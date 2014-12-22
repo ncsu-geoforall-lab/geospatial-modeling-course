@@ -1,0 +1,420 @@
+<P>
+Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
+GRASS GIS overview and manual</a>
+<P>
+<!--TODO add back the display with attributes-->
+<P><B>Topic: Geospatial Analysis II:  buffers,
+cost surfaces, least cost path</B></p>
+<!--<p><B>Tasks:  
+<ul>
+<LI>use buffers and map algebra to find areas within a given distance 
+from given features (roads, lakes) that have a selected property (are developed), 
+<LI>use cost surface analysis to support emergency response to road accident and search for 
+a lost person. 
+</ul>
+ </B></p>-->
+Use lecture slides for this topic to better understand the results and 
+comment on your findings - e.g. is the developed area around lakes larger/smaller
+than expected? Why?
+<P>
+Text files with recode rules, color rules and site locations:<br>
+<a href="noise_cats.txt"> noise_cats.txt,</a>
+<a href="friction_rules.txt"> friction_rules.txt,</a>
+<a href="friction_color.txt"> friction_color.txt,</a>
+<a href="fire_pt.txt"> fire_pt.txt,</a>
+<a href="lostperson.txt"> lostperson.txt</a><br>
+<p>
+On MSWindows, it is recommended to use wxGUI equivalents of d.* commands:</font><br>
+use their GUI equivalents,r
+see assignment <a href="GIS_Anal_grvisual.html">Data display and visualization</a>
+
+<p>
+To run mapcalc expressions, you can either run the entire command in the GUI Command console,
+or in case of any problems, type or copy the expression in the GRASS GIS Raster Map Calculator
+which can be launched from Layer Manager toolbar.
+</p>
+start GRASS<br>
+
+<pre><code>
+grass70
+</code></pre>
+
+<p>
+in the startup pannel<br>
+GIS data directory: type path to GRASS datasets<br>
+LOCATION: select nc_spm_08<br>
+MAPSET: use mapset with your unity ID or user1<br>
+Enter GRASS<br>
+
+Remove MASK in case it was left over from previous assignment<br>
+
+
+<pre><code>
+g.remove rast=MASK
+</code></pre>
+
+<p>
+p. 133<br>
+<b>Buffers</b><br>
+find developed areas close to lakes<br>
+set region, create buffers<br>
+reminder: d.erase means zoom to computational region<br>
+
+<pre><code>
+g.region swwake_30m -p
+r.buffer lakes out=lakes_buff dist=60,120,240,500 
+d.erase
+d.rast lakes_buff
+</code></pre>
+
+<p>
+list categories in land use map to identify cat numbers for developed areas<br>
+then run r.mapcalc as command line or from GUI, if the expression with quotes does not work<br>
+
+<pre><code>
+r.category landuse96_28m
+r.mapcalc "developed_lake = if(landuse96_28m==1 || landuse96_28m==2, lakes_buff, null())"
+r.support developed_lake rast=lakes_buff
+</code></pre>
+
+<p>
+display results<br>
+in GUI: switch off previous map, use Add raster, Add vector icons<br>
+
+<pre><code>
+d.rast developed_lake
+d.vect streets_wake co=grey
+d.rast lakes 
+d.out.file mylakesbuffmap
+</code></pre>
+
+<p>
+find the total area within buffers and the developed area in ha<br>
+
+<pre><code>
+r.report -n lakes_buff unit=h
+r.report -n developed_lake unit=h
+
+</code></pre>
+
+<p>
+find developed areas impacted by noise from highways<br>
+set region and create buffers along major roads<br>
+intersect developed areas from landuse map with road buffers<br>
+transfer the category labels and compute the affected area<br>
+set <b>full path</b> to the file with categories <a href="noise_cats.txt">noise_cats.txt</a><br>
+or run r.category from GUI and browse to the txt file<br>
+
+<pre><code>
+g.region rast=landuse96_28m -p
+r.buffer roadsmajor out=roads_buffers dist=250,500,2500
+r.mapcalc "noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null())"
+r.colors noise col=ryg
+r.category noise rules=noise_cats.txt separator=:
+r.report -n noise unit=p,h
+</code></pre>
+
+<p>
+display the results<br>
+in GUI switch off previous maps<br>
+then use Add raster>noise<br>
+Add vector>streets_wake, Add legend<br>
+
+<pre><code>
+d.erase
+d.rast noise
+<!--d.his i_map=elevation_shade h_map=noise bright=30-->
+d.vect streets_wake
+d.legend noise at=5,25,2,5
+</code></pre>
+
+<p>
+find schools affected by high levels of noise<br>
+convert schools to raster using CORECAPACI attribute (school capacity)<br>
+use map algebra to overlay with noise impact buffers<br>
+compute the number of students exposed to noise (see result of r.univar)<br>
+
+<pre><code>
+v.to.rast schools_wake out=schoolscap_10m use=attr attrcol=CORECAPACI type=point
+r.mapcalc "schools_noise = if(int(schoolscap_10m) && roads_buffers == 2, int(schoolscap_10m), null())"
+r.univar schools_noise
+r.to.vect schools_noise out=schools_noise type=point
+d.vect schools_wake icon=basic/circle size=10 fcol=blue
+d.vect schools_noise size=14 fcol=cyan icon=basic/circle col=black
+d.out.file mynoisemap
+
+</code></pre>
+
+<p>
+<!-- r.null streets_speed null=5 does not work on MSWin, replaced by r.mapcalc
+r.mapcalc streets_speed="if(isnull(streets_speedtmp) || streets_speedtmp == 0,5,streets_speedtmp)"-->
+<b>Cost surfaces </b><br>
+p. 136-139<br>
+compute cumulative cost surface to a given accident site based on speed limits<br>
+use 5mi/hr speed limit for off-road areas (nulls)<br>
+for legend set the discrete speed limit values in GUI<br>
+Add legend > Required > streets_speed, Subset > List of discrete category numbers<br>
+
+<pre><code>
+g.region swwake_30m -p
+v.info -c streets_wake
+v.to.rast streets_wake out=streets_speedtmp use=attr attrcol=SPEED type=line
+r.mapcalc "streets_speed = if(isnull(streets_speedtmp),5,streets_speedtmp)"
+r.info streets_speed
+r.colors streets_speed co=gyr
+d.rast streets_speed
+d.legend streets_speed at=5,40,2,5 use=5,25,35,45,65
+d.out.file myspeedmap
+</code></pre>
+
+<p>
+<!-- # <b>READ THE NOTES BELOW!!!</b>
+# map streets_speed should have off-road areas in green, with values 5
+# if off-road is still null or 0, let me know and use r.mapcalc to replace 
+# the nulls or 0 by 5 to avoid division by 0 or nulls, for example, -->
+assign travel time to cross a 30m grid cell in hours,<br>
+compute cumulative cost surface to the given point<br>
+where does the 0.018641 constant come from?<br>
+you can modify the expression to get time in minutes<br>
+
+<pre><code>
+r.mapcalc "streets_travtime = 0.018641/streets_speed"
+r.cost -k streets_travtime output=streets_cost start_coord=634886,224328
+</code></pre>
+
+<p>
+import the accident point location given in the <a href="fire_pt.txt"><u>fire_pt.txt</u></a><br>
+so that you can display it on the map<br>
+run v.in.ascii from GUI, use file browser to provide full path to the file<br>
+or enter values interactively by pasting the coords into the provided space<br>
+!!change the field separator to space under tab Input format>Field separator<br>
+or, if you know the path to the text file, you can run the command in WinGRASS<br>
+
+<pre><code>
+v.in.ascii in="C:\mydata\homework\fire_pt.txt" out=fire_pt separator=space
+</code></pre>
+
+<p>
+<!-- <font color="#000066">
+# or use echo in linux shell
+</font>
+echo "634886 224328 1" | v.in.ascii out=fire_pt separator=space -->
+compute isochrones and display the cumulative cost surface map<br>
+!!! when adding legend, do not forget to clear up the List of discrete categories<br>
+under the Advanced tab<br>
+
+<pre><code>
+r.contour streets_cost out=streets_cost_04 step=0.04
+r.colors streets_cost co=elevation
+d.rast streets_cost
+d.vect fire_pt co=red icon=basic/marker size=20
+d.vect streets_cost_04 
+d.legend streets_cost at=5,50,2,5
+d.out.file mycostmap
+</code></pre>
+
+<p>
+find cost (travel time) from selected firestations<br>
+first make your own copy of the firestations map and list attributes<br>
+then query the cumulative cost surface at the firestations location<br>
+the travel time in hours will be stored in the attribute column CVLAG<br>
+
+<pre><code>
+g.copy vect=firestations,myfirestations
+v.info -c myfirestations
+v.what.rast myfirestations rast=streets_cost column=CVLAG
+</code></pre>
+
+<p>
+add myfirestations to layer manager and right click on Show attribute data<br>
+click on CVLAG to order them and find the lowest cost (shortest time) > 0<br>
+firestations with 0 cost are outside the region<br>
+you should see a <a href="firestations_table.png"><u>table like this</u></a><br>
+if you cannot access the attribute table continue as follows (viewing the table is optional)<br>
+to get the coordinates - export firestations with traveltime less than 0.1 hr<br>
+
+<pre><code>
+v.out.ascii myfirestations separator=space dp=3 columns=ID,LOCATION,CVLAG where="CVLAG<0.1 AND CVLAG>0"
+</code></pre>
+
+<p>
+you should get something like the following<br>
+635775.565 228121.693 19 19 4021 District Dr 0.076<br>
+635940.262 225912.796 20 0 5001 Western Blvd 0.037<br>
+637386.831 222569.152 21 0 1721 Trailwood Dr 0.071<br>
+633178.155 221353.037 52 27 6000 Holly Springs Rd 0.060<br>
+find the least cost path for the two closest stations<br>
+
+<pre><code>
+r.drain -n input=streets_cost out=route_20Westernb start_coord=635940.3,225912.8
+r.drain -n input=streets_cost out=route_52Hollyb start_coord=633178.2,221353.0
+r.colors route_20Westernb co=grey
+r.colors route_52Hollyb co=grey
+</code></pre>
+
+<p>
+display the results using GUI!<br>
+you already may have some of these maps in GUI layer tree,<br>
+so just switch them on and off and re-order as needed<br>
+<!-- # to display the LOCATION attribute for firestations
+# Add vector > Display> switch on attr 
+# Labels > Name of column > select LOCATION from dropdown list
+# Font - type in font-->
+
+<pre><code>
+d.erase
+d.rast streets_cost
+d.vect fire_pt co=red icon=basic/marker size=20
+<!--d.vect firestations displ=attr attrcol=LOCATION-->
+d.rast  route_20Westernb
+d.rast  route_52Hollyb
+d.out.file mylcpmap
+</code></pre>
+
+<p>
+print the length of the path in cells (multiply by 30m to get approx. m)<br>
+you should have the time in hr already from the cost map<br>
+at what average speed [km/hr] needs the truck travel to get there in estimated time?<br>
+is the time, speed and distance realistic?<br>
+
+<pre><code>
+r.describe route_20Westernb
+r.describe route_52Hollyb
+</code></pre>
+
+<p>
+if you would like to display streets_cost surface in 3D as shown in the lecture<br>
+you need to multiply the surface by 1000 using r.mapcalc because the numbers<br>
+in hours are very low, then switch off all layers except for the streets_cost_1000<br>
+and change display to 3D<br>
+
+<b>compute accessibility map for help in search for lost person</b><br>
+create friction map based on land cover<br>
+
+<pre><code>
+g.region swwake_30m -p
+r.category landclass96
+</code></pre>
+
+<p>
+recode the landuse map to friction map using the rules in <a href="friction_rules.txt"> friction_rules.txt</a><br>
+run r.recode from GUI, use file browser to provide full path to the rules file<br>
+
+<pre><code>
+r.recode landclass96 out=friction rules=friction_rules.txt
+</code></pre>
+
+<p>
+add the streets to friction map - they are missed by the landuse map<br>
+use GUI to run the r.colors and d.legend commands<br>
+or set <b>full path</b> to the file with color table <a href="friction_color.txt"> friction_color.txt</a><br>
+
+<pre><code>
+r.mapcalc "friction2 = if(streets_speed > 6, 0.1, friction)"
+r.colors friction2 rules=friction_color.txt
+d.erase
+d.rast friction2
+d.legend friction2 at=5,50,2,5
+</code></pre>
+
+<p>
+compute the cost map and generate isochrones<br>
+
+<pre><code>
+r.walk -k elev=elev_ned_30m fric=friction2 output=walkcost start_coord=635576,216485 lambda=0.5 max=10000
+r.contour walkcost out=walkcost step=1000
+</code></pre>
+
+<p>
+to display the input, import coordinates of the point where the lost person was last seen<br>
+given in the file <a href="lostperson.txt"> lostperson.txt</a><br>
+run v.in.ascii from GUI<br>
+use its file browser to provide <b>full path</b> to the input file<br>
+
+<pre><code>
+v.in.ascii lostperson.txt out=lostperson separator=,
+</code></pre>
+
+<p>
+<!--<font color="#000066">
+# or use echo (in linux only)
+</font>
+echo "635576,216485" | v.in.ascii out=lostperson separator=","-->
+display the results<br>
+
+<pre><code>
+d.erase
+d.rast lakes
+d.rast walkcost
+d.vect streets_wake
+d.vect walkcost co=brown 
+d.vect walkcost co=red where=level=6000 width=2
+d.vect lostperson size=20 co=black fcolor=black icon=basic/marker
+d.legend walkcost at=5,50,2,5
+d.out.file mywalkcostmap
+
+</code></pre>
+
+<p>
+<b>Cost surfaces to line features</b><br>
+compute the shortest distance to a major road<br>
+set region, convert vector road map to raster<br>
+
+<pre><code>
+g.region swwake_30m -p
+v.to.rast roadsmajor out=roadsmajor use=val type=line
+</code></pre>
+
+<p>
+compute the distance map and cost surface to highways<br>
+
+<pre><code>
+r.mapcalc "area_one = 1"
+r.cost in=area_one output=dist_toroad start_rast=roadsmajor
+r.mapcalc "dist_meters = dist_toroad * (ewres() + nsres())/2."
+r.mapcalc "dist_class = int(dist_meters/500)"
+d.erase
+d.rast dist_class
+d.vect roadsmajor
+d.out.file dist_roadsmaj
+r.cost -k in=streets_travtime output=cdist_toroadk start_rast=roadsmajor
+r.colors cdist_toroadk co=bgyr
+d.rast cdist_toroadk
+d.vect streets_wake co=black
+d.vect roadsmajor co=red
+d.legend cdist_toroadk at=5,50,2,5
+d.out.file cost_roadsmaj
+
+</code></pre>
+
+<p>
+<!---
+# compute linear regression and correlation  coefficient between different elevation data
+r.regression.line elevation map2=elev_srtm_30m
+
+# compute correlation matrix
+# run this from GUI: type r.covar, click run GUI, click on Print correlation matrix
+</font>
+g.region swwake_30m -p
+r.covar -r elevation,elev_ned_30m,elev_srtm_30m 
+
+#p. 112-113
+# transform a slope map to a map
+#representing probability values that
+#increase linearly with the slope value, but the rate of increase
+#changes at given threshold values (in our example at 2., 8. and 15.
+#degrees). 
+r.mapcalc "probability1 = graph(slope, 0.,0.,2.,0.1,8.,0.3,15.,0.8,90.,1.)"
+r.colors probability1 col=byr
+d.rast.leg probability1
+# compute map where probability values decrease with slope value
+r.mapcalc "probability2 = graph(slope, 0.,1.,2.,0.9,8.,0.7,15.,0.2,90.,0.)"
+r.colors probability2 col=byr
+d.rast.leg probability2
+# compute map where probability values increase up to 8 degrees slope and then they decrease
+r.mapcalc "probability3 = graph(slope, 0.,0.,2.,0.5,8.,1.,15.,0.5,90.,0.)"
+r.colors probability3 col=byr
+d.rast.leg probability3
+-->
+    </div>
+    

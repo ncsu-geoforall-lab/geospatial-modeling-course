@@ -1,0 +1,225 @@
+<P>Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
+GRASS GIS overview and manual</a>, 
+<a href="http://www.grassbook.org/"> GRASSbook</a>
+
+<P><B>Topic: Modeling Geospatial Processes: Hydrology and erosion</B></P>
+<!--<p><B>Tasks: Compute wettness index and erosion using existing simple models </B></p>-->
+<P>
+Read before doing the assignments, to understand the r.mapcalc expressions:<br>
+<a href="../GIS_anal_assign/erosion_notes2.pdf">Erosion equations and units</a>
+<P>
+Various color tables and recoding rules:<br>
+<a href="cfactor.txt">C-factor values</a><br>
+<a href="lu_labels.txt">Land use category description</a><br>
+<a href="cfac_rules.txt">C-factor recode table</a><br>
+<!--<a href="cfac_labels.txt">C-factor labels</a><br>-->
+<a href="cfac_color.txt">C-factor color table</a><br>
+<a href="soilloss_color.txt">Soil loss color table</a><br>
+<a href="erdep_color.txt">Erosion/deposition color table</a><br>
+<a href="erdep_class.txt">Erosion/deposition classes</a><br>
+<a href="erdep_label.txt">Erosion/deposition class labels</a>
+
+start GRASS<br>
+
+<pre><code>
+grass70
+</code></pre>
+
+<p>
+in the startup pannel<br>
+GIS data directory: type path to GRASS datasets<br>
+LOCATION: select nc_spm_08<br>
+MAPSET: use mapset with your unity ID or user1<br>
+Enter GRASSS<br>
+
+compute wetness index<br>
+
+<pre><code>
+g.region rural_1m -p
+r.topidx elev_lid792_1m out=wetness_1m
+</code></pre>
+
+<p>
+<b>erase and zoom display to computational region</b><br>
+
+<pre><code>
+d.erase 
+d.rast wetness_1m
+</code></pre>
+
+<p>
+display elev_lid792_1m in 3D and drape over wetness_1m as color<br>
+Erosion modeling<br>
+<!-- # compute length-based LS-factor (topographic potential for erosion)
+# for SW Wake area at 10m resolution 
+</font>
+g.region swwake_10m -p
+r.watershed -s elevation thresh=50000 accum=flowaccum_10m length=lsfac2d
+r.colors lsfac2dfp co=gyr -e
+# <b>erase and zoom display to computational region</b>
+d.erase 
+d.rast lsfac2dfp
+d.legend lsfac2dfp at=2,50,2,6
+d.out.file lsfac2d
+r.mapcalc "lsfac3d = 1.2 * pow(flowaccum_10m * 100,0.2) * sin(slope)"
+r.colors lsfac3d co=gyr -e
+d.rast lsfac3d
+d.legend lsfac3d at=2,50,2,6
+d.out.file lsfac3d
+nviz elevation co=lsfac3d
+<font color="#000066"># when you zoom-in and explore the result
+# can you comment on where is the highest topographic potential
+# for erosion predicted by the 2d and 3d models?  -->
+compute topographic potential for soil detachment<br>
+compare impact of the power function exponents on the erosion pattern<br>
+which equation represents conditions when water flow has greater impact<br>
+and which models stronger influence of slope<br>
+
+<pre><code>
+g.region rast=elev_lid792_1m -p
+r.slope.aspect elev_lid792_1m slo=slope_1m asp=aspect_1m
+r.flow elev_lid792_1m flowacc=flowacc_1m
+r.mapcalc "lsfac3d_1m = 1.2 * pow(flowacc_1m * 1./22.1,0.2) * pow(sin(slope_1m)/0.09,1.3)"
+r.mapcalc "lsfac3d_s1_1m = 1.5 * pow(flowacc_1m * 1./22.1,0.5) * pow(sin(slope_1m)/0.09,1.0)"
+r.colors lsfac3d_s1_1m col=gyr -e 
+r.colors lsfac3d_1m rast=lsfac3d_s1_1m
+</code></pre>
+
+<p>
+<b>erase and zoom display to computational region</b><br>
+
+<pre><code>
+d.erase 
+d.rast lsfac3d_1m
+d.vect elev_lid792_cont1m
+d.legend lsfac3d_1m at=2,50,2,6
+d.out.file lsfac_s13
+d.rast lsfac3d_s1_1m
+d.vect elev_lid792_cont1m
+d.legend lsfac3d_s1_1m at=2,50,2,6
+d.out.file lsfac_s10
+</code></pre>
+
+<p>
+compute soil detachment for spatially variable land cover<br>
+assign special color table and display result<br>
+set region to rural area and recode landcover_1m to cfactor<br>
+start r.recode in GUI, browser will pick up the full path to your rules file<br>
+
+<pre><code>
+g.region rural_1m -p
+r.recode landcover_1m out=cfactor_1m rules=cfac_rules.txt
+<!--r.category cfactor_1m rules=cfac_labels.txt-->
+</code></pre>
+
+<p>
+use custom color table cfac_color.txt to see also the very small values<br>
+start r.colors in GUI, browser will pick up the full path to your color rules file<br>
+redraw in GUI<br>
+
+<pre><code>
+r.colors map=cfactor_1m rules=cfac_color.txt
+d.rast cfactor_1m
+</code></pre>
+
+<p>
+compute the USLE3D equation using map algebra,<br>
+cfactorbare_1m is the same as cfactor_1m<br>
+cfactorgrow_1m has landuse recoded for summer conditions<br>
+you can do the color table by putting the rules in txt file as for the cfactor<br>
+compare erosion rates and distribution for winter (bare) and summer conditions<br>
+
+<pre><code>
+r.mapcalc "soillossbare_1m = 270. * soils_Kfactor * lsfac3d_1m * cfactorbare_1m"
+r.mapcalc "soillossgrow_1m = 270. * soils_Kfactor * lsfac3d_1m * cfactorgrow_1m"
+r.colors soillossbare_1m rules=soilloss_color.txt  
+r.colors soillossgrow_1m rast=soillossbare_1m
+d.erase
+d.rast soillossbare_1m
+d.legend soillossbare_1m at=2,50,2,6
+d.out.file soillossbare
+d.rast soillossgrow_1m
+d.legend soillossgrow_1m at=2,50,2,6
+d.out.file soillosgrow
+r.univar soillossbare_1m
+r.univar soillossgrow_1m
+</code></pre>
+
+<p>
+compute new DEM with erosion carved-in<br>
+to view it in 3D switch off everything except elev_erodedb_1m<br>
+drape soillossbare_1m as color and don't forget to set fine resolution to 1<br>
+use lighting from SW, z-exag at least 2.0<br>
+
+<pre><code>
+r.mapcalc "elev_erodedb_1m = elev_lid792_1m-(soillossbare_1m/100.)"
+</code></pre>
+
+<p>
+display elev_erodedb_1m in 3D and drape over soillossbare_1m as color<br>
+compute net erosion/deposition maps as divergence of sediment flow (USPED)<br>
+first compute sediment flow and its components in x, y directions<br>
+
+<pre><code>
+r.mapcalc "sedflow_1m = 270. * soils_Kfactor * cfactorgrow_1m * flowacc_1m * sin(slope_1m)"
+r.colors sedflow_1m rast=soillossbare_1m
+d.rast sedflow_1m
+r.mapcalc "qsx = sedflow_1m * cos(aspect_1m)"
+r.mapcalc "qsy = sedflow_1m * sin(aspect_1m)"
+</code></pre>
+
+<p>
+compute change of sediment flow in the x and y directions<br>
+and then change in the direction of flow using divergence<br>
+you can put the color table in a file and use r.colors from GUI<br>
+
+<pre><code>
+r.slope.aspect qsx dx=qsx_dx
+r.slope.aspect qsy dy=qsy_dy
+r.mapcalc "erdep = qsx_dx + qsy_dy"
+r.info -r erdep
+r.colors erdep rules=erdep_color.txt 
+d.rast erdep
+d.legend erdep at=2,50,2,6 range=-100,100
+</code></pre>
+
+<p>
+display elev_lid792_1m in 3D and drape over erdep as color<br>
+compute summary statistics<br>
+use r.recode and r.category from GUI to get the path to the txt file<br>
+use r.category to add labels (stable, high erosion, etc) to categories<br>
+
+<pre><code>
+r.recode erdep out=erdep_class rules=erdep_class.txt
+r.category erdep_class rules=erdep_label.txt sep=:
+r.report erdep_class unit=p,h,a
+</code></pre>
+
+<p>
+example output<br>
+[...]<br>
+| #| description         |  %  | hectares |  acres  |<br>
+|-4| severe erosion . . .| 0.19|  0.101300|  0.25031|<br>
+|-3| high erosion . . . .| 1.34|  0.701600|  1.73365|<br>
+|-2| moderate erosion . .| 3.89|  2.042600|  5.04726|<br>
+|-1| low erosion . . . . |19.74| 10.366000| 25.61438|<br>
+| 0| stable . . . . . . .|61.32| 32.192000| 79.54643|<br>
+| 1| low deposition . . .| 8.40|  4.407600| 10.89118|<br>
+| 2| moderate deposition | 2.49|  1.307500|  3.23083|<br>
+| 3| high deposition . . | 1.29|  0.676900|  1.67262|<br>
+| 4| severe deposition . | 0.24|  0.126100|  0.31159|<br>
+| *|no data. . . . . . . | 1.10|  0.578400|  1.42922|<br>
+|---------------------------------------------------|<br>
+|TOTAL                   |100.00| 52.500000|129.7275|<br>
+
+look for line with sum<br>
+
+<pre><code>
+r.univar erdep 
+SUM = -2374.473814
+</code></pre>
+
+<p>
+divide by 4046 to get total ton per year transported from the watershed<br>
+
+</div>

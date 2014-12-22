@@ -1,0 +1,272 @@
+<P>
+Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
+GRASS GIS overview and manual</a>, 
+<a href="http://www.grassbook.org/"> GRASSbook</a>
+<P>
+<P><B>Topic: Geomorphometry II: Spatial and temporal Terrain Analysis</B></P>
+<!--<p><B>Tasks: Derive topographic parameters and landforms, analyze time series of DEMs </B></p>-->
+<P>
+Download MAPSET 
+<a href="http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip">
+NagsHead time series</a> and copy it into your nc_spm_08 LOCATION (it should be the same level directory
+as PERMANENT)<br>
+Download color tables
+<a href="./stddev_color.txt">stddev_color.txt</a> and <a href="./regrslope_color.txt">regrslope_color.txt</a> 
+start GRASS<br>
+
+<pre><code>
+grass70
+</code></pre>
+
+<p>
+GIS data directory: type path to GRASS datasets<br>
+LOCATION: select nc_spm_08<br>
+MAPSET: use mapset with your unity ID or user1<br>
+Enter GRASSS<br>
+GUI opens automatically - you can work in GUI or on command line<br>
+work in GUI on MSWindows, do not type any d.* commands anywhere<br>
+
+compute basic topographic parameters: slope and aspect<br>
+p. 142-142<br>
+
+<pre><code>
+g.region rast=elevation -p
+r.slope.aspect el=elevation slope=myslope asp=myaspect 
+</code></pre>
+
+<p>
+display resulting maps with legend using GUI<br>
+Add raster in layer manager, add legend in Map display, use at=2,40,2,6<br>
+make sure you zoom to computational region<br>
+
+<pre><code>
+d.erase
+d.rast myslope
+d.legend myslope at=2,40,2,6
+d.out.file myslope
+d.rast myaspect
+d.legend myaspect at=2,40,2,6
+d.out.file myaspect
+</code></pre>
+
+<p>
+<!-- d.rast profcurv
+d.legend profcurv at=2,40,2,6
+d.out.file profcurv
+d.rast tancurv
+d.legend tancurv at=2,40,2,6
+d.out.file tancurv 
+<font color="#000066">
+# use nviz to explore relation between terrain shape and curvatures
+# zoom in to show features with concave and convex shape
+</font>
+nviz elevation color=profcurv -->
+show impact of integer values in meters on slope and aspect pattern<br>
+compute integer DEM and derive its slope and aspect<br>
+use GUI to display the histogram: in Map Display>Analyze>Create histogram<br>
+
+<pre><code>
+r.mapcalc "elev_int = int(elevation)"
+r.slope.aspect elev_int asp=aspect_int_10m slo=slope_int_10m
+d.erase
+d.histogram slope_int_10m
+d.histogram myslope
+d.histogram aspect_int_10m
+d.histogram myaspect
+d.erase
+d.rast myslope
+</code></pre>
+
+<p>
+zoom into SW area of the current region (relatively flat area near large interchange)<br>
+can you explain the difference in slope maps derived from integer (m vertical resolution)<br>
+and floating point (mm vertical resolution) DEMs?<br>
+
+<pre><code>
+d.rast slope_int_10m
+d.out.file slope_int
+</code></pre>
+
+<p>
+<!-- # further zoom into a selected area until you see grid cells
+# display gradient vector
+# in GUI GIS Manager click the icon with arrows
+</font>
+d.erase
+d.rast elevation
+d.zoom
+d.rast.arrow aspect arrow_col=blue magnitude=slope scale=2 -->
+p.248-249<br>
+compute slope, aspect and curvatures simultaneously with interpolation<br>
+you can do the examples below for the bare earth data only (first example)<br>
+multiple return example is optional (if you are curious how it differs from BE)<br>
+
+<pre><code>
+g.region rural_1m  -p
+v.surf.rst elev_lid792_bepts elev=elev_lid_1m asp=asp_lid_1m pcu=pc_lid_1m tcu=tc_lid_1m npmin=120 segm=25 
+v.surf.rst elev_lidrural_mrpts elev=elev_lidmr_1m asp=asp_lidmr_1m pcu=pc_lidmr_1m tcu=tc_lidmr_1m npmin=120 segmax=25 ten=300 smo=1.
+</code></pre>
+
+<p>
+display the results as 2D images or in 3D view<br>
+for 3D view, switch off everything except for elevation surface that you want to view<br>
+drape topographic parameters raster maps over DEMs as color<br>
+
+<pre><code>
+d.erase
+d.rast elev_lid_1m
+d.rast pc_lid_1m
+d.out.file profcurvature1
+d.rast elev_lidmr_1m
+d.rast pc_lidmr_1m
+</code></pre>
+
+<p>
+the curvature maps reflect survey pattern rather than topographic features<br>
+so we lower the tension and increase the smoothing<br>
+you can use multiple displays to compare the results side-by-side<br>
+
+<pre><code>
+g.region rural_1m  -p
+v.surf.rst elev_lid792_bepts elev=elev_lidt15_1m asp=asp_lidt15_1m pcu=pc_lidt15_1m tcu=tc_lidt15_1m npmi=120 seg=25 ten=15 smo=1.
+v.surf.rst elev_lidrural_mrpts elev=elev_lidmrt15_1m asp=asp_lidmrt15_1m pcu=pc_lidmrt15_1m tcu=tc_lidmrt15_1m npmi=120 seg=25 ten=15 smo=1.
+d.erase
+d.rast elev_lidt15_1m
+d.rast pc_lidt15_1m
+d.out.file profcurvature2
+d.rast tc_lidt15_1m
+d.rast elev_lidmrt15_1m
+d.rast pc_lidmrt15_1m
+</code></pre>
+
+<p>
+p. 150<br>
+extract landforms at different levels of detail by adjusting the size of moving window<br>
+set rural subregion at 1m resolution,<br>
+compute landforms using 9m and 45m neighborhood: read the manual to learn more<br>
+explain types of landforms and the role of the neighborhood size<br>
+
+<pre><code>
+g.region rural_1m -p
+r.param.scale elev_lid792_1m o=feature9c_1m  size=9  p=feature
+r.param.scale elev_lid792_1m o=feature45c_1m size=45 p=feature
+</code></pre>
+
+<p>
+display with legend, use GUI in winGRASS<br>
+save images for the report<br>
+optionally display the feature maps draped over elev_lid792_1m as color<br>
+
+<pre><code>
+d.rast feature9c_1m
+d.legend feature9c_1m at=2,20,2,6
+d.rast feature45c_1m
+d.legend feature45c_1m at=2,20,2,6
+d.vect elev_lid792_cont1m co=brown
+<!--nviz elev_lid792_1m color=feature9c_1m nviz elev_lid792_1m color=feature45c_1m-->
+</code></pre>
+
+<p>
+Raster time series analysis<br>
+
+dowload mapset NagsHead_series using the link above # and copy it into your nc_spm_08 directory<br>
+it should be at the same level directory as PERMANENT<br>
+do not let your unzipping program (e.g. EZARC) create additional level directory with the same name!<br>
+if you don't see the mapset, start GRASS with any other mapset<br>
+then enable access to NagsHead_series using Settings -> GRASS working environment -> Mapset access<br>
+run the series analysis and explain the results:<br>
+which maps are core and envelope?, which landforms have high standard deviation and what does it mean?<br>
+
+<pre><code>
+g.region rast=NH_2008_1m -p
+d.erase
+d.rast NH_2008_1m
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_min method=minimum
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_max method=maximum
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_mintime method=min_raster
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_maxtime method=max_raster
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_range method=range
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_avg method=average
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_stddev method=stddev
+<!--r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_slope method=slope-->
+r.colors NH_9908_stddev rules=stddev_color.txt
+<!--r.colors NH_9908_slope rules=regrslope_color.txt-->
+d.rast NH_9908_stddev
+d.rast NH_9908_range
+<!--d.rast NH_9908_slope-->
+</code></pre>
+
+<p>
+use cutting plane in 3D view to show the core and envelope<br>
+add constant elevation plane at -1m for reference<br>
+set zexag somewhere 3-5 (the default is too high)<br>
+assign surfaces constant color<br>
+use top or bottom surface for crossection color<br>
+when using top for color, lower the light source to make<br>
+top surface dark and highlight the crossection<br>
+
+<pre><code>
+</code></pre>
+
+<p>
+<!-- # optional example: topo parameters from contours
+nviz NH_9908_min,NH_9908_max
+g.region rural_1m res=2 -p
+v.surf.rst elev_lid792_cont1m zcol=level dmin=3 npmin=250 \
+  el=elev_rstcontd_2mt slo=slp_rstcontd_2m pc=pc_rstcontd_2m
+d.erase
+d.rast slp_rstcontd_2m
+d.rast pc_rstcontd_2m
+d.vect elev_lid792_cont1m
+g.region rural_1m res=2 -p
+v.surf.rst elev_lid792_cont1m zcol=level el=elev_rstct10_2m \
+   slo=slp_rstct10_2m asp=asp_rstct10_2m pcur=pc_rstct10_2m \
+   tcu=tc_rstct10_2m ten=10 dmin=3 npmin=250
+d.rast pc_rstct10_2m
+d.vect elev_lid792_cont1m
+d.rast tc_rstct10_2m
+# if available, use v.generalize to reduce number of points in elev_lid792_cont1m
+# and interpolate 
+<font color="#000066">
+# optional
+# p. 132
+# compute cut and fill for 4m deep excavation to build a facility
+# set the region, display facility on top of orthophoto
+# set MASK to facility map and find min elevation
+</font>
+g.region rural_1m -p
+d.erase
+d.rast ortho_2001_t792_1m
+d.rast facility
+r.mask facility
+r.univar elevation
+<font color="#000066">
+# [...]
+# minimum: 123.521 
+# bottom of 4m excavation will be 123.52-4=119.52m
+</font>
+r.mapcalc "excavation = elevation-119.52"
+d.rast excavation
+r.univar excavation
+<font color="#000066">
+# [...]
+# minimum: 4.00057
+# maximum: 9.50554
+</font>
+r.volume excavation
+<font color="#000066">
+# REMOVE MASK! so that it does not affect your future work
+</font>
+g.remove rast=MASK
+# or
+r.mask -r
+<font color="#000066">
+# optional: compute polar histogram if available
+# can you explain the difference in polar histograms?
+</font>
+d.polar aspect_int_10m
+d.polar myaspect
+-->
+
+</div>
+    

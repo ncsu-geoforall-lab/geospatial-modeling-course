@@ -1,0 +1,174 @@
+<P>
+Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
+GRASS GIS overview and manual</a>, 
+<a href="http://www.grassbook.org/"> GRASSbook</a>
+
+<P>
+<P><B>Topic: Spatial Interpolation</B></P>
+<!--<p><B>Tasks: Demonstrate impact of different interpolation methods 
+and distribution of points on resulting surface, 
+identify problems with several basic methods
+</B></p>-->
+<P>
+On MSWindows, it is recommended to use wxGUI equivalents of d.* commands:</font><br>
+use their GUI equivalents,
+see assignment <a href="GIS_Anal_grvisual.html">Data display and visualization</a>
+start GRASS<br>
+
+<pre><code>
+grass70
+</code></pre>
+
+<p>
+in startup pannel<br>
+GIS data directory: provide path to your Grass data<br>
+LOCATION select nc_spm_08<br>
+MAPSET select user1<br>
+Enter GRASS<br>
+
+p. 232<br>
+compute Voronoi polygons<br>
+display the polygons with centroids<br>
+find the column name where z is stored and convert the polygons to raster<br>
+compute aspect to evaluate the surface geometry<br>
+
+<pre><code>
+g.region rural_1m -p
+d.erase
+v.voronoi elev_lid792_randpts out=elev_vor
+d.vect elev_vor size=1 -c type=area,centroid
+v.info -c elev_vor
+v.to.rast elev_vor out=elev_vor_1m attrcol=value use=attr
+r.colors elev_vor_1m col=elevation
+r.slope.aspect elev_vor_1m aspect=asp_vor_1m
+</code></pre>
+
+<p>
+display the resulting elevation map and aspect map<br>
+v.voronoi may be buggy - what in the results indicates that something is wrong?<br>
+optionally, you can view it in 3D perspective using wxnviz<br>
+!!! switch off aspect and elev_vor and switch to 3D view with elev_vor_1m on<br>
+
+<pre><code>
+d.erase
+d.rast elev_vor_1m
+d.rast asp_vor_1m
+d.vect elev_lid792_randpts size=1 co=red
+d.out.file elev_voronoi
+</code></pre>
+
+<p>
+interpolation using IDW<br>
+set region and resolution, find a column name where z is stored<br>
+interpolate DEM using IDW, check the result using aspect<br>
+
+<pre><code>
+g.region rural_1m -p
+v.info -c elev_lid792_randpts
+v.surf.idw elev_lid792_randpts out=elev_idw_1m col=value
+r.colors elev_idw_1m col=elevation
+r.slope.aspect elev_idw_1m aspect=asp_idw_1m
+d.erase
+d.rast elev_idw_1m
+d.rast asp_idw_1m
+d.vect elev_lid792_randpts size=2 col=red
+d.out.file elev_idw
+</code></pre>
+
+<p>
+design experiment that elucidates the impact of IDW parameters on the surface,<br>
+focus on the impact of exponent e.g., p=0.5,1.,5. (2 is the default)<br>
+and number of neighboring points e.g., npoint=1,5,20,60 (12 is the default)<br>
+include selected images (e.g. hillshade or aspect)<br>
+and relevant stats (e.g., mean, min, max from r.univar, histogram)<br>
+that highlight the differences in the resulting surfaces into your report<br>
+
+check the surface interpolated with default parameters using 3D view<br>
+do not forget to switch off everything except for the interpolated elevations<br>
+set Visualize>Raster>fine resolution to 1<br>
+you can use constant color for the surface to highlight its structure<br>
+save an image for your report<br>
+
+<pre><code>
+</code></pre>
+
+<p>
+compute DEM from contours using linear interpolation between isolines<br>
+
+<pre><code>
+g.region rural_1m -p
+v.to.rast elev_lid792_cont1m out=el_lid792_cont1m attrcol=level use=attr
+r.surf.contour el_lid792_cont1m out=el_rcont
+r.colors el_rcont col=elevation
+</code></pre>
+
+<p>
+check the result using a 2D aspect map or view el_rcont in 3D<br>
+in 3D set view from SE and light from NW to reveal subtle geometry<br>
+
+<pre><code>
+r.slope.aspect el_rcont aspect=asp_rcont
+d.rast el_rcont
+d.rast asp_rcont
+d.vect elev_lid792_cont1m col=white
+d.out.file asp_rcont
+
+</code></pre>
+
+<p>
+<!-- <font color="#000066">
+nviz el_rcont
+# to asses the impact of point distribution on the resulting surface
+# generate contours, convert them to points and create voronoi polygons
+# use 20m res. for contour generation to avoid too many points
+# use 4m res. to convert the polygons to raster to preserve the polygon shape
+# do not forget to "zoom into computational region" after changing your region setting
+# in the report, discuss the geometry of the resulting surface
+# when compared with voronoi polygons generated from random points
+</font>
+g.region rural_1m res=20 -p
+d.erase
+r.contour el_D792_6m out=elev_cont_3m step=3m min=103
+v.to.points elev_cont_3m out=elev_cont_3mpts use=vertex
+v.voronoi elev_cont_3mpts out=elev_cont_3mvor
+d.vect -c elev_cont_3mvor 
+g.region res=4 -p
+d.erase
+v.info -c elev_cont_3m
+v.to.rast elev_cont_3mvor out=elev_cont_4mvor col=level
+r.slope.aspect elev_cont_4mvor aspect=asp_elev_cont_4mvor
+r.colors elev_cont_4mvor co=elevation
+d.rast asp_elev_cont_4mvor
+d.vect elev_cont_3mpts col=red
+d.rast elev_cont_4mvor
+d.out.file elev_cont_vor -->
+Optional: create TIN model<br>
+convert z-value stored as attribute "value" to z-coordinate<br>
+compute TIN and visualize it as 3D vector data<br>
+alternatively, you can use 3Dview (wxnviz):<br>
+keep only level90,elev_idw_1m and elev_rand_tin switched on<br>
+for elev_rand_tin > Properties under Tab Selection switch off everything except for boundary<br>
+switch the view from 2D to 3D and remove elev_idw_1m<br>
+
+<pre><code>
+v.to.3d elev_lid792_randpts out=elev_lid792_randpts3d column=value
+v.delaunay elev_lid792_randpts3d out=elev_rand_tin
+r.mapcalc "level90 = 90"
+</code></pre>
+
+<p>
+<!-- #some of the below is obsolete
+nviz elev_idw_1m vect=elev_rand_tin
+# compute reference plane for visualization in nviz
+# Optional - visualize as 3D vector data
+# you need to start nviz with a elev_lid792_1m so that it can set its view defaults
+# add the TIN as vector lines (although it is 3D polygons) or 
+# in nviz Visualize>Vector lines/3D polygons>elev_cont_tin
+# change the color for the raster level90 to grey and delete elev_lid792_1m
+# change the vector color to something nicer than blue 
+</font>
+v.delaunay elev_cont_3mpts out=elev_cont_tin
+d.vect -c elev_cont_tin
+nviz level90,elev_lid792_1m vect=elev_cont_tin
+-->
+</div>
