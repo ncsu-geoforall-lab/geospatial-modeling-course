@@ -5,7 +5,7 @@ if [ $? -ne 0 ]; then
     echo "git status failed. Are you in a repository?" 1>&2;
     exit
 elif [ -n "$output" ]; then
-    echo "There are some untracked files." 1>&2;
+    echo "Cannot publish. There are some untracked files." 1>&2;
     echo "Using \"git status\" to show what is not committed or tracked."
     git status
     exit
@@ -86,8 +86,6 @@ fi
 set -e
 
 # get changes of other people to be able to push but prefer current state
-# upstream must be defined to be able to pull
-# git branch --set-upstream-to=origin/gh-pages gh-pages
 git pull --no-edit --commit --strategy=ours
 
 git push
