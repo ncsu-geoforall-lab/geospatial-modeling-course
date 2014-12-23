@@ -1,0 +1,415 @@
+<h2>ASSIGNMENTS: in class practice and homework</h2>
+<hr size="2" NOSHADE>
+<a href="project_topics.html"><b>Project ideas and paper requirements,</b></a> see Schedule for dates when project pre-proposal, proposal, midterm progress report and final paper are due.
+<hr size="2" NOSHADE>
+<P><b> Homework structure to be used for all assignments</b> 
+<ul>
+<li>Short paper: min. 500 word text, 1-2 pages of graphics, single spaced, no bullets - full sentences. 
+<li><b>Both</b> GRASS and ArcGIS solutions are required, described in a single paper (more details see below).
+<li>Step-by-step instructions are provided, but it is your task to explain what is being done in terms of methods and results, based on the lectures, manual pages and other on-line resources.
+<li>Assigned on Thursdays, due the following Tuesdays at 11 pm, to be submitted on google site 
+according to the instructions on <a href="../GIS_anal_lecture/GIS_Anal_Lintro.html"><b>Course logistics</b></a> web page.
+<li> Required report sections: 
+<ol>
+   <li>Task, problem, background
+   <li>Approach: general description of methods and concepts, do not repeat instructions
+       and do not discuss software issues here - this section should be software independent, common for 
+       both Arc and GRASS.
+   <li>Results: maps, graphs, tables with comments, focus on what is interesting in the data 
+       and the derived maps, how does the method used influence the results. Include answers to questions
+       in this section. Post 4-6 images per page.
+   <li>Discussion: was there anything unexpected or problematic in the results?
+       were there any issues related to the methdology? also discuss the software issues, 
+       including fixes and suggestions for improvements here
+   <li>Conclusion: 1-2 sentences what you have learned
+</ol>
+<li>Sample report formatting in 
+<a href="MEA582_HWformat.docx">MSWord</a>
+<!--<a href="MEA582_HWformat2014.odt">OpenOffice</a>, <a href="sample_report.tex">latex</a>, <a href="sample_report.pdf">pdf</a>,-->
+(do not use the text from this example, it is for formatting only!). Note that the submitted report should be in pdf.
+<br>Optional detailed <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_assign/Report_guide.txt">Report guide by former TA Paul Paris</a>
+<br> You can find some helpful hints from past semesters in 
+<a href="GIS_Anal_Assignotes.html"><b>Comments/answers to HW questions</b></a><br>
+</ul>
+
+<p><b>Software and data</b> 
+<ul>
+<li>Install GRASS GIS and ArcGIS software following the instructions on the 
+<a href="../GIS_anal_lecture/GIS_Anal_Lintro.html">Course logistics webpage</a>
+<br>Troubleshooting GRASS on Windows:
+    <ul>
+<li>If GRASS crashes at the start, you may be missing some dll files, for more details see
+<a href="http://grasswiki.osgeo.org/wiki/WinGRASS_errors#The_GRASS_GIS_.28winGRASS.29_exits_immediately_after_I_start_it.21">
+suggested solution</a>
+<li>You may need to install <a href="http://www.tiffviewer.com/download.htm">tiff support</a>
+to view images saved by the 3D visualization module
+</ul>
+
+<li>Download data
+<ul>
+  <li>create folders for your GIS data in a directory where you have permissions to write, for example: <br>
+  <ul>
+      <li>MSWindows - C:\Users\myname\grassdata and C:\Users\myname\arcdata
+      <li>Mac or Linux - in your home directory myname/grassdata
+  </ul>
+  <li>download and unpack the following datasets:</a> <i><font color="#FF0000">(!!!make sure that your unpacking software does 
+not create additional directory with the same name, e.g. nc_spm_08_grass7\nc_spm_08_grass7, 
+the instructions assume you have only one layer of nc_spm_08_grass7) </font></i>
+   <ul>
+   <li><a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">
+       GRASS GIS LOCATION: <b>nc_spm_08_grass7</b></a> into grassdata (this is the same data set as North_Carolina provided with WinGRASS7)
+   <li><a href="http://courses.ncsu.edu/mea582/common/media/01/ncrast_geodatabase_08_31_09.zip">
+       ArcGIS GEODATABSE:<b> ncrast_geodatabase_08_31_09</b></a> into arcdata
+   <li><a href="http://courses.ncsu.edu/mea582/common/media/01/ncshape_geodatabase02_15_10.zip">
+       ArcGIS GEODATABSE:<b> ncshape_geodatabase_02_15_10</b></a> into arcdata
+   </ul>
+   <li>Data are provided at three hierarchical levels:
+   <ul>
+   <li>entire NC state with raster data at 500m resolution: region nc_500m 
+   <li>South-west Wake County with raster data at resolutions 30m-10m: region swwake_10m 
+   <li>small watershed in rural area with data resolutions of 1m-3m: rural_1m
+   <li>See more at <a href="http://www.grassbook.org/data_menu3rd.php">GRASSbook data description</a>
+   </ul>
+</ul>
+</ul>
+<!--
+<b>North Carolina data needed for assignments: </b><br>
+<a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">
+GRASS LOCATION in State Plane, meters: nc_spm_08 (150MB),</a> <br>
+<a href="http://courses.ncsu.edu/mea582/common/media/01/ncrast_geodatabase_08_31_09.zip">
+ArcGIS geodatabase, raster (53MB),</a>, 
+<a href="http://courses.ncsu.edu/mea582/common/media/01/ncshape_geodatabase02_15_10.zip">
+ArcGIS geodatabase, shape elevation for MR lidar stored as attribute (64MB) </a><br>
+GRASS MAPSET needed later for Temporal Terrain Analysis:<br>
+<a href="http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip">
+ NagsHead time series</a>, requires LOCATION in NC State Plane, meters<br>
+-->
+Optional data sets for optional tasks in the assignments or for a project<br>
+<a href="http://courses.ncsu.edu/mea582/common/media/01/nc_ll.zip">GRASS LOCATION in Geographic coordinates WGS84. (55MB),</a> <br>
+<a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spf.zip">GRASS LOCATION in State Plane coordinates, in feet (8MB),</a> <br>
+<a href="http://courses.ncsu.edu/mea582/common/media/01/nc_utm18.zip">GRASS LOCATION in UTM18, meters - to be added</a> <br>
+<a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016.las.zip">2013 Raleigh lidar survey, tile 073_016, point cloud in las format (22MB),</a>, 
+<a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016_xyzirnc_ncspf.zip">in asci xyzirnc format (22MB)</a> <br>
+<hr size="3" NOSHADE>
+<a name="Data"</a>
+<p><b> Topic: Data acquisition and integration: explore the provided data set</b></p>
+<!--
+<ul>
+  <li>Learn how to list data in the provided database, how to find their projection, coordinate system,
+spatial extent   </li>
+<li>Display and query selected raster and vector data in 2D, learn how to list data attributes.  </li>
+<li>Display elevation data and selected vector data in 3D</li>
+</li></ul>
+-->
+<p>
+<b>Approach:</b>
+     <a href="../GIS_anal_grass/GIS_Anal_grdataS1.html">GRASS solution</a>,
+     <a href="../GIS_anal_arc/GIS_Anal_arcdataS1.html">ArcGIS solution</a>
+<P><i>Screenshot-based tutorial:</i> <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">Getting started with GRASS GIS using wxGUI</a>
+<!--     <a href="http://courses.ncsu.edu/mea582/common/media/02/getting_started_GUI_1.mov">
+ Getting started with GRASS, screen capture on Mac (36MB)</a>,
+<br>Optional: Getting started with GRASS using QGIS (to be added)-->
+<P>
+<b>Homework:</b> Prepare report describing general properties of provided data set (coordinate system, resolutions, spatial extents, etc.)
+</p><p>
+<hr>
+<a href="GIS_Anal_Assignotes.html#Data">Comments/answers to HW questions</a><br>
+<hr size="3" NOSHADE>
+<a name="Datamodels"</a>
+<p><b> Topic: Geospatial data models</b></p>
+<!--
+<ul>
+<li>Resample raster data, evaluate results from different methods
+<li>Convert vector (point, line, area) to raster representation
+<li>Convert raster to vector representation 
+</li></ul>
+-->
+<p>
+<b>Approach:</b>
+     <a href="../GIS_anal_grass/GIS_Anal_grdataS2.html"> GRASS solution</a>,
+     <a href="../GIS_anal_arc/GIS_Anal_arcdataS2.html"> ArcGIS solution</a>
+<!--
+     <P><i>Optional: </i> <a href="http://courses.ncsu.edu/gis582/common/media/GRASS_clinic2013/NewLocCSTransfGRASS.html"> GRASS GIS: How to get started with a new project and how to reproject data </a>
+-->
+<P>
+<b>Homework:</b> Prepare report describing data models and their conversion (changing raster resolution, 
+vector data type, raster to vector and vector to raster) - issues, methods, results.
+</p><p>
+<hr>
+<a href="GIS_Anal_Assignotes.html#Data">Comments/answers to HW questions</a><br>
+<hr size="3" NOSHADE>
+
+<a name="Visu"</a>
+<p><b> Topic: Data display and visualization</b></p>
+<!--
+<ul>
+<li>Display raster and vector maps with adjusted color tables and symbols, 
+select suitable color tables for continuous and discrete data, histogram equalized 
+colors, custom colors for highlighting features </li>
+<li>Display labels, grids, scales </li>
+<li>Interactively view raster and vector data in 3D space,  
+adjust lighting to highlight features </li>
+<li> Visualize multiple surfaces with cutting planes
+<li> Post selected data to Google Maps and Google Earth.  </li>
+-->
+</ul>
+<p>
+<b>Approach: </b>
+<a href="../GIS_anal_grass/GIS_Anal_grvisual.html"> GRASS solution </a>,
+ <a href="../GIS_anal_arc/GIS_Anal_arcvisual.html"> ArcGIS solution </a><br>
+<P>
+<i>Screen captures for 3D visualization with wxnviz in GRASS6.4.3RC2</i><br>
+<a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz1_edit1large.mov"> Visualization in GRASS I: surface (71MB)</a><br> 
+<a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz2_edit2.mov"> Visualization in GRASS II: draping points and lines (45MB)</a><br> 
+<a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz3_edit.mov"> Visualization in GRASS III: cutting planes (62MB)</a><br>
+</p><p>
+<b>Homework:</b> 
+Prepare report describing methods and results for graphical 
+representation of continuous and discrete geospatial data.
+Demonstrate the use of multiple surfaces for visual analysis of
+the difference between the bare ground surface and multiple return surface with vegetation.
+</p><p>
+<hr>
+<a href="GIS_Anal_Assignotes.html">Comments/answers to HW questions</a>
+<hr size="3" NOSHADE>
+<a name="Mapalgebra"</a>
+<P><B>Topic: Global, zonal and focal operations, map algebra</B></P>
+ <P>
+<!--
+<ul>
+  <li> compute areas for land use classes</li>
+  <li> use neighborhood operations to smooth the SRTM data and remove small patches of forest from LU map</li>
+  <li> compute global and zonal statistics for elevation and land use classes</li>
+  <li> patch raster maps </li>
+  <li> analyze differences between NED and SRTM data</li>
+  <li> derive and apply masks</li>
+  <li> compute vegetation index</li>
+</ul>
+-->
+<P>
+<b>Approach</b>
+<a href="../GIS_anal_grass/GIS_Anal_granal1.html"> GRASS solution </a>,
+<a href="../GIS_anal_arc/GIS_Anal_arcanal1.html"> ArcGIS solution </a>
+<P>
+<b>Homework:</b> Prepare a report that describes the use of global and zonal statistics,
+neighborhood operations and map algebra to analyze continuous and discrete geospatial data.
+<hr>
+<a href="GIS_Anal_Assignotes.html#Mapalgebra">Comments/answers to HW questions</a><br>
+<hr size="3" NOSHADE>
+<a name="Costsurf"</a>
+<P>
+<P><B>Topic: Buffers, cost surfaces, least cost path </B></P>
+<!--
+<ul>
+  <li> use buffers around lakes to find developed areas
+  <li> use buffers along the major roads to find neighborhoods and schools
+       that may be affected by noise pollution</li> 
+  <li>assume there was an accident at a give site on Hwy 1. Compute cost surface for getting to the site
+from any point in the study region using the street map converted to raster. Find which
+firestation has the lowest cost to get there and find the shortest path. Find the 2nd and 3rd
+closest station and path. Discuss the issue of interchanges.
+<li> a child got lost around Lake Wheeler - compute the accessibility map to aid the search</li>
+</ul>
+-->
+<P>
+<b>Approach</b>
+<a href="../GIS_anal_grass/GIS_Anal_granal2.html"> GRASS solution </a>,
+<a href="../GIS_anal_arc/GIS_Anal_arcanal2.html"> ArcGIS solution </a>
+<P><i>Optional: </i> <a href="http://courses.ncsu.edu/gis582/common/media/GRASS_clinic2013/NewLocCSTransfGRASS.html">
+ GRASS GIS: How to get started with a new project and how to reproject data </a>
+<P>
+<b>Homework:</b> Prepare a report that explains and demonstrates the use of buffers and cost surfaces
+for solving proximity problems. Comment on specific results for the study area and given tasks. 
+<hr>
+<a href="GIS_Anal_Assignotes.html#Costsurf">Comments/answers to HW questions</a><br>
+<hr size="3" NOSHADE>
+<a name="Terrain"</a>
+<P><B> Topic: Terrain modeling: working with point clouds</B></P>
+<!--
+<UL>
+   <LI>analyze bare earth and multiple return lidar data</li>
+   <LI>create and compare bare earth and terrain surface DEM</li>
+   <LI>derive contours from DEM</li>
+</UL>
+-->
+<P>
+<P>
+<b>Approach</b>
+<a href="../GIS_anal_grass/GIS_Anal_grgeomorph1.html"> GRASS solution</a>,
+<a href="../GIS_anal_arc/GIS_Anal_arcgeomorph1.html"> ArcGIS solution </a>.
+<i>The assignments use standard GIS tools to analyze the point clouds. Updates and links to
+specialized lidar data processing tools are provided in GRASS and ArcGIS solution webpages</i>.
+<P> <b>Homework:</b> Prepare a report on properties of lidar data and  
+different types of digital terrain representations</P>
+<P>
+<hr>
+<a href="GIS_Anal_Assignotes.html#Terrain">Comments/answers to HW questions</a>
+<hr size="3" NOSHADE>
+<a name="Interp1"</a>
+<P><B>Topic: Spatial interpolation and approximation I: methods
+</B></P>
+<!--
+<ul>
+<li>interpolate 2m resolution DEM from random subsample of lidar data using: 
+    (a) voronoi (thiessen) polygons, (b) inverse distance weighted (IDW) average with different parameters,
+     (c) linear interpolation between contours and on TIN,
+     (d) natural neighbor interpolation
+</li>
+<li>design an experiment that will explore impact of IDW interpolation function 
+    parameters on the resulting surface</li>
+</ul>
+-->
+<P>
+<b>Approach</b>
+<a href="../GIS_anal_grass/GIS_Anal_grinterp1.html"> GRASS solution </a>,
+<a href="../GIS_anal_arc/GIS_Anal_arcinterp1.html"> ArcGIS solution </a>
+<P> <b>Homework:</b> Prepare a report on impact of interpolation method 
+and its parameters on the resulting surface</P>
+
+<hr>
+<a href="GIS_Anal_Assignotes.html#Costsurf">Comments/answers to HW questions</a><br>
+<hr size="3" NOSHADE>
+<a name="Interp2"</a>
+<P><B>Topic: Spatial interpolation and approximation II: splines
+</B></P>
+<!--
+<ul>
+<li>interpolate 2m resolution DEM using splines and 
+    demonstrate impact of spline interpolation parameters on the resulting
+    surface: control level of detail, remove noise, estimate deviations </li>
+<li> use crossvaliadtion the compute the predictive error of interpolation
+     and its spatial distribution</li>
+<li>interpolate NC precipitation map without and with influence of topography</li>
+<li>explore geostatistics approach to interpolation</li>
+<li>interpolate from contours and profiles, use generalization to thin the data
+</ul>
+-->
+<P>
+<b>Approach</b>
+<a href="../GIS_anal_grass/GIS_Anal_grinterp2.html"> GRASS solution </a>,
+<a href="../GIS_anal_arc/GIS_Anal_arcinterp2.html"> ArcGIS solution </a>
+<P> <b>Homework:</b> Prepare a report on properties of spline interpolation 
+method, its parameters and measures of accuracy </P>
+<hr>
+<a href="GIS_Anal_Assignotes.html#Costsurf">Comments/answers to HW questions</a><br>
+<hr size="3" NOSHADE>
+<a name="Topoanal"</a>
+<P><B>
+Topic: Spatial and Temporal Terrain analysis
+</B></P>
+<!--
+<UL>
+   <LI>compare slope, aspect and curvatures derived from NED, SRTM, and TIN  </li>
+   <LI>compute slope, aspect and curvatures from lidar point data 
+      using splines with different tension parameters</li>
+   <LI>derive landforms by combining basic topographic 
+       parameters, discuss impact of neighborhood size</li>
+   <LI>compute cut and fill volume and change in elevation surface area due to construction</li>
+   <LI>derive maps characterizing coastal terrain evolution using raster time series analysis</li>
+</UL>
+-->
+<P>
+<P>
+<b>Approach</b>
+<a href="../GIS_anal_grass/GIS_Anal_grgeomorph2.html"> GRASS solution </a>,
+<a href="../GIS_anal_arc/GIS_Anal_arcgeomorph2.html"> ArcGIS solution </a>
+<br>
+<!--<a href="GIS_Anal_Atopoanal2009c.ppt">Slides with comments and notes</a>-->
+<P> <b>Homework:</b> Prepare report on methods for computing topographic parameters from
+digital elevation models and discuss how the methods and types of DEM influence the result.
+Describe results of elevation time series analysis.</P>
+<hr>
+<a href="GIS_Anal_Assignotes.html#Topoanal">Comments/answers to HW questions</a><br>
+<hr size="3" NOSHADE>
+<a name="Solar"</a>
+<P><B>
+Topic: Viewshed, solar potential analysis
+</B></P>
+<!--
+<UL>
+     <LI>compute viewshed area from a building on CC and from RBC tower, compare areas,
+         find visible points of interest, optionally compare the results from SRTM and NED</li>
+     <LI>compute cast shadows for a given area with a building for 3 different times
+          on December 22 </li>
+     <LI>compute summary radiation for summer and winter solstice days in a given area</li>
+</UL>
+-->
+<b>Approach</b>
+<a href="../GIS_anal_grass/GIS_Anal_grgeomorph3.html"> GRASS solution </a>,
+<a href="../GIS_anal_arc/GIS_Anal_arcgeomorph3.html"> ArcGIS solution </a>
+
+<P> <b>Homework:</b> Prepare report on the results of viewshed computation
+and solar irradiation mapping</P>
+<hr>
+<a href="GIS_Anal_Assignotes.html#Solar">Comments/answers to HW questions</a><br>
+<hr size="3" NOSHADE>
+<a name="Flow"</a>
+<P><B> Topic: Flow routing, watershed analysis</B></P>
+<!--
+<UL>
+    <LI>compute streams and watersheds from NED 
+        D8, SFD with least cost path routing and compare with official stream data</li>
+    <LI>map DEM depressions and compare them with existing lakes</li>
+    <LI>compute and compare flow accumulation maps derived by D8, Dinf </li>
+    <LI>compute DEM with carved stream and show its impact on flow accumulation map </li>
+    <LI>extract watershed boundaries for a given outlet</li>
+    <LI>derive flowlines and flow path length using downslope and upslope flowtracing</li>
+    <LI>compute flooded area from given seed point at given flood level</li>
+</UL>
+-->
+<b>Approach</b>
+<a href="../GIS_anal_grass/GIS_Anal_grflow.html"> GRASS solution</a>,
+<a href="../GIS_anal_arc/GIS_Anal_arcflow.html"> ArcGIS solution </a>
+<!--<br> <a href="GIS_Anal_Aexamflow5.ppt">Exam Notes [ppt]</a>-->
+<P> <b>Homework:</b>Prepare report that compares different methods for flowrouting and watershed
+analysis </P>
+<hr>
+<a href="GIS_Anal_Assignotes.html#Flow">Comments/answers to HW questions</a><br>
+<a href="project_topics.html#Requirements">Project paper and presentation requirements</a>
+<hr size="3" NOSHADE>
+<a name="Hydro"</a>
+<P><B> Topic: Modeling Geospatial Processes: Hydrologic and erosion modeling
+</B></P>
+<!--
+<P><i>see <a href="../GIS_anal_schedule/index.html"><b>Schedule</b></a>
+to find out whether this assignment is optional or mandatory for your course section</i></P>
+<UL>
+      <LI>compute wetness index 
+      <LI>compute and compare erosion topographic factor based on hillslope length and on contributing area </LI>
+      <LI>derive soil erodibility and land cover maps for different land use alternatives</LI>
+      <LI>compute erosion, sediment transport and deposition for different land use alternatives</LI>
+     </UL>
+-->
+<b>Approach</b>
+<br>
+<a href="erosion_notes2.pdf">Brief theoretical background:</a>
+Equations used to write map algebra expressions
+<br>
+<a href="../GIS_anal_grass/GIS_Anal_grhydroer.html"> GRASS solution</a>,
+<a href="../GIS_anal_arc/GIS_Anal_archydroer.html"> ArcGIS solution </a>
+<p>Optional: process based hydrologic modeling using path sampling method: SIMWE 
+<br><a href="../GIS_anal_grass/GIS_Anal_grsimwe.html"> GRASS solution: SIMWE </a>
+<br>
+<!--
+<a href="erosion_notes.pdf">Equations and units for erosion modeling [pdf]</a>
+<br><a href="GIS_Anal_Amidtermnotes.ppt">Midterm notes</a>
+<br> <a href="GIS_Anal_Ahydroerosion2009c.ppt">Notes (GRASS64, hints) [ppt]</a>-->
+<P> <b>Homework:</b> Prepare report on impact of parameters and land use scenarios on
+spatial pattern and magnitude of erosion as simulated by simple GIS-based models</P>
+
+<hr>
+<a href="GIS_Anal_Assignotes.html#Hydro">Comments/answers to HW questions</a><br>
+<!--
+<hr size="3" NOSHADE>
+<P>
+<b>Various project related material - NEEDS UPDATE to GRASS6.4.2</b>
+<br>
+<a href="../GIS_anal_grass/GIS_Anal_grcstransform.html">Reproject data, start a new project </a>
+<br>
+<a href="../GIS_anal_grass/GIS_Anal_grworkflows.html"> Automate GRASS workflows, process large point clouds </a>
+<br>
+<a href="../GIS_anal_grass/WorkflowGRASS_09.sh"> Script to run the flowrouting homework on MSWindows 
+including d.* commands (needs update)</a>
+<br> <a href="CLIforWinGRASS.ppt"> Get command line working on MS Windows [ppt]</a>
+<br>
+-->
