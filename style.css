@@ -11,16 +11,17 @@ body {
 /* site top image */
 
 #header-image {
-    height: 200px;
+    height: 150px;
     background-image: url("img/header.png");
     background-repeat: no-repeat;
 }
 
 #header-image p {
-    position: absolute;
-    top:50px;
-    left:70px;
-    font-size: 150%;
+    margin: 0px;
+    padding: 0px;
+    padding-top: 50px;
+    padding-left: 30px;
+    font-size: 50px;
     font-weight: bold;
     font-size: 40px;
     color: #006600;
