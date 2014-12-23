@@ -25,10 +25,10 @@ do
     for FILE in `ls $DIR/*.html`
     do
         TGT_FILE=$OUTDIR/$DIR/`basename $FILE`
-        ./increase-file-depth.py < $HEAD_FILE > $TGT_FILE
+        ./increase-link-depth.py < $HEAD_FILE > $TGT_FILE
         echo "<!-- This is a generated file. Do not edit. -->" >> $TGT_FILE
         ./strip-whitestace.py < $FILE >> $TGT_FILE
-        ./increase-file-depth.py < $FOOT_FILE >> $TGT_FILE
+        ./increase-link-depth.py < $FOOT_FILE >> $TGT_FILE
     done
 done
 
