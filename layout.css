@@ -14,7 +14,7 @@ body {
     margin: 0 auto;
     padding-left: 10px;
     padding-right: 10px;
-    width: 760px;
+    width: 80%;
     background-color: white;
     height:auto !important;
     min-height:100%;
@@ -30,5 +30,6 @@ body {
 #header-image {
     width: auto;
     background-position: center top;
+    background-size: cover;
     vertical-align: bottom;
 }
