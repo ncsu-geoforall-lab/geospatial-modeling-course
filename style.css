@@ -11,7 +11,7 @@ body {
 /* site top image */
 
 #header-image {
-    height: 200px;
+    height: 150px;
     background-image: url("img/header.png");
     background-repeat: no-repeat;
 }
@@ -20,11 +20,10 @@ body {
     position: absolute;
     top:50px;
     left:70px;
-    font-size: 150%;
+    font-size: 120%;
     font-weight: bold;
-    font-size: 40px;
-    color: #006600;
-    text-shadow: 0 0 20px white, 0 0 18px white, 0 0 16px white, 0 0 14px white, 0 0 12px white, 0 0 10px white, 0 0 8px white, 0 0 6px white;
+    font-size: 30px;
+    color: white;
 }
 
 /* links */
