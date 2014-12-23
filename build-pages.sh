@@ -4,7 +4,12 @@
 
 OUTDIR=../mea582-gh-pages
 
-mkdir -p $OUTDIR
+if [ ! -d "$OUTDIR" ]; then
+    echo "The directory $OUTDIR does not exists and it will be created for you."
+    echo "This is fine if you want to just view the pages."
+    echo "However, if you want to publish the web pages, you should delete it and follow the instructions in README."
+    mkdir $OUTDIR
+fi
 
 HEAD_FILE=head.html
 FOOT_FILE=foot.html
