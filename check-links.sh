@@ -9,8 +9,12 @@ fi
 for file in "$@"
 do
     links=$(linkchecker --no-status --output=blacklist --recursion-level=1 $file)
-    if [ $$ -ne 0 ]; then
-        echo "Invalid links for file $file:"
-        echo "$links" | sed "s|file://$(pwd)/||g"
+    if [ $? -ne 0 ]; then
+        if [ "$links" ]; then
+            echo "Invalid links for file $file:"
+            echo "$links" | sed "s|file://$(pwd)/||g"
+        else
+            echo "There might be something wrong with links in $file file. Use linkchecker directly to see the errors or warnings."
+        fi
     fi
 done
