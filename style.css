@@ -221,6 +221,9 @@ ul {
 dd {
     padding: 4px;
 }
+dt {
+    font-weight: bold;
+}
 
 /* show more from the long list button */
 
