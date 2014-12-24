@@ -18,15 +18,15 @@ comment on your findings - e.g. is the developed area around lakes larger/smalle
 than expected? Why?
 <P>
 Text files with recode rules, color rules and site locations:<br>
-<a href="noise_cats.txt"> noise_cats.txt,</a>
-<a href="friction_rules.txt"> friction_rules.txt,</a>
-<a href="friction_color.txt"> friction_color.txt,</a>
-<a href="fire_pt.txt"> fire_pt.txt,</a>
-<a href="lostperson.txt"> lostperson.txt</a><br>
+<a href="data/noise_cats.txt"> noise_cats.txt,</a>
+<a href="data/friction_rules.txt"> friction_rules.txt,</a>
+<a href="data/friction_color.txt"> friction_color.txt,</a>
+<a href="data/fire_pt.txt"> fire_pt.txt,</a>
+<a href="data/lostperson.txt"> lostperson.txt</a><br>
 <p>
 On MSWindows, it is recommended to use wxGUI equivalents of d.* commands:</font><br>
 use their GUI equivalents,r
-see assignment <a href="GIS_Anal_grvisual.html">Data display and visualization</a>
+see assignment <a href="data_visualization.html">Data display and visualization</a>
 
 <p>
 To run mapcalc expressions, you can either run the entire command in the GUI Command console,
@@ -102,7 +102,7 @@ find developed areas impacted by noise from highways<br>
 set region and create buffers along major roads<br>
 intersect developed areas from landuse map with road buffers<br>
 transfer the category labels and compute the affected area<br>
-set <b>full path</b> to the file with categories <a href="noise_cats.txt">noise_cats.txt</a><br>
+set <b>full path</b> to the file with categories <a href="data/noise_cats.txt">noise_cats.txt</a><br>
 or run r.category from GUI and browse to the txt file<br>
 
 <pre><code>
@@ -183,7 +183,7 @@ r.cost -k streets_travtime output=streets_cost start_coord=634886,224328
 </code></pre>
 
 <p>
-import the accident point location given in the <a href="fire_pt.txt"><u>fire_pt.txt</u></a><br>
+import the accident point location given in the <a href="data/fire_pt.txt"><u>fire_pt.txt</u></a><br>
 so that you can display it on the map<br>
 run v.in.ascii from GUI, use file browser to provide full path to the file<br>
 or enter values interactively by pasting the coords into the provided space<br>
@@ -297,7 +297,7 @@ r.category landclass96
 </code></pre>
 
 <p>
-recode the landuse map to friction map using the rules in <a href="friction_rules.txt"> friction_rules.txt</a><br>
+recode the landuse map to friction map using the rules in <a href="data/friction_rules.txt"> friction_rules.txt</a><br>
 run r.recode from GUI, use file browser to provide full path to the rules file<br>
 
 <pre><code>
@@ -307,7 +307,7 @@ r.recode landclass96 out=friction rules=friction_rules.txt
 <p>
 add the streets to friction map - they are missed by the landuse map<br>
 use GUI to run the r.colors and d.legend commands<br>
-or set <b>full path</b> to the file with color table <a href="friction_color.txt"> friction_color.txt</a><br>
+or set <b>full path</b> to the file with color table <a href="data/friction_color.txt"> friction_color.txt</a><br>
 
 <pre><code>
 r.mapcalc "friction2 = if(streets_speed > 6, 0.1, friction)"
@@ -327,7 +327,7 @@ r.contour walkcost out=walkcost step=1000
 
 <p>
 to display the input, import coordinates of the point where the lost person was last seen<br>
-given in the file <a href="lostperson.txt"> lostperson.txt</a><br>
+given in the file <a href="data/lostperson.txt"> lostperson.txt</a><br>
 run v.in.ascii from GUI<br>
 use its file browser to provide <b>full path</b> to the input file<br>
 

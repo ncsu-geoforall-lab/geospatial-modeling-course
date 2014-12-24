@@ -35,6 +35,14 @@ do
         ./strip-whitestace.py < $FILE >> $TGT_FILE
         ./increase-link-depth.py < $FOOT_FILE >> $TGT_FILE
     done
+
+    for SUBDIR in data
+    do
+        # copy only if directory exists
+        if [ -d "$DIR/$SUBDIR" ]; then
+            cp --update --recursive $DIR/$SUBDIR $OUTDIR/$DIR
+        fi
+    done
 done
 
 for FILE in *.css
