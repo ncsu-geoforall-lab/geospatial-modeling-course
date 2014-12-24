@@ -18,7 +18,7 @@ Course developed at North Carolina State University.
 Basic Git introduction
 ----------------------
 
-Clone the repository:
+Create a directory `mea582_all` or something like that and cd into it. Clone the repository:
 
     git clone git@github.ncsu.edu:osgeorel/mea582.git
 
