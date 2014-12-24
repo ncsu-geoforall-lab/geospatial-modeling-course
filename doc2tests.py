@@ -1,0 +1,139 @@
+#!/usr/bin/python
+
+"""
+
+Create a new testing directory::
+
+    mkdir test_documentation
+    cd  test_documentation
+
+Create a simlink to the data directory::
+
+    ln -s ../mea582/grass/data data
+
+Generate the test script::
+
+    ./doc2tests.py < .../terrain_analysis.html > test_terrain_analysis.sh
+    chmod u+x test_terrain_analysis.sh
+
+In GRASS GIS session::
+
+    ./test_terrain_analysis.sh
+
+Do the cleanup using something like::
+
+    d.mon stop=cairo
+    rm *png
+    g.remove type=rast,vect patter=* -f
+"""
+
+import sys
+import re
+import fileinput
+
+code_start = re.compile(r'<pre><code>')
+code_end = re.compile(r'</code></pre>')
+
+html_comment_start = re.compile(r'\s*<!--')
+html_comment_end = re.compile(r'-->')
+
+in_code = False
+in_html_comment = False
+in_code = False
+
+ignored_lines = [
+    re.compile(r'grass70'),
+    #re.compile(r'\s*d\.mon'),
+    #re.compile(r'\s*d\.out.file')
+]
+
+line_count = 0
+
+# allow also uppper case tags for now
+text_replacemets = [
+    (re.compile(r'<p>', re.IGNORECASE), ''),
+    (re.compile(r'</p>', re.IGNORECASE), ''),
+    (re.compile(r'<br>', re.IGNORECASE), ''),
+    (re.compile(r'<div>', re.IGNORECASE), ''),
+    (re.compile(r'</div>', re.IGNORECASE), ''),
+    (re.compile(r'<a href="([^"]+)">[^<]+</a>', re.IGNORECASE), r'\1'),
+    (re.compile(r'^\s+\n$', re.IGNORECASE), '\n')
+]
+
+file_path_extraction = re.compile(r'<a href="([^"]+)">([^<]+)</a>', re.IGNORECASE)
+
+code_replacemets = [
+    (re.compile('d.mon wx.'), 'd.mon cairo'),
+    (re.compile('d.out.file (.+)(.png|)'),
+     r'# save the currently rendered image (generated replacement of d.out.file)\ncp map.png \1.png')
+]
+
+d_command = re.compile('d\..+ .+')
+
+code_for_beginning = r"""#!/usr/bin/env bash
+
+# Test script generated from documentation
+
+# bash settings suitable for testing (generated code)
+# fail on first error
+set -e
+# print commands before executing
+set -o xtrace
+
+# start monitor to rendered images (generated code)
+d.mon cairo
+"""
+
+sys.stdout.write(code_for_beginning)
+
+previous_code_line = None
+
+for line in fileinput.input():
+    line_count += 1  # lines are numbered from one
+
+    file_path_match = file_path_extraction.search(line)
+    if file_path_match:
+        path = file_path_match.group(1)
+        name = file_path_match.group(2)
+        code_replacemets.append((re.compile(name), path))
+
+    if html_comment_start.search(line) and not html_comment_end.search(line):
+        in_html_comment = True
+    elif html_comment_end.search(line):
+        in_html_comment = False
+        continue
+    elif code_start.search(line):
+        in_code = True
+        continue
+    elif in_code and code_end.search(line):
+        in_code = False
+        if d_command.search(previous_code_line):
+            # line number refers to the original file, not the new one
+            sys.stdout.write(
+                '# save the currently rendered image (generated code)\n'
+                'cp map.png image_line_%d.png' % line_count
+            )
+        continue
+
+    if in_code:
+        line = re.sub('<!--.*-->', '', line)
+        skip_line = False
+        for ignored_line in ignored_lines:
+            if ignored_line.search(line):
+                skip_line = True
+        if not skip_line:
+            #sys.stdout.write("line %d: %s" % (line_count, line)) # debug
+            for regexp, replacement in code_replacemets:
+                line = regexp.sub(replacement, line)
+            sys.stdout.write(line)
+        previous_code_line = line
+    elif in_html_comment:
+        continue
+    else:
+        for regexp, replacement in text_replacemets:
+            line = regexp.sub(replacement, line)
+        if line == '\n':
+            sys.stdout.write(line)
+        else:
+            sys.stdout.write("# %s" % line)
+   
