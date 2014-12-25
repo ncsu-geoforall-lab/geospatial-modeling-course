@@ -30,19 +30,22 @@ Feel free to use the approach that suits you the best.
 For a quick reference, here are the wxGUI equivalents for the d.* commands:</font>
 <P> in GRASS GIS Layer Manager
 <ul>
- <li>d.rast : <font color="#000066">Add raster map layer</font>
- <li>d.vect : <font color="#000066">Add vector map layer</font>
- <li>d.shadedmap : <font color="#000066">Add various raster map layers>Add shaded relief map</font>
+ <li>d.rast: <font color="#000066">Add raster map layer</font>
+ <li>d.vect: <font color="#000066">Add vector map layer</font>
+ <li>d.shade: <font color="#000066">Add various raster map layers>Add shaded relief map</font>
 </ul>
 in GRASS GIS Map Display
 <ul>
- <li>d.what.rast : <font color="#000066">Query raster map</font>
- <li>d.what.vect -x : <font color="#000066">Query vector map</font>
- <li>d.zoom : <font color="#000066"> Zoom options</font>
- <li>d.erase : <font color="#000066">Zoom options > Zoom to computational region, switch off previous layers</font>
- <li>d.out.file : <font color="#000066">Save display to graphic file</font>
- <li>d.barscale : <font color="#000066">Add map elements > Add scalebar</font>
- <li>d.legend : <font color="#000066">Add map elements > Add legend</font>
+<!--
+ <li>d.what.rast: <font color="#000066">Query raster map</font>
+ <li>d.what.vect: <font color="#000066">Query vector map</font>
+-->
+ <li>d.zoom: <font color="#000066"> Zoom options</font>
+ <li>d.erase: <font color="#000066">Zoom to computational region extent, switch off previous layers</font>
+ <li>d.out.file: <font color="#000066">Save display to graphic file</font>
+ <li>d.barscale: <font color="#000066">Add map elements > Show/hide scale bar</font>
+ <li>d.legend: <font color="#000066">Add map elements > Show/hide legend</font>
+ <li>d.northarrow: <font color="#000066">Add map elements > Show/hide north arrow</font>
 </ul>
 <i>
 The d.* commands throughout the assignments indicate which map layers should be included
@@ -94,7 +97,7 @@ display elevation map in 2D<br>
 in GIS Layer Manager click "Add raster layer" button<br>
 select raster elevation, click OK<br>
 in Map Display<br>
-click "Zoom options > Zoom to computational region"<br>
+click "Zoom to computational region extent"<br>
 
 note: make sure the Render button (lower right corner)<br>
 for automatic rendering of maps is checked on<br>
@@ -119,7 +122,7 @@ under Optional tab set Percent to brighten to 30, click OK<br>
 Command line equivalent: paste into Command console and Enter<br>
 
 <pre><code>
-d.shadedmap reliefmap=elevation_shade drapemap=elevation brighten=30
+d.shade reliefmap=elevation_shade drapemap=elevation brighten=30
 </code></pre>
 
 <p>
@@ -168,12 +171,14 @@ This is just a quick preview: We will explore 3D visualization in 3rd assignment
 To get familiar with query and zoom tools, set the view back to 2D<br>
 Query data: find out the values in raster maps<br>
 or attributes in vector maps at a location selected by mouse<br>
-In GIS manager select the map to query<br>
+In Layer Manager select the map to query<br>
 in Map Display click button "Query raster/vector map(s)"<br>
 click on a map at locations where you want to know the values/attributes<br>
 
 in Map Display explore the options to zoom<br>
 zoom-in, zoom-out, zoom to map, zoom to region<br>
+You can also zoom to specific map layer by right clicking on the layer
+and selecting Zoom to selected map(s).
 <!--
 # command line equivalents
 </font>
@@ -188,7 +193,7 @@ in Map Display: Zoom to computational region<br>
 in GIS Layer Manager: Add raster layer elev_state_500m,<br>
 Add vector map layer precip_30ynormals, set the symbol to marker<br>
 Add vector map layer boundary_county,<br>
-to display only county boundary, under tab "Selection" switch off areas and centroids<br>
+to display only county boundary, under tab "Selection" switch off areas<br>
 rearrange the layers by mouse if needed<br>
 
 command line equivalent is below<br>
@@ -210,22 +215,23 @@ list raster, vector and region data in the provided database<br>
 in GUI: File -> Manage maps and volumes -> List<br>
 
 <pre><code>
-g.list -f type=rast,vect,region
+g.list -f type=raster,vector,region
 </code></pre>
 
 <p>
 list only vector maps starting with "s"<br>
-in GUI: File -> Manage Maps and Volumes  -> List filtered -> tab Patterns<br>
+in GUI: File -> Manage Maps -> List<br>
+In tab Required -> select vector map(s) and in tab Pattern<br>
 type s* for "Map name search pattern"<br>
 
 <pre><code>
-g.mlist vect pattern=s*
+g.list type=vector pattern="s*"
 </code></pre>
 
 <p>
 find the working coordinate system, spatial extent<br>
 in GUI: Settings -> Map projections -> Display map projection<br>
-in GUI: Settings -> Region -> Display Region Settings<br>
+in GUI: Settings -> Region -> Display Region<br>
 
 <pre><code>
 g.proj -p
@@ -234,15 +240,15 @@ g.region -pl
 
 <p>
 copy, rename and remove maps<br>
-GUI: File -> Manage maps and volumes -> Copy -> select/type in names from,to<br>
-GUI: File -> Manage maps and volumes -> Rename -> select/type in names from,to<br>
-GUI: File -> Manage maps and volumes -> Delete -> select name<br>
+GUI: File -> Manage maps-> Copy -> select/type in names from,to<br>
+GUI: File -> Manage maps-> Rename -> select/type in names from,to<br>
+GUI: File -> Manage maps-> Delete -> select type and name and check Force removal<br>
 
 <pre><code>
-g.copy rast=geology_30m,mygeology
-g.rename rast=mygeology,mygeology_30m
-g.list rast
-g.remove rast=mygeology_30m 
+g.copy raster=geology_30m,mygeology
+g.rename raster=mygeology,mygeology_30m
+g.list raster
+g.remove type=raster name=mygeology_30m -f
 </code></pre>
 
 <p>
@@ -260,5 +266,4 @@ v.info -c streets_wake
 <p>
 You can save your project into a GRASS workspace file *.gxw under File>Workspace>Save as<br>
 
-<pre><code>
  </div>

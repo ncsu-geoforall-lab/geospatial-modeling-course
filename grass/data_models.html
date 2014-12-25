@@ -78,7 +78,7 @@ r.resamp.interp elev_ned_30m out=elev_ned10m_nn method=nearest
 
 <p>
 Zoom to computational region in Map Display to set it to 10m resolution (equivalent to d.erase)<br>
-display the resampled map (Add Raster, if you don't have it it in the GIS layer manager already)<br>
+display the resampled map (Add Raster, if you don't have it it in the Layer Manager already)<br>
 
 <pre><code>
 d.erase
@@ -169,13 +169,13 @@ then activate it by Zoom to computational region in Map display<br>
 
 <pre><code>
 g.region swwake_30m res=200 -p
-d.erase (Zoom to computational region)
+d.erase
 </code></pre>
 
 <p>
 convert vector data to raster for use in raster-based analysis<br>
 vector points to raster: convert schools, use attribute column for core capacity<br>
-for legend in GUI: Add map elements > Add legend > Set Options > schools_cap_200m<br>
+for legend in GUI: Add map elements > Show/hide legend > select schools_cap_200m<br>
 
 <pre><code>
 d.vect schools_wake 
@@ -183,7 +183,7 @@ v.info -c schools_wake
 v.to.rast schools_wake out=schools_cap_200m use=attr attrcol=CORECAPACI type=point
 d.rast schools_cap_200m
 d.vect streets_wake co=grey
-d.legend schools_cap_200m at=70,30,2,6 (please run this through GUI - see above)
+d.legend raster=schools_cap_200m at=70,30,2,6
 </code></pre>
 
 <p>
@@ -196,10 +196,10 @@ hint: if you don't see the legend GUI, move the Map display, it may be hiding be
 
 <pre><code>
 g.region res=30 -p
-d.erase (Zoom to computational region)
+d.erase
 v.to.rast streets_wake out=streets_speed_30m use=attr attrcol=SPEED type=line
 d.rast streets_speed_30m 
-d.legend streets_speed_30m at=5,30,2,5 use=25,35,45,55,65 (please run this through GUI - see above)
+d.legend raster=streets_speed_30m at=5,30,2,5 use=25,35,45,55,65 
 </code></pre>
 
 <p>
@@ -225,8 +225,8 @@ convert raster lines to vector lines<br>
 reminder - d.erase indicates that you should Erase the display and Zoom to computational region<br>
 
 <pre><code>
-g.region rast=streams_derived -p
-d.erase (Zoom to computational region)
+g.region raster=streams_derived -p
+d.erase
 d.rast streams_derived
 r.thin streams_derived out=streams_derived_t
 r.to.vect streams_derived_t out=streams_derived_t type=line
@@ -255,8 +255,8 @@ display vector polygons filled with random colors<br>
 Add vector > Colors > Switch on Random colors<br>
 
 <pre><code>
-g.region rast=basin_50K -p
-d.erase (Zoom to computational region)
+g.region raster=basin_50K -p
+d.erase
 d.rast basin_50K
 r.to.vect -sv basin_50K out=basin_50Kval type=area
 d.vect -c basin_50Kval
@@ -301,13 +301,12 @@ gdc.shp would be replaced by full path C:\pathtomayfile\gdc.shp<br>
 roadsmajor.shp by full path C:\pathtomayfile\roadsmajor.shp<br>
 
 <pre><code>
-v.in.ogr dsn=gdc.shp out=geodetic_points
-v.out.ogr roadsmajor dsn=roadsmajor.shp
-
+v.in.ogr input=gdc.shp output=geodetic_points
+v.out.ogr roadsmajor output=roadsmajor.shp
 </code></pre>
 
 <p>
-Import raster file provided in img format<br>
+Import raster file provided in tif format<br>
 download <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/lc96ras_cut.tif"> landuse: lc96ras_cut.tif</a><br>
 save it on Desktop or a directory of your choice<br>
 on MSWindows do the import through GUI to get the correct path to your data<br>
@@ -318,8 +317,6 @@ make sure the file is clicked on in the List of GDAL layers<br>
 click Import<br>
 command line alternative below requires full path to your input data<br>
 
-<pre><code>
-</code></pre>
 
 <p>
 MSWindows<br>
@@ -333,20 +330,18 @@ Mac, linux<br>
 
 <pre><code>
 r.in.gdal input=/Users/yourname/grassdata/indata/lc96ras_cut.tif output=lc96ras_cut 
-
 </code></pre>
 
 <p>
 export raster files as ascii grid and geotiff<br>
-<b> File > Export raster map > ESRI ASCII grid export </b><br>
 <b> File > Export raster map > Common export formats </b><br>
 do not forget to specify the full path to your output files<br>
 example below is for Mac<br>
 
 <pre><code>
-r.out.arc elev_ned_30m out=/Users/yourname/grassdata/outdata/elev_ned_30m.asci
+r.out.gdal elev_ned_30m out=/Users/yourname/grassdata/outdata/elev_ned_30m.asci
+format=AAIGrid 
 r.out.gdal basin_50K out=/Users/yourname/grassdata/outdata/basin_50K.tif
-
 </code></pre>
 
 <p>
