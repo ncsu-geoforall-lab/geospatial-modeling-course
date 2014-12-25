@@ -24,7 +24,7 @@ Do the cleanup using something like::
 
     d.mon stop=cairo
     rm *png
-    g.remove type=rast,vect patter=* -f
+    g.remove type=raster,vector patter=* -f
 """
 
 import sys
