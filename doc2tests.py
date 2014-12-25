@@ -49,6 +49,12 @@ ignored_lines = [
 
 line_count = 0
 
+common_replacements = [
+    (re.compile('&gt;'), '>'),
+    (re.compile('&lt;'), '<'),
+    (re.compile('&amp;'), '&'),
+]
+
 # allow also uppper case tags for now
 text_replacemets = [
     (re.compile(r'<p>', re.IGNORECASE), ''),
@@ -57,16 +63,20 @@ text_replacemets = [
     (re.compile(r'<div>', re.IGNORECASE), ''),
     (re.compile(r'</div>', re.IGNORECASE), ''),
     (re.compile(r'<a href="([^"]+)">[^<]+</a>', re.IGNORECASE), r'\1'),
-    (re.compile(r'^\s+\n$', re.IGNORECASE), '\n')
+    (re.compile(r'^\s+\n$', re.IGNORECASE), '\n'),
 ]
+
+text_replacemets.extend(common_replacements)
 
 file_path_extraction = re.compile(r'<a href="([^"]+)">([^<]+)</a>', re.IGNORECASE)
 
 code_replacemets = [
     (re.compile('d.mon wx.'), 'd.mon cairo'),
     (re.compile('d.out.file (.+)(.png|)'),
-     r'# save the currently rendered image (generated replacement of d.out.file)\ncp map.png \1.png')
+     r'# save the currently rendered image (generated replacement of d.out.file)\ncp map.png \1.png'),
 ]
+
+code_replacemets.extend(common_replacements)
 
 d_command = re.compile('d\..+ .+')
 
@@ -136,4 +146,3 @@ for line in fileinput.input():
             sys.stdout.write(line)
         else:
             sys.stdout.write("# %s" % line)
-   
