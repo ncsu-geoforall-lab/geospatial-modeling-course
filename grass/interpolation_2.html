@@ -1,11 +1,11 @@
 <P>
 Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>, 
+GRASS GIS overview and manual</a>,
 <a href="http://www.grassbook.org/"> GRASSbook</a>
 
 <P><B>Topic: Spatial Interpolation</B></P>
-<!--<p><B>Tasks: Demonstrate impact of interpolation 
-methods and parameters on the resulting surface 
+<!--<p><B>Tasks: Demonstrate impact of interpolation
+methods and parameters on the resulting surface
 </B></p>-->
 <P>
 On MSWindows, it is recommended to use wxGUI equivalents of d.* commands:</font><br>
@@ -23,7 +23,6 @@ GIS data directory: provide path to your Grass data<br>
 LOCATION select nc_spm_08<br>
 MAPSET select user1<br>
 Enter GRASS<br>
-
 p. 235<br>
 interpolate elevation raster from points using spline<br>
 compute aspect simultaneously with interpolation<br>
@@ -31,9 +30,9 @@ evaluate impact of tension by using default tension (40), ten=10 and 160<br>
 
 <pre><code>
 g.region rural_1m res=1 -p
-v.surf.rst elev_lid792_randpts elev=elev_rstdef_1m zcol=value aspect=asp_rstdef_1m segmax=30 npmin=140
-v.surf.rst elev_lid792_randpts elev=elev_rstt10_1m asp=asp_rstt10_1m zcol=value ten=10 seg=30 npmin=140
-v.surf.rst elev_lid792_randpts elev=elev_rstt160_1m asp=asp_rstt160_1m zcol=value ten=160 seg=30 npmin=140
+v.surf.rst elev_lid792_randpts elevation=elev_rstdef_1m zcolumn=value aspect=asp_rstdef_1m segmax=30 npmin=140
+v.surf.rst elev_lid792_randpts elevation=elev_rstt10_1m aspect=asp_rstt10_1m zcolumn=value tension=10 segmax=30 npmin=140
+v.surf.rst elev_lid792_randpts elevation=elev_rstt160_1m aspect=asp_rstt160_1m zcolumn=value tension=160 segmax=30 npmin=140
 </code></pre>
 
 <p>
@@ -70,9 +69,9 @@ compare deviation stats for smoothing 0.1 and 10<br>
 find root mean square deviation rmse<br>
 
 <pre><code>
-v.surf.rst elev_lid792_randpts el=elev_rstdef_1mb zcol=value smo=0.1 devi=elev_rstdef_devi seg=30 npmin=140
+v.surf.rst elev_lid792_randpts elevation=elev_rstdef_1mb zcolumn=value smooth=0.1 deviations=elev_rstdef_devi segmax=30 npmin=140
 v.build elev_rstdef_devi
-v.surf.rst elev_lid792_randpts el=elev_rstsm10_1mb zcol=value smo=10 devi=elev_rstsm10_devi seg=30 npmin=140
+v.surf.rst elev_lid792_randpts elevation=elev_rstsm10_1mb zcolumn=value smooth=10 deviations=elev_rstsm10_devi segmax=30 npmin=140
 v.build elev_rstsm10_devi
 v.info -c elev_rstdef_devi
 v.univar elev_rstdef_devi col=flt1 type=point
@@ -88,8 +87,8 @@ you need to use custom color table to see the results well<br>
 note that we are interpolating here the deviations not the given elevations<br>
 
 <pre><code>
-v.surf.rst elev_rstdef_devi elev=elev_rstdef_devi zcol=flt1 seg=30 npmin=140 
-v.surf.rst elev_rstsm10_devi elev=elev_rstsm10_devi zcol=flt1 seg=30 npmin=140
+v.surf.rst elev_rstdef_devi elevation=elev_rstdef_devi zcolumn=flt1 segmax=30 npmin=140
+v.surf.rst elev_rstsm10_devi elevation=elev_rstsm10_devi zcolumn=flt1 segmax=30 npmin=140
 </code></pre>
 
 <p>
@@ -101,7 +100,7 @@ and drape the deviations maps as color in wxnviz GUI<br>
 
 <pre><code>
 r.colors elev_rstsm10_devi rules=deviations_color.txt
-r.colors elev_rstdef_devi rast=elev_rstsm10_devi
+r.colors elev_rstdef_devi raster=elev_rstsm10_devi
 d.erase
 d.rast elev_rstdef_devi
 d.rast elev_rstsm10_devi
@@ -114,7 +113,7 @@ compute predictive error of interpolation for each point<br>
 using cross-validation (no raster output, only points with pred. errors)<br>
 
 <pre><code>
-v.surf.rst -c elev_lid792_randpts zcol=value cvdev=elev_rstdef_cv npmin=120 segmax=35
+v.surf.rst -c elev_lid792_randpts zcolumn=value cvdev=elev_rstdef_cv npmin=120 segmax=35
 v.build elev_rstdef_cv
 v.univar elev_rstdef_cv col=flt1 type=point
 </code></pre>
@@ -130,8 +129,8 @@ optionally, to view the result in 3D use elev_rstdef_1mb for elevation (switch o
 and drape the crossvalidation map elev_rstdef_cv as color in wxnviz GUI<br>
 
 <pre><code>
-v.surf.rst elev_rstdef_cv elev=elev_rstdef_cv zcol=flt1
-r.colors elev_rstdef_cv rast=elev_rstsm10_devi
+v.surf.rst elev_rstdef_cv elevation=elev_rstdef_cv zcolumn=flt1
+r.colors elev_rstdef_cv raster=elev_rstsm10_devi
 d.rast elev_rstdef_cv
 d.vect elev_rstdef_cv size=2
 d.legend elev_rstdef_cv at=2,50,2,6
@@ -160,9 +159,6 @@ d.vect elev_lid792_cont1m col=yellow
 # to improve the interpolation run v.generalize on elev_lid792_cont1m
 -->
 
-<pre><code>
-p. 258
-</code></pre>
 
 <p>
 interpolate precipitation with influence of topography<br>
@@ -175,7 +171,7 @@ we set tbres to high value - we have just a single level<br>
 because we are not computing the 3D raster (see lecture for more details)<br>
 
 <pre><code>
-g.region rast=elev_state_500m -p
+g.region raster=elev_state_500m -p
 g.region t=2000 b=0 tbres=2000 res3=500 -p3
 <!--r.mask ncmask_500m-->
 </code></pre>
@@ -187,10 +183,9 @@ interpolation function is computed using all points at once<br>
 we will use mask during the interpolation<br>
 
 <pre><code>
-g.copy rast=ncmask_500m@PERMANENT,ncmask_500m
-r.null map=ncmask_500m null=0
+r.mask raster=ncmask_500m
 v.info -c precip_30ynormals
-v.surf.rst precip_30ynormals elev=precip_annual_500m zcol=annual segmax=700 mask=ncmask_500m
+v.surf.rst precip_30ynormals elevation=precip_annual_500m zcolumn=annual segmax=700
 </code></pre>
 
 <p>
@@ -200,7 +195,7 @@ or use GUI (type r.colors ENTER into Cmd) to select the color table file<br>
 zoom to computational region when displaying the result<br>
 
 <pre><code>
-r.colors precip_annual_500m rules=precip_color.txt 
+r.colors precip_annual_500m rules=precip_color.txt
 d.erase
 d.rast precip_annual_500m
 d.legend precip_annual_500m at=2,30,2,5 range=970,2400
@@ -219,8 +214,8 @@ use precip_anntopo_500m for color, set icon size for points - sphere, 5000<br>
 
 <pre><code>
 v.info -c precip_30ynormals_3d
-v.vol.rst precip_30ynormals_3d cellinp=elev_state_500m cellout=precip_anntopo_500m wcolumn=annual zmult=90 segmax=700
-r.colors precip_anntopo_500m rast=precip_annual_500m
+v.vol.rst precip_30ynormals_3d cross_input=elev_state_500m cross_output=precip_anntopo_500m wcolumn=annual zscale=90 segmax=700
+r.colors precip_anntopo_500m raster=precip_annual_500m
 d.rast precip_anntopo_500m
 </code></pre>
 
@@ -228,7 +223,7 @@ d.rast precip_anntopo_500m
 after you are finished, remove mask<br>
 
 <pre><code>
-g.remove rast=MASK
+r.mask -r
 </code></pre>
 
 <p>
@@ -238,6 +233,3 @@ nviz elev_state_500m co=precip_anntopo_500m points=precip_30ynormals_3d
 <img src="http://skagit.meas.ncsu.edu/~helena/grasswork/grassbookdat07/galery/galery/s070302f010_resamp_i.jpg" height=70>
 </a>
 -->
-
-</div>
-

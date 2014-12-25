@@ -1,5 +1,5 @@
 <P>Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>, 
+GRASS GIS overview and manual</a>,
 <a href="http://www.grassbook.org/"> GRASSbook</a>
 <!-- pridaj streams from SRTM a porovnaj presnost using v.distance -->
 
@@ -24,8 +24,8 @@ compute flow direction, flow accumulation and subwatersheds<br>
 with approx. size of 10000 cells from 30m NED<br>
 
 <pre><code>
-g.region rast=elev_ned_30m -p
-r.watershed -s elev_ned_30m thresh=10000 accum=accum_10K drain=draindir_10K basin=basin_10K 
+g.region raster=elev_ned_30m -p
+r.watershed -s elev_ned_30m thresh=10000 accum=accum_10K drain=draindir_10K basin=basin_10K
 </code></pre>
 
 <p>
@@ -53,11 +53,11 @@ generate shaded map<br>
 
 <pre><code>
 d.erase
-d.his h_map=basin_10K i_map=elevation_shade bright=40
+d.his hue=basin_10K intensity=elevation_shade brighten=40
 d.vect basin_10K type=boundary
 d.rast lakes
-d.vect streams_der_30m col=blue
-d.vect streams col=red
+d.vect streams_der_30m color=blue
+d.vect streams color=red
 d.out.file mystreams
 </code></pre>
 
@@ -65,11 +65,11 @@ d.out.file mystreams
 create map of DEM depressions<br>
 
 <pre><code>
-g.region rast=elevation -p
-r.fill.dir input=elevation output=elev_fill1 outdir=dir1 areas=unres1
-r.fill.dir input=elev_fill1 output=elev_fill2 outdir=dir2 areas=unres2
-r.fill.dir input=elev_fill2 output=elev_fill3 outdir=dir3 areas=unres3
-r.mapcalc "depr_bin = if((elevation-elev_fill3) < 0., 1, null())" 
+g.region raster=elevation -p
+r.fill.dir input=elevation output=elev_fill1 direction=dir1 areas=unres1
+r.fill.dir input=elev_fill1 output=elev_fill2 direction=dir2 areas=unres2
+r.fill.dir input=elev_fill2 output=elev_fill3 direction=dir3 areas=unres3
+r.mapcalc "depr_bin = if((elevation-elev_fill3) < 0., 1, null())"
 </code></pre>
 
 <p>
@@ -80,7 +80,7 @@ d.erase
 d.rast elevation
 d.vect roadsmajor
 d.rast depr_bin
-d.vect lakes type=area fcol=aqua
+d.vect lakes type=area fill_color=aqua
 d.out.file depressions
 </code></pre>
 
@@ -90,7 +90,7 @@ set region to the high resolution study area<br>
 
 <pre><code>
 g.region rural_1m -p
-r.watershed -as elev_lid792_1m thresh=5000 accum=accum_5K drain=draindir_5K basin=basin_5K
+r.watershed -as elev_lid792_1m threshold=5000 accumulation=accum_5K drainage=draindir_5K basin=basin_5K
 </code></pre>
 
 <p>
@@ -99,7 +99,7 @@ display extracted streams over aerial image<br>
 <pre><code>
 d.erase
 d.rast ortho_2001_t792_1m
-d.rast accum_5K val=1000-1000000
+d.rast accum_5K values=1000-1000000
 </code></pre>
 
 <p>
@@ -111,8 +111,8 @@ by running v.in.asci from GUI and entering the coordinates interactively<br>
 the example below is example how to do it by running echo from linux shell<br>
 
 <pre><code>
-echo "638845.52 220085.26 1" | v.in.ascii input=- out=outletA30 separator=space
-d.vect outletA30 col=yellow
+echo "638845.52 220085.26 1" | v.in.ascii input=- output=outletA30 separator=space
+d.vect outletA30 color=yellow
 </code></pre>
 
 <p>
@@ -120,7 +120,7 @@ delineate the watershed and convert it to vector format<br>
 
 <pre><code>
 r.water.outlet input=draindir_5K output=basin_A30 coordinates=638845.52,220085.26
-r.to.vect -s basin_A30 out=basin_A30 type=area
+r.to.vect -s basin_A30 output=basin_A30 type=area
 </code></pre>
 
 <p>
@@ -128,9 +128,9 @@ display watershed boundary along with contours<br>
 compute the watershed area (category 1)<br>
 
 <pre><code>
-d.vect basin_A30 type=boundary col=green width=2
-r.contour elev_lid792_1m out=elev_lid792_cont_1m step=1 min=104
-d.vect elev_lid792_cont_1m col=white
+d.vect basin_A30 type=boundary color=green width=2
+r.contour elev_lid792_1m output=elev_lid792_cont_1m step=1 minlevel=104
+d.vect elev_lid792_cont_1m color=white
 d.out.file watershedA30
 r.report basin_A30 unit=h,a
 </code></pre>
@@ -142,16 +142,16 @@ compare the extracted strems (accum > 800) with official stream data<br>
 <pre><code>
 d.rast ortho_2001_t792_1m
 d.rast accum_5K values=800-1000000
-d.vect streets_wake col=red
-d.vect streams col=green
+d.vect streets_wake color=red
+d.vect streams color=green
 </code></pre>
 
 <p>
 carve a pre-defined channel given by the stream data into DEM<br>
 
 <pre><code>
-r.carve rast=elev_lid792_1m vect=streams width=2 depth=0.8 out=elev_lidcarved_1m 
-r.colors elev_lidcarved_1m rast=elev_lid792_1m
+r.carve raster=elev_lid792_1m vector=streams width=2 depth=0.8 output=elev_lidcarved_1m
+r.colors elev_lidcarved_1m raster=elev_lid792_1m
 d.rast elev_lidcarved_1m
 </code></pre>
 
@@ -161,8 +161,8 @@ what is the difference between accum_5K, accumc_5K1m and streams?<br>
 explain the advantage and disadvantage of carving<br>
 
 <pre><code>
-r.watershed -as elev_lidcarved_1m thresh=50000 accum=accumc_5K1m
-d.rast accumc_5K1m val=1500-10000000
+r.watershed -as elev_lidcarved_1m threshold=50000 accumulation=accumc_5K1m
+d.rast accumc_5K1m values=1500-10000000
 d.vect streams
 d.out.file streamcarved
 </code></pre>
@@ -173,10 +173,10 @@ compare upslope and downslope flow lines:<br>
 on what type of terrain feature they converge?<br>
 
 <pre><code>
-g.region rast=elev_lid792_1m -p
+g.region raster=elev_lid792_1m -p
 d.erase
-r.flow elev_lid792_1m flowline=flowlines flowlength=flowlg_1m flowaccum=flowacc_1m
-r.flow -u elev_lid792_1m flowlength=flowlgup_1m flowaccum=flowaccup_1m
+r.flow elev_lid792_1m flowline=flowlines flowlength=flowlg_1m flowaccumulation=flowacc_1m
+r.flow -u elev_lid792_1m flowlength=flowlgup_1m flowaccumulation=flowaccup_1m
 </code></pre>
 
 <p>
@@ -184,9 +184,9 @@ display maps along with contours to see relation to terrain<br>
 
 <pre><code>
 d.rast flowacc_1m
-d.vect elev_lid792_cont_1m col=red
+d.vect elev_lid792_cont_1m color=red
 d.rast flowaccup_1m
-d.vect elev_lid792_cont_1m col=red
+d.vect elev_lid792_cont_1m color=red
 d.vect flowlines
 d.out.file flowlines
 </code></pre>
@@ -195,8 +195,8 @@ d.out.file flowlines
 compare the multiple flow direction result with D8 and Dinf<br>
 
 <pre><code>
-r.watershed -a elev_lid792_1m thresh=50000 accum=accum_mfd_5K1m
-d.rast accum_mfd_5K1m 
+r.watershed -a elev_lid792_1m threshold=50000 accumulation=accum_mfd_5K1m
+d.rast accum_mfd_5K1m
 d.vect streams
 d.out.file stream_mfd
 </code></pre>
@@ -205,7 +205,7 @@ d.out.file stream_mfd
 create a map of flooded area for a given water level and seed point<br>
 
 <pre><code>
-r.lake elev_lid792_1m wl=113.5 lake=flood1 coordinates=638728,220278
+r.lake elev_lid792_1m water_level=113.5 lake=flood1 coordinates=638728,220278
 d.rast elev_lid792_1m
 d.rast flood1
 d.out.file floodedarea
@@ -227,7 +227,7 @@ d.rast flood3
 # note for the GRASSbook example
 # clean fix for the r.watershed in rural_1m example from GRASSbook
 # when r.watershed runs on floating point elevation data the watershed
-# defined by rural_1m is not complete - few grid cells that drain into 
+# defined by rural_1m is not complete - few grid cells that drain into
 # this area are outside the region
 # fix - extend the region 20m north, reinterpolate the DEM, rerun r.wtaershed
 <font color="#000066">
@@ -252,7 +252,7 @@ d.rast flood2
 # compute flow pattern  and wettness index using MFD
 # skip if terraflow is not available in your GRASS installation
 </font>
-g.region rast=elev_lid792_1m -p
+g.region raster=elev_lid792_1m -p
 r.terraflow elev_lid792_1m fill=elev_lidfilled_1m   \
             dir=dir_terrafl_1m swater=swatershed_1m \
             accum=accumterra_1m tci=tci_1m
@@ -268,5 +268,3 @@ d.rast tci_1m
 <img src="http://skagit.meas.ncsu.edu/~helena/grasswork/grassbookdat07/galery/galery/s070302f010_resamp_i.jpg" height=70>
 </a>
 -->
-</div>
-

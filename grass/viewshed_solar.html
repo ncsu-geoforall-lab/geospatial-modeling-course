@@ -1,19 +1,18 @@
 <P>
 Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>, 
+GRASS GIS overview and manual</a>,
 <a href="http://www.grassbook.org/"> GRASSbook</a>
 
 <P><B>Topic: Viewshed and solar energy potential analysis</B></P>
-<!--<p><B>Tasks: Compute and compare viewsheds from different sites, 
+<!--<p><B>Tasks: Compute and compare viewsheds from different sites,
 compute shadows cast by terrain and buildings, compute
 solar radiation maps for different times in the year</B></p>-->
 <P>
-Download text file with site locations: <a href="data/viewshed_points.txt"> viewshed_points.txt</a>
+Download text file with site locations: <a href="data/viewshed_points.txt">viewshed_points.txt</a>
 start GRASS<br>
 
 <pre><code>
 grass70
-
 </code></pre>
 
 <p>
@@ -32,14 +31,14 @@ d.his is Add shaded relief map layer,<br>
 d.barscale and d.legend button is on Map display<br>
 
 <pre><code>
-g.region rast=elev_ned_30m -ap
-v.in.ascii -z viewshed_points.txt out=viewpoints separator=, z=3
-r.viewshed elev_ned_30m out=tower_165_los coord=642212,224767 obs=165 max=10000
-d.mon x0
+g.region raster=elev_ned_30m -ap
+v.in.ascii -z input=viewshed_points.txt out=viewpoints separator=, z=3
+r.viewshed elev_ned_30m output=tower_165_los coordinates=642212,224767 observer_elevation=165 max_distance=10000
+
 d.erase
-d.his h=tower_165_los i=elevation_shade
+d.his hue=tower_165_los intensity=elevation_shade
 d.vect streets_wake
-d.vect viewpoints size=10 col=orange icon=basic/marker
+d.vect viewpoints size=10 color=orange icon=basic/marker
 d.barscale at=2,2
 d.legend tower_165_los at=50,90,2,6
 d.out.file towerview_angle
@@ -50,8 +49,8 @@ find out what is the landuse within the view using map algebra<br>
 
 <pre><code>
 r.mapcalc "tower_los_lu30m = if(tower_165_los,landclass96,null())"
-r.colors tower_los_lu30m rast=landclass96
-r.category tower_los_lu30m rast=landclass96
+r.colors tower_los_lu30m raster=landclass96
+r.category tower_los_lu30m raster=landclass96
 r.report -n tower_los_lu30m unit=p,h
 d.erase
 d.rast tower_los_lu30m
@@ -61,10 +60,10 @@ d.out.file towerviewlu
 </code></pre>
 
 <p>
-we can also do visibility from RedHat headquarters<br>
+we can also do visibility from former RedHat headquarters<br>
 
 <pre><code>
-r.viewshed elev_ned_30m out=redhat_25_los coord=638898,224528 obs=25 max=10000
+r.viewshed elev_ned_30m output=redhat_25_los coordinates=638898,224528 observer_elevation=25 max_distance=10000
 d.erase
 d.rast redhat_25_los
 d.vect streets_wake
@@ -87,7 +86,7 @@ d.erase is "zoom to computational region"<br>
 <pre><code>
 g.region rural_1m -p
 r.mapcalc "elevfacility_1m = if(isnull(facility), elev_lid792_1m,138.)"
-r.colors elevfacility_1m col=elevation
+r.colors elevfacility_1m color=elevation
 d.erase
 d.rast elevfacility_1m
 </code></pre>
@@ -113,9 +112,9 @@ hint: try the same color table without -e<br>
 what is the value on the roof? how is it related to day/time?<br>
 
 <pre><code>
-r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m inc=incid_elevfac_1m day=356 time=14.416667
+r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m incidout=incid_elevfac_1m day=356 time=14.416667
 r.info incid_elevfac_1m
-r.colors -e incid_elevfac_1m co=bcyr 
+r.colors -e incid_elevfac_1m co=bcyr
 d.rast incid_elevfac_1m
 d.legend incid_elevfac_1m at=25,50,1,3
 d.out.file incid_angle
@@ -131,7 +130,7 @@ r.mapcalc "shadow_1m = if(isnull(incid_elevfac_1m), 1, null())"
 r.colors shadow_1m col=grey
 d.rast elevfacility_1m
 d.rast shadow_1m
-r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m inc=incid_elevfac7_1m day=356 time=7.50
+r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m incidout=incid_elevfac7_1m day=356 time=7.50
 r.mapcalc "shadow7_1m = if(isnull(incid_elevfac7_1m), 1, null())"
 d.rast shadow7_1m
 d.out.file shadows
@@ -144,9 +143,9 @@ optionally display the radiation maps draped over elevation elevfacility_1m in 3
 to see relation between terrain geometry and solar radiation<br>
 
 <pre><code>
-r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=356 glob=g356 insol_time=its356
+r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=356 glob_rad=g356 insol_time=its356
 r.colors g356 co=gyr -e
-r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=172 glob=g172 insol_time=its172
+r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=172 glob_rad=g172 insol_time=its172
 r.colors g172 co=gyr -e
 d.rast g356
 d.legend g356 at=25,50,1,3
@@ -163,15 +162,14 @@ zoom to computational region if working from GUI<br>
 find good color table (custom, hist. equalized, to see the pattern)<br>
 
 <pre><code>
-g.region rast=elev_ned_30m -p
+g.region raster=elev_ned_30m -p
 d.erase
-r.slope.aspect elev_ned_30m asp=asp_ned_30m slo=slp_ned_30m
-r.sun elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m lin=2.5 alb=0.2 beam=b356 dif=d356 refl=r356 insol_time=it356 day=356
+r.slope.aspect elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m
+r.sun elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m linke_value=2.5 albedo_value=0.2 beam_rad=b356 diff_rad=d356 refl_rad=r356 insol_time=it356 day=356
 d.rast b356
 d.legend b356 at=2,30,2,6
 d.out.file beamrad356
-d.rast it356 
+d.rast it356
 d.legend it356 at=2,30,2,6
 d.out.file insol_time
-</div>
-    
+</code></pre>

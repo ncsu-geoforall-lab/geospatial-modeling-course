@@ -1,6 +1,6 @@
 <P>
 Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>, 
+GRASS GIS overview and manual</a>,
 <a href="http://liblas.org/"> libLAS tools for lidar data conversions</a>
 
 <P>
@@ -12,13 +12,13 @@ On MSWindows, it is recommended to use wxGUI equivalents of d.* commands:</font>
 use their GUI equivalents,
 see assignment <a href="data_visualization.html">Data display and visualization</a>
 <P>
-Download the ASCI (x,y,z) lidar bare earth data <a href="lid_be_pts.txt">lid_be_pts.txt</a><br>
-Download the ASCI (x,y,z) lidar multiple return data <a href="lid_mr_pts.txt">lid_mr_pts.txt</a><br>
+Download the ASCI (x,y,z) lidar bare earth data <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/lid_be_pts.txt">lid_be_pts.txt</a><br>
+Download the ASCI (x,y,z) lidar multiple return data <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/lid_mr_pts.txt">lid_mr_pts.txt</a><br>
 <P>
-Optional: You can also try a new version of this assignment based on the 2013 lidar survey, get it 
+Optional: You can also try a new version of this assignment based on the 2013 lidar survey, get it
 <b><a href="terrain_modeling_survey_2013.html">here</a></b><br>
 <!--
-Download the Raleigh 2013 lidar data in State Plane CS, units feet as<br> 
+Download the Raleigh 2013 lidar data in State Plane CS, units feet as<br>
 <a href="../media/01/0793_016_first_ground.txt.zip">0793_016_first.txt and 0793_016_ground.txt files</a><br>
 <a href="../media/01/0793_016_xyzirnc_ncspf.zip">all return txt file</a><br>
 and the related <a href=../media/01/nc_spf.zip>LOCATION</a>
@@ -48,8 +48,8 @@ you map display to create white space above and below the image<br>
 
 <pre><code>
 g.region rural_1m res=2 -p
-r.in.xyz input=lid_be_pts.txt out=lid_be_binn2m meth=n
-r.in.xyz input=lid_mr_pts.txt out=lid_mr_binn2m meth=n
+r.in.xyz input=lid_be_pts.txt output=lid_be_binn2m method=n
+r.in.xyz input=lid_mr_pts.txt output=lid_mr_binn2m method=n
 d.erase
 d.rast lid_mr_binn2m
 d.legend lid_mr_binn2m at=2,20,2,5
@@ -94,7 +94,7 @@ it will still have a few holes<br>
 
 <pre><code>
 r.in.xyz input=lid_be_pts.txt out=lid_be_binmean6m meth=mean
-r.colors lid_be_binmean6m co=elevation
+r.colors lid_be_binmean6m color=elevation
 d.rast lid_be_binmean6m
 d.legend lid_be_binmean6m at=2,40,2,5
 r.in.xyz input=lid_mr_pts.txt out=lid_mr_binmean6m meth=mean
@@ -169,12 +169,10 @@ import only points in the rural area  without building a table (Tab Points)<br>
 number of column used as z is 3<br>
 and using z-coordinate for elevation (Tab Optional, Create 3D vector map)<br>
 assuming that the txt file is in your current directory<br>
-second example shows this command with full path to the file in winGRASS<br>
 
 <pre><code>
 g.region rural_1m -p
 v.in.ascii -ztr input=lid_be_pts.txt out=elev_lid_bepts z=3
-v.in.ascii -ztr input="E:\myhomework\mea582\input_data\lid_be_pts.txt" out=elev_lid_bepts z=3
 </code></pre>
 
 <p>
@@ -198,13 +196,13 @@ points available in the data set<br>
 (elev_lid_bepts and elev_lid792_bepts should be identical)<br>
 
 <pre><code>
-d.vect elev_lidrural_mrpts size=4 col=0:100:0 
-d.vect elev_lid792_bepts size=2 col=yellow 
+d.vect elev_lidrural_mrpts size=4 col=0:100:0
+d.vect elev_lid792_bepts size=2 col=yellow
 </code></pre>
 
 <p>
 <!-- # note: if you are getting warning that topology is not available
-# build topology 
+# build topology
 </font>
 v.build elev_lid792_bepts
 v.build elev_lidrural_mrpts
@@ -217,9 +215,9 @@ and higher tension for multiple return data<br>
 
 <pre><code>
 g.region rural_1m -p
-v.extract elev_lidrural_mrpts out=elev_lidrur_first type=point where=Return=1
-v.surf.rst elev_lid792_bepts elev=elev_lidrural_1m npmin=120 segmax=25  
-v.surf.rst elev_lidrur_first elev=elev_lidrurfirst_1m npmin=120 segmax=25 ten=100 smo=0.5
+v.extract elev_lidrural_mrpts out=elev_lidrur_first type=point where="Return=1"
+v.surf.rst elev_lid792_bepts elevation=elev_lidrural_1m npmin=120 segmax=25
+v.surf.rst elev_lidrur_first elevation=elev_lidrurfirst_1m npmin=120 segmax=25 tension=100 smooth=0.5
 d.erase
 d.rast elev_lidrural_1m
 d.rast elev_lidrurfirst_1m
@@ -274,21 +272,17 @@ d.out.file lidreturns
 <!--
 <font color="#000066">
 # Optional task
-# Contour (isoline) representation 
+# Contour (isoline) representation
 # generate contours with 10m and 3m interval
 </font>
-g.region rast=elevation -p
+g.region raster=elevation -p
 d.erase
 d.rast elevation
 r.contour elevation out=elev_contour_10m step=10
 d.vect elev_contour_10m
-v.label -a map=elev_contour_10m label=contour_labels column=level back=white 
+v.label -a map=elev_contour_10m label=contour_labels column=level back=white
 d.labels contour_labels
 r.contour elevation out=elev_contour_3m step=3 min=55 max=154
 d.rast elevation
 d.vect elev_contour_3m
 -->
-
-
-</div>
-    

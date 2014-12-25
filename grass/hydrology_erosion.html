@@ -1,5 +1,5 @@
 <P>Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>, 
+GRASS GIS overview and manual</a>,
 <a href="http://www.grassbook.org/"> GRASSbook</a>
 
 <P><B>Topic: Modeling Geospatial Processes: Hydrology and erosion</B></P>
@@ -8,17 +8,17 @@ GRASS GIS overview and manual</a>,
 Read before doing the assignments, to understand the r.mapcalc expressions:<br>
 <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_assign/erosion_notes2.pdf">Erosion equations and units</a>
 <P>
-Various color tables and recoding rules:<br>
-<a href="data/cfactor.txt">C-factor values</a><br>
-<a href="data/lu_labels.txt">Land use category description</a><br>
-<a href="data/cfac_rules.txt">C-factor recode table</a><br>
-<!--<a href="cfac_labels.txt">C-factor labels</a><br>-->
-<a href="data/cfac_color.txt">C-factor color table</a><br>
-<a href="data/soilloss_color.txt">Soil loss color table</a><br>
-<a href="data/erdep_color.txt">Erosion/deposition color table</a><br>
-<a href="data/erdep_class.txt">Erosion/deposition classes</a><br>
-<a href="data/erdep_label.txt">Erosion/deposition class labels</a>
-
+Various color tables and recoding rules:
+<ul>
+<li>C-factor values (<a href="data/cfactor.txt">cfactor.txt</a>)</li>
+<li>Land use category description (<a href="data/lu_labels.txt">lu_labels.txt</a>)</li>
+<li>C-factor recode table (<a href="data/cfac_rules.txt">cfac_rules.txt</a>)</li>
+<li>C-factor color table (<a href="data/cfac_color.txt">cfac_color.txt</a>)</li>
+<li>Soil loss color table (<a href="data/soilloss_color.txt">soilloss_color.txt</a>)</li>
+<li>Erosion/deposition color table (<a href="data/erdep_color.txt">erdep_color.txt</a>)</li>
+<li>Erosion/deposition classes (<a href="data/erdep_class.txt">erdep_class.txt</a>)</li>
+<li>Erosion/deposition class labels (<a href="data/erdep_label.txt">erdep_label.txt</a>)</li>
+</ul>
 start GRASS<br>
 
 <pre><code>
@@ -36,14 +36,14 @@ compute wetness index<br>
 
 <pre><code>
 g.region rural_1m -p
-r.topidx elev_lid792_1m out=wetness_1m
+r.topidx elev_lid792_1m output=wetness_1m
 </code></pre>
 
 <p>
 <b>erase and zoom display to computational region</b><br>
 
 <pre><code>
-d.erase 
+d.erase
 d.rast wetness_1m
 </code></pre>
 
@@ -51,13 +51,13 @@ d.rast wetness_1m
 display elev_lid792_1m in 3D and drape over wetness_1m as color<br>
 Erosion modeling<br>
 <!-- # compute length-based LS-factor (topographic potential for erosion)
-# for SW Wake area at 10m resolution 
+# for SW Wake area at 10m resolution
 </font>
 g.region swwake_10m -p
 r.watershed -s elevation thresh=50000 accum=flowaccum_10m length=lsfac2d
 r.colors lsfac2dfp co=gyr -e
 # <b>erase and zoom display to computational region</b>
-d.erase 
+d.erase
 d.rast lsfac2dfp
 d.legend lsfac2dfp at=2,50,2,6
 d.out.file lsfac2d
@@ -76,20 +76,20 @@ which equation represents conditions when water flow has greater impact<br>
 and which models stronger influence of slope<br>
 
 <pre><code>
-g.region rast=elev_lid792_1m -p
-r.slope.aspect elev_lid792_1m slo=slope_1m asp=aspect_1m
-r.flow elev_lid792_1m flowacc=flowacc_1m
+g.region raster=elev_lid792_1m -p
+r.slope.aspect elev_lid792_1m slope=slope_1m aspect=aspect_1m
+r.flow elev_lid792_1m flowaccumulation=flowacc_1m
 r.mapcalc "lsfac3d_1m = 1.2 * pow(flowacc_1m * 1./22.1,0.2) * pow(sin(slope_1m)/0.09,1.3)"
 r.mapcalc "lsfac3d_s1_1m = 1.5 * pow(flowacc_1m * 1./22.1,0.5) * pow(sin(slope_1m)/0.09,1.0)"
-r.colors lsfac3d_s1_1m col=gyr -e 
-r.colors lsfac3d_1m rast=lsfac3d_s1_1m
+r.colors lsfac3d_s1_1m color=gyr -e
+r.colors lsfac3d_1m raster=lsfac3d_s1_1m
 </code></pre>
 
 <p>
 <b>erase and zoom display to computational region</b><br>
 
 <pre><code>
-d.erase 
+d.erase
 d.rast lsfac3d_1m
 d.vect elev_lid792_cont1m
 d.legend lsfac3d_1m at=2,50,2,6
@@ -132,8 +132,8 @@ compare erosion rates and distribution for winter (bare) and summer conditions<b
 <pre><code>
 r.mapcalc "soillossbare_1m = 270. * soils_Kfactor * lsfac3d_1m * cfactorbare_1m"
 r.mapcalc "soillossgrow_1m = 270. * soils_Kfactor * lsfac3d_1m * cfactorgrow_1m"
-r.colors soillossbare_1m rules=soilloss_color.txt  
-r.colors soillossgrow_1m rast=soillossbare_1m
+r.colors soillossbare_1m rules=soilloss_color.txt
+r.colors soillossgrow_1m raster=soillossbare_1m
 d.erase
 d.rast soillossbare_1m
 d.legend soillossbare_1m at=2,50,2,6
@@ -162,7 +162,7 @@ first compute sediment flow and its components in x, y directions<br>
 
 <pre><code>
 r.mapcalc "sedflow_1m = 270. * soils_Kfactor * cfactorgrow_1m * flowacc_1m * sin(slope_1m)"
-r.colors sedflow_1m rast=soillossbare_1m
+r.colors sedflow_1m raster=soillossbare_1m
 d.rast sedflow_1m
 r.mapcalc "qsx = sedflow_1m * cos(aspect_1m)"
 r.mapcalc "qsy = sedflow_1m * sin(aspect_1m)"
@@ -178,7 +178,7 @@ r.slope.aspect qsx dx=qsx_dx
 r.slope.aspect qsy dy=qsy_dy
 r.mapcalc "erdep = qsx_dx + qsy_dy"
 r.info -r erdep
-r.colors erdep rules=erdep_color.txt 
+r.colors erdep rules=erdep_color.txt
 d.rast erdep
 d.legend erdep at=2,50,2,6 range=-100,100
 </code></pre>
@@ -190,36 +190,37 @@ use r.recode and r.category from GUI to get the path to the txt file<br>
 use r.category to add labels (stable, high erosion, etc) to categories<br>
 
 <pre><code>
-r.recode erdep out=erdep_class rules=erdep_class.txt
+r.recode erdep output=erdep_class rules=erdep_class.txt
 r.category erdep_class rules=erdep_label.txt sep=:
 r.report erdep_class unit=p,h,a
 </code></pre>
 
 <p>
 example output<br>
-[...]<br>
-| #| description         |  %  | hectares |  acres  |<br>
-|-4| severe erosion . . .| 0.19|  0.101300|  0.25031|<br>
-|-3| high erosion . . . .| 1.34|  0.701600|  1.73365|<br>
-|-2| moderate erosion . .| 3.89|  2.042600|  5.04726|<br>
-|-1| low erosion . . . . |19.74| 10.366000| 25.61438|<br>
-| 0| stable . . . . . . .|61.32| 32.192000| 79.54643|<br>
-| 1| low deposition . . .| 8.40|  4.407600| 10.89118|<br>
-| 2| moderate deposition | 2.49|  1.307500|  3.23083|<br>
-| 3| high deposition . . | 1.29|  0.676900|  1.67262|<br>
-| 4| severe deposition . | 0.24|  0.126100|  0.31159|<br>
-| *|no data. . . . . . . | 1.10|  0.578400|  1.42922|<br>
-|---------------------------------------------------|<br>
-|TOTAL                   |100.00| 52.500000|129.7275|<br>
-
+<pre>
+[...]
+| #| description         |  %  | hectares |  acres  |
+|-4| severe erosion . . .| 0.19|  0.101300|  0.25031|
+|-3| high erosion . . . .| 1.34|  0.701600|  1.73365|
+|-2| moderate erosion . .| 3.89|  2.042600|  5.04726|
+|-1| low erosion . . . . |19.74| 10.366000| 25.61438|
+| 0| stable . . . . . . .|61.32| 32.192000| 79.54643|
+| 1| low deposition . . .| 8.40|  4.407600| 10.89118|
+| 2| moderate deposition | 2.49|  1.307500|  3.23083|
+| 3| high deposition . . | 1.29|  0.676900|  1.67262|
+| 4| severe deposition . | 0.24|  0.126100|  0.31159|
+| *|no data. . . . . . . | 1.10|  0.578400|  1.42922|
+|---------------------------------------------------|
+|TOTAL                   |100.00| 52.500000|129.7275|
+</pre>
 look for line with sum<br>
 
 <pre><code>
-r.univar erdep 
-SUM = -2374.473814
+r.univar erdep
 </code></pre>
+<pre>
+SUM = -2374.473814
+</pre>
 
 <p>
 divide by 4046 to get total ton per year transported from the watershed<br>
-
-</div>

@@ -1,12 +1,12 @@
 <P>
 Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>, 
+GRASS GIS overview and manual</a>,
 <a href="http://www.grassbook.org/"> GRASSbook</a>
 
 <P>
 <P><B>Topic: Spatial Interpolation</B></P>
-<!--<p><B>Tasks: Demonstrate impact of different interpolation methods 
-and distribution of points on resulting surface, 
+<!--<p><B>Tasks: Demonstrate impact of different interpolation methods
+and distribution of points on resulting surface,
 identify problems with several basic methods
 </B></p>-->
 <P>
@@ -99,7 +99,7 @@ compute DEM from contours using linear interpolation between isolines<br>
 g.region rural_1m -p
 v.to.rast elev_lid792_cont1m out=el_lid792_cont1m attrcol=level use=attr
 r.surf.contour el_lid792_cont1m out=el_rcont
-r.colors el_rcont col=elevation
+r.colors el_rcont color=elevation
 </code></pre>
 
 <p>
@@ -131,7 +131,7 @@ d.erase
 r.contour el_D792_6m out=elev_cont_3m step=3m min=103
 v.to.points elev_cont_3m out=elev_cont_3mpts use=vertex
 v.voronoi elev_cont_3mpts out=elev_cont_3mvor
-d.vect -c elev_cont_3mvor 
+d.vect -c elev_cont_3mvor
 g.region res=4 -p
 d.erase
 v.info -c elev_cont_3m
@@ -162,13 +162,12 @@ nviz elev_idw_1m vect=elev_rand_tin
 # compute reference plane for visualization in nviz
 # Optional - visualize as 3D vector data
 # you need to start nviz with a elev_lid792_1m so that it can set its view defaults
-# add the TIN as vector lines (although it is 3D polygons) or 
+# add the TIN as vector lines (although it is 3D polygons) or
 # in nviz Visualize>Vector lines/3D polygons>elev_cont_tin
 # change the color for the raster level90 to grey and delete elev_lid792_1m
-# change the vector color to something nicer than blue 
+# change the vector color to something nicer than blue
 </font>
 v.delaunay elev_cont_3mpts out=elev_cont_tin
 d.vect -c elev_cont_tin
 nviz level90,elev_lid792_1m vect=elev_cont_tin
 -->
-</div>

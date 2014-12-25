@@ -204,7 +204,7 @@ save results to graphics file<br>
 g.copy raster=slope,myslope
 r.colors myslope color=bgyr
 d.rast myslope
-d.legend raster=myslope
+d.legend myslope
 d.out.file myslopecolor
 r.colors -e myslope color=bgyr
 d.histogram myslope
@@ -224,7 +224,7 @@ add barscale on Map Display: Add map elements > Show/hide north arrow (double cl
 
 <pre><code>
 d.barscale 
-d.legend raster=myslope at=50,90,4,7
+d.legend myslope at=50,90,4,7
 </code></pre>
 
 <p>
@@ -307,7 +307,7 @@ see more options here: http://grasswiki.osgeo.org/wiki/WxGUI_Map_Swipe<br>
 <font color="#000066">
 # Set color scheme for vector data, display vector data attributes
 </font>
-g.region rast=elevation -p
+g.region raster=elevation -p
 g.copy vect=streets_wake,mystreets
 v.colors mystreets column=SPEED color=rainbow
 d.vect -a mystreets 
@@ -347,7 +347,7 @@ v.colors mycensus column=P10_TO_14 color=bcyr
 # derive RGB channels from hue and intensity
 # save shaded map with basins as a single raster layer
 </font>
-g.region rast=elevation -p
+g.region raster=elevation -p
 r.his h=basin_50K i=elevation_shade b=el_b g=el_g r=el_r
 <font color="#000066">
 # create a single composite map
