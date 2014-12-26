@@ -40,17 +40,17 @@ do
     do
         # copy only if directory exists
         if [ -d "$DIR/$SUBDIR" ]; then
-            cp --update --recursive $DIR/$SUBDIR $OUTDIR/$DIR
+            cp -r $DIR/$SUBDIR $OUTDIR/$DIR
         fi
     done
 done
 
 for FILE in *.css
 do
-    cp --update $FILE $OUTDIR
+    cp $FILE $OUTDIR
 done
 
 for DIR in img
 do
-    cp --update --recursive $DIR $OUTDIR
+    cp -r $DIR $OUTDIR
 done
