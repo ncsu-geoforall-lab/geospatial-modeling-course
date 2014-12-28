@@ -1,12 +1,12 @@
 <P>
 Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>, 
+GRASS GIS overview and manual</a>,
 <a href="http://www.grassbook.org/"> GRASSbook</a>
 <P>
 <P><B>Topic: Geomorphometry II: Spatial and temporal Terrain Analysis</B></P>
 <!--<p><B>Tasks: Derive topographic parameters and landforms, analyze time series of DEMs </B></p>-->
 <P>
-Download MAPSET 
+Download MAPSET
 <a href="http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip">
 NagsHead time series</a> and copy it into your nc_spm_08 LOCATION (it should be the same level directory
 as PERMANENT)<br>
@@ -31,8 +31,8 @@ compute basic topographic parameters: slope and aspect<br>
 p. 142-142<br>
 
 <pre><code>
-g.region rast=elevation -p
-r.slope.aspect el=elevation slope=myslope asp=myaspect 
+g.region raster=elevation -p
+r.slope.aspect el=elevation slope=myslope asp=myaspect
 </code></pre>
 
 <p>
@@ -56,7 +56,7 @@ d.legend profcurv at=2,40,2,6
 d.out.file profcurv
 d.rast tancurv
 d.legend tancurv at=2,40,2,6
-d.out.file tancurv 
+d.out.file tancurv
 <font color="#000066">
 # use nviz to explore relation between terrain shape and curvatures
 # zoom in to show features with concave and convex shape
@@ -104,8 +104,8 @@ multiple return example is optional (if you are curious how it differs from BE)<
 
 <pre><code>
 g.region rural_1m  -p
-v.surf.rst elev_lid792_bepts elev=elev_lid_1m asp=asp_lid_1m pcu=pc_lid_1m tcu=tc_lid_1m npmin=120 segm=25 
-v.surf.rst elev_lidrural_mrpts elev=elev_lidmr_1m asp=asp_lidmr_1m pcu=pc_lidmr_1m tcu=tc_lidmr_1m npmin=120 segmax=25 ten=300 smo=1.
+v.surf.rst elev_lid792_bepts elevation=elev_lid_1m aspect=asp_lid_1m pcurvature=pc_lid_1m tcurvature=tc_lid_1m npmin=120 segmax=25
+v.surf.rst elev_lidrural_mrpts elevation=elev_lidmr_1m aspect=asp_lidmr_1m pcurvature=pc_lidmr_1m tcurvature=tc_lidmr_1m npmin=120 segmax=25 tension=300 smooth=1.
 </code></pre>
 
 <p>
@@ -129,8 +129,8 @@ you can use multiple displays to compare the results side-by-side<br>
 
 <pre><code>
 g.region rural_1m  -p
-v.surf.rst elev_lid792_bepts elev=elev_lidt15_1m asp=asp_lidt15_1m pcu=pc_lidt15_1m tcu=tc_lidt15_1m npmi=120 seg=25 ten=15 smo=1.
-v.surf.rst elev_lidrural_mrpts elev=elev_lidmrt15_1m asp=asp_lidmrt15_1m pcu=pc_lidmrt15_1m tcu=tc_lidmrt15_1m npmi=120 seg=25 ten=15 smo=1.
+v.surf.rst elev_lid792_bepts elevation=elev_lidt15_1m aspect=asp_lidt15_1m pcurvature=pc_lidt15_1m tcurvature=tc_lidt15_1m npmin=120 segmax=25 tension=15 smooth=1.
+v.surf.rst elev_lidrural_mrpts elevation=elev_lidmrt15_1m asp=asp_lidmrt15_1m pcurvature=pc_lidmrt15_1m tcurvature=tc_lidmrt15_1m npmin=120 segmax=25 tension=15 smooth=1.
 d.erase
 d.rast elev_lidt15_1m
 d.rast pc_lidt15_1m
@@ -179,7 +179,7 @@ run the series analysis and explain the results:<br>
 which maps are core and envelope?, which landforms have high standard deviation and what does it mean?<br>
 
 <pre><code>
-g.region rast=NH_2008_1m -p
+g.region raster=NH_2008_1m -p
 d.erase
 d.rast NH_2008_1m
 r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_min method=minimum
@@ -227,7 +227,7 @@ d.rast pc_rstct10_2m
 d.vect elev_lid792_cont1m
 d.rast tc_rstct10_2m
 # if available, use v.generalize to reduce number of points in elev_lid792_cont1m
-# and interpolate 
+# and interpolate
 <font color="#000066">
 # optional
 # p. 132
@@ -243,7 +243,7 @@ r.mask facility
 r.univar elevation
 <font color="#000066">
 # [...]
-# minimum: 123.521 
+# minimum: 123.521
 # bottom of 4m excavation will be 123.52-4=119.52m
 </font>
 r.mapcalc "excavation = elevation-119.52"
@@ -268,6 +268,3 @@ r.mask -r
 d.polar aspect_int_10m
 d.polar myaspect
 -->
-
-</div>
-    

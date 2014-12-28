@@ -5,24 +5,24 @@ GRASS GIS overview and manual</a>
 <!--TODO add back the display with attributes-->
 <P><B>Topic: Geospatial Analysis II:  buffers,
 cost surfaces, least cost path</B></p>
-<!--<p><B>Tasks:  
+<!--<p><B>Tasks:
 <ul>
-<LI>use buffers and map algebra to find areas within a given distance 
-from given features (roads, lakes) that have a selected property (are developed), 
-<LI>use cost surface analysis to support emergency response to road accident and search for 
-a lost person. 
+<LI>use buffers and map algebra to find areas within a given distance
+from given features (roads, lakes) that have a selected property (are developed),
+<LI>use cost surface analysis to support emergency response to road accident and search for
+a lost person.
 </ul>
  </B></p>-->
-Use lecture slides for this topic to better understand the results and 
+Use lecture slides for this topic to better understand the results and
 comment on your findings - e.g. is the developed area around lakes larger/smaller
 than expected? Why?
 <P>
 Text files with recode rules, color rules and site locations:<br>
-<a href="data/noise_cats.txt"> noise_cats.txt,</a>
-<a href="data/friction_rules.txt"> friction_rules.txt,</a>
-<a href="data/friction_color.txt"> friction_color.txt,</a>
-<a href="data/fire_pt.txt"> fire_pt.txt,</a>
-<a href="data/lostperson.txt"> lostperson.txt</a><br>
+<a href="data/noise_cats.txt">noise_cats.txt</a>,
+<a href="data/friction_rules.txt">friction_rules.txt</a>,
+<a href="data/friction_color.txt">friction_color.txt</a>,
+<a href="data/fire_pt.txt">fire_pt.txt</a>,
+<a href="data/lostperson.txt">lostperson.txt</a><br>
 <p>
 On MSWindows, it is recommended to use wxGUI equivalents of d.* commands:</font><br>
 use their GUI equivalents,r
@@ -46,12 +46,8 @@ LOCATION: select nc_spm_08<br>
 MAPSET: use mapset with your unity ID or user1<br>
 Enter GRASS<br>
 
-Remove MASK in case it was left over from previous assignment<br>
-
-
-<pre><code>
-g.remove rast=MASK
-</code></pre>
+Remove MASK in case it was left over
+from previous assignment (use command <code>r.mask -r</code).
 
 <p>
 p. 133<br>
@@ -62,7 +58,7 @@ reminder: d.erase means zoom to computational region<br>
 
 <pre><code>
 g.region swwake_30m -p
-r.buffer lakes out=lakes_buff dist=60,120,240,500 
+r.buffer lakes out=lakes_buff dist=60,120,240,500
 d.erase
 d.rast lakes_buff
 </code></pre>
@@ -84,7 +80,7 @@ in GUI: switch off previous map, use Add raster, Add vector icons<br>
 <pre><code>
 d.rast developed_lake
 d.vect streets_wake co=grey
-d.rast lakes 
+d.rast lakes
 d.out.file mylakesbuffmap
 </code></pre>
 
@@ -106,10 +102,10 @@ set <b>full path</b> to the file with categories <a href="data/noise_cats.txt">n
 or run r.category from GUI and browse to the txt file<br>
 
 <pre><code>
-g.region rast=landuse96_28m -p
+g.region raster=landuse96_28m -p
 r.buffer roadsmajor out=roads_buffers dist=250,500,2500
 r.mapcalc "noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null())"
-r.colors noise col=ryg
+r.colors noise color=ryg
 r.category noise rules=noise_cats.txt separator=:
 r.report -n noise unit=p,h
 </code></pre>
@@ -118,7 +114,7 @@ r.report -n noise unit=p,h
 display the results<br>
 in GUI switch off previous maps<br>
 then use Add raster>noise<br>
-Add vector>streets_wake, Add legend<br>
+Add vector > streets_wake, Add legend<br>
 
 <pre><code>
 d.erase
@@ -170,7 +166,7 @@ d.out.file myspeedmap
 <p>
 <!-- # <b>READ THE NOTES BELOW!!!</b>
 # map streets_speed should have off-road areas in green, with values 5
-# if off-road is still null or 0, let me know and use r.mapcalc to replace 
+# if off-road is still null or 0, let me know and use r.mapcalc to replace
 # the nulls or 0 by 5 to avoid division by 0 or nulls, for example, -->
 assign travel time to cross a 30m grid cell in hours,<br>
 compute cumulative cost surface to the given point<br>
@@ -191,7 +187,7 @@ or enter values interactively by pasting the coords into the provided space<br>
 or, if you know the path to the text file, you can run the command in WinGRASS<br>
 
 <pre><code>
-v.in.ascii in="C:\mydata\homework\fire_pt.txt" out=fire_pt separator=space
+v.in.ascii in="fire_pt.txt" out=fire_pt separator=space
 </code></pre>
 
 <p>
@@ -208,7 +204,7 @@ r.contour streets_cost out=streets_cost_04 step=0.04
 r.colors streets_cost co=elevation
 d.rast streets_cost
 d.vect fire_pt co=red icon=basic/marker size=20
-d.vect streets_cost_04 
+d.vect streets_cost_04
 d.legend streets_cost at=5,50,2,5
 d.out.file mycostmap
 </code></pre>
@@ -257,7 +253,7 @@ display the results using GUI!<br>
 you already may have some of these maps in GUI layer tree,<br>
 so just switch them on and off and re-order as needed<br>
 <!-- # to display the LOCATION attribute for firestations
-# Add vector > Display> switch on attr 
+# Add vector > Display> switch on attr
 # Labels > Name of column > select LOCATION from dropdown list
 # Font - type in font-->
 
@@ -347,7 +343,7 @@ d.erase
 d.rast lakes
 d.rast walkcost
 d.vect streets_wake
-d.vect walkcost co=brown 
+d.vect walkcost co=brown
 d.vect walkcost co=red where=level=6000 width=2
 d.vect lostperson size=20 co=black fcolor=black icon=basic/marker
 d.legend walkcost at=5,50,2,5
@@ -396,14 +392,14 @@ r.regression.line elevation map2=elev_srtm_30m
 # run this from GUI: type r.covar, click run GUI, click on Print correlation matrix
 </font>
 g.region swwake_30m -p
-r.covar -r elevation,elev_ned_30m,elev_srtm_30m 
+r.covar -r elevation,elev_ned_30m,elev_srtm_30m
 
 #p. 112-113
 # transform a slope map to a map
 #representing probability values that
 #increase linearly with the slope value, but the rate of increase
 #changes at given threshold values (in our example at 2., 8. and 15.
-#degrees). 
+#degrees).
 r.mapcalc "probability1 = graph(slope, 0.,0.,2.,0.1,8.,0.3,15.,0.8,90.,1.)"
 r.colors probability1 col=byr
 d.rast.leg probability1
@@ -417,4 +413,3 @@ r.colors probability3 col=byr
 d.rast.leg probability3
 -->
     </div>
-    

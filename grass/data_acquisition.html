@@ -1,4 +1,4 @@
-<p>Resources: 
+<p>Resources:
 <a href="http://grass.osgeo.org/grass70/manuals/index.html">
 GRASS GIS overview and manual</a>
 </p>
@@ -9,10 +9,10 @@ You can run GRASS several ways using its graphical user interface (wxGUI) and co
   <LI><b>RECOMMENDED: </b>for display (d.*) commands use wxGUI,
 for other commands (r.*, g.*, v.*) type the command name into Command console
 (see tab on the bottom of GIS Layer Manager) and Enter to open its GUI;
-  <li>run everything through wxGUI: start the command using a relevant button or select it from a drop down menu 
+  <li>run everything through wxGUI: start the command using a relevant button or select it from a drop down menu
       (use "Search module" to find the command);
-  <li>for the display (d.*) commands use wxGUI, 
-      for other commands type or paste (Paste or Shift Insert) command 
+  <li>for the display (d.*) commands use wxGUI,
+      for other commands type or paste (Paste or Shift Insert) command
       with all options into Command console and Enter
       (useful when you are running out of time, but you will learn less); you can use Up/Down
       arrows on your keyboard to retrieve previously run command, if you want to re-run it with
@@ -22,10 +22,10 @@ for other commands (r.*, g.*, v.*) type the command name into Command console
 </UL>
 <P><i>Screenshot-based tutorial demonstrates these options:</i> <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">
 <b>Getting started with GRASS GIS using wxGUI</b></a>
-<br><i>Older, but may be still useful:</i><a href="http://courses.ncsu.edu/mea582/common/media/02/getting_started_GUI_1.mov"> Getting started, video (36MB)</a>, the screen capture is done on Mac with GRASS6.4.1RC1.
-<P>Instructions for both 
-<b><font color="#000066"><a href="http://grass.osgeo.org/grass70/manuals/wxGUI.html"> wxpython GUI</a></font></b> 
-and command line approach are provided in the introductory assignments, but the instructions will be mostly command line later on. 
+<!--<br><i>Older, but may be still useful:</i><a href="http://courses.ncsu.edu/mea582/common/media/02/getting_started_GUI_1.mov"> Getting started, video (36MB)</a>, the screen capture is done on Mac with GRASS6.4.1RC1.-->
+<P>Instructions for both
+<b><font color="#000066"><a href="http://grass.osgeo.org/grass70/manuals/wxGUI.html"> wxpython GUI</a></font></b>
+and command line approach are provided in the introductory assignments, but the instructions will be mostly command line later on.
 Feel free to use the approach that suits you the best.
 For a quick reference, here are the wxGUI equivalents for the d.* commands:</font>
 <P> in GRASS GIS Layer Manager
@@ -49,7 +49,7 @@ in GRASS GIS Map Display
 </ul>
 <i>
 The d.* commands throughout the assignments indicate which map layers should be included
-in the output map, d.out.file indicates which map should be saved for the report. 
+in the output map, d.out.file indicates which map should be saved for the report.
 The CLI instructions can also be used for running the assignments on LINUX and Mac as scripts.
 <P>
 </i>
@@ -60,12 +60,12 @@ GRASS uses the concept of LOCATION, MAPSET, region to support
 efficient analysis and modeling without the need to subset and resample
 data. LOCATION is a project space that has common coordinate system.
 Each LOCATION can have several MAPSETS, one is called PERMANENT
-to store baseline data, others are set by users. You can modify 
+to store baseline data, others are set by users. You can modify
 the data only in your current MAPSET, but you can view or copy
-data from other MAPSETS. See also 
+data from other MAPSETS. See also
 <a href="
 http://grass.osgeo.org/grass70/manuals/helptext.html">
-Structure of GRASS database</a>. <b>DO NOT MOVE</b> the files under 
+Structure of GRASS database</a>. <b>DO NOT MOVE</b> the files under
 LOCATION directory using non-GRASS tools.
 <P>
 
@@ -104,25 +104,25 @@ for automatic rendering of maps is checked on<br>
 you can also use the first button "Display map" in Map Display to render maps<br>
 <!-- # Command Line display version for X11 users: type into linux window
 # First, open monitor x0 and erase it to set it to computational region
-# then display raster map in 2D 
+# then display raster map in 2D
 </font>
 d.mon x0
 d.erase
 -->
 
 <pre><code>
-d.rast elevation 
+d.rast elevation
 </code></pre>
 
 <p>
 display elevation as a colored shaded map<br>
 in GIS Manager "Add various raster maps layers>Add shaded relief map layer"<br>
-select "elevation_shade" as shaded relief map and "elevation" as drape map<br>
+select "elevation_shade" as shaded relief map and "elevation" as color map<br>
 under Optional tab set Percent to brighten to 30, click OK<br>
 Command line equivalent: paste into Command console and Enter<br>
 
 <pre><code>
-d.shade reliefmap=elevation_shade drapemap=elevation brighten=30
+d.shade shade=elevation_shade color=elevation brighten=30
 </code></pre>
 
 <p>
@@ -182,7 +182,7 @@ and selecting Zoom to selected map(s).
 <!--
 # command line equivalents
 </font>
-d.what.rast 
+d.what.rast
 d.what.vect -x
 d.zoom
 -->

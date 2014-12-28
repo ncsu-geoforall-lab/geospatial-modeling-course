@@ -3,11 +3,11 @@ Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
 GRASS GIS overview and manual</a>
 
 <P><B>Topic: Geospatial Analysis I: global, zonal and focal operations, map algebra</B></P>
-<!--<p><B>Task: compute summaries, use map algebra to analyze, modify and derive new maps, 
+<!--<p><B>Task: compute summaries, use map algebra to analyze, modify and derive new maps,
 explain difference between operations on discrete and continuous data
 </B></p>-->
 <!-- TODO
-- try to redefine below into larger meaningful examples 
+- try to redefine below into larger meaningful examples
 - improve the SRTM difference example to show the impact of 0, null on univar
 - test and improve the MASK examples
 -->
@@ -15,8 +15,8 @@ On MSWindows, it is recommended to use wxGUI equivalents of d.* commands:</font>
 use their GUI equivalents,
 see assignment <a href="data_visualization.html">Data display and visualization</a>
 <p>
-To start the GUI for a given command, just type or paste the name of the command 
-into Comand console and Enter. Read the manual page for each new command to learn what it does 
+To start the GUI for a given command, just type or paste the name of the command
+into Comand console and Enter. Read the manual page for each new command to learn what it does
 and what the options mean. You can find the manual page under Manual tab in the command GUI
 or use the
  <a href="http://grass.osgeo.org/grass70/manuals/index.html">GRASS manual.</a>
@@ -47,9 +47,9 @@ Save the report in a text file: Output window > Save<br>
 Use fixed width font (e.g., Courier, Andale Mono  in your report to preserve formatting)<br>
 
 <pre><code>
-g.region rast=landuse96_28m res=12 -ap
+g.region raster=landuse96_28m res=12 -ap
 r.report landuse96_28m unit=c,h,p
-g.region rast=landuse96_28m res=30 -ap
+g.region raster=landuse96_28m res=30 -ap
 r.report landuse96_28m unit=c,h,p
 </code></pre>
 
@@ -69,9 +69,9 @@ add legends using Add legend in GUI (the pannel may open behind your map display
 reminder: d.out.file means Save to graphics file for your report<br>
 
 <pre><code>
-g.region rast=slope -p
+g.region raster=slope -p
 r.stats.zonal base=basin_50K cover=slope method=average output=slope_avgbasin
-r.colors slope_avgbasin co=gyr
+r.colors slope_avgbasin color=gyr
 d.rast slope_avgbasin
 d.legend slope_avgbasin at=90,50,5,8
 d.vect streams color=15:25:110
@@ -83,7 +83,7 @@ Compute zonal statistics maps representing most common land use for each basin<b
 When adding legend, make sure you define "List of discrete category numbers"<br>
 
 <pre><code>
-g.region rast=landuse96_28m -p
+g.region raster=landuse96_28m -p
 r.mode base=basin_50K cover=landuse96_28m out=landuse96_modebasin
 d.rast landuse96_modebasin
 d.vect streams
@@ -99,7 +99,7 @@ for d.erase: Zoom to computational region and switch off previous map layers<br>
 How diverse is land use in NCSU area?  Would you change it?<br>
 
 <pre><code>
-g.region rast=landuse96_28m -p
+g.region raster=landuse96_28m -p
 r.info -g landuse96_28m
 r.neighbors landuse96_28m out=lu_divers method=diversity size=7
 d.erase
@@ -116,7 +116,7 @@ for d.erase: Zoom to computational region and switch off previous map layers<br>
 How would size of the neighborhood influence the result?<br>
 
 <pre><code>
-g.region rast=elev_srtm_30m -p
+g.region raster=elev_srtm_30m -p
 r.neighbors elev_srtm_30m out=elev_srtm30m_sm5 method=average size=5
 d.rast elev_srtm_30m
 d.rast elev_srtm30m_sm5
@@ -131,9 +131,9 @@ patch raster tiles for lidar based, 6m res. DEM for Centennial Campus<br>
 on MS VISTA you need to have UAC (User Account Control) disabled to run r.patch<br>
 
 <pre><code>
-g.region rast=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m -p
+g.region raster=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m -p
 r.patch in=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m out=elevlidD_6m
-r.colors elevlidD_6m rast=elevation
+r.colors elevlidD_6m raster=elevation
 d.erase
 d.rast elevlidD_6m
 </code></pre>
@@ -142,7 +142,7 @@ d.rast elevlidD_6m
 patching discrete raster layers over continuous raster<br>
 
 <pre><code>
-g.region rast=elev_ned_30m -p
+g.region raster=elev_ned_30m -p
 r.patch roadsmajor,facility,lakes,elevation out=composite
 </code></pre>
 
@@ -187,14 +187,14 @@ explain the difference between floating point and integer<br>
 handling in ndvi1, ndvi2 and ndvi3 result<br>
 
 <pre><code>
-g.region rast=lsat7_2002_40 -p
+g.region raster=lsat7_2002_40 -p
 r.mapcalc "ndvi1 = (lsat7_2002_40 - lsat7_2002_30) / (lsat7_2002_40 + lsat7_2002_30)"
 r.mapcalc "ndvi2 = 1.0 * (lsat7_2002_40 - lsat7_2002_30) / (lsat7_2002_40 + lsat7_2002_30)"
 r.mapcalc "ndvi3 = float(lsat7_2002_40 - lsat7_2002_30) / float(lsat7_2002_40 + lsat7_2002_30)"
 r.info -r ndvi1
 r.info -r ndvi2
 r.info -r ndvi3
-r.colors ndvi3 co=ndvi
+r.colors ndvi3 color=ndvi
 d.rast ndvi3
 d.out.file ndvi3
 </code></pre>
@@ -204,7 +204,7 @@ explore the difference between the SRTM DSM and lidar-based NED DEM<br>
 compute the map of elevation differences<br>
 
 <pre><code>
-g.region rast=elev_ned_30m -p
+g.region raster=elev_ned_30m -p
 r.mapcalc "srtm_ned30_dif = elev_srtm_30m - elev_ned_30m"
 </code></pre>
 
@@ -250,11 +250,11 @@ the srtm_ned30_dif map or numbers provided by r.univar?<br>
 # what is the mean and range of differences when using 0 and NULL?
 </font>
 g.copy rast=elev_srtm_30m,myelev_srtm_30m
-g.region rast=myelev_srtm_30m -p
+g.region raster=myelev_srtm_30m -p
 d.rast myelev_srtm_30m
 r.null myelev_srtm_30m setnull=0.
 r.mapcalc mysrtm_ned30_dif=myelev_srtm_30m-elev_ned_30m
-r.colors mysrtm_ned30_dif rast=srtm_ned30_dif
+r.colors mysrtm_ned30_dif raster=srtm_ned30_dif
 d.rast srtm_ned30_dif
 d.rast mysrtm_ned30_dif
 r.univar myelev_srtm_30m
@@ -265,7 +265,7 @@ create map of urban areas (high density and low density class)<br>
 with 0 class elsewhere<br>
 
 <pre><code>
-g.region rast=landuse96_28m -p
+g.region raster=landuse96_28m -p
 r.mapcalc "urban1_30m = if(landuse96_28m == 1,1,0) + if(landuse96_28m == 2,2,0)"
 d.rast urban1_30m
 d.legend urban1_30m at=10,30,5,8
@@ -305,7 +305,7 @@ set the region, display the input maps and create a MASK<br>
 for d.erase: Zoom to computational region and switch off previous map layers<br>
 
 <pre><code>
-g.region rast=elevation -p
+g.region raster=elevation -p
 d.erase
 d.rast elevation
 d.rast landuse96_28m
@@ -325,7 +325,7 @@ rename MASK to disable it, and display basin_50K again<br>
 to show that the MASK was removed<br>
 
 <pre><code>
-g.rename rast=MASK,maskfile
+g.rename raster=MASK,maskfile
 d.rast basin_50K
 </code></pre>
 
@@ -358,7 +358,7 @@ use map algebra to create map subsets<br>
 change region to the airphoto tile 792 and resolution 10m<br>
 
 <pre><code>
-g.region rast=ortho_2001_t792_1m res=10 -ap
+g.region raster=ortho_2001_t792_1m res=10 -ap
 d.erase
 d.rast ortho_2001_t792_1m
 </code></pre>
@@ -374,9 +374,6 @@ d.rast elevation_792_10m
 <p>
 zoom out to see that it is a subset<br>
 
-<pre><code>
-</code></pre>
-
 <p>
 Work with NULL and MASK<br>
 p. 103-104<br>
@@ -390,11 +387,10 @@ d.rast elevation
 </code></pre>
 
 <p>
-remove mask - any of the two commands below should work<br>
+remove mask<br>
 
 <pre><code>
-r.mask -r 
-g.remove rast=MASK
+r.mask -r
 </code></pre>
 
 <p>
@@ -411,7 +407,7 @@ working with relative coordinates<br>
 enter the expression on a single line without \<br>
 
 <pre><code>
-g.region rast=elev_srtm_30m -p
+g.region raster=elev_srtm_30m -p
 d.erase
 r.mapcalc "elev_srtm30m_smooth = (elev_srtm_30m[-1,-1]   \
            + elev_srtm_30m[-1,0] + elev_srtm_30m[-1,1] \
@@ -425,9 +421,9 @@ assign the resulting map the same color table as the original<br>
 compare global statistics<br>
 
 <pre><code>
-r.colors elev_srtm30m_smooth rast=elev_srtm_30m
+r.colors elev_srtm30m_smooth raster=elev_srtm_30m
 r.univar elev_srtm_30m
 r.univar elev_srtm30m_smooth
 d.rast elev_srtm_30m
 d.rast elev_srtm30m_smooth
-</div>
+</code></pre>

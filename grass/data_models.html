@@ -183,7 +183,7 @@ v.info -c schools_wake
 v.to.rast schools_wake out=schools_cap_200m use=attr attrcol=CORECAPACI type=point
 d.rast schools_cap_200m
 d.vect streets_wake co=grey
-d.legend raster=schools_cap_200m at=70,30,2,6
+d.legend schools_cap_200m at=70,30,2,6
 </code></pre>
 
 <p>
@@ -199,7 +199,7 @@ g.region res=30 -p
 d.erase
 v.to.rast streets_wake out=streets_speed_30m use=attr attrcol=SPEED type=line
 d.rast streets_speed_30m 
-d.legend raster=streets_speed_30m at=5,30,2,5 use=25,35,45,55,65 
+d.legend streets_speed_30m at=5,30,2,5 use=25,35,45,55,65 
 </code></pre>
 
 <p>

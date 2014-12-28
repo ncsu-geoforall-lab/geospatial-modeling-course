@@ -1,6 +1,6 @@
 <P>
 Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>, 
+GRASS GIS overview and manual</a>,
 <a href="http://liblas.org/"> libLAS tools for lidar data conversions</a>
 <P>
 <P><B>Topic: Geomorphometry I: Terrain Modeling</B></P>
@@ -163,8 +163,8 @@ can you find out where is this outlier coming from?<br>
 
 <pre><code>
 g.region res=3 -ap
-v.surf.rst elev_lid793016_be elev=elev_lid793016_be_3ft npmin=120 segmax=25
-v.surf.rst elev_lid793016_1r elev=elev_lid793016_1r_3ft npmin=120 segmax=25 ten=100 smo=0.5
+v.surf.rst elev_lid793016_be elevation=elev_lid793016_be_3ft npmin=120 segmax=25
+v.surf.rst elev_lid793016_1r elevation=elev_lid793016_1r_3ft npmin=120 segmax=25 tension=100 smooth=0.5
 r.mapcalc "elev_lid793016_1r_3ft_fix = if(elev_lid793016_1r_3ft>500,500,elev_lid793016_1r_3ft)"
 r.colors elev_lid793016_1r_3ft_fix co=elevation
 d.rast elev_lid793016_be_3ft
@@ -235,4 +235,3 @@ nviz elev_lidrural_1m,elev_lidrurfirst_1m
 -->
 
 </div>
-    
