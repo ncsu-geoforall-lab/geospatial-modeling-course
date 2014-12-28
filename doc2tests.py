@@ -94,6 +94,8 @@ set -o xtrace
 d.mon cairo
 """
 
+replaced_files = []
+
 sys.stdout.write(code_for_beginning)
 
 previous_code_line = None
@@ -105,7 +107,9 @@ for line in fileinput.input():
     if file_path_match:
         path = file_path_match.group(1)
         name = file_path_match.group(2)
-        code_replacemets.append((re.compile(name), path))
+        if not name in replaced_files and not path.startswith('http'):
+            replaced_files.append(name)
+            code_replacemets.append((re.compile('=' + name), '=' + path))
 
     if html_comment_start.search(line) and not html_comment_end.search(line):
         in_html_comment = True
