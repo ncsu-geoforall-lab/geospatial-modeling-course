@@ -1,145 +1,107 @@
+<h2>Data acquisition and integration</h2>
 <p>Resources:
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
+<p>
+Instructions:
+LMC, RMC mean left and right mouse click.
 
-<pre><code>
-Topic: Some preliminaries:
-
-</code></pre>
+The geodatabases: ncshape.mdb, ncrast.mdb. If you don't already have these
+geodatabases downloaded, you can find them here:
+<a href="http://courses.ncsu.edu/mea582/common/media/01/ncshape_geodatabase02_15_10.zip">ncshape</a>,
+<a href="http://courses.ncsu.edu/mea582/common/media/01/ncrast_geodatabase_08_31_09.zip">ncrast</a>.
 
 <p>
-Instructions:<br>
-
-<pre><code>
-	LMC, RMC mean left and right mouse click 
-
-</code></pre>
-
+You can put the geodatabases in any suitable directory where you have permissions to write
+and in these instructions we will refer to this directory C:\Users\myname\arcdata.
 <p>
-What you'll need:<br>
+Move both geodatabases to the directory: C:\Users\myname\arcdata
 
-<pre><code>
-	the geodatabases: ncshape.mdb, ncrast.mdb. If you don't already have these
-	geodatabases downloaded, you can find them here:
-        <a href="http://courses.ncsu.edu/mea582/common/media/01/ncshape_geodatabase02_15_10.zip">ncshape</a>
-        <a href="http://courses.ncsu.edu/mea582/common/media/01/ncrast_geodatabase_08_31_09.zip">ncrast</a>
-
-</code></pre>
-
-<p>
-You can put the geodatabases in any suitable directory where you have permissions to write<br>
-and in these instructions we will refer to this directory C:\Users\myname\arcdata<br>
-
-
-<pre><code>
-	Move both geodatabases to the directory: C:\Users\myname\arcdata
-
-
-</code></pre>
-
-<p>
-Task: Get briefly familiar with ArcGIS 10<br>
-
-
-<pre><code>
+<h3>Data management</h3>
 Start ArcMap:  Start->Programs->ArcGIS->ArcMap 10.
 Click the Cancel button to dismiss the Getting Started dialog.
 
-</code></pre>
+<p>
+Adding data to ArcMap:
+Add the Bridges feature class (located in ncshape.gdb) to your project.
+Examine the descriptive attributes associated with the bridge features.
+
+<pre>
+RMC on the Bridges entry in the Table of Contents and select Open Attribute Table from
+the context menu.</pre>
+<ul><li>How many attributes (data fields) are associated with the Bridges feature class?</li>
+<li>How many bridges are shown in the Bridges feature class?</li></ul>
+
 
 <p>
-Adding data to ArcMap<br>
+Create a new geodatabase to store data:
 
-<pre><code>
-Add the Bridges feature class (located in ncshape.gdb) to your project. 
-
-</code></pre>
-
-<p>
-Examine the descriptive attributes associated with the bridge features.<br>
-
-<pre><code>
-RMC on the Bridges entry in the Table of Contents and select Open Attribute Table from 
-the context menu.
-		-How many attributes (data fields) are associated with the Bridges feature class?
-		-How many bridges are shown in the Bridges feature class?
-
-
-</code></pre>
+<pre>
+Find the Catalog tab along the right side of the ArcMap map window and LMC to expand.
+Navigate in the catalog tree to C:\Users\myname\arcdata.
+Create a new folder called 'Assign1' in the arcdata folder.
+RMC on the newly minted Assign1 folder icon in the Catalog window and
+choose New -> File Geodatabase from the context menu.
+Name it 'Assign1'.
+</pre>
 
 <p>
-Create a new geodatabase to store data<br>
+Copy data from one geodatabase to another:
 
-<pre><code>
-Find the Catalog tab along the right side of the ArcMap map window and LMC to expand
-Navigate in the catalog tree to C:\Users\myname\arcdata
-Create a new folder called 'Assign1' in the arcdata folder
-RMC on the newly minted Assign1 folder icon in the Catalog window and 
-choose New->File Geodatabase from the context menu
-Name it 'Assign1'
-
-</code></pre>
-
-<p>
-copy data from one geodatabase to another<br>
-
-<pre><code>
+<pre>
 Open ncshape.mdb geodatabase in the [Arc]catalog tree
-LMC on ncshape.mdb to open it
-
-</code></pre>
-
-<p>
-copying a feature class from one geodatabase to another.<br>
-
-<pre><code>
-Find and RMC bridges->Copy
-Navigate to the Assign1 geodatabase; On the geodatabase icon: RMC->Paste
-Click 'OK' in the Data Transfer dialog
-	#NOTE: you can also remove the data layer using the same menu
-
-</code></pre>
+LMC on ncshape.mdb to open it.
+</pre>
 
 <p>
-Converting a feature class to a shape file.<br>
+Copy a feature class from one geodatabase to another:
 
-<pre><code>
-Open ncshape.mdb in the ArcCatalog window
-RMC bridges->Export->To Shapefile (single)
-Set Output Location to C:\Users\myname\arcdata\Assign1 (your Assign1 folder)
-Set output Feature Class to 'bridges_shp'
-Click 'OK'
-
-</code></pre>
+<pre>
+Find and RMC bridges->Copy.
+Navigate to the Assign1 geodatabase; On the geodatabase icon: RMC -> Paste.
+Click 'OK' in the Data Transfer dialog.
+</pre>
+<p>
+Note: you can also remove the data layer using the same menu
 
 <p>
-Find information about your data<br>
+Convert a feature class to a shape file:
 
-<pre><code>
-Add the bridges feature class from the Assign1 geodatabase (the original bridges 
-feature class from ncshape and the newly created bridges shape file should already 
-be in your project's table of contents (TOC). If not, add these two, as well. 
+<pre>
+Open ncshape.mdb in the ArcCatalog window.
+RMC bridges->Export->To Shapefile (single).
+Set Output Location to C:\Users\myname\arcdata\Assign1 (your Assign1 folder).
+Set output Feature Class to 'bridges_shp'.
+Click 'OK'.
+</pre>
 
+<h3>Metadata</h3>
+<p>
+Find information about your data:
+<p>
+Add the bridges feature class from the Assign1 geodatabase (the original bridges
+feature class from ncshape and the newly created bridges shape file should already
+be in your project's table of contents (TOC). If not, add these two, as well.
+
+<pre>
 RMC bridges (the first one listed in the TOC)->Properties
 From the Layer Properties Source tab:
 		-What is the data type?
 		-What is the Geometry Type for the bridges feature class?
 		-What is the Coordinate System and Map Projection?
 		-What are the Linear Units?
-		-What is the geographic Extent (i.e. xMin, xMax, yMin, yMax) of the data? 
-	
+		-What is the geographic Extent (i.e. xMin, xMax, yMin, yMax) of the data?
+
 	Repeat the above for each of the remaining two data layers in the TOC.
 		-What is/are the differences between the three layers?
-	
-	
-</code></pre>
+</pre>
 
 <p>
-View and add some (simple) Metadata<br>
+View and add some (simple) Metadata:
 
-<pre><code>
+<pre>
 From within the expanded Catalog tab in ArcMap, RMC on Bridges feature class in the
-Assign1 geodatabase and select Item Description. Here, in the dialog that displays, 
+Assign1 geodatabase and select Item Description. Here, in the dialog that displays,
 you can obtain some basic metadata describing your feature class/layer. More importantly
 perhaps, it is also where you can add metadata (albeit only a tiny subset of what is
 recommended) describing the data you create. Since this is an important, yet so often
@@ -158,149 +120,128 @@ or your own similar content, to the fields:
 
 	Description field: "This ARCGIS point feature class contains locations and select
 	non-maintenance related record information for North Carolina Department of Transportation
-	maintained bridges and flyovers (highway overpasses). Points represent the geographic 
-	center (centroid) of the bridge structure. Data is stored in the North Carolina State 
+	maintained bridges and flyovers (highway overpasses). Points represent the geographic
+	center (centroid) of the bridge structure. Data is stored in the North Carolina State
 	Plane Coordinate System (NAD83 - EPSG: 32119)."
 
 	Credits field: "North Carolina Department of Transportation - Geography and GIS Group"
 
 	User Limitation field: "There are no restrictions on use of these data."
 
-	RMC->Save
+RMC->Save
+</pre>
+<p>
+This is a quick way to associate some important information (metadata) with your new data.
+Consider adding these few simple descriptors to each permanent layer that you create.
 
-	This is a quick way to associate some important information (metadata) with your new data.
-	Consider adding these few simple descriptors to each permanent layer that you create.
+<h3>Data view and symbology</h3>
+<p>
+Adding Raster Data into Data Frame:
 
-
-</code></pre>
+<pre>
+File->Data->Add Data...
+Navigate to the ncrast.mdb geodatabase and add the elev raster layer
+</pre>
 
 <p>
-Adding Raster Data into Data Frame<br>
+Turn the Bridges Layers Off:
 
-<pre><code>
-	File->Data->Add Data... 
-	Navigate to the ncrast.mdb geodatabase and add the elev raster layer
-
-</code></pre>
-
-<p>
-Turn the Bridges Layers Off<br>
-
-<pre><code>
-LMC the check boxes (to remove the existing checks) next to each of the three bridge entries
-in the TOC.
-
-</code></pre>
+<pre>
+LMC the check boxes (to remove the existing checks) next to each
+of the three bridge entries in the TOC.
+</pre>
 
 <p>
-Zoom to the elev raster layer.<br>
+Zoom to the elev raster layer:
 
-<pre><code>
+<pre>
 RMC on elev and select Zoom to Layer
-
-</code></pre>
+</pre>
 
 <p>
-Change color scheme<br>
+Change color scheme:
 
-<pre><code>
+<pre>
 RMC elev->Properties and select the 'Symbology' tab
-Change the Color Ramp (Color Ramp drop down menu) to one that represents elevation intuitively 
-(it makes sense to you)
-
-</code></pre>
+Change the Color Ramp (Color Ramp drop down menu) to one that
+represents elevation intuitively (it makes sense to you)
+</pre>
 
 <p>
-Add hillshade data into the data frame<br>
+Add hillshade data into the data frame:
 
-<pre><code>
+<pre>
 File->Data->Add Data...
 Add elev_sh from the ncrast.mdb geodatabase
-
-</code></pre>
+</pre>
 
 <p>
-Change the transparency of the hillshade<br>
+Change the transparency of the hillshade:
 
-<pre><code>
+<pre>
 RMC elev_sh->Properties
 Click on the 'Display' Tab
 Set Transparency to 70%
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-Display vector points and lines<br>
+Display vector points and lines:
 
-<pre><code>
-File->Data->Add Data... 
+<pre>
+File->Data->Add Data...
 Add streets_wake, roadsmajor, schools_wake from the ncshape.mdb geodatabase
 Hint: press and hold the control key to add multiple data layers
-
-</code></pre>
+</pre>
 
 <p>
-Change the line style<br>
+Change the line style:
 
-<pre><code>
+<pre>
 RMC roadsmajor->Properties and select 'Symbology' tab
 Click on the button displaying the current symbol
 Change the color to red and the width to 1.6
 Click 'OK'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-Change the point style<br>
+Change the point style:
 
-<pre><code>
-LMC directly on the symbol for schools_wake in the Table of Contents (shortcut to the 
+<pre>
+LMC directly on the symbol for schools_wake in the Table of Contents (shortcut to the
 symbol selector)
 Select 'School 1' It's about half way down in the symbol palette
 Change the size to 14
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-Trim the Vector Display to Match the Raster's Geographic Extent<br>
+Trim the Vector Display to Match the Raster's Geographic Extent:
 
-<pre><code>
+<pre>
 RMC Layers at the top of the TOC
 Select Properties->Data Frame->Clip Options->Clip to shape
 LMC Specify Shape button
 LMC Custom Extent
 Uncheck the Degrees Check box
-Enter the following in the top, botton, left, and right fields, 
+Enter the following in the top, botton, left, and right fields,
 respectively: 228500, 215000, 630000, 645000. (FYI: These coordinates define
 the geographic extent of the elev and elev_sh raster layers.)
 Click 'OK'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-Your display should now clip the roads and schools data so that these only<br>
-
-<pre><code>
+Your display should now clip the roads and schools data so that these only:
 display in the are covered by the elev and hillshade rasters.
 
-</code></pre>
-
 <p>
-Save the map for your report<br>
+Save the map for your report:
 
-<pre><code>
+<pre>
 LMC File->Export map  (Save the file to your Assign1 workspace as pdf or png)
-
-</code></pre>
+</pre>
 
 <p>
-Exit ArcMap<br>
-
-<pre><code>
-You can choose to save your project, if you wish, however, it's not necessary 
- 
- </div>
+Exit ArcMap. You can choose to save your project, if you wish, however, it's not necessary.
