@@ -1,14 +1,13 @@
+<h2>Data acquisition and integration - explore the provided data set in GRASS GIS</h2>
 <p>Resources:
 <a href="http://grass.osgeo.org/grass70/manuals/index.html">
 GRASS GIS overview and manual</a>
-</p>
-<p><b>Topic: Data acquisition and integration - explore the provided data set in GRASS GIS</b><br>
 <P>
 You can run GRASS several ways using its graphical user interface (wxGUI) and command line interface (CLI):
 <UL>
   <LI><b>RECOMMENDED: </b>for display (d.*) commands use wxGUI,
 for other commands (r.*, g.*, v.*) type the command name into Command console
-(see tab on the bottom of GIS Layer Manager) and Enter to open its GUI;
+(see tab on the bottom of Layer Manager) and Enter to open its GUI;
   <li>run everything through wxGUI: start the command using a relevant button or select it from a drop down menu
       (use "Search module" to find the command);
   <li>for the display (d.*) commands use wxGUI,
@@ -17,24 +16,26 @@ for other commands (r.*, g.*, v.*) type the command name into Command console
       (useful when you are running out of time, but you will learn less); you can use Up/Down
       arrows on your keyboard to retrieve previously run command, if you want to re-run it with
       different options;
-  <li>paste the command with the options into the linux shell (you can copy/paste multiple
-      commands at once and run the assignemnt as a script)
+  <li>when running on Linux or Mac, paste the command with the options into the shell (you can copy/paste multiple
+      commands at once)
 </UL>
-<P><i>Screenshot-based tutorial demonstrates these options:</i> <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">
+<P>
+<i>Screenshot-based tutorial demonstrates these options:</i> <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">
 <b>Getting started with GRASS GIS using wxGUI</b></a>
 <!--<br><i>Older, but may be still useful:</i><a href="http://courses.ncsu.edu/mea582/common/media/02/getting_started_GUI_1.mov"> Getting started, video (36MB)</a>, the screen capture is done on Mac with GRASS6.4.1RC1.-->
-<P>Instructions for both
+<P>
+Instructions for both
 <b><font color="#000066"><a href="http://grass.osgeo.org/grass70/manuals/wxGUI.html"> wxpython GUI</a></font></b>
 and command line approach are provided in the introductory assignments, but the instructions will be mostly command line later on.
 Feel free to use the approach that suits you the best.
 For a quick reference, here are the wxGUI equivalents for the d.* commands:</font>
-<P> in GRASS GIS Layer Manager
+<P> In GRASS GIS Layer Manager
 <ul>
  <li>d.rast: <font color="#000066">Add raster map layer</font>
  <li>d.vect: <font color="#000066">Add vector map layer</font>
- <li>d.shade: <font color="#000066">Add various raster map layers>Add shaded relief map</font>
+ <li>d.shade: <font color="#000066">Add various raster map layers > Add shaded relief map</font>
 </ul>
-in GRASS GIS Map Display
+In GRASS GIS Map Display
 <ul>
 <!--
  <li>d.what.rast: <font color="#000066">Query raster map</font>
@@ -50,95 +51,90 @@ in GRASS GIS Map Display
 <i>
 The d.* commands throughout the assignments indicate which map layers should be included
 in the output map, d.out.file indicates which map should be saved for the report.
+You might already have the right map layers in your Layer Manager, so you don't have to load them again.
 The CLI instructions can also be used for running the assignments on LINUX and Mac as scripts.
-<P>
 </i>
-</font>
-</p><p>
+
+<p>
 Before starting with GRASS it is important to understand that
-GRASS uses the concept of LOCATION, MAPSET, region to support
+GRASS uses the concept of LOCATION, MAPSET and computational region to support
 efficient analysis and modeling without the need to subset and resample
 data. LOCATION is a project space that has common coordinate system.
 Each LOCATION can have several MAPSETS, one is called PERMANENT
 to store baseline data, others are set by users. You can modify
 the data only in your current MAPSET, but you can view or copy
-data from other MAPSETS. See also
+data from other MAPSETS. Suggested workflow is to create a new mapset for each assignment
+and do all computations there.
+See also
 <a href="
 http://grass.osgeo.org/grass70/manuals/helptext.html">
 Structure of GRASS database</a>. <b>DO NOT MOVE</b> the files under
 LOCATION directory using non-GRASS tools.
-<P>
 
-start GRASS - click on GRASS icon<br>
-
+<h3>Start GRASS GIS</h3>
+<p>
+Start GRASS - click on GRASS icon.
 <pre><code>
 grass70
 </code></pre>
 
 <p>
-in startup pannel<br>
-set <b>GIS Data Directory</b> to path to datasets, for example, C:\Users\myname\grassdata<br>
-for <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters)<br>
-for <b>Accessible mapset</b> create a new mapset (called e.g. assignments) or use user1<br>
-click <b>Start GRASS</b><br>
-Display data in 2D and 3D<br>
+In startup pannel set <b>GIS Data Directory</b> to path to datasets,
+for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.
+For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_1) and
+click <b>Start GRASS</b>.
 
-first set working region<br>
-in GUI: Settings > Region > Set Region<br>
-Set from named region > swwake_30m > Run > Close<br>
-or paste in the command console:<br>
+<h3>Display data in 2D</h3>
+First set working region
+in GUI: Settings > Region > Set Region.
+Set current region from named region > select swwake_30m > Run > Close
+or paste in the command console:
 
 <pre><code>
 g.region swwake_30m -p
 </code></pre>
 
 <p>
-display elevation map in 2D<br>
-in GIS Layer Manager click "Add raster layer" button<br>
-select raster elevation, click OK<br>
-in Map Display<br>
-click "Zoom to computational region extent"<br>
-
-note: make sure the Render button (lower right corner)<br>
-for automatic rendering of maps is checked on<br>
-you can also use the first button "Display map" in Map Display to render maps<br>
-<!-- # Command Line display version for X11 users: type into linux window
-# First, open monitor x0 and erase it to set it to computational region
-# then display raster map in 2D
-</font>
-d.mon x0
-d.erase
--->
+Display elevation map:
+In Layer Manager click "Add raster layer" button,
+select raster elevation and click OK.
+In Map Display click "Zoom to computational region extent".
+Make sure the Render button (lower right corner)
+for automatic rendering of maps is checked on.
+You can also use the first button "Display map" in Map Display to render maps.
+Alternatively, you can add raster layer by pasting this command in the command console:
 
 <pre><code>
 d.rast elevation
 </code></pre>
 
 <p>
-display elevation as a colored shaded map<br>
-in GIS Manager "Add various raster maps layers>Add shaded relief map layer"<br>
-select "elevation_shade" as shaded relief map and "elevation" as color map<br>
-under Optional tab set Percent to brighten to 30, click OK<br>
-Command line equivalent: paste into Command console and Enter<br>
+Display elevation as a colored shaded map:
+In Layer Manager click on Add various raster maps layers > Add shaded relief map layer,
+select "elevation_shade" as shaded relief map and "elevation" as color map.
+Under Optional tab set Percent to brighten to 30 and click OK.
+Command line equivalent: paste into Command console and Enter:
 
 <pre><code>
 d.shade shade=elevation_shade color=elevation brighten=30
 </code></pre>
 
 <p>
-check the range of elevation values of the entire map<br>
+Now check the range of elevation values of the entire map.
+Either by pasting the following command in the command console or right clicking
+on the elevation raster layer and selecting Metadata in the context menu.
 
 <pre><code>
 r.info -r elevation
 </code></pre>
 
 <p>
-display vector line and point maps<br>
-in GIS manager click "Add vector map layer" button<br>
-select "streets_wake", click OK<br>
-adjust the colors, line widths, symbols by clicking on relevant tabs<br>
-on Mac pull up the slider from black to white to get the<br>
-colors in the circle<br>
+Display vector line and point maps:
+In Layer Manager click Add vector map layer button,
+select "streets_wake" and click OK.
+Adjust the colors, line widths, symbols by clicking on relevant tabs.
+Add additional maps:
 
 <pre><code>
 d.vect streets_wake
@@ -147,57 +143,48 @@ d.vect schools_wake icon=basic/circle size=10 fcol=blue
 </code></pre>
 
 <p>
-save the displayed map<br>
-in Map Display click "Save display to graphic file"<br>
+Save the displayed map:
+in Map Display click "Save display to graphic file".
 
 <pre><code>
 d.out.file mymap
 </code></pre>
 
+<h3>Display data in 3D</h3>
+This is just a quick preview: We will explore 3D visualization in 3rd assignment.
 <p>
-for 3D visualization in GRASS6.4.3RC2  and later<br>
-in GIS layer Manager: check-off the elevation_shade layer, keep the elevation raster on<br>
-in GIS Map Display: switch 2D view to 3D view<br>
-increase viewing height with slider, rotate puck to south<br>
-Click Data tab and set Fine mode resolution to 1, to get the full resolution surface<br>
-Save the image by clicking on "Save display to graphic file" (tiff support is required)<br>
-This is just a quick preview: We will explore 3D visualization in 3rd assignment<br>
+In Layer Manager check off the elevation_shade layer, but keep the elevation raster on.
+In Map Display switch 2D view to 3D view.
+After the 3D mode is loaded, increase viewing height with slider, rotate puck to the south.
+Click Data tab and set Fine mode resolution to 1, to get the full resolution surface.
+Save the image by clicking on "Save display to graphic file" (tiff support is required)
+or take screenshot.
 
-<pre><code>
-</code></pre>
-
+<h3>Data view and query</h3>
+To get familiar with query and zoom tools, set the view back to 2D.
+Querying data means finding out the values in raster maps
+or attributes in vector maps at a location selected by mouse.
+In Layer Manager select the map layer(s) to query by clicking on it.
+In Map Display click button "Query raster/vector map(s)" and
+click on a map at locations where you want to know the values/attributes.
 <p>
-
-To get familiar with query and zoom tools, set the view back to 2D<br>
-Query data: find out the values in raster maps<br>
-or attributes in vector maps at a location selected by mouse<br>
-In Layer Manager select the map to query<br>
-in Map Display click button "Query raster/vector map(s)"<br>
-click on a map at locations where you want to know the values/attributes<br>
-
-in Map Display explore the options to zoom<br>
-zoom-in, zoom-out, zoom to map, zoom to region<br>
+In Map Display explore the options to zoom:
+zoom-in, zoom-out, zoom to selected map, zoom to computational region.
 You can also zoom to specific map layer by right clicking on the layer
 and selecting Zoom to selected map(s).
-<!--
-# command line equivalents
-</font>
-d.what.rast
-d.what.vect -x
-d.zoom
--->
-Display statewide DEM, county boundaries and climate stations<br>
-in GUI: Settings > Region > Set Region<br>
-Set from named region > nc_500m > Run > Close<br>
-in Map Display: Zoom to computational region<br>
-in GIS Layer Manager: Add raster layer elev_state_500m,<br>
-Add vector map layer precip_30ynormals, set the symbol to marker<br>
-Add vector map layer boundary_county,<br>
-to display only county boundary, under tab "Selection" switch off areas<br>
-rearrange the layers by mouse if needed<br>
+<p>
+Now display statewide DEM, county boundaries and climate stations.
+In Layer Manager menu find: Settings > Region > Set Region.
+In g.region dialog find Set current region from named region > select nc_500m > Run > Close.
+In Map Display click on Zoom to computational region.
+In Layer Manager click on Add raster layer, select elev_state_500m.
+Add vector map layer precip_30ynormals, set the symbol to basic/marker.
+Add vector map layer boundary_county,
+to display only county boundary, under tab "Selection" switch off areas.
+Rearrange the layers by mouse if needed.
 
-command line equivalent is below<br>
-when running from command console, skip d.erase, Zoom to computational region instead<br>
+The command line equivalent is below.
+when running from command console, skip d.erase, Zoom to computational region instead.
 
 <pre><code>
 g.region nc_500m -p
@@ -208,30 +195,30 @@ d.vect boundary_county type=boundary
 d.out.file nc_precip_stations
 </code></pre>
 
+<h3>Managing data</h3>
+We will learn how to find more information about the data, copy and rename maps.
 <p>
-Learn how to find more information about the data, copy and rename maps<br>
-
-list raster, vector and region data in the provided database<br>
-in GUI: File -> Manage maps and volumes -> List<br>
+List raster, vector and region (saved extents) data in the provided database:<br>
+In GUI: File > Manage maps > List.
 
 <pre><code>
 g.list -f type=raster,vector,region
 </code></pre>
 
 <p>
-list only vector maps starting with "s"<br>
-in GUI: File -> Manage Maps -> List<br>
-In tab Required -> select vector map(s) and in tab Pattern<br>
-type s* for "Map name search pattern"<br>
+List only vector maps starting with "s":<br>
+In GUI: File -> Manage Maps -> List.<br>
+In tab Required -> select vector map(s)
+and in tab Pattern type s* for "Map name search pattern".
 
 <pre><code>
 g.list type=vector pattern="s*"
 </code></pre>
 
 <p>
-find the working coordinate system, spatial extent<br>
-in GUI: Settings -> Map projections -> Display map projection<br>
-in GUI: Settings -> Region -> Display Region<br>
+Find the working coordinate system and spatial extent:<br>
+In GUI: Settings -> Map projections -> Display map projection<br>
+In GUI: Settings -> Region -> Display Region<br>
 
 <pre><code>
 g.proj -p
@@ -239,10 +226,11 @@ g.region -pl
 </code></pre>
 
 <p>
-copy, rename and remove maps<br>
+Find out how to copy, rename and remove maps:<br>
 GUI: File -> Manage maps-> Copy -> select/type in names from,to<br>
 GUI: File -> Manage maps-> Rename -> select/type in names from,to<br>
-GUI: File -> Manage maps-> Delete -> select type and name and check Force removal<br>
+GUI: File -> Manage maps-> Delete -> select type and name and check Force removal.<br>
+Note that you can only remove maps from the current working mapset.
 
 <pre><code>
 g.copy raster=geology_30m,mygeology
@@ -252,10 +240,9 @@ g.remove type=raster name=mygeology_30m -f
 </code></pre>
 
 <p>
-note: you can only remove maps from the current working mapset<br>
-find information about individual maps layers and their attributes<br>
-in GUI: right click raster layer "elevation", select Metadata<br>
-right click vector layer "streets_wake", select Metadata, Show attribute data<br>
+Find information about individual maps layers and their attributes:<br>
+In GUI: right click raster layer "elevation", select Metadata,
+right click vector layer "streets_wake", select Metadata, Show attribute data.
 
 <pre><code>
 r.info elevation
@@ -264,6 +251,5 @@ v.info -c streets_wake
 </code></pre>
 
 <p>
-You can save your project into a GRASS workspace file *.gxw under File>Workspace>Save as<br>
-
- </div>
+All data (maps) are stored in your GRASS database directory.
+You can save your project into a GRASS workspace file *.gxw under File > Workspace > Save as.
