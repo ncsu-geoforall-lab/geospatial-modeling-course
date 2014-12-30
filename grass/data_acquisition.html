@@ -42,7 +42,7 @@ In GRASS GIS Map Display
  <li>d.what.vect: <font color="#000066">Query vector map</font>
 -->
  <li>d.zoom: <font color="#000066"> Zoom options</font>
- <li>d.erase: <font color="#000066">Zoom to computational region extent, switch off previous layers</font>
+ <li>d.erase: <font color="#000066">Remove all previous layers</font>
  <li>d.out.file: <font color="#000066">Save display to graphic file</font>
  <li>d.barscale: <font color="#000066">Add map elements > Show/hide scale bar</font>
  <li>d.legend: <font color="#000066">Add map elements > Show/hide legend</font>
@@ -73,7 +73,7 @@ LOCATION directory using non-GRASS tools.
 
 <h3>Start GRASS GIS</h3>
 <p>
-Start GRASS - click on GRASS icon.
+Start GRASS - click on GRASS icon or on Linux type:
 <pre><code>
 grass70
 </code></pre>
@@ -87,9 +87,10 @@ click <b>Start GRASS</b>.
 
 <h3>Display data in 2D</h3>
 First set working region
-in GUI: Settings > Region > Set Region.
-Set current region from named region > select swwake_30m > Run > Close
-or paste in the command console:
+in GUI: <br>
+<em>Settings > Region > Set Region >
+Set current region from named region > select swwake_30m > Run > Close</em>
+or alternatively, paste in the command console:
 
 <pre><code>
 g.region swwake_30m -p
@@ -97,13 +98,13 @@ g.region swwake_30m -p
 
 <p>
 Display elevation map:
-In Layer Manager click "Add raster layer" button,
-select raster elevation and click OK.
-In Map Display click "Zoom to computational region extent".
+<p>
+In Layer Manager > <em>Add raster layer button</em> > select raster "elevation" > OK.<br>
+In Map Display > <em>Zoom to computational region extent</em>.<br>
 Make sure the Render button (lower right corner)
 for automatic rendering of maps is checked on.
-You can also use the first button "Display map" in Map Display to render maps.
-Alternatively, you can add raster layer by pasting this command in the command console:
+You can also use the first button <em>Display map</em> in Map Display to render maps.
+<p>Alternatively, you can add raster layer by pasting this command in the command console:
 
 <pre><code>
 d.rast elevation
@@ -111,9 +112,11 @@ d.rast elevation
 
 <p>
 Display elevation as a colored shaded map:
-In Layer Manager click on Add various raster maps layers > Add shaded relief map layer,
-select "elevation_shade" as shaded relief map and "elevation" as color map.
-Under Optional tab set Percent to brighten to 30 and click OK.
+<p>
+In Layer Manager > <em>Add various raster maps layers</em> > <em>Add shaded relief map layer</em> >
+select "elevation_shade" as shaded relief map and "elevation" as color map.<br>
+Under <em>Optional</em> tab set <em>Percent to brighten</em> to 30 > OK.
+<p>
 Command line equivalent: paste into Command console and Enter:
 
 <pre><code>
@@ -123,7 +126,7 @@ d.shade shade=elevation_shade color=elevation brighten=30
 <p>
 Now check the range of elevation values of the entire map.
 Either by pasting the following command in the command console or right clicking
-on the elevation raster layer and selecting Metadata in the context menu.
+on the elevation raster layer and selecting <em>Metadata</em> in the context menu.
 
 <pre><code>
 r.info -r elevation
@@ -131,10 +134,13 @@ r.info -r elevation
 
 <p>
 Display vector line and point maps:
-In Layer Manager click Add vector map layer button,
-select "streets_wake" and click OK.
+<p>
+In Layer Manager: <em>Add vector map layer button</em> >
+select "streets_wake" > OK.
 Adjust the colors, line widths, symbols by clicking on relevant tabs.
-Add additional maps:
+Add additional maps ("roadsmajor", "schools_wake").
+<p>
+These are the command line equivalents:
 
 <pre><code>
 d.vect streets_wake
@@ -143,8 +149,8 @@ d.vect schools_wake icon=basic/circle size=10 fill_color=blue
 </code></pre>
 
 <p>
-Save the displayed map:
-in Map Display click "Save display to graphic file".
+Save the displayed map:<br>
+In Map Display click <em>Save display to graphic file</em>.
 
 <pre><code>
 d.out.file mymap
@@ -156,8 +162,8 @@ This is just a quick preview: We will explore 3D visualization in 3rd assignment
 In Layer Manager check off the elevation_shade layer, but keep the elevation raster on.
 In Map Display switch 2D view to 3D view.
 After the 3D mode is loaded, increase viewing height with slider, rotate puck to the south.
-Click Data tab and set Fine mode resolution to 1, to get the full resolution surface.
-Save the image by clicking on "Save display to graphic file" (tiff support is required)
+Click Data tab and set <em>Fine mode resolution</em> to 1, to get the full resolution surface.
+Save the image by clicking on <em>Save display to graphic file</em> (tiff support is required)
 or take screenshot.
 
 <h3>Data view and query</h3>
@@ -165,26 +171,29 @@ To get familiar with query and zoom tools, set the view back to 2D.
 Querying data means finding out the values in raster maps
 or attributes in vector maps at a location selected by mouse.
 In Layer Manager select the map layer(s) to query by clicking on it.
-In Map Display click button "Query raster/vector map(s)" and
+In Map Display click button <em>Query raster/vector map(s)</em> and
 click on a map at locations where you want to know the values/attributes.
 <p>
 In Map Display explore the options to zoom:
-zoom-in, zoom-out, zoom to selected map, zoom to computational region.
+<em>zoom-in, zoom-out, zoom to selected map, zoom to computational region</em>.
 You can also zoom to specific map layer by right clicking on the layer
 and selecting Zoom to selected map(s).
 <p>
-Now display statewide DEM, county boundaries and climate stations.
-In Layer Manager menu find: Settings > Region > Set Region.
-In g.region dialog find Set current region from named region > select nc_500m > Run > Close.
-In Map Display click on Zoom to computational region.
-In Layer Manager click on Add raster layer, select elev_state_500m.
-Add vector map layer precip_30ynormals, set the symbol to basic/marker.
+Now display statewide DEM, county boundaries and climate stations:
+<p>
+  Remove all map layers from Layer Manager.<br>
+In Layer Manager menu: <em>Settings > Region > Set Region</em>.<br>
+In g.region dialog: <em>Set current region from named region</em> >
+select "nc_500m" > <em>Run</em> > <em>Close</em>.<br>
+In Map Display: <em>Zoom to computational region</em>.<br>
+In Layer Manager: <em>Add raster layer</em> > select "elev_state_500m".<br>
+Add vector map layer "precip_30ynormals", set the symbol to basic/marker.<br>
 Add vector map layer boundary_county,
-to display only county boundary, under tab "Selection" switch off areas.
+to display only county boundary, under tab <em>Selection</em> switch off areas.
 Rearrange the layers by mouse if needed.
-
+<p>
 The command line equivalent is below.
-when running from command console, skip d.erase, Zoom to computational region instead.
+When running from command console, skip d.erase and instead remove all maps layers from Layer Manager.
 
 <pre><code>
 g.region nc_500m -p
@@ -200,6 +209,7 @@ We will learn how to find more information about the data, copy and rename maps.
 <p>
 List raster, vector and region (saved extents) data in the provided database:<br>
 In GUI: File > Manage maps > List.
+<p> Or paste the following command into command console:
 
 <pre><code>
 g.list -f type=raster,vector,region
@@ -207,19 +217,19 @@ g.list -f type=raster,vector,region
 
 <p>
 List only vector maps starting with "s":<br>
-In GUI: File -> Manage Maps -> List.<br>
-In tab Required -> select vector map(s)
-and in tab Pattern type s* for "Map name search pattern".
-
+In GUI: <em>File</em> > <em>Manage Maps</em> > <em>List</em>.<br>
+In tab <em>Required</em> -> select type vector map(s)
+and in tab <em>Pattern</em> type s* for <em>Map name search pattern</em>.
+<p> Or paste the following command into command console:
 <pre><code>
 g.list type=vector pattern="s*"
 </code></pre>
 
 <p>
 Find the working coordinate system and spatial extent:<br>
-In GUI: Settings -> Map projections -> Display map projection<br>
-In GUI: Settings -> Region -> Display Region<br>
-
+In GUI: <em>Settings</em> > <em>Map projections</em> > <em>Display map projection</em><br>
+In GUI: <em>Settings</em> > <em>Region</em> > <em>Display Region</em><br>
+<p> Or paste the following command into command console:
 <pre><code>
 g.proj -p
 g.region -pl
@@ -227,10 +237,11 @@ g.region -pl
 
 <p>
 Find out how to copy, rename and remove maps:<br>
-GUI: File -> Manage maps-> Copy -> select/type in names from,to<br>
-GUI: File -> Manage maps-> Rename -> select/type in names from,to<br>
-GUI: File -> Manage maps-> Delete -> select type and name and check Force removal.<br>
+GUI: <em>File</em> > <em>Manage maps</em> > <em>Copy</em> > select/type in names from,to<br>
+GUI: <em>File</em> > <em>Manage maps</em> > <em>Rename</em> > select/type in names from,to<br>
+GUI: <em>File</em> > <em>Manage maps</em> > <em>Delete</em> > select type and name and check <em>Force removal</em>.<br>
 Note that you can only remove maps from the current working mapset.
+<p> Or paste the following command into command console:
 
 <pre><code>
 g.copy raster=geology_30m,mygeology
@@ -241,8 +252,10 @@ g.remove type=raster name=mygeology_30m -f
 
 <p>
 Find information about individual maps layers and their attributes:<br>
-In GUI: right click raster layer "elevation", select Metadata,
-right click vector layer "streets_wake", select Metadata, Show attribute data.
+In GUI: right click raster layer "elevation", select <em>Metadata</em>,
+right click vector layer "streets_wake", select <em>Metadata</em>, <em>Show attribute data</em>.
+
+<p> Or paste the following command into command console:
 
 <pre><code>
 r.info elevation
@@ -252,4 +265,4 @@ v.info -c streets_wake
 
 <p>
 All data (maps) are stored in your GRASS database directory.
-You can save your project into a GRASS workspace file *.gxw under File > Workspace > Save as.
+You can save your project into a GRASS workspace file *.gxw under <em>File</em> > <em>Workspace</em> > <em>Save as</em>.
