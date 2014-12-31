@@ -1,90 +1,92 @@
-<p>Resources: 
+<h2>Data display and visualization</h2>
+<p>Resources:
 <a href="http://grass.osgeo.org/grass70/manuals/index.html">
 GRASS GIS overview and manual</a>
-</p>
-<P><B>Topic: Data display and visualization</B></P>
+
 <P>
 <i>Screen captures for 3D visualization with wxnviz in GRASS6.4.3RC2 (similar to GRASS7)</i><br>
-<a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz1_edit1large.mov"> Visualization in GRASS I: surface (71MB)</a><br> 
-<a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz2_edit2.mov"> Visualization in GRASS II: draping points and lines (45MB)</a><br> 
+<a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz1_edit1large.mov"> Visualization in GRASS I: surface (71MB)</a><br>
+<a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz2_edit2.mov"> Visualization in GRASS II: draping points and lines (45MB)</a><br>
 <a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz3_edit.mov"> Visualization in GRASS III: cutting planes (62MB)</a><br>
 <!--
 <P>
 If you are using GRASS6.4.3 or later you can switch to 3D view within your map display
 and create visualizations shown in the video using a new GUI written in wxpython.
-See the 
+See the
 <a href="http://grass.osgeo.org/grass70/manuals/html70_user/wxGUI.Nviz.html">
 <b>Manual</b> and links to related wiki page and videos there</a>
 </P>
 -->
 <P>
 <i>
-The assignment includes both GUI (buttons and menus) and command-line workflow, you can use 
+The assignment includes both GUI (buttons and menus) and command-line workflow, you can use
 any of those or their combination, based on the task that you are doing (no need to do both).
 On MSWindows, it  is recommended to use wxGUI equivalents of d.* commands: </i></font>
 <P> in GRASS GIS Layer Manager
 <ul>
- <li>d.rast : <font color="#000066">Add raster map layer</font>
- <li>d.vect : <font color="#000066">Add vector map layer</font>
- <li>d.shadedmap : <font color="#000066">Add various raster map layers>Add shaded relief map</font>
+ <li>d.rast: <font color="#000066">Add raster map layer</font></li>
+ <li>d.vect: <font color="#000066">Add vector map layer</font></li>
+ <li>d.shaded: <font color="#000066">Add various raster map layers>Add shaded relief map</font></li>
 </ul>
 in GRASS GIS Map Display
 <ul>
 <!-- <li>d.what.rast : <font color="#000066">Query raster map</font>
  <li>d.what.vect -x : <font color="#000066">Query vector map</font> -->
- <li>d.zoom : <font color="#000066"> Zoom options</font>
- <li>d.erase : <font color="#000066">Zoom to computational region, erase display</font>
- <li>d.out.file : <font color="#000066">Save display to graphic file</font>
- <li>d.barscale : <font color="#000066">Add map elements > Add scalebar</font>
- <li>d.legend : <font color="#000066">Add map elements > Add legend</font>
+<li>d.zoom: <font color="#000066"> Zoom options</font></li>
+<li>d.erase: <font color="#000066">Remove all previous layers</font></li>
+<li>d.out.file: <font color="#000066">Save display to graphic file</font></li>
+<li>d.barscale: <font color="#000066">Add map elements > Show/hide scale bar</font></li>
+<li>d.legend: <font color="#000066">Add map elements > Show/hide legend</font></li>
+<li>d.northarrow: <font color="#000066">Add map elements > Show/hide north arrow</font></li>
 </ul>
-<i>
-<b>To find additional GUI button equivalents for d.* commands 
-<font color="#990000">Read GUI help </font></b>
+<i>To find additional GUI button equivalents for d.* commands
+<font color="#990000">Read GUI help </font>
 </i>
 </font>
 
+<p>
+In startup pannel set <b>GIS Data Directory</b> to path to datasets,
+for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.
+For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_3) and
+click <b>Start GRASS</b>.
+
 <pre><code>
-grass70 
+grass70
 </code></pre>
 
-<p>
-in the startup pannel<br>
-GIS data directory: type path to GRASS datasets<br>
-LOCATION: select nc_spm_08<br>
-MAPSET: use mapset with your unity ID or user1<br>
-Enter GRASS<br>
+<h3>Visualization in 3D perspective</h3>
 
-<b>Visualization in 3D perspective</b><br>
-
-p. 273-280 in GRASSbook<br>
-set the region to the raster elevation<br>
-interactively view elevation raster and vector data (streams, usgsgauges) in 3D space,<br>
-adjust viewing position, surface properties and lighting to highlight features<br>
+<!-- p. 273-280 in GRASSbook<br> -->
+Set the region to the raster "elevation".
 
 <pre><code>
 g.region raster=elevation -p <!--nviz elevation vector=roadsmajor point=schools_wake-->
 </code></pre>
 
 <p>
-remove or switch off any map layers in the layer manager<br>
-Add raster elevation, Add vector streams, Add vector usgsgauges<br>
-Zoom to computational region<br>
-Switch to 3d view<br>
-follow the video Visualization I and II for similar tasks (link is above)<br>
-save 2-3 images for your report<br>
-(save as tiff or take screenshot, if you don't have tiff support)<br>
+Interactively view "elevation" raster and vector data ("streams", "usgsgauges") in 3D view,
+adjust viewing position, surface properties and lighting to highlight features.
+<p>
+Remove or switch off any map layers in the Layer Manager.
+Then add raster "elevation", Add vector "streams", Add vector "usgsgauges".<br>
+Zoom to computational region and Switch to 3D view.<br>
+<p>
+Follow the video Visualization I and II for similar tasks (link is above) and
+save 2-3 images for your report
+(save as tiff or take screenshot, if you don't have tiff support).
 
-It is recommended to quit GRASS before starting the task below<br>
-because we will be working with a smaller, high resolution region<br>
-
+<h4>Visualizing multiple surfaces</h4>
 Visualize multiple surfaces (bare earth and surface with vegetation and structures),<br>
 analyze their relationship using crossections generated by interactive cutting planes<br>
-
-start GRASS7 with LOCATION nc_spm_08 and your previous MAPSET<br>
-First set region to rural_1m, then interpolate surface with vegetation<br>
-from multiple return lidar points using the module v.surf.rst<br>
-(we will explain interpolation later on)<br>
+<p>
+It is recommended to quit GRASS before starting the task below
+because we will be working with a smaller, high resolution region.
+<p>
+Start GRASS7 with your previous MAPSET.
+First set region to "rural_1m", then interpolate surface with vegetation
+from multiple return lidar points using the module <em>v.surf.rst</em>
+(we will explain interpolation later on).
 
 <pre><code>
 g.region rural_1m -p
@@ -92,29 +94,30 @@ v.surf.rst elev_lidrural_mrpts elevation=elev_lidruralmr_1m npmin=120 segmax=25 
 </code></pre>
 
 <p>
-In GIS layer manager Add rasters elev_lidrural_mrpts and elev_lid792_1m (bare earth)<br>
-In Map Display Zoom to computational region<br>
-make sure that you have only the two elevation maps switched on in the layer manager<br>
-Switch to 3d view and follow the video Visualization III (link is above)<br>
-save 2-3 interesting images for your report, include at least one crossection<br>
+In Layer Manager Add rasters "elev_lidrural_mrpts" and "elev_lid792_1m" (bare earth).
+In Map Display <em>Zoom to computational region</em>.
+<p>
+Make sure that you have only the two elevation maps switched on in the Layer Manager.
+Switch to 3D view and follow the video Visualization III (link is above).
+Save 2-3 interesting images for your report, include at least one crossection.
 <!--nviz elev_lidruralmr_1m,elev_lid792_1m-->
 
-<b>Basic 2D display operations</b><br>
-GUI is recommended for the tasks below,<br>
-see the GUI equivalents for selected d* commands above,<br>
-the command line is to indicate the workflow and output<br>
+<h3>Basic 2D display operations</h3>
+GUI is recommended for the tasks below,
+see the GUI equivalents for selected d* commands above,
+the command line is to indicate the workflow and output.
 
-p. 84-85<br>
-Display subsets of data:<br>
-visualy explore relation between developed areas and topography<br>
-
-Display land use categories 1, 2 (developed land) over shaded topography<br>
-Settingsa> Region > Set region > Set region to match this raster > landuse96_28m<br>
-Add raster > elevation_shade<br>
-Add raster > landuse96_28m > Selection > List of cats to display > 1,2<br>
-Zoom to computational region<br>
-Right click on landuse96_28m and Change opacity to show topography blended with landuse<br>
-Save display to graphic file<br>
+<!-- p. 84-85<br> -->
+<h4>Display subsets of data</h4>
+Visualy explore relation between developed areas and topography.
+<p>
+Display land use categories 1, 2 (developed land) over shaded topography.<br>
+<em>Settings</em> > <em>Region</em> > <em>Set region</em> > <em>Set region to match this raster</em> > select "landuse96_28m".<br>
+<em>Add raster</em> > select "elevation_shade".<br>
+<em>Add raster</em> > select "landuse96_28m" > <em>Selection</em> > <em>List of cats to display</em> > 1,2.<br>
+<em>Zoom to computational region</em>.<br>
+Right click on "landuse96_28m" map layer and <em>Change opacity</em> to show topography blended with landuse.
+Save display to graphic file.
 
 <pre><code>
 g.region raster=landuse96_28m -p
@@ -124,21 +127,21 @@ d.rast landuse96_28m values=1,2
 d.out.file landuse_elev
 </code></pre>
 
-<p>
 <!--
 <font color="#000066">
 # Following the example above
-# display elevations with values within intervals <50,80> and <120,160> over geology 
+# display elevations with values within intervals <50,80> and <120,160> over geology
 # elevation is continuous field map, so we use val instead of cat for Selection
 # set opacity level for the elevation to 50% to see the underlying geology
 </font>
 d.rast geology_30m
 d.rast elevation val=50-80,120-160 -o
 -->
-Change colors for raster maps (there are many ways how to do it see <a href="http://grass.osgeo.org/grass70/manuals/r.colors.html"><b>r.colors</b> manual</a>)<br>
-
-first create your own copy of the elevation map (see the command below)<br>
-display it by Add raster > myelev<br>
+<h4>Change colors for raster maps</h4>
+There are many ways how to do it see <a href="http://grass.osgeo.org/grass70/manuals/r.colors.html"><b>r.colors</b> manual</a>).
+<p>
+First create your own copy of the elevation map (see the command below).<br>
+Display it by Add raster > "myelev".
 
 <pre><code>
 g.copy raster=elevation,myelev
@@ -146,10 +149,10 @@ d.rast myelev
 </code></pre>
 
 <p>
-set the color table to a predefined one, for example bgyr (blue,green,yellow,red)<br>
-GUI options: Right Click on the raster layer in Layer Mmanager<br>
-myelev > Set color table > Define > Name of color table > bgyr > Run<br>
-if you don't see the new colors - click the second button in Map Display to redraw<br>
+Set the color table to a predefined one, for example "bgyr" (blue, green, yellow, red).
+<p>
+GUI options: Right Click on the raster layer "myelev" in Layer Manager > <em>Set color table</em> > <em>Define</em> > <em>Name of color table</em> > "bgyr" > <em>Run</em>.<br>
+If you don't see the new colors - click the second button in Map Display to redraw.
 
 <pre><code>
 r.colors myelev color=bgyr
@@ -157,19 +160,20 @@ d.rast myelev
 </code></pre>
 
 <p>
-change the color table interactively using rules<br>
-in the Layer Manager click  Raster->Manage colors->Color rules<br>
-select raster map myelev<br>
-Click on colored squares to change the color, click Preview<br>
-if it looks good - click OK<br>
-
-To create color table for future multiple uses<br>
-type the rules into a plain text mycolor.txt file<br>
-using a text editor (TextEdit, Notepad), for example:<br>
+Change the color table interactively using rules:
+<p>
+In the Layer Manager manu click <em>Raster</em> > <em>Manage colors</em> > <em>Manage Color rules interactively</em>.<br>
+Select raster map "myelev".<br>
+Click on colored squares to change the color, click <em>Preview</em>.<br>
+If it looks good - click OK.
+<p>
+To create color table for future multiple uses
+type the rules into a plain text mycolor.txt file
+using a text editor (TextEdit, Notepad), for example:
 
 <pre>
 50 blue
-70 aqua    
+70 aqua
 90 green
 110 yellow
 130 orange
@@ -177,69 +181,70 @@ using a text editor (TextEdit, Notepad), for example:<br>
 </pre>
 
 <p>
-then assign it as follows:<br>
-right click on myelev > set color table > Define > Path to rules file > Run<br>
-if needed, redraw using the second button on Map Display<br>
-you can also create and assign the above color table by typing or pasting it into the<br>
-"enter values interactively" window<br>
-or run it from comand line (make sure you have the correct path)<br>
+Then assign it as follows:<br>
+Right click on "myelev" map layer > <em>set color table</em> > <em>Define</em> > <em>Path to rules file</em> > <em>Run</em>.<br>
+If needed, redraw using the second button on Map Display.
+You can also create and assign the above color table by typing or pasting it into the
+<em>enter values interactively</em> window
+or run it from comand line (make sure you have the correct path):
 
 <pre><code>
 r.colors myelev rules=/Users/helena/mycolor.txt
 </code></pre>
 
 <p>
-note that you can combine color RGB and name definitions<br>
-as well as % and cat/val to create complex custom color tables<br>
-and store them in a text file for future use, see the examples in r.colors man page<br>
+Note that you can combine color RGB and name definitions
+as well as % and cat/val to create complex custom color tables
+and store them in a text file for future use, see the examples in r.colors man page.
+<h4>
+Compare the use of equal interval and histogram equalized color table for slope</h4>
 
-compare the use of equal interval and histogram equalized color table for slope<br>
-To add the legend use Add legend button on Map display<br>
-under Set options,  make sure to change name of raster to myslope<br>
-to explain the difference between the two maps, you can generate a histogram<br>
-On map Display click on Analyze map>Create histogram to open the histogram tool<br>
-save results to graphics file<br>
+To add the legend use <em>Add map elements</em> button on Map Display.
+Make sure to change name of raster to "myslope".
+<p>
+To explain the difference between the two maps, you can generate a histogram.
+On map Display click on <em>Analyze map</em> > <em>Create histogram</em> to open the histogram tool and
+save results to graphics file.
 
 <pre><code>
 g.copy raster=slope,myslope
 r.colors myslope color=bgyr
 d.rast myslope
 d.legend myslope
+d.histogram myslope
 d.out.file myslopecolor
 r.colors -e myslope color=bgyr
 d.histogram myslope
-d.out.file myslopecolor
+d.out.file myslopecolorequalized
 </code></pre>
 
-<p>
-Modify legend, scale and grid<br>
-
-To re-size the legend for myslope, right click on the legend,<br>
-select Resize legend and resize with mouse.<br>
-Alternatively you can resize by double clicking on legend to launch the legend dialog<br>
-and set options > Optional > Placement >50,90,4,7.<br>
+<h3>Modify legend, scale and grid</h3>
+To re-size the legend for myslope, right click on the legend,
+select Resize legend and resize with mouse.
+Alternatively you can resize by selecting <em>Pointer</em> mode in Map Display, double clicking on legend to launch the legend dialog
+and set options > <em>Optional</em> > <em>Placement</em> > 50,90,4,7.<br>
 Numbers are bottom,top,left,right as percentage of screen coordinates.<br>
-add units to the legend: Add map elements > Add text layer > Enter text > type deg > OK<br>
-add barscale on Map Display: Add map elements > Show/hide north arrow (double click on it to change it)<br>
+Add units to the legend: <em>Add map elements</em> > <em>Add text layer</em> > type deg > OK.<br>
+Add barscale on Map Display: <em>Add map elements</em> > <em>Show/hide north arrow</em> (double click on it to change it).<br>
+<p>
+Note: you can use horizontal legends by using Placement at=6,10,2,30
+or just stretch it horizontally with mouse.
 
 <pre><code>
-d.barscale 
+d.barscale
 d.legend myslope at=50,90,4,7
 </code></pre>
 
 <p>
-note: you can use horizontal legends by using Placement at=6,10,2,30<br>
-or just stretch it horizontally with mouse<br>
-you can stretch your map display vertically to create white space above and below the image<br>
-
-Switch off myslope, display myelev raster and change the legend to myelev raster<br>
-Add grid for state plane coordinates at 5000m with ticks at 1000m<br>
-Also add a lat/long grid at 2 arc minute interval<br>
-In Layer Manager > Add grid  or vector labels> Add grid layer > Size 5000 > Run<br>
-To draw only border with ticks: change Size to 1000 and click Disable > Disable grid drawing > Run<br>
-switch off disable grid drawing<br>
-To draw lat/long grid: set Required > Size to 0:02 click Draw > Draw geographic grid > Run<br>
-command line alternative<br>
+Switch off "myslope", display "myelev" raster and change the legend to "myelev" raster.
+Add grid for state plane coordinates at 5000m with ticks at 1000m.
+Also add a lat/long grid at 2 arc minute interval.
+<p>
+In Layer Manager > <em>Add various overlays</em> > <em>Add grid layer</em> > Size 5000 > Run.<br>
+To draw only border with ticks: change Size to 1000 and click <em>Disable</em> > <em>Disable grid drawing</em> > Run.<br>
+Switch off <em>Disable grid drawing</em>.<br>
+To draw lat/long grid: set <em>Required</em> > Size to 0:02 > click <em>Draw</em> > <em>Draw geographic grid</em> > Run.<br>
+Command line alternative:
 
 <pre><code>
 d.rast myelev
@@ -250,31 +255,29 @@ d.grid -g size=0:02 color=black
 d.out.file myelevmap
 </code></pre>
 
-<p>
-Display color composite<br>
-GUI: Add various raster-based layers > Add RGB<br>
+<h3>Display color composite</h3>
+In Layer Manager: <em>Add various raster map layers</em> > <em>Add RGBmap layer</em>.<br>
 
 <pre><code>
-d.rgb red=lsat7_2002_30 green=lsat7_2002_20 blue=lsat7_2002_10 
+d.rgb red=lsat7_2002_30 green=lsat7_2002_20 blue=lsat7_2002_10
 d.vect roadsmajor color=yellow
 d.out.file mylandsat
 </code></pre>
 
-<p>
-Export NC precipitation stations data to kml and post in Google Earth<br>
-If your are running the command in GUI do not forget to click point for data type<br>
-To view the data in Google Earth just drag and drop the kml file in the Google Earth window<br>
+<h3>Export NC precipitation stations data to kml and post in Google Earth</h3>
+If your are running the command in GUI do not forget to click point for data type.
+To view the data in Google Earth just drag and drop the kml file in the Google Earth window.
 
 <pre><code>
 g.region nc_500m
 v.out.ogr precip_30ynormals output=c:\temp\precipitation.kml format=KML type=point
 </code></pre>
 
-<p>
-Optional - please test these tasks and report whether they worked without problems<br>
-View and download orthophoto through web mapping service<br>
-first change region to the small rural area and display the provided orthophoto<br>
-
+<h3>Optional part</h3>
+Please test these tasks and report whether they worked without problems:
+<h4>Add WMS layer</h4>
+View and download orthophoto through web mapping service.
+First change region to the small rural area and display the provided orthophoto.
 
 <pre><code>
 g.region rural_1m -p
@@ -282,25 +285,28 @@ d.rast ortho_2001_t792_1m
 </code></pre>
 
 <p>
-In Layer Manager toolbar Add web service layer<br>
-paste the link to the service into server field and press connect:<br>
-http://services.nconemap.com/arcgis/services/Imagery/Orthoimagery_All/ImageServer/WMSServer?<br>
+In Layer Manager toolbar <em>Add web service layer</em>.<br>
+Paste the link to the service into server field and press connect:<br>
+<pre>
+http://services.nconemap.com/arcgis/services/Imagery/Orthoimagery_All/ImageServer/WMSServer?
+</pre>
 Wait until GUI changes.<br>
-In list of layers, there should be Orthoimagery_All, click on that.<br>
+In list of layers, there should be "Orthoimagery_All", click on that.<br>
 Press Add layer button and wait.<br>
 The dialog can be closed afterwards.<br>
-
+<p>
 To save the layer:<br>
-Right click on the web service layer in Layer Manager - choose Save web service layer<br>
-In dialog, set the name of the layer  ortho_new and press Save layer.<br>
+Right click on the web service layer in Layer Manager - choose <em>Save web service layer</em>.
+In dialog, set the name of the layer ortho_new and press <em>Save layer</em>.<br>
 
-Use mapswipe to compare the new orthophoto with the ortho provided in the data set<br>
-File -> Map Swipe<br>
-Add raster > select ortho_2001_t792_1m and ortho_new<br>
-move slider to compare images - what changes do you observe?<br>
-save a screenshot of the mapswipe window showing the comparison of orthos<br>
-see more options here: http://grasswiki.osgeo.org/wiki/WxGUI_Map_Swipe<br>
-
+<h4>Map Swipe</h4>
+Use mapswipe to compare the new orthophoto with the ortho provided in the data set:<br>
+<em>File</em> > <em>Map Swipe</em>.<br>
+Add raster > select "ortho_2001_t792_1m" and "ortho_new".<br>
+<p>
+Move slider to compare images - what changes do you observe?
+Save a screenshot of the mapswipe window showing the comparison of orthos.
+See more options <a href="http://grasswiki.osgeo.org/wiki/WxGUI_Map_Swipe">here</a>.
 
 <p>
 <!--
@@ -310,7 +316,7 @@ see more options here: http://grasswiki.osgeo.org/wiki/WxGUI_Map_Swipe<br>
 g.region raster=elevation -p
 g.copy vect=streets_wake,mystreets
 v.colors mystreets column=SPEED color=rainbow
-d.vect -a mystreets 
+d.vect -a mystreets
 #
 # if the above does not work try this
 #
@@ -329,12 +335,12 @@ v.out.ogr precip_30ynormals dsn=c:\temp\precipitation.kml format=KML type=point
 <font color="#000066">
 # Draw thematic vector map showing number of children 10-14 in census blocks and school capacity
 # In GIS Layer Manager Add various vector maps > Add thematic layer
-# Tab Required > censusblk_swwake, Feature type > area, Name of attribute> P10_TO_14, 
+# Tab Required > censusblk_swwake, Feature type > area, Name of attribute> P10_TO_14,
 # Type of display>graduated_colors, Thematic divisions>interval, Color scheme > yellow-cyan
-# Tab Theme > Number of classes > 12, OK 
+# Tab Theme > Number of classes > 12, OK
 #
 # In GIS Layer Manager Add various vector maps > Add thematic layer
-# Required > schools_wake, Feature type > point, Name of attribute> CORECAPACI, 
+# Required > schools_wake, Feature type > point, Name of attribute> CORECAPACI,
 # Type of display>graduated_points, Thematic divisions>interval
 # Theme > Number of classes > 10
 # Points > Icon size > 3, Max icon size > 30
@@ -355,6 +361,3 @@ r.his h=basin_50K i=elevation_shade b=el_b g=el_g r=el_r
 r.composite b=el_b g=el_g r=el_r out=basins_shaded_10m
 d.rast basins_shaded_10m
 -->
-
-</div>
-
