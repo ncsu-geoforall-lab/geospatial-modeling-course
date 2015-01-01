@@ -14,7 +14,7 @@ Include resulting maps into your report
 <p>
 Compare resampling by nearest neighbor for discrete and continuous raster maps:
 
-<pre><code>
+<pre>
 File > Add Data > Add Data...
 select ncrast.mdb/elev_ned
 select ncrast.mdb/landcl96
@@ -32,24 +32,24 @@ Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\ned_10m_nn'
 Set 'Output Cell Size' to 10
 Set 'Resampling Technique' to 'NEAREST'
 Click 'OK'
-</code></pre>
+</pre>
 
 <p>
 Check the resampled elevation surface using the aspect map:
 
-<pre><code>
+<pre>
 Check out a Spatial Analysis Extension license: Customize Menu->Extensions
 
 Select 'Spatial Analyst Tools->Surface->Aspect'
 Set 'Input Surface' to 'ned_10m_nn'
 Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\aspect_10m_nn'
 Click 'OK'
-</code></pre>
+</pre>
 
 <p>
 Reinterpolate DEMs (continuous raster data) using bilinear and bicubic interpolation:
 
-<pre><code>
+<pre>
 Select 'Data Management Tools->Raster->Raster Processing->Resample'
 Set 'Input Raster' to 'elev_ned'
 Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\ned_10m_bi'
@@ -63,12 +63,12 @@ Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\ned_10m_bc'
 Set 'Output Cell Size' to 10
 Set 'Resampling Technique' to 'CUBIC'
 Click 'OK'
-</code></pre>
+</pre>
 
 <p>
 Check the interpolated elevation surface using aspect maps:
 
-<pre><code>
+<pre>
 'Spatial Analyst Tools->Surface->Aspect'
 Set 'Input Surface' to 'ned_10m_bi'
 Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\aspect_10m_bi'
@@ -78,37 +78,37 @@ Click 'OK'
 Set 'Input Surface' to 'ned_10m_bc'
 Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\aspect_10m_bc'
 Click 'OK'
-</code></pre>
+</pre>
 
 <p>
 Resampling to lower resolution (downscaling) for continuous field data:
 
-<pre><code>
+<pre>
 Select 'Spatial Analyst Tools->Neighborhood->Block Statistics'
 Set 'Input raster' to 'elev_ned'
 Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\el_100m_mean'
 Set Neighborhood' to 'Rectangle' with Height = 3 and Width = 3  (90m cells)
 Set Statistics type' to 'MEAN'
 Click 'OK'
-</code></pre>
+</pre>
 
 <p>
 Resampling to lower resolution (downscaling) for discrete categories:
 
 
-<pre><code>
+<pre>
 Select 'Spatial Analyst Tools->Neighborhood->Block Statistics'
 Set 'Input raster' to 'landcl96'
 Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\landcl_mode'
 Set Neighborhood' to 'Rectangle' with Height = 3 and Width = 3  (90m cells)
 Set Statistics type' to 'MAJORITY'
 Click 'OK'
-</code></pre>
+</pre>
 
 <h3>Convert Data from Vector to Raster using a working region</h3>
 Convert SW Wake subarea of geology layer to 30m raster.
 
-<pre><code>
+<pre>
 Select 'File->Add Data->Add Data...'
 Select ./ncshape.mdb/geology
 
@@ -119,31 +119,31 @@ Set Output Raster Dataset to 'C:\Users\myname\arcdata\assign2\rast_geo'
 Set Cellsize to 30
 Leave the remaining fields as their defaults
 Click 'OK'
-</code></pre>
+</pre>
 
 <p>
 Adjust the working region:
 
-<pre><code>
+<pre>
 Click 'Environments...' button (bottom of dialog)
 Under 'Processing Extent' Set the 'Extent' to 'Same as layer .\ncshape.mdb\wake_30m'
-</code></pre>
+</pre>
 
 <p>
 note: vector layers .\ncshape.mdb\streams and .\ncshape.mdb\swwake_10m<br>
 have the desired extent so use those if you don't have wake_30m<br>
 
-<pre><code>
+<pre>
 Click 'OK'
 Click 'OK'
 Click 'OK'
-</code></pre>
+</pre>
 
 <p>
 Convert SW Wake subset of streets_wake layer
 to 30m raster representing speed limit:
 
-<pre><code>
+<pre>
 Select 'File->Add Data->Add Data...'
 Select ./ncshape.mdb/streets_wake
 
@@ -153,34 +153,34 @@ Set Value Field to 'SPEED'
 Set Output Raster Dataset to 'C:\Users\myname\arcdata\assign2\rast_spdroads'
 Set Cellsize to 30
 Leave the remaining fields as their defaults
-</code></pre>
+</pre>
 
 <p>
 Adjust the working region:
 
-<pre><code>
+<pre>
 Click 'Environmnents...' button (bottom of dialog)
 Under 'Processing Extent' Set the 'Extent' to 'Same as layer .\ncshape.mdb\swwake_10m'
 Click 'OK'
 Click 'OK'
 Click 'OK'
-</code></pre>
+</pre>
 
 <p>
 Convert point data to raster:
 
-<pre><code>
+<pre>
 Select 'Conversion Tools->To Raster->Point To Raster'
 Set Input Features to .\ncshape.mdb\Schools_Wake
 Set Value Field to 'CORECAPACI'
 Set Output Raster Dataset to sw_rast
 Set Cellsize to 200
 Click 'OK'
-</code></pre>
+</pre>
 
 <h3>Convert Data from Raster to Vector</h3>
 
-<pre><code>
+<pre>
 File->Add Data->Add Data...
 Select ./ncrast.mdb/bas_50k
 # if raster bas_50k is floating point, convert the values to integer (check RMC on bas_50k-->Properties)
@@ -195,26 +195,26 @@ Set Input Raster to 'bas_50kint'
 Set Field to 'Value'
 Set 'Output Polygon Features' to 'C:\Users\myname\arcdata\assign2\bas_50Kpoly.shp'
 Click 'OK'
-</code></pre>
+</pre>
 
 <h3>
 Export data to format readable by other software</h3>
 
 Export vector data to shape file:
 
-<pre><code>
+<pre>
 From the Catalog Tab in ArcMap:
 Navigate to and open: ncshape.mdb
 RMC roadsmajor->Data->Export->To Shapefile (single)
 Set Output Location to C:\Users\myname\arcdata\assign2
 Set output Feature Class to 'roads_shp'
 Click 'OK'
-</code></pre>
+</pre>
 
 <p>
 Export raster data to grid ascii:
 
-<pre><code>
+<pre>
 Select 'Conversion Tools->From Raster->Raster to ASCII'
 Set Input Raster to ncrast.mdb\landcl96
 RMC landcl96 ->Data->Export->Raster to a Different Format...
@@ -224,4 +224,4 @@ Click 'OK'
 Navigate to 'C:\Users\myname\arcdata\assign2\ and open landcl96.asc in NotePad
 Examine the contents
 Close landcl96.asc
-</code></pre>
+</pre>
