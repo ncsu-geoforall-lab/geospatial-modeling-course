@@ -1,15 +1,14 @@
+<h2>Geospatial data models</h2>
+<!--Task: Resample raster data, convert between raster and vector data models-->
 <p>Resources: 
 <a href="http://grass.osgeo.org/grass70/manuals/index.html">
 GRASS GIS overview and manual</a>
 </p>
-<p><b>Topic: Geospatial data models<br>
-<!--Task: Resample raster data, convert between raster and vector data models-->
-</b></p>
+
 <p>
 <i>Command line (Cmd) instructions and selected  
-<b><font color="#000066"><a href="http://grass.osgeo.org/grass70/manuals/wxGUI.html">
-wxpython GUI</a></font></b>
-instructions are provided. 
+<a href="http://grass.osgeo.org/grass70/manuals/wxGUI.html">wxpython GUI</a>
+instructions are provided.
 </i><br>
 <b>On MSWindows, it is recommended to use wxGUI equivalents of d.* commands, such as:</b></i></font>
 <ul>
@@ -60,50 +59,76 @@ into the command console and then hit Enter to open the GUI panel<br>
 READ the manual page for each command you are using for the first time to learn<br>
 what it is doing and what the parameters mean</i><br>
 
-Resample the given raster map to higher and lower resolution (30m->10m, 30m->100m)<br>
-and compare resampling by nearest neighbor with bilinear and bicubic method<br>
+<h3>Resampling to higher resolution</h3>
 
-set the region to 30m resolution and display the 30m resolution elevation raster<br>
-to resample it to 10m resolution, first set the region to resolution 10m<br>
-then resample the raster using the nearest neighbor method<br>
-hint: to open the r.resamp.interp in gui, type or paste the module name into the command console<br>
-then Enter to open the GUI panel, don't forget to set the method to nearest under Optional tab<br>
+<p>
+Resample the given raster map to higher and lower resolution
+(30m->10m, 30m->100m) and compare resampling by nearest neighbor
+with bilinear and bicubic method. First, set the region to 30m resolution and
+display the 30m resolution elevation raster.
 
 <pre><code>
 g.region swwake_30m -p
 d.rast elev_ned_30m
+</code></pre>
+
+<p>
+To resample it to 10m resolution, first set the region to resolution 10m,
+then resample the raster using the nearest neighbor method.
+Hint: To open the r.resamp.interp in GUI, type or paste the module name
+into the <em>Command console</em>, then <em>Enter</em> to open the GUI panel,
+don't forget to set the method to nearest under <em>Optional</em> tab.
+
+<pre><code>
 g.region res=10 -p
 r.resamp.interp elev_ned_30m out=elev_ned10m_nn method=nearest
 </code></pre>
 
 <p>
+<!--
+TODO: check how the resolution works in GUI, might be important when resampling
 Zoom to computational region in Map Display to set it to 10m resolution (equivalent to d.erase)<br>
 display the resampled map (Add Raster, if you don't have it it in the Layer Manager already)<br>
+-->
+
+Display the resampled map by adding "elev_ned10m_nn" to <em>Layer Manager</em>
+in case you don't have it in the Layer Manager already.
+Alternatively, use in command line the following:
 
 <pre><code>
-d.erase
 d.rast elev_ned10m_nn
 </code></pre>
 
 <p>
-the elevation map looks the same so now check the resampled elevation surface using the aspect map<br>
+The elevation map "elev_ned10m_nn" looks the same as the original one,
+so now check the resampled elevation surface using the aspect map:
 
 <pre><code>
 r.slope.aspect elev_ned10m_nn aspect=aspect_ned10m_nn
+</code></pre>
+
+<p>
+Display the resampled map by adding "aspect_ned10m_nn" to <em>Layer Manager</em>
+or in command line using:
+
+<pre><code>
 d.rast aspect_ned10m_nn
 </code></pre>
 
 <p>
-save the displayed map  and explain what is going on in the report<br>
-in Map Display click button "Save display to graphic file"<br>
+Save the displayed map and explain what is going on in the report
+and how it differs from the aspect computed from the original elevation map.
+To save the map, click in <em>Map Display</em> to on the button
+<em>Save display to graphic file"</em> or alternatively,
+use the following command:
 
 <pre><code>
 d.out.file aspect_nn
 </code></pre>
 
 <p>
-reinterpolate DEMs using bilinear and bicubic interpolation<br>
-check the interpolated elevation surfaces using aspect maps<br>
+Now, reinterpolate DEMs using bilinear and bicubic interpolation.
+Check the interpolated elevation surfaces using aspect maps.
 
 <pre><code>
 r.resamp.interp elev_ned_30m out=elev_ned10m_bil meth=bilinear
@@ -115,23 +140,41 @@ d.rast aspect_ned10m_bic
 </code></pre>
 
 <p>
-save the displayed map and compare the result with the nn result in your report<br>
-in Map Display click button "Save display to graphic file"<br>
+Save the displayed map and in your report, compare the result with
+the previously computed nearest neighbor result.
+In <em>Map Display</em> click button <em>Save display to graphic file</em>,
+or use the following in the command line:
 
 <pre><code>
 d.out.file aspect_bic
 </code></pre>
 
+<h3>Resampling to lower resolution</h3>
+
 <p>
-Resample to lower resolution (30m -> 100m)<br>
-first display the original elevation and land use maps, then change the region resolution and resample<br>
-continuous field (elevation) and discrete categories (land use): explain selection of method<br>
-can we use average also for landuse? what does mode mean?<br>
-reminder: d.erase indicates Zoom to computational region (don't run it on Windows as command)<br>
+Resample to lower resolution (30m -> 100m).
+First, display the original elevation and land use maps:
 
 <pre><code>
 d.rast elev_ned_30m
 d.rast landuse96_28m
+</code></pre>
+
+Then change the region resolution and resample
+elevation (which is a continuous field)
+and land use (which has discrete categories).
+Explain selection of method can we use average also for landuse?
+What does mode mean?
+Reminder: d.erase indicates that you should remove all map layers
+from <em>Layer Manager</em>.
+
+<!--
+Not using the following because it might be more advantageous to look at some smaller region.
+Also, make sure that your <em>Map Display</em>
+is zoomed to computational region or to newly created maps (this should be the same).
+-->
+
+<pre><code>
 g.region res=100 -p
 r.resamp.stats elev_ned_30m out=elev_new100m_avg method=average
 d.rast elev_new100m_avg
@@ -141,41 +184,77 @@ d.rast landuse96_100m
 </code></pre>
 
 <p>
-Remove or switch off the land use, elevation and aspect maps<br>
+Remove or switch off the land use, elevation and aspect maps,
+or use d.erase in command line.
 
-Convert between vector data types<br>
-Census blocks polygons to Centroids (useful for interpolating a population density trend surface)<br>
-To display census boundaries using GUI: Add vector>census_wake2000,<br>
-Selection>Feature type>boundary (switch off the other types)<br>
-save the displayed map in Map Display click button "Save display to graphic file"<br>
+<pre><code>
+d.erase
+</code></pre>
 
-Contourlines to points (useful for computing DEM from contours)<br>
-zoom-in to very small area with elev_ned_contpts to see the actual points<br>
+
+<h3>Converting between vector data types</h3>
+
+<p>
+Convert census blocks polygons to points using their centroids
+(useful for interpolating a population density trend surface):
 
 <pre><code>
 v.to.points census_wake2000 type=centroid out=census_centr use=vertex
+</code></pre>
+
+Display census boundaries using GUI: <em>Add vector</em> "census_wake2000"
+<em>Selection</em> > <em>Feature type</em> > <em>boundary</em>
+(switch off the other types).
+Save the displayed map in <em>Map Display</em> click button
+<em>Save display to graphic file</em>.
+Alternatively, use the following commands to control display.
+Note that in both command line and GUI you must either enter the full path
+to the file you are saving the image in, or you must know the current working
+directory.
+
+<pre><code>
 d.vect census_centr icon=basic/circle fcol=green size=10 
 d.vect census_wake2000 col=red  type=boundary
 d.out.file vect_to_points
+</code></pre>
 
+Convert contour lines to points (useful for computing DEM from contours):
+
+<pre><code>
 v.to.points input=elev_ned10m_cont10m output=elev_ned_contpts type=line use=vertex
+</code></pre>
+
+Display the "elev_ned_contpts" points vector and zoom-in to very small area
+to see the actual points.
+
+<pre><code>
 d.vect elev_ned_contpts co=brown icon=basic/point size=3
 </code></pre>
 
+
+<h3>Convert from vector to raster</h3>
+
 <p>
-Convert from vector to raster<br>
-first adjust the computational region to resolution 200m<br>
-then activate it by Zoom to computational region in Map display<br>
+Convert vector data to raster for use in raster-based analysis.
+First, adjust the computational region to resolution 200m:
 
 <pre><code>
 g.region swwake_30m res=200 -p
+</code></pre>
+
+Then remove all layers from the <em>Map Display</em> or use
+the following in command line:
+
+<pre><code>
 d.erase
 </code></pre>
 
 <p>
-convert vector data to raster for use in raster-based analysis<br>
-vector points to raster: convert schools, use attribute column for core capacity<br>
-for legend in GUI: Add map elements > Show/hide legend > select schools_cap_200m<br>
+Convert vector points "schools" to raster.
+As value for raster use attribute column "CORECAPACI" for core capacity.
+To add legend in GUI use
+<em>Add map elements</em> > <em>Show/hide legend</em>
+and select "schools_cap_200m".
 
 <pre><code>
 d.vect schools_wake 
@@ -187,42 +266,55 @@ d.legend schools_cap_200m at=70,30,2,6
 </code></pre>
 
 <p>
-convert lines: streets, set the resolution to 30m and use speed limit attribute<br>
-after changing the region, adjust the Map Display: Zoom to computational region<br>
-for streets_speed add legend using GUI in Map Display<br>
-Add legend>Set Options>Advanced>List of discrete cat numbers<br>
-type in speed limits 25,35,45,55,65; move legend with mouse as needed<br>
-hint: if you don't see the legend GUI, move the Map display, it may be hiding behind it<br>
+Now convert lines in "streets" vector to raster.
+Set the resolution to 30m and use speed limit attribute.
 
 <pre><code>
 g.region res=30 -p
-d.erase
 v.to.rast streets_wake out=streets_speed_30m use=attr attrcol=SPEED type=line
+</code></pre>
+
+<p>
+If you haven't done this already, add remove all other map layers
+from <em>Layer Manager</em> and add "streets_speed_30m" raster layer.
+Add legend for "streets_speed_30m" raster using GUI in <em>Map Display</em>:
+<em>Add legend</em> > <em>Set Options</em> > <em>Advanced</em> > <em>List of discrete cat numbers</em>
+and type in speed limits 25,35,45,55,65; move legend with mouse as needed.
+Hint: if you don't see the legend GUI, move the other windows,
+it may be hiding behind them.
+Alternatively, use the following commands.
+
+<pre><code>
+d.erase
 d.rast streets_speed_30m 
 d.legend streets_speed_30m at=5,30,2,5 use=25,35,45,55,65 
 </code></pre>
 
 <p>
-save the displayed map<br>
-in Map Display click button "Save display to graphic file"<br>
+Save the displayed map.
+In <em>Map Display</em> click button <em>Save display to graphic file</em>,
+or use the following.
 
 <pre><code>
 d.out.file vect_to_rast
 </code></pre>
 
 <p>
-<!--<font color="#000066">
+<!--
 # areas: geology ID with labels
-</font>
 g.region swwake_30m -p
 v.to.rast geology out=mygeology_30m use=attr col=GEOL250_ID labelcolu=GEO_NAME
 d.rast mygeology_30m
 d.rast -o roadsmajor
-d.legend mygeology_30m use=948,921,910,862,766,720,583,405,270,217 at=70,20,2,6-->
-Convert from raster to vector<br>
+d.legend mygeology_30m use=948,921,910,862,766,720,583,405,270,217 at=70,20,2,6
+-->
 
-convert raster lines to vector lines<br>
-reminder - d.erase indicates that you should Erase the display and Zoom to computational region<br>
+<h3>Convert from raster to vector</h3>
+
+Convert raster lines to vector lines.
+First, set the region and remove map layers from <em>Layer Manager</em>.
+Then do the conversion.
+Explain why we are using r.thin module.
 
 <pre><code>
 g.region raster=streams_derived -p
@@ -233,7 +325,7 @@ r.to.vect streams_derived_t out=streams_derived_t type=line
 </code></pre>
 
 <p>
-visualy compare with streams digitized from airphotos<br>
+Visually compare the result with streams digitized from airphotos.
 
 <pre><code>
 d.vect streams_derived_t col=blue
@@ -264,29 +356,51 @@ d.vect streams co=blue
 </code></pre>
 
 <p>
-save the displayed map<br>
+Save the displayed map either using GUI or using the following in case
+you are working in the command line.
 
 <pre><code>
 d.out.file basins
 </code></pre>
 
+
+<h3>Import and export for raster and vector data</h3>
+
 <p>
-Import and export for raster and vector data<br>
-see screen captures on <a href="http://grass.osgeo.org/wiki/WxGUI"><b>wxGUI wiki page</b></a><br>
+In this section we will cover importing and exporting of raster and vector
+data which are in the same projection as the GRASS location we work in.
 
-Import and export shape files<br>
-download shape file with <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/geod_pts_spm.zip">geodetic points: geod_pts_spm.zip</a><br>
-save and unzip it on Desktop or a directory where you have read/write permissions<br>
+To get screen captures of importing and exporting data
+visit
+<a href="http://grasswiki.osgeo.org/wiki/Importing_data">Importing data</a>
+page and
+<a href="http://grasswiki.osgeo.org/wiki/WxGUI/Video_tutorials">Video tutorials</a>
+page at GRASS Wiki.
 
-on MSWindows do the import through GUI to get the correct path to your data<br>
-to import: <b>File>Import vector data>Common import formats</b><br>
-Source type > switch button to Directory<br>
-Source name > use Browse button to find the path to the directory geod_pts_spm<br>
-click Import<br>
+
+<h4>Import and export Shapefiles</h4>
+
+Download Shapefile with geodetic points:
+<a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/geod_pts_spm.zip">geod_pts_spm.zip</a>.
+Save and unzip it on Desktop or a directory where you have read/write permissions.
+
+<p>
+To import file in GUI use:
+<em>File</em> > <em>Import vector data</em> > <em>Common import formats</em>.
+In the dialog, select <em>Source type</em> > <em>Directory</em>.
+Use <em>Browse</em> button to find the path to the directory "geod_pts_spm"
+to fill the <em>Source name</em> field.
+Then click on <em>Import</em> button.
+<!--
 Zoom to computational region to keep the spatial extent at working region<br>
-Use Add vector to display the imported point data with streets_wake<br>
-to see how they are distributed<br>
+-->
+In case the imported point data was not displayed automatically,
+use <em>Add vector</em> to display the data
+and zoom to the vector layer.
+Compare the imported vector with "streets_wake" vector
+to see how they are distributed.
 
+<p>
 Export the roadsmajor map as a shape file,<br>
 File>Export>Common formats<br>
 select roadsmajor as Name of input vector map<br>
@@ -295,56 +409,78 @@ path should be to a directory where you have write permission<br>
 click Run<br>
 you can then display the roadsmajor in ArcGIS<br>
 
-For scripting workflows command line import/export can be used<br>
-it requires properly set path to external files<br>
-gdc.shp would be replaced by full path C:\pathtomayfile\gdc.shp<br>
-roadsmajor.shp by full path C:\pathtomayfile\roadsmajor.shp<br>
+<h4>Import and export of vectors when scripting</h4>
+
+<p>
+For scripting workflows a command line import/export can be used.
+It requires properly set path to external files.
+In this case, "gdc.shp" would be replaced, e.g. by "C:\path_to_my_file\gdc.shp"
+on MS Windows and by "/path_to_my_file/gdc.shp" on unix-like systems.
+And the full path, e.g. "C:\path_to_my_file\roadsmajor.shp", would be used
+instead of "roadsmajor.shp".
 
 <pre><code>
 v.in.ogr input=gdc.shp output=geodetic_points
-v.out.ogr roadsmajor output=roadsmajor.shp
+v.out.ogr input=roadsmajor output=roadsmajor.shp
 </code></pre>
 
-<p>
-Import raster file provided in tif format<br>
-download <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/lc96ras_cut.tif"> landuse: lc96ras_cut.tif</a><br>
-save it on Desktop or a directory of your choice<br>
-on MSWindows do the import through GUI to get the correct path to your data<br>
-<b> File > Import raster data > Common import formats </b><br>
-keep the default <b>GeoTIFF</b> as the <b>Format</b><br>
-and use Browse button to find the path to lc96ras_cut.tif file<br>
-make sure the file is clicked on in the List of GDAL layers<br>
-click Import<br>
-command line alternative below requires full path to your input data<br>
+On MS Windows it is often easier to do the import through GUI
+to get the correct path to your data.
+On Mac, Linux and other systems you can use current working directory
+and/or auto-complete in the system command line to avoid typing the full path;
+you can of course use GUI if you prefer.
 
 
+<h4>Import raster file provided in GeoTIFF format</h4>
+
 <p>
-MSWindows<br>
+Download a landuse raster in GeoTIFF format (referenced TIFF image):
+<a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/lc96ras_cut.tif">lc96ras_cut.tif</a>.
+Save it on Desktop or in a directory of your choice.
+
+To import file in GUI use:
+<em>File</em> > <em>Import raster data</em> > <em>Common import formats</em>.
+Keep the default <em>GeoTIFF</em> as the <em>Format</em>
+and use <em>Browse</em> button to find the path to downloaded "lc96ras_cut.tif" file.
+Make sure the file is checked on in the <em>List of GDAL layers</em>.
+Click <em>Import</em>.
+
+<p>
+On MS Windows, the import is often easier to do through GUI because of getting
+the correct path to your data. In general, you can use the
+command line alternative below.
+Note that it requires you to provide a full path to your input data,
+so you would have to replace "lc96ras_cut.tif" by something
+like "C:\path_to_my_file\lc96ras_cut.tif" or
+"/path_to_my_file/lc96ras_cut.tif" depending on the location of data
+and platform you are using.
 
 <pre><code>
-r.in.gdal input=C:\path_to_file\lc96ras_cut.tif out=landuse96_subset
+r.in.gdal input=lc96ras_cut.tif output=landuse96_subset
 </code></pre>
 
+<h4>Exporting raster files as ASCII grid and GeoTIFF</h4>
+
 <p>
-Mac, linux<br>
+Now, export raster files as ASCII grid and GeoTIFF.
+Use <em>File</em> > <em>Export raster map</em> > <em>Common export formats</em>.
+Do not forget to specify the full path to your output files otherwise you might
+have hard time finding them especially on MS Windows.
+
+Alternatively, you can use command line but again, don't forget to specify
+full path to output file or set your working directory to desired location.
 
 <pre><code>
-r.in.gdal input=/Users/yourname/grassdata/indata/lc96ras_cut.tif output=lc96ras_cut 
+r.out.gdal input=elev_ned_30m output=elev_ned_30m.ascii format=AAIGrid
+r.out.gdal input=basin_50K output=basin_50K.tif
 </code></pre>
 
-<p>
-export raster files as ascii grid and geotiff<br>
-<b> File > Export raster map > Common export formats </b><br>
-do not forget to specify the full path to your output files<br>
-example below is for Mac<br>
+<!--
+Note that there are different ASCII grid formats, so you must always keep
+in mind which one you are using. However, all of them are highly readable
+even by your custom scripts.
+-->
 
-<pre><code>
-r.out.gdal elev_ned_30m out=/Users/yourname/grassdata/outdata/elev_ned_30m.asci
-format=AAIGrid 
-r.out.gdal basin_50K out=/Users/yourname/grassdata/outdata/basin_50K.tif
-</code></pre>
-
-<p>
 <!--
 Learn how to 
 <a href="http://courses.ncsu.edu/gis582/common/media/GRASS_clinic2013/NewLocCSTransfGRASS.html">set up a new project</a>
@@ -371,6 +507,5 @@ d.vect wake_lakes
 # r.external input=yourpath/ortho_2001_t792.tif output=ortho_2001_t792_30m
 
 </font>
-r.in.poly input="C:\Grassdata\polygon.txt"-->
-<p>
- </div>
+r.in.poly input="C:\Grassdata\polygon.txt"
+-->
