@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $$ -eq 0 ]; then
+if [ $# -eq 0 ]; then
     echo "Usage:" 1>&2;
     echo "    $0 file [file...]" 1>&2;
     exit

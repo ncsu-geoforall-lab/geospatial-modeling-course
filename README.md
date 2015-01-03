@@ -1,5 +1,5 @@
-MEA582: Geospatial Modeling and Analysis
-========================================
+NCSU GIS/MEA582: Geospatial Modeling and Analysis
+=================================================
 
 
 Authors
@@ -18,7 +18,8 @@ Course developed at North Carolina State University.
 Basic Git introduction
 ----------------------
 
-Create a directory `mea582_all` or something like that and cd into it. Clone the repository:
+Create a directory `mea582_all` or something like that and `cd` into it.
+Clone the repository:
 
     git clone git@github.ncsu.edu:osgeorel/mea582.git
 
@@ -66,34 +67,8 @@ into the files and mark them. Consult the further steps with other contributors.
 Build and publish
 -----------------
 
-Web page is published using GitHub pages. The pages are build from the source
-code into a directory which is a clone of a repository with gh-pages branch
-active. The publishing step is done using Git.
-
-
-### Creating a directory for publishing
-
-These steps are done just once by each contributor who wants to publish
-the pages online.
-
-Using the following command create a new clone of the repository.
-The clone will be named `mea582-gh-pages`.
-You should and place it at the same level where you have the repository clone
-where you work with master branch.
-
-    git clone git@github.ncsu.edu:osgeorel/mea582.git mea582-gh-pages
-
-Checkout (switch to) `gh-pages` branch:
-
-    cd mea582-gh-pages
-    git checkout gh-pages
-
-Now you are ready to to build a publish pages. Your directory tree should look
-like:
-
-    some_directory (directory of your choice)
-        - mea582 (the directory with source code, master branch)
-        - mea582-gh-pages (the directory for build and publishing, gh-pages branch)
+Web page is published NCSU course web space. The pages are build from the source
+code into a separate directory. The publishing step is done using a script.
 
 
 ### Building the pages
@@ -103,7 +78,9 @@ use `build-pages.sh` script to build the pages.
 
     ./build-pages.sh
 
-You can look at them using e.g.
+The directory where pages are build is on the same level as directory with
+the source code and is named `mea582-gh-pages`.
+You can look at the pages using e.g.
 
     firefox ../mea582-gh-pages/index.html
 
@@ -113,46 +90,25 @@ directory and build again (the mechanism to recognize changes is not smart).
 
 ### Publishing the pages
 
-It is necessary to commit and push changes in `mea582-gh-pages` repository clone
-to publish them. One should not forget to commit and push changes also
-in the master branch repository.
-This is ensured using a script `build-and-publish.sh`:
-
-    ./build-and-publish.sh
-
+One should not forget to commit and push changes to the repository
+when publishing so that changes are shared with other contributors.
+This is ensured using a script `build-and-publish.sh`.
 The script will require you to have all all changes committed and pushed
 and then it will publish them.
 
+The script requires one parameter which is a destination for the `rsync`
+command. To work more effectively, you can create a script
+named `my-build-and-publish.sh` with hard-coded destination,
+for example:
 
-### Creating a gh-pages branch
+    #!/bin/bash
 
-This is done only once at the beginning by the contributor who is creating
-the branch for publishing GitHub pages.
+    ./build-and-publish.sh john@university.edu:/courses/gis/
 
-Create a new clone at the same directory as the main repository:
+If you name the script `my-build-and-publish.sh`, it will be ignored by Git
+and you can publish the pages using:
 
-    git clone git@github.ncsu.edu:osgeorel/mea582.git mea582-gh-pages
-    cd mea582-gh-pages
-
-Create `gh-pages` branch with no parents:
-
-    git checkout --orphan gh-pages
-
-Remove all files from the directory (except for `.git` directory)
-
-    git rm -rf .
-
-Upstream must be defined to be able to pull:
-
-    git branch --set-upstream-to=origin/gh-pages gh-pages
-
-Use the following for the first push:
-
-    git push origin gh-pages
-
-You can read more about it in GitHub documentation:
-
-* https://help.github.com/articles/creating-project-pages-manually/
+    ./my-build-and-publish.sh
 
 
 License
