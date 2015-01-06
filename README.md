@@ -105,6 +105,7 @@ for example:
 
     ./build-and-publish.sh john@university.edu:/courses/gis/
 
+Don't forget to set it executable using `chmod u+x`.
 If you name the script `my-build-and-publish.sh`, it will be ignored by Git
 and you can publish the pages using:
 
@@ -118,3 +119,5 @@ The text and images in this repository are under CC BY-SA 4.0 license.
 
 Note that a lot of things are just linked material or data from different
 sources which can have different licenses.
+
+The license does not apply to logos included in the web pages.
