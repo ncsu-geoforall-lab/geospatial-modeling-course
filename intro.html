@@ -1,21 +1,26 @@
 <h2> Introduction and course logistics</h2>
-<P>
-<a name="courseweb"></a>
-<b>Course web site and wolfware</b>
+
+<h3>Course web site and Wolfware</h3>
+
 <ul>
-   <li>Distance Education material is organized under 
-   <a href="schedule.html">Schedule</a>
-   <li>Grades are posted on Wolfware, see the section that you have registered for
-   <a href="http://courses.ncsu.edu/mea582/">MEA582</a> and <a href="http://courses.ncsu.edu/gis582/">GIS582</a>
-   <li>Get help by posting on the 
-   <a href="http://classic.wolfware.ncsu.edu/wrap-bin/mesgboard/gis:582::601:8:2014">Wolfware Message Board for spring 2015</a>
+    <li>
+        Distance Education material is organized under
+        <a href="schedule.html">Schedule</a>
+    <li>
+        Grades are posted on Wolfware, see the section that you have registered for
+        <a href="http://courses.ncsu.edu/mea582/">MEA582</a>
+        and <a href="http://courses.ncsu.edu/gis582/">GIS582</a>
+    <li>
+        Get help by posting on the
+        <a href="http://classic.wolfware.ncsu.edu/wrap-bin/mesgboard/gis:582::601:8:2014">Wolfware Message Board for spring 2015</a>
 </ul>
-<p>
-<b>Lectures</b>
-<UL>
-   <li>focus on principles, theory, concepts, methods and are mostly software independent
-   <li>slides and screen captures with audio are available at the <a href="lectures.html">lectures</a> page
-   <li>updated reading references and links to on-line material are included on the lectures webpage
+
+<h3>Lectures</h3>
+
+<ul>
+   <li>Focus of lectures is on principles, theory, concepts, methods and lectures are mostly software independent.
+   <li>Slides and screen captures with audio are available at the <a href="lectures.html">lectures</a> page.
+   <li>Reading references and links to on-line material are included on the <a href="lectures.html">lectures</a> page.
 </ul>
 
 <h3 id="software">Software</h3>
@@ -25,48 +30,51 @@ Install GRASS GIS and ArcGIS software following the instructions bellow.
 <h4>GRASS GIS</h4>
 
 <ul>
-<li>Free and open source GRASS GIS: <a href="http://grass.osgeo.org/"><b>GRASS GIS 7.0</b></a>
-<li>
-   <b>MS Windows 8+</b> (Win7 is OK too): use the stand-alone installer package
-   <a href="http://grass.osgeo.org/grass70/binary/mswindows/native/">WinGRASS 7.0.0beta4</a>,
-   or get the latest
-   <a href="http://wingrass.fsv.cvut.cz/grass70/"><b>development version</b></a>
-   <br>make sure you check install "Important Microsoft Runtime Libraries"
-   see <a href="img/scr_install1.png">screenshot1</a>
-   and <a href="img/scr_install2.png">screenshot2</a>
-   <br><a href="http://grasswiki.osgeo.org/wiki/WinGRASS_errors">Troubleshooting GRASS on Windows:</a>
-   <ul>
-      <li>If GRASS crashes at the start, you may be missing some dll files, for more details see
-      <a href="http://grasswiki.osgeo.org/wiki/WinGRASS_errors#The_GRASS_GIS_.28winGRASS.29_exits_immediately_after_I_start_it.21">
-      <b>suggested solution</b></a>
-      <li>You may need to install <a href="http://www.tiffviewer.com/download.htm"><b>tiff support</b></a> to view images saved by the 3D visualization module
-      <!-- <a href="http://grass.osgeo.org/grass64/binary/mswindows/native/">WinGRASS 6.4.4 </a> and -->
-   </ul>
-</li>
-<li>
-   <b>Mac OS X 10.7+</b>: download and install
-   <a href="http://grassmac.wikidot.com/frameworks">required frameworks</a> and
-   <a href="http://grassmac.wikidot.com/downloads">GRASS7.0.0beta3</a>
-   (start with the frameworks and then install GRASS-7.0beta3)
-</li>
-<li>
-   <b>Linux</b>:
-   <a href="http://grass.osgeo.org/download/software/linux/">GRASS 7.0 packages</a>
-   are available in software repositories
-</li>
-<li>use Help page to learn how to work with the software using wxGUI
-<li>use commands' manual pages to understand modules and their options
-<li>many examples are adopted and updated from the <a href="http://www.grassbook.org">GRASSbook</a>
+    <li>Free and open source GRASS GIS: <a href="http://grass.osgeo.org/"><b>GRASS GIS 7.0</b></a>
+    <li>
+        <b>MS Windows 8+</b> (or Windows 7): use the stand-alone installer package
+        <a href="http://grass.osgeo.org/grass70/binary/mswindows/native/">WinGRASS 7.0.0beta4</a>,
+        or get the latest
+        <a href="http://wingrass.fsv.cvut.cz/grass70/">development version</a>
+    </li>
+    <li>Troubleshooting GRASS GIS on Windows:
+        <ul>
+            <li>
+                Make sure you check install "Important Microsoft Runtime Libraries" during the installation,
+                see <a href="img/scr_install1.png">screenshot1</a>
+                and <a href="img/scr_install2.png">screenshot2</a>.
+            <li>
+                If GRASS crashes at the start, you may be missing some dll files, for more details see
+                <a href="http://grasswiki.osgeo.org/wiki/WinGRASS_errors#The_GRASS_GIS_.28winGRASS.29_exits_immediately_after_I_start_it.21">suggested solution</a>.
+            <li>If you have more problems see <a href="http://grasswiki.osgeo.org/wiki/WinGRASS_errors">Troubleshooting GRASS on Windows</a>  wiki page
+            <li>You may need to install <a href="http://www.tiffviewer.com/download.htm">TIFF support</a> to view images saved by the 3D visualization module
+        </ul>
+    </li>
+    <li>
+        <b>Mac OS X 10.7+</b>: download and install
+        <a href="http://grassmac.wikidot.com/frameworks">required frameworks</a> and
+        <a href="http://grassmac.wikidot.com/downloads">GRASS7.0.0beta3</a>
+        (start with the frameworks and then install GRASS-7.0beta3)
+    </li>
+    <li>
+        <b>Linux</b>:
+        <a href="http://grass.osgeo.org/download/software/linux/">GRASS 7.0 packages</a>
+        are available in software repositories
+    </li>
+    <li>use Help page to learn how to work with the software using wxGUI
+    <li>use commands' manual pages to understand modules and their options
+    <li>many examples are adopted and updated from the <a href="http://www.grassbook.org">GRASSbook</a>
 </ul>
 
 <h4>ArcGIS</h4>
 
-Industry standard: <a href="http://www.ncsu.edu/software/download/arcgis.php"><b>ArcGIS Version 10.2</b></a>
-      <ul>
-      <li>use <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus,</a> available at NCSU,
-          to learn the software
-      <li>use help pages to understand modules and their options
-      </ul>
+<ul>
+    <li>Proprietary <a href="http://www.ncsu.edu/software/download/arcgis.php"><b>ArcGIS Version 10.2</b></a>
+    <li>
+        use <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus,</a> available at NCSU,
+        to learn the software
+    <li>use help pages to understand modules and their options
+</ul>
 
 <h3>Assignments</h3>
 
