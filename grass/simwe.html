@@ -54,8 +54,7 @@ v.surf.rst -d input=elev_lid792_bepts elevation=elev_lid792_2m slope=dx_2m aspec
 run the model<br>
 
 <pre><code>
-r.sim.water -t elev=elev_lid792_2m dx=dx_2m dy=dy_2m rain=rain50mmhr infil=infil0 man=man05 \
-          depth=wdp_2m disch=disch_2m nwalk=400000 niter=500 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
+r.sim.water -t elevation=elev_lid792_2m dx=dx_2m dy=dy_2m rain=rain50mmhr infil=infil0 man=man05 depth=wdp_2m discharge=disch_2m nwalkers=400000 niterations=500 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
 d.rast wdp_2m.0498
 d.rast disch_2m.0498
 </code></pre>
@@ -70,7 +69,7 @@ along the stream inluding culvert under the road<br>
 compute direction (aspect) of the given streams<br>
 
 <pre><code>
-v.to.rast streams out=streams_dir_2m use=dir
+v.to.rast streams output=streams_dir_2m use=dir
 </code></pre>
 
 <p>
@@ -94,10 +93,7 @@ run the model<br>
 animation is available only on Linux or in GRASS7 (see the note above)<br>
 
 <pre><code>
-r.sim.water -t elev=elev_lid792_2m dx=dxdemstr_2m \
-      dy=dydemstr_2m rain=rain50mmhr infil=infil0 man=man05 \
-      depth=wdpstr_2m disch=dischstr_2m nwalk=400000 \
-      niter=500 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
+r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=rain50mmhr infil=infil0 man=man05 depth=wdpstr_2m discharge=dischstr_2m nwalkers=400000 niterations=500 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
 d.rast dischstr_2m.0498
 </code></pre>
 
@@ -146,10 +142,7 @@ r.recode landcover_1m out=raincover_2m
 run the model<br>
 
 <pre><code>
-r.sim.water -t elev=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m \
-          rain=raincover_2m infil=infil0 man=mancover_2m \
-          depth=wdpstrcov_2m disch=distrcov_2m nwalk=400000 \
-          niter=600 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
+r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=raincover_2m infil=infil0 man=mancover_2m depth=wdpstrcov_2m discharge=distrcov_2m nwalkers=400000 niterations=600 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
 d.rast wdp_2m.0398
 d.legend wdp_2m.0398
 d.rast disch_2m.0398
@@ -186,10 +179,7 @@ run the model, use last depth from previous run<br>
 
 <pre><code>
 g.copy rast=wdp_2m.00498,wdp_2m
-r.sim.sediment elev=elev_lid792_2m dx=dx_2m \
-      dy=dy_2m wdepth=wdp_2m detachment=detin transport=tranin \
-      shear_stress=tauin man=man05 nwalk=600000 niter=600 \
-      sedflow_capacity=tcapacity tlimit_erdep=erdepmax flux=sedflow erdep=erdepsimwe
+r.sim.sediment elevation=elev_lid792_2m dx=dx_2m dy=dy_2m water_depth=wdp_2m detachment_coeff=detin transport_coeff=tranin shear_stress=tauin man=man05 nwalkers=600000 niterations=600 transport_capacity=tcapacity tlimit_erosion_deposition=erdepmax sediment_flux=sedflow erosion_deposition=erdepsimwe
 </code></pre>
 
 <p>
