@@ -7,31 +7,36 @@ For formal requirements go to <a href="intro.html#assignments">Course logistics<
 This course is using GRASS GIS and ArcGIS, see
 <a href="intro.html#software">Course logistics</a> for details.
 
-<h3>Download data</h3>
+<h3>Data</h3>
+Data are provided at three hierarchical levels:
+<ul>
+   <li>entire NC state with raster data at 500m resolution: region nc_500m</li>
+   <li>South-west Wake County with raster data at resolutions 30m-10m: region swwake_10m</li>
+   <li>small watershed in rural area with data resolutions of 1m-3m: rural_1m</li>
+   <li>See more at <a href="http://www.grassbook.org/data_menu3rd.php">GRASSbook data description</a></li>
+</ul>
+<p>
+Download:
+<ul>
+<li>GRASS GIS location <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">
+    <em>nc_spm_08_grass7</em></a> (this is the same data set as North_Carolina provided during installation)</li>
+<li>ArcGIS geodatabase <a href="http://courses.ncsu.edu/mea582/common/media/01/ncrast_geodatabase_08_31_09.zip">
+  <em>ncrast_geodatabase_08_31_09</em></a> and
+    <a href="http://courses.ncsu.edu/mea582/common/media/01/ncshape_geodatabase02_15_10.zip">
+      <em>ncshape_geodatabase_02_15_10</em></a></li>
+</ul>
+<p>
+Instructions:
 <ul>
   <li>Create folders for your GIS data in a directory where you have permissions to write, for example:</li>
   <ul>
       <li>MSWindows - C:\Users\myname\grassdata and C:\Users\myname\arcdata</li>
       <li>Mac or Linux - in your home directory myname/grassdata</li>
   </ul>
-  <li>download and unpack the following datasets:</a> <i><font color="#FF0000">(!!!make sure that your unpacking software does
+  <li>After downloading unpack the datasets - GRASS GIS location into grassdata, ArcGIS geodatabase into arcdata</a></li>
+  <li><font color="#FF0000">Important:</font> make sure that your unpacking software does
 not create additional directory with the same name, e.g. nc_spm_08_grass7\nc_spm_08_grass7,
-the instructions assume you have only one layer of nc_spm_08_grass7) </font></i></li>
-   <ul>
-   <li><a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">
-       GRASS GIS LOCATION: <b>nc_spm_08_grass7</b></a> into grassdata (this is the same data set as North_Carolina provided with WinGRASS7)</li>
-   <li><a href="http://courses.ncsu.edu/mea582/common/media/01/ncrast_geodatabase_08_31_09.zip">
-       ArcGIS GEODATABSE:<b> ncrast_geodatabase_08_31_09</b></a> into arcdata</li>
-   <li><a href="http://courses.ncsu.edu/mea582/common/media/01/ncshape_geodatabase02_15_10.zip">
-       ArcGIS GEODATABSE:<b> ncshape_geodatabase_02_15_10</b></a> into arcdata</li>
-   </ul>
-   <li>Data are provided at three hierarchical levels:</li>
-   <ul>
-   <li>entire NC state with raster data at 500m resolution: region nc_500m</li>
-   <li>South-west Wake County with raster data at resolutions 30m-10m: region swwake_10m</li>
-   <li>small watershed in rural area with data resolutions of 1m-3m: rural_1m</li>
-   <li>See more at <a href="http://www.grassbook.org/data_menu3rd.php">GRASSbook data description</a></li>
-   </ul>
+the instructions assume you have only one layer of nc_spm_08_grass7)</li>
 </ul>
 
 <!--
@@ -49,7 +54,7 @@ GRASS MAPSET needed later for Temporal Terrain Analysis:<br>
 Optional data sets for optional tasks in the assignments or for a project<br>
 <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_ll.zip">GRASS LOCATION in Geographic coordinates WGS84. (55MB),</a> <br>
 <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spf.zip">GRASS LOCATION in State Plane coordinates, in feet (8MB),</a> <br>
-<a href="http://courses.ncsu.edu/mea582/common/media/01/nc_utm18.zip">GRASS LOCATION in UTM18, meters - to be added</a> <br>
+<!-- <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_utm18.zip">GRASS LOCATION in UTM18, meters - to be added</a> <br> -->
 <a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016.las.zip">2013 Raleigh lidar survey, tile 073_016, point cloud in las format (22MB)</a>,
 <a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016_xyzirnc_ncspf.zip">in asci xyzirnc format (22MB)</a> <br>
 
