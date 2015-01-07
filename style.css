@@ -191,6 +191,11 @@ ul {
 
 /* list with images and text under them */
 
+/* sparse list */
+
+.sparse>li {
+    margin-bottom: 1em;
+}
 
 /* must be without ul to work */
 .logo-list {
