@@ -1,6 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
 # builds pages from source
+
+function build_page {
+    FILE_SOURCE=$1
+    FILE_TARGET=$2
+    cat $HEAD_FILE > $OUTDIR/$FILE_TARGET
+    echo "<!-- This is a generated file. Do not edit. -->" >> $OUTDIR/$FILE_TARGET
+    ./strip-whitestace.py < $FILE_SOURCE >> $OUTDIR/$FILE_TARGET
+    cat $FOOT_FILE >> $OUTDIR/$FILE_TARGET
+}
+
+HEAD_FILE=head.html
+FOOT_FILE=foot.html
 
 OUTDIR=../mea582-gh-pages
 
@@ -9,17 +21,14 @@ if [ ! -d "$OUTDIR" ]; then
     mkdir $OUTDIR
 fi
 
-HEAD_FILE=head.html
-FOOT_FILE=foot.html
-
-
 for FILE in `ls *.html|grep -v foot|grep -v head`
 do
-    cat $HEAD_FILE > $OUTDIR/$FILE
-    echo "<!-- This is a generated file. Do not edit. -->" >> $OUTDIR/$FILE
-    ./strip-whitestace.py < $FILE >> $OUTDIR/$FILE
-    cat $FOOT_FILE >> $OUTDIR/$FILE
+    build_page $FILE $FILE
 done
+
+# for backwards compatibility, remove next semester
+build_page "index.html" "syllabus.html"
+build_page "logistics.html" "intro.html"
 
 for DIR in grass arcgis resources project_titles
 do
