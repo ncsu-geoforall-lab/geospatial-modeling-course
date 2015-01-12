@@ -1,63 +1,35 @@
 <h2>Geospatial data models</h2>
 <!--Task: Resample raster data, convert between raster and vector data models-->
-<p>Resources: 
-<a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>
-</p>
-
-<p>
-<i>Command line (Cmd) instructions and selected  
-<a href="http://grass.osgeo.org/grass70/manuals/wxGUI.html">wxpython GUI</a>
-instructions are provided.
-</i><br>
-<b>On MSWindows, it is recommended to use wxGUI equivalents of d.* commands, such as:</b></i></font>
+<p>Resources:
 <ul>
- <li>d.rast : <font color="#000066">Add raster map layer</font>
- <li>d.vect : <font color="#000066">Add vector map layer</font>
- <li>d.zoom : <font color="#000066">various Zoom options in Map Display</font>
- <li>d.erase : <font color="#000066">Zoom to computational region, erase display</font>
- <li>d.out.file : <font color="#000066">Save display to graphic file</font>
+<li><a href="http://grass.osgeo.org/grass70/manuals/index.html">
+GRASS GIS overview and manual</a></li>
+<li> <a href="data_acquisition.html#data_acquisition">Recommendations</a>
+and <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">tutorial</a>
+how to use wxGUI from the first assignment</li>
 </ul>
-<i>
-In the workflow description, the d.* commands indicate which map layers should be 
-included in the display for the required output (these commands are often used in scripts)
-To find additional wxGUI button equivalents for d.* commands 
-<font color="#990000">see 
-<a href="http://grass.osgeo.org/grass70/manuals/wxGUI.html">wxGUI help </a></font></i>
-</p><p>
-Reminder: It is important to understand that
-GRASS uses the concept of LOCATION, MAPSET, region to support
-efficient analysis and modeling without the need to subset and resample
-data. LOCATION is a project that has common coordinate system.
-Each LOCATION can have several MAPSETS, one is called PERMANENT
-to store baseline data, others are set by users. You can modify 
-the data only in your current MAPSET, but you can view or copy
-data from other MAPSETS. See also 
-<a href="
-http://grass.osgeo.org/grass70/manuals/helptext.html">
-Structure of GRASS database</a>. DO NOT MOVE the files under 
-LOCATION directory using non-GRASS tools.
 
-start GRASS - click on GRASS icon or type<br>
+<h3>Start GRASS GIS</h3>
+Start GRASS - click on GRASS icon or type<br>
 
 <pre><code>
 grass70
 </code></pre>
 
 <p>
-in startup pannel<br>
-set <b>GIS Data Directory</b> to path to datasets, for example, C:\Users\myname\grassdata<br>
-for <b>Project location</b> select nc_spm_08 (North Carolina, State Plane, meters)<br>
-for <b>Accessible mapset</b> use your mapset or user1<br>
-click <b>Start GRASS</b><br>
-
-<i>If you prefer to work in GUI, you should be able to find out yourself<br>
-the GUI equivalents for the tasks below. Some hints for GUI are included, but<br>
+In startup pannel set <b>GIS Data Directory</b> to path to datasets,
+for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.
+For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_2) and
+click <b>Start GRASS</b>.
+<p>
+If you prefer to work in GUI, you should be able to find out yourself
+the GUI equivalents for the tasks below. Some hints for GUI are included, but
 from now on, most of the instructions will be provided as command line.<br>
-Hint for running most of the commands in GUI - type or paste the name of the module<br>
-into the command console and then hit Enter to open the GUI panel<br>
-READ the manual page for each command you are using for the first time to learn<br>
-what it is doing and what the parameters mean</i><br>
+Hint for running most of the commands in GUI - type or paste the name of the module
+into the command console and then hit Enter to open the GUI dialog.
+<em>Read</em> the manual page for each command you are using for the first time to learn
+what it is doing and what the parameters mean.
 
 <h3>Resampling to higher resolution</h3>
 
@@ -116,8 +88,8 @@ d.rast aspect_ned10m_nn
 </code></pre>
 
 <p>
-Save the displayed map and explain what is going on in the report
-and how it differs from the aspect computed from the original elevation map.
+Save the displayed map and <span class="question">explain what is going on in the report
+and how it differs from the aspect computed from the original elevation map?</span>
 To save the map, click in <em>Map Display</em> to on the button
 <em>Save display to graphic file"</em> or alternatively,
 use the following command:
@@ -163,8 +135,8 @@ d.rast landuse96_28m
 Then change the region resolution and resample
 elevation (which is a continuous field)
 and land use (which has discrete categories).
-Explain selection of method can we use average also for landuse?
-What does mode mean?
+<span class="question">Explain selection of method can we use average also for landuse?
+What does mode mean?</span>
 Reminder: d.erase indicates that you should remove all map layers
 from <em>Layer Manager</em>.
 
@@ -314,7 +286,7 @@ d.legend mygeology_30m use=948,921,910,862,766,720,583,405,270,217 at=70,20,2,6
 Convert raster lines to vector lines.
 First, set the region and remove map layers from <em>Layer Manager</em>.
 Then do the conversion.
-Explain why we are using r.thin module.
+<span class="question">Explain why we are using r.thin module</span>.
 
 <pre><code>
 g.region raster=streams_derived -p

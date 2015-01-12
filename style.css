@@ -272,3 +272,7 @@ iframe {
     margin-left: auto;
     margin-right: auto;
 }
+
+.question {
+    color: #FF5900;
+}

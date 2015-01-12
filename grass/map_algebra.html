@@ -1,50 +1,42 @@
-<P>
-Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>
+<h2>Geospatial Analysis I: global, zonal and focal operations, map algebra</h2>
+<p>Resources:
+<ul>
+<li><a href="http://grass.osgeo.org/grass70/manuals/index.html">
+GRASS GIS overview and manual</a></li>
+<li> <a href="data_acquisition.html#data_acquisition">Recommendations</a>
+and <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">tutorial</a>
+how to use wxGUI from the first assignment</li>
+</ul>
 
-<P><B>Topic: Geospatial Analysis I: global, zonal and focal operations, map algebra</B></P>
-<!--<p><B>Task: compute summaries, use map algebra to analyze, modify and derive new maps,
-explain difference between operations on discrete and continuous data
-</B></p>-->
 <!-- TODO
 - try to redefine below into larger meaningful examples
 - improve the SRTM difference example to show the impact of 0, null on univar
 - test and improve the MASK examples
 -->
-On MSWindows, it is recommended to use wxGUI equivalents of d.* commands:</font><br>
-use their GUI equivalents,
-see assignment <a href="data_visualization.html">Data display and visualization</a>
-<p>
-To start the GUI for a given command, just type or paste the name of the command
-into Comand console and Enter. Read the manual page for each new command to learn what it does
-and what the options mean. You can find the manual page under Manual tab in the command GUI
-or use the
- <a href="http://grass.osgeo.org/grass70/manuals/index.html">GRASS manual.</a>
 <p>
 To run mapcalc expressions, you can either run the entire command in the GUI Command console,
 or in case of any problems, type or copy the expression in the GRASS GIS Raster Map Calculator
 which can be launched from Layer Manager toolbar.
-</p>
 
+<h3>Start GRASS GIS</h3>
+In startup pannel set <b>GIS Data Directory</b> to path to datasets,
+for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.
+For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_4) and
+click <b>Start GRASS</b>.
 
 <pre><code>
 grass70
 </code></pre>
 
+<h3>Compute summaries</h3>
+<!-- p.90 -->
+Compute areas for each category at two different resolutions.
 <p>
-in the startup pannel<br>
-GIS data directory: type path to GRASS datasets<br>
-LOCATION: select nc_spm_08<br>
-MAPSET: use mapset with your unity ID or user1<br>
-Enter GRASS<br>
-
-Compute summaries<br>
-p.90<br>
-Compute areas for each category at two different resolutions<br>
-Are results equal? Explain (see also Lecture 1)<br>
-Copy and paste the report from the output window or<br>
-Save the report in a text file: Output window > Save<br>
-Use fixed width font (e.g., Courier, Andale Mono  in your report to preserve formatting)<br>
+<span class="question">Are results equal? Explain (see also Lecture 1)</span>.
+Copy and paste the report from the output window or
+save the report in a text file: <em>Output window</em> > <em>Save</em>.
+Use fixed width font (e.g., Courier, Andale Mono  in your report to preserve formatting).
 
 <pre><code>
 g.region raster=landuse96_28m res=12 -ap
@@ -54,19 +46,19 @@ r.report landuse96_28m unit=c,h,p
 </code></pre>
 
 <p>
-Compute areas for each category of land use for each zipcode<br>
-Compare 27601 Raleigh with 27511 Cary<br>
-Include only the relevant part of the Table in your report<br>
+Compute areas for each category of land use for each zipcode.
+Compare 27601 Raleigh with 27511 Cary.
+Include only the relevant part of the table in your report.
 
 <pre><code>
 r.report zipcodes,landuse96_28m unit=h,p
 </code></pre>
 
 <p>
-Compute zonal statistics maps representing<br>
-average slope for each basin<br>
-add legends using Add legend in GUI (the pannel may open behind your map display)<br>
-reminder: d.out.file means Save to graphics file for your report<br>
+Compute zonal statistics maps representing
+average slope for each basin.<br>
+Add legends using <em>Add map elements</em> in Map Display toolbar.
+Reminder: d.out.file means Save to graphics file for your report.
 
 <pre><code>
 g.region raster=slope -p
@@ -79,29 +71,28 @@ d.out.file slope_avgbasin
 </code></pre>
 
 <p>
-Compute zonal statistics maps representing most common land use for each basin<br>
-When adding legend, make sure you define "List of discrete category numbers"<br>
+Compute zonal statistics maps representing most common land use for each basin.<br>
+When adding legend, make sure you define <em>List of discrete category numbers</em>.
 
 <pre><code>
 g.region raster=landuse96_28m -p
-r.mode base=basin_50K cover=landuse96_28m out=landuse96_modebasin
+r.mode base=basin_50K cover=landuse96_28m output=landuse96_modebasin
 d.rast landuse96_modebasin
 d.vect streams
 d.legend landuse96_modebasin at=40,20,2,5 -n
 d.out.file landuse96_modezip
 </code></pre>
 
-<p>
-Apply neighborhood operators<br>
-p.127<br>
-use neighborhood operator to compute land use diversity map<br>
-for d.erase: Zoom to computational region and switch off previous map layers<br>
-How diverse is land use in NCSU area?  Would you change it?<br>
+<h3>Apply neighborhood operators</h3>
+<!-- p.127<br> -->
+Use neighborhood operator to compute land use diversity map.<br>
+<span class="question">How diverse is land use in NCSU area?  Would you change it?</span><br>
+For d.erase: Zoom to computational region extent and switch off previous map layers.
 
 <pre><code>
 g.region raster=landuse96_28m -p
 r.info -g landuse96_28m
-r.neighbors landuse96_28m out=lu_divers method=diversity size=7
+r.neighbors landuse96_28m output=lu_divers method=diversity size=7
 d.erase
 d.rast lu_divers
 d.legend lu_divers at=70,15,5,10 -v
@@ -110,46 +101,44 @@ r.report lu_divers unit=p
 </code></pre>
 
 <p>
-use neighborhood operator to smooth the SRTM elevation map<br>
-compare the global statistical measures for the original and smoothed DEM<br>
-for d.erase: Zoom to computational region and switch off previous map layers<br>
-How would size of the neighborhood influence the result?<br>
+Use neighborhood operator to smooth the SRTM elevation map and 
+compare the global statistical measures for the original and smoothed DEM.
+<span class="question">How would size of the neighborhood influence the result?</span>
 
 <pre><code>
 g.region raster=elev_srtm_30m -p
-r.neighbors elev_srtm_30m out=elev_srtm30m_sm5 method=average size=5
+r.neighbors elev_srtm_30m output=elev_srtm30m_sm5 method=average size=5
 d.rast elev_srtm_30m
 d.rast elev_srtm30m_sm5
 r.univar elev_srtm_30m
 r.univar elev_srtm30m_sm5
 </code></pre>
 
-<p>
-Patch multiple raster layers into a single raster<br>
-p.124-125<br>
-patch raster tiles for lidar based, 6m res. DEM for Centennial Campus<br>
-on MS VISTA you need to have UAC (User Account Control) disabled to run r.patch<br>
+<h3>Patch multiple raster layers into a single raster</h3>
+<!-- p.124-125<br> -->
+Patch raster tiles for lidar based, 6m res. DEM for Centennial Campus.
+<!-- on MS VISTA you need to have UAC (User Account Control) disabled to run r.patch<br> -->
 
 <pre><code>
 g.region raster=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m -p
-r.patch in=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m out=elevlidD_6m
+r.patch input=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m output=elevlidD_6m
 r.colors elevlidD_6m raster=elevation
 d.erase
 d.rast elevlidD_6m
 </code></pre>
 
 <p>
-patching discrete raster layers over continuous raster<br>
+Patching discrete raster layers over continuous raster:
 
 <pre><code>
 g.region raster=elev_ned_30m -p
-r.patch roadsmajor,facility,lakes,elevation out=composite
+r.patch input=roadsmajor,facility,lakes,elevation output=composite
 </code></pre>
 
 <p>
-assign colors to the composite based on raster values<br>
-first check the range of values in each raster<br>
-they are very different so custom color table is needed<br>
+Assign colors to the composite based on raster values.
+First check the range of values in each raster.
+They are very different so custom color table is needed.
 
 <pre><code>
 r.info -r roadsmajor
@@ -159,32 +148,33 @@ r.info -r elevation
 </code></pre>
 
 <p>
-assign the custom color table<br>
-<a href="rastcomposite_color.txt">download rastcomposite_color.txt</a><br>
-GUI: Edit layer settings>Set color table>Colors>Path to rules file<br>
-or just type r.colors into Cmd and hit Enter<br>
-Browser will pick up the full path to your color rules file<br>
-on MS Windows the command below assumes that the color table is in your msys home directory<br>
-for d.erase: Zoom to computational region and switch off previous map layers<br>
+Assign the custom color table.
+Download <a href="data/rastcomposite_color.txt">rastcomposite_color.txt</a>.<br>
+GUI: Right click on layer > <em>Properties</em> > <em>Set color table</em> > <em>Define</em> > <em>Path to rules file</em>
+or just type r.colors into command console and hit Enter.
+Browser will pick up the full path to your color rules file.
+<p>
+On MS Windows the command below assumes that the color table is in your msys home directory.
+For d.erase: Zoom to computational region and switch off previous map layers.
 
 <pre><code>
 r.colors composite rules=rastcomposite_color.txt
 d.erase
 d.rast composite
 d.out.file composite
-
 </code></pre>
 
+<h3>Map Algebra</h3>
+See <a href="http://grass.osgeo.org/grass70/manuals/r.mapcalc.html">
+r.mapcalc</a> manual page for syntax and functions.
+<!-- # p. 107-108  -->
+<!--# <a href="mapcalcformats.html">See here for several ways on <b>how to run r.mapcalc</b></a>-->
+If you are getting en error when running r.mapcalc in command console,
+launch the GUI version from Layer Manager toolbar.
 <p>
-Map Algebra<br>
-<a href="http://grass.osgeo.org/grass70/manuals/r.mapcalc.html"><br>
-see <b>r.mapcalc</b></a> manual page for syntax and functions<br>
-# p. 107-108 <!--# <a href="mapcalcformats.html">See here for several ways on <b>how to run r.mapcalc</b></a>-->
-<b>if you are getting en error when running r.mapcalc in command console use the GUI version</b><br>
-
-compute Normalized Difference Vegetation Index (NDVI)<br>
-explain the difference between floating point and integer<br>
-handling in ndvi1, ndvi2 and ndvi3 result<br>
+Compute Normalized Difference Vegetation Index (NDVI).<br>
+<span class="question">Explain the difference between floating point and integer
+handling in ndvi1, ndvi2 and ndvi3 result</span>.
 
 <pre><code>
 g.region raster=lsat7_2002_40 -p
@@ -200,8 +190,8 @@ d.out.file ndvi3
 </code></pre>
 
 <p>
-explore the difference between the SRTM DSM and lidar-based NED DEM<br>
-compute the map of elevation differences<br>
+Explore the difference between the SRTM DSM and lidar-based NED DEM.
+Compute the map of elevation differences.
 
 <pre><code>
 g.region raster=elev_ned_30m -p
@@ -209,7 +199,7 @@ r.mapcalc "srtm_ned30_dif = elev_srtm_30m - elev_ned_30m"
 </code></pre>
 
 <p>
-create a custom color table to distinguish the negative and positive values<br>
+Create a custom color table to distinguish the negative and positive values:
 
 <pre><code>
 r.info -r srtm_ned30_dif
@@ -217,9 +207,9 @@ r.info -r srtm_ned30_dif
 
 <p>
 fp: Data range is -142.24... to 86.19...<br>
-<a href="srtmneddiff_color.txt">download srtmneddiff_color.txt</a><br>
-GUI: Edit layer settings>Set color table>Colors>Path to rules file<br>
-for d.erase: Zoom to computational region and switch off previous map layers<br>
+Download <a href="data/srtmneddiff_color.txt">srtmneddiff_color.txt</a>.<br>
+GUI: Right click on layer > <em>Properties</em> > <em>Set color table</em> > <em>Colors</em> > <em>Path to rules file</em>.
+For d.erase: Zoom to computational region and switch off previous map layers.
 
 <pre><code>
 r.colors srtm_ned30_dif rules=srtmneddiff_color.txt
@@ -227,7 +217,7 @@ d.erase
 </code></pre>
 
 <p>
-GUI: use second button on Map display to redraw<br>
+GUI: use second button on Map Display toolbar to redraw.
 
 <pre><code>
 d.rast srtm_ned30_dif
@@ -239,9 +229,9 @@ r.univar elev_ned_30m
 </code></pre>
 
 <p>
-is the srtm mostly higher or lower than elev_ned?<br>
-which result will you use to answer the above question -<br>
-the srtm_ned30_dif map or numbers provided by r.univar?<br>
+<span class="question">Is the srtm mostly higher or lower than elev_ned?
+Which result will you use to answer the above question -
+the srtm_ned30_dif map or numbers provided by r.univar?</span>
 <!--
 <font color="#000066">
 # check the imapct of NULL on map algebra operation
@@ -259,10 +249,10 @@ d.rast srtm_ned30_dif
 d.rast mysrtm_ned30_dif
 r.univar myelev_srtm_30m
 -->
-p. 109<br>
-working with if statements<br>
-create map of urban areas (high density and low density class)<br>
-with 0 class elsewhere<br>
+<!-- p. 109<br> -->
+<h4>Working with if statements</h4>
+Create map of urban areas (high density and low density class)
+with 0 class elsewhere.
 
 <pre><code>
 g.region raster=landuse96_28m -p
@@ -272,22 +262,22 @@ d.legend urban1_30m at=10,30,5,8
 </code></pre>
 
 <p>
-alternatively with logical 'or' operator and null elsewhere<br>
+Alternatively with logical 'or' operator and null elsewhere:
 
 <pre><code>
 r.mapcalc "urban2_30m = if(landuse96_28m == 1 || landuse96_28m == 2,landuse96_28m,null())"
 d.rast urban2_30m
 </code></pre>
 
-<p>
-p. 110-111<br>
-handling null values<br>
-replace lakes in the landclass96 map with more accurate representation<br>
-from raster map lakes, we divide lakes by 1000 because the lake map has<br>
-large numbers that would have required custom color table<br>
+
+<!-- p. 110-111<br> -->
+<h4>Handling null values</h4>
+Replace lakes in the landclass96 map with more accurate representation.<br>
+From raster map lakes, we divide lakes by 1000 because the lake map has
+large numbers that would have required custom color table.
 
 <pre><code>
-r.mapcalc "luselakes = if(isnull(lakes),landclass96,lakes/1000)"
+r.mapcalc "luselakes = if(isnull(lakes), landclass96, lakes/1000)"
 d.rast luselakes
 d.out.file luselakes
 </code></pre>
@@ -299,10 +289,10 @@ d.out.file luselakes
 </font>
 r.mapcalc developed=if(landclass96 > 1, null(), 1)
 -->
-create mask for low lying developed areas (e.g. vulnerable to flooding)<br>
-with elevation between 60 and 100m and land use 1 or 2<br>
-set the region, display the input maps and create a MASK<br>
-for d.erase: Zoom to computational region and switch off previous map layers<br>
+Create mask for low lying developed areas (e.g. vulnerable to flooding)
+with elevation between 60 and 100m and land use 1 or 2.<br>
+Set the region, display the input maps and create a MASK.<br>
+For d.erase: Zoom to computational region and switch off previous map layers.
 
 <pre><code>
 g.region raster=elevation -p
@@ -313,7 +303,7 @@ r.mapcalc "MASK = if((elevation < 100 && elevation > 60) && (landuse96_28m == 1 
 </code></pre>
 
 <p>
-display watersheds to see the MASK effect<br>
+Display watersheds to see the MASK effect:
 
 <pre><code>
 d.rast basin_50K
@@ -321,8 +311,8 @@ d.out.file basin_masked
 </code></pre>
 
 <p>
-rename MASK to disable it, and display basin_50K again<br>
-to show that the MASK was removed<br>
+Rename MASK to disable it, and display basin_50K again
+to show that the MASK was removed.
 
 <pre><code>
 g.rename raster=MASK,maskfile
@@ -330,15 +320,15 @@ d.rast basin_50K
 </code></pre>
 
 <p>
-p. 114<br>
+<!-- p. 114<br> -->
 replace section of SRTM DSM with NED DEM elevation<br>
 
 <pre><code>
 r.mapcalc "elev_combined = if(y() < 224274. && x() > 637455., elevation, elev_srtm_30m)"
 </code></pre>
 
-<p>
-create a raster map representing tilted plane (e.g., geologic fault)<br>
+<h4>Tilted plane</h4>
+Create a raster map representing tilted plane (e.g., geologic fault).
 
 <pre><code>
 g.region rural_1m -p
@@ -347,15 +337,15 @@ r.mapcalc "tiltpl_under = if(tiltplane < elev_lid792_1m + 2,tiltplane,null())"
 </code></pre>
 
 <p>
-view the elevation surface and subsurface plane in 3D<br>
-switch off all layers in the layer manager except for elev_lid792_1m and tiltpl_under<br>
-change display to 3D view, adjust viewing position to a view from South<br>
-save an image for your report<br>
+View the elevation surface and subsurface plane in 3D.
+<em>Switch off all layers in the layer manager except for elev_lid792_1m and tiltpl_under</em>.
+Change display to 3D view, adjust viewing position to a view from South.
+Save an image for your report.
 
-<b>Optional:</b> Various additional useful tasks<br>
-p. 91<br>
-use map algebra to create map subsets<br>
-change region to the airphoto tile 792 and resolution 10m<br>
+<h3>Optional -  various additional useful tasks</h3>
+<!-- p. 91<br> -->
+Use map algebra to create map subsets.<br>
+Change region to the airphoto tile 792 and resolution 10m.
 
 <pre><code>
 g.region raster=ortho_2001_t792_1m res=10 -ap
@@ -364,7 +354,7 @@ d.rast ortho_2001_t792_1m
 </code></pre>
 
 <p>
-create a subset of the map elevation for this subregion<br>
+Create a subset of the map elevation for this subregion.
 
 <pre><code>
 r.mapcalc "elevation_792_10m = elevation"
@@ -372,12 +362,12 @@ d.rast elevation_792_10m
 </code></pre>
 
 <p>
-zoom out to see that it is a subset<br>
+Zoom out to see that it is a subset.
 
 <p>
-Work with NULL and MASK<br>
-p. 103-104<br>
-set the mask and check its effect<br>
+Work with NULL and MASK.
+<!-- p. 103-104<br> -->
+Set the mask and check its effect.
 
 <pre><code>
 d.rast elevation
@@ -387,24 +377,24 @@ d.rast elevation
 </code></pre>
 
 <p>
-remove mask<br>
+Remove mask:
 
 <pre><code>
 r.mask -r
 </code></pre>
 
 <p>
-Compute %area for each category in each zipcode<br>
-which zipcode has the most high density development?<br>
+Compute % area for each category in each zipcode.
+<span class="question">Which zipcode has the most high density development?</span>
 
 <pre><code>
 r.stats -pl zipcodes,landuse96_28m
 </code></pre>
 
 <p>
-p. 113<br>
-working with relative coordinates<br>
-enter the expression on a single line without \<br>
+<!-- p. 113<br> -->
+Working with relative coordinates.<br>
+Enter the expression on a single line without \<br>
 
 <pre><code>
 g.region raster=elev_srtm_30m -p
@@ -417,8 +407,8 @@ r.mapcalc "elev_srtm30m_smooth = (elev_srtm_30m[-1,-1]   \
 </code></pre>
 
 <p>
-assign the resulting map the same color table as the original<br>
-compare global statistics<br>
+Assign the resulting map the same color table as the original.
+Compare global statistics
 
 <pre><code>
 r.colors elev_srtm30m_smooth raster=elev_srtm_30m
