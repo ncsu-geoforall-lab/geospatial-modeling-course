@@ -1,50 +1,21 @@
 <h2>Data display and visualization</h2>
 <p>Resources:
-<a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>
-
-<P>
-<i>Screen captures for 3D visualization with wxnviz in GRASS6.4.3RC2 (similar to GRASS7)</i><br>
-<a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz1_edit1large.mov"> Visualization in GRASS I: surface (71MB)</a><br>
-<a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz2_edit2.mov"> Visualization in GRASS II: draping points and lines (45MB)</a><br>
-<a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz3_edit.mov"> Visualization in GRASS III: cutting planes (62MB)</a><br>
-<!--
-<P>
-If you are using GRASS6.4.3 or later you can switch to 3D view within your map display
-and create visualizations shown in the video using a new GUI written in wxpython.
-See the
-<a href="http://grass.osgeo.org/grass70/manuals/html70_user/wxGUI.Nviz.html">
-<b>Manual</b> and links to related wiki page and videos there</a>
-</P>
--->
-<P>
-<i>
-The assignment includes both GUI (buttons and menus) and command-line workflow, you can use
-any of those or their combination, based on the task that you are doing (no need to do both).
-On MSWindows, it  is recommended to use wxGUI equivalents of d.* commands: </i></font>
-<P> in GRASS GIS Layer Manager
 <ul>
- <li>d.rast: <font color="#000066">Add raster map layer</font></li>
- <li>d.vect: <font color="#000066">Add vector map layer</font></li>
- <li>d.shaded: <font color="#000066">Add various raster map layers>Add shaded relief map</font></li>
-</ul>
-in GRASS GIS Map Display
+<li><a href="http://grass.osgeo.org/grass70/manuals/index.html">
+GRASS GIS overview and manual</a></li>
+<li> <a href="data_acquisition.html#data_acquisition">Recommendations</a>
+and <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">tutorial</a>
+how to use wxGUI from the first assignment</li>
+<li>Screen captures for 3D visualization with wxnviz in GRASS6.4.3RC2 (similar to GRASS7)</i></li>
 <ul>
-<!-- <li>d.what.rast : <font color="#000066">Query raster map</font>
- <li>d.what.vect -x : <font color="#000066">Query vector map</font> -->
-<li>d.zoom: <font color="#000066"> Zoom options</font></li>
-<li>d.erase: <font color="#000066">Remove all previous layers</font></li>
-<li>d.out.file: <font color="#000066">Save display to graphic file</font></li>
-<li>d.barscale: <font color="#000066">Add map elements > Show/hide scale bar</font></li>
-<li>d.legend: <font color="#000066">Add map elements > Show/hide legend</font></li>
-<li>d.northarrow: <font color="#000066">Add map elements > Show/hide north arrow</font></li>
+<li><a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz1_edit1large.mov"> Visualization in GRASS I: surface (71MB)</a></li>
+<li><a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz2_edit2.mov"> Visualization in GRASS II: draping points and lines (45MB)</a></li>
+<li><a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz3_edit.mov"> Visualization in GRASS III: cutting planes (62MB)</a></li>
 </ul>
-<i>To find additional GUI button equivalents for d.* commands
-<font color="#990000">Read GUI help </font>
-</i>
-</font>
+</ul>
 
-<p>
+
+<h3>Start GRASS GIS</h3>
 In startup pannel set <b>GIS Data Directory</b> to path to datasets,
 for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.
 For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
