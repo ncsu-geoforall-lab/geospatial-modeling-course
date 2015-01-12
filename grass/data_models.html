@@ -88,8 +88,8 @@ d.rast aspect_ned10m_nn
 </code></pre>
 
 <p>
-Save the displayed map and explain what is going on in the report
-and how it differs from the aspect computed from the original elevation map.
+Save the displayed map and <span class="question">explain what is going on in the report
+and how it differs from the aspect computed from the original elevation map?</span>
 To save the map, click in <em>Map Display</em> to on the button
 <em>Save display to graphic file"</em> or alternatively,
 use the following command:
@@ -135,8 +135,8 @@ d.rast landuse96_28m
 Then change the region resolution and resample
 elevation (which is a continuous field)
 and land use (which has discrete categories).
-Explain selection of method can we use average also for landuse?
-What does mode mean?
+<span class="question">Explain selection of method can we use average also for landuse?
+What does mode mean?</span>
 Reminder: d.erase indicates that you should remove all map layers
 from <em>Layer Manager</em>.
 
@@ -286,7 +286,7 @@ d.legend mygeology_30m use=948,921,910,862,766,720,583,405,270,217 at=70,20,2,6
 Convert raster lines to vector lines.
 First, set the region and remove map layers from <em>Layer Manager</em>.
 Then do the conversion.
-Explain why we are using r.thin module.
+<span class="question">Explain why we are using r.thin module</span>.
 
 <pre><code>
 g.region raster=streams_derived -p

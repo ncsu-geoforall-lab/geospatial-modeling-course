@@ -1,0 +1,7 @@
+1 black
+55 green
+90 yellow
+130 orange
+160 brown
+30000 aqua
+50000 aqua
