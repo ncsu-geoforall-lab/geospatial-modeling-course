@@ -52,6 +52,16 @@ do
     done
 done
 
+FILES="`./extract-links.py "grass/.+html" assignments.html`"
+TITLE="List of GRASS GIS assignments"
+DIR="grass"
+
+TGT_FILE=$OUTDIR/$DIR/index.html
+./increase-link-depth.py < $HEAD_FILE > $TGT_FILE
+echo "<!-- This is a generated file. Do not edit. -->" >> $TGT_FILE
+./generate-index.py "$TITLE" $DIR/ $FILES >> $TGT_FILE
+./increase-link-depth.py < $FOOT_FILE >> $TGT_FILE
+
 for FILE in *.css
 do
     cp $FILE $OUTDIR
