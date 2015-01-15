@@ -120,8 +120,12 @@ Under <em>Optional</em> tab set <em>Percent to brighten</em> to 30 > OK.
 Command line equivalent: paste into Command console and Enter:
 
 <pre><code>
-d.shade shade=elevation_shade color=elevation brighten=30
+d.shade reliefmap=elevation_shade drapemap=elevation brighten=30
 </code></pre>
+Note: depending on your installed GRASS version, the names of the d.shade
+module can be different. Open the d.shade dialog to find the correct options.
+<!-- d.shade shade=elevation_shade color=elevation brighten=30 -->
+
 
 <p>
 Now check the range of elevation values of the entire map.
