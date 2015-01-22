@@ -18,16 +18,17 @@ grass70
 
 <p>
 In startup pannel set <b>GIS Data Directory</b> to path to datasets,
-for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.
+for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.<br>
 For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
-for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_2) and
-click <b>Start GRASS</b>.
+for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_2).<br>
+Click <b>Start GRASS</b>.
 <p>
 If you prefer to work in GUI, you should be able to find out yourself
-the GUI equivalents for the tasks below. Some hints for GUI are included, but
+the GUI equivalents for the tasks below.<br>
+Some hints for GUI are included, but
 from now on, most of the instructions will be provided as command line.<br>
 Hint for running most of the commands in GUI - type or paste the name of the module
-into the command console and then hit Enter to open the GUI dialog.
+into the command console and then hit Enter to open the GUI dialog.<br>
 <em>Read</em> the manual page for each command you are using for the first time to learn
 what it is doing and what the parameters mean.
 
@@ -36,7 +37,8 @@ what it is doing and what the parameters mean.
 <p>
 Resample the given raster map to higher and lower resolution
 (30m->10m, 30m->100m) and compare resampling by nearest neighbor
-with bilinear and bicubic method. First, set the region to 30m resolution and
+with bilinear and bicubic method.
+<p>First, set the region to 30m resolution and
 display the 30m resolution elevation raster.
 
 <pre><code>
@@ -46,7 +48,7 @@ d.rast elev_ned_30m
 
 <p>
 To resample it to 10m resolution, first set the region to resolution 10m,
-then resample the raster using the nearest neighbor method.
+then resample the raster using the nearest neighbor method.<br>
 Hint: To open the r.resamp.interp in GUI, type or paste the module name
 into the <em>Command console</em>, then <em>Enter</em> to open the GUI panel,
 don't forget to set the method to nearest under <em>Optional</em> tab.
@@ -64,7 +66,7 @@ display the resampled map (Add Raster, if you don't have it it in the Layer Mana
 -->
 
 Display the resampled map by adding "elev_ned10m_nn" to <em>Layer Manager</em>
-in case you don't have it in the Layer Manager already.
+in case you don't have it in the Layer Manager already.<br>
 Alternatively, use in command line the following:
 
 <pre><code>
@@ -89,7 +91,7 @@ d.rast aspect_ned10m_nn
 
 <p>
 Save the displayed map and <span class="question">explain what is going on in the report
-and how it differs from the aspect computed from the original elevation map?</span>
+and how it differs from the aspect computed from the original elevation map?</span><br>
 To save the map, click in <em>Map Display</em> to on the button
 <em>Save display to graphic file"</em> or alternatively,
 use the following command:
@@ -113,7 +115,7 @@ d.rast aspect_ned10m_bic
 
 <p>
 Save the displayed map and in your report, compare the result with
-the previously computed nearest neighbor result.
+the previously computed nearest neighbor result.<br>
 In <em>Map Display</em> click button <em>Save display to graphic file</em>,
 or use the following in the command line:
 
@@ -125,6 +127,7 @@ d.out.file aspect_bic
 
 <p>
 Resample to lower resolution (30m -> 100m).
+<p>
 First, display the original elevation and land use maps:
 
 <pre><code>
@@ -134,9 +137,9 @@ d.rast landuse96_28m
 
 Then change the region resolution and resample
 elevation (which is a continuous field)
-and land use (which has discrete categories).
+and land use (which has discrete categories).<br>
 <span class="question">Explain selection of method can we use average also for landuse?
-What does mode mean?</span>
+What does mode mean?</span><br>
 Reminder: d.erase indicates that you should remove all map layers
 from <em>Layer Manager</em>.
 
@@ -174,12 +177,14 @@ Convert census blocks polygons to points using their centroids
 v.to.points census_wake2000 type=centroid out=census_centr use=vertex
 </code></pre>
 
-Display census boundaries using GUI: <em>Add vector</em> "census_wake2000"
+Display census boundaries using GUI:<br>
+<em>Add vector</em> "census_wake2000"
 <em>Selection</em> > <em>Feature type</em> > <em>boundary</em>
-(switch off the other types).
+(switch off the other types).<br>
 Save the displayed map in <em>Map Display</em> click button
-<em>Save display to graphic file</em>.
+<em>Save display to graphic file</em>.<br>
 Alternatively, use the following commands to control display.
+<p>
 Note that in both command line and GUI you must either enter the full path
 to the file you are saving the image in, or you must know the current working
 directory.
@@ -223,7 +228,7 @@ d.erase
 
 <p>
 Convert vector points "schools" to raster.
-As value for raster use attribute column "CORECAPACI" for core capacity.
+As value for raster use attribute column "CORECAPACI" for core capacity.<br>
 To add legend in GUI use
 <em>Add map elements</em> > <em>Show/hide legend</em>
 and select "schools_cap_200m".
@@ -248,13 +253,12 @@ v.to.rast streets_wake out=streets_speed_30m use=attr attrcol=SPEED type=line
 
 <p>
 If you haven't done this already, add remove all other map layers
-from <em>Layer Manager</em> and add "streets_speed_30m" raster layer.
-Add legend for "streets_speed_30m" raster using GUI in <em>Map Display</em>:
+from <em>Layer Manager</em> and add "streets_speed_30m" raster layer.<br>
+Add legend for "streets_speed_30m" raster using GUI in <em>Map Display</em>:<br>
 <em>Add legend</em> > <em>Set Options</em> > <em>Advanced</em> > <em>List of discrete cat numbers</em>
 and type in speed limits 25,35,45,55,65; move legend with mouse as needed.
-Hint: if you don't see the legend GUI, move the other windows,
-it may be hiding behind them.
-Alternatively, use the following commands.
+<p>
+Alternatively, use the following commands:
 
 <pre><code>
 d.erase
@@ -284,47 +288,49 @@ d.legend mygeology_30m use=948,921,910,862,766,720,583,405,270,217 at=70,20,2,6
 <h3>Convert from raster to vector</h3>
 
 Convert raster lines to vector lines.
+<p>
 First, set the region and remove map layers from <em>Layer Manager</em>.
 Then do the conversion.
+<p>
 <span class="question">Explain why we are using r.thin module</span>.
 
 <pre><code>
 g.region raster=streams_derived -p
 d.erase
 d.rast streams_derived
-r.thin streams_derived out=streams_derived_t
-r.to.vect streams_derived_t out=streams_derived_t type=line
+r.thin streams_derived output=streams_derived_t
+r.to.vect streams_derived_t output=streams_derived_t type=line
 </code></pre>
 
 <p>
 Visually compare the result with streams digitized from airphotos.
 
 <pre><code>
-d.vect streams_derived_t col=blue
-d.vect streams col=red
+d.vect streams_derived_t color=blue
+d.vect streams color=red
 </code></pre>
 
 <p>
-save the displayed map<br>
-in Map Display click button "Save display to graphic file"<br>
+Save the displayed map (in Map Display click button <em>Save display to graphic file</em>).
 
 <pre><code>
 d.out.file streams_compare
 </code></pre>
 
 <p>
-convert raster areas representing basins to vector polygons<br>
-use raster value as category number (flag -v)<br>
-display vector polygons filled with random colors<br>
-Add vector > Colors > Switch on Random colors<br>
+Convert raster areas representing basins to vector polygons.
+<p>
+Use raster value as category number (flag -v) and 
+display vector polygons filled with random colors.<br>
+In GUI: Add vector > Colors > Switch on Random colors.
 
 <pre><code>
 g.region raster=basin_50K -p
 d.erase
 d.rast basin_50K
-r.to.vect -sv basin_50K out=basin_50Kval type=area
+r.to.vect -sv basin_50K output=basin_50Kval type=area
 d.vect -c basin_50Kval
-d.vect streams co=blue
+d.vect streams color=blue
 </code></pre>
 
 <p>
@@ -358,33 +364,37 @@ Save and unzip it on Desktop or a directory where you have read/write permission
 
 <p>
 To import file in GUI use:
-<em>File</em> > <em>Import vector data</em> > <em>Common import formats</em>.
-In the dialog, select <em>Source type</em> > <em>Directory</em>.
-Use <em>Browse</em> button to find the path to the directory "geod_pts_spm"
-to fill the <em>Source name</em> field.
-Then click on <em>Import</em> button.
+<ul>
+<li><em>File</em> > <em>Import vector data</em> > <em>Common import formats</em>.</li>
+<li>In the dialog, select <em>Source type</em> > <em>Directory</em>.</li>
+<li>Use <em>Browse</em> button to find the path to the directory "geod_pts_spm"
+to fill the <em>Source name</em> field.</li>
+<li>Then click on <em>Import</em> button.</li>
+</ul>
 <!--
 Zoom to computational region to keep the spatial extent at working region<br>
 -->
 In case the imported point data was not displayed automatically,
 use <em>Add vector</em> to display the data
-and zoom to the vector layer.
+and zoom to the vector layer.<br>
 Compare the imported vector with "streets_wake" vector
 to see how they are distributed.
 
 <p>
-Export the roadsmajor map as a shape file,<br>
-File>Export>Common formats<br>
-select roadsmajor as Name of input vector map<br>
-type C:\mydirectory\roadsmajor path as OGR output datasource name<br>
-path should be to a directory where you have write permission<br>
-click Run<br>
-you can then display the roadsmajor in ArcGIS<br>
+Export the roadsmajor map as a shape file:
+<ul>
+<li><em>File</em> > <em>Export</em> > <em>Common formats</em></li>
+<li>Select roadsmajor as <em>Name of input vector map</em></li>
+<li>Type C:\mydirectory\roadsmajor path as OGR output datasource name
+(path should be to a directory where you have write permission)</li>
+<li>click <em>Run</em></li>
+</ul>
+You can then display the roadsmajor in ArcGIS.
 
 <h4>Import and export of vectors when scripting</h4>
 
 <p>
-For scripting workflows a command line import/export can be used.
+For scripting workflows a command line import/export can be used.<br>
 It requires properly set path to external files.
 In this case, "gdc.shp" would be replaced, e.g. by "C:\path_to_my_file\gdc.shp"
 on MS Windows and by "/path_to_my_file/gdc.shp" on unix-like systems.
@@ -397,7 +407,7 @@ v.out.ogr input=roadsmajor output=roadsmajor.shp
 </code></pre>
 
 On MS Windows it is often easier to do the import through GUI
-to get the correct path to your data.
+to get the correct path to your data.<br>
 On Mac, Linux and other systems you can use current working directory
 and/or auto-complete in the system command line to avoid typing the full path;
 you can of course use GUI if you prefer.
@@ -409,18 +419,18 @@ you can of course use GUI if you prefer.
 Download a landuse raster in GeoTIFF format (referenced TIFF image):
 <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/lc96ras_cut.tif">lc96ras_cut.tif</a>.
 Save it on Desktop or in a directory of your choice.
-
+<p>
 To import file in GUI use:
 <em>File</em> > <em>Import raster data</em> > <em>Common import formats</em>.
 Keep the default <em>GeoTIFF</em> as the <em>Format</em>
-and use <em>Browse</em> button to find the path to downloaded "lc96ras_cut.tif" file.
+and use <em>Browse</em> button to find the path to downloaded "lc96ras_cut.tif" file.<br>
 Make sure the file is checked on in the <em>List of GDAL layers</em>.
 Click <em>Import</em>.
 
 <p>
 On MS Windows, the import is often easier to do through GUI because of getting
 the correct path to your data. In general, you can use the
-command line alternative below.
+command line alternative below.<br>
 Note that it requires you to provide a full path to your input data,
 so you would have to replace "lc96ras_cut.tif" by something
 like "C:\path_to_my_file\lc96ras_cut.tif" or
@@ -435,10 +445,10 @@ r.in.gdal input=lc96ras_cut.tif output=landuse96_subset
 
 <p>
 Now, export raster files as ASCII grid and GeoTIFF.
-Use <em>File</em> > <em>Export raster map</em> > <em>Common export formats</em>.
+<p>
+Use <em>File</em> > <em>Export raster map</em> > <em>Common export formats</em>.<br>
 Do not forget to specify the full path to your output files otherwise you might
-have hard time finding them especially on MS Windows.
-
+have hard time finding them especially on MS Windows.<br>
 Alternatively, you can use command line but again, don't forget to specify
 full path to output file or set your working directory to desired location.
 
