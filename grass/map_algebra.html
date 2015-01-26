@@ -18,6 +18,13 @@ To run mapcalc expressions, you can either run the entire command in the GUI Com
 or in case of any problems, type or copy the expression in the GRASS GIS Raster Map Calculator
 which can be launched from Layer Manager toolbar.
 
+<p>
+Text files with color rules:
+<ul>
+<li><a href="data/rastcomposite_color.txt">rastcomposite_color.txt</a></li>
+<li><a href="data/srtmneddiff_color.txt">srtmneddiff_color.txt</a></li>
+</ul>
+
 <h3>Start GRASS GIS</h3>
 In startup pannel set <b>GIS Data Directory</b> to path to datasets,
 for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.
@@ -28,6 +35,17 @@ click <b>Start GRASS</b>.
 <pre><code>
 grass70
 </code></pre>
+
+<p>
+Change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <tt>cd</tt> (stands for change directory) into the GUI command console and hit Enter:
+<pre><code>
+cd
+</code></pre>
+Download all text files with color rules (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
 
 <h3>Compute summaries</h3>
 <!-- p.90 -->
@@ -148,18 +166,16 @@ r.info -r elevation
 </code></pre>
 
 <p>
-Assign the custom color table.
-Download <a href="data/rastcomposite_color.txt">rastcomposite_color.txt</a>.<br>
+Assign the custom color table (<a href="data/rastcomposite_color.txt">rastcomposite_color.txt</a>).<br>
 GUI: Right click on layer > <em>Properties</em> > <em>Set color table</em> > <em>Define</em> > <em>Path to rules file</em>
 or just type r.colors into command console and hit Enter.
 Browser will pick up the full path to your color rules file.
 <p>
-On MS Windows the command below assumes that the color table is in your msys home directory.
-For d.erase: Zoom to computational region and switch off previous map layers.
+The command below assumes that the color table is in your working directory.<br>
+Zoom to computational region and switch off previous map layers.
 
 <pre><code>
 r.colors composite rules=rastcomposite_color.txt
-d.erase
 d.rast composite
 d.out.file composite
 </code></pre>
@@ -207,17 +223,15 @@ r.info -r srtm_ned30_dif
 
 <p>
 fp: Data range is -142.24... to 86.19...<br>
-Download <a href="data/srtmneddiff_color.txt">srtmneddiff_color.txt</a>.<br>
+Assign custom solor table <a href="data/srtmneddiff_color.txt">srtmneddiff_color.txt</a>.<br>
 GUI: Right click on layer > <em>Properties</em> > <em>Set color table</em> > <em>Colors</em> > <em>Path to rules file</em>.
-For d.erase: Zoom to computational region and switch off previous map layers.
 
 <pre><code>
 r.colors srtm_ned30_dif rules=srtmneddiff_color.txt
-d.erase
 </code></pre>
 
 <p>
-GUI: use second button on Map Display toolbar to redraw.
+Zoom to computational region and switch off previous map layers. Display the difference map layer:
 
 <pre><code>
 d.rast srtm_ned30_dif
