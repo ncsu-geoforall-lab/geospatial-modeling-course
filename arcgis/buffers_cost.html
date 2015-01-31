@@ -1,42 +1,32 @@
+<h2>Buffers, cost surfaces, least cost path</h2>
 <p>Resources:
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
-
-<pre><code>
-Topic: Buffers, cost surfaces, least cost path
-
+<p>
 Include resulting maps into your report 
 (use your judgement to decide which results to include).
 
-Task: apply cost surface analysis to assist in accident management
-
-</code></pre>
-
-<p>
-general notes before you start<br>
-
-<pre><code>
+<!-- <pre>
 ========================================================================
 ALL COORDINATE SYSTEMS MUST BE DEFINED TO RUN BUFFER (i.e. .prj files)
 ========================================================================
-
-</code></pre>
+</pre> -->
 
 <p>
-Create the workspace for the current assignment (5) as the folder Assign5<br>
-
-to constrain analyses in a similar manner as g.region<br>
+Create the workspace for the current assignment as the folder Assign5<br>
+<p>
+To constrain analyses in a similar manner as g.region,
 set the spatial extent using the options under Environments, for example:<br>
 to constrain analyses results to the extents defined by intersection of input features:<br>
 
-<pre><code>
+<pre>
 Start ArcCatalog or ArcMap. 
 Open the ArcToolbox. 
 RC right on the ArcToolbox icon 
 From the context menu -> Environments... -> Extent. 
 Choose Intersection of Inputs. 
 Click 'OK'
-</code></pre>
+</pre>
 
 <p>
 <!-- You can create a bounding polygon of the "elev" DEM by using the 3D Analyst Tools. Check out 3D Analyst (if you haven't already) > Open ArcToolbox > 3D Analyst Tools > Conversion > From Raster > Raster Domain
@@ -45,11 +35,10 @@ Output = "name your file"
 Output Type = Line or Poly (I tend to use Poly so I can calculate area)
 Then when you are clipping the extent of the Data Frame you can use the extent of your new file, instead of copy/pasting or writing down the extent of the raster.  -->
 
-to work on a subset (clip your data to a given spatial extent)<br>
-Constrain the drawing of project layers to a user specified extent<br>
-Start ArcMap<br>
+To work on a subset, clip your data to a given spatial extent.<br>
+Constrain the drawing of project layers to a user specified extent.
 
-<pre><code>
+<pre>
 Start -> Programs -> ArcMap
 Add ./ncrast.mdb/elev
 Add ./ncshape.mdb/streets_wake
@@ -65,23 +54,12 @@ Uncheck the 'Degrees' check box
 Enter the four numbers you recorded earlier in their appropriate text fields
 Click 'OK'
 Click 'OK'
+</pre>
 
-</code></pre>
+<h3>Find developed areas close to lakes</h3>
+Create the buffers:
 
-<p>
-start ArcMap<br>
-
-<pre><code>
-Start->Programs->ArcGIS->ArcMap
-
-</code></pre>
-
-<p>
-Find developed areas close to lakes<br>
-
-create the buffers<br>
-
-<pre><code>
+<pre>
 File -> Add Data -> Add Data...
 Select ./ncrast.mdb/lakes
 Select ./ncrast.mdb/landcl96
@@ -93,25 +71,21 @@ Set Output distance raster' to '\Assign5\lk_dist'
 Set 'Maximum distance' to '500'
 Leave the rest as defaults 
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-select the locations that overlay developed areas<br>
+Select the locations that overlay developed areas:
 
-<pre><code>
+<pre>
 Select 'Spatial Analyst Tools->Map Algebra->Raster Calculator'
 Type in the expression: SetNull( "landcl96" > 2, "lk_dist")
 Set the Output raster to './Assign5/dev_lakes
 Click 'OK'
+</pre>
 
+<h3>Compute cost surface from accident based on speed limits</h3>
 
-</code></pre>
-
-<p>
-compute cost surface from accident based on speed limits<br>
-
-<pre><code>
+<pre>
 File -> Add Data -> Add Data...
 Select ncshape.mdb/streets_wake
 Open the ArcToolbox (if not already open)
@@ -125,38 +99,35 @@ Click 'OK'
 
 File -> Add Data -> Add Data...
 select ./ncshape.mdb/fire_pt
-
-</code></pre>
+</pre>
 
 <p>
-set the working directory<br>
+Set the working directory:
 
-<pre><code>
+<pre>
 Select Geoprocessing -> Environments...
 Under 'Workspace' set the 'Current Workspace' to '.\Assign5'
 Under 'Raster Analysis' set the 'Cell Size' to 'Same as layer str_speed'
 Under 'Raster Analysis' set the  'Mask' to '.\ncshape.mdb\boundary_wake'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-assign travel time per cell in hours, compute cost surface<br>
-assign null values a speed of 5<br>
+Assign travel time per cell in hours, compute cost surface.<br>
+Assign null values a speed of 5.
 
-<pre><code>
+<pre>
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Map Algebra->Raster Calculator'
 Type in the expression: Con(IsNull("str_speed"),5,"str_speed") 
 Set the Output raster to 'str_speed2'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-calculate the traveltime and cost surface<br>
+Calculate the traveltime and cost surface:
 
-<pre><code>
+<pre>
 Select 'Spatial Analyst Tools->Map Algebra->Raster Calculator' 
 Type in the expression: 0.018641 / "str_speed2"
 Set the 'Output raster' to str_trv
@@ -168,13 +139,11 @@ Set 'Output distance raster' to './Assign5/str_cost'
 Set 'Output backlink raster (optional)' to './Assign5/backlink'
 Leave the rest as defaults
 Click 'OK'
+</pre>
 
-</code></pre>
+<h3>Find cost from selected firestations</h3>
 
-<p>
-find cost from selected firestations<br>
-
-<pre><code>
+<pre>
 File -> Add Data -> Add Data...
 Select ./ncshape.mdb/firestations
 Open the ArcToolbox (if not already open)
@@ -184,31 +153,29 @@ Set 'Input Location raster or point features' to 'firestations'
 Set 'Output table' to './Assign5/station_costs'  
 Leave everything else as defaults
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-add the table of costs (NOTE: in Arc 10 this should be added automatically at the bottom of the TOC)<br>
+Add the table of costs (NOTE: in Arc 10 this should be added automatically at the bottom of the TOC).
+However, if the table does not get added:
+<pre>
 
-<pre><code>
-However, if the table does not get added...
 File -> Add Data ->
 Select '.\ssign5\station_costs'
-
-</code></pre>
+</pre>
 
 <p>
-open the station_costs table and sort on the field 'STR_COST'<br>
+Open the station_costs table and sort on the field 'STR_COST':
 
-<pre><code>
+<pre>
 RMC 'station_costs' -> Open 
 RMC column named 'STR_COST' and choose 'Sort Ascending'
 Note the range of cost values.
 Close the table
-</code></pre>
+</pre>
 
-<p>
-<!-- #create the cost backlink (direction grid)
+<!--<p>
+ #create the cost backlink (direction grid)
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Distance->Cost Back Link'
 Set 'Input raster or feature source data' to 'fire_pt'
@@ -216,19 +183,13 @@ Set the 'Input cost raster' to 'str_cost'
 Set the 'Ouput Backlink raster' to '.\assign5\backlink'  
 Click 'OK' -->
 
-<pre><code>
-======================================================
-NOTE: create the firestations as a shapefile if the below
-does not work with geodatabase firestations
-======================================================
-
-</code></pre>
 
 <p>
-find shortest path from nearby firestations<br>
-convert the firestations to shape file to get destination field FID<br>
+Find shortest path from nearby firestations.<br>
+Note: create the firestations as a shapefile if the below
+does not work with geodatabase firestations.
 
-<pre><code>
+<pre>
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Distance->Cost Path'
 Set 'Input raster or feature destination data' to 'firestations'
@@ -238,7 +199,7 @@ Set the 'Input cost backlink raster' to 'backlink'
 Set the 'Output raster' to '.\Assign5\cost_path'
 Set the 'Path type' to 'BEST_SINGLE'   
 Click 'OK'
-NOTE: to see the resulting least cost (drive-time) path 
+</pre>
+<p>
+Note: to see the resulting least cost (drive-time) path 
 you may have to turn off some or most of the layers in your TOC.
- 
- </div>
