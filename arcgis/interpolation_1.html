@@ -1,167 +1,146 @@
+<h2>Spatial interpolation and approximation I: methods</h2>
 <p>Resources:
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
 
-<pre><code>
-Topic: Spatial Interpolation and approximation
-
-Task: Demonstrate impact of interpolation methods on resulting surface using hillshade
-
-</code></pre>
-
 <p>
-create the assignment working directory (folder) .\Assign7<br>
+Create the assignment working directory (folder) .\Assign6<br>
 
-
-<pre><code>
+<pre>
 Start ArcMap
+</pre>
 
-</code></pre>
+<h3>Compute DEM based on voronoi polygons</h3>
+Compute DEM based on voronoi polygons and check it with hillshade.<br>
+Compute and display voronoi polygons with centroids (clear data frame).
 
-<p>
-compute DEM based on voronoi polygons and check it with hillshade<br>
-
-compute and display voronoi polygons with centroids (clear data frame)<br>
-
-<pre><code>
+<pre>
 ArcMap File->Add Data->Add Data...
 Select ncshape.mdb/elev_lid792_randpts
 Open the ArcToolbox
 Select 'Analysis Tools->Proximity->Create Thiessen Polygons' 
 Set 'Input Features' to 'elev_lid792_randpts'
-Set 'Output Feature Class' to '.\Assign7\elev_vor.shp'
+Set 'Output Feature Class' to '.\Assign6\elev_vor.shp'
 Set 'Output Fields' to 'ALL'    
 Click 'OK'
 NOTE: this process may take a while...
 Select 'Data Management Tools->Features->Feature to Point'
 Set 'Input Features' to 'elev_vor'
-Set 'Output Feature Class' to '.\Assign7\vor_center.shp'
+Set 'Output Feature Class' to '.\Assign6\vor_center.shp'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-convert to raster and display with standard elevation color<br>
+Convert to raster and display with standard elevation color.
 
-<pre><code>
+<pre>
 Open the ArcToolbox (if it's not already open)
 Select 'Conversion Tools->To Raster->Polygon To Raster'
 Set 'Input Feature' to 'elev_vor'
 Set 'Value Field' to 'value_'
-Set 'Output Raster Dataset' to '.\Assign7\elev_vor2m'
+Set 'Output Raster Dataset' to '.\Assign6\elev_vor2m'
 Set 'Cellsize' to '2'         
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-Set the Raster Analyst Cell Size to 2m in Environment Settings<br>
+Set the Raster Analyst Cell Size to 2m in Environment Settings.
 
-<pre><code>
+<pre>
 Select Menu Geoprocessing->Environments...->Raster Analyst
 NOTE: this will set the default cell size to 2 units (meters) for all subsequent processing.
 Set Cell Size to 'As Specified Below'
 Set the cell value to 2
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-check the result using hillshade<br>
+Check the result using hillshade.
 
-<pre><code>
+<pre>
 Check out a 3-D Analyst Extension license
 Open the ArcToolbox (if it's not already open)
 Select '3D Analyst->Raster Surface->Hillshade'
 Set 'Input Surface' to 'elev_vor2m'
-Set 'Output Raster' to '.\Assign7\Hillsh_vor_2m'
+Set 'Output Raster' to '.\Assign6\Hillsh_vor_2m'
 Click 'OK'
+</pre>
 
-</code></pre>
+<h3>Interpolate DEM using TIN and check it in ArcScene or hillshade</h3>
+First create TIN:
 
-<p>
-interpolate DEM using TIN and check it in ArcScene or hillshade<br>
-
-first create TIN<br>
-
-<pre><code>
+<pre>
 Select 3D Analyst Tools->TIN Management->Create TIN
 Set Input Feature Class to 'elev_lid792_randpts'
 Set 'height_field' to 'value_'
 Set 'SF_type as mass points'
-Set 'Output TIN' to '.\Assign7\elev_lid792_TIN'
+Set 'Output TIN' to '.\Assign6\elev_lid792_TIN'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-interpolate TIN to raster DEM<br>
-note: you can set the resolution of the output raster<br>
-in TIN to Raster > Sampling Distance >  CELLSIZE 2<br>
+Interpolate TIN to raster DEM.<br>
+Note: you can set the resolution of the output raster
+in TIN to Raster > Sampling Distance >  CELLSIZE 2.
 
-<pre><code>
+<pre>
 Open the ArcToolbox (if it's not already open)
 Select '3D Analyst Tools->Conversion->From TIN->TIN to Raster'
 Set 'Input Tin' to 'elev_lid792_TIN'
-Set Output Raster to .\Assign7\tinrast_2m
+Set Output Raster to .\Assign6\tinrast_2m
 Leave all else as default
 Click OK
-
-</code></pre>
+</pre>
 
 <p>
-you can do the above for aspect too<br>
-display  as hillshade<br>
+Display  as hillshade:
 
-<pre><code>
+<pre>
 Open the ArcToolbox (if it's not already open)
 Select 3D Analyst Tools->Raster Surface->Hillshade'
 Set 'Input Surface' to 'tinrast_2m'
-Set 'Output Raster' to '.\Assign7\Hlshtinrast2m'
+Set 'Output Raster' to '.\Assign6\Hlshtinrast2m'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-create the Terrain Model using the Terrain Wizard in ArcCatalog.<br>
-First create a new empty file geodatabase and feature dataset<br>
-In ArcCatalog:<br>
-Create a new file geodatabase called 'assign7_terrain' in your ./Assign7/ folder<br>
+Create the Terrain Model using the Terrain Wizard in ArcCatalog.<br>
+First create a new empty file geodatabase and feature dataset.<br>
+In ArcCatalog:
+create a new file geodatabase called 'assign6_terrain' in your ./Assign6/ folder<br>
 
-<pre><code>
-RMC on the assign7 folder in ArcCatalog
+<pre>
+RMC on the assign6 folder in ArcCatalog
 Choose New->File geodatabase
-Set the geodatabase name to 'assign7_terrain'
-
-</code></pre>
+Set the geodatabase name to 'assign6_terrain'
+</pre>
 
 <p>
-Create a new feature dataset called 'terrain' in the new 'assign7_terrain' geodatabase.<br>
-Set (Import) the horizontal coordinate system for the dataset to that associated<br>
+Create a new feature dataset called 'terrain' in the new 'assign6_terrain' geodatabase.<br>
+Set (Import) the horizontal coordinate system for the dataset to that associated
 with the vector point feature class 'elev_lid792_randpts'.<br>
 
-<pre><code>
-RMC on the 'assign7_terrain' geodatabase and select New->Feature dataset
+<pre>
+RMC on the 'assign6_terrain' geodatabase and select New->Feature dataset
 Set name to 'terrain'
 Set the horizontal coordinate system for 'terrain' to that associated 
 with the vector point layer ./ncshape.gdb/elev_lid792_randpts
 Finish with defaults
-
-</code></pre>
+</pre>
 
 <p>
-Add the feature class data that will be used to create the terrain<br>
-by dragging the elev_lid792_randpts into the created feature dataset<br>
+Add the feature class data that will be used to create the terrain
+by dragging the elev_lid792_randpts into the created feature dataset.<br>
 Now, construct the Terrain Model:<br>
 
-<pre><code>
+<pre>
 RMC on the 'terrain' feature data set, select NEW->Terrain
-</code></pre>
+</pre>
 
 <p>
 In the Terrain Wizard:<br>
 
-<pre><code>
+<pre>
 Set the terrain name to 'elev_lid792_TER'
 Set the participating feature class to 'elev_lid792_randpts'
 Set the Approximate point spacing to 1m (average distance between points)
@@ -175,39 +154,36 @@ Click 'Next'
 Review the displayed summary
 Click 'Next'
 Click 'Yes' to build new terrain
-
-</code></pre>
+</pre>
 
 <p>
-You can now add the terrain to your ArcMap project and proceed<br>
+You can now add the terrain to your ArcMap project and proceed.<br>
 To compute a raster DEM from Terrain, pick up with the stanza: 'interpolate TIN to raster' above,<br>
 replacing TIN with Terrain, as appropriate, through to the solution's end.<br>
-You will also have to select the appropriate tools for the terrain in place<br>
-of those specified for the TIN model.<br>
+You will also have to select the appropriate tools for the terrain in place
+of those specified for the TIN model.
 
-interpolate DEM using IDW  and check it with hillshade<br>
+<h3>Interpolate DEM using IDW  and check it with hillshade</h3>
 
-interpolate DEM using IDW<br>
+Interpolate DEM using IDW:
 
-<pre><code>
+<pre>
 Open the ArcToolbox (if it's not already open)
 Check out a Spatial Analyst Extension license
 Select 'Spatial Analyst Tools->Interpolation->IDW'
 Set 'Input point features' to 'elev_lid792_randpts'
 Set 'Z value field' to 'value_'
-Set 'Output Raster' to '.\Assign7\elev_idw_2m'
+Set 'Output Raster' to '.\Assign6\elev_idw_2m'
 Leave the other inputs as defaults
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-check the interpolated elevation surface using hillshade<br>
+Check the interpolated elevation surface using hillshade:
 
-<pre><code>
+<pre>
 Open the ArcToolbox (if it's not already open)
 Select '3D Analyst Tools->Raster Surface->Hillshade'
 Set 'Input raster' to 'elev_idw_2m'
-Set 'Output Raster' to '.\Assign7\Hillsh_idw_2m'
-
- </div>
+Set 'Output Raster' to '.\Assign6\Hillsh_idw_2m'
+</pre>
