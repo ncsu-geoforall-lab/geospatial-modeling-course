@@ -1,32 +1,50 @@
-<P>
-Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>,
-<a href="http://www.grassbook.org/"> GRASSbook</a>
+<h2>Spatial interpolation and approximation II: splines</h2>
+<p>Resources:
+<ul>
+<li><a href="http://grass.osgeo.org/grass70/manuals/index.html">
+GRASS GIS overview and manual</a></li>
+<li> <a href="data_acquisition.html#commands">Recommendations</a>
+and <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">tutorial</a>
+how to use wxGUI from the first assignment</li>
+</ul>
 
-<P><B>Topic: Spatial Interpolation</B></P>
-<!--<p><B>Tasks: Demonstrate impact of interpolation
-methods and parameters on the resulting surface
-</B></p>-->
-<P>
-On MSWindows, it is recommended to use wxGUI equivalents of d.* commands:</font><br>
-use their GUI equivalents,
-see assignment <a href="data_visualization.html">Data display and visualization</a>
-start GRASS<br>
+<p>
+Text files with color rules:
+<ul>
+<li><a href="data/deviations_color.txt">deviations_color.txt</a></li>
+<li><a href="data/precip_color.txt">precip_color.txt</a></li>
+</ul>
+
+
+<h3>Start GRASS GIS</h3>
+Start GRASS - click on GRASS icon or type<br>
 
 <pre><code>
 grass70
 </code></pre>
 
 <p>
-in startup pannel<br>
-GIS data directory: provide path to your Grass data<br>
-LOCATION select nc_spm_08<br>
-MAPSET select user1<br>
-Enter GRASS<br>
-p. 235<br>
-interpolate elevation raster from points using spline<br>
-compute aspect simultaneously with interpolation<br>
-evaluate impact of tension by using default tension (40), ten=10 and 160<br>
+In startup pannel set <b>GIS Data Directory</b> to path to datasets,
+for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.<br>
+For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_7).<br>
+Click <b>Start GRASS</b>.
+
+<p>
+Change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <tt>cd</tt> (stands for change directory) into the GUI command console and hit Enter:
+<pre><code>
+cd
+</code></pre>
+Download all text files with color rules (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
+
+<!-- p. 235<br> -->
+<h3>Interpolate elevation raster from points using splines with different tension</h3>
+Compute aspect simultaneously with interpolation and 
+evaluate impact of tension by using tension=40 (default), tension=10 and tension=160.
 
 <pre><code>
 g.region rural_1m res=1 -p
@@ -36,14 +54,14 @@ v.surf.rst elev_lid792_randpts elevation=elev_rstt160_1m aspect=asp_rstt160_1m z
 </code></pre>
 
 <p>
-compare the interpolated elevation surfaces using aspect maps<br>
-change the aspect color table to grey aspect<br>
-save images for your report<br>
+Compare the interpolated elevation surfaces using aspect maps.<br>
+Change the aspect color table to grey aspect.<br>
+Save images for your report.
 
 <pre><code>
-r.colors asp_rstdef_1m col=aspect
-r.colors asp_rstt10_1m col=aspect
-r.colors asp_rstt160_1m col=aspect
+r.colors asp_rstdef_1m color=aspect
+r.colors asp_rstt10_1m color=aspect
+r.colors asp_rstt160_1m color=aspect
 d.erase
 d.rast elev_rstdef_1m
 d.rast asp_rstdef_1m
@@ -52,21 +70,17 @@ d.rast asp_rstt10_1m
 d.out.file asp_rst_t10
 d.rast asp_rstt160_1m
 d.out.file asp_rst_t160
-d.vect elev_lid792_randpts size=1 col=red
+d.vect elev_lid792_randpts size=1 color=red
 </code></pre>
 
 <p>
-or use 3D views of elev_rstdef_1m, elev_rstt10_1m, elev_rstt160_1m<br>
-make sure you switch off the aspect rasters and save the 3 images for your report<br>
+Or use 3D views of elev_rstdef_1m, elev_rstt10_1m, elev_rstt160_1m, 
+make sure you switch off the aspect rasters and save the 3 images for your report.
 
-<pre><code>
-</code></pre>
-
-<p>
-compute elevation raster and deviations vector point map<br>
-for different values of smoothing<br>
-compare deviation stats for smoothing 0.1 and 10<br>
-find root mean square deviation rmse<br>
+<h3>Compute elevation raster and deviations vector point map</h3>
+For different values of smoothing
+compare deviation stats for smoothing 0.1 and 10.<br>
+Find root mean square deviation rmse.
 
 <pre><code>
 v.surf.rst elev_lid792_randpts elevation=elev_rstdef_1mb zcolumn=value smooth=0.1 deviations=elev_rstdef_devi segmax=30 npmin=140
@@ -74,17 +88,17 @@ v.build elev_rstdef_devi
 v.surf.rst elev_lid792_randpts elevation=elev_rstsm10_1mb zcolumn=value smooth=10 deviations=elev_rstsm10_devi segmax=30 npmin=140
 v.build elev_rstsm10_devi
 v.info -c elev_rstdef_devi
-v.univar elev_rstdef_devi col=flt1 type=point
+v.univar elev_rstdef_devi color=flt1 type=point
 r.info elev_rstdef_1mb
 v.info -c elev_rstsm10_devi
-v.univar elev_rstsm10_devi col=flt1 type=point
+v.univar elev_rstsm10_devi color=flt1 type=point
 r.info elev_rstsm10_1mb
 </code></pre>
 
 <p>
-compute and display deviations maps using same color table<br>
-you need to use custom color table to see the results well<br>
-note that we are interpolating here the deviations not the given elevations<br>
+Compute and display deviations maps using same color table.
+You need to use custom color table to see the results well.<br>
+Note that we are interpolating here the deviations, not the given elevations.
 
 <pre><code>
 v.surf.rst elev_rstdef_devi elevation=elev_rstdef_devi zcolumn=flt1 segmax=30 npmin=140
@@ -92,11 +106,10 @@ v.surf.rst elev_rstsm10_devi elevation=elev_rstsm10_devi zcolumn=flt1 segmax=30 
 </code></pre>
 
 <p>
-download the color table <a href="data/deviations_color.txt">deviations_color.txt</a><br>
-type in the full path to the file in quotes<br>
-or use GUI (type r.colors ENTER into Cmd) to select the color table file<br>
-optionally, to view the results in 3D use elev_rstdef_1mb for elevation (switch off everything else)<br>
-and drape the deviations maps as color in wxnviz GUI<br>
+Apply the downloaded color table <a href="data/deviations_color.txt">deviations_color.txt</a>
+to the deviation raster.<br>
+Optionally, to view the results in 3D use "elev_rstdef_1mb" for elevation (switch off everything else)
+and drape the deviations maps as color.
 
 <pre><code>
 r.colors elev_rstsm10_devi rules=deviations_color.txt
