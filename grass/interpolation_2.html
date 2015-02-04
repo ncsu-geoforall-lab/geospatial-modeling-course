@@ -121,18 +121,18 @@ d.legend elev_rstsm10_devi at=2,50,2,6
 d.out.file elev_rstsm10_devi
 </code></pre>
 
-<p>
-compute predictive error of interpolation for each point<br>
-using cross-validation (no raster output, only points with pred. errors)<br>
+<h3>Compute predictive error of interpolation</h3>
+Compute predictive error of interpolation for each point
+using cross-validation (no raster output, only points with pred. errors).
 
 <pre><code>
 v.surf.rst -c elev_lid792_randpts zcolumn=value cvdev=elev_rstdef_cv npmin=120 segmax=35
 v.build elev_rstdef_cv
-v.univar elev_rstdef_cv col=flt1 type=point
+v.univar elev_rstdef_cv color=flt1 type=point
 </code></pre>
 
 <p>
-skip the section below if you got error for elev_rstdef_cv<br>
+Skip the section below if you got error for elev_rstdef_cv<br>
 but please include the error description into your report<br>
 and continue with precipitation example<br>
 
