@@ -313,11 +313,14 @@ g.region raster=elevation -p
 d.erase
 d.rast elevation
 d.rast landuse96_28m
-r.mapcalc "MASK = if((elevation < 100 && elevation > 60) && (landuse96_28m == 1 || landuse96_28m == 2),1,null())"
+r.mapcalc "low_elev_developed = if((elevation < 100 &amp;&amp; elevation > 60) &amp;&amp; (landuse96_28m == 1 || landuse96_28m == 2),1,null())"
+r.mask raster=low_elev_developed
 </code></pre>
+Command r.mask creates a raster map "MASK" in your mapset.
 
 <p>
-Display watersheds to see the MASK effect:
+Remove "low_elev_developed" layer if it was added.
+<p>Display watersheds to see the mask effect:
 
 <pre><code>
 d.rast basin_50K
@@ -325,24 +328,25 @@ d.out.file basin_masked
 </code></pre>
 
 <p>
-Rename MASK to disable it, and display basin_50K again
-to show that the MASK was removed.
+Disable mask, and display basin_50K again
+to show that the mask was removed.
 
 <pre><code>
-g.rename raster=MASK,maskfile
+r.mask -r
 d.rast basin_50K
 </code></pre>
 
-<p>
+<h4>Using coordinates of moving window in map algebra</h4>
 <!-- p. 114<br> -->
-replace section of SRTM DSM with NED DEM elevation<br>
+Replace section of SRTM DSM with NED DEM elevation.<br>
+<span class="question">Try to explain how this r.mapcalc expression works.</span>
 
 <pre><code>
-r.mapcalc "elev_combined = if(y() < 224274. && x() > 637455., elevation, elev_srtm_30m)"
+r.mapcalc "elev_combined = if(y() < 224274. &amp;&amp; x() > 637455., elevation, elev_srtm_30m)"
 </code></pre>
 
 <h4>Tilted plane</h4>
-Create a raster map representing tilted plane (e.g., geologic fault).
+Create a raster map representing tilted plane (e.g., geologic fault):
 
 <pre><code>
 g.region rural_1m -p
