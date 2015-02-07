@@ -333,14 +333,14 @@ Compute the distance map and cost surface to highways:
 
 <pre><code>
 r.mapcalc "area_one = 1"
-r.cost input=area_one output=dist_toroad start_raster=roadsmajor
+r.cost input=area_one output=dist_toroad start_rast=roadsmajor
 r.mapcalc "dist_meters = dist_toroad * (ewres() + nsres())/2."
 r.mapcalc "dist_class = int(dist_meters/500)"
 d.erase
 d.rast dist_class
 d.vect roadsmajor
 d.out.file dist_roadsmaj
-r.cost -k input=streets_travtime output=cdist_toroadk start_raster=roadsmajor
+r.cost -k input=streets_travtime output=cdist_toroadk start_rast=roadsmajor
 r.colors cdist_toroadk color=bgyr
 d.rast cdist_toroadk
 d.vect streets_wake color=black
