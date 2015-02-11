@@ -59,7 +59,7 @@ Interpolate DEM using IDW, check the result using aspect.
 <pre><code>
 g.region rural_1m -p
 v.info -c elev_lid792_randpts
-v.surf.idw elev_lid792_randpts output=elev_idw_1m color=value
+v.surf.idw elev_lid792_randpts output=elev_idw_1m column=value
 r.colors elev_idw_1m color=elevation
 r.slope.aspect elev_idw_1m aspect=asp_idw_1m
 d.erase

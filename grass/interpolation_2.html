@@ -88,10 +88,10 @@ v.build elev_rstdef_devi
 v.surf.rst elev_lid792_randpts elevation=elev_rstsm10_1mb zcolumn=value smooth=10 deviations=elev_rstsm10_devi segmax=30 npmin=140
 v.build elev_rstsm10_devi
 v.info -c elev_rstdef_devi
-v.univar elev_rstdef_devi color=flt1 type=point
+v.univar elev_rstdef_devi column=flt1 type=point
 r.info elev_rstdef_1mb
 v.info -c elev_rstsm10_devi
-v.univar elev_rstsm10_devi color=flt1 type=point
+v.univar elev_rstsm10_devi column=flt1 type=point
 r.info elev_rstsm10_1mb
 </code></pre>
 
@@ -128,7 +128,7 @@ using cross-validation (no raster output, only points with pred. errors).
 <pre><code>
 v.surf.rst -c elev_lid792_randpts zcolumn=value cvdev=elev_rstdef_cv npmin=120 segmax=35
 v.build elev_rstdef_cv
-v.univar elev_rstdef_cv color=flt1 type=point
+v.univar elev_rstdef_cv column=flt1 type=point
 </code></pre>
 
 <p>
