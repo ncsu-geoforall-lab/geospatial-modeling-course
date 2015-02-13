@@ -44,7 +44,7 @@ without the need to specify the full path to the file.
 <!-- p. 235<br> -->
 <h3>Interpolate elevation raster from points using splines with different tension</h3>
 Compute aspect simultaneously with interpolation and 
-evaluate impact of tension by using tension=40 (default), tension=10 and tension=160.
+<span class="question">evaluate impact of tension by using tension=40 (default), tension=10 and tension=160.</span>
 
 <pre><code>
 g.region rural_1m res=1 -p
@@ -132,14 +132,10 @@ v.univar elev_rstdef_cv column=flt1 type=point
 </code></pre>
 
 <p>
-Skip the section below if you got error for elev_rstdef_cv<br>
-but please include the error description into your report<br>
-and continue with precipitation example<br>
-
-compute raster map of predictive errors and identify locations<br>
-where the sampling is inadequate<br>
-optionally, to view the result in 3D use elev_rstdef_1mb for elevation (switch off everything else)<br>
-and drape the crossvalidation map elev_rstdef_cv as color in wxnviz GUI<br>
+Compute raster map of predictive errors and <span class="question">identify locations
+where the sampling is inadequate.</span><br>
+Optionally, to view the result in 3D use "elev_rstdef_1mb" for elevation (switch off everything else)
+and drape the crossvalidation map "elev_rstdef_cv" as color.
 
 <pre><code>
 v.surf.rst elev_rstdef_cv elevation=elev_rstdef_cv zcolumn=flt1
@@ -150,7 +146,7 @@ d.legend elev_rstdef_cv at=2,50,2,6
 d.out.file elev_rstdef_cv
 </code></pre>
 
-<p>
+
 <!-- <font color="#000066">
 nviz elev_rstdef_1m col=elev_rstdef_cv
 p. 247
@@ -173,27 +169,22 @@ d.vect elev_lid792_cont1m col=yellow
 -->
 
 
-<p>
-interpolate precipitation with influence of topography<br>
+<h3>Interpolate precipitation with influence of topography</h3>
 
-! some of the following lines related to masking changed 10/16<br>
-if you have map name MASK in your mapset, run r.mask -r<br>
-
-set the 3D region (read the man page for g.region)<br>
-we set tbres to high value - we have just a single level<br>
-because we are not computing the 3D raster (see lecture for more details)<br>
+Set the 3D region (read the man page for g.region).<br>
+We set <em>tbres</em> to high value - we have just a single level
+because we are not computing the 3D raster (see lecture for more details).
 
 <pre><code>
 g.region raster=elev_state_500m -p
 g.region t=2000 b=0 tbres=2000 res3=500 -p3
-<!--r.mask ncmask_500m-->
 </code></pre>
 
 <p>
-compute precipitation raster map without influence of elevation<br>
-with segmax=700 segmentation is not performed so<br>
-interpolation function is computed using all points at once<br>
-we will use mask during the interpolation<br>
+Compute precipitation raster map without influence of elevation
+(with segmax=700 segmentation is not performed so
+interpolation function is computed using all points at once).<br>
+We will use mask during the interpolation.
 
 <pre><code>
 r.mask raster=ncmask_500m
@@ -202,10 +193,8 @@ v.surf.rst precip_30ynormals elevation=precip_annual_500m zcolumn=annual segmax=
 </code></pre>
 
 <p>
-download the color table <a href="data/precip_color.txt">precip_color.txt</a><br>
-type in the full path to the file in quotes<br>
-or use GUI (type r.colors ENTER into Cmd) to select the color table file<br>
-zoom to computational region when displaying the result<br>
+Use the downloaded the color table <a href="data/precip_color.txt">precip_color.txt</a>.<br>
+Zoom to computational region when displaying the result.
 
 <pre><code>
 r.colors precip_annual_500m rules=precip_color.txt
@@ -215,15 +204,15 @@ d.legend precip_annual_500m at=2,30,2,5 range=970,2400
 </code></pre>
 
 <p>
-compute precipitation raster map with elevation<br>
-note that we need to rescale elevation by 90 to get good results<br>
-display the result and save the image for the report<br>
-run v.vol.rst as command, if using GUI make sure you set the options correctly<br>
-there is both 3D voxel output and 2D raster output - we want the 2D raster cellout<br>
-optionally to view the results in 3D,<br>
-switch off everything except for elev_state_500m and precip_30ynormals_3d<br>
-switch to 3D, set(type in) viewer height at 300000, z-exag at 6, fine res=1<br>
-use precip_anntopo_500m for color, set icon size for points - sphere, 5000<br>
+Compute precipitation raster map with elevation.
+<p>
+<!-- Note that we need to rescale elevation by 90 to get good results.<br> -->
+There is both 3D voxel output and 2D raster output - we want the 2D raster output (cross_output).<br>
+Optionally to view the results in 3D,
+switch off everything except for elev_state_500m and precip_30ynormals_3d,<br>
+switch to 3D, set(type in) viewer height at 300000, z-exag at 6, fine res=1,<br>
+use precip_anntopo_500m for color, set icon size for points - sphere, 5000.<br>
+Display the result and save the image for the report.
 
 <pre><code>
 v.info -c precip_30ynormals_3d
@@ -233,13 +222,15 @@ d.rast precip_anntopo_500m
 </code></pre>
 
 <p>
-after you are finished, remove mask<br>
+<span class="question">Try to explain how was elevation used for the precipitation raster interpolation.</span>
+<p>
+After you are finished, remove mask.
 
 <pre><code>
 r.mask -r
 </code></pre>
 
-<p>
+
 <!--
 nviz elev_state_500m co=precip_anntopo_500m points=precip_30ynormals_3d
 <a href="http://www.grassbook.org/gallery/chapters/s050303f010_resamp.jpg">
