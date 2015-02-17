@@ -72,6 +72,7 @@ In GUI: switch off previous map, use Add raster, Add vector icons.
 d.rast developed_lake
 d.vect streets_wake color=grey
 d.rast lakes
+d.legend -c developed_lake use=2,3,4,5 at=5,25,2,5
 d.out.file mylakesbuffmap
 </code></pre>
 
@@ -106,7 +107,7 @@ Display the results. In GUI switch off previous maps.
 <pre><code>
 d.rast noise
 d.vect streets_wake
-d.legend noise at=5,25,2,5
+d.legend -c noise at=5,25,2,5
 </code></pre>
 
 <h4>Find schools affected by high levels of noise</h4>
