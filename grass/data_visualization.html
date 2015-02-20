@@ -14,6 +14,15 @@ how to use wxGUI from the first assignment</li>
 </ul>
 </ul>
 
+<p>For Windows users: When showing legend, make sure the numbers are displayed.
+If not, please go through the following steps:
+<ol>
+<li>In Layer Manager toolbar find <em>Settings</em> -> <em>Map Display</em> tab</li>
+<li><em>Set font</em> -> select font (e.g. arial)</li>
+<li>Click on <em>Save</em> to save settings</li>
+<li>Click on <em>Render map</em> (second button in Map Display toolbar)
+and legend numbers  should appear.</li>
+</ol>
 
 <h3>Start GRASS GIS</h3>
 In startup pannel set <b>GIS Data Directory</b> to path to datasets,
@@ -36,11 +45,11 @@ g.region raster=elevation -p <!--nviz elevation vector=roadsmajor point=schools_
 </code></pre>
 
 <p>
-Interactively view "elevation" raster and vector data ("streams", "usgsgauges") in 3D view,
+Interactively view "elevation" raster and vector data ("streams", "usgsgages") in 3D view,
 adjust viewing position, surface properties and lighting to highlight features.
 <p>
 Remove or switch off any map layers in the Layer Manager.
-Then add raster "elevation", Add vector "streams", Add vector "usgsgauges".<br>
+Then add raster "elevation", Add vector "streams", Add vector "usgsgages".<br>
 Zoom to computational region and Switch to 3D view.<br>
 <p>
 Follow the video Visualization I and II for similar tasks (link is above) and
@@ -65,7 +74,7 @@ v.surf.rst elev_lidrural_mrpts elevation=elev_lidruralmr_1m npmin=120 segmax=25 
 </code></pre>
 
 <p>
-In Layer Manager Add rasters "elev_lidrural_mrpts" and "elev_lid792_1m" (bare earth).
+In Layer Manager Add rasters "elev_lidruralmr_1m" and "elev_lid792_1m" (bare earth).
 In Map Display <em>Zoom to computational region</em>.
 <p>
 Make sure that you have only the two elevation maps switched on in the Layer Manager.

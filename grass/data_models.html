@@ -9,6 +9,16 @@ and <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">tutorial</a>
 how to use wxGUI from the first assignment</li>
 </ul>
 
+<p>For Windows users: When showing legend, make sure the numbers are displayed.
+If not, please go through the following steps:
+<ol>
+<li>In Layer Manager toolbar find <em>Settings</em> -> <em>Map Display</em> tab</li>
+<li><em>Set font</em> -> select font (e.g. arial)</li>
+<li>Click on <em>Save</em> to save settings</li>
+<li>Click on <em>Render map</em> (second button in Map Display toolbar)
+and legend numbers  should appear.</li>
+</ol>
+
 <h3>Start GRASS GIS</h3>
 Start GRASS - click on GRASS icon or type<br>
 
@@ -138,7 +148,7 @@ d.rast landuse96_28m
 Then change the region resolution and resample
 elevation (which is a continuous field)
 and land use (which has discrete categories).<br>
-<span class="question">Explain selection of method can we use average also for landuse?
+<span class="question">Explain selection of aggregation method. Can we use average also for landuse?
 What does mode mean?</span><br>
 Reminder: d.erase indicates that you should remove all map layers
 from <em>Layer Manager</em>.

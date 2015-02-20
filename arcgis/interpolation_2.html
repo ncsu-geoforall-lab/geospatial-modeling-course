@@ -1,23 +1,17 @@
+<h2>Spatial interpolation and approximation II</h2>
 <p>Resources:
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
-<P>
-Topic: Spatial Interpolation and approximation
-<br>Task: Demonstrate impact of interpolation methods on resulting surface using hillshade, 
-histogram and univariate statistics
-<P>
+<p>
+Create the assignment working directory (folder) .\assign7.
+
+<h3>Interpolation using splines</h3>
 Interpolate elevation surfaces from spot point heights using the Spline tool 
-in the Spatial Analyst toolbox. Use three different weights (0.1, 1, 1000) to control the tension, and thus, the resulting surface character. For the first interpolation, you'll leave the Weight field blank, accepting the default 0.1 value. In subsequent interpolations, you'll enter the explicit weights (i.e., 1, and 1000).
-<P>
-Use the Geostatistical Analyst tool's Radial Basis Functions to generate at least two different elevation surfaces. In the first surface you'll use the RBF multi-quadric method. In the second, you'll choose Regularized Spline.
+in the Spatial Analyst toolbox.<br>
+Use three different weights (0.1, 1, 1000) to control the tension, and thus, the resulting surface character.<br>
+For the first interpolation, you'll leave the Weight field blank, accepting the default 0.1 value.<br>
+In subsequent interpolations, you'll enter the explicit weights.
 
-create the assignment working directory (folder) .\assign8<br>
-
-design experiment to evaluate impact of interpolation function<br>
-paramaters on the resulting surface<br>
-
-interpolate DEM using Spline<br>
-
-<pre><code>
+<pre>
 ArcMap File->Add Data->Add Data...
 Select ncshape.mdb/elev_lid792_randpts
 Check out a Spatial Analyst Extension license
@@ -25,46 +19,44 @@ Open the ArcToolbox
 Select 'Spatial Analyst Tools->Interpolation->Spline'
 Set 'Input Point Features' to 'elev_lid792_randpts'
 Set 'Z value field' to 'value_'
-Set 'Output Raster' to '.\assign8\elev_tps'
+Set 'Output Raster' to '.\assign7\elev_tps'
 Set 'Output cell size' to '2'
 Set to Spline Type to 'Tension'
 Leave the other inputs as defaults     
 Click 'OK'
-
-</code></pre>
-
-<p>
-check the interpolated elevation surface using hillshade<br>
-
-<pre><code>
-Check out a 3D Analyst Extension license
-</code></pre>
+</pre>
 
 <p>
-set the default output raster cell size environment variable to 2<br>
+Evaluate impact of interpolation function paramaters on the resulting surface
+using hillshade.
+<p>
+Check out a 3D Analyst Extension license.<br>
+Set the default output raster cell size environment variable to 2.
 
-<pre><code>
+<pre>
 Geoprocessing->Environments...->Raster Analysis->Cell Size
 Set 'As Specified Below' and enter 2 in the field that follows.
 Click 'OK'
 Open the ArcToolbox (if it's not already open)
 Select '3D Analyst Tools -> Raster Surface -> Hillshade'
 Set 'Input Surface' to 'elev_tps'
-Set 'Output Raster' to '.\assign8\Hillsh_tps'
+Set 'Output Raster' to '.\assign7\Hillsh_tps'
 Leave the other inputs as defaults
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-Repeat the splined interpolations, above, using weights of 1 and then 1000,<br>
+Repeat the spline interpolations above, using weights of 1 and then 1000,<br>
 and generate the associated hill shade surfaces.<br>
 Compare the three hill shade surfaces, and discuss your findings in your report.<br>
 
-interpolate using Radial Basis Functions from Geostatistical Analyst<br>
-select different Kernel functions for comparison<br>
+<h3>Interpolate surface using Radial Basis Functions</h3>
+Use the Geostatistical Analyst tool's Radial Basis Functions to generate at least
+two different elevation surfaces by selecting different Kernel functions.<br>
+In the first surface you'll use the RBF multi-quadric method.<br>
+In the second, you'll choose Regularized Spline.
 
-<pre><code>
+<pre>
 Check out a Geostatistical Analyst Extension license
 Customize->Toolbars->Geostatistical Analysis'
 Select 'Geostatistical Analysis->Geostatistical Wizard'
@@ -73,11 +65,9 @@ Set the 'Source Dataset' to 'elev_lid792_randpts'
 Set the Data Field to 'value_'
 Click 'Next'
 Set the Kernel function to 'Multiquadric'
-Click Next/Finish/OK through remainder of Windows
-
-</code></pre>
+Click Next/Finish/OK through remainder of dialogs
+</pre>
 
 <p>
-rerun the interpolation in the Geostatistical Analyst Wizard using<br>
- 
- </div>
+Rerun the interpolation in the Geostatistical Analyst Wizard using<br>
+ Kernal Type = Completely Regularized Spline and compare your results.
