@@ -38,7 +38,7 @@ without the need to specify the full path to the file.
 
 
 <!-- p. 249<br> -->
-<h3>Analyze bare earth and multiple return lidar data properties</h3>
+<h3>Analyze bare earth and multiple return lidar data properties by binning</h3>
 Import the points.
 Set the region from the imported point file with resolution of 1 meter:
 
@@ -148,6 +148,8 @@ We now know how dense the data are and what is the range within cell.<br>
 If we need a 1m resolution DEM or DSM for our application
 this analysis tells us that we need to interpolate it from the point cloud.
 <p>
+<h3>Interpolate DEM and DSM</h3>
+
 To interpolate DEM and DSM
 we use default parameters except for number of points used for
 segmentation and interpolation<br> (segmax and npmin and higher tension for multiple return data).<br>
