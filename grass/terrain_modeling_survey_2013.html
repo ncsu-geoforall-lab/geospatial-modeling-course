@@ -1,188 +1,183 @@
-<P>
+<h2>Geomorphometry I: Terrain Modeling</h2>
+<p>
 Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
 GRASS GIS overview and manual</a>,
 <a href="http://liblas.org/"> libLAS tools for lidar data conversions</a>
-<P>
-<P><B>Topic: Geomorphometry I: Terrain Modeling</B></P>
-<!--<p><B>Analyze multiple return lidar data and create DEM and DSM</B></p>-->
 
-On MSWindows, it is recommended to use wxGUI equivalents of d.* commands:</font><br>
-use their GUI equivalents
-see assignment <a href="data_visualization.html">Data display and visualization</a>
-<P>
-<!--
-Download the ASCI (x,y,z) lidar bare earth data <a href="lid_be_pts.txt">lid_be_pts.txt</a><br>
-Download the ASCI (x,y,z) lidar multiple return data <a href="lid_mr_pts.txt">lid_mr_pts.txt</a><br>
-Optional: -->
-Download the Raleigh 2013 lidar data in State Plane CS, units feet:<br>
-- <a href="../media/01/0793_016_first_ground.txt.zip">0793_016_first.txt and 0793_016_ground.txt files</a><br>
-- <a href="../media/01/0793_016_xyzirnc_ncspf.zip">all return txt file</a><br>
-- <a href="../media/01/ortho_0793_016.zip">Orthophoto geotif (mosaic at 1ft resolution)</a><br>
-- <a href="../media/01/ortho_0793_016_1ft.pack">Orthphoto GRASS pack file </a><br>
-- to be unziped and imported into <a href=../media/01/nc_spf.zip>LOCATION</a> in State Plane CS, units feet
-start GRASS<br>
+<p>
+Download the Raleigh 2013 lidar data as plain text files (x,y,z):
+<ul>
+<li><a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016_first_ground_txt_ncspm.zip">zipped 0793_016_first.txt (first return) and 0793_016_ground.txt (bare earth) files</a><br></li>
+<li><a href="http://courses.ncsu.edu/mea582/common/media/01/ortho_0793_016_ncspm.zip">Orthophoto geotif (mosaic at 1ft resolution)</a></li>
+</ul>
+
+<h3>Start GRASS GIS</h3>
+Start GRASS - click on GRASS icon or type<br>
 
 <pre><code>
 grass70
 </code></pre>
 
 <p>
-in the startup pannel<br>
-GIS data directory: type path to GRASS datasets<br>
-LOCATION: select nc_spf<br>
-MAPSET: create new mapset with your unity ID or assignment name<br>
-Enter GRASSS<br>
+In startup pannel set <b>GIS Data Directory</b> to path to datasets,
+for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.<br>
+For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_8).<br>
+Click <b>Start GRASS</b>.
 
-p. 249<br>
-Analyze bare earth and multiple return lidar data properties<br>
-download the x,y,z lidar data for bare earth and first return using the link above<br>
-Import the points - run v.in.ascii from GUI to find the path to the external txt file<br>
-set the region from the imported point file with resolution of 3ft<br>
-zoom to computational region where indicated by d.erase<br>
+<p>
+Change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <tt>cd</tt> (stands for change directory) into the GUI command console and hit Enter:
+<pre><code>
+cd
+</code></pre>
+Download all text files (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
 
-Compute raster maps representing number of points per 3ft grid cell<br>
-compare point densities for bare earth, first return, and all returns<br>
-run r.in.xyz from GUI to find the path to the external txt file, set separator to space<br>
 
-first set the current directory where you have downloaded and uncompressed the txt files<br>
-to avoid typing the full path<br>
-in menu: Settings > GRASS working environment > Change working directory<br>
+<!-- p. 249<br> -->
+<h3>Analyze bare earth and multiple return lidar data properties</h3>
+Import the points.
+Set the region from the imported point file with resolution of 1 meter:
 
 <pre><code>
-v.in.ascii -zt input=0793_016ground.txt out=elev_lid793016_be z=3 separator=space
-v.in.ascii -zt input=0793_016first.txt out=elev_lid793016_1r z=3 separator=space
-g.region vect=elev_lid793016_1r res=3 -p
-d.erase
-r.in.xyz input=0793_016ground.txt out=lid_be_binn3ft meth=n separator=space
-r.in.xyz input=0793_016first.txt out=lid_1r_binn3ft meth=n separator=space
-r.colors lid_be_binn3ft co=bcyr -e
-r.colors lid_1r_binn3ft co=bcyr -e
-d.rast lid_be_binn3ft
-d.legend lid_be_binn3ft at=2,90,2,9
-r.report lid_be_binn3ft unit=p,c
-r.univar lid_be_binn3ft
-d.rast lid_1r_binn3ft
-d.legend -d -s lid_1r_binn3ft at=2,50,2,5
-r.report lid_1r_binn3ft unit=p
-r.univar lid_1r_binn3ft
+v.in.ascii -zt input=0793_016ground.txt output=elev_lid793016_be z=3 separator=space
+v.in.ascii -zt input=0793_016first.txt output=elev_lid793016_1r z=3 separator=space
+g.region vect=elev_lid793016_1r res=1 -p
+</code></pre>
+<p>
+Note: if you have any problems with the files, review the instructions above or
+use v.in.ascii GUI dialog to browse to get the path to the files.
+<p>
+Compute raster maps (with r.in.xyz) representing number of points per 1m grid cell.<br>
+Compare point densities for bare earth, first return.
+
+<pre><code>
+r.in.xyz input=0793_016ground.txt output=lid_be_binn1m method=n separator=space
+r.in.xyz input=0793_016first.txt output=lid_1r_binn1m method=n separator=space
+r.colors lid_be_binn1m,lid_1r_binn1m color=bcyr -e
+d.rast lid_be_binn1m
+d.legend lid_be_binn1m at=2,50,2,9
+r.report lid_be_binn1m unit=p,c
+r.univar lid_be_binn1m
+d.rast lid_1r_binn1m
+d.legend -d -s lid_1r_binn1m at=2,50,8,12
+r.report lid_1r_binn1m unit=p
+r.univar lid_1r_binn1m
 </code></pre>
 
 <p>
-
-compute a raster map representing mean elevation for each 3ft cell<br>
-it will have holes and note the maximum elevation for first return<br>
-
+Compute a raster map representing mean elevation for each 1m cell.<br>
+It will have holes and note the maximum elevation for first return.
 
 <pre><code>
-r.in.xyz input=0793_016ground.txt out=lid_be_binmean3ft separator=space
-r.in.xyz input=0793_016first.txt out=lid_1r_binmean3ft separator=space
-r.colors lid_be_binmean3ft co=elevation
-r.colors lid_1r_binmean3ft co=elevation
-d.rast lid_be_binmean3ft
-d.legend lid_be_binmean3ft at=2,40,2,5
-d.rast lid_1r_binmean3ft
-d.legend lid_1r_binmean3ft at=2,40,2,5
-d.out.file mylidmrmean3ft
-
+r.in.xyz input=0793_016ground.txt output=lid_be_binmean1m separator=space
+r.in.xyz input=0793_016first.txt output=lid_1r_binmean1m separator=space
+r.colors lid_be_binmean1m color=elevation
+r.colors lid_1r_binmean1m color=elevation
+r.info map=lid_1r_binmean1m
+d.rast lid_be_binmean1m
+d.legend lid_be_binmean1m at=2,40,2,5
+d.rast lid_1r_binmean1m
+d.legend lid_1r_binmean1m at=2,40,2,5
+d.out.file mylidmrmean1m
 </code></pre>
 
 <p>
-compute a raster map representing mean elevation for each 6ft cell<br>
-result is almost good enough for 1st return, but many holes for bare earth<br>
+Compute a raster map representing mean elevation for each 2m cell.<br>
+Result is almost good enough for 1st return, but there are still many holes for bare earth.
 
 <pre><code>
-g.region res=6 -ap
-r.in.xyz input=0793_016ground.txt out=lid_be_binmean6ft separator=space
-r.in.xyz input=0793_016first.txt out=lid_1r_binmean6ft separator=space zrange=200,500
-r.colors lid_be_binmean6ft co=elevation
-r.colors lid_1r_binmean6ft co=elevation
-d.rast lid_be_binmean6ft
-d.legend lid_be_binmean6ft at=2,40,2,5
-d.rast lid_1r_binmean6ft
-d.legend lid_1r_binmean6ft at=2,40,2,5
-d.out.file mylidmrmean6ft
-
+g.region res=2 -ap
+r.in.xyz input=0793_016ground.txt output=lid_be_binmean2m separator=space
+r.in.xyz input=0793_016first.txt output=lid_1r_binmean2m separator=space zrange=60,150
+r.colors lid_be_binmean2m color=elevation
+r.colors lid_1r_binmean2m color=elevation
+d.rast lid_be_binmean2m
+d.legend lid_be_binmean2m at=2,40,2,5
+d.rast lid_1r_binmean2m
+d.legend lid_1r_binmean2m at=2,40,2,5
+d.out.file mylidmrmean2m
 </code></pre>
 
 <p>
-compute range of elevation values in each grid cell<br>
+Compute range of elevation values in each grid cell:
 
 <pre><code>
-r.in.xyz input=0793_016ground.txt out=lid_be_binrange6ft meth=range separator=space
-r.in.xyz input=0793_016first.txt out=lid_1r_binrange6ft meth=range separator=space
-d.rast lid_be_binrange6ft
-d.legend lid_be_binrange6ft at=2,40,2,5
-d.rast lid_1r_binrange6ft
-d.legend lid_1r_binrange6ft at=2,40,2,5
+r.in.xyz input=0793_016ground.txt output=lid_be_binrange2m method=range separator=space
+r.in.xyz input=0793_016first.txt output=lid_1r_binrange2m method=range separator=space
+d.rast lid_be_binrange2m
+d.legend lid_be_binrange2m at=2,40,2,5
+d.rast lid_1r_binrange2m
+d.legend lid_1r_binrange2m at=2,40,2,5
 </code></pre>
 
 <p>
-in the first return we have huge range at one or more cells, so we adjust<br>
-the color table to histogram equalized and redraw<br>
+In the first return we have huge range at one or more cells, so we adjust
+the color table to histogram equalized and redraw:
 
 <pre><code>
-r.colors lid_1r_binrange6ft co=bcyr -e
+r.colors lid_1r_binrange2m color=bcyr -e
 </code></pre>
 
 <p>
-display orthophoto<br>
-switch off all layers except for orthophoto<br>
+Import and display orthophoto, 
+switch off all layers except for orthophoto.
 
 <pre><code>
-r.in.gdal ortho_0793_016_1ft.tif out=ortho_2013_0793
+r.in.gdal ortho_0793_016_ncspm.tif output=ortho_2013_0793
 d.rast ortho_2013_0793
-
 </code></pre>
 
 <p>
-identify the features that are associated with large range values<br>
-display only the high values of range<br>
-what landcover is associated with large range in multiple return data?<br>
+Identify the features that are associated with large range values.<br>
+Display only the high values of range.<br>
+<span class="question">What landcover is associated with large range in multiple return data?</span>
 
 
 <pre><code>
-d.rast lid_1r_binrange6ft val=100.-2500.
-d.rast lid_1r_binrange6ft val=3.-100.
-d.out.file mylid_1rrange6ft
-
+d.rast lid_1r_binrange2m values=30.-760.
+d.rast lid_1r_binrange2m values=1.-30.
+d.out.file mylid_1rrange2m
 </code></pre>
 
 <p>
-we now know how dense the data are and what is the range within cell<br>
-if we need a 3ft resolution DEM or DSM for our application<br>
-this analysis tells us that we need to interpolate it from the point cloud<br>
-
-To interpolate DEM and DSM (more about interpolation in next assignment)<br>
-we use default parameters except for number of points used for<br>
-segmentation and interpolation - segmax and npmin and higher tension for multiple return data<br>
-you can set dmin=3 to make the interpolation run faster (see the manual)<br>
-be patient, it can take few minutes to run depending on the computer power<br>
-use mapalgebra to remove extremely high elevation outlier in the 1st return DSM<br>
-can you find out where is this outlier coming from?<br>
+We now know how dense the data are and what is the range within cell.<br>
+If we need a 1m resolution DEM or DSM for our application
+this analysis tells us that we need to interpolate it from the point cloud.
+<p>
+To interpolate DEM and DSM
+we use default parameters except for number of points used for
+segmentation and interpolation<br> (segmax and npmin and higher tension for multiple return data).<br>
+You can set dmin=1 to make the interpolation run faster (see the manual).<br>
+Be patient, it can take a few minutes to run depending on the computer power.<br>
+Use mapalgebra to remove extremely high elevation outlier in the 1st return DSM.<br>
+<span class="question">Can you find out where is this outlier coming from?</span>
 
 
 <pre><code>
-g.region res=3 -ap
-v.surf.rst elev_lid793016_be elevation=elev_lid793016_be_3ft npmin=120 segmax=25
-v.surf.rst elev_lid793016_1r elevation=elev_lid793016_1r_3ft npmin=120 segmax=25 tension=100 smooth=0.5
-r.mapcalc "elev_lid793016_1r_3ft_fix = if(elev_lid793016_1r_3ft>500,500,elev_lid793016_1r_3ft)"
-r.colors elev_lid793016_1r_3ft_fix co=elevation
-d.rast elev_lid793016_be_3ft
-d.rast elev_lid793016_1r_3ft_fix
-
+g.region res=1 -ap
+v.surf.rst elev_lid793016_be elevation=elev_lid793016_be_1m npmin=120 segmax=25
+v.surf.rst elev_lid793016_1r elevation=elev_lid793016_1r_1m npmin=120 segmax=25 tension=100 smooth=0.5
+r.mapcalc "elev_lid793016_1r_1m_fix = if(elev_lid793016_1r_1m>150,150,elev_lid793016_1r_1m)"
+r.colors elev_lid793016_1r_1m_fix color=elevation
+d.rast elev_lid793016_be_1m
+d.rast elev_lid793016_1r_1m_fix
 </code></pre>
 
 <p>
-faster interpolation, specially designed for lidar<br>
+Faster interpolation, specially designed for lidar.<br>
+In case of problems with v.surf.bspline, post the error message in the report.
 
 <pre><code>
-v.surf.bspline elev_lid793016_be rast=elev_lid793016_be_3ft_bsp
-v.surf.bspline elev_lid793016_1r rast=elev_lid793016_1r_3ft_bsp
-r.colors elev_lid793016_1r_3ft_bsp co=elevation
-r.colors elev_lid793016_be_3ft_bsp co=elevation
-d.rast elev_lid793016_be_3ft_bsp
-d.rast elev_lid793016_1r_3ft_bsp
-
+v.surf.bspline elev_lid793016_be rast=elev_lid793016_be_1m_bsp
+v.surf.bspline elev_lid793016_1r rast=elev_lid793016_1r_1m_bsp
+r.colors elev_lid793016_1r_1m_bsp color=elevation
+r.colors elev_lid793016_be_1m_bsp color=elevation
+d.rast elev_lid793016_be_1m_bsp
+d.rast elev_lid793016_1r_1m_bsp
 </code></pre>
 
 <p>
@@ -191,20 +186,14 @@ d.rast elev_lid793016_1r_3ft_bsp
 v.extract elev_lidrural_mrpts out=elev_lidrur_first type=point where=Return=1
 -->
 
-use wxnviz (3D view) with cutting planes to compare the bare earth and terrain surface<br>
-make sure fine resolution is set to 1 for all surfaces<br>
-assign each surface constant color, add constant plane z=220 for reference<br>
-shade the crossection using the color by bottom surface option<br>
-if you don't remember this, see screen capture video for nviz or wxnviz 3d view<br>
-
-<pre><code>
-
-nviz elev_lid793016_be_3ft,elev_lid793016_1r_3ft_fix
-
-</code></pre>
+Use 3D view with cutting planes to compare the bare earth and terrain surface.<br>
+Make sure fine resolution is set to 1 for all surfaces.<br>
+Assign each surface constant color, add constant plane for reference.<br>
+Shade the crossection using the color by bottom surface option.<br>
+If you don't remember this, see screen capture video for 3d view.
 
 <p>
-save image for report, if you don't have tiff support, use screen capture tool<br>
+Save image for your report.
 
 <!--
 # optional
@@ -215,12 +204,12 @@ d.rast ortho_2013_0793
 # Add vector>Selection>type return=1 into WHERE condition of SQL statement
 # you need to add the points 4 times to create a map that will have
 # all sets of returns
-r.in.xyz input=0793_016.txt out=lid_mr_binn3ft meth=n separator=space
-d.rast lid_mr_binn3ft
-d.legend lid_mr_binn3ft at=2,80,2,5 thin=2
-d.out.file mylidmrn3ft
-r.report lid_mr_binn3ft unit=p,c
-r.univar lid_mr_binn3ft
+r.in.xyz input=0793_016.txt out=lid_mr_binn1m meth=n separator=space
+d.rast lid_mr_binn1m
+d.legend lid_mr_binn1m at=2,80,2,5 thin=2
+d.out.file mylidmrn1m
+r.report lid_mr_binn1m unit=p,c
+r.univar lid_mr_binn1m
 
 v.in.ascii -z input=0793_016.txt out=elev_lid793016_all z=3 separator=space
 d.vect elev_lid793016_all where=return=1 fcol=grey size=5 icon=basic/circle
@@ -234,4 +223,3 @@ nviz elev_lidrural_1m,elev_lidrurfirst_1m
 # save image for report, if you don't have tiff support, use screen capture tool
 -->
 
-</div>

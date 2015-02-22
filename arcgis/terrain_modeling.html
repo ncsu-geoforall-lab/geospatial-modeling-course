@@ -1,39 +1,23 @@
+<h2>Geomorphometry I: Terrain Modeling</h2>
 <p>Resources:
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
-
-<pre><code>
-Topic: Geomorphometry I: Terrain Modeling
-
-Task: Compare properties of elevation data acquired by different technologies
-
-</code></pre>
+Create the folder 'Assign8'.<br>
+Download the file <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_arc/lid_be_ptsarc.txt">lid_be_ptsarc.txt</a> to the Assign8 folder.
 
 <p>
-start ArcMap<br>
+Set the output coordinate system and spatial extent to the layer
+that you are working with using 'Environment -> General Settings' in ArcToolbox.<br>
+For example, for the point cloud data analysis set it to raster e_lid792 
+which is equivalent to 1m resolution rural_1m region in GRASS.
 
-<pre><code>
-Start->Programs->ArcGIS->ArcMap
+<h3>Analyze bare earth lidar data</h3>
+<h4>Compute a raster map representing number of points per cell</h4>
+Use the lidar input (point cloud) file: 'lid_be_ptsarc.txt'.
 
-Create the folder 'Assign6'
-Download the file <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_arc/lid_be_ptsarc.txt">lid_be_ptsarc.txt</a> to the Assign6 folder
-
-</code></pre>
-
-<p>
-Set the output coordinate system and spatial extent to the layer<br>
-that you are working with using 'Environment->General Settings' in ArcToolbox<br>
-for example, for the point cloud data analysis set it to raster e_lid792<br>
-which is equivalent to 1m resolution rural_1m region in GRASS<br>
-
-analyze multiple return lidar data<br>
-compute a raster map representing number of points per cell<br>
-use the lidar input (point cloud) file: 'lid_be_ptsarc.txt'<br>
-
-
-<pre><code>
+<pre>
 Select Menu 'File -> Add Data -> Add XY Data'
-Browse for data table:  ./Assign6//lid_be_ptsarc.txt
+Browse for data table:  ./Assign8//lid_be_ptsarc.txt
 Set the 'X-Field' to X (this may happen automatically)
 Set the 'Y-Field' to Y (this may happen automatically)
 Set the 'Z-Field' to Z (this is  less likely to happen automatically)
@@ -46,184 +30,170 @@ NOTE: You will probably be presented with a 'Table Does Not Have Object-ID Field
 This is okay. Read the lengthy message so that you understand what it's trying to tell you 
 (you'll rectify this in the next step) and then...
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-make this data permanent<br>
+Make this data permanent:
 
-<pre><code>
+<pre>
 RMC 'lid_be_ptsarc.txt Events' and Select 'Data -> Export Data...'
-Set the 'Ouptu Feature Class' to '.\Assign6\lidar_be.shp'
+Set the 'Ouptu Feature Class' to '.\Assign8\lidar_be.shp'
 Set 'Save as type' to 'Shapefile'
 Click 'Save'
 Click 'OK'
 Click 'Yes' when prompted to add the data to the data frame as a layer
-
-</code></pre>
+</pre>
 
 <p>
-remove the event theme<br>
+Remove the event theme.
 
-<pre><code>
+<pre>
 RMC 'lid_be_ptsarc.txt Events' and Select 'Remove'
-
-</code></pre>
+</pre>
 
 <p>
-analyze lidar point cloud data<br>
-compute a raster map representing number of points per cell (at 2 different resolutions),<br>
+Compute a raster map representing number of points per cell (at 2 different resolutions).<br>
+Calculating for 2m x 2m cell:
 
-<pre><code>
-calculating for 2m x 2m cell
+<pre>
 Open the ArcToolbox
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'lidar_be'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Assign6\bin_count2m'
+Set 'Output Raster Dataset' to '.\Assign8\bin_count2m'
 Set 'Cell assignment type' to 'COUNT'
 Set Cellsize' to '2'                            
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-calculate for 6m x 6m cell<br>
+Calculate for 6m x 6m cell:
 
-<pre><code>
+<pre>
 Open the ArcToolbox (if not already open)
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'lidar_be'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Assign6\bin_count6m'
+Set 'Output Raster Dataset' to '.\Assign8\bin_count6m'
 Set 'Cell assignment type' to 'COUNT'
 Set Cellsize' to '6'                             
 Click 'OK'
+</pre>
 
-</code></pre>
-
-<p>
-compute raster maps representing mean elevation for each cell<br>
-
-<pre><code>
+<h4>Compute raster maps representing different elevation statistics for each cell</h4>
+Compute mean:
+<pre>
 Open the ArcToolbox (if not already open)
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'lidar_be'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Assign6\bin_mean6m'
+Set 'Output Raster Dataset' to '.\Assign8\bin_mean6m'
 Set 'Cell assignment type' to 'MEAN'
 Set Cellsize' to '6'                            
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-compute range<br>
+Compute range:
 
-<pre><code>
+<pre>
 Open the ArcToolbox (if not already open)
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'lidar_be'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Assign6\bin_range6m'
+Set 'Output Raster Dataset' to '.\Assign8\bin_range6m'
 Set 'Cell assignment type' to 'RANGE'
 Set Cellsize' to '6'                            
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-compute variation (standard deviation)<br>
+Compute variation (standard deviation):
 
-<pre><code>
+<pre>
 Open the ArcToolbox (if not already open)
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'lidar_be'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Assign6\bin_var6m'
+Set 'Output Raster Dataset' to '.\Assign8\bin_var6m'
 Set 'Cell assignment type' to 'STANDARD_DEVIATION'
 Set Cellsize' to '6'                            
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-add some background data<br>
+Find how many points are there:
 
-<pre><code>
+<pre>
+RMC 'lidar_be->Open Attribute Table'
+</pre>
+
+<h3>Analyze multiple return lidar data</h3>
+
+Add some background data:
+
+<pre>
 Select Menu File -> Add Data -> Add Data...
 Select ncshape.mdb/streets_wake
 Select ncshape.mdb/lakes
 Select ncshape.mdb/streams
-
-</code></pre>
-
-<p>
-find how many points<br>
-
-<pre><code>
-RMC 'lidar_be->Open Attribute Table'
-
-</code></pre>
+</pre>
 
 <p>
-display bare ground and multiple return points over orthophoto<br>
+Display bare ground and multiple return points over orthophoto:
 
-<pre><code>
+<pre>
 Select Menu 'File -> Add Data -> Add Data...'
 Select ncrast.mdb/ortho01
 Select ncshape/elev_lidrural_mrpts
 
-NOTE: if you receive a Coordinate System warning read through the message, and then: Click 'Close'
-
-</code></pre>
+NOTE: if you receive a Coordinate System warning
+read through the message, and then: Click 'Close'
+</pre>
 
 <p>
-select a subset of the lidar points for analysis<br>
+Select a subset of the lidar points for analysis:
 
-<pre><code>
+<pre>
 RMC 'elev_lidrural_mrpts->Zoom to Layer'
 Select the 'Select Features by Rectange' tool (in the Select Tool dropdown menu in the Main toolbar)
 RMC on 'lidar_be' in the TOC and select 'Selection -> Make This The Only Selectable Layer'
 Drag a box that selects points from 'lidar_be' that overlap with 'elev_lidrural_mrpts'
 NOTE: make sure that the layer 'lidar_be' is visible (checked on in TOC)
 RMC 'lidar_be-> DAta -> Export Data...'
-Set 'Output file' to '.\Assign6\rural_bepts.shp'
+Set 'Output file' to '.\Assign8\rural_bepts.shp'
 Click 'Save'
 Click 'OK'
 click 'Yes' to add the exported data to the map
 Select Menu 'Selection->Clear Selected Features'
-
-</code></pre>
+</pre>
 
 <p>
-check the imported data by creating low resolution DEM<br>
+Check the imported data by creating low resolution DEM:
 
-<pre><code>
+<pre>
 Open the ArcToolbox (if not already open)
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'rural_bepts'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Assign6\be_rural6m'
+Set 'Output Raster Dataset' to '.\Assign8\be_rural6m'
 Set 'Cell assignment type' to 'MEAN'
-Set Cellsize' to '6'                            
+Set Cellsize' to '6'
 Click 'OK'
 
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'elev_lidrural_mrpts'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Assign6\rural_mr6m'
+Set 'Output Raster Dataset' to '.\Assign8\rural_mr6m'
 Set 'Cell assignment type' to 'MEAN'
-Set Cellsize' to '6'                            
+Set Cellsize' to '6'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-interpolate DEM and DSM - we will work with different functions in the next assignment<br>
-updated to ArcGIS10<br>
+Interpolate DEM and DSM:
 
-<pre><code>
+<pre>
 Check out a Geostatistical Analyst Extension license
 LMC View->Toolbars->Geostatistical Analyst
 Select 'Geostatistical Analyst Toolbar->Geostatistical Wizard'
@@ -234,13 +204,12 @@ Click 'Next'
 Under 'General Properties->Kernel Functions' select 'Spline with Tension'
 Click 'Finish'
 To the Method Report Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-find out where we have multiple returns<br>
+Find out where we have multiple returns:
 
-<pre><code>
+<pre>
 RMC 'elev_lidrural_mrpts->Properties'
 Select 'Symbology' tab
 Under 'Show' select 'Categories->Unique Values'
@@ -248,37 +217,35 @@ Set the 'Value Field' to 'RETURN'
 Click the 'Add All Values' button
 Choose a color ramp that's to your liking
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-Select out 1st return<br>
+Select out 1st return:
 
-<pre><code>
+<pre>
 LMC Menu 'Selection->Select by Attributes'
 Set 'Layer' to 'elev_lidrural_mrpts'
 Set 'Method' to 'Create a new selection'
-</code></pre>
+</pre>
 
 <p>
-construct the SQL SELECT statement<br>
+Construct the SQL SELECT statement:
 
-<pre><code>
+<pre>
 Double click [Return]
 click '='
 Type in the value '1' so that the expression looks like '[Return] = 1'
 Click 'OK'
 RMC 'elev_lidrural_mrpts->Data->Export Data...'
-Save the selection set to '.\Assign6\lidfirst.shp'
+Save the selection set to '.\Assign8\lidfirst.shp'
 Click 'Yes' to add the exported data to the map
 LMC Menu 'Selection->Clear Selected Features'
-
-</code></pre>
+</pre>
 
 <p>
-Select out the 2nd return<br>
+Select out the 2nd return:
 
-<pre><code>
+<pre>
 LMC 'Selection->Select by Attributes'
 Set 'Layer' to 'elev_lidrural_mrpts'
 Set 'Method' to 'Create a new selection'
@@ -287,19 +254,16 @@ click '='
 Type in the value '2' so that the expression looks like '[Return] = 2'
 Click 'OK'
 RMC 'elev_lidrural_mrpts->Data->Export Data'
-Save the selection set to '.\Assign6\lidlast.shp'
+Save the selection set to '.\Assign8\lidlast.shp'
 Click 'Yes' to add the exported data to the map
 LMC 'Selection->Clear Selected Features'
+</pre>
 
-</code></pre>
+<h3>Optional - display the multiple return data as points in ArcScene</h3>
+Set the spatial extent to the raster elev.<br>
+Generate contours with 10m and 3m interval:
 
-<p>
-Optional - display the multiple return data as points in ArcScene<br>
-
-set the spatial extent to the raster elev<br>
-generate contours with 10m and 3m interval<br>
-
-<pre><code>
+<pre>
 File->Add Data->Add Data...
 Add ./ncrast.mdb/elev
 Check out a Spatial Analyst Extension license
@@ -309,7 +273,7 @@ Set 'Input Raster' to 'elev'
 Set 'Contour interval' to '10'
 Set 'Base contour' as '0'
 Set 'Z factor' to '1'
-Save 'Output polyline features' as '.\Assign6\cont_10m.shp'
+Save 'Output polyline features' as '.\Assign8\cont_10m.shp'
 Click 'OK'
 
 Select 'Spatial Analyst Tools->Surface->Contour'
@@ -317,26 +281,27 @@ Set 'Input Surface' to 'elev'
 Set 'Contour interval' to '3'
 Set 'Base contour' as '55'
 Set 'Z factor' to '1'
-Save 'Output Features' as '.\Assign6\cont_3m.shp'
+Save 'Output Features' as '.\Assign8\cont_3m.shp'
+</pre>
 
-Update on handling LAS data in ArcGIS
-
-1. LAS Datasets 
+<h3>FYI: Handling LAS data in ArcGIS</h3>
+<h4>1. LAS Datasets</h4>
 To import LAS files into ArcGIS, run the Create LAS Dataset tool in the Data Management toolbox.
 This will prompt you to load all of your LAS files and create a dataset from them.
-http://resources.arcgis.com/en/help/main/10.1/index.html#//015w00000057000000
-You can then use the LAS Dataset to Raster tool in the Conversion toolbox to create a raster DEM.  
+You can then use the LAS Dataset to Raster tool in the Conversion toolbox to create a raster DEM.
+See <a href="http://resources.arcgis.com/en/help/main/10.2/index.html#//015w00000057000000">ArcGIS help</a>.
 
-2. Mosiacs
-You can also import LAS using the Add Rasters to Mosaic Dataset tool.  
-http://resources.arcgis.com/en/help/main/10.1/index.html#/Adding_lidar_data_to_a_mosaic_dataset/015w0000006q000000/ 
+<h4>2. Mosaics</h4>
+You can also import LAS using the Add Rasters to Mosaic Dataset tool.
+See <a href="http://resources.arcgis.com/en/help/main/10.2/index.html#/Adding_lidar_data_to_a_mosaic_dataset/015w0000006q000000/">ArcGIS help</a>.
 
-3. Terrains 
-The Terrain Wizard in ArcCatalog.  Create a feature dataset inside a geodatabase.  
+<h4>3. Terrains</h4>
+The Terrain Wizard in ArcCatalog. Create a feature dataset inside a geodatabase.  
 Import your LAS files using the LAS to Multipoint tool in the 3D Analyst.  
 Save the multipoint feature class in your new feature dataset.  
-Right click on the feature dataset and select New/Terrain to launch the Terrain Wizard.  
-http://resources.arcgis.com/en/help/main/10.1/index.html#//005v0000001p000000
-http://resources.arcgis.com/en/help/main/10.1/index.html#//005v00000002000000
+Right click on the feature dataset and select New/Terrain to launch the Terrain Wizard.
+See ArcGIS help <a href="http://resources.arcgis.com/en/help/main/10.2/index.html#//005v0000001p000000">here</a>
+and <a href="http://resources.arcgis.com/en/help/main/10.2/index.html#//005v00000002000000">here</a>. 
+<p>
 Try the <a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016.las.zip">Raleigh las data:0793_016.las.zip</a>
- </div>
+ 
