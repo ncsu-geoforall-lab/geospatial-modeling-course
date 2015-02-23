@@ -70,7 +70,7 @@ r.univar lid_1r_binn1m
 
 <p>
 Compute a raster map representing mean elevation for each 1m cell.<br>
-It will have holes and note the maximum elevation for first return.
+It will have holes.
 
 <pre><code>
 r.in.xyz input=0793_016ground.txt output=lid_be_binmean1m separator=space
@@ -92,7 +92,7 @@ Result is almost good enough for 1st return, but there are still many holes for 
 <pre><code>
 g.region res=2 -ap
 r.in.xyz input=0793_016ground.txt output=lid_be_binmean2m separator=space
-r.in.xyz input=0793_016first.txt output=lid_1r_binmean2m separator=space zrange=60,150
+r.in.xyz input=0793_016first.txt output=lid_1r_binmean2m separator=space
 r.colors lid_be_binmean2m color=elevation
 r.colors lid_1r_binmean2m color=elevation
 d.rast lid_be_binmean2m
@@ -113,14 +113,14 @@ d.legend lid_be_binrange2m at=2,40,2,5
 d.rast lid_1r_binrange2m
 d.legend lid_1r_binrange2m at=2,40,2,5
 </code></pre>
-
+<!--
 <p>
 In the first return we have huge range at one or more cells, so we adjust
 the color table to histogram equalized and redraw:
 
 <pre><code>
 r.colors lid_1r_binrange2m color=bcyr -e
-</code></pre>
+</code></pre> -->
 
 <p>
 Import and display orthophoto, 
@@ -138,7 +138,7 @@ Display only the high values of range.<br>
 
 
 <pre><code>
-d.rast lid_1r_binrange2m values=30.-760.
+d.rast lid_1r_binrange2m values=30.-200.
 d.rast lid_1r_binrange2m values=1.-30.
 d.out.file mylid_1rrange2m
 </code></pre>
@@ -155,18 +155,14 @@ we use default parameters except for number of points used for
 segmentation and interpolation<br> (segmax and npmin and higher tension for multiple return data).<br>
 You can set dmin=1 to make the interpolation run faster (see the manual).<br>
 Be patient, it can take a few minutes to run depending on the computer power.<br>
-Use mapalgebra to remove extremely high elevation outlier in the 1st return DSM.<br>
-<span class="question">Can you find out where is this outlier coming from?</span>
-
 
 <pre><code>
 g.region res=1 -ap
 v.surf.rst elev_lid793016_be elevation=elev_lid793016_be_1m npmin=120 segmax=25
 v.surf.rst elev_lid793016_1r elevation=elev_lid793016_1r_1m npmin=120 segmax=25 tension=100 smooth=0.5
-r.mapcalc "elev_lid793016_1r_1m_fix = if(elev_lid793016_1r_1m>150,150,elev_lid793016_1r_1m)"
-r.colors elev_lid793016_1r_1m_fix color=elevation
+r.colors elev_lid793016_1r_1m color=elevation
 d.rast elev_lid793016_be_1m
-d.rast elev_lid793016_1r_1m_fix
+d.rast elev_lid793016_1r_1m
 </code></pre>
 
 <p>
