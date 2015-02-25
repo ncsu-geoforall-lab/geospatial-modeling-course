@@ -1,28 +1,19 @@
+<h2>Geomorphometry II: Spatial and Temporal Terrain Analysis</h2>
 <p>Resources:
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
 
-<pre><code>
-Topic: Geomorphometry III: Spatial and Temporal Terrain analysis
-
-Task: Compare topographic parameters derived from different types of elevation models
-
-</code></pre>
-
 <p>
-create the assignment working directory (folder) .\Assign9<br>
+Create the assignment working directory (folder) .\Assign9.<br>
+Start ArcMap.
 
-start ArcMap<br>
-
-<pre><code>
+<pre>
 Start->Programs->ArcGIS->ArcMap
+</pre>
 
-</code></pre>
+<h3>Compute basic topographic parameters from 10m NED</h3>
 
-<p>
-compute basic topographic parameters from 10m NED<br>
-
-<pre><code>
+<pre>
 In ArcMap
 Select File->Add Data->Add Data...
 Select ncrast.mdb/elev
@@ -33,17 +24,16 @@ Set 'Input raster' to 'elev'
 Set 'Output raster' to '.\Assign9\Slope_elev'
 Set 'Output measurement' to 'DEGREE'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-do the same for Aspect and Curvature<br>
-try to create a meaningful diverging color table for curvatures<br>
-with two color shades and light color in the middle<br>
-<!--note that histogram equalized may crash ArcGIS (can you say why and how to avoid it?)-->
-Compute topographic parameters from SRTM DEM and compare with NED<br>
+Do the same for Aspect and Curvature<br>
+Try to create a meaningful diverging color table for curvatures
+with two color shades and light color in the middle.
 
-<pre><code>
+<h3>Compute topographic parameters from SRTM DEM and compare with NED</h3>
+
+<pre>
 In ArcMap
 Select File->Add Data->Add Data...
 Select ncrast.mdb/elev_srt
@@ -55,26 +45,26 @@ Set 'Output measurement' to 'DEGREE'
 Click 'OK'
 
 RMC 'Slope_el_srt->Properties->Symbology->Classify 
-</code></pre>
+</pre>
 
 <p>
-compare mean and stddev in Classification statistics with 10m NED derived<br>
-slope explain the differences between slope from 10m NED and 30m SRTM<br>
+Compare mean and stddev in Classification statistics with 10m NED derived slope.<br>
+<span class="question">Explain the differences between slope from 10m NED and 30m SRTM.</span>
 
-compare slope and aspect, from TIN and from 1m raster DEM<br>
-use a previously created TIN or create a new one<br>
-see Assignment 7, the first of two covering the topic of Spatial interpolation<br>
+<h3>Compare slope and aspect, from TIN and from 1m raster DEM</h3>
+Use a previously created TIN or create a new one,<br>
+see the first assignment of two covering the topic of Spatial interpolation.
 
-<pre><code>
+<pre>
 In ArcMap
 Select File->Add Data->Add Data...
 Select ncshape.mdb/elev_lid792_randpts
-</code></pre>
+</pre>
 
 <p>
-create TIN 'tin' in 3D Analyst from these points if you don't have it already<br>
+Create TIN 'tin' in 3D Analyst from these points if you don't have it already:
 
-<pre><code>
+<pre>
 Open ArcToolbox (if it's not already open)
 Select 3D Analyst Tools->TIN Management->Create TIN
 Set 'Output TIN' to .\Assign9\lid792_tin
@@ -84,7 +74,7 @@ Click on the entry for the elev_lid792_randpts (Shape_Z is displayed by default)
 By clicking on the field it should convert to a drop-down list. 
 Click the down arrow to display your list of options and select "Value_".  
 Click 'OK'
-</code></pre>
+</pre>
 
 <p>
 <!-- # compute slope
@@ -96,32 +86,33 @@ Set 'Slope Units' to 'DEGREE'
 Click 'OK'
 
 # do the same for Surface Aspect to create: '.\Assign9\lid792_tin_SurfaceAspect' -->
-compute slope<br>
-the output from this process is a polygon feature class whose attribute (found<br>
-in the slope class field) consists of the slopes binned into 7 classes. The<br>
-default (ESRI) breaks (bins) are at 0.57, 1.43, 2.66, 5.71, 12.13, 24.89,<br>
-45.0, 90.0.<br>
+Compute slope.<br>
+The output from this process is a polygon feature class whose attribute (found
+in the slope class field) consists of the slopes binned into 7 classes.<br>
+The default (ESRI) breaks (bins) are at 0.57, 1.43, 2.66, 5.71, 12.13, 24.89,
+45.0, 90.0.
 
-<pre><code>
+<pre>
 Open the ArcToolbox (if it's not already open)
 Select '3D Analyst Tools-> Triangulated Surface -> Surface Slope'
 Set 'Input Surface' to 'lid792_tin'
 Set 'Output Feature Class' as '.\Assign9\lid792_tin_SurfaceSlope' 
 Set 'Slope Units' to 'DEGREE'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-do the same for Surface Aspect to create: '.\Assign9\lid792_tin_SurfaceAspect'<br>
-As with slope, the aspect that comes from this process is in the form of a<br>
+Do the same for Surface Aspect to create: '.\Assign9\lid792_tin_SurfaceAspect'.<br>
+As with slope, the aspect that comes from this process is in the form of a
 polygon feature class whose aspect attribute is binned into eight 45 degree wide<br>
-directions (code = 1 - 8 ). These are: N, NE, E, SE, S, SW, W, and NW,<br>
-respectively. Assign suitable colors to the slope and aspect polygons.<br>
+directions (code = 1 - 8 ).<br>
+These are: N, NE, E, SE, S, SW, W, and NW, respectively.<br>
+Assign suitable colors to the slope and aspect polygons.
 
-derive slope from 6m raster DEM<br>
+<p>
+Derive slope from 1m raster DEM:
 
-<pre><code>
+<pre>
 Select File->Add Data->Add Data...
 Select ncrast.mdb/elid_792
 Open the ArcToolbox (if it's not already open)
@@ -129,34 +120,20 @@ Select '3D Analyst Tools -> Raster Surface -> Slope'
 Set 'Input raster' to 'elid_792'
 Set 'Output raster' to '.\Assign9\slope_elid71'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-to get more continuous color table<br>
+Choose similar color table as for the TIN. To get more continuous color table:
 
-<pre><code>
+<pre>
 RMC 'Slope_elid71' 
 Select 'Properties -> Symbology"
 Change Classes to 32
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-compute the curvature, and change the color table to one that has lighter<br>
-break in the middle. Do you see a problem, suspicious pattern?<br>
-Can you explain it?<br>
-hint - the DEM was interpolated using v.surf.rst (GRASS) which uses<br>
-quadtree segmentation<br>
+Compute the aspect and curvature.<br>
+For curvature change the color table to one that has lighter break in the middle.<br>
+<span class="question">Compare the resulting slope, aspect and curvature with the topographic parameters derived from TIN.</span>
 
-------optional---------------------------------------<br>
-interpolate 1m resolution DEM from elev_lid792_randpts<br>
-using IDW and spline (Spatial Analyst Tools->Interpolate->)<br>
-compute and display curvature (Spatial Analyst Tools->Surface->)<br>
-from the IDW and spline surface. Can you infer from the result what type of<br>
-point selection technique was used in these modules?<br>
-
-compute cut and fill volumes (Spatial Analyst Tools->Surface->) from the<br>
- 
- </div>
