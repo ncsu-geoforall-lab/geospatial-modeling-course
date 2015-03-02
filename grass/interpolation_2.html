@@ -216,7 +216,7 @@ Display the result and save the image for the report.
 
 <pre><code>
 v.info -c precip_30ynormals_3d
-v.vol.rst precip_30ynormals_3d cross_input=elev_state_500m cross_output=precip_anntopo_500m wcolumn=annual zscale=90 segmax=700
+v.vol.rst precip_30ynormals_3d cross_input=elev_state_500m cross_output=precip_anntopo_500m maskmap=elev_state_500m wcolumn=annual zscale=90 segmax=700
 r.colors precip_anntopo_500m raster=precip_annual_500m
 d.rast precip_anntopo_500m
 </code></pre>
