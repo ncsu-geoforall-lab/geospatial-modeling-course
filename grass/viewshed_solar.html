@@ -1,41 +1,51 @@
-<P>
-Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>,
-<a href="http://www.grassbook.org/"> GRASSbook</a>
+<h2>Viewshed and solar energy potential analysis</h2>
+<p>Resources:
+<ul>
+<li><a href="http://grass.osgeo.org/grass70/manuals/index.html">
+GRASS GIS overview and manual</a></li>
+<li><a href="http://www.grassbook.org/"> GRASSbook</a></li>
+</ul>
 
-<P><B>Topic: Viewshed and solar energy potential analysis</B></P>
-<!--<p><B>Tasks: Compute and compare viewsheds from different sites,
-compute shadows cast by terrain and buildings, compute
-solar radiation maps for different times in the year</B></p>-->
-<P>
-Download text file with site locations: <a href="data/viewshed_points.txt">viewshed_points.txt</a>
-start GRASS<br>
+<p>
+Text files with site locations:
+<ul>
+<li><a href="data/viewshed_points.txt">viewshed_points.txt</a></li>
+</ul>
+
+<h3>Start GRASS GIS</h3>
+In startup pannel set <b>GIS Data Directory</b> to path to datasets,
+for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.
+For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_9) and
+click <b>Start GRASS</b>.
 
 <pre><code>
 grass70
 </code></pre>
 
 <p>
-in the startup pannel<br>
-GIS data directory: type path to GRASS datasets<br>
-LOCATION: select nc_spm_08<br>
-MAPSET: use mapset with your unity ID or user1<br>
-Enter GRASSS<br>
-GUI opens automatically - you can work in GUI or on command line<br>
-work in GUI on MSWindows<br>
+Change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <tt>cd</tt> (stands for change directory) into the GUI command console and hit Enter:
+<pre><code>
+cd
+</code></pre>
+Download all text files (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
 
-compute viewshed from a new 32 story tower located in downtown<br>
-display result on hillshade topography<br>
-reminder: d.mon x0, d.erase is equivalent to Zoom into computational region<br>
-d.his is Add shaded relief map layer,<br>
-d.barscale and d.legend button is on Map display<br>
+<h3>Viewshed analysis</h3>
+Compute viewshed from a new 32 story tower located in downtown.<br>
 
 <pre><code>
 g.region raster=elev_ned_30m -ap
-v.in.ascii -z input=viewshed_points.txt out=viewpoints separator=, z=3
+v.in.ascii -z input=viewshed_points.txt output=viewpoints separator=, z=3
 r.viewshed elev_ned_30m output=tower_165_los coordinates=642212,224767 observer_elevation=165 max_distance=10000
+</code></pre>
 
-d.erase
+Display result on shaded relief:
+<!-- d.erase -->
+<pre><code>
 d.his hue=tower_165_los intensity=elevation_shade
 d.vect streets_wake
 d.vect viewpoints size=10 color=orange icon=basic/marker
@@ -45,14 +55,17 @@ d.out.file towerview_angle
 </code></pre>
 
 <p>
-find out what is the landuse within the view using map algebra<br>
+Find out what is the landuse within the view using map algebra:
 
 <pre><code>
 r.mapcalc "tower_los_lu30m = if(tower_165_los,landclass96,null())"
 r.colors tower_los_lu30m raster=landclass96
 r.category tower_los_lu30m raster=landclass96
 r.report -n tower_los_lu30m unit=p,h
-d.erase
+</code></pre>
+<!-- d.erase -->
+Display only the following layers and save result:
+<pre><code>
 d.rast tower_los_lu30m
 d.vect streets_wake
 d.legend tower_los_lu30m at=25,50,1,3
@@ -60,11 +73,14 @@ d.out.file towerviewlu
 </code></pre>
 
 <p>
-we can also do visibility from former RedHat headquarters<br>
+We can also do visibility from former RedHat headquarters:
 
 <pre><code>
 r.viewshed elev_ned_30m output=redhat_25_los coordinates=638898,224528 observer_elevation=25 max_distance=10000
-d.erase
+</code></pre>
+<!-- d.erase -->
+Display only the following layers and save result:
+<pre><code>
 d.rast redhat_25_los
 d.vect streets_wake
 d.vect viewpoints size=10 col=red icon=basic/marker
@@ -72,44 +88,44 @@ d.out.file RHview
 </code></pre>
 
 <p>
-use mapalgebra to compute landuse in the view,<br>
-assign the visible land use map land use colors and category labels<br>
-using r.colors and r.category and use<br>
-r.report -n to compare the size and land use composition within<br>
-viewshed from the RBC tower and RH headquarters<br>
+Use mapalgebra to compute landuse in the view,
+assign the visible land use map land use colors and category labels
+using r.colors and r.category (see previous example)
+and use r.report -n to <span class="question">compare the size and land use composition within
+viewshed from the RBC tower and RH headquarters</span>.
 
-solar radiation<br>
+<h3>Solar radiation analysis</h3>
 
-set the region and add the planned building to the DEM<br>
-d.erase is "zoom to computational region"<br>
-
+Set the region and add the planned building to the DEM, we will use this new DEM for the analyses.<br>
+Remove all layers and zoom to the region.
 <pre><code>
 g.region rural_1m -p
 r.mapcalc "elevfacility_1m = if(isnull(facility), elev_lid792_1m,138.)"
 r.colors elevfacility_1m color=elevation
-d.erase
+<!-- d.erase -->
 d.rast elevfacility_1m
 </code></pre>
 
 <p>
-compute the sun position on Dec. 22 at 2:25pm, EST (no map output)<br>
+Prepare input maps (slope and aspect):
+
+<pre><code>
+r.slope.aspect elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m
+</code></pre>
+
+<h4>Incidence angles and cast shadows</h4>
+<p>
+Compute the sun position on Dec. 22 at 2:25pm, EST (no map output expected):
 
 <pre><code>
 r.sunmask -s elevfacility_1m year=2001 month=12 day=22 hour=14 minute=25 sec=0 timezone=-5
 </code></pre>
 
 <p>
-prepare input maps<br>
-
-<pre><code>
-r.slope.aspect elevfacility_1m asp=aspect_elevfac_1m slo=slope_elevfac_1m
-</code></pre>
-
-<p>
-calculate incidence angles including cast shadows<br>
-we assign histogram equalized color table - can you explain why?<br>
-hint: try the same color table without -e<br>
-what is the value on the roof? how is it related to day/time?<br>
+Calculate incidence angles including cast shadows.<br>
+We assign histogram equalized color table - <span class="question">can you explain why?</span>
+(hint: try the same color table without -e).<br>
+<span class="question">What is the value on the roof? How is it related to day/time?</span>
 
 <pre><code>
 r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m incidout=incid_elevfac_1m day=356 time=14.416667
@@ -118,16 +134,15 @@ r.colors -e incid_elevfac_1m co=bcyr
 d.rast incid_elevfac_1m
 d.legend incid_elevfac_1m at=25,50,1,3
 d.out.file incid_angle
-<!--nviz elevfacility_1m co=incid_elevfac_1m-->
 </code></pre>
 
 <p>
-extract the cast shadow area for 14.4 hr<br>
-compute and extract shadow area for 7.5 hr<br>
+Extract the cast shadow area for 14.4 hr and
+compute and extract shadow area for 7.5 hr:
 
 <pre><code>
 r.mapcalc "shadow_1m = if(isnull(incid_elevfac_1m), 1, null())"
-r.colors shadow_1m col=grey
+r.colors shadow_1m color=grey
 d.rast elevfacility_1m
 d.rast shadow_1m
 r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m incidout=incid_elevfac7_1m day=356 time=7.50
@@ -136,11 +151,11 @@ d.rast shadow7_1m
 d.out.file shadows
 </code></pre>
 
-<p>
-compute global (beam+diffuse+refl) radiation for entire day during summer and winter solstice<br>
-display the radiation maps and also insolation time maps insol_time using same commands<br>
-optionally display the radiation maps draped over elevation elevfacility_1m in 3D view<br>
-to see relation between terrain geometry and solar radiation<br>
+<h4>Solar radiation</h4>
+Compute global (beam+diffuse+refl) radiation for entire day during summer and winter solstice.<br>
+Display the radiation maps and also insolation time maps insol_time using same commands.<br>
+Optionally display the radiation maps draped over elevation elevfacility_1m in 3D view
+to see relation between terrain geometry and solar radiation.
 
 <pre><code>
 r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=356 glob_rad=g356 insol_time=its356
@@ -153,19 +168,21 @@ d.out.file solar_winter
 d.rast g172
 d.legend g172 at=25,50,1,3 range=8800,8867
 d.out.file solar_summer
-<!--nviz elevfacility_1m co=g356-->
 </code></pre>
 
 <p>
-calculate direct solar radiation and insolation time for a larger region<br>
-zoom to computational region if working from GUI<br>
-find good color table (custom, hist. equalized, to see the pattern)<br>
+Calculate direct solar radiation and insolation time for a larger region.<br>
+
+Try to find good color tables (custom, hist. equalized, to see the pattern).
 
 <pre><code>
 g.region raster=elev_ned_30m -p
-d.erase
 r.slope.aspect elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m
 r.sun elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m linke_value=2.5 albedo_value=0.2 beam_rad=b356 diff_rad=d356 refl_rad=r356 insol_time=it356 day=356
+</code></pre>
+<!-- d.erase -->
+Zoom to the new computational region and display the following layers:<br>
+<pre><code>
 d.rast b356
 d.legend b356 at=2,30,2,6
 d.out.file beamrad356
