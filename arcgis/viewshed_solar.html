@@ -1,172 +1,145 @@
+<h2>Viewshed and solar radiation analysis</h2>
 <p>Resources:
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
-
-<pre><code>
-Topic: Viewshed and solar radiation analysis
-
-Task: Compute viewshed from a given set of points, model solar radiation
-
-</code></pre>
-
-<p>
-here is more detailed description of these tasks from our TA Paul Paris<br>
-
-Preliminaries<br>
-
-<pre><code>
+<pre>
 Start ArcMap
 Load the Spatial Analysis Extension
-
-</code></pre>
-
-<p>
-Viewshed Analysis:<br>
+</pre>
 
 
-<pre><code>
-Add the raster elev_ned to your project
-Add the point feature class fire_pt to your project
+<h3>Viewshed Analysis</h3>
 
-</code></pre>
+<pre>
+Add the raster elev_ned
+Add the point feature class fire_pt
+</pre>
 
 <p>
-Use the Spatial Analysis Extension's Viewshed tool<br>
-to compute the the area visible from the fire_pt location.<br>
+Use the Spatial Analysis Extension's Viewshed tool
+to compute the the area visible from the fire_pt location.
 
-
-<pre><code>
+<pre>
 Open the ArcToolbox
 ToolBox SA->Surface->Viewshed 
 Set input surface to elev_ned
 Set observer feature to fire_pt 
-Give your viewshed a name, and store it in your ./Assign10 folder
+Give your viewshed a name, and store it in your ./Assign9 folder
 Click OK to run the analysis
-
-</code></pre>
+</pre>
 
 <p>
 What is the ground elevation at the fire_pt site?<br>
-In the output (viewshed) raster the visible cells are given a value of 1,<br>
+In the output (viewshed) raster the visible cells are given a value of 1,
 while those not visible are assigned a value of 0.<br>
-How many cells are visible in this view shed?<br>
-How much area (in sq. meters) do these visible cells represent?<br>
-Rerun the viewshed, with elevation offset at the fire_pnt site at +60 m.<br>
+<span class="question">How many cells are visible in this view shed?<br>
+How much area (in sq. meters) do these visible cells represent?</span><br>
+Rerun the viewshed, with elevation offset at the fire_pnt site at +60 m.
 
 
-<pre><code>
+<pre>
 Add the field OFFSETA to the fire_pt attribute table. 
 Enter 60 into the attribute field. 
-
-</code></pre>
+</pre>
 
 <p>
-Now, how many cell are visible in this viewshed?<br>
-How much additional area was gained by adding the 60 m of elevation<br>
-to the observer?<br>
+<span class="question">Now, how many cell are visible in this viewshed?<br>
+How much additional area was gained by adding the 60 m of elevation
+to the observer?</span>
+<p>
+Rerun the viewshed again, using the +60 m observer,
+but this time limit your search radius to 2000m.
 
-Rerun the viewshed again, using the +60 m observer,<br>
-but this time limit your search radius to 2000m.<br>
-
-
-<pre><code>
+<pre>
 Add the fields RADIUS1 and RADIUS2 to the fire_pt attribute table. 
 Populate: RADIUS1=0 and RADIUS2=2000. 
-
-</code></pre>
+</pre>
 
 <p>
-How many cells are visible in this viewshed? How much ground area is visible?<br>
+<span class="question">How many cells are visible in this viewshed?
+How much ground area is visible?</span>
+<p>
+Restrict the search area to an annulus 1000 m wide
+and restrict the search azimuth to the arc from NE (45 deg) to SE (135 deg).
 
-restrict the search area to an annulus 1000 m wide<br>
-and restrict the search azimuth to the arc from NE (45 deg) to SE (135 deg)<br>
-
-
-<pre><code>
+<pre>
 modify RADIUS1 and RADIUS2 fields accordingly
 Add the fields AZIMUTH1 and AZIMUTH2 (as doubles) to the fire_pt attribute table 
 and populate: AZIMUTH1=45, and AZIMUTH2=135.
-</code></pre>
+</pre>
 
 <p>
-How many cells and area are visible now?<br>
-
-To expand our repertoire a bit, let's next add our own data,<br>
+<span class="question">How many cells and area are visible now?</span>
+<p>
+To expand our repertoire a bit, let's next add our own data,
 but instead of a single point, let's add a pair to the project<br>
-(so that you know how to do this) and run one more<br>
-(just one, I promise) view shed analysis.<br>
+(so that you know how to do this) and run one more
+(just one, I promise) viewshed analysis.<br>
+<p>
+You can do this with any point data you wish, but if you don't have one handy,<br>
+here's the coordinates (in NC State Plane NAD83) for Red Hat's Headquarters
+over on Centennial Campus:
 
-you can do this with any point data you wish, but if you don't have one handy,<br>
-here's the coordinates (in NC State Plane NAD83) for Red Hat's Headquarters<br>
-over on Centennial Campus:<br>
-
-<pre><code>
-x=638898 and y=224528, 
-</code></pre>
+<pre>
+x=638898 and y=224528
+</pre>
 
 <p>
-and for Jordan Hall on Central Campus<br>
+And for Jordan Hall on Central Campus:
 
-<pre><code>
-x=638887, y=225365. 
-</code></pre>
+<pre>
+x=638887, y=225365.
+</pre>
 
 <p>
 Put these values into a text file (use e.g. Notepad but avoid MS Word).<br>
-Your text file should look something like this:<br>
+Your text file should look something like this:
 
-
-<pre><code>
+<pre>
 X,Y
 638898,224528
 638887,225365
-
-</code></pre>
-
-<p>
-Load your points to ArcGIS<br>
-
-<pre><code>
- Add XY Data. (File->Add Data->Add XY Data...)
-</code></pre>
+</pre>
 
 <p>
-Convert it from the resulting event to a feature class (or shape file).<br>
+Load your points to ArcGIS:
 
+<pre>
+Add XY Data. (File->Add Data->Add XY Data...)
+</pre>
 
-<pre><code>
+<p>
+Convert it from the resulting event to a feature class (or shape file).
+
+<pre>
 Add the fields OFFSETA, VERT1, VERT2, AZIMUTH1, and AZIMUTH2. 
 Populate point FID=0: 
 OFFSETA=35m, VERT1=12, VERT2=-12, AZIMUTH1=300, AZIMUTH2=60. 
 For point FID=1: 
 OFFSETA=40m, VERT1=12, VERT2=-12, AZIMUTH1=150, AZIMUTH2=240. 
 Run a viewshed on your new data with these attributes.
-
-</code></pre>
+</pre>
 
 <p>
-For an observer standing atop the Red Hat Building,<br>
+For an observer standing atop the Red Hat Building,
 what do you think that this view shed result represents?<br>
 Can the observer see Jordan Hall on the NCSU Central Campus?<br>
-Do you think an observer standing atop Jordan Hall could see<br>
-his counterpart on the Red Hat Building?<br>
-You could run another view shed to find out.<br>
-But, okay, I promised only one more, so this last one is optional.<br>
+Do you think an observer standing atop Jordan Hall could see
+his counterpart on the Red Hat Building?
 
-perform solar radiation analysis in Spatial Analyst<br>
+<h3>Solar radiation analysis</h3>
+Perform solar radiation analysis in Spatial Analyst:
 
-
-<pre><code>
+<pre>
 Display the Arc Toolbox. 
 Select Geoprocessing->Environments. 
 Under Workspace set the Current Workspace to point to the ncrast,mdb geodatabase
-
-</code></pre>
+</pre>
 
 <p>
-Compute the solar incidence for the summer solstice (day number=180).<br>
+Compute the solar incidence for the summer solstice (day number=180)
 
-<pre><code>
+<pre>
 Spatial Analysis Toolbox-Solar Radiation-Area Solar Radiation
 use elev_ned for the input raster
 Set the output raster = ned_solar180
@@ -174,32 +147,27 @@ Set the latitude = 35.7716 (~for Raleigh, NC)
 Set the Time Configuration to Within a day
 Set the Date/Time settings-Day number of year to 180
 the remainder of the fields can be left at their default values.
-
-</code></pre>
+</pre>
 
 <p>
-repeat the above steps to generate a incident solar radiation raster<br>
+Repeat the above steps to generate a incident solar radiation raster
 for the winter solstice (day number=356).<br>
-Note: the computation can take some time<br>
-
-What are the data units for the resulting incident radiation maps?<br>
-
-Determine the difference in radiation energy between the two solstice extremes<br>
+Note: the computation can take some time.
+<p>
+<span class="question">What are the data units for the resulting incident radiation maps?</span><br>
+<p>
+Determine the difference in radiation energy between the two solstice extremes
 by differencing the two radiation rasters just created.<br>
 
-
-<pre><code>
+<pre>
 Spatial Analyst > Map Algebra > Raster Calculator
 Set output to solar_diff
 In the calculator's expression field type:
 "ned_solar180" - "ned_solar356"
-
-</code></pre>
+</pre>
 
 <p>
 Change the color ramp to one that emphasizes contrast in the difference raster.<br>
-Where do you see the greatest differences in insolation between summer and winter?<br>
+<span class="question">Where do you see the greatest differences in insolation between summer and winter?<br>
 Where does the least difference in annual insolation occur?<br>
-Do these differences make sense? Please explain.<br>
- 
- </div>
+Do these differences make sense? Please explain.</span>
