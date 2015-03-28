@@ -1,114 +1,100 @@
+<h2>Flow routing and watershed analysis</h2>
 <p>Resources:
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
-
-<pre><code>
-Topic: Flow routing and watershed analysis
-
-Task: Derive flowaccumulation and watersheds from DEM
-
-</code></pre>
-
 <p>
-create the assignment working directory (folder) .\Assign11<br>
+Create the assignment working directory (folder) .\Assign11<br>
+Start ArcMap<br>
 
-start ArcMap<br>
-
-<pre><code>
+<pre>
 Start->Programs->ArcGIS->ArcMap
+</pre>
 
-</code></pre>
+<h3>Derive flow pattern and streams from 10m NED</h3>
 
-<p>
-derive flow pattern and streams from 10m NED<br>
+Fill the sinks in DEM:
 
-fill the sinks in DEM<br>
-
-<pre><code>
+<pre>
 In ArcMap: add the raster feature layer ncrast.mdb/elev
 Open the ArcToolbox
 Select 'Spatial Analyst Tools->Hydrology->Fill'
 Set 'Input' to 'elev'
 Set 'Output Raster' to '.\Assign11\Fill_elev1'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-Compute flow direction<br>
+Compute flow direction:
 
-<pre><code>
+<pre>
 In ArcToolbox
 Select 'Spatial Analyst Tools->Hydrology->FlowDirection'
 Set 'Input' to 'Fill_elev1'
 Set 'Output Raster' to '.\Assign11\FlowDir_fill1'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-Compute flow accumulation<br>
+Compute flow accumulation:
 
-<pre><code>
+<pre>
 In ArcToolbox
 Select 'Spatial Analyst Tools->Hydrology->FlowAccumulation'
 Set 'Input' to 'FlowDir_fill1'
 Set 'Output Raster' to '.\Assign11\FlowAcc_fill1'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-change the color table to something better -<br>
-e.g. yellow-green-blue, histogram equalized works well<br>
-if the resolution of your screen is not good enough to see connected streams<br>
-zoom-in to see the detail<br>
-compare with streams digitized from high resolution orthophoto<br>
+Change the color table to something better -
+e.g. yellow-green-blue, histogram equalized works well.<br>
+If the resolution of your screen is not good enough to see connected streams,
+zoom-in to see the detail.<br>
+Compare with streams digitized from high resolution orthophoto:
 
 
-<pre><code>
+<pre>
 In ArcMap add ncshape.mdb/streams
-</code></pre>
+</pre>
 
 <p>
-change color to red: how do the derived streams fit with the digitized data?<br>
+Change color to red: <span class="question">how do the derived streams fit with the digitized data?</span>
 
-derive drainage basins<br>
+<p>
+Derive drainage basins:
+<pre>
 
-<pre><code>
 In ArcToolbox
 Select 'Spatial Analyst Tools->Hydrology->Basin'
 Set 'Input' to 'FlowDir_fill1'
 Set 'Output Raster' to '.\Assign11\Basins_fill1'
 Click 'OK'
-
-</code></pre>
+</pre>
 
 <p>
-derive flow path length<br>
+Derive flow path length:
 
-<pre><code>
+<pre>
 In ArcToolbox
 Select 'Spatial Analyst Tools->Hydrology->FlowLength'
 Set 'Input' to 'FlowDir_fill1'
 Set 'Output Raster' to '.\Assign11\flowlength'
 Click 'OK'
+</pre>
 
-</code></pre>
-
-<p>
-Derive stream network and watersheds from 30m NED (./ncrast/elev_ned)<br>
-first check whether we have sinks, if yes, fill them in<br>
-then compute flow direction and flow accumulation<br>
-extract streams from flow accumulation using map algebra<br>
-create stream links from the stream raster and derive watersheds<br>
-draining into these stream links<br>
+<h3>Derive stream network and watersheds from 30m NED</h3>
+First check whether we have sinks, if yes, fill them in.
+Then compute flow direction and flow accumulation.<br>
+Extract streams from flow accumulation using map algebra
+and create stream links from the stream raster and derive watersheds
+draining into these stream links:
 
 
-<pre><code>
+<pre>
 In ArcMap:
 
 Set your workspace and scratch workspace to C:\path\.Assign11
+Add ncrast/elev_ned
 Compute FlowDirection input=elev_ned output=FlowDir_el30
 Compute Sink input=FlowDir_el30 output=sinks30
 Compute Fill input=elev_ned output=Fill_elev30
@@ -118,5 +104,4 @@ Using the Algebra Raster Calculator, compute:
 Con( "Flowacc_fil30", 1, 0, "Value > 10000" )  Set the output to: Streams_der30
 Compute StreamLink input=Streams_der30 flow dir raster=FlowDir_fil30 output=Source30
 Compute Watershed input=FlowDir_fil30 Pour point=Source30 output=Watersheds30
- 
- </div>
+</pre>
