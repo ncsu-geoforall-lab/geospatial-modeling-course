@@ -102,7 +102,7 @@ Assign special color table and display result.<br>
 
 <pre><code>
 g.region rural_1m -p
-r.recode landcover_1m out=cfactor_1m rules=cfac_rules.txt
+r.recode landcover_1m output=cfactor_1m rules=cfac_rules.txt
 r.colors map=cfactor_1m rules=cfac_color.txt
 d.rast cfactor_1m
 </code></pre>

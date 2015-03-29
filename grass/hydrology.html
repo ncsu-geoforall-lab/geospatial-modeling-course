@@ -1,58 +1,77 @@
-<P>Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>,
-<a href="http://www.grassbook.org/"> GRASSbook</a>
-<!-- pridaj streams from SRTM a porovnaj presnost using v.distance -->
+<h2>Flow routing and watershed analysis</h2>
+<p>Resources:
+<ul>
+<li><a href="http://grass.osgeo.org/grass70/manuals/index.html">
+GRASS GIS overview and manual</a></li>
+<li> <a href="data_acquisition.html#commands">Recommendations</a>
+and <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">tutorial</a>
+how to use wxGUI from the first assignment</li>
+</ul>
 
+<p>
+Text file with outlet point coordinates:
+<ul>
+<li>point coordinates (<a href="data/point_outlet.txt">point_outlet.txt</a>)</li>
+</ul>
 
-<P><B>Topic: Flow Routing Watershed Analysis</B></P>
-<!--<p><B>Tasks: Compare flowaccumulation, stream networks and watersheds derived by different algorithms from different DEMs, map flooded area </B></p>
-####!!!!UPDATE WITH SFD and MFD for r.watershed and r.stream.extract for vectorized streams #### explain the topology of stream network from r.stream.extract -->
-start GRASS<br>
+<h3>Start GRASS GIS</h3>
+In startup pannel set <b>GIS Data Directory</b> to path to datasets,
+for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.
+For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_11) and
+click <b>Start GRASS</b>.
 
 <pre><code>
 grass70
 </code></pre>
 
 <p>
-in the startup pannel<br>
-GIS data directory: type path to GRASS datasets<br>
-LOCATION: select nc_spm_08<br>
-MAPSET: use mapset with your unity ID or user1<br>
-Enter GRASSS<br>
+Change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <tt>cd</tt> (stands for change directory) into the GUI command console and hit Enter:
+<pre><code>
+cd
+</code></pre>
+Download all text files with site locations (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
 
-compute flow direction, flow accumulation and subwatersheds<br>
-with approx. size of 10000 cells from 30m NED<br>
+
+<!--<p><B>Tasks: Compare flowaccumulation, stream networks and watersheds derived by different algorithms from different DEMs, map flooded area </B></p>
+####!!!!UPDATE WITH SFD and MFD for r.watershed and r.stream.extract for vectorized streams #### explain the topology of stream network from r.stream.extract -->
+start GRASS<br>
+
+<h3>Compute flow direction, flow accumulation and subwatersheds</h3>
+Compute flow direction, flow accumulation and subwatersheds
+with approx. size of 10000 cells from 30m NED.
 
 <pre><code>
 g.region raster=elev_ned_30m -p
-r.watershed -s elev_ned_30m thresh=10000 accum=accum_10K drain=draindir_10K basin=basin_10K
+r.watershed -s elev_ned_30m threshold=10000 accumulation=accum_10K drainage=draindir_10K basin=basin_10K
 </code></pre>
 
 <p>
-extract more detailed streams from flow accumulation raster<br>
-run r.mapcalc from GUI: type r.mapcalc and ENTER<br>
-provide name of the resulting map in the relevant field<br>
-paste or type the expression into the expression field and Run<br>
+Extract more detailed streams from flow accumulation raster:
 
 <pre><code>
 r.mapcalc "streams_der_30m = if(abs(accum_10K) > 100, 1, null())"
 </code></pre>
 
 <p>
-convert to vector format and display results<br>
-along with the official Wake county streams (red)<br>
+Convert to vector format and display results
+along with the official Wake county streams (red):
 
 <pre><code>
-r.to.vect -s basin_10K out=basin_10K type=area
-r.thin streams_der_30m out=streams_der_30m_t
+r.to.vect -s basin_10K output=basin_10K type=area
+r.thin streams_der_30m output=streams_der_30m_t
 r.to.vect -s streams_der_30m_t out=streams_der_30m type=line
 </code></pre>
 
 <p>
-generate shaded map<br>
+Generate shaded map and diplay:
 
+<!-- d.erase -->
 <pre><code>
-d.erase
 d.his hue=basin_10K intensity=elevation_shade brighten=40
 d.vect basin_10K type=boundary
 d.rast lakes
@@ -61,8 +80,10 @@ d.vect streams color=red
 d.out.file mystreams
 </code></pre>
 
-<p>
-create map of DEM depressions<br>
+<h3>Create map of DEM depressions</h3>
+Depression filling is often necessary for certain flow routing algorithms.<br>
+Note that r.watershed doesn't need depression filling, because of
+its underlying algorithm which uses least cost path to get over depressions.
 
 <pre><code>
 g.region raster=elevation -p
@@ -73,7 +94,7 @@ r.mapcalc "depr_bin = if((elevation-elev_fill3) < 0., 1, null())"
 </code></pre>
 
 <p>
-display results, compare the derived depressions with actual lakes >"<br>
+Display results, compare the derived depressions with actual lakes:
 
 <pre><code>
 d.erase
@@ -84,9 +105,9 @@ d.vect lakes type=area fill_color=aqua
 d.out.file depressions
 </code></pre>
 
-<p>
-derive contributing area for a given outlet<br>
-set region to the high resolution study area<br>
+
+<h3>Derive contributing area for a given outlet</h3>
+Set region to the high resolution study area and zoom to it:
 
 <pre><code>
 g.region rural_1m -p
@@ -94,29 +115,27 @@ r.watershed -as elev_lid792_1m threshold=5000 accumulation=accum_5K drainage=dra
 </code></pre>
 
 <p>
-display extracted streams over aerial image<br>
+Remove previous layers. Display extracted streams over aerial image:
 
+<!-- d.erase -->
 <pre><code>
-d.erase
 d.rast ortho_2001_t792_1m
 d.rast accum_5K values=1000-1000000
 </code></pre>
 
 <p>
-identify outlet on the extracted stream<br>
-we select the point east=638845.52 north=220085.26<br>
-that has  accum_5K=224510<br>
-to display the point: import it with coordinates 638845.52 220085.26<br>
-by running v.in.asci from GUI and entering the coordinates interactively<br>
-the example below is example how to do it by running echo from linux shell<br>
+Identify outlet on the extracted stream.
+<p>
+We create a vector map with the point east=638845.52 north=220085.26 (download the text file)
+that has accum_5K=224510.
 
 <pre><code>
-echo "638845.52 220085.26 1" | v.in.ascii input=- output=outletA30 separator=space
+v.in.ascii input=outlet_point.txt output=outletA30 separator=space
 d.vect outletA30 color=yellow
 </code></pre>
 
 <p>
-delineate the watershed and convert it to vector format<br>
+Delineate the watershed and convert it to vector format:
 
 <pre><code>
 r.water.outlet input=draindir_5K output=basin_A30 coordinates=638845.52,220085.26
@@ -124,8 +143,8 @@ r.to.vect -s basin_A30 output=basin_A30 type=area
 </code></pre>
 
 <p>
-display watershed boundary along with contours<br>
-compute the watershed area (category 1)<br>
+Display watershed boundary along with contours.<br>
+Compute the watershed area (category 1)<br>
 
 <pre><code>
 d.vect basin_A30 type=boundary color=green width=2
@@ -135,9 +154,8 @@ d.out.file watershedA30
 r.report basin_A30 unit=h,a
 </code></pre>
 
-<p>
-assess and mitigate impact of the road on flowrouting<br>
-compare the extracted strems (accum > 800) with official stream data<br>
+<h3>Assess and mitigate impact of the road on flowrouting</h3>
+Compare the extracted streams (accum > 800) with official stream data:
 
 <pre><code>
 d.rast ortho_2001_t792_1m
@@ -146,8 +164,7 @@ d.vect streets_wake color=red
 d.vect streams color=green
 </code></pre>
 
-<p>
-carve a pre-defined channel given by the stream data into DEM<br>
+<h3>Carve a pre-defined channel given by the stream data into DEM</h3>
 
 <pre><code>
 r.carve raster=elev_lid792_1m vector=streams width=2 depth=0.8 output=elev_lidcarved_1m
@@ -155,10 +172,9 @@ r.colors elev_lidcarved_1m raster=elev_lid792_1m
 d.rast elev_lidcarved_1m
 </code></pre>
 
-<p>
-extract streams from the carved DEM and compare with the official streams map<br>
-what is the difference between accum_5K, accumc_5K1m and streams?<br>
-explain the advantage and disadvantage of carving<br>
+<p>Extract streams from the carved DEM and compare with the official streams map.<br>
+<span class="question">What is the difference between accum_5K, accumc_5K1m and streams?<br>
+Explain the advantage and disadvantage of carving.</span>
 
 <pre><code>
 r.watershed -as elev_lidcarved_1m threshold=50000 accumulation=accumc_5K1m
@@ -167,20 +183,21 @@ d.vect streams
 d.out.file streamcarved
 </code></pre>
 
+<h3>Compute refined flow pattern using D-inf</h3>
+Compare upslope and downslope flow lines:
+<span class="question">On what type of terrain feature they converge?</span>
 <p>
-compute refined flow pattern using D-inf<br>
-compare upslope and downslope flow lines:<br>
-on what type of terrain feature they converge?<br>
+Remove or switch off all previous layers.
 
+<!-- d.erase -->
 <pre><code>
 g.region raster=elev_lid792_1m -p
-d.erase
 r.flow elev_lid792_1m flowline=flowlines flowlength=flowlg_1m flowaccumulation=flowacc_1m
 r.flow -u elev_lid792_1m flowlength=flowlgup_1m flowaccumulation=flowaccup_1m
 </code></pre>
 
 <p>
-display maps along with contours to see relation to terrain<br>
+Display maps along with contours to see relation to terrain:
 
 <pre><code>
 d.rast flowacc_1m
@@ -191,8 +208,7 @@ d.vect flowlines
 d.out.file flowlines
 </code></pre>
 
-<p>
-compare the multiple flow direction result with D8 and Dinf<br>
+<h3>Compare the multiple flow direction result with D8 and Dinf</h3>
 
 <pre><code>
 r.watershed -a elev_lid792_1m threshold=50000 accumulation=accum_mfd_5K1m
@@ -201,8 +217,20 @@ d.vect streams
 d.out.file stream_mfd
 </code></pre>
 
-<p>
-create a map of flooded area for a given water level and seed point<br>
+
+<h3>Compute wetness index</h3>
+
+<pre><code>
+g.region rural_1m -p
+r.topidx elev_lid792_1m output=wetness_1m
+d.rast wetness_1m
+</code></pre>
+
+<p>Display elev_lid792_1m in 3D and drape over wetness_1m as color.<br>
+Note: switch off all layers except for elev_lid792_1m.
+
+<h3>Create a map of flooded area</h3>
+Create a map of flooded area for a given water level and seed point:
 
 <pre><code>
 r.lake elev_lid792_1m water_level=113.5 lake=flood1 coordinates=638728,220278
@@ -212,13 +240,9 @@ d.out.file floodedarea
 </code></pre>
 
 <p>
-increase water level to 113.7m and 114.0m and create flooded<br>
-area maps at this two levels<br>
+Increase water level to 113.7m and 114.0m and create flooded
+area maps at these two levels.
 
-<pre><code>
-</code></pre>
-
-<p>
 <!--
 r.lake elev_lid792_1m wl=113.7 lake=flood2 coordinates=638728,220278
 r.lake elev_lid792_1m wl=114.0 lake=flood3 coordinates=638728,220278
