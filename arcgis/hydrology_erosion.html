@@ -21,9 +21,9 @@ Under Tools->Extensions make sure there is a check next to 'Spatial Analyst'
 Select View->Toolbars->Spatial Analyst to activate the extension
 </pre>
 
-<h3>Compute soil detachment rate using RUSLE3d</h3>
+<h3>Compute soil detachment rate using USLE3D</h3>
 
-Compute a map of soil detachment rate using RUSLE3d equation which assumes that there is no deposition.<br>
+Compute a map of soil detachment rate using USLE3D equation which assumes that there is no deposition.<br>
 This represents detachment limited sediment transport by overland flow.<br>
 <pre>
 E = RKLSCP
@@ -75,7 +75,7 @@ Compute FlowAccumulation input=FlowDir_fil output=Flowacc
 Build an expression in the Spatial Analyst Raster Calculator for lsfac map
 using the Flowacc and slope_1m layers you just generated.<br>
 <p>
-Note that the lsfac map represents the topographic factor LS used in the RUSLE3d model.<br>
+Note that the lsfac map represents the topographic factor LS used in the USLE3D model.<br>
 Flowacc map multiplied by resolution is the contributing area per unit width U.
 
 <pre>
