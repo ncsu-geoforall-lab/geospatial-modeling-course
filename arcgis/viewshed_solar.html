@@ -137,15 +137,15 @@ Under Workspace set the Current Workspace to point to the ncrast,mdb geodatabase
 </pre>
 
 <p>
-Compute the solar incidence for the summer solstice (day number=180)
+Compute the solar incidence for the summer solstice (day number=172)
 
 <pre>
 Spatial Analysis Toolbox-Solar Radiation-Area Solar Radiation
 use elev_ned for the input raster
-Set the output raster = ned_solar180
+Set the output raster = ned_solar172
 Set the latitude = 35.7716 (~for Raleigh, NC)
 Set the Time Configuration to Within a day
-Set the Date/Time settings-Day number of year to 180
+Set the Date/Time settings-Day number of year to 172
 the remainder of the fields can be left at their default values.
 </pre>
 
@@ -163,7 +163,7 @@ by differencing the two radiation rasters just created.<br>
 Spatial Analyst > Map Algebra > Raster Calculator
 Set output to solar_diff
 In the calculator's expression field type:
-"ned_solar180" - "ned_solar356"
+"ned_solar172" - "ned_solar356"
 </pre>
 
 <p>
