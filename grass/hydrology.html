@@ -68,7 +68,10 @@ r.to.vect -s streams_der_30m_t out=streams_der_30m type=line
 </code></pre>
 
 <p>
-Generate shaded map and diplay:
+Generate shaded map and display:
+How do the derived streams compare with the official stream map?
+How can you modify the mapcalc expression to make stream origins fit better
+with the official stream map?
 
 <!-- d.erase -->
 <pre><code>
@@ -81,7 +84,8 @@ d.out.file mystreams
 </code></pre>
 
 <h3>Create map of DEM depressions</h3>
-Depression filling is often necessary for certain flow routing algorithms.<br>
+Depression filling is often necessary for certain flow routing algorithms but it can alter the elevation data significantly. 
+Find out how extensive the depressions are in our DEM.<br>
 Note that r.watershed doesn't need depression filling, because of
 its underlying algorithm which uses least cost path to get over depressions.
 
