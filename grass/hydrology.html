@@ -69,9 +69,9 @@ r.to.vect -s streams_der_30m_t out=streams_der_30m type=line
 
 <p>
 Generate shaded map and display:
-How do the derived streams compare with the official stream map?
-How can you modify the mapcalc expression to make stream origins fit better
-with the official stream map?
+<span class="question">How do the derived streams compare with the official stream map?</span><br>
+<span class="question">How can you modify the mapcalc expression to make stream origins fit better
+with the official stream map?</span>
 
 <!-- d.erase -->
 <pre><code>
@@ -213,8 +213,8 @@ d.out.file flowlines
 </code></pre>
 
 <h3>Compare the multiple flow direction result with D8 and Dinf</h3>
-Compare the result of accum_5K and accum_mfd_5K1m. Why are they different,
-which is more accurate and why?
+<span class="question">Compare the result of accum_5K and accum_mfd_5K1m. Why are they different,
+which is more accurate and why?</span>
 <pre><code>
 r.watershed -a elev_lid792_1m threshold=50000 accumulation=accum_mfd_5K1m
 d.rast accum_mfd_5K1m
