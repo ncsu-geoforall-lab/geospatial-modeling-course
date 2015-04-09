@@ -130,7 +130,7 @@ d.rast accum_5K values=1000-1000000
 <p>
 Identify outlet on the extracted stream.
 <p>
-We create a vector map with the point east=638845.52 north=220085.26 (download the text file)
+Create a vector map with the point east=638845.52 north=220085.26 (download the text file)
 that has accum_5K=224510.
 
 <pre><code>
@@ -139,7 +139,7 @@ d.vect outletA30 color=yellow
 </code></pre>
 
 <p>
-Delineate the watershed and convert it to vector format:
+Delineate the contributing area associated with this outlet and convert it to vector format:
 
 <pre><code>
 r.water.outlet input=draindir_5K output=basin_A30 coordinates=638845.52,220085.26
@@ -189,7 +189,7 @@ d.out.file streamcarved
 
 <h3>Compute refined flow pattern using D-inf</h3>
 Compare upslope and downslope flow lines:
-<span class="question">On what type of terrain feature they converge?</span>
+<span class="question">On what type of landform (ridge, valley) they converge?</span>
 <p>
 Remove or switch off all previous layers.
 
@@ -213,7 +213,8 @@ d.out.file flowlines
 </code></pre>
 
 <h3>Compare the multiple flow direction result with D8 and Dinf</h3>
-
+Compare the result of accum_5K and accum_mfd_5K1m. Why are they different,
+which is more accurate and why?
 <pre><code>
 r.watershed -a elev_lid792_1m threshold=50000 accumulation=accum_mfd_5K1m
 d.rast accum_mfd_5K1m
