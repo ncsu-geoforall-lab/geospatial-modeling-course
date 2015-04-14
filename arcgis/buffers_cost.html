@@ -125,12 +125,17 @@ Click 'OK'
 </pre>
 
 <p>
-Calculate the traveltime and cost surface:
+Calculate the traveltime and cost surface.
+<p>
+In ArcGIS cost is defined per <em>map unit</em> (meters in this case).
+We create a cost raster where cost is time to cross one map unit.
+<span class="question">Where does the 0.00062137 constant come from?</span>
 
 <pre>
 Select 'Spatial Analyst Tools->Map Algebra->Raster Calculator' 
-Type in the expression: 0.018641 / "str_speed2"
+Type in the expression: 0.00062137 / "str_speed2"
 Set the 'Output raster' to str_trv
+
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Distance->Cost Distance'
 Set 'Input raster or feature source data' to 'fire_pt'
