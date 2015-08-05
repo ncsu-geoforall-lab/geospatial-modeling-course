@@ -18,51 +18,59 @@ based on projects from previous semesters.
 
 
 <ul>
-<li><b> Coastal dynamics</b>
+<li><b>Coastal dynamics</b>
     <ul>
-       <li> beach/dune evolution and coastal erosion from lidar time series
-       <li> sea level rise impact on barrier islands
-       <li> Large coastal dunes migration analysis and visualization, implications for management
-       <li> <i>get data from here:</i>
+        <li>beach/dune evolution and coastal erosion from lidar time series
+        <li>sea level rise impact on barrier islands
+        <li>large coastal dunes migration analysis and visualization, implications for management
+        <li><em>data sources:</em>
             <a href="http://www.csc.noaa.gov/digitalcoast/data/index.html">Digital Coast</a>
-            and critically explore <a href="http://sealevel.climatecentral.org/ssrf/north-carolina">Sea level rise impact</a> interactive web map
+            and critically explore
+            <a href="http://sealevel.climatecentral.org/ssrf/north-carolina">Sea level rise impact</a>
+            interactive web map
     </ul>
 <li><b>Solar irradiation and energy potential</b>
     <ul>
-       <li> locations and buildings with best potential for solar energy in your neighborhood
-       <li> spatial and temporal patterns of solar irradiation as input for ecosystem management
-       <li> compare solar energy estimates from various sources: nrel, geomodel.sk, your own high resolution computation
-       <li> <i>get the data here </i> - <a href="http://lidar.cr.usgs.gov/">CLICK</a>
-            for multiple return lidar data, check nconemap.com for county data for building footprints
+        <li>locations and buildings with best potential for solar energy in your neighborhood
+        <li>spatial and temporal patterns of solar irradiation as input for ecosystem management
+        <li>compare solar energy estimates from various sources:
+            <a href="http://pvwatts.nrel.gov/">NREL PVWatts Calculator</a>,
+            <a href="http://pvmapper.org/">PVMapper</a>,
+            <a href="http://geomodelsolar.eu/">GeoModel Solar</a>,
+            your own high resolution computation
+        <li><em>data sources:</em>
+            <a href="http://lidar.cr.usgs.gov/">USGS</a> for multiple return lidar data,
+            check also <a href="http://nconemap.com/">NC OneMap</a> for county data for building footprints
+            and <a href="http://www.data.gov/">Data.gov</a> as a general U.S. Government open data catalog
     </ul>
 <li><b>Lidar data processing and Watershed analysis</b>
-       <br>(data available for Shenandoah National Park, Mammoth Cave National Park, North Carolina
-            and many other regions)
     <ul>
-    <li>Mapping forest canopy height, understory vegetation and vegetation growth from lidar
-    <li>Mapping landforms
-     <li>Watershed analysis - stream mapping, stream buffer effectiveness, land use impacts
+        <li>Mapping forest canopy height, understory vegetation and vegetation growth from lidar
+        <li>Mapping landforms
+        <li>Watershed analysis - stream mapping, stream buffer effectiveness, land use impacts
+        <li>data available for Shenandoah National Park,
+            Mammoth Cave National Park, North Carolina and many other regions
     </ul>
 <li><b>Cost surfaces and least cost paths</b>
     <ul>
-      <li> find suitable locations/routes for hiking trails, biking paths
-      <li> find routes and solar charging station locations for alternative vehicles
+        <li>find suitable locations/routes for hiking trails, biking paths
+        <li>find routes and solar charging station locations for alternative vehicles
     </ul>
 <li><b>Hazards mapping and response management</b>
     <ul>
-      <li> assess impact of natural distaster (hurricanes, floods, tornadoes, fires)
-           <a href="http://hdds.usgs.gov/hdds2/">Hazards data distribution system</a>
-           and provide analysis for responders and future disaster prevention/mitigation.
+    <li>assess impact of natural disasters (hurricanes, floods, tornadoes, fires)
+        and provide analysis for responders and future disaster prevention/mitigation
+    <li>see <a href="http://hdds.usgs.gov/">USGS Emergency Response(HDDS)</a> website
     </ul>
-<li><b>Process modeling </b>
+<li><b>Process modeling</b>
+    <ul>
+        <li>soil erosion modeling for different land use alternatives
+        <li>air pollution: linking plume simulation with GIS, pollution distribution along roads
+    </ul>
+<li><b>Utilities planning and assessment</b>
    <ul>
-      <li>soil erosion modeling for different land use alternatives
-      <li> Air pollution: linking plume simulation with GIS, polution distribution along roads
-   </ul>
-<li><b>Utilities planning and assessment </b>
-   <ul>
-      <li> identify optimal path for utilities infrastructure: pipes, cables, power lines
-           that minimize cost and environmental impacts and fulfill a set of desired parameters
+        <li>identify optimal path for utilities infrastructure: pipes, cables, power lines
+            that minimize cost and environmental impacts and fulfill a set of desired parameters
    </ul>
 <li><b>Comparison of algorithms</b>
     <ul>
@@ -71,37 +79,37 @@ based on projects from previous semesters.
     </ul>
 <li><b>Open source GIS development</b>
     <ul>
-      <li>testing release candidate or a selected GRASS GIS module under development
-      <li>development or co-development a new GRASS GIS module
-        (<a href="http://www4.ncsu.edu/~jlloyd/Lloydj_MEA582f11/Lloyd_ProjectPaper_mea582f11.pdf">report on testing and enhancing v.transect addon</a>), suggestions:
-        <ul>
-            <li><a href="http://grass.osgeo.org/grass70/manuals/v.kernel.html">v.kernel</a>
-                wrapper with detection hotspots which are 10% of areas/values, e.g. using histogram,
-                and with other convenient features
-        </ul>
-      <li>testing of an existing GRASS GIS module
-        (<a href="resources/WendelS_Project_GIS582601s15.pdf">report on creating a test suite for r.watershed</a>)
-      <li>development of web or mobile application, for example with GRASS GIS as a backend
-      <li>ideal start for
-        <a href="http://http://wiki.osgeo.org/wiki/Google_Summer_of_Code">Google Summer of Code</a>
+        <li>testing release candidate or a selected GRASS GIS module under development
+        <li>development or co-development a new GRASS GIS module
+            (<a href="http://www4.ncsu.edu/~jlloyd/Lloydj_MEA582f11/Lloyd_ProjectPaper_mea582f11.pdf">report on testing and enhancing v.transect addon</a>), suggestions:
+            <ul>
+                <li><a href="http://grass.osgeo.org/grass70/manuals/v.kernel.html">v.kernel</a>
+                    wrapper with detection hotspots which are 10% of areas/values, e.g. using histogram,
+                    and with other convenient features
+            </ul>
+        <li>testing of an existing GRASS GIS module
+            (<a href="resources/WendelS_Project_GIS582601s15.pdf">report on creating a test suite for r.watershed</a>)
+        <li>development of web or mobile application, for example with GRASS GIS as a backend
+        <li>ideal start for
+            <a href="http://http://wiki.osgeo.org/wiki/Google_Summer_of_Code">Google Summer of Code</a>
     </ul>
 <li><b>Enhancing open source GIS documentation</b>
     <ul>
-      <li>tutorials for GRASS GIS and extended descriptions and examples for GRASS GIS modules
-        to be included in the official documentation
-        <ul>
-            <li>extended documentation for
-                <a href="http://grass.osgeo.org/grass70/manuals/v.kernel.html">v.kernel</a>
-        </ul>
-      <li>create equivalent assignments for this class in
-        <a href="http://qgis.org/">QGIS</a> using
-        <a href="http://docs.qgis.org/2.8/en/docs/user_manual/processing/">QGIS Processing</a>
-        with SAGA and GRASS GIS algorithms
-      <li>rewrite the assignments using
-        <a href="http://grass.osgeo.org/grass70/manuals/libpython/script_intro.html">GRASS GIS Python API</a>,
-        <a href="http://docs.qgis.org/2.8/en/docs/user_manual/processing/scripts.html">QGIS Processing Python API</a>
-        or <a href="https://www.r-project.org/">R</a>
-        with <a href="https://cran.r-project.org/web/packages/rgrass7/rgrass7.pdf">rgrass7</a> package
+        <li>tutorials for GRASS GIS and extended descriptions and examples for GRASS GIS modules
+            to be included in the official documentation
+            <ul>
+                <li>extended documentation for
+                    <a href="http://grass.osgeo.org/grass70/manuals/v.kernel.html">v.kernel</a>
+            </ul>
+        <li>create equivalent assignments for this class in
+            <a href="http://qgis.org/">QGIS</a> using
+            <a href="http://docs.qgis.org/2.8/en/docs/user_manual/processing/">QGIS Processing</a>
+            with SAGA and GRASS GIS algorithms
+        <li>rewrite the assignments using
+            <a href="http://grass.osgeo.org/grass70/manuals/libpython/script_intro.html">GRASS GIS Python API</a>,
+            <a href="http://docs.qgis.org/2.8/en/docs/user_manual/processing/scripts.html">QGIS Processing Python API</a>
+            or <a href="https://www.r-project.org/">R</a>
+            with <a href="https://cran.r-project.org/web/packages/rgrass7/rgrass7.pdf">rgrass7</a> package
     </ul>
 <li><b>Analyze OpenStreetMap data</b>
     <ul>
