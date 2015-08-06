@@ -13,13 +13,16 @@ Data are provided at three hierarchical levels:
    <li>entire NC state with raster data at 500m resolution: region nc_500m</li>
    <li>South-west Wake County with raster data at resolutions 30m-10m: region swwake_10m</li>
    <li>small watershed in rural area with data resolutions of 1m-3m: rural_1m</li>
-   <li>See more at <a href="http://www.grassbook.org/data_menu3rd.php">GRASSbook data description</a></li>
+   <li>See more at <a href="http://grassbook.org/datasets/datasets-3rd-edition/">GRASSbook datasets description</a></li>
 </ul>
 <p>
 Download:
 <ul>
-<li>GRASS GIS location <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">
-    <em>nc_spm_08_grass7</em></a> (this is the same data set as North_Carolina provided during installation)</li>
+<li>GRASS GIS location
+    <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">
+    <em>nc_spm_08_grass7</em></a>
+    (this is the same data set as North_Carolina provided during installation of GRASS GIS on MS Windows)
+</li>
 <li>ArcGIS geodatabase <a href="http://courses.ncsu.edu/mea582/common/media/01/ncrast_geodatabase_08_31_09.zip">
   <em>ncrast_geodatabase_08_31_09</em></a> and
     <a href="http://courses.ncsu.edu/mea582/common/media/01/ncshape_geodatabase02_15_10.zip">
@@ -30,13 +33,13 @@ Instructions:
 <ul>
   <li>Create folders for your GIS data in a directory where you have permissions to write, for example:</li>
   <ul>
-      <li>MSWindows - C:\Users\myname\grassdata and C:\Users\myname\arcdata</li>
-      <li>Mac or Linux - in your home directory myname/grassdata</li>
+      <li>MS Windows: C:\Users\myname\grassdata and C:\Users\myname\arcdata</li>
+      <li>Mac OS or Linux: ideally in your home directory, e.g. /home/myname/grassdata</li>
   </ul>
-  <li>After downloading unpack the datasets - GRASS GIS location into grassdata, ArcGIS geodatabase into arcdata</a></li>
+  <li>After downloading, unpack the datasets and copy GRASS GIS location into grassdata and ArcGIS geodatabase into arcdata</a></li>
   <li><font color="#FF0000">Important:</font> make sure that your unpacking software does
-not create additional directory with the same name, e.g. nc_spm_08_grass7\nc_spm_08_grass7,
-the instructions assume you have only one layer of nc_spm_08_grass7)</li>
+not create additional directory with the same name, e.g. on MS Windows you typically get nc_spm_08_grass7\nc_spm_08_grass7,
+the instructions assume that you deal with this after unpacking)</li>
 </ul>
 
 <!--
@@ -51,12 +54,14 @@ GRASS MAPSET needed later for Temporal Terrain Analysis:<br>
 <a href="http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip">
  NagsHead time series</a>, requires LOCATION in NC State Plane, meters<br>
 -->
-Optional data sets for optional tasks in the assignments or for a project<br>
-<a href="http://courses.ncsu.edu/mea582/common/media/01/nc_ll.zip">GRASS LOCATION in Geographic coordinates WGS84. (55MB),</a> <br>
-<a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spf.zip">GRASS LOCATION in State Plane coordinates, in feet (8MB),</a> <br>
+Optional data sets for optional tasks in the assignments or for a project:
+<ul>
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/nc_ll.zip">GRASS LOCATION in Geographic coordinates WGS84. (55MB),</a>
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spf.zip">GRASS LOCATION in State Plane coordinates, in feet (8MB),</a>
 <!-- <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_utm18.zip">GRASS LOCATION in UTM18, meters - to be added</a> <br> -->
-<a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016.las.zip">2013 Raleigh lidar survey, tile 073_016, point cloud in las format (22MB)</a>,
-<a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016_xyzirnc_ncspf.zip">in asci xyzirnc format (22MB)</a> <br>
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016.las.zip">2013 Raleigh lidar survey, tile 073_016, point cloud in las format (22MB)</a>,
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016_xyzirnc_ncspf.zip">in asci xyzirnc format (22MB)</a>
+</ul>
 
 
 <h2 id="data_acquisition">1. Explore the provided data set</h2>
@@ -117,7 +122,7 @@ adjust lighting to highlight features </li>
 <ul>
     <li>Approach:
         <a href="grass/data_visualization.html"> GRASS solution </a>,
-        <a href="arcgis/data_visualization.html"> ArcGIS solution </a><br>
+        <a href="arcgis/data_visualization.html"> ArcGIS solution </a>
     <li>Screen captures for 3D visualization with wxnviz in GRASS6.4.3RC2:
         <ul>
             <li><a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz1_edit1large.mov"> Visualization in GRASS I: surface (71MB)</a>
