@@ -50,7 +50,7 @@ you map display to create white space above and below the image<br>
 g.region rural_1m res=2 -p
 r.in.xyz input=lid_be_pts.txt output=lid_be_binn2m method=n
 r.in.xyz input=lid_mr_pts.txt output=lid_mr_binn2m method=n
-d.erase
+<!-- d.erase -->
 d.rast lid_mr_binn2m
 d.legend lid_mr_binn2m at=2,20,2,5
 d.out.file mylidmrn2m
@@ -79,7 +79,7 @@ run from GUI or define fullpath for r.in.xyz<br>
 <pre><code>
 g.region rural_1m res=6 -ap
 r.in.xyz input=lid_be_pts.txt out=lid_be_binn6m meth=n
-d.erase
+<!-- d.erase -->
 d.rast lid_be_binn6m
 d.legend lid_be_binn6m at=2,20,2,5
 d.out.file mylidben6m
@@ -111,7 +111,7 @@ compute range<br>
 <pre><code>
 r.in.xyz input=lid_be_pts.txt out=lid_be_binrange6m meth=range
 r.in.xyz input=lid_mr_pts.txt out=lid_mr_binrange6m meth=range
-d.erase
+<!-- d.erase -->
 d.rast lid_be_binrange6m
 d.legend lid_be_binrange6m at=2,40,2,5
 d.rast lid_mr_binrange6m
@@ -145,10 +145,10 @@ Add raster > Required select lid_be_binrange6m<br>
 Tab Selection > List of values to be displayed > type in 0.5-20.<br>
 
 <pre><code>
-d.erase
+<!-- d.erase -->
 d.rast ortho_2001_t792_1m
 d.rast lid_be_binrange6m val=0.5-20.
-d.erase
+<!-- d.erase -->
 d.rast ortho_2001_t792_1m
 d.rast lid_mr_binrange6m val=0.5-20.
 
@@ -180,7 +180,7 @@ display bare ground and multiple return points over orthophoto<br>
 don't forget to set display to new resolution set by region<br>
 
 <pre><code>
-d.erase
+<!-- d.erase -->
 d.rast ortho_2001_t792_1m
 </code></pre>
 
@@ -218,7 +218,7 @@ g.region rural_1m -p
 v.extract elev_lidrural_mrpts out=elev_lidrur_first type=point where="Return=1"
 v.surf.rst elev_lid792_bepts elevation=elev_lidrural_1m npmin=120 segmax=25
 v.surf.rst elev_lidrur_first elevation=elev_lidrurfirst_1m npmin=120 segmax=25 tension=100 smooth=0.5
-d.erase
+<!-- d.erase -->
 d.rast elev_lidrural_1m
 d.rast elev_lidrurfirst_1m
 </code></pre>
@@ -242,7 +242,7 @@ find out where we have multiple returns<br>
 
 <pre><code>
 g.region rural_1m -p
-d.erase
+<!-- d.erase -->
 d.rast ortho_2001_t792_1m
 </code></pre>
 
@@ -276,7 +276,7 @@ d.out.file lidreturns
 # generate contours with 10m and 3m interval
 </font>
 g.region raster=elevation -p
-d.erase
+<!-- d.erase -->
 d.rast elevation
 r.contour elevation out=elev_contour_10m step=10
 d.vect elev_contour_10m

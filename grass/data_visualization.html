@@ -98,10 +98,12 @@ Display land use categories 1, 2 (developed land) over shaded topography.<br>
 <em>Zoom to computational region</em>.<br>
 Right click on "landuse96_28m" map layer and <em>Change opacity</em> to show topography blended with landuse.
 Save display to graphic file.
+You may want to remove all previously used layers from the <em>Layer Manager</em>
+before you start visualizing the new ones.
 
 <pre><code>
 g.region raster=landuse96_28m -p
-d.erase
+<!-- d.erase -->
 d.rast elevation_shade
 d.rast landuse96_28m values=1,2
 d.out.file landuse_elev

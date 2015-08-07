@@ -98,10 +98,11 @@ r.mapcalc "depr_bin = if((elevation-elev_fill3) < 0., 1, null())"
 </code></pre>
 
 <p>
-Display results, compare the derived depressions with actual lakes:
+Remove all previously used layers from the <em>Layer Manager</em> and
+display the new results, compare the derived depressions with actual lakes:
 
 <pre><code>
-d.erase
+<!-- d.erase -->
 d.rast elevation
 d.vect roadsmajor
 d.rast depr_bin
@@ -121,8 +122,8 @@ r.watershed -as elev_lid792_1m threshold=5000 accumulation=accum_5K drainage=dra
 <p>
 Remove previous layers. Display extracted streams over aerial image:
 
-<!-- d.erase -->
 <pre><code>
+<!-- d.erase -->
 d.rast ortho_2001_t792_1m
 d.rast accum_5K values=1000-1000000
 </code></pre>
@@ -285,7 +286,7 @@ g.region raster=elev_lid792_1m -p
 r.terraflow elev_lid792_1m fill=elev_lidfilled_1m   \
             dir=dir_terrafl_1m swater=swatershed_1m \
             accum=accumterra_1m tci=tci_1m
-d.erase
+<!-- d.erase -->
 d.rast swatershed_1m
 d.rast accumterra_1m
 d.rast tci_1m

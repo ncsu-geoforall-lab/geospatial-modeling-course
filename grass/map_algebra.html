@@ -105,13 +105,14 @@ d.out.file landuse96_modezip
 <!-- p.127<br> -->
 Use neighborhood operator to compute land use diversity map.<br>
 <span class="question">How diverse is land use in NCSU area?  Would you change it?</span><br>
-For d.erase: Zoom to computational region extent and switch off previous map layers.
+Before you start to display the new results,
+remove all previously added map layers from the <em>Layer Manager</em>.
 
 <pre><code>
 g.region raster=landuse96_28m -p
 r.info -g landuse96_28m
 r.neighbors landuse96_28m output=lu_divers method=diversity size=7
-d.erase
+<!-- d.erase -->
 d.rast lu_divers
 d.legend lu_divers at=70,15,5,10 -v
 d.vect streets_wake
@@ -136,12 +137,13 @@ r.univar elev_srtm30m_sm5
 <!-- p.124-125<br> -->
 Patch raster tiles for lidar based, 6m res. DEM for Centennial Campus.
 <!-- on MS VISTA you need to have UAC (User Account Control) disabled to run r.patch<br> -->
+Before displaying new data, remove older map layers from <em>Layer Manager</em>.
 
 <pre><code>
 g.region raster=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m -p
 r.patch input=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m output=elevlidD_6m
 r.colors elevlidD_6m raster=elevation
-d.erase
+<!-- d.erase -->
 d.rast elevlidD_6m
 </code></pre>
 
@@ -306,11 +308,14 @@ r.mapcalc developed=if(landclass96 > 1, null(), 1)
 Create mask for low lying developed areas (e.g. vulnerable to flooding)
 with elevation between 60 and 100m and land use 1 or 2.<br>
 Set the region, display the input maps and create a MASK.<br>
-For d.erase: Zoom to computational region and switch off previous map layers.
+Before you start new computations, remove or switch off previous map layers
+in the <em>Layer Manger</em>.
+You may also zoom to computational region in <em>Map Display</em>
+once you set a new one.
 
 <pre><code>
 g.region raster=elevation -p
-d.erase
+<!-- d.erase -->
 d.rast elevation
 d.rast landuse96_28m
 r.mapcalc "low_elev_developed = if((elevation < 100 &amp;&amp; elevation > 60) &amp;&amp; (landuse96_28m == 1 || landuse96_28m == 2),1,null())"
@@ -364,10 +369,12 @@ Save an image for your report.
 <!-- p. 91<br> -->
 Use map algebra to create map subsets.<br>
 Change region to the airphoto tile 792 and resolution 10m.
+Since we will work in different are, it is a good idea to remove
+all previously used map layers from the <em>Layer Manager</em>.
 
 <pre><code>
 g.region raster=ortho_2001_t792_1m res=10 -ap
-d.erase
+<!-- d.erase -->
 d.rast ortho_2001_t792_1m
 </code></pre>
 
@@ -413,10 +420,12 @@ r.stats -pl zipcodes,landuse96_28m
 <!-- p. 113<br> -->
 Working with relative coordinates.<br>
 Enter the expression on a single line without \<br>
+Again, it is a good idea to remove the previously used map layers
+before we start to work on a new task.
 
 <pre><code>
 g.region raster=elev_srtm_30m -p
-d.erase
+<!-- d.erase -->
 r.mapcalc "elev_srtm30m_smooth = (elev_srtm_30m[-1,-1]   \
            + elev_srtm_30m[-1,0] + elev_srtm_30m[-1,1] \
            + elev_srtm_30m[0,-1] + elev_srtm_30m[0,0]  \

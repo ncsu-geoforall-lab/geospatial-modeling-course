@@ -233,7 +233,7 @@ You already may have some of these maps in GUI layer tree,
 so just switch them on and off and re-order as needed:
 
 <pre><code>
-d.erase
+<!-- d.erase -->
 d.rast streets_cost
 d.vect fire_pt color=red icon=basic/marker size=20
 d.rast route_20Westernb
@@ -282,10 +282,15 @@ Add the streets to friction map - they are missed by the landuse map.
 <pre><code>
 r.mapcalc "friction2 = if(streets_speed > 6, 0.1, friction)"
 r.colors friction2 rules=friction_color.txt
-d.erase
+<!-- d.erase -->
 d.rast friction2
 d.legend friction2 at=5,50,2,5
 </code></pre>
+
+<p>
+Reminder: Time to time, you should remove or at least uncheck previously
+used map layers in the <em>Layer Manager</em>, so the layers are not rendered
+when you don't need them anymore.
 
 <p>
 Compute the cost map and generate isochrones:
@@ -311,7 +316,7 @@ echo "635576,216485" | v.in.ascii out=lostperson separator=","-->
 Display the results:
 
 <pre><code>
-d.erase
+<!-- d.erase -->
 d.rast lakes
 d.rast walkcost
 d.vect streets_wake
@@ -339,7 +344,7 @@ r.mapcalc "area_one = 1"
 r.cost input=area_one output=dist_toroad start_rast=roadsmajor
 r.mapcalc "dist_meters = dist_toroad * (ewres() + nsres())/2."
 r.mapcalc "dist_class = int(dist_meters/500)"
-d.erase
+<!-- d.erase -->
 d.rast dist_class
 d.vect roadsmajor
 d.out.file dist_roadsmaj

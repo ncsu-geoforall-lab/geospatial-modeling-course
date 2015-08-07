@@ -59,7 +59,7 @@ In GRASS GIS Map Display
  <li>d.what.vect: <font color="#000066">Query vector map</font>
 -->
  <li>d.zoom: <font color="#000066"> Zoom options</font>
- <li>d.erase: <font color="#000066">Remove all previous layers</font>
+ <!--<li>d.erase: <font color="#000066">Remove all previous layers</font>-->
  <li>d.out.file: <font color="#000066">Save display to graphic file</font>
  <li>d.barscale: <font color="#000066">Add map elements > Show/hide scale bar</font>
  <li>d.legend: <font color="#000066">Add map elements > Show/hide legend</font>
@@ -222,12 +222,18 @@ Add vector map layer boundary_county,
 to display only county boundary, under tab <em>Selection</em> switch off areas.
 Rearrange the layers by mouse if needed.
 <p>
-The command line equivalent is below.
-When running from command console, skip d.erase and instead remove all maps layers from Layer Manager.
+The command line equivalent is below,
+except for removing all map layers from the <em>Layer Manager</em>.
+When using GUI and its <em>Command Console</em>, you can either uncheck
+the map layers or completely remove them in the <em>Layer Manager</em>.
+When using the system command line and
+<em><a href="http://grass.osgeo.org/grass70/manuals/d.mon.html">d.mon</a></em>,
+you can use
+<em><a href="http://grass.osgeo.org/grass70/manuals/d.erase.html">d.erase</a></em>.
 
 <pre><code>
 g.region nc_500m -p
-d.erase
+<!-- d.erase -->
 d.rast elev_state_500m
 d.vect precip_30ynormals icon=basic/marker
 d.vect boundary_county type=boundary

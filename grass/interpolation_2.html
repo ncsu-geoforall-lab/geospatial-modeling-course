@@ -62,7 +62,7 @@ Save images for your report.
 r.colors asp_rstdef_1m color=aspect
 r.colors asp_rstt10_1m color=aspect
 r.colors asp_rstt160_1m color=aspect
-d.erase
+<!-- d.erase -->
 d.rast elev_rstdef_1m
 d.rast asp_rstdef_1m
 d.out.file asp_rst_t40
@@ -114,7 +114,7 @@ and drape the deviations maps as color.
 <pre><code>
 r.colors elev_rstsm10_devi rules=deviations_color.txt
 r.colors elev_rstdef_devi raster=elev_rstsm10_devi
-d.erase
+<!-- d.erase -->
 d.rast elev_rstdef_devi
 d.rast elev_rstsm10_devi
 d.legend elev_rstsm10_devi at=2,50,2,6
@@ -155,7 +155,7 @@ p. 247
 </font>
 g.region rural_1m res=2 -p
 v.surf.rst elev_lid792_cont1m elev=elev_rstcontd_2m zcol=level aspect=asp_rstcontd_2m dmin=3
-d.erase
+<!-- d.erase -->
 d.rast elev_rstcontd_2m
 <font color="#000066">
 # to compare the results,
@@ -198,7 +198,7 @@ Zoom to computational region when displaying the result.
 
 <pre><code>
 r.colors precip_annual_500m rules=precip_color.txt
-d.erase
+<!-- d.erase -->
 d.rast precip_annual_500m
 d.legend precip_annual_500m at=2,30,2,5 range=970,2400
 </code></pre>
