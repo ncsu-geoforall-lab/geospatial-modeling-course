@@ -60,7 +60,7 @@ You need to select the "from" file using the browser and type name of "to" file<
 raster files to be copied<br>
 geology_30m,mygeology
 <P>
-<li><i>I am getting Error "mygeology" map layer already exists </i>
+<li><i>I am getting Error "mygeology" map layer already exists</i>
 <br>Give your output a new name or you can force overwrite by adding --o to your command
 (this applies to practically all GRASS commands). There is an equivalent overwrite
 button in each command's GUI.
@@ -117,22 +117,22 @@ so lakes have the elevation value 0 leading the large negative difference. Both 
 georeferenced to the same vertical datum.
 </li>
 <P>
-  <li> in the map algebra example with relative coordinates, SE corner is replaced</li>
+  <li>in the map algebra example with relative coordinates, SE corner is replaced</li>
 <P>
-  <li> <i>how we got from the computer raster to the plane? How would I use it?</i><br>
+  <li><i>how we got from the computer raster to the plane? How would I use it?</i><br>
 We are computing an equation for a plane here: 
 ax+by+cz+d=0 which we can rewrite as <br>
 z = -1/c (ax + by) - d/c
 and use it to model, for example, a geologic fault.
 </li>
 <P>
-  <li> <i>NDVI computed with integers gives 0 in GRASS and -1, 0 in ArcGIS, what is going on?</i><br>
+  <li><i>NDVI computed with integers gives 0 in GRASS and -1, 0 in ArcGIS, what is going on?</i><br>
 The correct values for NDVI range between (-0.957, 0.979) so
 when the decimals are simply cut-off the result is 0, when the numbers are rounded down to nearest 
 integer the result will be -1,0. Neither of them is correct.
 <P>
 <P>
-  <li> <i>subsetting a raster using map algebra - what is happening? </i><br>
+  <li><i>subsetting a raster using map algebra - what is happening?</i><br>
 we set the spatial extent to orthophoto and resolution to 10m (that means that the 1m resolution
 of ortho is ignored). Then we compute a new raster by assigning it the same values
 as in the original raster only within the defined spatial extent. So the resulting
@@ -144,15 +144,15 @@ the original raster.</li>
 <a name="buffers_cost"></a>
 <P><B>Topic: Buffers, cost surfaces, least cost path </B></P>
 <ul>
-  <li> <i>Can I manually set region by drawing a rectangle on the map in display window?</i><br>
+  <li><i>Can I manually set region by drawing a rectangle on the map in display window?</i><br>
        yes, zoom to the area of interest using the Zoom in button and drawing 
        a rectangle and then click Zoom options > save display geometry to named region file, e.g. myregion.
        You can then set your region to this using g.region myregion or 
        by running Config > Region > Set Region > Set from named region > myregion.
        Update for GRASS GIS 7: Find toolbar button 'Various zoom options' on Map Display toolbar,
-       select 'Set computational region extent interactively' and then draw the rectangle.	
+       select 'Set computational region extent interactively' and then draw the rectangle.
 <P>
-  <li> <i> what the internal structure is of a GRASS raster, where is category list stored?</i>
+  <li><i>what the internal structure is of a GRASS raster, where is category list stored?</i>
        we have talked about it in the first lecture, but you can find it here too <br>
        http://grass.osgeo.org/grass64/manuals/html64_user/helptext.html <br>
        categories are under cats, color tables under colr, and history/metadata in /hist.
@@ -160,9 +160,9 @@ the original raster.</li>
        DO NOT edit these files unless you know what you are doing, you can corrupt your data,
        use the relevant commands instead.
 <P>
-<li> <i> I would have thought that I could have used the streets layer as a mask to contain 
-        all analysis to the roads system itself and still arrive at the same results. 
-        To my surprise, this was not the case. Why would areas outside the road system 
+<li><i> I would have thought that I could have used the streets layer as a mask to contain
+        all analysis to the roads system itself and still arrive at the same results.
+        To my surprise, this was not the case. Why would areas outside the road system
         have such an impact on travel time and shortest path within this analysis?</i><br>
         I would have to see your results to say for sure, 
         it should be the same if the firestations were all located on the roads, but they 
@@ -183,13 +183,13 @@ the original raster.</li>
        through cells with different types of cover, they increase the cost to pass a grid cell.
 <P>
   <li> <i> what is the best way to capture the min and max raster value in GRASS?</i><br>
-       use r.info -r
+       use <tt>r.info -r</tt>
 <P>
-  <li> <i>In GRASS I don't get any firestations for the given condition CVLAG<0.1,
-       I had to use CVLAG<0.5 and the stations that I got were far away
-       (S. East St. and W main St stations) </i><br>
-       you may be searching in a wrong region, reset it with <PRE>g.region swwake_30m -p</PRE>
-       </li> 
+  <li> <i>In GRASS I don't get any firestations for the given condition CVLAG &lt; 0.1,
+       I had to use CVLAG &lt; 0.5 and the stations that I got were far away
+       (S. East St. and W main St stations)</i><br>
+       you may be searching in a wrong region, reset it with <tt>g.region swwake_30m -p</tt>
+       </li>
 </li>
 </ul>
 <hr>
@@ -228,13 +228,13 @@ significant differences in surface geometry.
 <a name="interpolation_2"></a>
 <P><B>Topic: Spatial interpolation and approximation: splines</b>
 <ul>
-<li><i> GRASS defines spline method as regularized spline with tension, 
-while ArcGIS defines spline method with two functions, regularized and tension. 
-It seems the functions from these two software are different when both state 
+<li><i> GRASS defines spline method as regularized spline with tension,
+while ArcGIS defines spline method with two functions, regularized and tension.
+It seems the functions from these two software are different when both state
 it is a spline interpolation method.</i>
 <br>
-There are many different spline interpolation methods based on what type 
-of smoothness seminorm (also called roughness penalty) they minimize, see 
+There are many different spline interpolation methods based on what type
+of smoothness seminorm (also called roughness penalty) they minimize, see
 <a href=" http://skagit.meas.ncsu.edu/~helena/gmslab/papers/mitas_mitasova_1999_2005.pdf">
 Table 1 in this paper</a>
 (this paper has lot of typos as we were not given the proofs after the chapter was typeset,
@@ -244,9 +244,9 @@ is thin plate spline with tension, not just thin plate spline).
 Regularized spline with tension is equivalent
 to completely regularized spline but the others are different.
 
-<li><i>Another confusion I have is radial basis functions. 
-Radial basis function methods are part of spline method? 
-Or some are spline (thin-plate spline, spline with tension, 
+<li><i>Another confusion I have is radial basis functions.
+Radial basis function methods are part of spline method?
+Or some are spline (thin-plate spline, spline with tension,
 and completely regularized spline), and some are not?</i>
 <br>
 Splines are a special type of radial basis function methods, multiquadrics is another group RBF methods.
@@ -260,7 +260,7 @@ Spline with tension under radial basis functions and the one in Spatial Analyst 
 based on the same equations but the implementation may be different
 so unless it calls the same code, the results will be different
 ( e.g. the data are usually normalized to avoid numerical problems
-and each program does it differently, and the search for points may be different too - we 
+and each program does it differently, and the search for points may be different too - we
 covered that in the lecture.)
 </ul>
 
@@ -269,7 +269,7 @@ covered that in the lecture.)
 <UL>
    <LI><i>In the time series analysis task my surfaces are fuzzy and the cutting plane does not work</i><br>
 Make sure you set display to computational region and use fine resolution=1 in nviz. 
-When using cutting planes both surfaces should have their resolution set to same value (e.g. fine=1), 
+When using cutting planes both surfaces should have their resolution set to same value (e.g. fine=1),
 use constant plane for reference (-1m for the coast) and set its resolution to fine=1 too.
 When comparing two surfaces assign each of them different constant color 
 and use top or bottom surface option to color the cutting plane. You can lower your light source
