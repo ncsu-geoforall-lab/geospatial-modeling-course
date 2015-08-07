@@ -276,3 +276,38 @@ iframe {
 .question {
     color: #FF5900;
 }
+
+/* default style is too dense */
+.schedule td {
+    padding-left: 0.5em;
+    padding-right: 0.2em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+/* width of first column */
+.schedule td:first-child {
+    width: 7em;
+}
+
+/* do table using alternate colors of rows */
+.schedule tr:nth-child(even) {
+    background: #EEE;
+}
+
+.schedule tr:nth-child(odd) {
+    background: #FFF;
+}
+
+/* override for header to get different color */
+.schedule > thead > tr:nth-child(1) {
+    background: #EEE;
+}
+
+/* header needs to bigger a little bit */
+.schedule > thead > tr > th {
+    padding-left: 0.5em;
+    padding-right: 0.2em;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+}
