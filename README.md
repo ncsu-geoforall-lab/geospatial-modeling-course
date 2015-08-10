@@ -112,6 +112,18 @@ and you can publish the pages using:
     ./my-build-and-publish.sh
 
 
+New semester checklist
+----------------------
+
+A list of what should be changed, updated or checked for new semester
+in the web pages.
+
+* change dates in the schedule
+* update students' Google Site name template
+* update course Google Site URL
+* create a new page for project titles and link it
+
+
 License
 -------
 
