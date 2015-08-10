@@ -99,15 +99,16 @@ nav li {
     float: left;
     border-right: 2px solid #F3F3F3;
     /*border-left: 1px solid #DDDDDD;*/
+}
+
+.nav a {
+    text-decoration: none;
+    color: #F3F3F3;
+    display: inline-block;
     padding-left: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-right: 15px;
-}
-
-.nav a {
-text-decoration:none;
-color: #F3F3F3;
 }
 
 nav li:hover {
