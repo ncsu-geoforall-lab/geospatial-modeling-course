@@ -122,6 +122,7 @@ in the web pages.
 * update students' Google Site name template
 * update course Google Site URL
 * create a new page for project titles and link it
+* emails to share Google Site with and send the homeworks to
 
 
 License
