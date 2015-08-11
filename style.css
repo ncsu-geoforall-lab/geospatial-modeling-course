@@ -16,7 +16,9 @@ body {
     background-repeat: no-repeat;
 }
 
-#header-image p {
+/* main heading / title */
+
+h1 {
     margin: 0px;
     padding: 0px;
     padding-top: 50px;
@@ -39,9 +41,9 @@ a {
     text-decoration: underline;
 }
 
-/* headings */
+/* normal headings */
 
-h1, h2, h3, h4, h5, h6 {
+h2, h3, h4, h5, h6 {
     font-weight: bold;
     color: #444;
     clear: both;
