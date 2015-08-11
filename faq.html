@@ -1,13 +1,13 @@
-<h2>ASSIGNMENTS: homework comments and answers (Spring 2010 - Fall 2010 - Spring 2012)</h2>
+<h2>Comments, questions and answers for assignments</h2>
 
-<p>
-<a href="report_guide.html">Report guide provided by Paul Paris</a>
 
-<a name="data_acquisition"></a>
-<p><b> Topic: Data acquisition and integration</b></p>
-<ul>
-  <li><i>Should we list and provide information about all the files 
-in each geodatabase, or a subset</i><br>
+<h3 id="data_acquisition">Data acquisition and integration</h3>
+
+<dl class="qa">
+
+<dt>Should we list and provide information about all the files
+in each geodatabase, or a subset</dt>
+<dd>
 As the instructions for HW indicate you should be able
 to write the text of your report on 1 page (500 words), so rather than listing
 properties for each file you should provide a general description
@@ -24,10 +24,10 @@ In the approach section - do not write about software issues, focus on general m
 in the results sections focus on what is interesting in the data and the derived maps.
 Put software issues, including fixes and suggestions for improvements into
 the discussion section.
-  </li>
-<P>
-<li><i>When I open GRASS, nc_spm_08 doesn't show up under "Project Locations, 
-although it is downloaded and unzipped on my computer</i><br>
+
+<dt>When I open GRASS, nc_spm_08 doesn't show up under "Project Locations,
+although it is downloaded and unzipped on my computer</dt>
+<dd>
 Make sure that when you unzip your nc_spm_08 is not hidden under another nc_spm_08.
 Some zip software tools create an extra directory by default, so you need to sepcify
 that you do not want a new directory created.
@@ -38,132 +38,149 @@ it still does not see the correct nc_spm_08
 to find out whether it is a valid LOCATION) and then it would not show up.
 To avoid future confusion, remove all nc_spm_08 folders and unzip nc_spm_08 again,
 making sure that no extra directory is created.
-<P>
-<li><i>Is there a way to reorder the layers so that this information does not become hidden?</i>
-<br>yes - just grab a layer with the mouse and move it where you want it to be.
-<P>
-<li><i>data were in ... geographic coordinate system</i>
-<br>there are no data in geographic coordinate system in the provided data set - everything is 
+
+<dt>Is there a way to reorder the layers so that this information does not become hidden?</dt>
+<dd>yes - just grab a layer with the mouse and move it where you want it to be.
+
+<dt>data were in ... geographic coordinate system</dt>
+<dd>there are no data in geographic coordinate system in the provided data set - everything is
 in State Plane coordinate system (datum:NAD83, projection:LCC)
-<P>
-<li><i>I expected the data concerning projections, coordinate systems, 
-etc. to be presented in GRASS more like ArcGIS.</i>
+
+<dt>I expected the data concerning projections, coordinate systems,
+etc. to be presented in GRASS more like ArcGIS.
+<dd>
 in your LOCATION, everything is in the same coordinate system - you find the information
 by running g.proj -p.
-<P>
-<li><i>I did not get the GUI copy feature to work</i>
-<br>please be more specific! what did not work - did you get an error message?
+
+<dt>I did not get the GUI copy feature to work</dt>
+<dd>please be more specific! what did not work - did you get an error message?
 more detailed information helps to to improve the instructions or,
 if there is a bug we can file a bug report. (and you will learn how to
 prepare bug reports too!)
 You need to select the "from" file using the browser and type name of "to" file<br>
 raster files to be copied<br>
 geology_30m,mygeology
-<P>
-<li><i>I am getting Error "mygeology" map layer already exists</i>
-<br>Give your output a new name or you can force overwrite by adding --o to your command
+
+<dt>I am getting Error "mygeology" map layer already exists</dt>
+<dd>Give your output a new name or you can force overwrite by adding --o to your command
 (this applies to practically all GRASS commands). There is an equivalent overwrite
 button in each command's GUI.
-<P>
-<li><i>Image rendering in GRASS is slow</i>
+
+<dt>Image rendering in GRASS is slow
+<dd>
 check your region and make sure you have it set up as given in the instructions
 and then zoom to computational region - these are small data sets so they should
 be displayed instantly when added to the map layer.
 Also, do not keep large number of layers in GIS manager, start each assignment 
 with empty list and if you accumulate many layers (10+) remove those that you don't need.
-<P>
-<li>please save the image of your 3D view from nviz so that
+
+<dt>Do I have to use 3D views?</dt>
+<dd>
+Yes, please save the image of your 3D view from nviz so that
 I can see that you can work with it. We will be using 3D views a lot.
 Save the nviz image as tiff file, make sure you have a tiff support installed
 on your computer, otherwise when you try to open the file, it will be black.
-<P>
-<li>please include name on the first page of your report !!!
-</ul>
-<p>
-<hr>
-<a name="data_visualization"></a>
-<p><b> Topic: Data display and visualization</b></p>
-<ul>
-<li><i> not sure what setting the grid parameters "size=0:02" did</i><br>
+
+</dl>
+
+<p>Please, include name on the first page of your report.</p>
+
+
+<h3 id="data_visualization">Data display and visualization</h3>
+
+<dl class="qa">
+
+<dt>not sure what setting the grid parameters "size=0:02" did</dt>
+<dd>
 it draws the lat/long grid - you should read the numbers along the image broder to find out.
 Maps used to provide both x/y grid in meters and lat/long in degrees:min:sec so that
 both cartesian and geographic coordinates could be derived.
-</li>
-<P>
-<li>ArcGIS equivalent to setting the region: rather than clipping the data set, 
+
+<dt>What is the ArcGIS equivalent to setting the computational region in GRASS GIS?</dt>
+<dd>rather than clipping the data set,
 which would be a pain if you need to use many data sets with different 
 spatial extent and if you need to work on different regions (you would be
 also creating a lot of extra files) is under:
 Environments > General Settings > Extent
-</li>
-</ul>
-<hr>
-<a name="map_algebra"></a>
-<P><B>Topic: Global, zonal and focal operations, map algebra</B></P>
-<ul>
-  <li> <i>what is happening when region is set?</i><br>
+
+</dl>
+
+
+<h3 id="map_algebra">Global, zonal and focal operations, map algebra</h3>
+
+<dl class="qa">
+<dt>what is happening when region is set?</dt>
+<dd>
    it sets the spatial extent AND resolution at which all raster operations are done.
    If any of the rasters has different resolution, it is quietly resampled using nearest neighbor.
    It also defines the viewing area if the display is set to "zoom into computational region"
    It does not affect vector operations, so vector data need to be clipped if the operation
    is to be performed on a subset of the data.
 </li>
-<P>
-  <li> <i> what does the difference between SRTM and NED DEMs mean?</i><br>
-   SRTM represents surface with vegetation and buildings, while NED is derived from bare earth lidar data,
-   so it is lower in most areas. The issue is complicated by the fact, that in SRTM v1
+
+<dt>what does the difference between SRTM and NED DEMs mean?</dt>
+<dd>
+    SRTM represents surface with vegetation and buildings, while NED is derived from bare earth lidar data,
+    so it is lower in most areas. The issue is complicated by the fact, that in SRTM v1
 surface water was assigned value 0 instead of NULL or actual value (there were no data),
 so lakes have the elevation value 0 leading the large negative difference. Both DEMs are properly
 georeferenced to the same vertical datum.
-</li>
-<P>
-  <li>in the map algebra example with relative coordinates, SE corner is replaced</li>
-<P>
-  <li><i>how we got from the computer raster to the plane? How would I use it?</i><br>
+
+<dt>What is happening in the map algebra example with relative coordinates?
+<dd>
+SE corner is replaced
+
+<dt>how we got from the computer raster to the plane? How would I use it?</dt>
+<dd>
 We are computing an equation for a plane here: 
 ax+by+cz+d=0 which we can rewrite as <br>
 z = -1/c (ax + by) - d/c
 and use it to model, for example, a geologic fault.
-</li>
-<P>
-  <li><i>NDVI computed with integers gives 0 in GRASS and -1, 0 in ArcGIS, what is going on?</i><br>
+
+<dt>NDVI computed with integers gives 0 in GRASS and -1, 0 in ArcGIS, what is going on?</dt>
+<dd>
 The correct values for NDVI range between (-0.957, 0.979) so
 when the decimals are simply cut-off the result is 0, when the numbers are rounded down to nearest 
 integer the result will be -1,0. Neither of them is correct.
-<P>
-<P>
-  <li><i>subsetting a raster using map algebra - what is happening?</i><br>
+
+<dt>subsetting a raster using map algebra - what is happening?</dt>
+<dd>
 we set the spatial extent to orthophoto and resolution to 10m (that means that the 1m resolution
 of ortho is ignored). Then we compute a new raster by assigning it the same values
 as in the original raster only within the defined spatial extent. So the resulting
 map has the spatial extent of the orthophoto but the values and resolution are the same as in
-the original raster.</li>
-</ul>
-<hr>
-<P>
-<a name="buffers_cost"></a>
-<P><B>Topic: Buffers, cost surfaces, least cost path </B></P>
-<ul>
-  <li><i>Can I manually set region by drawing a rectangle on the map in display window?</i><br>
+the original raster.
+
+</dl>
+
+
+<h3 id="buffers_cost">Buffers, cost surfaces, least cost path</h3>
+
+<dl class="qa">
+
+<dt>Can I manually set region by drawing a rectangle on the map in display window?</dt>
+<dd>
        yes, zoom to the area of interest using the Zoom in button and drawing 
        a rectangle and then click Zoom options > save display geometry to named region file, e.g. myregion.
        You can then set your region to this using g.region myregion or 
        by running Config > Region > Set Region > Set from named region > myregion.
        Update for GRASS GIS 7: Find toolbar button 'Various zoom options' on Map Display toolbar,
        select 'Set computational region extent interactively' and then draw the rectangle.
-<P>
-  <li><i>what the internal structure is of a GRASS raster, where is category list stored?</i>
+
+<dt>what the internal structure is of a GRASS raster, where is category list stored?
+<dd>
        we have talked about it in the first lecture, but you can find it here too <br>
        http://grass.osgeo.org/grass64/manuals/html64_user/helptext.html <br>
        categories are under cats, color tables under colr, and history/metadata in /hist.
        These are all asci files so they are readable and editable as plain text.
        DO NOT edit these files unless you know what you are doing, you can corrupt your data,
        use the relevant commands instead.
-<P>
-<li><i> I would have thought that I could have used the streets layer as a mask to contain
+
+<dt>I would have thought that I could have used the streets layer as a mask to contain
         all analysis to the roads system itself and still arrive at the same results.
         To my surprise, this was not the case. Why would areas outside the road system
-        have such an impact on travel time and shortest path within this analysis?</i><br>
+        have such an impact on travel time and shortest path within this analysis?</dt>
+<dd>
         I would have to see your results to say for sure, 
         it should be the same if the firestations were all located on the roads, but they 
         are not. They are located off-the road and they are not connected to the street network.
@@ -172,48 +189,61 @@ the original raster.</li>
         find the least cost path to the road by assigning off-road areas some low speed value.
         Depending on where the firestation is located in relation to the roads, the two approaches
         may lead to different paths.
-<P>
-  <li> <i>coordinates of firestations are not stored in the attribute table, where do they come from?</i><br>
+
+<dt>coordinates of firestations are not stored in the attribute table, where do they come from?</dt>
+<dd>
        v.out.ascii pulls them from the coor file that defines the geometry of each vector map
        and combines them with attributes from the dbf table (or any other DBMS that you may use -
        GRASS supports several)
-<P>
-  <li> <i>what are the friction values?</i><br>
+
+<dt>what are the friction values?</dt>
+<dd>
        these are empirically selected values that measure how difficult it is to walk 
        through cells with different types of cover, they increase the cost to pass a grid cell.
-<P>
-  <li> <i> what is the best way to capture the min and max raster value in GRASS?</i><br>
+
+<dt> what is the best way to capture the min and max raster value in GRASS?</dt>
+<dd>
        use <code>r.info -r</code>
-<P>
-  <li> <i>In GRASS I don't get any firestations for the given condition CVLAG &lt; 0.1,
+
+<dt>In GRASS I don't get any firestations for the given condition CVLAG &lt; 0.1,
        I had to use CVLAG &lt; 0.5 and the stations that I got were far away
-       (S. East St. and W main St stations)</i><br>
+       (S. East St. and W main St stations)</dt>
+<dd>
        you may be searching in a wrong region, reset it with <code>g.region swwake_30m -p</code>
-       </li>
-</li>
-</ul>
-<hr>
-<a name="terrain_modeling"></a>
-<P><B> Topic: Terrain modeling</B></P>
-<UL>
-   <LI><i>is 2m or 6m resolution more suitable for DEM from the given lidar data?</i><br>
+
+</dl>
+
+
+<h3 id="terrain_modeling">Terrain modeling</h3>
+
+<dl class="qa">
+
+<dt>is 2m or 6m resolution more suitable for DEM from the given lidar data?</dt>
+<dd>
     if we are going to generate the DEM using binning, e.g. mean elevation for each cell,
     6m provides more complete coverage, but as the range map shows we lose some detail.
     2m resolution is not suitable for generating DEM by binning - the data are not dense enough.
     But if we interpolate (computationally more intensive task than binning)
     we will get a more detailed DEM.
-   <LI><i>I have problems with v.patch</i><br>
+
+<dt>I have problems with v.patch</dt>
+<dd>
    this is a known UAC related problem on Windows VISTA, you need to have UAC disabled, but
    it should work in the latest binaries
-   <LI>mr lidar points in ArcGIS shape geodatabase were missing Z value<br>
+
+<dt>mr lidar points in ArcGIS shape geodatabase were missing Z value
+<dd>
    new version of the geodatabase with Z-value added is available on the Assignments web site
-</UL>
-<P>
-<hr>
-<a name="interpolation_1"></a>
-<P><B>Topic: Spatial interpolation and approximation</b>
-<ul>
-<li><i>how to design an experiment to test IDW with different parameters?</i><br>
+
+</dl>
+
+
+<h3 id="interpolation_1">Spatial interpolation and approximation</h3>
+
+<dl class="qa">
+
+<dt>how to design an experiment to test IDW with different parameters?</dt>
+<dd>
 run the command with the suggested parameters and then compare the results 
 visually and statististically using hillshade, contours, univariate statistics
 and histograms. For example, you should be able to conclude that the lower 
@@ -221,18 +251,19 @@ the number of points, the rougher the surface
 The univariate statistics shows almost no difference
 illustrating the fact that summary statistics does not reveal subtle but
 significant differences in surface geometry.
-</li>
-</ul>
-<P>
-<hr>
-<a name="interpolation_2"></a>
-<P><B>Topic: Spatial interpolation and approximation: splines</b>
-<ul>
-<li><i> GRASS defines spline method as regularized spline with tension,
+
+</dl>
+
+
+<h3 id="interpolation_2">Spatial interpolation and approximation: splines</h3>
+
+<dl class="qa">
+
+<dt>GRASS defines spline method as regularized spline with tension,
 while ArcGIS defines spline method with two functions, regularized and tension.
 It seems the functions from these two software are different when both state
-it is a spline interpolation method.</i>
-<br>
+it is a spline interpolation method.</dt>
+<dd>
 There are many different spline interpolation methods based on what type
 of smoothness seminorm (also called roughness penalty) they minimize, see
 <a href=" http://skagit.meas.ncsu.edu/~helena/gmslab/papers/mitas_mitasova_1999_2005.pdf">
@@ -244,30 +275,34 @@ is thin plate spline with tension, not just thin plate spline).
 Regularized spline with tension is equivalent
 to completely regularized spline but the others are different.
 
-<li><i>Another confusion I have is radial basis functions.
+<dt>Another confusion I have is radial basis functions.
 Radial basis function methods are part of spline method?
 Or some are spline (thin-plate spline, spline with tension,
-and completely regularized spline), and some are not?</i>
-<br>
+and completely regularized spline), and some are not?</dt>
+<dd>
 Splines are a special type of radial basis function methods, multiquadrics is another group RBF methods.
 But there are also splines that are smoothly connected piecewise polynomials 
 that we have not covered at all (they are applied to meshes which are not very well supported in GIS).
 
-<li><i>And does spline with tension under radial basis functions create 
-the same results from spline interpolation with tension type?</i>
-<br>
+<dt>And does spline with tension under radial basis functions create
+the same results from spline interpolation with tension type?</dt>
+<dd>
 Spline with tension under radial basis functions and the one in Spatial Analyst are probably
 based on the same equations but the implementation may be different
 so unless it calls the same code, the results will be different
 ( e.g. the data are usually normalized to avoid numerical problems
 and each program does it differently, and the search for points may be different too - we
 covered that in the lecture.)
-</ul>
 
-<a name="terrain_analysis"></a>
-<P><B> Topic: Spatial and Temporal Terrain analysis </B></P>
-<UL>
-   <LI><i>In the time series analysis task my surfaces are fuzzy and the cutting plane does not work</i><br>
+</dl>
+
+
+<h3 id="terrain_analysis">Spatial and Temporal Terrain analysis</h3>
+
+<dl class="qa">
+
+<dt>In the time series analysis task my surfaces are fuzzy and the cutting plane does not work</dt>
+<dd>
 Make sure you set display to computational region and use fine resolution=1 in nviz. 
 When using cutting planes both surfaces should have their resolution set to same value (e.g. fine=1),
 use constant plane for reference (-1m for the coast) and set its resolution to fine=1 too.
@@ -275,24 +310,26 @@ When comparing two surfaces assign each of them different constant color
 and use top or bottom surface option to color the cutting plane. You can lower your light source
 and reduce its brightness to create contrast between the cross-section and the surface if you
 are coloring the cross-section using the top surface option.
-</UL>
+
+</dl>
+
 <!--
 <hr>
 <P><B>
 <a name="Solar"></a>
 Topic: Viewshed, solar potential analysis
-</B></P>
-<UL>
+</h3>
+<dl class="qa">
      <LI>compute viewshed area from a building on CC and from RBC tower, compare areas,
          find visible points of interest, optionally compare the results from SRTM and NED</li>
      <LI>compute cast shadows for a given area with a building for 3 different times
           on December 22 </li>
      <LI>compute summary radiation for summer and winter solstice days in a given area</li>
-</UL>
+</dl>
 <hr>
 <a name="Flow"></a>
-<P><B> Topic: Flow routing, watershed analysis</B></P>
-<UL>
+<h3 id>Flow routing, watershed analysis</b>
+<dl class="qa">
     <LI>compute streams and watersheds from NED 
         D8, SFD with least cost path routing and compare with official stream data</li>
     <LI>map DEM depressions and compare them with existing lakes</li>
@@ -301,12 +338,12 @@ Topic: Viewshed, solar potential analysis
     <LI>extract watershed boundaries for a given outlet</li>
     <LI>derive flowlines and flow path length using downslope and upslope flowtracing</li>
     <LI>compute flooded area from given seed point at given flood level</li>
-</UL>
+</dl>
 <hr>
 <a name="Hydro"></a>
-<P><B> Topic: Modeling Geospatial Processes: Hydrologic and erosion modeling
-</B></P>
-<P><B> Tasks: Compute wetness index, soil detachment and net erosion deposition maps</B></P>
+<h3 id>Modeling Geospatial Processes: Hydrologic and erosion modeling
+</h3>
+<P><B> Tasks: Compute wetness index, soil detachment and net erosion deposition maps</h3>
 <UL>
       <LI>compute wetness index 
       <LI>compute and compare erosion topographic factor based on hillslope length and on contributing area </LI>
