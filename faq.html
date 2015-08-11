@@ -6,7 +6,7 @@
 <dl class="qa">
 
 <dt>Should we list and provide information about all the files
-in each geodatabase, or a subset</dt>
+in each Location and geodatabase, or a subset?</dt>
 <dd>
 As the instructions for HW indicate you should be able
 to write the text of your report on 1 page (500 words), so rather than listing
@@ -15,7 +15,7 @@ that will characterize the data. For example,
 after looking at most of the data in the data set, are you able to generalize some
 common properties?  are all the data local? regional? do they have all same level of detail?
 do they represent natural or anthropogenic features? how are they georeferenced?
-The goal in this assignemnt is to ensure that the students understand the basic properties 
+The goal in this assignment is to ensure that the students understand the basic properties
 of digital geospatial data and can make general observations and conclusions based
 on broad range of specific technical information.
 The reports will get more meaningful for more complex
@@ -25,18 +25,18 @@ in the results sections focus on what is interesting in the data and the derived
 Put software issues, including fixes and suggestions for improvements into
 the discussion section.
 
-<dt>When I open GRASS, nc_spm_08 doesn't show up under "Project Locations,
-although it is downloaded and unzipped on my computer</dt>
+<dt>When I open GRASS, <code>nc_spm_08</code> doesn't show up under "Project Locations",
+although it is downloaded and unzipped on my computer.</dt>
 <dd>
-Make sure that when you unzip your nc_spm_08 is not hidden under another nc_spm_08.
-Some zip software tools create an extra directory by default, so you need to sepcify
+Make sure that when you unzip your <code>nc_spm_08</code> is not hidden under another <code>nc_spm_08</code>.
+Some zip software tools create an extra directory by default, so you need to specify
 that you do not want a new directory created.
-Otherwise you end up with C:\grassdata\nc_spm_08\nc_spm_08
-and if you then give grass path to GISdatabase as C:\grassdata 
-it still does not see the correct nc_spm_08 
-(it checks for the folder PERMANENT under nc_spm_08 
-to find out whether it is a valid LOCATION) and then it would not show up.
-To avoid future confusion, remove all nc_spm_08 folders and unzip nc_spm_08 again,
+Otherwise you end up with something like <code>C:\grassdata\nc_spm_08\nc_spm_08</code>
+and if you then give GRASS path to GRASS GIS database as <code>C:\grassdata</code>
+it still does not see the correct </code>nc_spm_08</code>
+(it checks for the folder <code>PERMANENT</code> under <code>nc_spm_08</code>
+to find out whether it is a valid GRASS Location) and then it would not show up.
+To avoid future confusion, remove all <code>nc_spm_08<code> folders and unzip <code>nc_spm_08</code> again,
 making sure that no extra directory is created.
 
 <dt>Is there a way to reorder the layers so that this information does not become hidden?</dt>
@@ -47,31 +47,34 @@ making sure that no extra directory is created.
 in State Plane coordinate system (datum:NAD83, projection:LCC)
 
 <dt>I expected the data concerning projections, coordinate systems,
-etc. to be presented in GRASS more like ArcGIS.
+etc. to be presented in GRASS GIS more like ArcGIS.
 <dd>
-in your LOCATION, everything is in the same coordinate system - you find the information
-by running g.proj -p.
+In your GRASS Location, everything is in the same coordinate system.
+You find the information about current Location by running <code>g.proj -p</code>.
 
-<dt>I did not get the GUI copy feature to work</dt>
-<dd>please be more specific! what did not work - did you get an error message?
-more detailed information helps to to improve the instructions or,
-if there is a bug we can file a bug report. (and you will learn how to
+<dt>I did not get the XY feature to work</dt>
+<dd>Please be more specific. What did not work? Did you get an error message?
+More detailed information helps to to improve the instructions or,
+if there is a bug we can file a bug report. (And you will learn how to
 prepare bug reports too!)
-You need to select the "from" file using the browser and type name of "to" file<br>
-raster files to be copied<br>
-geology_30m,mygeology
+
+<dt>I was not able to figure out how to create a copy of data in GRASS GIS</dt>
+In the <code>g.copy</code> dialog
+(which you get, e.g. by typing <code>g.copy</code> in <em>Command Console</em> and pressing Enter)
+Find the option (input field) for raster or vector, e.g. raster files to be copied.
+Then you need to select the "from" file using the browser and type name of "to" file.
 
 <dt>I am getting Error "mygeology" map layer already exists</dt>
 <dd>Give your output a new name or you can force overwrite by adding --o to your command
 (this applies to practically all GRASS commands). There is an equivalent overwrite
-button in each command's GUI.
+checkbox in each module's GUI.
 
 <dt>Image rendering in GRASS is slow
 <dd>
 check your region and make sure you have it set up as given in the instructions
 and then zoom to computational region - these are small data sets so they should
 be displayed instantly when added to the map layer.
-Also, do not keep large number of layers in GIS manager, start each assignment 
+Also, do not keep large number of layers in the <em>Layer Manager</em>, start each assignment
 with empty list and if you accumulate many layers (10+) remove those that you don't need.
 
 <dt>Do I have to use 3D views?</dt>
@@ -81,18 +84,22 @@ I can see that you can work with it. We will be using 3D views a lot.
 Save the nviz image as tiff file, make sure you have a tiff support installed
 on your computer, otherwise when you try to open the file, it will be black.
 
+<td>Should I include my name inside the report or to the filename?</td>
+<dd>
+Include your name on the first page of your report
+and see <a href="logistics.html">Course logistics</a> for filename conventions.
+
 </dl>
 
-<p>Please, include name on the first page of your report.</p>
 
 
 <h3 id="data_visualization">Data display and visualization</h3>
 
 <dl class="qa">
 
-<dt>not sure what setting the grid parameters "size=0:02" did</dt>
+<dt>I'm not sure what setting the grid parameters "size=0:02" did.</dt>
 <dd>
-it draws the lat/long grid - you should read the numbers along the image broder to find out.
+It draws the lat/long grid - you should read the numbers along the image broder to find out.
 Maps used to provide both x/y grid in meters and lat/long in degrees:min:sec so that
 both cartesian and geographic coordinates could be derived.
 
@@ -109,13 +116,16 @@ Environments > General Settings > Extent
 <h3 id="map_algebra">Global, zonal and focal operations, map algebra</h3>
 
 <dl class="qa">
-<dt>what is happening when region is set?</dt>
+<dt>What is happening when (computational) region is set?</dt>
 <dd>
-   it sets the spatial extent AND resolution at which all raster operations are done.
+   It sets the spatial extent AND resolution at which all raster operations are done.
    If any of the rasters has different resolution, it is quietly resampled using nearest neighbor.
-   It also defines the viewing area if the display is set to "zoom into computational region"
+   It also sets the viewing area of the <em>Map Display</em>
+   when the option <em>Zoom into computational region</em> is selected.
    It does not affect vector operations, so vector data need to be clipped if the operation
    is to be performed on a subset of the data.
+   However, some vector modules can work with the region when it is advantageous
+   or when rasters are involved.
 </li>
 
 <dt>what does the difference between SRTM and NED DEMs mean?</dt>
@@ -128,11 +138,11 @@ georeferenced to the same vertical datum.
 
 <dt>What is happening in the map algebra example with relative coordinates?
 <dd>
-SE corner is replaced
+South-east corner is replaced.
 
-<dt>how we got from the computer raster to the plane? How would I use it?</dt>
+<dt>How we got from the computer raster to the plane? How would I use it?</dt>
 <dd>
-We are computing an equation for a plane here: 
+We are computing an equation for a plane here:
 ax+by+cz+d=0 which we can rewrite as <br>
 z = -1/c (ax + by) - d/c
 and use it to model, for example, a geologic fault.
@@ -143,7 +153,7 @@ The correct values for NDVI range between (-0.957, 0.979) so
 when the decimals are simply cut-off the result is 0, when the numbers are rounded down to nearest 
 integer the result will be -1,0. Neither of them is correct.
 
-<dt>subsetting a raster using map algebra - what is happening?</dt>
+<dt>Subsetting a raster using map algebra - what is happening there?</dt>
 <dd>
 we set the spatial extent to orthophoto and resolution to 10m (that means that the 1m resolution
 of ortho is ignored). Then we compute a new raster by assigning it the same values
@@ -161,19 +171,21 @@ the original raster.
 <dt>Can I manually set region by drawing a rectangle on the map in display window?</dt>
 <dd>
        yes, zoom to the area of interest using the Zoom in button and drawing 
-       a rectangle and then click Zoom options > save display geometry to named region file, e.g. myregion.
-       You can then set your region to this using g.region myregion or 
-       by running Config > Region > Set Region > Set from named region > myregion.
+       a rectangle and then click <em>Zoom options > Save display geometry to named region file</em>, e.g. <code>myregion</code>.
+       You can then set your region to this using <code>g.region myregion</code> or
+       by running <em>Config > Region > Set Region > Set from named region > myregion</em>.
        Update for GRASS GIS 7: Find toolbar button 'Various zoom options' on Map Display toolbar,
        select 'Set computational region extent interactively' and then draw the rectangle.
 
-<dt>what the internal structure is of a GRASS raster, where is category list stored?
+<dt>What the internal structure is of a GRASS raster, where is category list stored?
 <dd>
-       we have talked about it in the first lecture, but you can find it here too <br>
-       http://grass.osgeo.org/grass64/manuals/html64_user/helptext.html <br>
+       We have talked about it in the first lecture, but you can find it in the
+       <a href="http://grass.osgeo.org/grass70/manuals/helptext.html">GRASS GIS manual</a>too.
+       If you are really interested you can look to the directories yourself.
+       You will see, for example that
        categories are under cats, color tables under colr, and history/metadata in /hist.
-       These are all asci files so they are readable and editable as plain text.
-       DO NOT edit these files unless you know what you are doing, you can corrupt your data,
+       These are all ASCII files so they are readable and editable as plain text.
+       Never, ever edit these files unless you know what you are doing, you can corrupt your data,
        use the relevant commands instead.
 
 <dt>I would have thought that I could have used the streets layer as a mask to contain
@@ -190,20 +202,20 @@ the original raster.
         Depending on where the firestation is located in relation to the roads, the two approaches
         may lead to different paths.
 
-<dt>coordinates of firestations are not stored in the attribute table, where do they come from?</dt>
+<dt>Coordinates of firestations are not stored in the attribute table. Where do they come from?</dt>
 <dd>
        v.out.ascii pulls them from the coor file that defines the geometry of each vector map
-       and combines them with attributes from the dbf table (or any other DBMS that you may use -
-       GRASS supports several)
+       and combines them with attributes from the SQLite table (or any other DBMS that you may use -
+       GRASS supports several).
 
-<dt>what are the friction values?</dt>
+<dt>What are the friction values?</dt>
 <dd>
        these are empirically selected values that measure how difficult it is to walk 
        through cells with different types of cover, they increase the cost to pass a grid cell.
 
-<dt> what is the best way to capture the min and max raster value in GRASS?</dt>
+<dt>What is the best way to get the min and max raster value in GRASS?</dt>
 <dd>
-       use <code>r.info -r</code>
+    Use <code>r.info -r</code>.
 
 <dt>In GRASS I don't get any firestations for the given condition CVLAG &lt; 0.1,
        I had to use CVLAG &lt; 0.5 and the stations that I got were far away
@@ -218,18 +230,13 @@ the original raster.
 
 <dl class="qa">
 
-<dt>is 2m or 6m resolution more suitable for DEM from the given lidar data?</dt>
+<dt>Is 2m or 6m resolution more suitable for DEM from the given lidar data?</dt>
 <dd>
     if we are going to generate the DEM using binning, e.g. mean elevation for each cell,
     6m provides more complete coverage, but as the range map shows we lose some detail.
     2m resolution is not suitable for generating DEM by binning - the data are not dense enough.
     But if we interpolate (computationally more intensive task than binning)
     we will get a more detailed DEM.
-
-<dt>I have problems with v.patch</dt>
-<dd>
-   this is a known UAC related problem on Windows VISTA, you need to have UAC disabled, but
-   it should work in the latest binaries
 
 <dt>mr lidar points in ArcGIS shape geodatabase were missing Z value
 <dd>
@@ -242,10 +249,10 @@ the original raster.
 
 <dl class="qa">
 
-<dt>how to design an experiment to test IDW with different parameters?</dt>
+<dt>How to design an experiment to test IDW with different parameters?</dt>
 <dd>
-run the command with the suggested parameters and then compare the results 
-visually and statististically using hillshade, contours, univariate statistics
+Run the command with the suggested parameters and then compare the results
+visually and statistically using shaded relief (hillshade), contours, univariate statistics
 and histograms. For example, you should be able to conclude that the lower 
 the number of points, the rougher the surface
 The univariate statistics shows almost no difference
@@ -301,7 +308,7 @@ covered that in the lecture.)
 
 <dl class="qa">
 
-<dt>In the time series analysis task my surfaces are fuzzy and the cutting plane does not work</dt>
+<dt>In the time series analysis task my surfaces are fuzzy and the cutting plane does not work.</dt>
 <dd>
 Make sure you set display to computational region and use fine resolution=1 in nviz. 
 When using cutting planes both surfaces should have their resolution set to same value (e.g. fine=1),

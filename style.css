@@ -332,3 +332,10 @@ hr {
     padding-top: 0.4em;
     padding-bottom: 0.4em;
 }
+
+/* FAQ or other Q&As */
+
+.qa dt {
+    font-weight: normal;
+    font-style: italic;
+}
