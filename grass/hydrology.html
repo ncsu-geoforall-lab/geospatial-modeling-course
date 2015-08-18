@@ -94,7 +94,7 @@ g.region raster=elevation -p
 r.fill.dir input=elevation output=elev_fill1 direction=dir1 areas=unres1
 r.fill.dir input=elev_fill1 output=elev_fill2 direction=dir2 areas=unres2
 r.fill.dir input=elev_fill2 output=elev_fill3 direction=dir3 areas=unres3
-r.mapcalc "depr_bin = if((elevation-elev_fill3) < 0., 1, null())"
+r.mapcalc "depr_bin = if((elevation-elev_fill3) &lt; 0., 1, null())"
 </code></pre>
 
 <p>
@@ -263,8 +263,8 @@ d.rast flood3
 <font color="#000066">
 r.lake elev_lid792_1m wl=115.0 lake=flood2 seed=flood1
 d.rast flood2
-#----------optional----------------------------------------
-# display seed, overlay flow accumulation from r.watershed </font>
+# optional
+# display seed, overlay flow accumulation from r.watershed </font> -->
 <!--
 echo "638728 220278 1" | v.in.ascii out=lakeseed fs=space
 d.vect lakeseed
@@ -286,7 +286,7 @@ g.region raster=elev_lid792_1m -p
 r.terraflow elev_lid792_1m fill=elev_lidfilled_1m   \
             dir=dir_terrafl_1m swater=swatershed_1m \
             accum=accumterra_1m tci=tci_1m
-<!-- d.erase -->
+d.erase
 d.rast swatershed_1m
 d.rast accumterra_1m
 d.rast tci_1m

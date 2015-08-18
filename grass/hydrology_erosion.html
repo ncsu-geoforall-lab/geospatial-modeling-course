@@ -53,7 +53,7 @@ g.region swwake_10m -p
 r.watershed -s elevation thresh=50000 accum=flowaccum_10m length=lsfac2d
 r.colors lsfac2dfp co=gyr -e
 # <b>erase and zoom display to computational region</b>
-<!-- d.erase -->
+d.erase
 d.rast lsfac2dfp
 d.legend lsfac2dfp at=2,50,2,6
 d.out.file lsfac2d
