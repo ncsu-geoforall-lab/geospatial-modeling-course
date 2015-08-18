@@ -105,7 +105,7 @@ d.out.file slope_int
 # display gradient vector
 # in GUI GIS Manager click the icon with arrows
 </font>
-<!-- d.erase -->
+d.erase
 d.rast elevation
 d.zoom
 d.rast.arrow aspect arrow_col=blue magnitude=slope scale=2 -->
@@ -229,7 +229,7 @@ nviz NH_9908_min,NH_9908_max
 g.region rural_1m res=2 -p
 v.surf.rst elev_lid792_cont1m zcol=level dmin=3 npmin=250 \
   el=elev_rstcontd_2mt slo=slp_rstcontd_2m pc=pc_rstcontd_2m
-<!-- d.erase -->
+d.erase
 d.rast slp_rstcontd_2m
 d.rast pc_rstcontd_2m
 d.vect elev_lid792_cont1m
@@ -250,7 +250,7 @@ d.rast tc_rstct10_2m
 # set MASK to facility map and find min elevation
 </font>
 g.region rural_1m -p
-<!-- d.erase -->
+d.erase
 d.rast ortho_2001_t792_1m
 d.rast facility
 r.mask facility
