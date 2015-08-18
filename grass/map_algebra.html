@@ -27,9 +27,9 @@ Text files with color rules:
 
 <h3>Start GRASS GIS</h3>
 In startup pannel set <b>GIS Data Directory</b> to path to datasets,
-for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.
+for example on MS Windows, <code>C:\Users\myname\grassdata</code>.
 For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
-for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_4) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. HW_map_algebra) and
 click <b>Start GRASS</b>.
 
 <pre><code>
@@ -39,7 +39,7 @@ grass70
 <p>
 Change working directory:<br>
 <em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
-or type <tt>cd</tt> (stands for change directory) into the GUI command console and hit Enter:
+or type <code>cd</code> (stands for change directory) into the GUI command console and hit Enter:
 <pre><code>
 cd
 </code></pre>
@@ -318,7 +318,7 @@ g.region raster=elevation -p
 <!-- d.erase -->
 d.rast elevation
 d.rast landuse96_28m
-r.mapcalc "low_elev_developed = if((elevation < 100 &amp;&amp; elevation > 60) &amp;&amp; (landuse96_28m == 1 || landuse96_28m == 2),1,null())"
+r.mapcalc "low_elev_developed = if((elevation &lt; 100 &amp;&amp; elevation > 60) &amp;&amp; (landuse96_28m == 1 || landuse96_28m == 2),1,null())"
 r.mask raster=low_elev_developed
 </code></pre>
 Command r.mask creates a raster map "MASK" in your mapset.
@@ -347,7 +347,7 @@ Replace section of SRTM DSM with NED DEM elevation.<br>
 <span class="question">Try to explain how this r.mapcalc expression works.</span>
 
 <pre><code>
-r.mapcalc "elev_combined = if(y() < 224274. &amp;&amp; x() > 637455., elevation, elev_srtm_30m)"
+r.mapcalc "elev_combined = if(y() &lt; 224274. &amp;&amp; x() > 637455., elevation, elev_srtm_30m)"
 </code></pre>
 
 <h4>Tilted plane</h4>
@@ -356,7 +356,7 @@ Create a raster map representing tilted plane (e.g., geologic fault):
 <pre><code>
 g.region rural_1m -p
 r.mapcalc "tiltplane = 0.2*(0.1*row()+col())+50"
-r.mapcalc "tiltpl_under = if(tiltplane < elev_lid792_1m + 2,tiltplane,null())"
+r.mapcalc "tiltpl_under = if(tiltplane &lt; elev_lid792_1m + 2,tiltplane,null())"
 </code></pre>
 
 <p>

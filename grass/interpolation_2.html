@@ -25,15 +25,15 @@ grass70
 
 <p>
 In startup pannel set <b>GIS Data Directory</b> to path to datasets,
-for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.<br>
+for example on MS Windows, <code>C:\Users\myname\grassdata</code>.<br>
 For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
-for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_7).<br>
+for <b>Accessible mapset</b> create a new mapset (called e.g. HW_interpolation_2).<br>
 Click <b>Start GRASS</b>.
 
 <p>
 Change working directory:<br>
 <em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
-or type <tt>cd</tt> (stands for change directory) into the GUI command console and hit Enter:
+or type <code>cd</code> (stands for change directory) into the GUI command console and hit Enter:
 <pre><code>
 cd
 </code></pre>
@@ -155,7 +155,7 @@ p. 247
 </font>
 g.region rural_1m res=2 -p
 v.surf.rst elev_lid792_cont1m elev=elev_rstcontd_2m zcol=level aspect=asp_rstcontd_2m dmin=3
-<!-- d.erase -->
+d.erase
 d.rast elev_rstcontd_2m
 <font color="#000066">
 # to compare the results,

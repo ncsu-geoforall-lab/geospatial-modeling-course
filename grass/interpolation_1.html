@@ -17,9 +17,9 @@ grass70
 
 <p>
 In startup pannel set <b>GIS Data Directory</b> to path to datasets,
-for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.<br>
+for example on MS Windows, <code>C:\Users\myname\grassdata</code>.<br>
 For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
-for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_6).<br>
+for <b>Accessible mapset</b> create a new mapset (called e.g. HW_interpolation_1).<br>
 Click <b>Start GRASS</b>.
 
 <!-- p. 232<br> -->
@@ -117,7 +117,7 @@ nviz el_rcont
 # in the report, discuss the geometry of the resulting surface
 # when compared with voronoi polygons generated from random points
 </font>
-g.region rural_1m res=20 -p
+g.region rural_1m res=20 -p -->
 <!-- d.erase -->
 r.contour el_D792_6m out=elev_cont_3m step=3m min=103
 v.to.points elev_cont_3m out=elev_cont_3mpts use=vertex

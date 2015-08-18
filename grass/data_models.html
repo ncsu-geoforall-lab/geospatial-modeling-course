@@ -9,16 +9,6 @@ and <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">tutorial</a>
 how to use wxGUI from the first assignment</li>
 </ul>
 
-<p>For Windows users: When showing legend, make sure the numbers are displayed.
-If not, please go through the following steps:
-<ol>
-<li>In Layer Manager toolbar find <em>Settings</em> -> <em>Map Display</em> tab</li>
-<li><em>Set font</em> -> select font (e.g. arial)</li>
-<li>Click on <em>Save</em> to save settings</li>
-<li>Click on <em>Render map</em> (second button in Map Display toolbar)
-and legend numbers  should appear.</li>
-</ol>
-
 <h3>Start GRASS GIS</h3>
 Start GRASS - click on GRASS icon or type<br>
 
@@ -28,9 +18,9 @@ grass70
 
 <p>
 In startup pannel set <b>GIS Data Directory</b> to path to datasets,
-for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.<br>
+for example on MS Windows, <code>C:\Users\myname\grassdata</code>.<br>
 For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
-for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_2).<br>
+for <b>Accessible mapset</b> create a new mapset (called e.g. HW_data_models).<br>
 Click <b>Start GRASS</b>.
 <p>
 If you prefer to work in GUI, you should be able to find out yourself
@@ -61,7 +51,7 @@ g.region region=swwake_30m -p
 </code></pre>
 
 <p>
-The <tt>-p</tt> flag for <em>g.region</em> is used to print the region
+The <code>-p</code> flag for <em>g.region</em> is used to print the region
 we just set.
 
 <p>

@@ -39,31 +39,31 @@ and command line interface (CLI):
 <!--<br><i>Older, but may be still useful:</i><a href="http://courses.ncsu.edu/mea582/common/media/02/getting_started_GUI_1.mov"> Getting started, video (36MB)</a>, the screen capture is done on Mac with GRASS6.4.1RC1.-->
 <p>
 Instructions for both
-<b><a href="http://grass.osgeo.org/grass70/manuals/wxGUI.html">wxGUI</a></font></b>
+<b><a href="http://grass.osgeo.org/grass70/manuals/wxGUI.html">wxGUI</a></b>
 and command line approach are provided in the introductory assignments,
 but the instructions will be mostly command line later on.
 Feel free to use the approach that suits you the best.
-For a quick reference, here are the wxGUI equivalents for the d.* commands:</font>
+For a quick reference, here are the wxGUI equivalents for the d.* commands:
 
 <p>
 In GRASS GIS Layer Manager
 <ul>
-    <li>d.rast: <font color="#000066">Add raster map layer</font>
-    <li>d.vect: <font color="#000066">Add vector map layer</font>
-    <li>d.shade: <font color="#000066">Add various raster map layers > Add shaded relief map</font>
+    <li>d.rast: <em>Add raster map layer</em>
+    <li>d.vect: <em>Add vector map layer</em>
+    <li>d.shade: <em>Add various raster map layers > Add shaded relief map</em>
 </ul>
 In GRASS GIS Map Display
 <ul>
 <!--
- <li>d.what.rast: <font color="#000066">Query raster map</font>
- <li>d.what.vect: <font color="#000066">Query vector map</font>
+ <li>d.what.rast: <em>Query raster map</em>
+ <li>d.what.vect: <em>Query vector map</em>
 -->
- <li>d.zoom: <font color="#000066"> Zoom options</font>
- <!--<li>d.erase: <font color="#000066">Remove all previous layers</font>-->
- <li>d.out.file: <font color="#000066">Save display to graphic file</font>
- <li>d.barscale: <font color="#000066">Add map elements > Show/hide scale bar</font>
- <li>d.legend: <font color="#000066">Add map elements > Show/hide legend</font>
- <li>d.northarrow: <font color="#000066">Add map elements > Show/hide north arrow</font>
+ <li>d.zoom: <em> Zoom options</em>
+ <!--<li>d.erase: <em>Remove all previous layers</em>-->
+ <li>d.out.file: <em>Save display to graphic file</em>
+ <li>d.barscale: <em>Add map elements > Show/hide scale bar</em>
+ <li>d.legend: <em>Add map elements > Show/hide legend</em>
+ <li>d.northarrow: <em>Add map elements > Show/hide north arrow</em>
 </ul>
 <i>
 The d.* commands throughout the assignments indicate which map layers should be included
@@ -106,9 +106,9 @@ grass70
 
 <p>
 In startup pannel set <b>GIS Data Directory</b> to path to datasets,
-for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.
+for example on MS Windows, <code>C:\Users\myname\grassdata</code>.
 For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
-for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_1) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. <code>HW_data_acquisition</code>) and
 click <b>Start GRASS</b>.
 
 <h3>Display data in 2D</h3>
@@ -146,11 +146,10 @@ Under <em>Optional</em> tab set <em>Percent to brighten</em> to 30 > OK.
 Command line equivalent: paste into Command console and Enter:
 
 <pre><code>
-d.shade reliefmap=elevation_shade drapemap=elevation brighten=30
+d.shade shade=elevation_shade color=elevation brighten=30
 </code></pre>
 Note: depending on your installed GRASS version, the names of the d.shade
 module can be different. Open the d.shade dialog to find the correct options.
-<!-- d.shade shade=elevation_shade color=elevation brighten=30 -->
 
 
 <p>

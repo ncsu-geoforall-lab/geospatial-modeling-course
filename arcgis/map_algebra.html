@@ -265,6 +265,6 @@ Select ncrast.mdb/elev   (this layer may already be present in your project)
 Open the ArcToolbox (if not already open)
 select 'Spatial Analyst->Map Algebra->Raster Calculator'
 Type in the expression: 
-SetNull( (("elev" < 100) &amp; ("elev" > 60)) &amp; (("landcl96" == 1) | ("landcl96" == 2)), 1)  
+SetNull( (("elev" &lt; 100) &amp; ("elev" > 60)) &amp; (("landcl96" == 1) | ("landcl96" == 2)), 1)
 Set output raster to 'mask'
 </pre>

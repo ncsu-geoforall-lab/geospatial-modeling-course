@@ -24,9 +24,9 @@ Text files with recode rules and color rules:
 
 <h3>Start GRASS GIS</h3>
 In startup pannel set <b>GIS Data Directory</b> to path to datasets,
-for example on MS Windows, <tt>C:\Users\myname\grassdata</tt>.
+for example on MS Windows, <code>C:\Users\myname\grassdata</code>.
 For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
-for <b>Accessible mapset</b> create a new mapset (called e.g. assignment_12) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. HW_erosion) and
 click <b>Start GRASS</b>.
 
 <pre><code>
@@ -36,7 +36,7 @@ grass70
 <p>
 Change working directory:<br>
 <em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
-or type <tt>cd</tt> (stands for change directory) into the GUI command console and hit Enter:
+or type <code>cd</code> (stands for change directory) into the GUI command console and hit Enter:
 <pre><code>
 cd
 </code></pre>
@@ -53,7 +53,7 @@ g.region swwake_10m -p
 r.watershed -s elevation thresh=50000 accum=flowaccum_10m length=lsfac2d
 r.colors lsfac2dfp co=gyr -e
 # <b>erase and zoom display to computational region</b>
-<!-- d.erase -->
+d.erase
 d.rast lsfac2dfp
 d.legend lsfac2dfp at=2,50,2,6
 d.out.file lsfac2d
