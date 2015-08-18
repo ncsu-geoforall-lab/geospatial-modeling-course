@@ -1,0 +1,255 @@
+% Assignment report LaTeX template
+% for class Geospatial Modeling and Analysis
+% GIS/MEA582-601 Spring 2014
+
+
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+% comment the following line when compiling the real document (it causes demo mode where images are black)
+\usepackage[demo]{graphicx}
+% uncomment the following line when compiling the real document
+% \usepackage{graphicx}
+\usepackage[colorlinks=false]{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{mdwlist}
+\usepackage{booktabs}
+\usepackage[american]{babel}
+\usepackage{csquotes}
+\usepackage{textcomp}
+
+\usepackage[left=1in, right=1in]{geometry}
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\newcommand{\gmodule}[1]{\href{http://grass.osgeo.org/grass70/manuals/html70_user/#1.html}{\emph{#1}}}
+\newcommand{\asixmodule}[1]{\emph{#1}}
+\newcommand{\asevenmodule}[1]{\emph{#1}}
+\newcommand{\module}[1]{\emph{#1}}
+\newcommand{\grasslink}{\href{http://grass.osgeo.org/}{GRASS GIS}}
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\newcommand{\authorName}{Your Name}
+\newcommand{\classSemestr}{Spring 2014}
+\newcommand{\classId}{GIS/MEA582-601}
+\newcommand{\className}{Geospatial Modeling and Analysis}
+\newcommand{\classWeb}{\url{http://courses.ncsu.edu/mea582/common/GIS_anal_assign/GIS_Anal_Assignall.html}}
+\newcommand{\assignmentTopic}{Assignment report \LaTeX{} template}
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+
+% % fancyhdr
+% % accoding to http://en.wikibooks.org/wiki/LaTeX/Page_Layout#Customising_with_fancyhdr
+\usepackage{fancyhdr}
+\setlength{\headheight}{15.2pt}
+% 
+% % default fancy page style
+\fancyhf{}
+\fancyhead[R]{\textit{\classId, \classSemestr, \authorName}}
+
+\fancyfoot[R]{\thepage}
+% 
+% % plain affects chapter first page
+\fancypagestyle{plain}{
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+}
+% 
+\title{\classId, \classSemestr \\ \className \\ \assignmentTopic}
+\author{\authorName}
+\date{\today}
+% 
+% 
+\hypersetup{
+    pdftitle={\assignmentTopic},
+    pdfsubject={\classId, \className, \classSemestr},
+    pdfauthor={\authorName},
+    pdfkeywords={GIS} {GRASS} {GRASS GIS} {open source}
+                {free and open source} {ArcGIS} {ArcMap} {ESRI},
+}
+
+
+
+
+% rules for floats
+% setting rules which are much less strict than default
+
+% general parameters for all pages
+\renewcommand{\topfraction}{0.9}    % max fraction of floats at top
+\renewcommand{\bottomfraction}{0.8} % max fraction of floats at bottom
+
+% parameters for text pages
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}  % 2 may work better
+\setcounter{dbltopnumber}{2}  % for 2-column pages
+\renewcommand{\dbltopfraction}{0.9}  % fit big float above 2-col. text
+\renewcommand{\textfraction}{0.07}  % allow minimal text w. figs
+
+% parameters for float pages (pages without text)
+\renewcommand{\floatpagefraction}{0.9} % require fuller float pages
+% note that floatpagefraction must be less than topfraction
+\renewcommand{\dblfloatpagefraction}{0.7}  % require fuller float pages
+% remember to use [htp] or [htpb] for placement
+% if you want all rules to apply
+
+
+% image size commands
+\newcommand{\oneimgwidth}{0.7\textwidth}
+\newcommand{\twoimgwidth}{0.45\textwidth}
+\newcommand{\threeimgwidth}{0.3\textwidth}
+\newcommand{\twobytwoimgwidth}{0.4\textwidth}
+
+
+\begin{document}
+
+
+\maketitle
+\noindent
+\rule{\textwidth}{1.5pt}
+
+% will not show header for the fist page but that's actually what we want now
+\pagestyle{fancy}
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\section*{Introduction}
+
+Task, motivation
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\section*{Approach}
+
+We list the raster and vector data using the layer management tools and display
+the selected layers at appropriate spatial extent and resolution.
+We set the spatial extent for our study area and define resolution at 30m\ldots\ and
+display raster and vector data using the default color maps and basic line symbols.
+We use the metadata information stored with each map layer to identify
+the original raster data resolution, spatial extent and range of values\ldots
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\section*{Results}
+
+The data set includes raster and vector data layers for North Carolina
+at several spatial extents and resolutions\ldots
+
+The elevation and road map for the study area is in the Fig. 1\ldots\ The state wide DEM
+and climate data points are in Fig. 10\ldots \emph{(See the page \pageref{fig:figure-internal-label} and further
+for suggestion on how to arrange your figures. Two images in row are usually the right choice,
+e.g. figure \ref{fig:twotwo})}
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\section*{Discussion}
+
+Displaying the data in both systems was straightforward. The default color table
+for the elevation data was fuzzy, classification into fewer discrete classes
+in ArcGIS or conversion to integers brings out the contours (choropleths?).
+More detailed representation was achieved by relief shading.
+I could get GRASS to display points using the circle symbol --- I was getting the following error.
+It was impossible to find where to set the resolution when displaying the elevation data in ArcGIS\ldots
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\section*{What I learned}
+
+I got familiar with ArcGIS basics, and with the data set. I already GRASS GIS know pretty well\ldots
+
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% figures
+\newcommand{\figuresPath}{../figures}
+% ../figures counts with directory layout:
+% - hw1
+%    - figures
+%    - report
+% the other posibilities are ./figures (tex file in the same directory as figures directory)
+% and . (tex file and all figures in the same directory)
+% command should be used for all image paths to ensure consistecy
+% however, hardcoding of the path is possible as well
+
+% templates to include figures
+% uncomment lines with caption and label to add/exclude caption (text) or label (figure reference)
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\oneimgwidth]{\figuresPath/picture_name}
+  \caption{Image description}
+  \label{fig:figure-internal-label}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[b]{\twoimgwidth}
+    \includegraphics[width=\textwidth]{\figuresPath/picture_name}
+    \caption{Left figure}
+%     \label{fig:}
+  \end{subfigure}%
+  ~ % ~, \quad, \qquad etc. or \\
+  \begin{subfigure}[b]{\twoimgwidth}
+    \includegraphics[width=\textwidth]{../figures/picture_name}
+    \caption{Right figure}
+%     \label{fig:}
+  \end{subfigure}
+  \caption{Main figure description}
+  \label{fig:twotwo}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[b]{\twobytwoimgwidth}
+    \includegraphics[width=\textwidth]{}
+    \caption{}
+%     \label{fig:}
+  \end{subfigure}%
+  ~ % ~, \quad, \qquad etc. or \\
+  \begin{subfigure}[b]{\twobytwoimgwidth}
+    \includegraphics[width=\textwidth]{}
+    \caption{}
+%     \label{fig:}
+  \end{subfigure}
+  \\[0.01\textheight]
+    \begin{subfigure}[b]{\twobytwoimgwidth}
+    \includegraphics[width=\textwidth]{}
+    \caption{}
+%     \label{fig:}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[b]{\twobytwoimgwidth}
+    \includegraphics[width=\textwidth]{}
+    \caption{}
+%     \label{fig:}
+  \end{subfigure}%
+  \caption{}
+%   \label{fig:}
+\end{figure}
+
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[b]{\threeimgwidth}
+    \includegraphics[width=\textwidth]{}
+    \caption{left}
+%     \label{fig:}
+  \end{subfigure}%
+  ~ % ~, \quad, \qquad etc. or \\
+    \begin{subfigure}[b]{\threeimgwidth}
+    \includegraphics[width=\textwidth]{}
+    \caption{middle}
+%     \label{fig:}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[b]{\threeimgwidth}
+    \includegraphics[width=\textwidth]{}
+    \caption{right}
+%     \label{fig:}
+  \end{subfigure}%
+%   \caption{}
+%   \label{fig:}
+\end{figure}
+
+
+\end{document}
