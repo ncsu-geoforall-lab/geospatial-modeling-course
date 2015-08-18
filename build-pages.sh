@@ -76,7 +76,7 @@ for DIR in resources
 do
     mkdir -p $OUTDIR/$DIR
 
-    for FILE in `ls $DIR/*.pdf $DIR/*.docx`
+    for FILE in `ls $DIR/*.pdf $DIR/*.docx $DIR/*.tex`
     do
         cp $FILE $OUTDIR/$DIR
     done
