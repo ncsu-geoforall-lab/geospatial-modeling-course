@@ -21,7 +21,7 @@
 \usepackage[left=1in, right=1in]{geometry}
 
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\gmodule}[1]{\href{http://grass.osgeo.org/grass70/manuals/html70_user/#1.html}{\emph{#1}}}
 \newcommand{\asixmodule}[1]{\emph{#1}}
 \newcommand{\asevenmodule}[1]{\emph{#1}}
@@ -29,14 +29,14 @@
 \newcommand{\grasslink}{\href{http://grass.osgeo.org/}{GRASS GIS}}
 
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\authorName}{Your Name}
-\newcommand{\classSemestr}{Spring 2014}
+\newcommand{\classSemestr}{Fall 2015}
 \newcommand{\classId}{GIS/MEA582-601}
 \newcommand{\className}{Geospatial Modeling and Analysis}
 \newcommand{\classWeb}{\url{http://courses.ncsu.edu/mea582/common/GIS_anal_assign/GIS_Anal_Assignall.html}}
 \newcommand{\assignmentTopic}{Assignment report \LaTeX{} template}
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 % % fancyhdr
@@ -102,7 +102,13 @@
 \newcommand{\threeimgwidth}{0.3\textwidth}
 \newcommand{\twobytwoimgwidth}{0.4\textwidth}
 
+% when images are placed in these directories, we don't have to specify the directory
+% just the filename
+\graphicspath{{img/}{figures/}{images/}}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
 
@@ -114,12 +120,12 @@
 \pagestyle{fancy}
 
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Introduction}
 
-Task, motivation
+Task, motivation. Do not use the text from this example, it is for formatting only!
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Approach}
 
 We list the raster and vector data using the layer management tools and display
@@ -130,19 +136,77 @@ We use the metadata information stored with each map layer to identify
 the original raster data resolution, spatial extent and range of values\ldots
 
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Results}
 
-The data set includes raster and vector data layers for North Carolina
+The data set includes raster and vector data layers for North Carolina (\ref{fig:afigure})
 at several spatial extents and resolutions\ldots
+
+% templates to include figures
+% uncomment lines with caption and label to add/exclude caption (text) or label (figure reference)
+% sizes are predifined in the preamble (before \begin{document}) but can be changed
+% filename can be without directory when it is in the directories specfied in the preamble
+% filename's extension can be ommited for .png, .jpg and .pdf
+% don't forget to replace \usepackage[demo]{graphicx} by \usepackage{graphicx}
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[b]{\twobytwoimgwidth}
+    \includegraphics[width=\textwidth]{filename}
+    \caption{}
+%     \label{fig:afigure}
+  \end{subfigure}%
+  ~ % ~, \quad, \qquad etc. or \\
+  \begin{subfigure}[b]{\twobytwoimgwidth}
+    \includegraphics[width=\textwidth]{filename}
+    \caption{}
+%     \label{fig:}
+  \end{subfigure}
+  \\[0.01\textheight]
+    \begin{subfigure}[b]{\twobytwoimgwidth}
+    \includegraphics[width=\textwidth]{filename}
+    \caption{}
+%     \label{fig:}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[b]{\twobytwoimgwidth}
+    \includegraphics[width=\textwidth]{filename}
+    \caption{}
+%     \label{fig:}
+  \end{subfigure}%
+  \caption{A figure with four subfigures (images).
+    Note that the black boxes are coming from the demo mode of graphicx package
+    and should be disabled for the actual report}
+  \label{fig:afigure}
+\end{figure}
 
 The elevation and road map for the study area is in the Fig. 1\ldots\ The state wide DEM
 and climate data points are in Fig. 10\ldots \emph{(See the page \pageref{fig:figure-internal-label} and further
 for suggestion on how to arrange your figures. Two images in row are usually the right choice,
 e.g. figure \ref{fig:twotwo})}
 
+We set the computational region to match the raster elevation
+\emph{(When showing textual output of a module, use environment verbatim which uses monospace font)}:
+\begin{verbatim}
+projection: 99 (Lambert Conformal Conic)
+zone:       0
+datum:      nad83
+ellipsoid:  a=6378137 es=0.006694380022900787
+north:      734132.59185159
+south:      731672.4061379
+west:       2092185.68036389
+east:       2094646.84229405
+nsres:      6.00045296
+ewres:      6.00283398
+rows:       410
+cols:       410
+cells:      168100
+\end{verbatim}
+For emphasis use \verb|\emph{...}| command and for short text which should be shown
+verbatim in monospace font use command \verb|\verb+...+| or \verb+\verb|...|+.
+Remove \verb|[demo]| from the \verb|\usepackage[demo]{graphicx}| command
+to make the actual images show.
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Discussion}
 
 Displaying the data in both systems was straightforward. The default color table
@@ -153,30 +217,17 @@ I could get GRASS to display points using the circle symbol --- I was getting th
 It was impossible to find where to set the resolution when displaying the elevation data in ArcGIS\ldots
 
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{What I learned}
 
-I got familiar with ArcGIS basics, and with the data set. I already GRASS GIS know pretty well\ldots
+I got familiar with GRASS basics and with the data set.
+I learned how to identify the resolution of my raster data in ArcGIS
+and that it can be different from the resolution of the displayed raster.
 
-
-
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-% figures
-\newcommand{\figuresPath}{../figures}
-% ../figures counts with directory layout:
-% - hw1
-%    - figures
-%    - report
-% the other posibilities are ./figures (tex file in the same directory as figures directory)
-% and . (tex file and all figures in the same directory)
-% command should be used for all image paths to ensure consistecy
-% however, hardcoding of the path is possible as well
-
-% templates to include figures
-% uncomment lines with caption and label to add/exclude caption (text) or label (figure reference)
+% more templates to include figures
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\oneimgwidth]{\figuresPath/picture_name}
+  \includegraphics[width=\oneimgwidth]{filename}
   \caption{Image description}
   \label{fig:figure-internal-label}
 \end{figure}
@@ -184,72 +235,18 @@ I got familiar with ArcGIS basics, and with the data set. I already GRASS GIS kn
 \begin{figure}[htbp]
   \centering
   \begin{subfigure}[b]{\twoimgwidth}
-    \includegraphics[width=\textwidth]{\figuresPath/picture_name}
+    \includegraphics[width=\textwidth]{filename}
     \caption{Left figure}
 %     \label{fig:}
   \end{subfigure}%
   ~ % ~, \quad, \qquad etc. or \\
   \begin{subfigure}[b]{\twoimgwidth}
-    \includegraphics[width=\textwidth]{../figures/picture_name}
+    \includegraphics[width=\textwidth]{filename}
     \caption{Right figure}
 %     \label{fig:}
   \end{subfigure}
   \caption{Main figure description}
   \label{fig:twotwo}
 \end{figure}
-
-\begin{figure}[htbp]
-  \centering
-  \begin{subfigure}[b]{\twobytwoimgwidth}
-    \includegraphics[width=\textwidth]{}
-    \caption{}
-%     \label{fig:}
-  \end{subfigure}%
-  ~ % ~, \quad, \qquad etc. or \\
-  \begin{subfigure}[b]{\twobytwoimgwidth}
-    \includegraphics[width=\textwidth]{}
-    \caption{}
-%     \label{fig:}
-  \end{subfigure}
-  \\[0.01\textheight]
-    \begin{subfigure}[b]{\twobytwoimgwidth}
-    \includegraphics[width=\textwidth]{}
-    \caption{}
-%     \label{fig:}
-  \end{subfigure}
-  ~
-  \begin{subfigure}[b]{\twobytwoimgwidth}
-    \includegraphics[width=\textwidth]{}
-    \caption{}
-%     \label{fig:}
-  \end{subfigure}%
-  \caption{}
-%   \label{fig:}
-\end{figure}
-
-
-\begin{figure}[htbp]
-  \centering
-  \begin{subfigure}[b]{\threeimgwidth}
-    \includegraphics[width=\textwidth]{}
-    \caption{left}
-%     \label{fig:}
-  \end{subfigure}%
-  ~ % ~, \quad, \qquad etc. or \\
-    \begin{subfigure}[b]{\threeimgwidth}
-    \includegraphics[width=\textwidth]{}
-    \caption{middle}
-%     \label{fig:}
-  \end{subfigure}
-  ~
-  \begin{subfigure}[b]{\threeimgwidth}
-    \includegraphics[width=\textwidth]{}
-    \caption{right}
-%     \label{fig:}
-  \end{subfigure}%
-%   \caption{}
-%   \label{fig:}
-\end{figure}
-
 
 \end{document}
