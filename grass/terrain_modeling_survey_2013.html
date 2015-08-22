@@ -5,9 +5,9 @@ GRASS GIS overview and manual</a>,
 <a href="http://liblas.org/"> libLAS tools for lidar data conversions</a>
 
 <p>
-Download the Raleigh 2013 lidar data as plain text files (x,y,z):
+Download the Raleigh 2013 lidar data as LAS file and orthophoto:
 <ul>
-<li><a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016_first_ground_txt_ncspm.zip">zipped 0793_016_first.txt (first return) and 0793_016_ground.txt (bare earth) files</a><br></li>
+<li><a href="http://courses.ncsu.edu/mea582/common/media/data/tile_0793_016_spm.las">LAS tile 0793_016 in NC State Plane Meters </a></li>
 <li><a href="http://courses.ncsu.edu/mea582/common/media/01/ortho_0793_016_ncspm.zip">Orthophoto geotif (mosaic at 1ft resolution)</a></li>
 </ul>
 
@@ -39,24 +39,32 @@ without the need to specify the full path to the file.
 
 <!-- p. 249<br> -->
 <h3>Analyze bare earth and multiple return lidar data properties by binning</h3>
-Import the points.
-Set the region from the imported point file with resolution of 1 meter:
+Import the points using v.in.lidar.
+We can specify which class and which return (first, middle, last) we want to import.<br>
+We can see the classification either in metadata distributed with the lidar data
+or it can be displayed with <a href="http://liblas.org/">lasinfo</a> tool (in case lasinfo command is not available, skip it.):
+<pre><code>
+lasinfo tile_0793_016_spm.las
+</code></pre>
+Class 2 represents bare earth points.<br>
+Now we import bare earth points and first return points separately:
 
 <pre><code>
-v.in.ascii -zt input=0793_016ground.txt output=elev_lid793016_be z=3 separator=space
-v.in.ascii -zt input=0793_016first.txt output=elev_lid793016_1r z=3 separator=space
-g.region vect=elev_lid793016_1r res=1 -p
+v.in.lidar -t input=tile_0793_016_spm.las output=elev_lid793016_be class_filter=2
+v.in.lidar -t input=tile_0793_016_spm.las output=elev_lid793016_1r return_filter=first
 </code></pre>
 <p>
 Note: if you have any problems with the files, review the instructions above or
 use v.in.ascii GUI dialog to browse to get the path to the files.
 <p>
-Compute raster maps (with r.in.xyz) representing number of points per 1m grid cell.<br>
+Set the region from the imported point file with resolution of 1 meter.
+Compute raster maps (with r.in.lidar) representing number of points per 1 m grid cell.<br>
 Compare point densities for bare earth, first return.
 
 <pre><code>
-r.in.xyz input=0793_016ground.txt output=lid_be_binn1m method=n separator=space
-r.in.xyz input=0793_016first.txt output=lid_1r_binn1m method=n separator=space
+g.region vect=elev_lid793016_1r res=1 -p
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binn1m class_filter=2 method=n
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binn1m return_filter=first method=n
 r.colors lid_be_binn1m,lid_1r_binn1m color=bcyr -e
 d.rast lid_be_binn1m
 d.legend lid_be_binn1m at=2,50,2,9
@@ -73,8 +81,8 @@ Compute a raster map representing mean elevation for each 1m cell.<br>
 It will have holes.
 
 <pre><code>
-r.in.xyz input=0793_016ground.txt output=lid_be_binmean1m separator=space
-r.in.xyz input=0793_016first.txt output=lid_1r_binmean1m separator=space
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binmean1m class_filter=2 method=mean
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binmean1m return_filter=first method=mean
 r.colors lid_be_binmean1m color=elevation
 r.colors lid_1r_binmean1m color=elevation
 r.info map=lid_1r_binmean1m
@@ -91,8 +99,8 @@ Result is almost good enough for 1st return, but there are still many holes for 
 
 <pre><code>
 g.region res=2 -ap
-r.in.xyz input=0793_016ground.txt output=lid_be_binmean2m separator=space
-r.in.xyz input=0793_016first.txt output=lid_1r_binmean2m separator=space
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binmean2m class_filter=2 method=mean
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binmean2m return_filter=first method=mean
 r.colors lid_be_binmean2m color=elevation
 r.colors lid_1r_binmean2m color=elevation
 d.rast lid_be_binmean2m
@@ -106,8 +114,8 @@ d.out.file mylidmrmean2m
 Compute range of elevation values in each grid cell:
 
 <pre><code>
-r.in.xyz input=0793_016ground.txt output=lid_be_binrange2m method=range separator=space
-r.in.xyz input=0793_016first.txt output=lid_1r_binrange2m method=range separator=space
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binrange2m class_filter=2 method=range
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binrange2m return_filter=first method=range
 d.rast lid_be_binrange2m
 d.legend lid_be_binrange2m at=2,40,2,5
 d.rast lid_1r_binrange2m
@@ -160,11 +168,13 @@ Be patient, it can take a few minutes to run depending on the computer power.<br
 g.region res=1 -ap
 v.surf.rst elev_lid793016_be elevation=elev_lid793016_be_1m npmin=120 segmax=25 dmin=1
 v.surf.rst elev_lid793016_1r elevation=elev_lid793016_1r_1m npmin=120 segmax=25 tension=100 smooth=0.5 dmin=1
+r.colors elev_lid793016_be_1m color=elevation
 r.colors elev_lid793016_1r_1m color=elevation
 d.rast elev_lid793016_be_1m
 d.rast elev_lid793016_1r_1m
 </code></pre>
 
+<!-- not working on windows
 <p>
 Faster interpolation, specially designed for lidar.<br>
 In case of problems with v.surf.bspline, post the error message in the report.
@@ -177,13 +187,9 @@ r.colors elev_lid793016_be_1m_bsp color=elevation
 d.rast elev_lid793016_be_1m_bsp
 d.rast elev_lid793016_1r_1m_bsp
 </code></pre>
-
-<p>
-<!--
-# extract first return to get points for DSM
-v.extract elev_lidrural_mrpts out=elev_lidrur_first type=point where=Return=1
 -->
 
+Hide legend and switch off all map layers except for the last 2 interpolated ones.<br>
 Use 3D view with cutting planes to compare the bare earth and terrain surface.<br>
 Make sure fine resolution is set to 1 for all surfaces.<br>
 Assign each surface constant color, add constant plane for reference.<br>
