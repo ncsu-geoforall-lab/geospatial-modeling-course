@@ -7,7 +7,7 @@ function build_page {
     FILE_TARGET=$2
     cat $HEAD_FILE > $OUTDIR/$FILE_TARGET
     echo "<!-- This is a generated file. Do not edit. -->" >> $OUTDIR/$FILE_TARGET
-    ./strip-whitestace.py < $FILE_SOURCE >> $OUTDIR/$FILE_TARGET
+    ./edit.py < $FILE_SOURCE >> $OUTDIR/$FILE_TARGET
     cat $FOOT_FILE >> $OUTDIR/$FILE_TARGET
 }
 
@@ -39,7 +39,7 @@ do
         TGT_FILE=$OUTDIR/$DIR/`basename $FILE`
         ./increase-link-depth.py < $HEAD_FILE > $TGT_FILE
         echo "<!-- This is a generated file. Do not edit. -->" >> $TGT_FILE
-        ./strip-whitestace.py < $FILE >> $TGT_FILE
+        ./edit.py < $FILE >> $TGT_FILE
         ./increase-link-depth.py < $FOOT_FILE >> $TGT_FILE
     done
 
