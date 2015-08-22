@@ -39,7 +39,7 @@ without the need to specify the full path to the file.
 
 <!-- p. 249<br> -->
 <h3>Analyze bare earth and multiple return lidar data properties by binning</h3>
-Import the points using v.in.lidar.
+Import the points using <em class="module">v.in.lidar</em>.
 We can specify which class and which return (first, middle, last) we want to import.<br>
 We can see the classification either in metadata distributed with the lidar data
 or it can be displayed with <a href="http://liblas.org/">lasinfo</a> tool (in case lasinfo command is not available, skip it.):
@@ -55,10 +55,10 @@ v.in.lidar -t input=tile_0793_016_spm.las output=elev_lid793016_1r return_filter
 </code></pre>
 <p>
 Note: if you have any problems with the files, review the instructions above or
-use v.in.ascii GUI dialog to browse to get the path to the files.
+use v.in.lidar GUI dialog to browse to get the path to the files.
 <p>
 Set the region from the imported point file with resolution of 1 meter.
-Compute raster maps (with r.in.lidar) representing number of points per 1 m grid cell.<br>
+Compute raster maps (with <em class="module">r.in.lidar</em>) representing number of points per 1 m grid cell.<br>
 Compare point densities for bare earth, first return.
 
 <pre><code>

@@ -56,7 +56,7 @@ because we will be working with a smaller, high resolution region.
 <p>
 Start GRASS7 with your previous MAPSET.
 First set region to "rural_1m", then interpolate surface with vegetation
-from multiple return lidar points using the module <em>v.surf.rst</em>
+from multiple return lidar points using the module <em class="module">v.surf.rst</em>
 (we will explain interpolation later on).
 
 <pre><code>
@@ -111,7 +111,7 @@ d.rast geology_30m
 d.rast elevation val=50-80,120-160 -o
 -->
 <h4>Change colors for raster maps</h4>
-There are many ways how to do it see <a href="http://grass.osgeo.org/grass70/manuals/r.colors.html"><b>r.colors</b> manual</a>).
+There are many ways how to do it see <em class="module">r.colors</em> manual).
 <p>
 First create your own copy of the elevation map (see the command below).<br>
 Display it by Add raster > "myelev".
@@ -168,7 +168,7 @@ r.colors myelev rules=/Users/helena/mycolor.txt
 <p>
 Note that you can combine color RGB and name definitions
 as well as % and cat/val to create complex custom color tables
-and store them in a text file for future use, see the examples in r.colors man page.
+and store them in a text file for future use, see the examples in <em class="module">r.colors</em> man page.
 <h4>
 Compare the use of equal interval and histogram equalized color table for slope</h4>
 

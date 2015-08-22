@@ -48,9 +48,9 @@ For a quick reference, here are the wxGUI equivalents for the d.* commands:
 <p>
 In GRASS GIS Layer Manager
 <ul>
-    <li>d.rast: <em>Add raster map layer</em>
-    <li>d.vect: <em>Add vector map layer</em>
-    <li>d.shade: <em>Add various raster map layers > Add shaded relief map</em>
+    <li><em class="module">d.rast</em>: <em>Add raster map layer</em>
+    <li><em class="module">d.vect</em>: <em>Add vector map layer</em>
+    <li><em class="module">d.shade</em>: <em>Add various raster map layers > Add shaded relief map</em>
 </ul>
 In GRASS GIS Map Display
 <ul>
@@ -58,16 +58,16 @@ In GRASS GIS Map Display
  <li>d.what.rast: <em>Query raster map</em>
  <li>d.what.vect: <em>Query vector map</em>
 -->
- <li>d.zoom: <em> Zoom options</em>
+ <li><em class="module">d.zoom</em>: <em> Zoom options</em>
  <!--<li>d.erase: <em>Remove all previous layers</em>-->
- <li>d.out.file: <em>Save display to graphic file</em>
- <li>d.barscale: <em>Add map elements > Show/hide scale bar</em>
- <li>d.legend: <em>Add map elements > Show/hide legend</em>
- <li>d.northarrow: <em>Add map elements > Show/hide north arrow</em>
+ <li><em class="module">d.out.file</em>: <em>Save display to graphic file</em>
+ <li><em class="module">d.barscale</em>: <em>Add map elements > Show/hide scale bar</em>
+ <li><em class="module">d.legend</em>: <em>Add map elements > Show/hide legend</em>
+ <li><em class="module">d.northarrow</em>: <em>Add map elements > Show/hide north arrow</em>
 </ul>
 <i>
 The d.* commands throughout the assignments indicate which map layers should be included
-in the output map, d.out.file indicates which map should be saved for the report.
+in the output map, <em class="module">d.out.file</em> indicates which map should be saved for the report.
 You might already have the right map layers in your Layer Manager, so you don't have to load them again.
 The CLI instructions can also be used for running the assignments on Linux and Mac as scripts.
 </i>
@@ -93,7 +93,7 @@ Suggested workflow is to create a new mapset for each assignment
 and do all computations there.
 
 <p>
-Computational region is set by <code>g.region</code> module (command)
+Computational region is set by <em class="module">g.region</em> module (command)
 and specifies the extent and resolution at which raster operation are performed.
 
 
@@ -148,8 +148,8 @@ Command line equivalent: paste into Command console and Enter:
 <pre><code>
 d.shade shade=elevation_shade color=elevation brighten=30
 </code></pre>
-Note: depending on your installed GRASS version, the names of the d.shade
-module can be different. Open the d.shade dialog to find the correct options.
+Note: depending on your installed GRASS version, the names of the <em class="module">d.shade</em>
+module can be different. Open the <em class="module">d.shade</em> dialog to find the correct options.
 
 
 <p>
@@ -212,7 +212,7 @@ Now display statewide DEM, county boundaries and climate stations:
 <p>
   Remove all map layers from Layer Manager.<br>
 In Layer Manager menu: <em>Settings > Region > Set Region</em>.<br>
-In g.region dialog: <em>Set current region from named region</em> >
+In <em class="module">g.region</em> dialog: <em>Set current region from named region</em> >
 select "nc_500m" > <em>Run</em> > <em>Close</em>.<br>
 In Map Display: <em>Zoom to computational region</em>.<br>
 In Layer Manager: <em>Add raster layer</em> > select "elev_state_500m".<br>
@@ -226,9 +226,9 @@ except for removing all map layers from the <em>Layer Manager</em>.
 When using GUI and its <em>Command Console</em>, you can either uncheck
 the map layers or completely remove them in the <em>Layer Manager</em>.
 When using the system command line and
-<em><a href="http://grass.osgeo.org/grass70/manuals/d.mon.html">d.mon</a></em>,
+<em class="module">d.mon</em>,
 you can use
-<em><a href="http://grass.osgeo.org/grass70/manuals/d.erase.html">d.erase</a></em>.
+<em class="module">d.erase</em>.
 
 <pre><code>
 g.region nc_500m -p

@@ -41,7 +41,7 @@ with bilinear and bicubic method.
 <p>First, set the computation region extent to our study area
 and set resolution to 30 meters.
 The computational region (region for short) is set using
-<em><a href="http://grass.osgeo.org/grass70/manuals/g.region.html">g.region</a></em> module.
+<em class="module">g.region</em> module.
 Here for convenience we use named region which defines both the extent and the resolution.
 This named region is included in the data (location) we are using
 but it is possible to create new named regions and use them to bookmark different study areas.
@@ -51,7 +51,7 @@ g.region region=swwake_30m -p
 </code></pre>
 
 <p>
-The <code>-p</code> flag for <em>g.region</em> is used to print the region
+The <code>-p</code> flag for <em class="module">g.region</em> is used to print the region
 we just set.
 
 <p>
@@ -64,7 +64,7 @@ d.rast elev_ned_30m
 <p>
 To resample it to 10m resolution, first set the computational region to resolution 10m,
 then resample the raster using the nearest neighbor method.<br>
-Hint: To open the r.resamp.interp in GUI, type or paste the module name
+Hint: To open the <em class="module">r.resamp.interp</em> in GUI, type or paste the module name
 into the <em>Command console</em>, then <em>Enter</em> to open the GUI panel,
 don't forget to set the method to nearest under <em>Optional</em> tab.
 
@@ -317,7 +317,7 @@ Convert raster lines to vector lines.
 First, set the region and remove map layers from <em>Layer Manager</em>.
 Then do the conversion.
 <p>
-<span class="question">Explain why we are using r.thin module</span>.
+<span class="question">Explain why we are using <em class="module">r.thin</em> module</span>.
 You may want to remove all previously used layers from the <em>Layer Manager</em>
 before you start these new computations.
 

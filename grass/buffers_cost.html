@@ -56,7 +56,8 @@ d.rast lakes_buff
 </code></pre>
 
 <p>
-List categories in land use map to identify cat numbers for developed areas. Then run r.mapcalc:
+List categories in land use map to identify cat numbers for developed areas.
+Then run <em class="module">r.mapcalc</em>:
 
 <pre><code>
 r.category landuse96_28m
@@ -88,8 +89,8 @@ r.report -n developed_lake units=h
 Set region and create buffers along major roads.<br>
 Intersect developed areas from landuse map with road buffers.<br>
 Transfer the category labels and compute the affected area.<br>
-Run r.category from GUI and browse to the txt file,
-or run r.category command (assuming <a href="data/noise_cats.txt">noise_cats.txt</a>
+Run <em class="module">r.category</em> from GUI and browse to the txt file,
+or run <em class="module">r.category</em> command (assuming <a href="data/noise_cats.txt">noise_cats.txt</a>
 is in your working directory).
 
 <pre><code>
@@ -113,7 +114,7 @@ d.legend -c noise at=5,25,2,5
 <h4>Find schools affected by high levels of noise</h4>
 Convert schools to raster using CORECAPACI attribute (school capacity).<br>
 Use map algebra to overlay with noise impact buffers and
-compute the number of students exposed to noise (see result of r.univar).
+compute the number of students exposed to noise (see result of <em class="module">r.univar</em>).
 
 <pre><code>
 v.to.rast schools_wake output=schoolscap_10m use=attr attrcolumn=CORECAPACI type=point
@@ -161,7 +162,7 @@ r.cost -k streets_travtime output=streets_cost start_coordinates=634886,224328
 <p>
 Import the accident point location given in <a href="data/fire_pt.txt">fire_pt.txt</a>
 so that you can display it on the map.<br>
-Run v.in.ascii from GUI, use file browser to provide full path to the file
+Run <em class="module">v.in.ascii</em> from GUI, use file browser to provide full path to the file
 or enter values interactively by pasting the coords into the provided space,
 or run the command assuming the file is in your working directory.
 
@@ -254,7 +255,7 @@ r.describe route_52Hollyb
 
 <p>
 If you would like to display streets_cost surface in 3D as shown in the lecture,
-you need to multiply the surface by 1000 using r.mapcalc because the numbers
+you need to multiply the surface by 1000 using <em class="module">r.mapcalc</em> because the numbers
 in hours are very low.<br>
 Then switch off all layers except for the streets_cost_1000
 and change display to 3D.
