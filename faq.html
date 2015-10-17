@@ -180,6 +180,12 @@ both has limited (spatial, yx) precision and although the area boundary
 in vector looks nicer it might be much less accurate then the raster
 representation depending on how the data were acquired.
 
+<dt>GRASS GIS Map Display is not using my system default font.
+    Is there any way to change it?
+<dd>You can change the default font used in Map Display by going to
+the main menu > Settings > Preferences > Map Display tab and click Set font
+button. Select name of any font you like.
+
 <dt>The maps composed in GRASS GIS Map Display are not good enough for me.
     Is there something else I can use?
 <dd>
@@ -348,12 +354,24 @@ the original raster.
 <dd>
    new version of the geodatabase with Z-value added is available on the Assignments web site
 
-<dt>The image I see in 3D in GRASS GIS is just a lot of spikes, no DEM.
+<dt>The image I see in 3D in GRASS GIS is just a lot of spikes or outliers, no digital elevation model.
 <dd>
 When visualizing rasters in GRASS GIS 3D view, you have to switch off
 aspect and any other raster map layers which you don't want to show as surface.
 You can however, show any raster by draping it over a
 surface in 3D (by selecting method of coloring for a surface).
+
+<dt>When I show the TIN in GRASS GIS 3D view, I get just large spheres or flat thick plate.
+    How to view the 3D TIN.
+<dd>
+When visualizing vectors in GRASS GIS 3D view,
+go through a <em>Vector</em> section of the <em>Data</em> tab and
+check values of all the fields. In case of TIN, you probably don't want
+to show any points or set the size of points to a small number.
+Note also that depending on vector type, you need to specify if you want
+to show the features on an existing raster surface (flat plane by default)
+or as actual 3D features.
+Switching off other layers beforehand in 2D is also a good idea.
 
 </dl>
 
