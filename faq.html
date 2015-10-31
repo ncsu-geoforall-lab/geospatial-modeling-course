@@ -373,6 +373,18 @@ to show the features on an existing raster surface (flat plane by default)
 or as actual 3D features.
 Switching off other layers beforehand in 2D is also a good idea.
 
+<dt>When I show the raster map in GRASS GIS 3D view as a surface,
+    I cannot see much detail and the view seems not precise, coarse or blurry.
+<dd>Set fine mode resolution in 3D view tab, in the Surface part to 1
+    to get the surface in the actual (full, native) resolution of the raster.
+
+<dt>What does the fine mode resolution in GRASS GIS 3D mean?
+<dd>Fine mode resolution in 3D is resolution of resampling when using
+    the raster in 3D, for example fine mode resolution 2 means that raster
+    with resolution 3 is shown as if it would have resolution 6.
+    This is for performance purposes. To see raster in its full (native)
+    resolution, use fine mode resolution 1.
+
 </dl>
 
 
