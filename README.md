@@ -5,12 +5,13 @@ NCSU GIS/MEA582: Geospatial Modeling and Analysis
 Authors
 -------
 
-Copyright 2008-2014 by
+Copyright 2008-2015 by
 
  * Helena Mitasova
- * Paul Paris
+ * Rob Austin
  * Anna Petrasova
  * Vaclav Petras
+ * Paul Paris
 
 Course developed at North Carolina State University.
 
