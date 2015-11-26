@@ -1,0 +1,197 @@
+<h2>Working with data in different coordinate systems</h2>
+
+GRASS GIS Location can contain data only in one projection. This is for consistency.
+
+
+<h3>Importing data in common vector and raster formats</h3>
+
+<p>
+If your data are in two different projections,
+you create the location with one dataset
+(in location wizard get projection from a referenced file).
+Then you can use r.import and v.import modules to import the data.
+
+<p>
+If the coordinates in fact match the coordinates you want but the projection
+information is wrong, then it is appropriate to use r.in.gdal
+with the -o flag to overwrite the projection check and import
+the data as they are (same also for the GUI import dialog).
+In GUI dialog the flag -o is not mentioned, "override projection check"
+is the right thing to use.
+
+<p>
+If you zoom to raster or vector in GRASS GUI and it does not fit with
+the rest of the data, it means that it was imported with wrong projection
+information (or with overwriting the checks when the coordinates in fact don't match).
+You can use r.info and v.info to get the information
+about the extents of (already imported) rasters and vectors.
+
+<p>
+If you don't have the right Location, you should know
+which coordinate system/projection you want to use.
+In which projection your vector points are?
+Ideally, you should know EPSG code, creating location using EPSG code is simple.
+
+<p>
+If you mean data in other GRASS Locations, use r.proj and v.proj in the desired Location to reproject from the other Location.
+
+
+<h3>Importing CSV and other ASCII data</h3>
+
+<p>
+There are many formats of plain text files. In context of GIS we usually
+talk about ASCII formats and CSV files. CSV files usually hold only
+coordinates and sometimes attributes of points.
+
+<p>
+These files usually don't have projection information attached to them,
+so we must be very careful and import the date only if the coordinates
+are in the projection of the Location we are using.
+
+<p>
+Let's create a CSV file called <code>points.txt</code>
+using a text editor (Notepad++, TextEdit, MS Notepad), for example:
+
+<pre>
+637803.6,223804.7
+641835.5,223761.2
+643056.0,217419.0
+</pre>
+
+The coordinates we entered are in EPSG:3358 and we assume that the
+GRASS Location is using this projection as well.
+This file can be imported to GRASS GIS using:
+
+<pre><code>
+v.in.ascii input=points.txt output=test_ascii separator=comma x=1 y=2
+</code></pre>
+
+
+<h3>Importing lidar point clouds</h3>
+
+Lidar point clouds can be imported in two ways: as raster maps using binning
+or as vector points. However first of all, one must explore the dataset.
+
+<p>
+In command line, we can check the projection information and other metadata
+about a LAS file using <em>lasinfo</em> tool:
+
+<pre><code>
+lasinfo tile_0793_016_spm.las
+</code></pre>
+
+<em>lasinfo</em> tool is included in most GRASS GIS distributions but sometimes,
+a special package is need, often called <em>liblas-bin</em> in package managers.
+
+<p>
+<em class="module">r.in.lidar</em> module can be used to scan the spatial extent
+of the dataset:
+
+<pre><code>
+r.in.lidar input=tile_0793_016_spm.las -s
+</code></pre>
+
+
+<h4>Binning</h4>
+
+Before creating the actual raster with elevation, we need to decide the extent
+and the resolution we will use for the binning. We can use
+<em class="module">r.in.lidar</em> module for that when setting the resolution
+directly and using a flag to use dataset extent instead of taking it from
+the computational region.
+We are interested in the density of points, so we use <code>method=n</code>:
+
+<pre><code>
+r.in.lidar input=tile_0793_016_spm.las output=tile_0793_016_n method=n -e resolution=2
+</code></pre>
+
+After determining the optimal resolution for binning and the desired area,
+we can use <em class="module">g.region</em> to set the computational region.
+<em class="module">r.in.lidar</em> without the additional parameters above
+will create a raster map from points using binning with resolution and extent
+taken from the computational region:
+
+<pre><code>
+r.in.lidar input=tile_0793_016_spm.las output=tile_0793_016
+</code></pre>
+
+
+<h4>Interpolation</h4>
+
+When the result of binning contains a lot of NULL cells or when it is not
+smooth enough for further analysis, we can import the point cloud as vector
+points and interpolate a raster.
+
+<p>
+Supposing that we already determined the desired extent and resolution
+(using <em class="module">r.in.lidar</em>) we can use 
+
+<pre><code>
+v.in.lidar input=tile_0793_016_spm.las output=tile_0793_016 -r -t -b
+</code></pre>
+
+<pre><code>
+v.surf.rst input=tile_0793_016 elevation=tile_0793_016_elevation slope=tile_0793_016_slope aspect=tile_0793_016_aspect npmin=100 tension=20 smooth=1
+</code></pre>
+
+
+<h4>Importing data in different projection</h4>
+
+In case that the projection of the file doesn't match the projection
+used in the GRASS Location, reprojection can be done before import
+using <em>las2las</em> tool.
+
+<p>
+The following example command is for reprojecting tiles
+in NAD83/North Carolina in feet (EPSG:2264)
+into NAD83/North Carolina in meters (EPSG:3358):
+<pre><code>
+las2las --a_srs=EPSG:2264 --t_srs=EPSG:3358 -i input_spf.las -o output_spm.las
+</code></pre>
+
+<em>las2las</em> tool is included in most GRASS GIS distributions but sometimes,
+a special package is need, often called <em>liblas-bin</em> in package managers.
+
+
+<h4>Importing data with broken projection information</h4>
+
+In case that the specified projection of the file doesn't match the projection
+used in the GRASS Location, but the actual coordinates are in the projection
+used in the GRASS Location, we can use <code>-o</code> flag to skip the projection
+check and import the data as they are. Here we scan the file to get the extent:
+
+<pre><code>
+r.in.lidar input=tile_0793_016_spm.las -s -o
+</code></pre>
+
+
+<h3>Transferring GRASS GIS data between two computers</h3>
+
+If two GRASS GIS users want to exchange data, they can use GRASS GIS native
+exchange format &ndash; <em>packed map</em>. A vector or raster map can be
+exported from a GRASS Location in this format using
+<em class="module">v.pack</em> or <em class="module">r.pack</em> respectively.
+This format preserves everything for a map in a way as it is stored in
+a GRASS Database. Projection of the source and target GRASS Locations
+must be the same.
+
+<p>
+If GRASS GIS users wish to exchange GRASS Mapsets, they can do so as long as
+the source and target GRASS Locations have the same projection.
+The PERMANENT Mapset should not be usually exchanged as it is a crucial part
+of the given Location.
+Locations can be easily transfered in between GRASS Database directories
+on different computers as they carry all data and projection information
+within them and the storage format used in the background is platform independent.
+Locations as well as whole GRASS Databases can be copied and moved
+in the same way as any other directories on the computer.
+
+
+<h3>Further resources</h3>
+
+<ul>
+    <li><a href="http://grass.osgeo.org/grass70/manuals">GRASS GIS manual</a></li>
+    <li><a href="https://grass.osgeo.org/grass71/manuals/grass_database.html">About GRASS GIS Database structure</a></li>
+    <li><a href="https://grass.osgeo.org/grass70/manuals/projectionintro.html">Projections and spatial transformations in GRASS GIS</a></li>
+    <li><a href="http://epsg.io/">epsg.io</a> (Repository of EPSG codes)</li>
+</ul>
