@@ -101,7 +101,7 @@ Compute Fill input=elev_ned output=Fill_elev30
 Compute FlowDirection input=Fill_elev30 output=FlowDir_fil30
 Compute FlowAccumulation input=FlowDir_fil30 output=Flowacc_fil30
 Using the Algebra Raster Calculator, compute:
-Con( "Flowacc_fil30", 1, 0, "Value > 10000" )  Set the output to: Streams_der30
+Con( "Flowacc_fil30" > 10000, 1, 0 ) Set the output to: Streams_der30
 Compute StreamLink input=Streams_der30 flow dir raster=FlowDir_fil30 output=Source30
 Compute Watershed input=FlowDir_fil30 Pour point=Source30 output=Watersheds30
 </pre>
