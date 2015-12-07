@@ -35,7 +35,7 @@ E = RKLSCP
 <li>K is the soil</li>
 <li>C is the land cover</li>
 <li>P is the preventive measures factor</li>
-<li>LS = 1.4 * (U/22.1)**0.4 * (sin (slope/0.09))**1.2<br>
+<li>LS = 1.4 * (U/22.1)**0.4 * (sin (slope)/0.09)**1.2<br>
 LS is the topography factor, U is contributing area per unit width (function of flowaccumulation)</li>
 </ul>
 <p>
@@ -88,7 +88,7 @@ Slope should be in radians,
 flowaccumulation is in number of cells so we multiply by resolution:
 
 <pre>
-1.4 * (Power("Flowacc" * 1. / 22.1 , 0.4) * Power((Sin(("slope_1m" / 0.09 )* math.pi/180.0) ) , 1.2))
+1.4 * (Power("Flowacc" * 1. / 22.1 , 0.4) * Power(Sin("slope_1m" * math.pi/180.0) / 0.09, 1.2))
 Set the output raster to lsfac
 Click 'OK'
 </pre>
