@@ -34,10 +34,14 @@ import fileinput
 code_start = re.compile(r'<pre><code>')
 code_end = re.compile(r'</code></pre>')
 
+file_content_start = re.compile(r'<pre data-filename=.*><code>')
+file_name_capture = re.compile(r'<pre data-filename="(.*?)"><code>')
+
 html_comment_start = re.compile(r'\s*<!--')
 html_comment_end = re.compile(r'-->')
 
 in_code = False
+in_file_content = False
 in_html_comment = False
 in_code = False
 
@@ -116,6 +120,14 @@ for line in fileinput.input():
     elif html_comment_end.search(line):
         in_html_comment = False
         continue
+    elif file_content_start.search(line):
+        in_file_content = True
+        tmp_file = open(file_name_capture.search(line).group(1), 'w')
+        continue
+    elif in_file_content and code_end.search(line):
+        in_file_content = False
+        tmp_file.close()
+        continue
     elif code_start.search(line):
         in_code = True
         continue
@@ -143,6 +155,8 @@ for line in fileinput.input():
         previous_code_line = line
     elif in_html_comment:
         continue
+    elif in_file_content:
+        tmp_file.write(line)
     else:
         for regexp, replacement in text_replacemets:
             line = regexp.sub(replacement, line)
