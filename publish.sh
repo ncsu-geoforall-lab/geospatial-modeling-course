@@ -42,10 +42,10 @@ fi
 
 # the actual build
 echo "Building..."
-./build-pages.sh
+./build.sh
 
 if [ $? -ne 0 ]; then
-    echo "Build failed. Use ./build-pages.sh script to debug the issue." 1>&2;
+    echo "Build failed. Use ./build.sh script to debug the issue." 1>&2;
     exit
 fi
 

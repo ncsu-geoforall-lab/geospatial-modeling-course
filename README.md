@@ -75,15 +75,15 @@ code into a separate directory. The publishing step is done using a script.
 ### Building the pages
 
 In your clone of the repository where you are in master branch,
-use `build-pages.sh` script to build the pages.
+use `build.sh` script to build the pages.
 
-    ./build-pages.sh
+    ./build.sh
 
-The directory where pages are build is on the same level as directory with
-the source code and is named `mea582-gh-pages`.
+The directory where pages are build is inside the directory with
+the source code and is named `build`.
 You can look at the pages using e.g.
 
-    firefox ../mea582-gh-pages/index.html
+    firefox build/index.html
 
 If you don't see the changes you have made, delete the file in the build
 directory and build again (the mechanism to recognize changes is not smart).
@@ -93,24 +93,9 @@ directory and build again (the mechanism to recognize changes is not smart).
 
 One should not forget to commit and push changes to the repository
 when publishing so that changes are shared with other contributors.
-This is ensured using a script `build-and-publish.sh`.
+This is ensured using a script `publish.sh`.
 The script will require you to have all all changes committed and pushed
 and then it will publish them.
-
-The script requires one parameter which is a destination for the `rsync`
-command. To work more effectively, you can create a script
-named `my-build-and-publish.sh` with hard-coded destination,
-for example:
-
-    #!/bin/bash
-
-    ./build-and-publish.sh john@university.edu:/courses/gis/
-
-Don't forget to set it executable using `chmod u+x`.
-If you name the script `my-build-and-publish.sh`, it will be ignored by Git
-and you can publish the pages using:
-
-    ./my-build-and-publish.sh
 
 
 New semester checklist
