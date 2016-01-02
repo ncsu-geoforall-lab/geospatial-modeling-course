@@ -14,7 +14,7 @@ function build_page {
 HEAD_FILE=head.html
 FOOT_FILE=foot.html
 
-OUTDIR=../mea582-gh-pages
+OUTDIR=build
 
 if [ ! -d "$OUTDIR" ]; then
     echo "The directory $OUTDIR does not exists and it will be created for you."

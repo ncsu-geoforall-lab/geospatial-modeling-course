@@ -51,7 +51,7 @@ fi
 
 last_commit=$(git log -n 1  --pretty=format:"%h \"%s\"")
 
-build_dir="../mea582-gh-pages"
+build_dir="build"
 
 cd $build_dir
 
