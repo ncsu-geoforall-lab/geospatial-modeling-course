@@ -16,6 +16,19 @@ Copyright 2008-2015 by
 Course developed at North Carolina State University.
 
 
+Online version of the materials
+-------------------------------
+
+The (static) website for this course is using GitHub pages and the URL is:
+
+* http://ncsu-osgeorel.github.io/geospatial-modeling-course
+
+Old URLs (for archival purposes):
+
+* http://courses.ncsu.edu/gis582/common/
+* https://courses.ncsu.edu/mea582/common/GIST.html
+
+
 Basic Git introduction
 ----------------------
 
