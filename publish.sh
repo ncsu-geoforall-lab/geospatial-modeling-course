@@ -1,11 +1,5 @@
 #!/bin/bash
 
-if [ $# -ne 1 ]; then
-    echo "Usage:" 1>&2;
-    echo "    $0 destination" 1>&2;
-    exit
-fi
-
 output=$(git status --porcelain)
 if [ $? -ne 0 ]; then
     echo "git status failed. Are you in a repository?" 1>&2;
@@ -60,12 +54,40 @@ if [ $? -ne 0 ]; then
     exit
 fi
 
-# the publishing process using rsync
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+if [ $? -ne 0 ]; then
+    echo "git rev-parse failed. Is $(pwd) a clone of a repository?" 1>&2;
+    exit
+elif [ "master" = "$current_branch" ]; then
+    echo "You are not on gh-pages branch in $build_dir, so you cannot publish pages." 1>&2;
+    echo "Using \"git branch\" to show current branches."
+    git branch
+    exit
+fi
+
+# the publishing process for GitHub
 
 # fail on first error
 set -e
 
-echo "You may be asked for password for the server (destination) now."
-rsync -rtvu --exclude '.*' * $1
+# stage all (new, modified, deleted) files
+git add -A
+
+# check commit separately to provide informative error message
+# commit fails when there is nothing to commit
+set +e
+echo "Build of" $last_commit | git commit -a --file=-
+
+if [ $? -ne 0 ]; then
+    echo "Probably nothing changed in the build, so no commit is needed." 1>&2;
+    echo "You may want to just \"git push\" in $build_dir or do some changes first."
+    exit
+fi
+set -e
+
+# get changes of other people to be able to push but prefer current state
+git pull --no-edit --commit --strategy=ours
+
+git push
 
 set +e
