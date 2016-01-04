@@ -47,6 +47,8 @@ in_code = False
 
 ignored_lines = [
     re.compile(r'grass70'),
+    re.compile(r'cd'),
+    re.compile(r'cd.*'),
     #re.compile(r'\s*d\.mon'),
     #re.compile(r'\s*d\.out.file')
 ]
@@ -113,7 +115,10 @@ for line in fileinput.input():
         name = file_path_match.group(2)
         if not name in replaced_files and not path.startswith('http'):
             replaced_files.append(name)
-            code_replacemets.append((re.compile('=' + name), '=' + path))
+            code_replacemets.append(
+                (re.compile('=' + name), '=' + path))
+            code_replacemets.append(
+                (re.compile('="' + name + '"'), '="' + path + '"'))
 
     if html_comment_start.search(line) and not html_comment_end.search(line):
         in_html_comment = True
