@@ -9,7 +9,8 @@ When starting a project, decide which CRS you will use. Create
 a new Location using Location Wizard (accessible from GRASS GIS start-up page).
 Specify desired CRS either by providing
 EPSG code (can be found e.g. at <a href="http://epsg.io/">epsg.io</a>)
-or by providing a georeferenced file (such as Shapefile) which has the CRS you want.
+or by providing a georeferenced file (such as Shapefile) which has
+the CRS you want.
 
 <h3>Importing data in common vector and raster formats</h3>
 
@@ -28,21 +29,23 @@ First create a new temporary Location
 based on the CRS of the data you want to import, switch to this Location
 and then use <em class="module">r.in.gdal</em> or <em class="module">v.in.ogr</em>
 to import raster and vector data, respectively. Then switch to the Location
-of your project and use <em class="module">r.proj</em> and <em class="module">v.proj</em>
+of your project and use
+<em class="module">r.proj</em> and <em class="module">v.proj</em>
 to reproject data from the temporary Location to your project Location.
 This approach is necessary for formats which are not supported by
-<em class="module">r.import</em> and <em class="module">v.import</em> modules.  
+<em class="module">r.import</em> and <em class="module">v.import</em> modules.
 Modules  <em class="module">r.proj</em> and <em class="module">v.proj</em>
 can be also used for bringing raster and vector maps from one Location to another.
 
 <p>
 Modules <em class="module">r.in.gdal</em> and <em class="module">v.in.ogr</em>
 check whether the CRS of the imported data matches the Location's CRS.
-Sometimes the CRS of imported data is not specified correctly or is missing and therefore
-import fails. If you know that the actual CRS matches the Location's CRS,
+Sometimes the CRS of imported data is not specified correctly
+or is missing and therefore import fails.
+If you know that the actual CRS matches the Location's CRS,
 it is appropriate to use <em class="module">r.in.gdal</em>'s
-or <em class="module">v.in.ogr</em>'s -o flag to overwrite the projection check and import
-the data as they are.
+or <em class="module">v.in.ogr</em>'s -o flag to overwrite the projection
+check and import the data as they are.
 
 <p>
 If you zoom to raster or vector in GRASS GUI and it does not fit with
@@ -83,7 +86,8 @@ Notice, we have to specify the column number where the X and Y (optionally Z)
 coordinates are stored. In this example, X coordinates are in the first column
 Y in the second one. Don't forget to specify correct column delimiter.
 <p>
-If the data are not in the CRS we are using, create a new Location with matching CRS,
+If the data are not in the CRS we are using, create a new Location
+with matching CRS,
 import the data and use <em class="module">v.proj</em> as described above.
 
 
@@ -148,7 +152,8 @@ to get only ground points):
 v.in.lidar input=tile_0793_016_spm.las output=tile_0793_016 class=2 -r -t -b
 </code></pre>
 
-This import only the points of class 2 (ground) in the current computational region
+This import only the points of class 2 (ground)
+in the current computational region
 without the attribute table and building the topology.
 Then we follow with interpolation using,
 e.g. <em class="module">v.surf.rst</em> module:
@@ -176,11 +181,12 @@ las2las --a_srs=EPSG:2264 --t_srs=EPSG:3358 -i input_spf.las -o output_spm.las
 
 Modules <em class="module">r.in.lidar</em> and <em class="module">v.in.lidar</em>
 check whether the CRS of the imported data matches the Location's CRS.
-Sometimes the CRS of imported data is not specified correctly or is missing and therefore
-import fails. If you know that the actual CRS matches the Location's CRS,
+Sometimes the CRS of imported data is not specified correctly
+or is missing and therefore import fails.
+If you know that the actual CRS matches the Location's CRS,
 it is appropriate to use <em class="module">r.in.lidar</em>'s
-or <em class="module">v.in.lidar</em>'s -o flag to overwrite the projection check and import
-the data as they are.
+or <em class="module">v.in.lidar</em>'s -o flag to overwrite the projection
+check and import the data as they are.
 
 <pre><code>
 r.in.lidar input=tile_0793_016_spm.las -s -o
