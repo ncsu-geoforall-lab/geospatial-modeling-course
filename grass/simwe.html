@@ -1,17 +1,23 @@
-<P>Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
-GRASS GIS overview and manual</a>,
-<a href="http://www.grassbook.org/"> GRASSbook</a>
+<h2>Surface water flow and erosion simulation</h2>
+
+Here we compute surface runoff, and sediment transport using existing
+path sampling model.
+
+<p>
+Resources:
+<ul>
+    <li><a href="http://grass.osgeo.org/grass70/manuals/index.html">
+GRASS GIS overview and manual</a>
+    <li><a href="http://www.grassbook.org/">GRASS book</a>
+</ul>
 <!--
-<P>
+<p>
 <a href="mannings.txt">Mannings values</a><br>
 <a href="rainfallexcess.txt">Rainfall-infiltration recode table</a><br>
 <a href="erodibility.txt">Erodibility, transport capacity coef., critical sheer stress</a>
 -->
 
-
-<P><B>Topic: Modeling Geospatial Processes: Hydrology and erosion</B></P>
-<!--<p><B>Tasks: Compute surface runoff, and sediment transport using existing path sampling model </B></p>-->
-<P>
+<p>
 For animating in GRASS GIS 7, see the
 <a href="https://www.youtube.com/watch?v=Pi1ESk9iPwk">video instructions</a> or
 instructions for the
@@ -19,21 +25,23 @@ instructions for the
   Spatio-temporal data handling and visualization in GRASS GIS workshop
 </a>
 
-<p>
-Start GRASS:
+
+<h3>Start GRASS GIS</h3>
 
 <pre><code>
 grass70
 </code></pre>
 
 <p>
-working in linux<br>
-in startup pannel<br>
-GIS data directory /local/share/grassdata<br>
+in startup window<br>
+GIS data directory, e.g. /local/share/grassdata<br>
 LOCATION select nc_spm_08<br>
 MAPSET select user1<br>
 Enter GRASSS<br>
 GUI opens automatically - you can work in GUI or command line<br>
+
+
+<h3>Overland flow depth and discharge</h3>
 
 <p>
 compute spatial pattern of overland flow depth and discharge<br>
@@ -59,13 +67,16 @@ run the model<br>
 
 <pre><code>
 r.sim.water -t elevation=elev_lid792_2m dx=dx_2m dy=dy_2m rain=rain50mmhr infil=infil0 man=man05 depth=wdp_2m discharge=disch_2m nwalkers=400000 niterations=500 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
-d.rast wdp_2m.0498
-d.rast disch_2m.0498
+d.rast wdp_2m.120
+d.rast disch_2m.120
 </code></pre>
 
 <p>
 animate the time series<br>
 File > Animation tool<br>
+
+
+<h3>Peak runoff with predefined flow direction</h3>
 
 compute peak runoff with predefined flow direction<br>
 along the stream inluding culvert under the road<br>
@@ -94,23 +105,26 @@ r.mapcalc "dydemstr_2m = if(isnull(dystr_2m), dy_2m, dystr_2m)"
 
 <p>
 run the model<br>
-animation is available only on Linux or in GRASS7 (see the note above)<br>
 
 <pre><code>
 r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=rain50mmhr infil=infil0 man=man05 depth=wdpstr_2m discharge=dischstr_2m nwalkers=400000 niterations=500 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
-d.rast dischstr_2m.0498
+d.rast dischstr_2m.140
 </code></pre>
 
 <p>
 use Animation tool to animate discharge<br>
+
+
+<h3>Runoff for spatially variable landcover and rainfall excess</h3>
 
 compute runoff for spatially variable landcover<br>
 represented by  spatially variable Mannings and infiltration<br>
 
 variable Mannings<br>
 
-<pre><code>
-r.recode landcover_1m out=mancover_2m
+land_to_mannings.txt:
+
+<pre data-filename="land_to_mannings.txt">
 1:1:0.9:0.9
 2:2:0.5:0.5
 3:3:0.01:0.01
@@ -122,13 +136,18 @@ r.recode landcover_1m out=mancover_2m
 9:9:0.9:0.9
 10:10:0.03:0.03
 11:11:0.5:0.5
+</pre>
+
+<pre><code>
+r.recode input=landcover_1m output=mancover_2m rules=land_to_mannings.txt
 </code></pre>
 
 <p>
 variable rainfall excess<br>
 
-<pre><code>
-r.recode landcover_1m out=raincover_2m
+land_to_rain.txt:
+
+<pre data-filename="land_to_rain.txt">
 1:1:50:50
 2:2:5:5
 3:3:40:40
@@ -140,6 +159,10 @@ r.recode landcover_1m out=raincover_2m
 9:9:50.:50.
 10:10:40:40
 11:11:10:10
+</pre>
+
+<pre><code>
+r.recode input=landcover_1m output=raincover_2m rules=land_to_rain.txt
 </code></pre>
 
 <p>
@@ -147,14 +170,16 @@ run the model<br>
 
 <pre><code>
 r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=raincover_2m infil=infil0 man=mancover_2m depth=wdpstrcov_2m discharge=distrcov_2m nwalkers=400000 niterations=600 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
-d.rast wdp_2m.0398
-d.legend wdp_2m.0398
-d.rast disch_2m.0398
-d.legend disch_2m.0398
+d.rast wdp_2m.140
+d.legend wdp_2m.140
+d.rast disch_2m.140
+d.legend disch_2m.140
 </code></pre>
 
 <p>
 animate<br>
+
+<h3>Sediment flow rate, erosion and deposition</h3>
 
 compute sediment flow rate and net erosion/deposition using simwe<br>
 set region to the upper part of the watershed<br>
@@ -182,7 +207,7 @@ r.mapcalc "tauin = 0.01"
 run the model, use last depth from previous run<br>
 
 <pre><code>
-g.copy rast=wdp_2m.00498,wdp_2m
+g.copy rast=wdp_2m.140,wdp_2m
 r.sim.sediment elevation=elev_lid792_2m dx=dx_2m dy=dy_2m water_depth=wdp_2m detachment_coeff=detin transport_coeff=tranin shear_stress=tauin man=man05 nwalkers=600000 niterations=600 transport_capacity=tcapacity tlimit_erosion_deposition=erdepmax sediment_flux=sedflow erosion_deposition=erdepsimwe
 </code></pre>
 
