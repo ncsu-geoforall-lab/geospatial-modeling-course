@@ -1,20 +1,19 @@
-<P>
+<h2>Geomorphometry I: Terrain Modeling</h2>
+<!--<p><B>Analyze multiple return lidar data and create DEM and DSM,
+convert between different representations </B></p>-->
+
+<p>
 Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
 GRASS GIS overview and manual</a>,
 <a href="http://liblas.org/"> libLAS tools for lidar data conversions</a>
 
-<P>
-<P><B>Topic: Geomorphometry I: Terrain Modeling</B></P>
-<!--<p><B>Analyze multiple return lidar data and create DEM and DSM,
-convert between different representations </B></p>-->
-
 On MSWindows, it is recommended to use wxGUI equivalents of d.* commands:</font><br>
 use their GUI equivalents,
 see assignment <a href="data_visualization.html">Data display and visualization</a>
-<P>
+<p>
 Download the ASCI (x,y,z) lidar bare earth data <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/lid_be_pts.txt">lid_be_pts.txt</a><br>
 Download the ASCI (x,y,z) lidar multiple return data <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/lid_mr_pts.txt">lid_mr_pts.txt</a><br>
-<P>
+<p>
 Optional: You can also try a new version of this assignment based on the 2013 lidar survey, get it
 <b><a href="terrain_modeling_survey_2013.html">here</a></b><br>
 <!--
@@ -23,7 +22,9 @@ Download the Raleigh 2013 lidar data in State Plane CS, units feet as<br>
 <a href="../media/01/0793_016_xyzirnc_ncspf.zip">all return txt file</a><br>
 and the related <a href=../media/01/nc_spf.zip>LOCATION</a>
 -->
-start GRASS<br>
+
+
+<h3>Start GRASS GIS</h3>
 
 <pre><code>
 grass70
@@ -36,7 +37,9 @@ LOCATION: select nc_spm_08<br>
 MAPSET: use mapset with your unity ID or user1<br>
 Enter GRASSS<br>
 
-p. 249<br>
+
+<h3>Bare earth data</h3>
+
 Analyze bare earth and multiple return lidar data properties<br>
 download the ASCI (x,y,z) lidar data <a href="lid_be_pts.txt">lid_be_pts.txt</a><br>
 compute a raster map representing number of points<br>
@@ -61,6 +64,9 @@ d.legend lid_be_binn2m at=2,20,2,5
 r.report lid_be_binn2m unit=p
 r.univar lid_be_binn2m
 </code></pre>
+
+
+<h3>Range of coordinates at lower resolution</h3>
 
 <p>
 patch and overlay planimetry to see that there are<br>
@@ -154,6 +160,9 @@ d.rast lid_mr_binrange6m val=0.5-20.
 
 </code></pre>
 
+
+<h3>Interpolation</h3>
+
 <p>
 we now know how dense the data are and what is the range within cell<br>
 if we need 1m resolution DEM for our application<br>
@@ -208,7 +217,7 @@ v.build elev_lid792_bepts
 v.build elev_lidrural_mrpts
 <font color="#000066"> -->
 extract first return to get points for DSM<br>
-interpolate DEM and DSM (more about interpolation in next assignment)<br>
+interpolate DEM and DSM (more about interpolation in the interpolation assignment)<br>
 we use default parameters except for number of points used for<br>
 segmentation and interpolation - segmax and npmin<br>
 and higher tension for multiple return data<br>
@@ -234,8 +243,8 @@ shade the crossection using the color by bottom surface option<br>
 save image for report, if you don't have tiff support, use screen capture tool<br>
 if you don't remember this, see screen capture video for <a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz3_edit.mov">wxnviz 3d view</a><br>
 
-<pre><code>
-</code></pre>
+
+<h3>Multiple returns</h3>
 
 <p>
 find out where we have multiple returns<br>
@@ -264,19 +273,18 @@ d.vect elev_lidrural_mrpts where=return=2 col=green size=3
 d.vect elev_lidrural_mrpts where=return=3 col=blue
 d.vect elev_lidrural_mrpts where=return=4 col=yellow
 d.out.file lidreturns
-
-<!-- #add here TIN using the new module if available -->
 </code></pre>
 
-<p>
+<!-- add here TIN using the new module if available -->
+
 <!--
-<font color="#000066">
-# Optional task
-# Contour (isoline) representation
-# generate contours with 10m and 3m interval
-</font>
+<p>
+Optional task
+Contour (isoline) representation
+generate contours with 10m and 3m interval
+
 g.region raster=elevation -p
-<!-- d.erase -->
+d.erase
 d.rast elevation
 r.contour elevation out=elev_contour_10m step=10
 d.vect elev_contour_10m
