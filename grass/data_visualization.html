@@ -144,7 +144,7 @@ To create color table for future multiple uses
 type the rules into a plain text mycolor.txt file
 using a text editor (TextEdit, Notepad), for example:
 
-<pre>
+<pre data-filename="mycolor.txt">
 50 blue
 70 aqua
 90 green
@@ -159,10 +159,12 @@ Right click on "myelev" map layer > <em>set color table</em> > <em>Define</em> >
 If needed, redraw using the second button on Map Display.
 You can also create and assign the above color table by typing or pasting it into the
 <em>enter values interactively</em> window
-or run it from comand line (make sure you have the correct path):
+or run it from comand line (make sure you have the correct path,
+in the following example <code>mycolor.txt</code> should be replaced
+by e.g. /Users/john/mycolor.txt on Mac OS X):
 
 <pre><code>
-r.colors myelev rules=/Users/helena/mycolor.txt
+r.colors myelev rules=mycolor.txt
 </code></pre>
 
 <p>
