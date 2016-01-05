@@ -7,10 +7,12 @@ GRASS GIS overview and manual</a>,
 <p>
 Download Mapset and color tables:
 <ul>
-<li> download <a href="http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip">
+<li> Download <a href="http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip">
 NagsHead time series</a> and copy it into your nc_spm_08_grass7 Location
 (it should be the same level directory as PERMANENT).
 Do not let your unzipping program create additional level directory with the same name!
+If you are not sure about GRASS GIS Database structure read about it in
+<a href="http://grass.osgeo.org/grass71/manuals/grass_database.html">the manual</a>.
 <li><a href="data/stddev_color.txt">stddev_color.txt</a></li>
 <li><a href="data/regrslope_color.txt">regrslope_color.txt</a></li>
 </ul>
@@ -162,8 +164,8 @@ compute landforms using 9m and 45m neighborhood: read the manual to learn more.<
 
 <pre><code>
 g.region rural_1m -p
-r.param.scale elev_lid792_1m output=feature9c_1m size=9  param=feature
-r.param.scale elev_lid792_1m output=feature45c_1m size=45 param=feature
+r.param.scale elev_lid792_1m output=feature9c_1m size=9  method=feature
+r.param.scale elev_lid792_1m output=feature45c_1m size=45 method=feature
 </code></pre>
 
 <p>
