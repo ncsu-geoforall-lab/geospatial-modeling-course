@@ -34,8 +34,9 @@ import fileinput
 code_start = re.compile(r'<pre><code>')
 code_end = re.compile(r'</code></pre>')
 
-file_content_start = re.compile(r'<pre data-filename=.*><code>')
-file_name_capture = re.compile(r'<pre data-filename="(.*?)"><code>')
+file_content_start = re.compile(r'<pre data-filename=.*>')
+file_content_end = re.compile(r'</pre>')
+file_name_capture = re.compile(r'<pre data-filename="(.*?)">')
 
 html_comment_start = re.compile(r'\s*<!--')
 html_comment_end = re.compile(r'-->')
@@ -129,7 +130,7 @@ for line in fileinput.input():
         in_file_content = True
         tmp_file = open(file_name_capture.search(line).group(1), 'w')
         continue
-    elif in_file_content and code_end.search(line):
+    elif in_file_content and file_content_end.search(line):
         in_file_content = False
         tmp_file.close()
         continue
