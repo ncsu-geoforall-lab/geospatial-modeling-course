@@ -6,8 +6,10 @@ import re
 argc = len(sys.argv)
 
 page_title = sys.argv[1]
-directory = sys.argv[2]
-files = sys.argv[3:]
+start_html = sys.argv[2]
+end_html = sys.argv[3]
+directory = sys.argv[4]
+files = sys.argv[5:]
 
 heading = re.compile(r'<[Hh]..*>(.+)</[Hh].>|<[Pp]><[Bb]>Topic: (.+)</[Bb]></[Pp]>')
 
@@ -30,7 +32,11 @@ for name in files:
 
 sys.stdout.write('<h2>{t}</h2>\n\n'.format(t=page_title))
 
+sys.stdout.write(start_html)
+
 sys.stdout.write('<ul>\n')
 for (filename, title) in entries:
     sys.stdout.write('    <li><a href="{f}">{t}</a></li>\n'.format(f=filename, t=title))
 sys.stdout.write('</ul>\n')
+
+sys.stdout.write(end_html)
