@@ -82,18 +82,23 @@ bellow are some ideas you can use.
             (see, for example a
             <a href="http://www4.ncsu.edu/~jlloyd/Lloydj_MEA582f11/Lloyd_ProjectPaper_mea582f11.pdf">report on testing and enhancing v.transect addon</a>), suggestions:
             <ul>
-                <li><a href="http://grass.osgeo.org/grass70/manuals/v.kernel.html">v.kernel</a>
+                <li><em class="module">v.kernel</em>
                     wrapper with detection hotspots which are 10% of areas/values, e.g. using histogram,
                     and with other convenient features
                 <li><em>r3.patch</em> (similar to
-                    <a href="http://grass.osgeo.org/grass70/manuals/r.patch.html">r.patch</a>)
+                    <em class="module">r.patch</em>)
                     can be implemented using Python and
-                    <a href="http://grass.osgeo.org/grass70/manuals/r.mapcalc.html">r.mapcalc</a>
+                    <em class="module">r.mapcalc</em>
                     or, by an advanced programmer, in C
                 <li>find an interesting scientific article
                     and implement GRASS GIS module based on that article (see e.g.
                     <a href="http://grass.osgeo.org/grass70/manuals/addons/r.local.relief.html">r.local.relief</a> and its references)
                 <li>read <a href="https://github.com/wenzeslaus/python-grass-addon">How to write a Python GRASS GIS 7 addon</a>
+                <li>update
+                    <a href="https://grass.osgeo.org/grass64/manuals/addons/r.wind.sun.py.html">r.wind.sun</a>
+                    addon (calculates visual impact of aerogenerators and photovoltaic panels;
+                    see also the <a href="https://trac.osgeo.org/grass/browser/grass-addons/grass6/raster/r.wind.sun/r.wind.sun.py?rev=67404">source code</a>)
+                    for GRASS GIS 7 and split it into two if needed
             </ul>
         <li>development of a web or mobile application, for example with GRASS GIS as a backend
         <li>possible continuation in
@@ -102,9 +107,14 @@ bellow are some ideas you can use.
 <li><b>Open source GIS testing</b>
     <ul>
         <li>testing a selected GRASS GIS module under development or a release candidate
+            or test different versions (Linux versus MS Windows, 64bit versus 32bit, ...)
         <li>testing of an existing GRASS GIS module
             (see, for example a
             <a href="resources/WendelS_Project_GIS582601s15.pdf">report on creating a test suite for r.watershed</a>)
+        <li>testing of
+            <a href="https://grass.osgeo.org/grass70/manuals/addons/r.futures.html">r.futures</a>,
+            a module implementing urban growth model which is being
+            developed at NCSU
     </ul>
 <li><b>Enhancing open source GIS documentation</b>
     <ul>
@@ -112,17 +122,17 @@ bellow are some ideas you can use.
             to be included in the official documentation
             <ul>
                 <li>extend documentation for
-                    <a href="http://grass.osgeo.org/grass70/manuals/v.kernel.html">v.kernel</a>,
+                    <em class="module">v.kernel</em>,
                     add explanations of different kernels and constants
                 <li>add examples and descriptions to
-                    <a href="http://grass.osgeo.org/grass70/manuals/r.topmodel.html">r.topmodel</a>
+                    <em class="module">r.topmodel</em>
                     documentation
                 <li>add examples and applications to
-                    <a href="http://grass.osgeo.org/grass70/manuals/r.topidx.html">r.topidx</a>
+                    <em class="module">r.topidx</em>
                     documentation
                 <li>add examples and images to
-                    <a href="http://grass.osgeo.org/grass70/manuals/r.sun.html">r.sun</a>
-                    and <a href="http://grass.osgeo.org/grass70/manuals/r.sunmask.html">r.sunmask</a>
+                    <em class="module">r.sun</em>
+                    and <em class="module">r.sunmask</em>
                     documentation and extend
                     <a href="http://grass.osgeo.org/grass70/manuals/addons/r.sun.hourly.html">r.sun.hourly</a>
                     and
@@ -140,7 +150,8 @@ bellow are some ideas you can use.
                     <a href="http://grass.osgeo.org/grass70/manuals/full_index.html">GRASS GIS manual</a>
                     and
                     <a href="http://grass.osgeo.org/grass70/manuals/addons/">GRASS GIS Addons manuals</a>
-                    and find a module related to this class with insufficient documentation according to you
+                    and find a module related to this class with insufficient
+                    documentation according to your judgment
             </ul>
         <li>create equivalent of assignments for this class in
             <a href="http://qgis.org/">QGIS</a> using
