@@ -7,7 +7,6 @@ Create folder Assign3 in your preferred workspace.
 
 Include resulting maps into your report
 (use your judgement to decide which results to include).
-
 <pre>
 Start ArcGIS
 Start->Programs->ArcMap
@@ -19,9 +18,9 @@ Display land use classes using custom color, add labels:
 
 <pre>
 File->Add Data->Add Data... ./ncrast.mdb/landcl96
-RMC landcl96->Properties
-LMC Symbology Tab
-LMC on line 1 under Label - replace numbers 1-7 with these labels, respectively:
+<i>right click</i> landcl96->Properties
+<i>left click</i> Symbology Tab
+<i>left click</i> on line 1 in th Label column- replace numbers 1-7 with these labels, respectively:
 (hint: the tab key will move you to the next label entry)
 
 developed
@@ -32,9 +31,9 @@ forest
 water
 sediment
 
-LMC on color - replace the color for each land use by more intuitive one
-(one that seems to fit the theme for the label - e.g. green for agriculture,
-blue for water) by selecting from the provided pallette
+<i>left click</i> on color - replace the color for each land use by more intuitive one by selecting from the provided pallette.
+<a href=" https://dabrownstein.files.wordpress.com/2014/02/nlcd-2006-legend.jpg">Example palette</a>
+
 Click 'OK'
 </pre>
 
@@ -42,7 +41,7 @@ Click 'OK'
 Save as layer to preserve the new color scheme and labels:
 
 <pre>
-LMC on the landcl96 entry in the Table of Contents (TOC) ->'Save as layer file...'
+<i>left click</i> on the landcl96 entry in the Table of Contents (TOC) ->'Save as layer file...'
 Navigate to .\Assign3
 Save as landcl96.lyr
 </pre>
@@ -51,10 +50,10 @@ Save as landcl96.lyr
 Display only categories 1 and 2 from the land use map:
 
 <pre>
-RMC landcl96->Properties
-LMC Symbology Tab
-Use LMC to select items 3 - 7 (herbaceous - sediment)
-LMC Remove button to remove values 3 through 7
+<i>right click</i> landcl96->Properties
+<i>left click</i> Symbology Tab
+Use <i>left click</i> to select items 3 - 7 (herbaceous - sediment)
+<i>left click</i> Remove button to remove values 3 through 7
 Click 'OK'
 </pre>
 
@@ -62,50 +61,38 @@ Click 'OK'
 Display only elevation higher than 100 m over the geology map:
 
 <pre>
-File->Add Data->Add Datsa...  .\ncrast.mdb\geology
+File->Add Data->Add Data...  .\ncrast.mdb\geology
 File->Add Data->Add Data...  .\ncrast.mdb\elev
-RMC elev->Properties
-LMC Symbology Tab
+<i>right click</i> elev->Properties
+<i>left click</i> Symbology Tab
 From the Show panel (far left) select 'Classified'
-LMC Classify Button
+<i>left click</i> Classify Button
 Set the method to 'Equal Interval'
 Set Classes to 10
-LMC the 'Exclusion' button
+<i>left click</i> the 'Exclusion' button
 Set the Excluded values to 1-100
 Click 'OK'
 Click 'OK'
-LMC Display Tab -> Set the Transparency to 50%
+<i>left click</i> Display Tab -> Set the Transparency to 50%
 Click 'OK'
 </pre>
 
 <p>
 Change colors for raster maps:
 <pre>
-RMC elev->Properties
-LMC Symbology Tab
-Change the color ramp to one that goes from brown to blue
-LMC the Symbol column heading (legend table) and select 'Flip Colors'
-Click 'OK'
+<i>right click</i> elev->Properties
+<i>left click</i> Symbology Tab
+Change the color ramp to one that goes from green to white (one of the last in the drop down menu)
 </pre>
 
 <p>
 Use a histogram equalized color table to display topographic slope:
-<p>
-(Note: this crashes ArcMAP (r9.x) if original FP map is used on some computers if that
-is the case, convert map to integers first. It appears that this same problem exists
-in r10.x)
+
 
 <pre>
 File->Add Data->Add Data...  .\ncrast\slope
-LMC Customize Menu->Extensions...
-LMC in check box to select (check out) a Spatial Analyst Extensionlicense.
-Click 'OK'
-LMC ArcToolBox Window
-LMC ArcToolBox->Spatial Analyst Tools->Math->Int
-Input: slope
-Output: .\Assign3\slopeint
-RMC slopeint->Properties
-LMC Symbology Tab
+<i>right click</i> slope->Properties
+<i>left click</i> Symbology Tab
 Choose the 'Red to Green Diverging, Bright' color ramp
 Change the Stretch Type to Histogram Equalize
 Click 'OK'
@@ -117,7 +104,17 @@ Make a map with a legend, scale and grid:
 
 <pre>
 Turn off all layers except landcl96 in the TOC
+</pre>
+<p>
+add the streams layer
+<pre>
 File->Add Data->Add Data... ./ncshape.mdb/streams
+change the streams color to blue 
+in the TOC <i>right click</i> streams -> Properties
+<i>left click</i> Symbology Tab
+<i>left click</i> line symbol
+change the color to blue
+Click 'OK'
 Toggle to Layout View: View Menu->Layout View
 </pre>
 
@@ -125,11 +122,11 @@ Toggle to Layout View: View Menu->Layout View
 Assign a fixed scale for the layout:
 
 <pre>
-RMC Layers->Properties
+<i>right click</i> Layers->Properties
 Select Data Frame tab
 In the Extent panel select Fixed Scale and set it to 1:50,000
 Click 'OK'
-
+# the default format of the layout is to small to display the whole area in the 1:50000 scale. Should I change the scale or the format or leave it as it is?
 </pre>
 
 <p>
@@ -137,13 +134,14 @@ Add a legend<br>
 
 <pre>
 Insert Menu->Legend...
-Accept the defaults for the first panel LMC 'Next >'
+Accept the defaults for the first panel <i>left click</i> 'Next >'
 Replace the text "Legend" with "Land Classification" in the Legend title
-LMC 'Next >'
+<i>left click</i> 'Next >'
 Add a Legend Frame Border (select one as you feel appropriate)
-LMC 'Next >'
-LMC 'Next >'
-LMC 'Finish'
+Add a white Frame Background. Set the cap to X:10 and Y:10 (as in the Frame Border)
+<i>left click</i> 'Next >'
+<i>left click</i> 'Next >'
+<i>left click</i> 'Finish'
 Follow the menus until finished
 Drag the legend to a more appropriate location, and resize as you feel is needed to
 make it "fit" into your map.
@@ -155,17 +153,18 @@ Add a scale bar:
 <pre>
 Insert Menu->Scale bar...
 Select a scale bar (your choice)
-LMC Properties to set Division Units to meters
+<i>left click</i> Properties to set Division Units to kilometers
 Click 'OK'
 Click 'OK'
-Place and resize the legend as you see fit for your map design.
+Place and resize the legend as you see fit for your map design. Make sure that the numbers on the scale are reasonable (round numbers preferably). 
+Hint: You can resize the Data Frame too (select Data Frame by <i>left click</i> on it then drag the corners to the desired position
 </pre>
 
 <p>
 Add a grid:
 
 <pre>
-RMC Layers->Properties
+<i>right click</i> Layers->Properties
 Select the Grids tab
 Click 'New Grid...'
 select 'Measured Grid'
@@ -180,42 +179,75 @@ Display roads with labels:
 
 <pre>
 File->Add Data->Add Data...  ./ncshape.mdb/roadsmajor
-RMC (roadsmajor)->Properties
+<i>right click</i> (roadsmajor)->Properties
+<i>left click</i> Symbology Tab
+<i>left click</i> line symbol
+change the symbol to Expressway 
 Select Labels tab
 In the Text String Panel set the Label Field to 'ROAD_NAME'
 Check the 'Label features in this layer' box (upper left corner of dialog window)
-Click 'OK'
-Note: you can optionally toggle label display by: RMC roadsmajor->Label Features
+In the Text Symbol section <i>left click</i> Symbol...
+In the dialog window select the 'Country 3' style and <i>left click</i> Edit Symbol... button in the right panel of the Sybol Selector dialog window.
+In the Editor dialog window go the the Mask tab and in Style section check the 'Halo' option
+Click 'OK' to come back to the Symbol Selector dialog window
+Click 'OK' to come back to the Layer Properties window
+In the Other Options section <i>left click</i> 'Placement Properties...' button
+In the Position Section, set the position to 'On the line'
+Click 'OK' to come back to the Layer Properties window
+Click 'OK' 
 </pre>
 
 <h4>Compare hillshades</h4>
 <p>
-For raster map elev, compare hillshade generated by the Symbology 'Switch on Hillshade':
+
+Switch the Layer mode back to the Data Mode and remove all the layers from TOC (You can also strat a new project in menu File -> New project)
+<p>
+Compare different types pof displayung the hillshade effect for the elev map
+<p> 1. Hillshade generated using the 3D Analyst Extension.
 
 <pre>
-to the hillshade generated using the 3D Analyst Extension.
-RMC elev->Properties...
-Select the Symbology tab
-Check the 'Use hillshade effect'
-Set the Z to 3
-Click 'OK'
-
-LMC Customize Menu->Extensions...
+<i>left click</i> Customize Menu->Extensions...
 Check out a 3D Analyst license
 ArcToolBox->3D Analyst Tools->Raster Surface->Hillshade
 Select elev as input, hillsh_el as output, zscale=3
 Click 'OK'
+File->Add Data->Add Data...  .\ncrast.mdb\elev
+<i>right click</i> elev->Properties
+<i>left click</i> Symbology Tab
+From the Show panel (far left) select 'Streched'
+Change the color ramp to one that goes from green to white (one of the last in the drop down menu)
+<i>left click</i> Display Tab -> Set the Transparency to 50%
+Click 'OK'
+change the layer name <i>left click</i> elev layer in the TOC than again <i>left click</i> elev layer in the TOC. Type the name: elev_transp
+</pre>
+<p>
+2. Hillshade generated by the Symbology 'Switch on Hillshade':
 
-RMC hillsh_el->Properties
-Select the Display tab
-Set the Transparency to 50%
+<pre>
+File->Add Data->Add Data...  .\ncrast.mdb\elev
+<i>right click</i> elev->Properties
+<i>left click</i> Symbology Tab
+From the Show panel (far left) select 'Streched'
+Change the color ramp to one that goes from green to white (one of the last in the drop down menu)
+Check the 'Use hillshade effect'
+Set the Z to 3
+Click 'OK'
+change the layer name <i>left click</i> elev layer in the TOC than again <i>left click</i> elev layer in the TOC. Type the name: elev_hillsh
 </pre>
 
-To examine the differences, zoom into an area of the data and toggle the hillsh_el layer
-on and off (by repetitively checking and unchecking the layer in the TOC). This flash
-technique is an extension of an older analog method used to rapidly flip between two
-photographs. The rapid image interchange emphasizes differences.
-
+<p>
+To examine the differences, zoom into an area of the data and toggle elev_hillsh layer
+on and off (by repetitively checking and unchecking the layer in the TOC). The rapid image interchange emphasizes differences.
+<p>
+In order to copare the results with elev with no hillshade applied you can load the elev layer again, without checking the hillshade effect in Symbology tab <pre>
+File->Add Data->Add Data...  .\ncrast.mdb\elev
+<i>right click</i> elev->Properties
+<i>left click</i> Symbology Tab
+From the Show panel (far left) select 'Streched'
+Change the color ramp to one that goes from green to white (one of the last in the drop down menu)
+</pre>
+<p>
+Toggle elev layer on and off by repetitively checking and unchecking the layer in the TOC. 
 
 <h3>Viewing data in 3D using ArcScene</h3>
 Start ArcScene:
@@ -228,7 +260,7 @@ Start -> Programs -> ArcGIS -> ArcScene
 Add data in ArcScene:
 
 <pre>
-LMC on the 'Add Data' Button in the tool bar
+<i>left click</i> on the 'Add Data' Button in the tool bar
 Add .\ncrast.mdb\elev
 Note, you can shift-click (contiguous selections) or control-click
 (non-contiguous selections) to add more than one data set at a time.
@@ -259,7 +291,7 @@ Click 'OK'
 Drape a vector feature over the 3-D (raster) surface:
 
 <pre>
-LMC on the 'Add Data' Button in the tool bar
+<i>left click</i> on the 'Add Data' Button in the tool bar
 Add  .\ncshape.mdb\streets_wake
 Dbl. click on streets_wake in the TOC.
 From Properties select Base Heights tab -> 'FLoating on a custom surface'
@@ -327,3 +359,4 @@ Click 'OK'
 <p>
 Note: changes made using the contrast slider, like those controls associated with
 solar altitude and azimuth, are reflected immediately in the data frame.
+
