@@ -61,7 +61,7 @@ from multiple return lidar points using the module <em class="module">v.surf.rst
 
 <pre><code>
 g.region rural_1m -p
-v.surf.rst elev_lidrural_mrpts elevation=elev_lidruralmr_1m npmin=120 segmax=25 tension=300 smooth=1.0
+v.surf.rst elev_lidrural_mrpts elevation=elev_lidruralmr_1m npmin=120 segmax=25 tension=40 smooth=1.0
 </code></pre>
 
 <p>
@@ -171,26 +171,34 @@ r.colors myelev rules=mycolor.txt
 Note that you can combine color RGB and name definitions
 as well as % and cat/val to create complex custom color tables
 and store them in a text file for future use, see the examples in <em class="module">r.colors</em> man page.
-<h4>
-Compare the use of equal interval and histogram equalized color table for slope</h4>
+
+<h4>Compare the use of equal interval and histogram equalized color table for slope</h4>
 
 To add the legend use <em>Add map elements</em> button on Map Display.
-Make sure to change name of raster to "myslope".
-<p>
-To explain the difference between the two maps, you can generate a histogram.
-On map Display click on <em>Analyze map</em> > <em>Create histogram</em> to open the histogram tool and
-save results to graphics file.
 
 <pre><code>
 g.copy raster=slope,myslope
 r.colors myslope color=bgyr
 d.rast myslope
 d.legend myslope
-d.histogram myslope
 d.out.file myslopecolor
-r.colors -e myslope color=bgyr
+</code></pre>
+
+<p>
+To explain the difference between the two maps, you can generate a histogram.
+On map Display click on <em>Analyze map</em> > <em>Create histogram</em> to open the histogram tool and
+save results to graphics file. Or use this command which will
+add a histogram as a layer to Layer Manager.
+<pre><code>
 d.histogram myslope
+</code></pre>
+<p>
+Now set the histogram equalized color table, and save the new slope map and histogram images.
+<span class="question">Describe the effect of the histogram equalized color table.</span>
+<pre><code>
+r.colors -e myslope color=bgyr
 d.out.file myslopecolorequalized
+d.histogram myslope
 </code></pre>
 
 <h3>Modify legend, scale and grid</h3>
