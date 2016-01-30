@@ -4,7 +4,7 @@
 
 <p>
 Include resulting maps into your report 
-(use your judgement to decide which results to include).
+(use your judgement to decide which results to include). Adjust the cololors and symbology of displayed layers to match the cartographic standards (lakes are displayed in blue etc.)
 
 <!-- <pre>
 ========================================================================
@@ -13,7 +13,7 @@ ALL COORDINATE SYSTEMS MUST BE DEFINED TO RUN BUFFER (i.e. .prj files)
 </pre> -->
 
 <p>
-Create the workspace for the current assignment as the folder Assign5<br>
+Create the workspace for the current assignment as the folder assign3b<br>
 <p>
 To constrain analyses in a similar manner as g.region,
 set the spatial extent using the options under Environments, for example:<br>
@@ -22,7 +22,7 @@ to constrain analyses results to the extents defined by intersection of input fe
 <pre>
 Start ArcMap.
 From the menu Geoprocessing -> Environments... -> Processing extent.
-Choose Intersection of Inputs.
+Choose Intersection of Inputs from the drop down menu.
 Click 'OK'
 </pre>
 
@@ -61,11 +61,11 @@ Create the buffers:
 File -> Add Data -> Add Data...
 Select ./ncrast.mdb/lakes
 Select ./ncrast.mdb/landcl96
-Check out a Spatial Analysis Extension license
+Check out a Spatial Analysis Extension license (Menu -> Customize -> Extensions -> Spatial Analyst box needs to be checked)
 Open the ArcToolbox (you may already have it open)
 Select 'Spatial Analysis Tools->Distance->Euclidean Distance'
 Set 'Input raster' to 'lakes'
-Set Output distance raster' to '\Assign5\lk_dist' 
+Set Output distance raster' to '\assign3b\lk_dist'
 Set 'Maximum distance' to '500'
 Leave the rest as defaults 
 Click 'OK'
@@ -77,7 +77,7 @@ Select the locations that overlay developed areas:
 <pre>
 Select 'Spatial Analyst Tools->Map Algebra->Raster Calculator'
 Type in the expression: SetNull( "landcl96" > 2, "lk_dist")
-Set the Output raster to './Assign5/dev_lakes
+Set the Output raster to './assign3b/dev_lakes
 Click 'OK'
 </pre>
 
@@ -90,7 +90,7 @@ Open the ArcToolbox (if not already open)
 Select 'Conversion Tools->To Raster->Polyline to Raster'
 Set 'Input Features' to 'streets_wake'
 Set 'Value field' to 'SPEED'
-Set 'Output Raster Dataset to './Assign5/str_speed'
+Set 'Output Raster Dataset to './assign3b/str_speed'
 Set Cellsize to 30
 Leave the others as defaults 
 Click 'OK'
@@ -104,7 +104,7 @@ Set the working directory:
 
 <pre>
 Select Geoprocessing -> Environments...
-Under 'Workspace' set the 'Current Workspace' to '.\Assign5'
+Under 'Workspace' set the 'Current Workspace' to '.\assign3b'
 Under 'Raster Analysis' set the 'Cell Size' to 'Same as layer str_speed'
 Under 'Raster Analysis' set the  'Mask' to '.\ncshape.mdb\boundary_wake'
 Click 'OK'
@@ -138,8 +138,8 @@ Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Distance->Cost Distance'
 Set 'Input raster or feature source data' to 'fire_pt'
 Set 'Input Cost raster' to 'str_trv'    
-Set 'Output distance raster' to './Assign5/str_cost'
-Set 'Output backlink raster (optional)' to './Assign5/backlink'
+Set 'Output distance raster' to './assign3b/str_cost'
+Set 'Output backlink raster (optional)' to './assign3b/backlink'
 Leave the rest as defaults
 Click 'OK'
 </pre>
@@ -153,7 +153,7 @@ Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Extraction->Sample'
 Set 'Input rasters' to 'str_cost'
 Set 'Input Location raster or point features' to 'firestations'
-Set 'Output table' to './Assign5/station_costs'  
+Set 'Output table' to './assign3b/station_costs'
 Leave everything else as defaults
 Click 'OK'
 </pre>
@@ -164,15 +164,15 @@ However, if the table does not get added:
 <pre>
 
 File -> Add Data ->
-Select '.\ssign5\station_costs'
+Select '.\assign3b\station_costs'
 </pre>
 
 <p>
 Open the station_costs table and sort on the field 'STR_COST':
 
 <pre>
-RMC 'station_costs' -> Open 
-RMC column named 'STR_COST' and choose 'Sort Ascending'
+<i>right click</i> 'station_costs' -> Open
+<i>right click</i> column named 'STR_COST' and choose 'Sort Ascending'
 Note the range of cost values.
 Close the table
 </pre>
@@ -183,7 +183,7 @@ Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Distance->Cost Back Link'
 Set 'Input raster or feature source data' to 'fire_pt'
 Set the 'Input cost raster' to 'str_cost'
-Set the 'Ouput Backlink raster' to '.\assign5\backlink'  
+Set the 'Ouput Backlink raster' to '.\assign3b\backlink'  
 Click 'OK' -->
 
 
@@ -196,13 +196,13 @@ does not work with geodatabase firestations.
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Distance->Cost Path'
 Set 'Input raster or feature destination data' to 'firestations'
-Set 'Destination field' to 'FID'
+Set 'Destination field' to 'OBJECTID'
 Set the 'Input cost distance raster' to 'str_cost'
 Set the 'Input cost backlink raster' to 'backlink'
-Set the 'Output raster' to '.\Assign5\cost_path'
+Set the 'Output raster' to '.\assign3b\cost_path'
 Set the 'Path type' to 'BEST_SINGLE'   
 Click 'OK'
 </pre>
 <p>
-Note: to see the resulting least cost (drive-time) path 
+Note: to see the resulting least cost (drive-time) path
 you may have to turn off some or most of the layers in your TOC.
