@@ -13,7 +13,7 @@ ALL COORDINATE SYSTEMS MUST BE DEFINED TO RUN BUFFER (i.e. .prj files)
 </pre> -->
 
 <p>
-Create the workspace for the current assignment as the folder assign3b<br>
+Create the workspace for the current assignment as the folder Buffers_cost<br>
 <p>
 To constrain analyses in a similar manner as g.region,
 set the spatial extent using the options under Environments, for example:<br>
@@ -65,7 +65,7 @@ Check out a Spatial Analysis Extension license (Menu -> Customize -> Extensions 
 Open the ArcToolbox (you may already have it open)
 Select 'Spatial Analysis Tools->Distance->Euclidean Distance'
 Set 'Input raster' to 'lakes'
-Set Output distance raster' to '\assign3b\lk_dist'
+Set Output distance raster' to '\Buffers_cost\lk_dist'
 Set 'Maximum distance' to '500'
 Leave the rest as defaults 
 Click 'OK'
@@ -77,7 +77,7 @@ Select the locations that overlay developed areas:
 <pre>
 Select 'Spatial Analyst Tools->Map Algebra->Raster Calculator'
 Type in the expression: SetNull( "landcl96" > 2, "lk_dist")
-Set the Output raster to './assign3b/dev_lakes
+Set the Output raster to './Buffers_cost/dev_lakes
 Click 'OK'
 </pre>
 
@@ -90,7 +90,7 @@ Open the ArcToolbox (if not already open)
 Select 'Conversion Tools->To Raster->Polyline to Raster'
 Set 'Input Features' to 'streets_wake'
 Set 'Value field' to 'SPEED'
-Set 'Output Raster Dataset to './assign3b/str_speed'
+Set 'Output Raster Dataset to './Buffers_cost/str_speed'
 Set Cellsize to 30
 Leave the others as defaults 
 Click 'OK'
@@ -104,7 +104,7 @@ Set the working directory:
 
 <pre>
 Select Geoprocessing -> Environments...
-Under 'Workspace' set the 'Current Workspace' to '.\assign3b'
+Under 'Workspace' set the 'Current Workspace' to '.\Buffers_cost'
 Under 'Raster Analysis' set the 'Cell Size' to 'Same as layer str_speed'
 Under 'Raster Analysis' set the  'Mask' to '.\ncshape.mdb\boundary_wake'
 Click 'OK'
@@ -138,8 +138,8 @@ Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Distance->Cost Distance'
 Set 'Input raster or feature source data' to 'fire_pt'
 Set 'Input Cost raster' to 'str_trv'    
-Set 'Output distance raster' to './assign3b/str_cost'
-Set 'Output backlink raster (optional)' to './assign3b/backlink'
+Set 'Output distance raster' to './Buffers_cost/str_cost'
+Set 'Output backlink raster (optional)' to './Buffers_cost/backlink'
 Leave the rest as defaults
 Click 'OK'
 </pre>
@@ -153,7 +153,7 @@ Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Extraction->Sample'
 Set 'Input rasters' to 'str_cost'
 Set 'Input Location raster or point features' to 'firestations'
-Set 'Output table' to './assign3b/station_costs'
+Set 'Output table' to './Buffers_cost/station_costs'
 Leave everything else as defaults
 Click 'OK'
 </pre>
@@ -164,7 +164,7 @@ However, if the table does not get added:
 <pre>
 
 File -> Add Data ->
-Select '.\assign3b\station_costs'
+Select '.\Buffers_cost\station_costs'
 </pre>
 
 <p>
@@ -183,7 +183,7 @@ Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Distance->Cost Back Link'
 Set 'Input raster or feature source data' to 'fire_pt'
 Set the 'Input cost raster' to 'str_cost'
-Set the 'Ouput Backlink raster' to '.\assign3b\backlink'  
+Set the 'Ouput Backlink raster' to '.\Buffers_cost\backlink'  
 Click 'OK' -->
 
 
@@ -199,7 +199,7 @@ Set 'Input raster or feature destination data' to 'firestations'
 Set 'Destination field' to 'OBJECTID'
 Set the 'Input cost distance raster' to 'str_cost'
 Set the 'Input cost backlink raster' to 'backlink'
-Set the 'Output raster' to '.\assign3b\cost_path'
+Set the 'Output raster' to '.\Buffers_cost\cost_path'
 Set the 'Path type' to 'BEST_SINGLE'   
 Click 'OK'
 </pre>

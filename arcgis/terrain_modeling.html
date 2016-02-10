@@ -2,9 +2,9 @@
 <p>Resources:
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
-Create the folder 'Assign4a'.<br>
+Create the folder 'Modeling'.<br>
 Download the Raleigh 2013 lidar data as LAS file
-<a href="http://courses.ncsu.edu/mea582/common/media/data/tile_0793_016_spm.las">LAS tile 0793_016 in NC State Plane Meters </a>to the assign4a folder.
+<a href="http://courses.ncsu.edu/mea582/common/media/data/tile_0793_016_spm.las">LAS tile 0793_016 in NC State Plane Meters </a>to the Modeling folder.
 
 <p>
 Set the output coordinate system and spatial extent to the layer
@@ -20,7 +20,7 @@ Menu -> Customize ->Extensions...
 Open the ArcToolbox (if not already open)
 Select '3D Analyst->Conversion->From File->LAS to Multipoint'
 Set 'Input' to 'tile_0793_016_spm.las'
-Set 'Output Feature Class' to '.\Assign4a\lidar_be'
+Set 'Output Feature Class' to '.\Modeling\lidar_be'
 Set 'Average Point Spacing' to '0.5'
 Set 'Coordinate System' to 'NAD_1983_StatePlane_North_Carolina_FIPS_3200' (you can type 32119 in the search window)
 Click 'OK'
@@ -35,7 +35,7 @@ Open the ArcToolbox
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'lidar_be'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\assign4a\bin_count2m'
+Set 'Output Raster Dataset' to '.\Modeling\bin_count2m'
 Set 'Cell assignment type' to 'COUNT'
 Set Cellsize' to '2'                            
 Click 'OK'
@@ -49,7 +49,7 @@ Open the ArcToolbox (if not already open)
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'lidar_be'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\assign4a\bin_count6m'
+Set 'Output Raster Dataset' to '.\Modeling\bin_count6m'
 Set 'Cell assignment type' to 'COUNT'
 Set Cellsize' to '6'                             
 Click 'OK'
@@ -62,7 +62,7 @@ Open the ArcToolbox (if not already open)
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'lidar_be'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\assign4a\bin_mean6m'
+Set 'Output Raster Dataset' to '.\Modeling\bin_mean6m'
 Set 'Cell assignment type' to 'MEAN'
 Set Cellsize' to '6'                            
 Click 'OK'
@@ -76,7 +76,7 @@ Open the ArcToolbox (if not already open)
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'lidar_be'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\assign4a\bin_range6m'
+Set 'Output Raster Dataset' to '.\Modeling\bin_range6m'
 Set 'Cell assignment type' to 'RANGE'
 Set Cellsize' to '6'                            
 Click 'OK'
@@ -90,7 +90,7 @@ Open the ArcToolbox (if not already open)
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'lidar_be'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\assign4a\bin_var6m'
+Set 'Output Raster Dataset' to '.\Modeling\bin_var6m'
 Set 'Cell assignment type' to 'STANDARD_DEVIATION'
 Set Cellsize' to '6'                            
 Click 'OK'
@@ -136,7 +136,7 @@ Select the 'Select Features by Rectange' tool (in the Select Tool dropdown menu 
 Drag a box that selects points from 'lidar_be' that overlap with 'elev_lidrural_mrpts'
 NOTE: make sure that the layer 'lidar_be' is visible (checked on in TOC)
 <i>right click</i> 'lidar_be-> DAta -> Export Data...'
-Set 'Output file' to '.\assign4a\rural_bepts.shp'
+Set 'Output file' to '.\Modeling\rural_bepts.shp'
 Click 'Save'
 Click 'OK'
 click 'Yes' to add the exported data to the map
@@ -151,7 +151,7 @@ Open the ArcToolbox (if not already open)
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'rural_bepts'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\assign4a\be_rural6m'
+Set 'Output Raster Dataset' to '.\Modeling\be_rural6m'
 Set 'Cell assignment type' to 'MEAN'
 Set Cellsize' to '6'
 Click 'OK'
@@ -159,7 +159,7 @@ Click 'OK'
 Select 'Conversion Tools->To Raster->Point to Raster'
 Set 'Input Features' to 'elev_lidrural_mrpts'
 Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\assign4a\rural_mr6m'
+Set 'Output Raster Dataset' to '.\Modeling\rural_mr6m'
 Set 'Cell assignment type' to 'MEAN'
 Set Cellsize' to '6'
 Click 'OK'
@@ -212,7 +212,7 @@ click '='
 Type in the value '1' so that the expression looks like '[Return] = 1'
 Click 'OK'
 <i>right click</i> 'elev_lidrural_mrpts->Data->Export Data...'
-Save the selection set to '.\assign4a\lidfirst.shp'
+Save the selection set to '.\Modeling\lidfirst.shp'
 Click 'Yes' to add the exported data to the map
 <i>left click</i> Menu 'Selection->Clear Selected Features'
 </pre>
@@ -229,7 +229,7 @@ click '='
 Type in the value '2' so that the expression looks like '[Return] = 2'
 Click 'OK'
 <i>right click</i> 'elev_lidrural_mrpts->Data->Export Data'
-Save the selection set to '.\assign4a\lidlast.shp'
+Save the selection set to '.\Modeling\lidlast.shp'
 Click 'Yes' to add the exported data to the map
 <i>left click</i> 'Selection->Clear Selected Features'
 </pre>
@@ -248,7 +248,7 @@ Set 'Input Raster' to 'elev'
 Set 'Contour interval' to '10'
 Set 'Base contour' as '0'
 Set 'Z factor' to '1'
-Save 'Output polyline features' as '.\assign4a\cont_10m.shp'
+Save 'Output polyline features' as '.\Modeling\cont_10m.shp'
 Click 'OK'
 
 Select 'Spatial Analyst Tools->Surface->Contour'
@@ -256,7 +256,7 @@ Set 'Input Surface' to 'elev'
 Set 'Contour interval' to '3'
 Set 'Base contour' as '55'
 Set 'Z factor' to '1'
-Save 'Output Features' as '.\assign4a\cont_3m.shp'
+Save 'Output Features' as '.\Modeling\cont_3m.shp'
 </pre>
 
 <h3>FYI: Handling LAS data in ArcGIS</h3>

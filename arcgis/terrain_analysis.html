@@ -4,7 +4,7 @@
 
 
 <p>
-Create the assignment working directory (folder) .\Assign9.<br>
+Create the assignment working directory (folder) .\Analysis.<br>
 Start ArcMap.<br>
 Disable background processing.
 
@@ -24,7 +24,7 @@ Check out a Spatial Analyst Extension license
 Open the ArcToolbox
 Select 'Spatial Analyst Tools->Surface->Slope'
 Set 'Input raster' to 'elev'
-Set 'Output raster' to '.\Assign9\Slope_elev'
+Set 'Output raster' to '.\Analysis\Slope_elev'
 Set 'Output measurement' to 'DEGREE'
 Click 'OK'
 </pre>
@@ -43,11 +43,11 @@ Select ncrast.mdb/elev_srt
 Open the ArcToolbox (if it's not already open)
 Select 'Spatial Analyst Tools->Surface->Slope'
 Set 'Input raster' to 'elev_srt'
-Set 'Output raster' to '.\Assign9\Slope_el_srt'
+Set 'Output raster' to '.\Analysis\Slope_el_srt'
 Set 'Output measurement' to 'DEGREE'
 Click 'OK'
 
-RMC 'Slope_el_srt->Properties->Symbology->Classify 
+<i>right mouse click</i> 'Slope_el_srt->Properties->Symbology->Classify 
 </pre>
 
 <p>
@@ -69,8 +69,8 @@ Create TIN 'tin' in 3D Analyst from these points if you don't have it already:
 
 <pre>
 Open ArcToolbox (if it's not already open)
-Select 3D Analyst Tools->TIN Management->Create TIN
-Set 'Output TIN' to .\Assign9\lid792_tin
+Select 3D Analyst Tools->Data Management->TIN->Create TIN
+Set 'Output TIN' to .\Analysis\lid792_tin
 Set 'Input feature class' to elev_lid792_randpts
 In the Input feature class list, find the "height_field" (2nd field from left). 
 Click on the entry for the elev_lid792_randpts (Shape_Z is displayed by default). 
@@ -84,11 +84,11 @@ Click 'OK'
 Open the ArcToolbox (if it's not already open)
 Select '3D Analyst Tools-> terrain and TIN Surface -> Surface Slope'
 Set 'Input Surface' to 'lid792_tin'
-Set 'Output Feature Class' as '.\Assign9\lid792_tin_SurfaceSlope' 
+Set 'Output Feature Class' as '.\Analysis\lid792_tin_SurfaceSlope' 
 Set 'Slope Units' to 'DEGREE'
 Click 'OK'
 
-# do the same for Surface Aspect to create: '.\Assign9\lid792_tin_SurfaceAspect' -->
+# do the same for Surface Aspect to create: '.\Analysis\lid792_tin_SurfaceAspect' -->
 Compute slope.<br>
 The output from this process is a polygon feature class whose attribute (found
 in the slope class field) consists of the slopes binned into 7 classes.<br>
@@ -99,13 +99,13 @@ The default (ESRI) breaks (bins) are at 0.57, 1.43, 2.66, 5.71, 12.13, 24.89,
 Open the ArcToolbox (if it's not already open)
 Select '3D Analyst Tools-> Triangulated Surface -> Surface Slope'
 Set 'Input Surface' to 'lid792_tin'
-Set 'Output Feature Class' as '.\Assign9\lid792_tin_SurfaceSlope' 
+Set 'Output Feature Class' as '.\Analysis\lid792_tin_SurfaceSlope' 
 Set 'Slope Units' to 'DEGREE'
 Click 'OK'
 </pre>
 
 <p>
-Do the same for Surface Aspect to create: '.\Assign9\lid792_tin_SurfaceAspect'.<br>
+Do the same for Surface Aspect to create: '.\Analysis\lid792_tin_SurfaceAspect'.<br>
 As with slope, the aspect that comes from this process is in the form of a
 polygon feature class whose aspect attribute is binned into eight 45 degree wide<br>
 directions (code = 1 - 8 ).<br>
@@ -121,7 +121,7 @@ Select ncrast.mdb/elid_792
 Open the ArcToolbox (if it's not already open)
 Select '3D Analyst Tools -> Raster Surface -> Slope'
 Set 'Input raster' to 'elid_792'
-Set 'Output raster' to '.\Assign9\slope_elid71'
+Set 'Output raster' to '.\Analysis\slope_elid72'
 Click 'OK'
 </pre>
 
@@ -129,7 +129,7 @@ Click 'OK'
 Choose similar color table as for the TIN. To get more continuous color table:
 
 <pre>
-RMC 'Slope_elid71' 
+<i>right mouse click</i> 'Slope_elid72' 
 Select 'Properties -> Symbology"
 Change Classes to 32
 Click 'OK'

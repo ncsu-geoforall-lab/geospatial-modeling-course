@@ -2,7 +2,7 @@
 <p>Resources:
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
-Create folder assign3ain your preferred workspace.
+Create folder Map_algebra in your preferred workspace.
 Include resulting maps into your report 
 (use your judgement to decide which results to include).
 
@@ -69,7 +69,7 @@ Set Input Raster or feature zone data to 'zipcodes'
 Set Zone field to 'VALUE'
 Set Input Raster or feature class data to 'landcl96'
 Set Class field to 'VALUE'
-Set Output Table to '.\Assign3a\zip_sum'
+Set Output Table to '.\Map_algebra\zip_sum'
 Set Processing cell size to 28.5
 Click 'OK'
 </pre>
@@ -89,7 +89,7 @@ Create a copy of SRTM DSM map, converting cells with elevation=0 to NULL:
 <pre>
 File->Add Data->Add Data... ncrast.mdb/elev_srt
 <i>right click</i> elev_srt->Data->Export Data...
-Set the Location to '.\Assign3a'
+Set the Location to '.\Map_algebra'
 Set the format to 'GRID' and the Name to 'elev_srt2'
 Click 'Save'
 Click 'Yes' to add the GRID layer to the TOC
@@ -104,7 +104,7 @@ Select Spatial Analyst Tools->Conditional->Set Null
 Set Input Conditional Raster to 'elev_srt2'
 Set the Expression to VALUE = 0
 Set Input false raster or constant value to 'elev_srt2'
-Set Output raster to .\Assign3a\elev_srt3
+Set Output raster to .\Map_algebra\elev_srt3
 Click 'OK'
 </pre>
 
@@ -118,7 +118,7 @@ Set Input raster to aspect
 Click the 'Classify' Button
 Set the Method to 'Equal Interval' and Classes to '8'
 Click 'OK'
-Set the Output Raster to '.\Assign3a\aspect_d8'
+Set the Output Raster to '.\Map_algebra\aspect_d8'
 Click 'OK'
 </pre>
 
@@ -135,7 +135,7 @@ Select ncrast.mdb/elid_782 (hold down control key to select multiple layers)
 Open the ArcToolbox (if not already open)
 Open Data Management Tools->Raster->Raster Dataset->Mosaic To New Raster
 Set Input Rasters to 'elid_782' , 'elid_783' , 'elid_792' , 'elid_793'
-Set Output Location to '.\Assign3a\'
+Set Output Location to '.\Map_algebra\'
 Set Raster dataset name to 'elev_6m'
 Set Number of Bands to 1
 Leave the remaining fields as their defaults
@@ -157,7 +157,7 @@ Open the ArcToolbox (if not already open)
 Select Spatial Analyst Tools->Extraction->Extract by Mask
 Set Input Raster to 'elev'
 Set Input raster of feature mask data to 'ortho01'
-Set the out put raster to '.\Assign3a\elev_mask'
+Set the out put raster to '.\Map_algebra\elev_mask'
 Click 'OK'
 </pre>
 
@@ -176,12 +176,12 @@ Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst->Map Algebra->Raster Calculator
 Type in the expression:
    ("lsat7_40" - "lsat7_30") / ("lsat7_40" + "lsat7_30")
-   Set Output raster to './Assign3a/ndvi1
+   Set Output raster to './Map_algebra/ndvi1
 Click 'OK'
 Select 'Spatial Analyst->Raster Calculator
 Type in the expression: 
    Float("lsat7_40" - "lsat7_30") / Float("lsat7_40" + "lsat7_30")
-   Set Output raster to './Assign3a/ndvi2
+   Set Output raster to './Map_algebra/ndvi2
 Click 'OK'
 Assign the ndvi2 map a color ramp that has green for high values
 </pre>
@@ -196,7 +196,7 @@ Select ncrast.mdb/elev_srt
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst->Map Algebra->Raster Calculator
 Type in the expression: "elev_srt" - "elev_ned"  
-Set Output raster to './Assign3a/elev_diff
+Set Output raster to './Map_algebra/elev_diff
 Click 'OK'
 </pre>
 
@@ -220,7 +220,7 @@ Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst->Map Algebra->Raster Calculator
 Type in the expression: Con( ("landcl96" == 1) | ("landcl96" == 2),"landcl96",0)  
 (Note: in ArcGIS 10 map algebra components are case-sensitive - i.e. con != Con) 
-Set Output raster to './Assign3a/calcmap5a
+Set Output raster to './Map_algebra/calcmap5a
 Click 'OK'
 </pre>
 
@@ -233,7 +233,7 @@ Select Spatial Analyst Tools->Conditional->Pick
 Set input position raster to landcl96
 Set the input rasters as constant values: 1 and 2. 
 Enter 1 and then 2 such that there are two entries (each value is on its own line).
-Set output raster to '.\Assign3a\urban_pick'
+Set output raster to '.\Map_algebra\urban_pick'
 Click 'OK'
 </pre>
 
@@ -247,7 +247,7 @@ Select ncrast.mdb/lakes
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst->Map Algebra->Raster Calculator
 Type in the expression: Con(IsNull("lakes"), "landcl96", "lakes" / 1000) 
-Set output raster to '.\Assign3a\luselakes'
+Set output raster to '.\Map_algebra\luselakes'
 Click 'OK'
 </pre>
 
@@ -258,7 +258,7 @@ Create a map where all land use categories > 1 are set to null:
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst->Map Algebra->Raster Calculator'
 Type in the expression: SetNull( "landcl96" > 1, "landcl96" )     
-Set output raster to '.\Assign3a\developed'
+Set output raster to '.\Map_algebra\developed'
 Click 'OK'
 </pre>
 

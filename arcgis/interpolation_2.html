@@ -2,7 +2,7 @@
 <p>Resources:
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 <p>
-Create the assignment working directory (folder) .\assign7.
+Create the assignment working directory (folder) .\Interpolation2.
 
 <h3>Interpolation using splines</h3>
 Interpolate elevation surfaces from spot point heights using the Spline tool 
@@ -19,9 +19,9 @@ Open the ArcToolbox
 Select 'Spatial Analyst Tools->Interpolation->Spline'
 Set 'Input Point Features' to 'elev_lid792_randpts'
 Set 'Z value field' to 'value_'
-Set 'Output Raster' to '.\assign7\elev_tps'
+Set 'Output Raster' to '.\Interpolation2\elev_tps'
 Set 'Output cell size' to '2'
-Set to Spline Type to 'Tension'
+Set to Spline Type to 'TENSION'
 Leave the other inputs as defaults     
 Click 'OK'
 </pre>
@@ -40,7 +40,7 @@ Click 'OK'
 Open the ArcToolbox (if it's not already open)
 Select '3D Analyst Tools -> Raster Surface -> Hillshade'
 Set 'Input Surface' to 'elev_tps'
-Set 'Output Raster' to '.\assign7\Hillsh_tps'
+Set 'Output Raster' to '.\Interpolation2\Hillsh_tps'
 Leave the other inputs as defaults
 Click 'OK'
 </pre>
