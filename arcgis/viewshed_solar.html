@@ -3,6 +3,7 @@
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
 <pre>
+Create a ./Viewshed folder on your computer
 Start ArcMap
 Load the Spatial Analysis Extension
 </pre>
@@ -15,16 +16,14 @@ Add the raster elev_ned
 Add the point feature class fire_pt
 </pre>
 
-<p>
-Use the Spatial Analysis Extension's Viewshed tool
-to compute the the area visible from the fire_pt location.
+<p><strong>the the area visible from the fire_pt location.</strong>
 
 <pre>
 Open the ArcToolbox
-ToolBox SA->Surface->Viewshed 
+ToolBox Spatial Analyst Tools->Surface->Viewshed 
 Set input surface to elev_ned
 Set observer feature to fire_pt 
-Give your viewshed a name, and store it in your ./Assign9 folder
+Give your viewshed a name, and store it in your ./Viewshed folder
 Click OK to run the analysis
 </pre>
 
@@ -34,40 +33,69 @@ In the output (viewshed) raster the visible cells are given a value of 1,
 while those not visible are assigned a value of 0.<br>
 <span class="question">How many cells are visible in this view shed?<br>
 How much area (in sq. meters) do these visible cells represent?</span><br>
-Rerun the viewshed, with elevation offset at the fire_pnt site at +60 m.
 
-
+<p><strong>Rerun the viewshed, with elevation offset at the fire_pnt site at +60 m.</strong>
+<p>Add the field OFFSETA to the fire_pt attribute table. 
 <pre>
-Add the field OFFSETA to the fire_pt attribute table. 
-Enter 60 into the attribute field. 
+<i>right mouse click</i> on the fire_pt layer > Open Attribute Table
+<i>left mouse click</i> on the first icon in the Attribute Table toolbar > Add Field
+Type the name OFFSETA
+Click 'OK'
+In the Editor Tollbar (open if not visible) <i>left mouse click</i> on the Editor button > Start Editing
+Choose the layer fire_pt and click 'OK'
+In the fire_pt Attribute Table type '60' in the OFFSETA column
+In the Editor Tollbar <i>left mouse click</i> on the Editor button > Stop Editing
+Click 'Yes' to save your edits
 </pre>
-
+<p>Rerun the viewshed
+<pre>
+ToolBox Spatial Analyst Tools->Surface->Viewshed 
+Set input surface to elev_ned
+Set observer feature to fire_pt 
+Give your viewshed a name, but different from the first one and store it in your ./Viewshed folder
+Click OK to run the analysis
+</pre>
 <p>
 <span class="question">Now, how many cell are visible in this viewshed?<br>
 How much additional area was gained by adding the 60 m of elevation
 to the observer?</span>
 <p>
-Rerun the viewshed again, using the +60 m observer,
-but this time limit your search radius to 2000m.
-
+<strong>Rerun the viewshed again, using the +60 m observer, but this time limit your search radius to 2000m.</strong>
+<p>Add the fields RADIUS1 and RADIUS2 to the fire_pt attribute table. 
 <pre>
-Add the fields RADIUS1 and RADIUS2 to the fire_pt attribute table. 
-Populate: RADIUS1=0 and RADIUS2=2000. 
+<i>right mouse click</i> on the fire_pt layer > Open Attribute Table
+<i>left mouse click</i> on the first icon in the Attribute Table toolbar > Add Field
+Type the name RADIUS1
+Click 'OK'
+Add another column and name it RADIUS2
+In the Editor Tollbar (open if not visible) <i>left mouse click</i> on the Editor button > Start Editing
+Choose the layer fire_pt and click 'OK'
+In the fire_pt Attribute Table type '0' in the ORADIUS1 column and '2000' in the RADIUS2 column
+In the Editor Tollbar <i>left mouse click</i> on the Editor button > Stop Editing
+Click 'Yes' to save your edits
 </pre>
-
+<p>Rerun the viewshed
+<pre>
+ToolBox Spatial Analyst Tools->Surface->Viewshed 
+Set input surface to elev_ned
+Set observer feature to fire_pt 
+Give your viewshed a name, choose a different namet one and store it in your ./Viewshed folder
+Click OK to run the analysis
+</pre>
 <p>
 <span class="question">How many cells are visible in this viewshed?
 How much ground area is visible?</span>
 <p>
-Restrict the search area to an annulus 1000 m wide
-and restrict the search azimuth to the arc from NE (45 deg) to SE (135 deg).
+<strong>Restrict the search area to an annulus 1000 m wide (from 1000m to 2000m) and restrict the search azimuth to the arc from NE (45 deg) to SE (135 deg).</strong>
+<p>
 
 <pre>
-modify RADIUS1 and RADIUS2 fields accordingly
-Add the fields AZIMUTH1 and AZIMUTH2 (as doubles) to the fire_pt attribute table 
+add two fields: AZIMUTH1 and AZIMUTH2 (as doubles) to the fire_pt Attribute table (see instructions above)
+Start editing (see instructions above)
+modify RADIUS1 and RADIUS2 fields: RADIUS1 =  '1000', RADIUS2 =  '2000', 
 and populate: AZIMUTH1=45, and AZIMUTH2=135.
 </pre>
-
+<p>Rerun the viewshed (see instructions above)
 <p>
 <span class="question">How many cells and area are visible now?</span>
 <p>
@@ -92,7 +120,7 @@ x=638887, y=225365.
 </pre>
 
 <p>
-Put these values into a text file (use e.g. Notepad but avoid MS Word).<br>
+Put these values into a text file (use e.g. Notepad but avoid MS Word). and save the file in a known location (with the extension .txt)<br>
 Your text file should look something like this:
 
 <pre>
@@ -106,26 +134,38 @@ Load your points to ArcGIS:
 
 <pre>
 Add XY Data. (File->Add Data->Add XY Data...)
+browse for your saved .txt file
+Set 'X Field' to 'X' and 'Y Field' to 'Y'
+Click 'OK'
+Click 'OK' for the warning
 </pre>
 
 <p>
-Convert it from the resulting event to a feature class (or shape file).
+Convert it from the resulting event to a  shape file.
 
 <pre>
+<i> right mouse click</i> on the .txt Events
+Data > Export Data
+save in the ./Viewshed folder and click 'Yes' to add the layer to the project
+Open the Attribute Table of newly created shapefile
 Add the fields OFFSETA, VERT1, VERT2, AZIMUTH1, and AZIMUTH2. 
-Populate point FID=0: 
+Populate (in the editing mode)
+point FID=0: 
 OFFSETA=35m, VERT1=12, VERT2=-12, AZIMUTH1=300, AZIMUTH2=60. 
 For point FID=1: 
 OFFSETA=40m, VERT1=12, VERT2=-12, AZIMUTH1=150, AZIMUTH2=240. 
-Run a viewshed on your new data with these attributes.
+Save the edits
+
 </pre>
 
 <p>
-For an observer standing atop the Red Hat Building,
+Run a viewshed on your new data with these attributes.
+
+<span class="question">For an observer standing atop the Red Hat Building,
 what do you think that this view shed result represents?<br>
 Can the observer see Jordan Hall on the NCSU Central Campus?<br>
 Do you think an observer standing atop Jordan Hall could see
-his counterpart on the Red Hat Building?
+his counterpart on the Red Hat Building?</span>
 
 <h3>Solar radiation analysis</h3>
 Perform solar radiation analysis in Spatial Analyst:
@@ -140,7 +180,7 @@ Under Workspace set the Current Workspace to point to the ncrast,mdb geodatabase
 Compute the solar incidence for the summer solstice (day number=172)
 
 <pre>
-Spatial Analysis Toolbox-Solar Radiation-Area Solar Radiation
+Spatial Analysis Toolbox > Solar Radiation > Area Solar Radiation
 use elev_ned for the input raster
 Set the output raster = ned_solar172
 Set the latitude = 35.7716 (~for Raleigh, NC)
@@ -170,4 +210,4 @@ In the calculator's expression field type:
 Change the color ramp to one that emphasizes contrast in the difference raster.<br>
 <span class="question">Where do you see the greatest differences in insolation between summer and winter?<br>
 Where does the least difference in annual insolation occur?<br>
-Do these differences make sense? Please explain.</span>
+Do these differences make sense? Explain.</span>
