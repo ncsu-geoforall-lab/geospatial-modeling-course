@@ -3,7 +3,7 @@
 <a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
 <p>
-Create the assignment working directory (folder) .\Assign11<br>
+Create the assignment working directory (folder) .\Hydro<br>
 Start ArcMap<br>
 
 <pre>
@@ -19,7 +19,7 @@ In ArcMap: add the raster feature layer ncrast.mdb/elev
 Open the ArcToolbox
 Select 'Spatial Analyst Tools->Hydrology->Fill'
 Set 'Input' to 'elev'
-Set 'Output Raster' to '.\Assign11\Fill_elev1'
+Set 'Output Raster' to '.\Hydro\Fill_elev1'
 Click 'OK'
 </pre>
 
@@ -28,9 +28,9 @@ Compute flow direction:
 
 <pre>
 In ArcToolbox
-Select 'Spatial Analyst Tools->Hydrology->FlowDirection'
+Select 'Spatial Analyst Tools->Hydrology->Flow Direction'
 Set 'Input' to 'Fill_elev1'
-Set 'Output Raster' to '.\Assign11\FlowDir_fill1'
+Set 'Output Raster' to '.\Hydro\FlowDir_fill1'
 Click 'OK'
 </pre>
 
@@ -39,15 +39,15 @@ Compute flow accumulation:
 
 <pre>
 In ArcToolbox
-Select 'Spatial Analyst Tools->Hydrology->FlowAccumulation'
+Select 'Spatial Analyst Tools->Hydrology->Flow Accumulation'
 Set 'Input' to 'FlowDir_fill1'
-Set 'Output Raster' to '.\Assign11\FlowAcc_fill1'
+Set 'Output Raster' to '.\Hydro\FlowAcc_fill1'
 Click 'OK'
 </pre>
 
 <p>
 Change the color table to something better -
-e.g. yellow-green-blue, histogram equalized works well.<br>
+e.g. STRECHED  yellow-green-blue, histogram equalized (Strech type) works well.<br>
 If the resolution of your screen is not good enough to see connected streams,
 zoom-in to see the detail.<br>
 Compare with streams digitized from high resolution orthophoto:
@@ -67,7 +67,7 @@ Derive drainage basins:
 In ArcToolbox
 Select 'Spatial Analyst Tools->Hydrology->Basin'
 Set 'Input' to 'FlowDir_fill1'
-Set 'Output Raster' to '.\Assign11\Basins_fill1'
+Set 'Output Raster' to '.\Hydro\Basins_fill1'
 Click 'OK'
 </pre>
 
@@ -76,32 +76,45 @@ Derive flow path length:
 
 <pre>
 In ArcToolbox
-Select 'Spatial Analyst Tools->Hydrology->FlowLength'
+Select 'Spatial Analyst Tools->Hydrology->Flow Length'
 Set 'Input' to 'FlowDir_fill1'
-Set 'Output Raster' to '.\Assign11\flowlength'
+Set 'Output Raster' to '.\Hydro\flowlength'
 Click 'OK'
 </pre>
 
 <h3>Derive stream network and watersheds from 30m NED</h3>
-First check whether we have sinks, if yes, fill them in.
-Then compute flow direction and flow accumulation.<br>
-Extract streams from flow accumulation using map algebra
-and create stream links from the stream raster and derive watersheds
-draining into these stream links:
-
-
-<pre>
-In ArcMap:
-
-Set your workspace and scratch workspace to C:\path\.Assign11
+Set your workspace and scratch workspace to C:\path\.Hydro
+<pre> 
+Geoprocessing>Environments>Workspace
 Add ncrast/elev_ned
-Compute FlowDirection input=elev_ned output=FlowDir_el30
-Compute Sink input=FlowDir_el30 output=sinks30
-Compute Fill input=elev_ned output=Fill_elev30
-Compute FlowDirection input=Fill_elev30 output=FlowDir_fil30
-Compute FlowAccumulation input=FlowDir_fil30 output=Flowacc_fil30
-Using the Algebra Raster Calculator, compute:
-Con( "Flowacc_fil30" > 10000, 1, 0 ) Set the output to: Streams_der30
-Compute StreamLink input=Streams_der30 flow dir raster=FlowDir_fil30 output=Source30
-Compute Watershed input=FlowDir_fil30 Pour point=Source30 output=Watersheds30
 </pre>
+First check whether we have sinks, if yes, fill them in.
+<pre>
+Spatial Analyst Tools->Hydrology->Flow Direction
+input=elev_ned output=FlowDir_el30
+Spatial Analyst Tools->Hydrology->Sink
+input=FlowDir_el30 output=sinks30
+Spatial Analyst Tools->Hydrology->Fill
+input=elev_ned output=Fill_elev30
+</pre>
+Compute flow direction and flow accumulation 
+<pre>
+Spatial Analyst Tools->Hydrology->Flow Direction
+input=Fill_elev30 output=FlowDir_fil30
+Spatial Analyst Tools->Hydrology->Flow Accumulation
+input=FlowDir_fil30 output=Flowacc_fil30
+</pre>
+Extract streams from flow accumulation using map algebra
+<pre>
+Spatial Analyt Tools>Map Algebra>Raster Calculator
+expression= Con( "Flowacc_fil30" > 10000, 1, 0 ) output=Streams_der30
+</pre>
+Create stream links from the stream raster and derive watersheds draining into these stream links:
+<pre>
+Spatial Analyst Tools->Hydrology->Stream Link
+input=Streams_der30 flow dir raster=FlowDir_fil30 output=Source30
+Spatial Analyst Tools->Hydrology->Watershed
+input=FlowDir_fil30 Pour point=Source30 output=Watersheds30
+</pre>
+
+

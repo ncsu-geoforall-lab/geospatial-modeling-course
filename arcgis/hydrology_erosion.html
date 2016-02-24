@@ -6,7 +6,7 @@
 Task: Compute soil detachment and net erosion/deposition using simple GIS-based models
 
 <p>
-Create the assignment working directory (folder) .\Assign12.<br>
+Create the assignment working directory (folder) .\Erosion<br>
 Start ArcMap:
 
 <pre>
@@ -14,13 +14,16 @@ Start->Programs->ArcGIS->ArcMap
 </pre>
 
 <p>
-Check out a Spatial Analyst Extension license.:
+Check out a Spatial Analyst Extension license:
 
 <pre>
 Under Tools->Extensions make sure there is a check next to 'Spatial Analyst'
 Select View->Toolbars->Spatial Analyst to activate the extension
 </pre>
-
+Set your workspace and scratch workspace to C:\path\.Erosion
+<pre> 
+Geoprocessing>Environments>Workspace
+</pre>
 <h3>Compute soil detachment rate using USLE3D</h3>
 
 Compute a map of soil detachment rate using USLE3D equation which assumes that there is no deposition.<br>
@@ -56,10 +59,8 @@ Compute slope_1m map using the Slope function, we will use it later:
 
 <pre>
 Select 'Spatial Analyst Tools->Surface->Slope'
-Set 'Input' to 'e_lid792'
-Set 'Output Raster Dataset' to '.\Assign12\slope_1m'
+input: e_lid792 output: slope_1m
 keep DEGREES for units
-Click 'OK'
 </pre>
 
 <p>
@@ -95,19 +96,22 @@ Click 'OK'
 
 <h4>Soil loss</h4>
 
-Now build the expression for soil detachment rate E (soil loss) s_loss.
-<p>
-cfactb is the land cover factor (C), soils_kf is the soil erodibility (K).<br>
-From ncrast.mdb add: cfactb (C) and soil factor soils_kf (K) to your project.<br>
-Hint: hold down control key to select multiple layers.<br>
-The rainfall factor (R) is set here to be 270.<br>
-The prevention measures factor (P) is here taken to = 1.<br>
-If the expression does not work try moving the constant to the end of expression.
-
-
+Now build the expression for soil detachment rate E (soil loss) s_loss. From the formula
 <pre>
+E = RKLSCP
+</pre>
+We computed LS factor
+R factor is considered to be constant and set to 270.0
+K factor values can be added as a layer ncrast.mdb/soils_kf
+C factior values can be added as a layer ncrast.mdb/cfactb
+P factor (prevention measures) is here taken to = 1.
+<p>
+Multiplying all the factors in Raster Calculator we will compute the raster map of erosion rate
+<pre>
+In the ArcToolbox, Select 'Spatial Analyst->Map Algebra->Raster Calculator
+expression=
 270.0 * "cfactb" * "lsfac" * "soils_kf"
-Click 'OK'
+output=s_loss
 </pre>
 
 Adjust color table for the s_loss map - histogram equalized color ramp may be needed
@@ -124,11 +128,8 @@ We have already computed slope_1m and flowaccumulation, but we will also need di
 Compute aspect_1m map (direction of flow, direction of gradient vector) using the Aspect function:
 
 <pre>
-Select 'Spatial Analyst Tools->Surface->Aspect'
-Set 'Input' to 'e_lid792'
-Set 'Output Raster Dataset' to '.\Assign12\aspect_1m'
-keep DEGREES for units
-Click 'OK'
+'Spatial Analyst Tools->Surface->Aspect'
+input=e_lid792, output=aspect_1m
 </pre>
 
 <p>
@@ -137,6 +138,8 @@ using the Raster Calculator.<br>
 For the exponents use m=n=1, resolution is 1.
 
 <pre>
+In the ArcToolbox, Select 'Spatial Analyst->Map Algebra->Raster Calculator
+expression=
 "Flowacc" * 1. * Sin("slope_1m" * math.pi/180.0)
 output raster = sflowtopo
 </pre>
@@ -147,24 +150,27 @@ In this case, channels/streams will have large erosion rates due to high values 
 
 
 <pre>
+In the ArcToolbox, Select 'Spatial Analyst->Map Algebra->Raster Calculator
+expression=
 (Power("Flowacc" * 1. , 1.3) * Power((Sin("slope_1m" * math.pi/180.0)), 1.2))
-output raster = sflowtopo
-CLick "OK"
+output raster = sflowtopo2
 </pre>
 
 <h4>Compute divergence of sediment flow</h4>
 First compute components of sediment flow in x and y direction:
-
+Calculate qsx
 <pre>
-Build an expression for: qsx
+In the ArcToolbox, Select 'Spatial Analyst->Map Algebra->Raster Calculator
+expression=
 "sflowtopo" * "soils_kf" * "cfactb" * 270. * Cos((- "aspect_1m" + 450.) * math.pi / 180.0) 
 Output raster = qsx
-Click "OK"
-
-Build an expression for: qsy
+</pre>
+Calculate qsy
+<pre>
+In the ArcToolbox, Select 'Spatial Analyst->Map Algebra->Raster Calculator
+expression=
 "sflowtopo" * "soils_kf" * "cfactb" * 270. * Sin((- "aspect_1m" + 450.) * math.pi / 180.0) 
 Output raster = qsy
-Click "OK"
 </pre>
 
 <p>
@@ -174,56 +180,42 @@ as partial derivatives of sediment flow field, derived from slope and aspect
 
 <pre>
 In ArcToolbox
-Select 'Spatial Analyst Tools->Surface->Slope'
-Set 'Input' to 'qsx'
-Set 'Output Raster Dataset' to '.\Assign12\Slope_qsx'
-Keep DEGREES for units
-Click 'OK'
+'Spatial Analyst Tools->Surface->Slope'
+input=qsx, output=Slope_qsx
 </pre>
 
 <p>
-Do the same for Aspect to compute Aspect_qsx:
+In the same way compute Aspect_qsx, Slope_qsy and Aspect_qsy
 
 <pre>
-Select 'Spatial Analyst Tools->Surface->Aspect'
-Set 'Input' to 'qsx'
-Set 'Output Raster Dataset' to '.\Assign12\Aspect_qsx'
-Click 'OK'
-
 In ArcToolbox
-Select 'Spatial Analyst Tools->Surface->Slope'
-Set 'Input' to 'qsy'
-Set 'Output Raster Dataset' to '.\Assign12\Slope_qsy'
-Keep DEGREES for units
-Click 'OK'
+'Spatial Analyst Tools->Surface->Aspect'
+input=qsx, output=Aspect_qsx
+'Spatial Analyst Tools->Surface->Slope'
+input=qsx, output=Slope_qsy
+In ArcToolbox
+'Spatial Analyst Tools->Surface->Aspect'
+input=qsx, output=Aspect_qsy
 </pre>
-
-<p>
-Do the same for Aspect to compute Aspect_qsy:
-
+Compute qsx_dx and qsy_dy
 <pre>
-Select 'Spatial Analyst Tools->Surface->Aspect'
-Set 'Input' to 'qsy'
-Set 'Output Raster Dataset' to '.\Assign12\Aspect_qsy'
-Click 'OK'
-
-Using the 'Spatial Analyst->Map Algebra->Raster Calculator:
-Build an expression for: qsx_dx
+'Spatial Analyst->Map Algebra->Raster Calculator:
+expression=
 Cos((- "Aspect_qsx" + 450) * math.pi / 180.0) * Tan("Slope_qsx" * math.pi/180.0)
-Click'OK'
-
-Build an expression for: qsy_dy
+output=qsx_dx
+expression=
 Sin((- "Aspect_qsy" + 450) * math.pi / 180.0) * Tan("Slope_qsy" * math.pi/180.0)
-Click 'OK'
+output=qsy_dy
 </pre>
 
 <p>
 Finally. compute net erosion deposition:
 
 <pre>
-Build an expression for: erdep
+'Spatial Analyst->Map Algebra->Raster Calculator:
+expression=
 "qsx_dx" + "qsy_dy"
-Click 'OK'
+output=erdep
 </pre>
 
 <p>
