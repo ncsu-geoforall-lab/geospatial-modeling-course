@@ -101,6 +101,35 @@ d.rast slope_int_10m
 d.out.file slope_int
 </code></pre>
 
+<h3>Compute slope along road</h3>
+Compute slope of a bus route. First extract values from slope map layer:
+<pre><code>
+g.region raster=elevation res=20
+v.to.rast input=busroute11 type=line output=busroute11 use=dir
+r.mapcalc "route_slope = if(busroute11, myslope)"
+</pre></code>
+
+Then compute slope in the direction of the route:
+<pre><code>
+v.to.rast input=busroute11 type=line output=busroute11_dir use=dir
+r.mapcalc "route_slope_dir = abs(atan(tan(myslope) * cos(myaspect - busroute11_dir)))"
+r.colors map=route_slope,route_slope_dir color=slope
+</pre></code>
+
+Display, zoom if necessary, and compute univariate statistics and comment on the difference of two results.
+<pre><code>
+r.univar route_slope
+r.univar route_slope_dir
+
+d.shade shade=elevation_shade color=myslope brighten=20
+r.contour input=elevation output=contours step=2
+d.vect contours
+d.rast route_slope
+d.out.file route_slope
+d.rast route_slope_dir
+d.out.file route_slope_dir
+</pre></code>
+
 <h3>Curvatures</h3>
 <p>
 <!-- # further zoom into a selected area until you see grid cells
