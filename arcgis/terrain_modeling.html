@@ -4,7 +4,7 @@
 
 Create the folder 'Modeling'.<br>
 Download the Raleigh 2013 lidar data as LAS file
-<a href="http://courses.ncsu.edu/mea582/common/media/data/tile_0793_016_spm.las">LAS tile 0793_016 in NC State Plane Meters </a>to the Modeling folder.
+<a href="http://courses.ncsu.edu/mea582/common/media/data/tile_0793_016_spm.las">LAS tile 0793_016 in NC State Plane Meters </a> and the <a href="http://courses.ncsu.edu/mea582/common/media/01/ortho_0793_016_ncspm.zip">orthophoto</a> to the Modeling folder. Unpack the package containing orthophoto
 
 <p>
 Set the output coordinate system and spatial extent to the layer
@@ -14,6 +14,7 @@ which is equivalent to 1m resolution rural_1m region in GRASS.
 
 <h3>Bring lidar data into ArcGIS</h3>
 There are multiple ways of handling lidar data in ArcGIS and improvements are being added to new version of the software. We will follow the step by step, not automated workflow. For other workflows refer to the FYI section at the end of the assignment 
+<h3>Analyze bare earth lidar data</h3>
 <h4>Create a Multipoint flie from .las point cloud</h4>
 <pre>Turn on the 3D Analyst Extension
 Menu -> Customize ->Extensions...
@@ -22,13 +23,13 @@ Select '3D Analyst->Conversion->From File->LAS to Multipoint'
 Set 'Input' to 'tile_0793_016_spm.las'
 Set 'Output Feature Class' to '.\Modeling\lidar_be'
 Set 'Average Point Spacing' to '0.5'
+In 'Input Return Values' check the '2' box
 Set 'Coordinate System' to 'NAD_1983_StatePlane_North_Carolina_FIPS_3200' (you can type 32119 in the search window)
 Click 'OK'
 </pre>
 
-<h3>Analyze bare earth lidar data</h3>
 <p>
-Compute a raster map representing number of points per cell (at 2 different resolutions).<br>
+<h4>Compute a raster map representing number of points per cell (at 2 different resolutions)</h4>.<br>
 Calculating for 2m x 2m cell:
 <pre>
 Open the ArcToolbox
@@ -113,67 +114,35 @@ Select ncshape.mdb/streets_wake
 Select ncshape.mdb/lakes
 Select ncshape.mdb/streams
 </pre>
-
+<h4>Create a Multipoint flie from .las point cloud</h4>
+<pre>Turn on the 3D Analyst Extension
+Menu -> Customize ->Extensions...
+Open the ArcToolbox (if not already open)
+Select '3D Analyst->Conversion->From File->LAS to Multipoint'
+Set 'Input' to 'tile_0793_016_spm.las'
+Set 'Output Feature Class' to '.\Modeling\lidar_mr'
+Set 'Average Point Spacing' to '0.5'
+In 'Input Return Values' check the 'All Values' box
+Set 'Coordinate System' to 'NAD_1983_StatePlane_North_Carolina_FIPS_3200' (you can type 32119 in the search window)
+Click 'OK'
+</pre>
 <p>
 Display bare ground and multiple return points over orthophoto:
 
 <pre>
 Select Menu 'File -> Add Data -> Add Data...'
-Select ncrast.mdb/ortho01
-Select ncshape/elev_lidrural_mrpts
-
-NOTE: if you receive a Coordinate System warning
-read through the message, and then: Click 'Close'
+Select ./Modeling/ortho_0793_016_ncspm.tif
 </pre>
 
 <p>
-Select a subset of the lidar points for analysis:
-
-<pre>
-<i>right click</i> 'elev_lidrural_mrpts->Zoom to Layer'
-Select the 'Select Features by Rectange' tool (in the Select Tool dropdown menu in the Main toolbar)
-<i>right click</i> on 'lidar_be' in the TOC and select 'Selection -> Make This The Only Selectable Layer'
-Drag a box that selects points from 'lidar_be' that overlap with 'elev_lidrural_mrpts'
-NOTE: make sure that the layer 'lidar_be' is visible (checked on in TOC)
-<i>right click</i> 'lidar_be-> DAta -> Export Data...'
-Set 'Output file' to '.\Modeling\rural_bepts.shp'
-Click 'Save'
-Click 'OK'
-click 'Yes' to add the exported data to the map
-Select Menu 'Selection->Clear Selected Features'
-</pre>
-
-<p>
-Check the imported data by creating low resolution DEM:
-
-<pre>
-Open the ArcToolbox (if not already open)
-Select 'Conversion Tools->To Raster->Point to Raster'
-Set 'Input Features' to 'rural_bepts'
-Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Modeling\be_rural6m'
-Set 'Cell assignment type' to 'MEAN'
-Set Cellsize' to '6'
-Click 'OK'
-
-Select 'Conversion Tools->To Raster->Point to Raster'
-Set 'Input Features' to 'elev_lidrural_mrpts'
-Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Modeling\rural_mr6m'
-Set 'Cell assignment type' to 'MEAN'
-Set Cellsize' to '6'
-Click 'OK'
-</pre>
-
-<p>
-Interpolate DEM and DSM:
+Interpolate DSM:
 
 <pre>
 Check out a Geostatistical Analyst Extension license
 <i>right click</i> on the empty space next to the Main Toolbar ->Geostatistical Analyst
 Select 'Geostatistical Analyst Toolbar->Geostatistical Wizard'
 Under 'Deterministic Methods' select 'Radial Basis Function' 
-Set 'Source Dataset' to 'rural_bepts'
+Set 'Source Dataset' to 'lidar_mr'
 Set 'Data Field' to 'Z'
 Click 'Next'
 Under 'General Properties->Kernel Functions' select 'Spline with Tension'
@@ -185,7 +154,7 @@ To the Method Report Click 'OK'
 Find out where we have multiple returns:
 
 <pre>
-<i>right click</i> 'elev_lidrural_mrpts->Properties'
+<i>right click</i> 'lidar_mr'->'Properties'
 Select 'Symbology' tab
 Under 'Show' select 'Categories->Unique Values'
 Set the 'Value Field' to 'RETURN'
@@ -199,7 +168,7 @@ Select out 1st return:
 
 <pre>
 <i>left click</i> Menu 'Selection->Select by Attributes'
-Set 'Layer' to 'elev_lidrural_mrpts'
+Set 'Layer' to 'lidar_mr'
 Set 'Method' to 'Create a new selection'
 </pre>
 
@@ -211,7 +180,7 @@ Double click [Return]
 click '='
 Type in the value '1' so that the expression looks like '[Return] = 1'
 Click 'OK'
-<i>right click</i> 'elev_lidrural_mrpts->Data->Export Data...'
+<i>right click</i> 'lidar_mr->Data->Export Data...'
 Save the selection set to '.\Modeling\lidfirst.shp'
 Click 'Yes' to add the exported data to the map
 <i>left click</i> Menu 'Selection->Clear Selected Features'
@@ -222,13 +191,13 @@ Select out the 2nd return:
 
 <pre>
 <i>left click</i> 'Selection->Select by Attributes'
-Set 'Layer' to 'elev_lidrural_mrpts'
+Set 'Layer' to 'lidar_mr'
 Set 'Method' to 'Create a new selection'
 Double click [Return]
 click '='
 Type in the value '2' so that the expression looks like '[Return] = 2'
 Click 'OK'
-<i>right click</i> 'elev_lidrural_mrpts->Data->Export Data'
+<i>right click</i> 'lidar_mr->Data->Export Data'
 Save the selection set to '.\Modeling\lidlast.shp'
 Click 'Yes' to add the exported data to the map
 <i>left click</i> 'Selection->Clear Selected Features'
