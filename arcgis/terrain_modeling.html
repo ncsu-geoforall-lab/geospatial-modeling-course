@@ -6,11 +6,6 @@ Create the folder 'Modeling'.<br>
 Download the Raleigh 2013 lidar data as LAS file
 <a href="http://courses.ncsu.edu/mea582/common/media/data/tile_0793_016_spm.las">LAS tile 0793_016 in NC State Plane Meters </a> and the <a href="http://courses.ncsu.edu/mea582/common/media/01/ortho_0793_016_ncspm.zip">orthophoto</a> to the Modeling folder. Unpack the package containing orthophoto
 
-<p>
-Set the output coordinate system and spatial extent to the layer
-that you are working with from 'Geprocessing -> Environment'.<br>
-For example, for the lidar data analysis set it to raster e_lid792 
-which is equivalent to 1m resolution rural_1m region in GRASS.
 
 <h3>Bring lidar data into ArcGIS</h3>
 There are multiple ways of handling lidar data in ArcGIS and improvements are being added to new version of the software. We will follow the step by step, not automated workflow. For other workflows refer to the FYI section at the end of the assignment 
@@ -114,7 +109,7 @@ Select ncshape.mdb/streets_wake
 Select ncshape.mdb/lakes
 Select ncshape.mdb/streams
 </pre>
-<h4>Create a Multipoint flie from .las point cloud</h4>
+<h4>Create a Multipoint file from .las point cloud</h4>
 <pre>Turn on the 3D Analyst Extension
 Menu -> Customize ->Extensions...
 Open the ArcToolbox (if not already open)
@@ -122,7 +117,7 @@ Select '3D Analyst->Conversion->From File->LAS to Multipoint'
 Set 'Input' to 'tile_0793_016_spm.las'
 Set 'Output Feature Class' to '.\Modeling\lidar_mr'
 Set 'Average Point Spacing' to '0.5'
-Leave the 'Input Class Codes'empty
+Leave the 'Input Class Codes' empty
 Set 'Coordinate System' to 'NAD_1983_StatePlane_North_Carolina_FIPS_3200' (you can type 32119 in the search window)
 Click 'OK'
 </pre>
@@ -151,82 +146,25 @@ To the Method Report Click 'OK'
 </pre>
 
 <p>
-Find out where we have multiple returns:
-
+Find out where we have multiple returns. First export first return:
 <pre>
-<i>right click</i> 'lidar_mr'->'Properties'
-Select 'Symbology' tab
-Under 'Show' select 'Categories->Unique Values'
-Set the 'Value Field' to 'RETURN'
-Click the 'Add All Values' button
-Choose a color ramp that's to your liking
-Click 'OK'
+Select '3D Analyst->Conversion->From File->LAS to Multipoint'
+Set 'Output Feature Class' to '.\Modeling\lidar_r1'
+Fill the rest as before but in 'Input return values' check 1
 </pre>
 
-<p>
-Select out 1st return:
-
+And then second return:
 <pre>
-<i>left click</i> Menu 'Selection->Select by Attributes'
-Set 'Layer' to 'lidar_mr'
-Set 'Method' to 'Create a new selection'
+Select '3D Analyst->Conversion->From File->LAS to Multipoint'
+Set 'Output Feature Class' to '.\Modeling\lidar_r2'
+Fill the rest as before but in 'Input return values' check 2
 </pre>
-
-<p>
-Construct the SQL SELECT statement:
-
-<pre>
-Double click [Return]
-click '='
-Type in the value '1' so that the expression looks like '[Return] = 1'
-Click 'OK'
-<i>right click</i> 'lidar_mr->Data->Export Data...'
-Save the selection set to '.\Modeling\lidfirst.shp'
-Click 'Yes' to add the exported data to the map
-<i>left click</i> Menu 'Selection->Clear Selected Features'
-</pre>
-
-<p>
-Select out the 2nd return:
-
-<pre>
-<i>left click</i> 'Selection->Select by Attributes'
-Set 'Layer' to 'lidar_mr'
-Set 'Method' to 'Create a new selection'
-Double click [Return]
-click '='
-Type in the value '2' so that the expression looks like '[Return] = 2'
-Click 'OK'
-<i>right click</i> 'lidar_mr->Data->Export Data'
-Save the selection set to '.\Modeling\lidlast.shp'
-Click 'Yes' to add the exported data to the map
-<i>left click</i> 'Selection->Clear Selected Features'
-</pre>
+Overlay with orthophoto. Where do we have second return points?
 
 <h3>Optional - display the multiple return data as points in ArcScene</h3>
-Set the spatial extent to the raster elev.<br>
-Generate contours with 10m and 3m interval:
+Start ArcScene, add lidar_r1 and lidar_r2 and manipulate with the 3D scene.
 
-<pre>
-File->Add Data->Add Data...
-Add ./ncrast.mdb/elev
-Check out a Spatial Analyst Extension license
-Open the ArcToolbox (if not already open)
-Select 'Spatial Analyst Tools->Surface->Contour'
-Set 'Input Raster' to 'elev'
-Set 'Contour interval' to '10'
-Set 'Base contour' as '0'
-Set 'Z factor' to '1'
-Save 'Output polyline features' as '.\Modeling\cont_10m.shp'
-Click 'OK'
 
-Select 'Spatial Analyst Tools->Surface->Contour'
-Set 'Input Surface' to 'elev'
-Set 'Contour interval' to '3'
-Set 'Base contour' as '55'
-Set 'Z factor' to '1'
-Save 'Output Features' as '.\Modeling\cont_3m.shp'
-</pre>
 
 <h3>FYI: Handling LAS data in ArcGIS</h3>
 There are three different formats (datasets) that can be used to manage and work with your lidar data in ArcGIS
