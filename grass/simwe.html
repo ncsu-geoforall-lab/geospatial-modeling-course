@@ -27,26 +27,24 @@ instructions for the
 
 
 <h3>Start GRASS GIS</h3>
+Start GRASS - click on GRASS icon or type<br>
 
 <pre><code>
 grass70
 </code></pre>
 
 <p>
-in startup window<br>
-GIS data directory, e.g. /local/share/grassdata<br>
-LOCATION select nc_spm_08<br>
-MAPSET select user1<br>
-Enter GRASSS<br>
-GUI opens automatically - you can work in GUI or command line<br>
+In startup pannel set <b>GIS Data Directory</b> to path to datasets,
+for example on MS Windows, <code>C:\Users\myname\grassdata</code>.<br>
+For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. HW_interpolation_2).<br>
+Click <b>Start GRASS</b>.
 
 
 <h3>Overland flow depth and discharge</h3>
 
 <p>
-compute spatial pattern of overland flow depth and discharge<br>
-
-compute input raster maps for uniform land cover and uniform rainfall excess<br>
+Compute input raster maps for uniform land cover and uniform rainfall excess:
 
 <pre><code>
 g.region rural_1m res=2 -p
@@ -56,39 +54,47 @@ r.mapcalc "rain50mmhr = 50."
 </code></pre>
 
 <p>
-calculate partial derivatives to define the gradient of elevation surface<br>
+Calculate partial derivatives to define the gradient of elevation surface:
 
 <pre><code>
 v.surf.rst -d input=elev_lid792_bepts elevation=elev_lid792_2m slope=dx_2m aspect=dy_2m tension=15 smooth=1.5 npmin=150
 </code></pre>
 
 <p>
-run the model<br>
+Compute spatial pattern of overland flow depth and discharge
+by running the SIMWE model implemented in
+the <em class="module">r.sim.water</em> module.
 
 <pre><code>
 r.sim.water -t elevation=elev_lid792_2m dx=dx_2m dy=dy_2m rain=rain50mmhr infil=infil0 man=man05 depth=wdp_2m discharge=disch_2m nwalkers=400000 niterations=500 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
+</code></pre>
+
+Display the results, add legend for individual raster and whatever you think is appropriate.
+
+<pre><code>
 d.rast wdp_2m.120
 d.rast disch_2m.120
 </code></pre>
 
 <p>
-animate the time series<br>
-File > Animation tool<br>
+Optionally, animate the time series:
+<em>File > Animation tool</em>
 
 
 <h3>Peak runoff with predefined flow direction</h3>
 
-compute peak runoff with predefined flow direction<br>
-along the stream inluding culvert under the road<br>
+Compute peak runoff with predefined flow direction
+along the stream inluding culvert under the road.
 
-compute direction (aspect) of the given streams<br>
+<p>
+First, compute direction (aspect) of the given streams:
 
 <pre><code>
 v.to.rast streams output=streams_dir_2m use=dir
 </code></pre>
 
 <p>
-compute stream dx,dy using direction and slope=2deg<br>
+Compute stream dx and dy using direction and slope equal to 2 degrees:
 
 <pre><code>
 r.mapcalc "dxstr_2m = tan(2.)*cos(streams_dir_2m)"
@@ -96,7 +102,7 @@ r.mapcalc "dystr_2m = tan(2.)*sin(streams_dir_2m)"
 </code></pre>
 
 <p>
-compute combined DEM and stream dx,dy<br>
+Compute combined DEM and stream dx and dy:
 
 <pre><code>
 r.mapcalc "dxdemstr_2m = if(isnull(dxstr_2m), dx_2m, dxstr_2m)"
@@ -104,7 +110,7 @@ r.mapcalc "dydemstr_2m = if(isnull(dystr_2m), dy_2m, dystr_2m)"
 </code></pre>
 
 <p>
-run the model<br>
+Run the model:
 
 <pre><code>
 r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=rain50mmhr infil=infil0 man=man05 depth=wdpstr_2m discharge=dischstr_2m nwalkers=400000 niterations=500 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
@@ -112,17 +118,19 @@ d.rast dischstr_2m.140
 </code></pre>
 
 <p>
-use Animation tool to animate discharge<br>
+Use Animation tool to animate the discharge.
 
 
 <h3>Runoff for spatially variable landcover and rainfall excess</h3>
 
-compute runoff for spatially variable landcover<br>
-represented by  spatially variable Mannings and infiltration<br>
+Compute runoff for spatially variable landcover
+represented by  spatially variable Mannings and infiltration.
 
-variable Mannings<br>
-
-land_to_mannings.txt:
+<p>
+We will use variable Mannings coefficient defined by reclassifying
+land cover class. Here is the content of a file called
+<code>land_to_mannings.txt</code> with reclassification rules for
+the <em class="module">r.recode</em> module.
 
 <pre data-filename="land_to_mannings.txt">
 1:1:0.9:0.9
@@ -142,10 +150,9 @@ land_to_mannings.txt:
 r.recode input=landcover_1m output=mancover_2m rules=land_to_mannings.txt
 </code></pre>
 
-<p>
-variable rainfall excess<br>
-
-land_to_rain.txt:
+Similarly, we will create raster with spatially variable rainfall excess
+rates based on the land cover classes. We use file named
+<code>land_to_rain.txt</code> to specify the rates for individual classes.
 
 <pre data-filename="land_to_rain.txt">
 1:1:50:50
@@ -161,15 +168,22 @@ land_to_rain.txt:
 11:11:10:10
 </pre>
 
+Again, we use the file as rules for the <em class="module">r.recode</em> module.
+
 <pre><code>
 r.recode input=landcover_1m output=raincover_2m rules=land_to_rain.txt
 </code></pre>
 
 <p>
-run the model<br>
+Run the model:
 
 <pre><code>
 r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=raincover_2m infil=infil0 man=mancover_2m depth=wdpstrcov_2m discharge=distrcov_2m nwalkers=400000 niterations=600 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
+</code></pre>
+
+Display the static results.
+
+<pre><code>
 d.rast wdp_2m.140
 d.legend wdp_2m.140
 d.rast disch_2m.140
@@ -177,19 +191,23 @@ d.legend disch_2m.140
 </code></pre>
 
 <p>
-animate<br>
+Animate the time series using the Animation tool.
+
 
 <h3>Sediment flow rate, erosion and deposition</h3>
 
-compute sediment flow rate and net erosion/deposition using simwe<br>
-set region to the upper part of the watershed<br>
+Compute sediment flow rate and net erosion/deposition using sediment
+transport part of the SIMWE model implemented in the
+the <em class="module">r.sim.sediment</em> module.
+To make the computations faster, set region just to the upper part of
+the watershed:
 
 <pre><code>
 g.region s=s+290
 </code></pre>
 
 <p>
-compute input transport capacity and detachment coef. maps<br>
+Compute input transport capacity and detachment coefficient maps:
 
 <pre><code>
 r.mapcalc "tranin = 0.001"
@@ -197,14 +215,14 @@ r.mapcalc "detin = 0.001"
 </code></pre>
 
 <p>
-compute input critical shear stress<br>
+Compute input critical shear stress:
 
 <pre><code>
 r.mapcalc "tauin = 0.01"
 </code></pre>
 
 <p>
-run the model, use last depth from previous run<br>
+Run the model using the last depth from previous run:
 
 <pre><code>
 g.copy rast=wdp_2m.140,wdp_2m
@@ -212,7 +230,7 @@ r.sim.sediment elevation=elev_lid792_2m dx=dx_2m dy=dy_2m water_depth=wdp_2m det
 </code></pre>
 
 <p>
-display these results after few seconds:<br>
+Display these results after few seconds:
 
 <pre><code>
 d.rast tcapacity
@@ -220,7 +238,7 @@ d.rast erdepmax
 </code></pre>
 
 <p>
-display the final results<br>
+Display the final results:
 
 <pre><code>
 d.rast sedflow
