@@ -7,12 +7,12 @@ GRASS GIS overview and manual</a></li>
 and <a href="http://www4.ncsu.edu/~akratoc/GRASS_intro/">tutorial</a>
 how to use wxGUI from the first assignment</li>
 <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_assign/erosion_notes2.pdf">Brief theoretical background, equations, units</a></li>
+<li><a href="data/cfactor.txt">C-factor values</a></li>
 </ul>
 
 <p>
 Text files with recode rules and color rules:
 <ul>
-<li>C-factor values (<a href="data/cfactor.txt">cfactor.txt</a>)</li>
 <li>Land use category description (<a href="data/lu_labels.txt">lu_labels.txt</a>)</li>
 <li>C-factor recode table (<a href="data/cfac_rules.txt">cfac_rules.txt</a>)</li>
 <li>C-factor color table (<a href="data/cfac_color.txt">cfac_color.txt</a>)</li>
@@ -21,6 +21,7 @@ Text files with recode rules and color rules:
 <li>Erosion/deposition classes (<a href="data/erdep_class.txt">erdep_class.txt</a>)</li>
 <li>Erosion/deposition class labels (<a href="data/erdep_label.txt">erdep_label.txt</a>)</li>
 </ul>
+
 
 <h3>Start GRASS GIS</h3>
 In startup pannel set <b>GIS Data Directory</b> to path to datasets,
@@ -66,8 +67,12 @@ nviz elevation co=lsfac3d
 <font color="#000066"># when you zoom-in and explore the result
 # can you comment on where is the highest topographic potential
 # for erosion predicted by the 2d and 3d models?  -->
+
+
 <h3>Compute soil detachment using USLE3D</h3>
+
 <h4>Compute topographic potential (LS factor)</h4>
+
 Compare impact of the power function exponents on the erosion pattern.<br>
 <span class="question">Which equation represents conditions when water flow has greater impact
 and which models stronger influence of slope?</span>
@@ -96,8 +101,11 @@ d.legend lsfac3d_s1_1m at=2,50,2,6
 d.out.file lsfac_s10
 </code></pre>
 
-<h4>Compute soil detachment for spatially variable land cover.</h4>
-Set region to rural area and recode landcover_1m to cfactor.
+
+<h4>Compute soil detachment for spatially variable land cover</h4>
+
+Set region to rural area and recode landcover_1m to cfactor
+using the <em class="module">r.recode</em> module.
 Assign special color table and display result.<br>
 
 <pre><code>
@@ -112,8 +120,10 @@ d.rast cfactor_1m
 Compute the USLE3D equation using map algebra,
 cfactorbare_1m is the same as cfactor_1m,
 cfactorgrow_1m has landuse recoded for summer conditions.<br>
-Specify units of the raster maps.<br>
-<span class="question">Compare erosion rates and distribution for winter (bare) and summer conditions</span>
+Specify units of the raster maps using
+the <em class="module">r.support</em> module.<br>
+<span class="question">Compare erosion rates and distribution
+for winter (bare) and summer conditions.</span>
  
 <pre><code>
 r.mapcalc "soillossbare_1m = 270. * soils_Kfactor * lsfac3d_1m * cfactorbare_1m"
@@ -136,6 +146,7 @@ r.univar soillossbare_1m
 r.univar soillossgrow_1m
 </code></pre>
 
+
 <h4>Compute new DEM with erosion carved-in</h4>
 
 <pre><code>
@@ -149,6 +160,7 @@ Use lighting from SW, z-exag at least 2.0<br>
 
 
 <h3>Compute net erosion/deposition maps (using USPED)</h3>
+
 Compute net erosion/deposition maps as divergence of sediment flow (USPED).
 <p>
 First compute sediment flow and its components in x, y directions:
@@ -180,6 +192,7 @@ Display elev_lid792_1m in 3D and drape over erdep as color (switch off all layer
 
 
 <h4>Compute summary statistics</h4>
+
 Use <em class="module">r.recode</em> to classify erosion/deposition and <em class="module">r.category</em>
 to add labels (stable, high erosion, etc) to individual categories:
 
@@ -208,16 +221,25 @@ Example output:
 |TOTAL                   |100.00| 52.500000|129.7275|
 </pre>
 
+<span class="question">Comment on advantages, disadvantages and risks of
+classifying erosion/deposition data into categories.</span>
+
 <p>
-Look for line with sum:
+Compute univariate statistics:
 
 <pre><code>
 r.univar erdep
 </code></pre>
+
+<p>
+Look for line with sum:
+
 <pre>
-SUM = -2374.473814
+sum: -2374.473814
 </pre>
 
 <p>
 The units are tons/(acre.year), but our cells are 1 m<sup>2</sup>.
-Therefore we have to divide by 4046 (1 acre = 4046 m<sup>2</sup>) to get total ton per year transported from the watershed. <br>
+Therefore we have to divide by 4046 (1 acre = 4046 m<sup>2</sup>)
+to get total ton per year transported from the watershed.
+You can use the Python shell do the division.
