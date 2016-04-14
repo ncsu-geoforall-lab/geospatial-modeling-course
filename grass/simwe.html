@@ -44,29 +44,29 @@ Click <b>Start GRASS</b>.
 <h3>Overland flow depth and discharge</h3>
 
 <p>
-Compute input raster maps for uniform land cover and uniform rainfall excess:
+
 
 <pre><code>
 g.region rural_1m res=2 -p
-r.mapcalc "man05 = 0.05"
-r.mapcalc "infil0 = 0."
-r.mapcalc "rain50mmhr = 50."
 </code></pre>
-
+<!-- r.mapcalc "man05 = 0.05"
+r.mapcalc "infil0 = 0."
+r.mapcalc "rain50mmhr = 50." -->
 <p>
 Calculate partial derivatives to define the gradient of elevation surface:
 
 <pre><code>
 v.surf.rst -d input=elev_lid792_bepts elevation=elev_lid792_2m slope=dx_2m aspect=dy_2m tension=15 smooth=1.5 npmin=150
 </code></pre>
+Note that partial derivatives can be also computed using <em class="module">r.slope.aspect</em>.
 
 <p>
 Compute spatial pattern of overland flow depth and discharge
 by running the SIMWE model implemented in
 the <em class="module">r.sim.water</em> module.
-
+We will use uniform rainfall excess, infiltration and land cover.
 <pre><code>
-r.sim.water -t elevation=elev_lid792_2m dx=dx_2m dy=dy_2m rain=rain50mmhr infil=infil0 man=man05 depth=wdp_2m discharge=disch_2m nwalkers=400000 niterations=500 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
+r.sim.water -t elevation=elev_lid792_2m dx=dx_2m dy=dy_2m rain_value=50 infil_value=0 man_value=0.05 depth=wdp_2m discharge=disch_2m nwalkers=100000 niterations=120 output_step=20
 </code></pre>
 
 Display the results, add legend for individual raster and whatever you think is appropriate.
@@ -81,7 +81,7 @@ Optionally, animate the time series:
 <em>File > Animation tool</em>
 
 
-<h3>Peak runoff with predefined flow direction</h3>
+<h4>Peak runoff with predefined flow direction</h4>
 
 Compute peak runoff with predefined flow direction
 along the stream inluding culvert under the road.
@@ -113,15 +113,15 @@ r.mapcalc "dydemstr_2m = if(isnull(dystr_2m), dy_2m, dystr_2m)"
 Run the model:
 
 <pre><code>
-r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=rain50mmhr infil=infil0 man=man05 depth=wdpstr_2m discharge=dischstr_2m nwalkers=400000 niterations=500 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
-d.rast dischstr_2m.140
+r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain_value=50 infil_value=0 man_value=0.05 depth=wdpstr_2m discharge=dischstr_2m nwalkers=100000 niterations=120 output_step=20
+d.rast dischstr_2m.120
 </code></pre>
 
 <p>
 Use Animation tool to animate the discharge.
 
 
-<h3>Runoff for spatially variable landcover and rainfall excess</h3>
+<h4>Runoff for spatially variable landcover and rainfall excess</h4>
 
 Compute runoff for spatially variable landcover
 represented by  spatially variable Mannings and infiltration.
@@ -178,16 +178,16 @@ r.recode input=landcover_1m output=raincover_2m rules=land_to_rain.txt
 Run the model:
 
 <pre><code>
-r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=raincover_2m infil=infil0 man=mancover_2m depth=wdpstrcov_2m discharge=distrcov_2m nwalkers=400000 niterations=600 output_step=20 hmax=0.2 halpha=8.0 hbeta=1.0
+r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=raincover_2m infil_value=0 man=mancover_2m depth=wdpstrcov_2m discharge=distrcov_2m nwalkers=100000 niterations=120 output_step=20
 </code></pre>
 
 Display the static results.
 
 <pre><code>
-d.rast wdp_2m.140
-d.legend wdp_2m.140
-d.rast disch_2m.140
-d.legend disch_2m.140
+d.rast wdp_2m.120
+d.legend wdp_2m.120
+d.rast disch_2m.120
+d.legend disch_2m.120
 </code></pre>
 
 <p>
@@ -225,8 +225,8 @@ r.mapcalc "tauin = 0.01"
 Run the model using the last depth from previous run:
 
 <pre><code>
-g.copy rast=wdp_2m.140,wdp_2m
-r.sim.sediment elevation=elev_lid792_2m dx=dx_2m dy=dy_2m water_depth=wdp_2m detachment_coeff=detin transport_coeff=tranin shear_stress=tauin man=man05 nwalkers=600000 niterations=600 transport_capacity=tcapacity tlimit_erosion_deposition=erdepmax sediment_flux=sedflow erosion_deposition=erdepsimwe
+g.copy rast=wdp_2m.120,wdp_2m
+r.sim.sediment elevation=elev_lid792_2m dx=dx_2m dy=dy_2m water_depth=wdp_2m detachment_coeff=detin transport_coeff=tranin shear_stress=tauin man=man05 nwalkers=1000000 niterations=120 transport_capacity=tcapacity tlimit_erosion_deposition=erdepmax sediment_flux=sedflow erosion_deposition=erdepsimwe
 </code></pre>
 
 <p>
