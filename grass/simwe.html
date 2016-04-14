@@ -184,10 +184,10 @@ r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=rainc
 Display the static results.
 
 <pre><code>
-d.rast wdp_2m.120
-d.legend wdp_2m.120
-d.rast disch_2m.120
-d.legend disch_2m.120
+d.rast wdpstrcov_2m.120
+d.legend wdpstrcov_2m.120
+d.rast distrcov_2m.120
+d.legend distrcov_2m.120
 </code></pre>
 
 <p>
@@ -226,7 +226,7 @@ Run the model using the last depth from previous run:
 
 <pre><code>
 g.copy rast=wdp_2m.120,wdp_2m
-r.sim.sediment elevation=elev_lid792_2m dx=dx_2m dy=dy_2m water_depth=wdp_2m detachment_coeff=detin transport_coeff=tranin shear_stress=tauin man=man05 nwalkers=1000000 niterations=120 transport_capacity=tcapacity tlimit_erosion_deposition=erdepmax sediment_flux=sedflow erosion_deposition=erdepsimwe
+r.sim.sediment elevation=elev_lid792_2m dx=dx_2m dy=dy_2m water_depth=wdp_2m detachment_coeff=detin transport_coeff=tranin shear_stress=tauin man_value=0.05 nwalkers=1000000 niterations=120 transport_capacity=tcapacity tlimit_erosion_deposition=erdepmax sediment_flux=sedflow erosion_deposition=erdepsimwe
 </code></pre>
 
 <p>
