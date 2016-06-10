@@ -32,15 +32,10 @@ Old URLs (for archival purposes):
 Basic Git introduction
 ----------------------
 
-Create a directory `mea582_all` or something like that and `cd` into it.
-Clone the repository:
+Clone this repository using `git clone` and the URL from the green button
+near the top of the page (this is a Git alternative to downloading a ZIP file).
 
-    git clone git@github.ncsu.edu:osgeorel/mea582.git
-
-Eventually, you will have two directories at this directory level,
-one with the source code and another with the build of the pages.
-
-Do all the changes in the `mea582` directory created by the `git clone` command.
+Change directory (using `cd`) into the newly created directory.
 
 Once you edit some files, use `git commit` to commit them. Use `-a` flag to
 commit all or specify the filenames to commit just some of them.
@@ -81,8 +76,10 @@ into the files and mark them. Consult the further steps with other contributors.
 Build and publish
 -----------------
 
-Web page is published NCSU course web space. The pages are build from the source
-code into a separate directory. The publishing step is done using a script.
+Web page is published using GitHub pages. The pages are build from the source
+code and placed into a separate directory. The publishing step
+is done using a script which makes GitHub pages publishing
+even easier than it already is.
 
 
 ### Building the pages
@@ -117,11 +114,10 @@ New semester checklist
 A list of what should be changed, updated or checked for new semester
 in the web pages.
 
-* change dates in the schedule
-* update students' Google Site name template
-* update course Google Site URL
+* change dates in the schedule (in this repository)
+* update link to the Moodle side if needed
 * create a new page for project titles and link it
-* emails to share Google Site with and send the homeworks to
+* email students with link to the website and to Moodle
 
 
 License
