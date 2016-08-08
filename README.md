@@ -21,7 +21,7 @@ Online version of the materials
 
 The (static) website for this course is using GitHub pages and the URL is:
 
-* http://ncsu-osgeorel.github.io/geospatial-modeling-course
+* http://ncsu-geoforall-lab.github.io/geospatial-modeling-course
 
 Old URLs (for archival purposes):
 
