@@ -30,7 +30,7 @@ done
 build_page "index.html" "syllabus.html"
 build_page "logistics.html" "intro.html"
 
-for DIR in grass arcgis resources project_titles
+for DIR in grass arcgis resources project_titles topics
 do
     mkdir -p $OUTDIR/$DIR
 
