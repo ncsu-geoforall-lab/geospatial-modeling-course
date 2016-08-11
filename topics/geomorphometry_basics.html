@@ -1,0 +1,95 @@
+<h2>Geomorphometry basics</h2>
+
+<h3 id="terrain_modeling">Terrain modeling</h3>
+
+<h4>Outline:</h4>
+<ul>
+    <li>3D mapping technologies: topography and bathymetry</li>
+    <li>mathematical and digital terrain models</li>
+    <li>point clouds, multiple return data, CLICK, LDART</li>
+    <li>triangular irregular networks</li>
+    <li>regular grid (raster), NED, SRTM, CRM</li>
+    <li>isolines</li>
+</ul>
+<h4>Lecture:</h4>
+<ul>
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/GIS_Anal_Lterrain.pptx">Lecture Slides used in the video</a>
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/GIS_Anal_LterrainJan2014.pptx">Lecture Slides with updates</a>
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/03/LectureTerrainMap_ed.mov">Lecture_Terrain Mapping</a> (ppt+audio 67MB)
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/03/LectureTerrainMod_ed.mov">Lecture_Terrain Modeling</a> (ppt+audio 69MB)
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/03/LectureTerrainBinning_ed.mov">Lecture_Terrain Binning</a> (ppt+audio 79MB)
+</ul>
+Supplemental materials:
+<ul>
+    <li><a href="../resources/data_providers.html">Links to elevation data repositories</a>
+<!--<li><a href="http://www.geodynamicsgroup.com/">Geodynamics - coastal mapping company</a>-->
+</ul>
+<h4>Assignments:</h4>
+<!--
+<UL>
+   <LI>analyze bare earth and multiple return lidar data</li>
+   <LI>create and compare bare earth and terrain surface DEM</li>
+   <LI>derive contours from DEM</li>
+</UL>
+-->
+<ul>
+    <li>Approach:
+        <a href="../grass/terrain_modeling_survey_2013.html">GRASS solution</a>,
+        <a href="../arcgis/terrain_modeling.html">ArcGIS solution</a>.
+    <li>The assignments use standard GIS tools to analyze the point clouds. Updates and links to
+        specialized lidar data processing tools are provided in GRASS and ArcGIS solution webpages.
+    <li><a href="../faq.html#terrain_modeling">Comments/answers to HW questions</a>
+</ul>
+
+<h3 id="terrain_analysis">Spatial and temporal terrain analysis</h3>
+
+<h4>Outline:</h4>
+<ul>
+    <li>summary parameters: volumes, surface areas</li>
+    <li>first and second order point parameters: general approach</li>
+    <li>methods for slope, aspect and curvatures using polynomial and spline approximation</li>
+    <li>combining parameters to map landforms and terrain features</li>
+    <li>computing parameters from noisy data, accuracy and uncertainty, scale and level of detail</li>
+    <li>raster time series analysis, quantification of coastal change</li>
+</ul>
+<h4>Lecture:</h4>
+<ul>
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/GIS_Anal_Ltopoanal.ppt">Lecture Slides</a>
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/04/LectureTopoanalGradient_ed.mov">Lecture_Topoanalysis_Gradient parameters</a> (ppt+audio 74MB)
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/04/LectureTopoanalCurvature_ed.mov">Lecture_Topoanalysis_Curvature parameters</a> (ppt+audio 74MB)
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/04/LectureTopoanalSeries_ed.mov">Lecture_Topoanalysis Time Series</a> (ppt+audio 74MB)
+</ul>
+Supplemental materials:
+<ul>
+<li>Landscape dynamics from lidar:
+    <a href="http://www4.ncsu.edu/~hmitaso/publwork/Mitasova_geomorph2011.pptx">Slides</a> and
+    <a href="http://proceedings.esri.com/library/userconf/geomorphometry11/videos/1-mitasova-lg.html">Keynote Video (56 minutes)</a>
+    from <a href="http://geomorphometry.org/content/geomorphometry-2011-programme">Geomorphometry 2011 conference</a>
+<li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/JR_DucthD_pres3.pptx">Jockey's Ridge Slides</a>
+    (ongoing research project on coastal landscape dynamics)
+</ul>
+
+<h4>Assignments:</h4>
+<!--
+<UL>
+   <LI>compare slope, aspect and curvatures derived from NED, SRTM, and TIN  </li>
+   <LI>compute slope, aspect and curvatures from lidar point data
+      using splines with different tension parameters</li>
+   <LI>derive landforms by combining basic topographic
+       parameters, discuss impact of neighborhood size</li>
+   <LI>compute cut and fill volume and change in elevation surface area due to construction</li>
+   <LI>derive maps characterizing coastal terrain evolution using raster time series analysis</li>
+</UL>
+-->
+<ul>
+    <li>Approach:
+        <a href="../grass/terrain_analysis.html">GRASS solution</a>,
+        <a href="../arcgis/terrain_analysis.html">ArcGIS solution</a>
+    <li><a href="../faq.html#terrain_analysis">Comments/answers to HW questions</a>
+</ul>
+   <h4>Homework:</h4>
+        Prepare a paper on properties of lidar data and on computing topographic parameters from
+        digital elevation models.
+        Discuss how the topographic analysis methods and types of DEM influence the result.
+        Describe results of elevation time series analysis.
+

@@ -1,0 +1,86 @@
+<h2>Spatial Interpolation</h2>
+
+<h3 id="interpolation_1">Spatial interpolation and approximation: methods</h3>
+
+<h4>Outline:</h4>
+<ul>
+    <li>definitions, principles and applications
+    <li>selected methods and their properties
+    <!--Outline:
+<ul> <li>Voronoi polygons, TIN-based method <li>Inverse distance weighting <li>Splines, kriging)</li> </ul>-->
+    <li>influence of interpolation parameters</li>
+</ul>
+<h4>Lecture:</h4>
+<ul>
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/GIS_Anal_Linterp.ppt">Lecture slides</a> (methods)
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/interpall.pdf">Equations</a>
+    <li><a href="http://www.spatialanalysisonline.com/output/">Equations for additional functions</a>
+        (see section 6.6.1-3,6.6.6)
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/03/LectureInterpDef_ed.mov">Lecture_Interpolation Definitions</a> (ppt+audio 51MB)
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/03/LectureInterpMeth_ed.mov"> Lecture_Interpolation Methods</a> (ppt+audio 67MB)
+</ul>
+<h4>Assignment part A:</h4>
+<!--
+<ul>
+<li>interpolate 2m resolution DEM from random subsample of lidar data using:
+    (a) voronoi (thiessen) polygons, (b) inverse distance weighted (IDW) average with different parameters,
+     (c) linear interpolation between contours and on TIN,
+     (d) natural neighbor interpolation
+</li>
+<li>design an experiment that will explore impact of IDW interpolation function
+    parameters on the resulting surface</li>
+</ul>
+-->
+<ul>
+    <li>Approach:
+        <a href="../grass/interpolation_1.html">GRASS solution</a>,
+        <a href="../arcgis/interpolation_1.html">ArcGIS solution</a>
+    <li><a href="../faq.html#interpolation_1">Comments/answers to HW questions</a>
+</ul>
+
+<h3 id="interpolation_2">Spatial interpolation and approximation: splines, point selection</h3>
+
+<h4>Outline:</h4>
+<ul>
+    <li>influence of spline interpolation parameters: tension/range and smoothing</li>
+    <li>implementation - point selection techniques</li>
+    <li>special cases: contours, profiles, anisotropy</li>
+    <li>trivariate interpolation of volumes and topo-climatology</li>
+    <li>evaluating interpolation accuracy, crossvalidation</li>
+</ul>
+<h4>Lecture:</h4>
+<ul>
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/GIS_Anal_LinterpS2f.ppt">Lecture slides</a> (splines, point selection)
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/03/LectureInterpSpline_ed.mov">Lecture_Interpolation Splines</a> (ppt+audio 97MB)
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/03/LectureInterpSegm_ed.mov">Lecture_Interpolation Point selection</a> (ppt+audio 67MB)
+</ul>
+Supplemental materials:
+<ul>
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/mitas_mitasova_1999_2005.pdf">Overview of interpolation methods</a> (book chapter)
+    <li><a href="http://www.spatialanalysisonline.com/output/">Equations for additional functions</a>
+        (see section 6.6.4)
+</ul>
+
+<h4>Assignment part B: </h4>
+<!--
+<ul>
+<li>interpolate 2m resolution DEM using splines and
+    demonstrate impact of spline interpolation parameters on the resulting
+    surface: control level of detail, remove noise, estimate deviations </li>
+<li> use crossvaliadtion the compute the predictive error of interpolation
+     and its spatial distribution</li>
+<li>interpolate NC precipitation map without and with influence of topography</li>
+<li>explore geostatistics approach to interpolation</li>
+<li>interpolate from contours and profiles, use generalization to thin the data
+</ul>
+-->
+<ul>
+    <li>Approach:
+        <a href="grass/interpolation_2.html">GRASS solution</a>,
+        <a href="arcgis/interpolation_2.html">ArcGIS solution</a>
+    <li><a href="faq.html#interpolation_2">Comments/answers to HW questions</a>
+</ul>
+<h4>Homework:</h4>
+        Prepare a paper on impact of interpolation method and its parameters on the resulting surface
+        including the properties of spline interpolation method, its parameters and measures of accuracy.
+

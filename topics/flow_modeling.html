@@ -1,0 +1,103 @@
+<h2>Flow modeling</h2>
+
+<h3 id="hydrology">Flow tracing, watershed analysis</h3>
+
+<h4>Outline:</h4>
+<ul>
+    <li>cumulative terrain parameters based on flow tracing: definitions and general approach
+        (flow path length, flow accumulation, stream networks, watershed boundaries, ridge lines)
+    <li>methods for computing flow direction (D8, Dinf), flow tracing (SFD, MFD, uniform, weighted)
+    <li>methods for flow tracing through depressions and flat areas
+        (filling, carving, hybrid, least cost path)
+</ul>
+<h4>Lecture:</h4>
+<ul>
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/GIS_Anal_Lflow.ppt">Lecture slides</a>
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/04/LectureFlowacc_ed.mov">Lecture_Flow accumulation</a> (ppt+audio 73MB)
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/04/LectureStreambasin_ed.mov">Lecture_Stream extraction and watersheds</a> (ppt+audio 106MB)
+</ul>
+
+<h4>Assignment A:</h4>
+<!--
+<UL>
+    <LI>compute streams and watersheds from NED
+        D8, SFD with least cost path routing and compare with official stream data</li>
+    <LI>map DEM depressions and compare them with existing lakes</li>
+    <LI>compute and compare flow accumulation maps derived by D8, Dinf </li>
+    <LI>compute DEM with carved stream and show its impact on flow accumulation map </li>
+    <LI>extract watershed boundaries for a given outlet</li>
+    <LI>derive flowlines and flow path length using downslope and upslope flowtracing</li>
+    <LI>compute flooded area from given seed point at given flood level</li>
+</UL>
+-->
+<ul>
+    <li>Approach:
+        <a href="../grass/hydrology.html">GRASS solution</a>,
+        <a href="../arcgis/hydrology.html">ArcGIS solution</a>
+</ul>
+
+
+MERGE INTO SINGLE LECTURE - more complex modeling and general approach goes to PhD course
+
+<h3 id="hydrology_2">Modeling Geospatial Processes: Hydrologic modeling</h3>
+
+<h4>Outline:</h4>
+<ul>
+    <li>spatially explicit modeling: principles and applications, role of GIS</li>
+    <li>geospatial aspects of models: spatially averaged and distributed models</li>
+    <li>general approaches and methods: empirical and physics based components of models</li>
+    <li>steady state, continuous time and dynamic models and related modeling tools</li>
+    <li>spatial hydrologic modeling: processes and methods</li>
+</ul>
+<h4>Lecture:</h4>
+<ul>
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/GIS_Anal_LHydroSpr2010.ppt">Lecture slides: Geospatial modeling and hydrology</a>
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/04/LectureModelingGeo_ed.mov">Lecture Geospatial Modeling</a> (ppt+audio 79MB)
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/04/LectureModelingHydro_ed.mov">Lecture Geospatial Hydrologic Modeling</a> (ppt+audio 150MB)
+</ul>
+
+<h3 id="hydrology_erosion">Modeling Geospatial Processes: Erosion modeling</h3>
+
+<h4>Outline:</h4>
+<ul>
+    <li>spatial modeling of erosion, sediment transport and landscape evolution</li>
+    <li>deriving input parameters, analysis and visualization of modeling results</li>
+    <li>simulating impact of landuse and climate change</li>
+</ul>
+<h4>Lecture:</h4>
+<ul>
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/GIS_Anal_LErosionSpr2011.ppt">Lecture slides: Erosion modeling</a>
+<!--<li><a href="giserosion5.pdf">Review paper: Geospatial Erosion Modeling</a>-->
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/04/LectureModelingErosion_ed.mov">Lecture Geospatial Erosion Modeling</a> (ppt+audio 120MB)
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/04/LectureModelingErosionapp_ed.mov">Lecture Geospatial Erosion Modeling applications</a> (ppt+audio 60MB)
+</ul>
+Supplemental materials:
+<ul>
+    <li><a href="http://ncsu-osgeorel.github.io/erosion-modeling-tutorial/">Soil erosion and deposition modeling tutorial</a> (material under development)
+    <li><a href="http://www4.ncsu.edu/~hmitaso/gmslab/reports/CerlErosionTutorial/denix/denixstart.html">Erosion modeling tutorial</a> (old but useful document)
+</ul>
+<h4>Assignment B:</h4>
+<!--
+<P><i>see <a href="../GIS_anal_schedule/index.html"><b>Schedule</b></a>
+to find out whether this assignment is optional or mandatory for your course section</i></P>
+<UL>
+      <LI>compute wetness index
+      <LI>compute and compare erosion topographic factor based on hillslope length and on contributing area </LI>
+      <LI>derive soil erodibility and land cover maps for different land use alternatives</LI>
+      <LI>compute erosion, sediment transport and deposition for different land use alternatives</LI>
+     </UL>
+-->
+<ul>
+    <li><a href="../resources/erosion_notes.pdf">Brief theoretical background</a>
+        (equations used to write map algebra expressions)
+    <li>Approach:
+        <a href="../grass/hydrology_erosion.html">GRASS solution</a>,
+        <a href="../arcgis/hydrology_erosion.html">ArcGIS solution</a>
+    <li>Optional: process based hydrologic modeling using path sampling method: SIMWE
+    <li><a href="../grass/simwe.html">GRASS solution: SIMWE</a>
+</ul>
+   <h4> Homework:</h4>
+        Prepare a paper where you compare different methods for flowrouting and watershed analysis,
+    explain and discuss impact of model parameters and land use scenarios on
+    spatial pattern and magnitude of erosion as simulated by simple GIS-based models.
+
