@@ -49,6 +49,7 @@ h2, h3, h4, h5, h6 {
     clear: both;
     border-bottom: 2px solid #F3F3F3;
     padding-bottom: 0.1em;
+    margin-bottom: 0.9em;
 }
 
 /* links inside the headings - the standard settings */
@@ -237,6 +238,10 @@ dd {
 }
 dt {
     font-weight: bold;
+}
+
+ul {
+    padding-left: 30px;
 }
 
 /* show more from the long list button */
