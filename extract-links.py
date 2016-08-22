@@ -8,7 +8,8 @@ argc = len(sys.argv)
 link_pattern = sys.argv[1]
 files = sys.argv[2:]
 
-link = re.compile(r'<a href="({l})">.+</a>'.format(l=link_pattern))
+# match any a even if the text part in on different line
+link = re.compile(r'<a href="({l})">'.format(l=link_pattern))
 
 entries = []
 
@@ -17,4 +18,17 @@ for name in files:
         for line in f:
             match = link.search(line)
             if match:
-                sys.stdout.write(match.group(1) + ' ')
+                entries.append(match.group(1))
+
+# remove anchor part
+entries = [entry.split('#')[0] for entry in entries]
+
+# only unique entries, preserved only the first one
+previous = None
+unique_entries = []
+for entry in entries:
+    if entry not in unique_entries:
+        unique_entries.append(entry)
+
+# print in one line
+sys.stdout.write(' '.join(unique_entries))
