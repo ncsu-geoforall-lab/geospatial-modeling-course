@@ -133,6 +133,66 @@ on your computer after you graduate.
     <li>use help pages to understand modules and their options
 </ul>
 
+
+<h3 id="data">Data</h3>
+
+Data are provided at three hierarchical levels:
+<ul>
+   <li>entire NC state with raster data at 500m resolution: region nc_500m</li>
+   <li>South-west Wake County with raster data at resolutions 30m-10m: region swwake_10m</li>
+   <li>small watershed in rural area with data resolutions of 1m-3m: rural_1m</li>
+   <li>See more at <a href="http://grassbook.org/datasets/datasets-3rd-edition/">GRASSbook datasets description</a></li>
+</ul>
+<p>
+Download:
+<ul>
+<li>GRASS GIS location
+    <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">
+    <em>nc_spm_08_grass7</em></a>
+    (this is the same data set as North_Carolina provided during installation of GRASS GIS on MS Windows)
+</li>
+<li>ArcGIS geodatabase <a href="http://courses.ncsu.edu/mea582/common/media/01/ncrast_geodatabase_08_31_09.zip">
+  <em>ncrast_geodatabase_08_31_09</em></a> and
+    <a href="http://courses.ncsu.edu/mea582/common/media/01/ncshape_geodatabase02_15_10.zip">
+      <em>ncshape_geodatabase_02_15_10</em></a></li>
+</ul>
+<p>
+Instructions:
+<ul>
+    <li>Create folders for your GIS data in a directory where you have permissions to write, for example:
+        <ul>
+            <li>MS Windows: C:\Users\myname\grassdata and C:\Users\myname\arcdata</li>
+            <li>Mac OS or Linux: ideally in your home directory, e.g. /home/myname/grassdata</li>
+        </ul>
+    </li>
+    <li>After downloading, unpack the datasets and copy GRASS GIS location into grassdata and ArcGIS geodatabase into arcdata</li>
+    <li><strong>Important:</strong> make sure that your unpacking software does
+    not create additional directory with the same name, e.g. on MS Windows you typically get nc_spm_08_grass7\nc_spm_08_grass7,
+    the instructions assume that you deal with this after unpacking)</li>
+</ul>
+
+<!--
+<b>North Carolina data needed for assignments: </b><br>
+<a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">
+GRASS LOCATION in State Plane, meters: nc_spm_08 (150MB),</a> <br>
+<a href="http://courses.ncsu.edu/mea582/common/media/01/ncrast_geodatabase_08_31_09.zip">
+ArcGIS geodatabase, raster (53MB),</a>,
+<a href="http://courses.ncsu.edu/mea582/common/media/01/ncshape_geodatabase02_15_10.zip">
+ArcGIS geodatabase, shape elevation for MR lidar stored as attribute (64MB) </a><br>
+GRASS MAPSET needed later for Temporal Terrain Analysis:<br>
+<a href="http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip">
+ NagsHead time series</a>, requires LOCATION in NC State Plane, meters<br>
+-->
+Optional data sets for optional tasks in the assignments or for a project:
+<ul>
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/nc_ll.zip">GRASS LOCATION in Geographic coordinates WGS84. (55MB),</a>
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spf.zip">GRASS LOCATION in State Plane coordinates, in feet (8MB),</a>
+<!-- <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_utm18.zip">GRASS LOCATION in UTM18, meters - to be added</a> <br> -->
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016.las.zip">2013 Raleigh lidar survey, tile 073_016, point cloud in las format (22MB)</a>,
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016_xyzirnc_ncspf.zip">in asci xyzirnc format (22MB)</a>
+</ul>
+
+
 <h3 id="assignments">Assignments</h3>
 
 In the assignments you will be performing similar geospatial analyses
