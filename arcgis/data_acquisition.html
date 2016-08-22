@@ -75,65 +75,6 @@ Set output Feature Class to 'bridges_shp'.
 Click 'OK'.
 </pre>
 
-<h3>Metadata</h3>
-<p>
-Find information about your data:
-<p>
-Add the bridges feature class from the Assign1 geodatabase (the original bridges
-feature class from ncshape and the newly created bridges shape file should already
-be in your project's table of contents (TOC). If not, add these two, as well.
-
-<pre>
-RMC bridges (the first one listed in the TOC)->Properties
-From the Layer Properties Source tab:
-		-What is the data type?
-		-What is the Geometry Type for the bridges feature class?
-		-What is the Coordinate System and Map Projection?
-		-What are the Linear Units?
-		-What is the geographic Extent (i.e. xMin, xMax, yMin, yMax) of the data?
-
-	Repeat the above for each of the remaining two data layers in the TOC.
-		-What is/are the differences between the three layers?
-</pre>
-
-<p>
-View and add some (simple) Metadata:
-
-<pre>
-From within the expanded Catalog tab in ArcMap, RMC on Bridges feature class in the
-Assign1 geodatabase and select Item Description. Here, in the dialog that displays,
-you can obtain some basic metadata describing your feature class/layer. More importantly
-perhaps, it is also where you can add metadata (albeit only a tiny subset of what is
-recommended) describing the data you create. Since this is an important, yet so often
-overlooked, step in the data creation process, let's add some descriptive info to the
-Bridges feature class in the Assign1 geodatabase.
-
-From the Catalog tab: RMC on the bridges feature class in the Assign1 geodatabase
-Select Item Description from the context menu
-LMC on the Edit button near the top of the dialog presented and enter the following,
-or your own similar content, to the fields:
-
-	Tags field: "Bridges, transportation, roads, highways"
-
-	Summary field: "Point layer depicting the location of  North Carolina Department
-	of Transportation maintained bridges."
-
-	Description field: "This ARCGIS point feature class contains locations and select
-	non-maintenance related record information for North Carolina Department of Transportation
-	maintained bridges and flyovers (highway overpasses). Points represent the geographic
-	center (centroid) of the bridge structure. Data is stored in the North Carolina State
-	Plane Coordinate System (NAD83 - EPSG: 32119)."
-
-	Credits field: "North Carolina Department of Transportation - Geography and GIS Group"
-
-	User Limitation field: "There are no restrictions on use of these data."
-
-RMC->Save
-</pre>
-<p>
-This is a quick way to associate some important information (metadata) with your new data.
-Consider adding these few simple descriptors to each permanent layer that you create.
-
 <h3>Data view and symbology</h3>
 <p>
 Adding Raster Data into Data Frame:
