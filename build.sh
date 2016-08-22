@@ -114,3 +114,6 @@ do
         fi
     done
 done
+
+# URL backwards compatibility
+cp $OUTDIR/grass/terrain_modeling.html $OUTDIR/grass/terrain_modeling_survey_2013.html

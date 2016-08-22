@@ -1,296 +1,233 @@
 <h2>Geomorphometry I: Terrain Modeling</h2>
-<!--<p><B>Analyze multiple return lidar data and create DEM and DSM,
-convert between different representations </B></p>-->
-
 <p>
 Resources: <a href="http://grass.osgeo.org/grass70/manuals/index.html">
 GRASS GIS overview and manual</a>,
 <a href="http://liblas.org/"> libLAS tools for lidar data conversions</a>
 
-On MSWindows, it is recommended to use wxGUI equivalents of d.* commands:</font><br>
-use their GUI equivalents,
-see assignment <a href="data_visualization.html">Data display and visualization</a>
 <p>
-Download the ASCI (x,y,z) lidar bare earth data <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/lid_be_pts.txt">lid_be_pts.txt</a><br>
-Download the ASCI (x,y,z) lidar multiple return data <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/lid_mr_pts.txt">lid_mr_pts.txt</a><br>
-<p>
-Optional: You can also try a new version of this assignment based on the 2013 lidar survey, get it
-<b><a href="terrain_modeling_survey_2013.html">here</a></b><br>
-<!--
-Download the Raleigh 2013 lidar data in State Plane CS, units feet as<br>
-<a href="../media/01/0793_016_first_ground.txt.zip">0793_016_first.txt and 0793_016_ground.txt files</a><br>
-<a href="../media/01/0793_016_xyzirnc_ncspf.zip">all return txt file</a><br>
-and the related <a href=../media/01/nc_spf.zip>LOCATION</a>
--->
-
+Download the Raleigh 2013 lidar data as LAS file and orthophoto:
+<ul>
+<li><a href="http://courses.ncsu.edu/mea582/common/media/data/tile_0793_016_spm.las">LAS tile 0793_016 in NC State Plane Meters </a></li>
+<li><a href="http://courses.ncsu.edu/mea582/common/media/01/ortho_0793_016_ncspm.zip">Orthophoto geotif (mosaic at 1ft resolution)</a></li>
+</ul>
 
 <h3>Start GRASS GIS</h3>
+Start GRASS - click on GRASS icon or type<br>
 
 <pre><code>
 grass70
 </code></pre>
 
 <p>
-in the startup pannel<br>
-GIS data directory: type path to GRASS datasets<br>
-LOCATION: select nc_spm_08<br>
-MAPSET: use mapset with your unity ID or user1<br>
-Enter GRASSS<br>
-
-
-<h3>Bare earth data</h3>
-
-Analyze bare earth and multiple return lidar data properties<br>
-download the ASCI (x,y,z) lidar data <a href="lid_be_pts.txt">lid_be_pts.txt</a><br>
-compute a raster map representing number of points<br>
-per 2m and 6m grid cell to assess the point density<br>
-Run r.in.xyz from GUI to find the path to the external lid_be_pts.txt<br>
-do not forget to zoom to computational region<br>
-you can use horizontal legends by using at=6,10,2,30 and resize<br>
-you map display to create white space above and below the image<br>
-
-<pre><code>
-g.region rural_1m res=2 -p
-r.in.xyz input=lid_be_pts.txt output=lid_be_binn2m method=n
-r.in.xyz input=lid_mr_pts.txt output=lid_mr_binn2m method=n
-<!-- d.erase -->
-d.rast lid_mr_binn2m
-d.legend lid_mr_binn2m at=2,20,2,5
-d.out.file mylidmrn2m
-r.report lid_mr_binn2m unit=p
-r.univar lid_mr_binn2m
-d.rast lid_be_binn2m
-d.legend lid_be_binn2m at=2,20,2,5
-r.report lid_be_binn2m unit=p
-r.univar lid_be_binn2m
-</code></pre>
-
-
-<h3>Range of coordinates at lower resolution</h3>
+In startup pannel set <b>GIS Data Directory</b> to path to datasets,
+for example on MS Windows, <code>C:\Users\myname\grassdata</code>.<br>
+For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. HW_terrain_modeling).<br>
+Click <b>Start GRASS</b>.
 
 <p>
-patch and overlay planimetry to see that there are<br>
-no points in areas with buildings<br>
-
+Change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI command console and hit Enter:
 <pre><code>
-v.patch P079214,P079215,P079218,P079219 out=planimetry_rural
-d.vect planimetry_rural
-d.out.file mylidben2m
+cd
 </code></pre>
+Download all files (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the file
+without the need to specify the full path to the file.
 
-<p>
-decrease resolution and try again<br>
-run from GUI or define fullpath for r.in.xyz<br>
+
+<!-- p. 249<br> -->
+<h3>Analyze bare earth and multiple return lidar data properties by binning</h3>
+Import the points using <em class="module">v.in.lidar</em>.
+We can specify which class and which return (first, middle, last) we want to import.<br>
+We can see the classification either in metadata distributed with the lidar data
+or it can be displayed with <a href="http://liblas.org/">lasinfo</a> tool (in case lasinfo command is not available, skip it.):
+<pre><code>
+lasinfo tile_0793_016_spm.las
+</code></pre>
+Class 2 represents bare earth points.<br>
+Now we import bare earth points and first return points separately:
 
 <pre><code>
-g.region rural_1m res=6 -ap
-r.in.xyz input=lid_be_pts.txt out=lid_be_binn6m meth=n
-<!-- d.erase -->
-d.rast lid_be_binn6m
-d.legend lid_be_binn6m at=2,20,2,5
-d.out.file mylidben6m
-r.report lid_be_binn6m unit=p
-r.univar lid_be_binn6m
+v.in.lidar -t input=tile_0793_016_spm.las output=elev_lid793016_be class_filter=2
+v.in.lidar -t input=tile_0793_016_spm.las output=elev_lid793016_1r return_filter=first
+</code></pre>
+<p>
+Note: if you have any problems with the files, review the instructions above or
+use v.in.lidar GUI dialog to browse to get the path to the files.
+<p>
+Set the region from the imported point file with resolution of 1 meter.
+Compute raster maps (with <em class="module">r.in.lidar</em>) representing number of points per 1 m grid cell.<br>
+Compare point densities for bare earth, first return.
 
+<pre><code>
+g.region vect=elev_lid793016_1r res=1 -p
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binn1m class_filter=2 method=n
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binn1m return_filter=first method=n
+r.colors lid_be_binn1m,lid_1r_binn1m color=bcyr -e
+d.rast lid_be_binn1m
+d.legend lid_be_binn1m at=2,50,2,9
+r.report lid_be_binn1m unit=p,c
+r.univar lid_be_binn1m
+d.rast lid_1r_binn1m
+d.legend -d -s lid_1r_binn1m at=2,50,8,12
+r.report lid_1r_binn1m unit=p
+r.univar lid_1r_binn1m
 </code></pre>
 
 <p>
-compute a raster map representing mean elevation for each 6m cell<br>
-it will still have a few holes<br>
+Compute a raster map representing mean elevation for each 1m cell.<br>
+It will have holes.
 
 <pre><code>
-r.in.xyz input=lid_be_pts.txt out=lid_be_binmean6m meth=mean
-r.colors lid_be_binmean6m color=elevation
-d.rast lid_be_binmean6m
-d.legend lid_be_binmean6m at=2,40,2,5
-r.in.xyz input=lid_mr_pts.txt out=lid_mr_binmean6m meth=mean
-r.colors lid_mr_binmean6m co=elevation
-d.rast lid_mr_binmean6m
-d.legend lid_mr_binmean6m at=2,40,2,5
-d.out.file mylidmrmean6m
-
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binmean1m class_filter=2 method=mean
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binmean1m return_filter=first method=mean
+r.colors lid_be_binmean1m color=elevation
+r.colors lid_1r_binmean1m color=elevation
+r.info map=lid_1r_binmean1m
+d.rast lid_be_binmean1m
+d.legend lid_be_binmean1m at=2,40,2,5
+d.rast lid_1r_binmean1m
+d.legend lid_1r_binmean1m at=2,40,2,5
+d.out.file mylidmrmean1m
 </code></pre>
 
 <p>
-compute range<br>
+Compute a raster map representing mean elevation for each 2m cell.<br>
+Result is almost good enough for 1st return, but there are still many holes for bare earth.
 
 <pre><code>
-r.in.xyz input=lid_be_pts.txt out=lid_be_binrange6m meth=range
-r.in.xyz input=lid_mr_pts.txt out=lid_mr_binrange6m meth=range
-<!-- d.erase -->
-d.rast lid_be_binrange6m
-d.legend lid_be_binrange6m at=2,40,2,5
-d.rast lid_mr_binrange6m
-d.legend lid_mr_binrange6m at=2,40,2,5
+g.region res=2 -ap
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binmean2m class_filter=2 method=mean
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binmean2m return_filter=first method=mean
+r.colors lid_be_binmean2m color=elevation
+r.colors lid_1r_binmean2m color=elevation
+d.rast lid_be_binmean2m
+d.legend lid_be_binmean2m at=2,40,2,5
+d.rast lid_1r_binmean2m
+d.legend lid_1r_binmean2m at=2,40,2,5
+d.out.file mylidmrmean2m
 </code></pre>
 
 <p>
-identify the features that are associated with large range values<br>
-display with vector data<br>
+Compute range of elevation values in each grid cell:
 
 <pre><code>
-d.vect planimetry_rural
-d.vect lakes type=boundary co=violet
-d.vect streams co=blue
-d.out.file mylidmrrange6m
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binrange2m class_filter=2 method=range
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binrange2m return_filter=first method=range
+d.rast lid_be_binrange2m
+d.legend lid_be_binrange2m at=2,40,2,5
+d.rast lid_1r_binrange2m
+d.legend lid_1r_binrange2m at=2,40,2,5
 </code></pre>
 
-<p>
-display only the high values of range (0.5-20m) overlayed over orthophoto<br>
-what landcover is associated with large range in multiple return data?<br>
-which landscape features may be lost at 6m resolution?<br>
-
-<pre><code>
-g.region rural_1m -p
-</code></pre>
-
-<p>
-do not forget to zoom/set the display to computational region<br>
-to display only selected interval of values in GUI<br>
-Add raster > Required select lid_be_binrange6m<br>
-Tab Selection > List of values to be displayed > type in 0.5-20.<br>
-
-<pre><code>
-<!-- d.erase -->
-d.rast ortho_2001_t792_1m
-d.rast lid_be_binrange6m val=0.5-20.
-<!-- d.erase -->
-d.rast ortho_2001_t792_1m
-d.rast lid_mr_binrange6m val=0.5-20.
-
-</code></pre>
-
-
-<h3>Interpolation</h3>
-
-<p>
-we now know how dense the data are and what is the range within cell<br>
-if we need 1m resolution DEM for our application<br>
-this analysis tells us that we need to interpolate<br>
 <!--
-# linux only: find how many points (number of lines) in the file
-</font>
-wc -l lid_be_pts.txt
-# here is the answer 319214: (no need to do it on windows)
+<p>
+In the first return we have huge range at one or more cells, so we adjust
+the color table to histogram equalized and redraw:
+
+<pre><code>
+r.colors lid_1r_binrange2m color=bcyr -e
+</code></pre>
 -->
-import the ascii lidar data as vector points<br>
-import only points in the rural area  without building a table (Tab Points)<br>
-number of column used as z is 3<br>
-and using z-coordinate for elevation (Tab Optional, Create 3D vector map)<br>
-assuming that the txt file is in your current directory<br>
+
+<p>
+Import and display orthophoto, 
+switch off all layers except for orthophoto.
 
 <pre><code>
-g.region rural_1m -p
-v.in.ascii -ztr input=lid_be_pts.txt out=elev_lid_bepts z=3
+r.in.gdal ortho_0793_016_ncspm.tif output=ortho_2013_0793
+d.rast ortho_2013_0793
 </code></pre>
 
 <p>
-display bare ground and multiple return points over orthophoto<br>
-don't forget to set display to new resolution set by region<br>
+Identify the features that are associated with large range values.<br>
+Display only the high values of range.<br>
+<span class="question">What landcover is associated with large range in multiple return data?</span>
+
 
 <pre><code>
-<!-- d.erase -->
-d.rast ortho_2001_t792_1m
+d.rast lid_1r_binrange2m values=10.-200.
+d.out.file mylid_1rrange2m
 </code></pre>
 
 <p>
-our imported points<br>
+We now know how dense the data are and what is the range within cell.<br>
+If we need a 1m resolution DEM or DSM for our application
+this analysis tells us that we need to interpolate it from the point cloud.
+<span class="question">What steps would you begin with when processing
+point cloud data you are not familiar with?</span>
+
+
+<h3>Interpolate DEM and DSM</h3>
+
+To interpolate DEM and DSM
+we use default parameters except for number of points used for
+segmentation and interpolation<br> (segmax and npmin and higher tension for multiple return data).<br>
+You can set dmin=1 to make the interpolation run faster (see the manual).<br>
+Be patient, it can take a few minutes to run depending on the computer power.<br>
 
 <pre><code>
-d.vect elev_lid_bepts size=2 col=red
+g.region res=1 -ap
+v.surf.rst elev_lid793016_be elevation=elev_lid793016_be_1m npmin=120 segmax=25 dmin=1
+v.surf.rst elev_lid793016_1r elevation=elev_lid793016_1r_1m npmin=120 segmax=25 tension=100 smooth=0.5 dmin=1
+r.colors elev_lid793016_be_1m color=elevation
+r.colors elev_lid793016_1r_1m color=elevation
+d.rast elev_lid793016_be_1m
+d.rast elev_lid793016_1r_1m
 </code></pre>
 
+<!-- not working on windows
 <p>
-points available in the data set<br>
-(elev_lid_bepts and elev_lid792_bepts should be identical)<br>
+Faster interpolation, specially designed for lidar.<br>
+In case of problems with v.surf.bspline, post the error message in the report.
 
 <pre><code>
-d.vect elev_lidrural_mrpts size=4 col=0:100:0
-d.vect elev_lid792_bepts size=2 col=yellow
+v.surf.bspline elev_lid793016_be rast=elev_lid793016_be_1m_bsp
+v.surf.bspline elev_lid793016_1r rast=elev_lid793016_1r_1m_bsp
+r.colors elev_lid793016_1r_1m_bsp color=elevation
+r.colors elev_lid793016_be_1m_bsp color=elevation
+d.rast elev_lid793016_be_1m_bsp
+d.rast elev_lid793016_1r_1m_bsp
 </code></pre>
+-->
+
+Hide legend and switch off all map layers except for the last 2 interpolated ones.<br>
+Use 3D view with cutting planes to compare the bare earth and terrain surface.<br>
+Make sure fine resolution is set to 1 for all surfaces.<br>
+Assign each surface constant color, add constant plane for reference.<br>
+Shade the crossection using the color by bottom surface option.<br>
+If you don't remember this, see screen capture video for 3d view.
 
 <p>
-<!-- # note: if you are getting warning that topology is not available
-# build topology
-</font>
-v.build elev_lid792_bepts
-v.build elev_lidrural_mrpts
-<font color="#000066"> -->
-extract first return to get points for DSM<br>
-interpolate DEM and DSM (more about interpolation in the interpolation assignment)<br>
-we use default parameters except for number of points used for<br>
-segmentation and interpolation - segmax and npmin<br>
-and higher tension for multiple return data<br>
+Save image for your report.
 
-<pre><code>
-g.region rural_1m -p
-v.extract elev_lidrural_mrpts out=elev_lidrur_first type=point where="Return=1"
-v.surf.rst elev_lid792_bepts elevation=elev_lidrural_1m npmin=120 segmax=25
-v.surf.rst elev_lidrur_first elevation=elev_lidrurfirst_1m npmin=120 segmax=25 tension=100 smooth=0.5
-<!-- d.erase -->
-d.rast elev_lidrural_1m
-d.rast elev_lidrurfirst_1m
-</code></pre>
+<!--
+# optional
+# find out where we have multiple returns
+d.rast ortho_2013_0793
 
-<p>
-use wxnviz (3D view) with cutting planes to compare the bare earth and terrain surface<br>
-switch off all layers except for elev_lidrural_1m and elev_lidrurfirst_1m<br>
-switch to 3D view<br>
-make sure fine resolution is set to 1 for all surfaces<br>
-assign each surface constant color, add constant plane z=90 for reference<br>
-create crossections using cutting plane,<br>
-shade the crossection using the color by bottom surface option<br>
-save image for report, if you don't have tiff support, use screen capture tool<br>
-if you don't remember this, see screen capture video for <a href="http://courses.ncsu.edu/mea582/common/media/03/sc_wxnviz3_edit.mov">wxnviz 3d view</a><br>
+# condition for subset in GUI:
+# Add vector>Selection>type return=1 into WHERE condition of SQL statement
+# you need to add the points 4 times to create a map that will have
+# all sets of returns
+r.in.xyz input=0793_016.txt out=lid_mr_binn1m meth=n separator=space
+d.rast lid_mr_binn1m
+d.legend lid_mr_binn1m at=2,80,2,5 thin=2
+d.out.file mylidmrn1m
+r.report lid_mr_binn1m unit=p,c
+r.univar lid_mr_binn1m
 
-
-<h3>Multiple returns</h3>
-
-<p>
-find out where we have multiple returns<br>
-
-<pre><code>
-g.region rural_1m -p
-<!-- d.erase -->
-d.rast ortho_2001_t792_1m
-</code></pre>
-
-<p>
-condition for subset in GUI:<br>
-Add vector>Selection>type return=1 into WHERE condition of SQL statement<br>
-you need to add the points 4 times to create a map that will have<br>
-all sets of returns<br>
-
-<pre><code>
-d.vect elev_lidrural_mrpts where=return=1 col=red size=2
-</code></pre>
-
-<p>
-can you guess what is in the area that does not have any 1st return points?<br>
-
-<pre><code>
-d.vect elev_lidrural_mrpts where=return=2 col=green size=3
-d.vect elev_lidrural_mrpts where=return=3 col=blue
-d.vect elev_lidrural_mrpts where=return=4 col=yellow
+v.in.ascii -z input=0793_016.txt out=elev_lid793016_all z=3 separator=space
+d.vect elev_lid793016_all where=return=1 fcol=grey size=5 icon=basic/circle
+d.vect elev_lid793016_all where=return=2 fcol=green size=4 icon=basic/circle
+d.vect elev_lid793016_all where=return=3 fcol=yellow size=3 icon=basic/circle
+d.vect elev_lid793016_all where=return=4 fcol=red size=2
 d.out.file lidreturns
-</code></pre>
-
-<!-- add here TIN using the new module if available -->
-
-<!--
-<p>
-Optional task
-Contour (isoline) representation
-generate contours with 10m and 3m interval
-
-g.region raster=elevation -p
-d.erase
-d.rast elevation
-r.contour elevation out=elev_contour_10m step=10
-d.vect elev_contour_10m
-v.label -a map=elev_contour_10m label=contour_labels column=level back=white
-d.labels contour_labels
-r.contour elevation out=elev_contour_3m step=3 min=55 max=154
-d.rast elevation
-d.vect elev_contour_3m
+# can you guess what is in the area that does not have any 1st return points?
+nviz elev_lidrural_1m,elev_lidrurfirst_1m
+<font color="#000066">
+# save image for report, if you don't have tiff support, use screen capture tool
 -->
+
