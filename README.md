@@ -120,6 +120,21 @@ in the web pages.
 * email students with link to the website and to Moodle
 
 
+Automatic indexes
+-----------------
+
+Topics index and GRASS GIS assignments index are generated automatically.
+The process is split into two phases. First, links to pages are extracted
+from a given page. This introduces the desired order of the linked pages
+(alternative would be, e.g. alphabetical order based on file names
+and directory listing). In the second phase, individual files are search
+for the main heading and optionally subheadings. These headings
+are used to create the text in the index page.
+See `extract-links.py`, `generate-index.py` and `build.sh` for details.
+
+Subtopics are extracted from the topics pages when they have `class="subtopic"`.
+
+
 License
 -------
 
