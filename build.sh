@@ -85,7 +85,7 @@ DIR="topics"
 TGT_FILE=$OUTDIR/$DIR/index.html
 ./increase-link-depth.py < $HEAD_FILE > $TGT_FILE
 echo "<!-- This is a generated file. Do not edit. -->" >> $TGT_FILE
-./generate-index.py "$TITLE" "$HEAD_TEXT" "$FOOT_TEXT" $DIR/ ol ul $FILES >> $TGT_FILE
+./generate-index.py "$TITLE" "$HEAD_TEXT" "$FOOT_TEXT" $DIR/ ul ul $FILES >> $TGT_FILE
 ./increase-link-depth.py < $FOOT_FILE >> $TGT_FILE
 
 for FILE in *.css
