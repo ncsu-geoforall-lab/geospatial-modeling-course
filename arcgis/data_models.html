@@ -84,11 +84,11 @@ Click 'OK'
 Resampling to lower resolution (downscaling) for continuous field data:
 
 <pre>
-Select 'Spatial Analyst Tools->Neighborhood->Block Statistics'
+Select 'Spatial Analyst Tools->Generalization->Aggregate'
 Set 'Input raster' to 'elev_ned'
 Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\el_90m_mean'
-Set Neighborhood' to 'Rectangle' with Height = 3 and Width = 3  (90m cells)
-Set Statistics type' to 'MEAN'
+Set 'Cell factor' to 3
+Set 'Aggregation technique' to 'MEAN'
 Click 'OK'
 </pre>
 
@@ -97,11 +97,11 @@ Resampling to lower resolution (downscaling) for discrete categories:
 
 
 <pre>
-Select 'Spatial Analyst Tools->Neighborhood->Block Statistics'
+Select 'Data Management' Tools-> Raster -> Raster Processing -> Resample'
 Set 'Input raster' to 'landcl96'
 Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\landcl_mode'
-Set Neighborhood' to 'Rectangle' with Height = 3 and Width = 3  (90m cells)
-Set Statistics type' to 'MAJORITY'
+Set 'X' and 'Y' to 90
+Set 'Resampling technique' to 'MAJORITY'
 Click 'OK'
 </pre>
 
@@ -111,6 +111,7 @@ Convert SW Wake subarea of geology layer to 30m raster.
 <pre>
 Select 'File->Add Data->Add Data...'
 Select ./ncshape.mdb/geology
+Select ./ncshape.mdb/swwake_10m
 
 Select 'Conversion Tools->To Raster->Polygon To Raster'
 Set Input Features to '.\ncshape.mdb\geology'
@@ -118,7 +119,6 @@ Set Value Field to 'GEO_NAME'
 Set Output Raster Dataset to 'C:\Users\myname\arcdata\assign2\rast_geo'
 Set Cellsize to 30
 Leave the remaining fields as their defaults
-Click 'OK'
 </pre>
 
 <p>
@@ -126,15 +126,7 @@ Adjust the working region:
 
 <pre>
 Click 'Environments...' button (bottom of dialog)
-Under 'Processing Extent' Set the 'Extent' to 'Same as layer .\ncshape.mdb\wake_30m'
-</pre>
-
-<p>
-note: vector layers .\ncshape.mdb\streams and .\ncshape.mdb\swwake_10m<br>
-have the desired extent so use those if you don't have wake_30m<br>
-
-<pre>
-Click 'OK'
+Under 'Processing Extent' Set the 'Extent' to 'Same as layer .\ncshape.mdb\swwake_10m'
 Click 'OK'
 Click 'OK'
 </pre>
