@@ -188,7 +188,8 @@ See <em class="module">r.mapcalc</em> manual page for syntax and functions.
 <!--# <a href="mapcalcformats.html">See here for several ways on <b>how to run r.mapcalc</b></a>-->
 If you are getting en error when running <em class="module">r.mapcalc</em> in command console,
 launch the GUI version from Layer Manager toolbar.
-<p>
+
+<h4>NDVI</h4>
 Compute Normalized Difference Vegetation Index (NDVI).<br>
 <span class="question">Explain the difference between floating point and integer
 handling in ndvi1, ndvi2 and ndvi3 result</span>.
@@ -206,7 +207,7 @@ d.rast ndvi3
 d.out.file ndvi3
 </code></pre>
 
-<p>
+<h4>Difference between DEM and DSM</h4>
 Explore the difference between the SRTM DSM and lidar-based NED DEM.
 Compute the map of elevation differences.
 
@@ -287,7 +288,7 @@ d.rast urban2_30m
 
 <!-- p. 110-111<br> -->
 <h4>Handling null values</h4>
-Replace lakes in the landclass96 map with more accurate representation.<br>
+<!-- Replace lakes in the landclass96 map with more accurate representation.<br>
 From raster map lakes, we divide lakes by 1000 because the lake map has
 large numbers that would have required custom color table.
 
@@ -295,7 +296,7 @@ large numbers that would have required custom color table.
 r.mapcalc "luselakes = if(isnull(lakes), landclass96, lakes/1000)"
 d.rast luselakes
 d.out.file luselakes
-</code></pre>
+</code></pre> -->
 
 <p>
 <!--
@@ -349,6 +350,9 @@ Replace section of SRTM DSM with NED DEM elevation.<br>
 r.mapcalc "elev_combined = if(y() &lt; 224274. &amp;&amp; x() > 637455., elevation, elev_srtm_30m)"
 </code></pre>
 
+
+
+<h3>Optional -  various additional useful tasks</h3>
 <h4>Tilted plane</h4>
 Create a raster map representing tilted plane (e.g., geologic fault):
 
@@ -364,8 +368,8 @@ View the elevation surface and subsurface plane in 3D.
 Change display to 3D view, adjust viewing position to a view from South.
 Save an image for your report.
 
-<h3>Optional -  various additional useful tasks</h3>
 <!-- p. 91<br> -->
+<h4>Map subsets</h4>
 Use map algebra to create map subsets.<br>
 Change region to the airphoto tile 792 and resolution 10m.
 Since we will work in different are, it is a good idea to remove
@@ -388,8 +392,7 @@ d.rast elevation_792_10m
 <p>
 Zoom out to see that it is a subset.
 
-<p>
-Work with NULL and MASK.
+<h4>Work with NULL and MASK</h4>
 <!-- p. 103-104<br> -->
 Set the mask and check its effect.
 
@@ -407,7 +410,7 @@ Remove mask:
 r.mask -r
 </code></pre>
 
-<p>
+<h4>Zonal statistics</h4>
 Compute % area for each category in each zipcode.
 <span class="question">Which zipcode has the most high density development?</span>
 
@@ -415,9 +418,9 @@ Compute % area for each category in each zipcode.
 r.stats -pl zipcodes,landuse96_28m
 </code></pre>
 
-<p>
+
 <!-- p. 113<br> -->
-Working with relative coordinates.<br>
+<h4>Working with relative coordinates</h4>
 Enter the expression on a single line without \<br>
 Again, it is a good idea to remove the previously used map layers
 before we start to work on a new task.
