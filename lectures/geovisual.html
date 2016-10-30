@@ -1,0 +1,330 @@
+<section>
+    <h2><b>Geovisualization</b></h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h3>Outline (learning objectives)</h3>
+<p>
+<ul>
+  <li>display of raster and vector data: scaling properties
+  <li>color ramps for raster data, relief shading
+  <li>color and symbols for vector data
+  <li>map elements
+  <li>3D visualization: single and multiple surfaces
+  <li>dynamic visualization with animations
+  <li>Web GIS cartography: MapStory, CartoDB, WorldMap
+</ul>
+</section>
+
+<section>
+  <h3>Role of geovisualization</h3>
+<p>visual analytics
+<p>communication of geospatial information
+</section>
+
+<section>
+   <h3>Display of raster and vector data</h3>
+<p>
+data displayed on computer screen are rasters 
+<p>
+raster data zoom in: pixels show up, reinterpolate raster data to avoid visible pixels
+vector data zoom in: display is scalable, preserves shape 
+<p>
+<p> Image composite - raster and vector zoom in #5
+</section>
+
+<section>
+   <h3>Display of large rasters</h3>
+<p>
+If raster rows or columns are greater than those of map display,
+not all pixels are visible: example raster lines representation is broken 
+<br>solution? convert to vector representation
+<p>
+</ul>
+<p> Image composite - discontinuous streams #7
+</section>
+
+<section>
+   <h3>Working with color</h3>
+<p>
+Color definition as RGB ....., hue and intensity
+<p>
+Color for raster data: discrete or continuous 
+(interpolated RGB values based on the values in the raster map)
+<p>
+Color for vector data: discrete by definition
+<p>
+Learn more about color
+<br><a href="link.html"> color ramps</a>
+</p>
+</section>
+
+<section>
+   <h3>Colors for discrete raster data</h3>
+<p>
+quantitative data: intensity as function of values
+example: soil erodibility 
+<p>qualitative data: constant intensity, discrete hue
+<p> Image composite - erodibility and landuse examples #10
+<p>Brewer - example of discrete color ramps for cartography
+</section>
+
+<section>
+   <h3>Colors for continuous raster data</h3>
+<p>
+Continuous data are quantitative data 
+<p>continuous color ramps highlight the continuous property
+<p class="credit">(note: default is often greyscale with uniform interval)</p>
+<p>discrete color ramp limits the information but makes the interval values easier to identify
+<p> Image composite - histogram and color ramp cont and discrete
+</section>
+
+<section>
+   <h3>Colors for continuous raster data</h3>
+<p>
+Distribution of color based on uniform raster data intervals
+<p class="credit">Works for Wake, for NC highlights that most NC is flat coastal plane
+but we don't see the topography structure
+<p> Image composite - histogram and color ramp Wake and NC
+</section>
+
+<section>
+   <h3>Histogram equalized color</h3>
+<p>
+Distribution of color based on histogram of raster data values
+<p class="credit"> highlights topography structure, distorts the elevation differences
+<p> Image composite - histogram equalized and custom color ramp NC
+<p>Equation or graph?
+</section>
+
+<section>
+   <h3>Color for data with non-linear distributions</h3>
+<p>
+Example: flow accumulation data range over several magnitudes
+<p>Display with uniform interval, histogram equalized and logarithmic color ramps
+<p> Image composite - flowaccumulation uniform, hist eq, log
+<p>split into 3 slides
+<p>Equation or graph?
+</section>
+
+<section>
+   <h3>Relief shading</h3>
+<p>
+Color composite (intensity+hue) highlights the relationship between the theme values
+represented by color and the surface (topography) structure
+<p>
+<ul>
+  <li>intensity: shaded relief (illuminated topography in greyscale)
+  <li>hue: theme values (elevation, watersheds, land cover as color map)
+</ul>
+<p> Image composite - elevation map with relief shading
+<p> Equations for illuminated relief and composite
+</section>
+
+<section>
+   <h3>Relief shading</h3>
+<p>
+Watersheds with streams
+<p> Image composite - watersheds map with relief shading
+</section>
+
+<section>
+   <h3>Vector data display</h3>
+<p>
+Topic covered by thematic cartography,
+follow conventions for baseline data, national standards 
+<p class=small>
+<ul>
+  <li>lines: color and symbols
+  <li>polygons: color and fill, transparency
+  <li>points: color and symbols
+  <li>colors and symbols are assigned based on attributes
+  <li>general rules for quantitative and qualitative data apply
+  <li>relation between symbol size, line width and scale
+  <li>adding labels: complex algorithms for automated positioning of labels 
+</ul>
+</p>
+</section>
+
+<section>
+   <h3>Vector data display</h3>
+<p> examples from GRASS, ArcGIS, online maps (OSM, Google), USGS standards
+<p> Image composite - watersheds map with relief shading
+</section>
+
+<section>
+  <h3>From image to map</h3>
+<p>Display of raster and vector data does not make a map
+<p>Map: cartographic representation of geospatial data
+<p> Image composite - display of raster and vector data
+</section>
+
+<section>
+<h3>Map elements</h3>
+<ul>
+<li>data frame - map content image
+<p>placed outside the map image:
+<li>legend and title
+<li>scale and north arrow
+<li>coordinates 
+<li>citation, metadata
+</ul>
+<p> Image composite - display of raster and vector data with map elements,
+compare the projected and geographic grid
+</section>
+
+<section>
+   <h3>Visualization in 3D perspective</h3>
+<p> Viewing and analyzing 3D data
+<ul>
+<li> on-line viewers (GE, NASA Wolrd Wind), GPS navigation
+<li> Projection of 3D object into a 2D space: perspective
+<li> Parameters:
+  <ul>
+  <li>viewing position (height, distance and angle)
+  <li>surface position, z-scale, resolution 
+  <li>light and shading
+  <li>surface color: raster map, vector data
+  </ul>
+</ul>
+<p> Image composite - 2D to 3D view, GE, GPS nav
+</section>
+
+<section>
+   <h3>Properties of 3D perspective</h3>
+<p>Different properties than 2D display 
+<ul>
+<li> paralel lines intersect in XX point
+<li> scale depends on distance from the viewer
+<li> 3D ortho view: viewing position in infinity above center of the image
+<li> only visible part of surface is rendered
+<li> interactive exploration important for viewing obstructed data
+</ul>
+<p> Image composite - illustrate the points above
+</section>
+
+<section>
+   <h3>Light and shading</h3>
+<p>Importnat for visual representation of surface structure
+<p>Useful for indentification of subtle features or artifacts
+</ul>
+<p> Image composite - light sphere
+</section>
+
+<section>
+   <h3>Multiple surface visualization</h3>
+<p>Applications - use cases
+<ul>
+  <li>Lidar: bare ground and surface with vegetation
+  <li>Change in topography (coast, development)
+  <li>Geological or soil layers
+  <li>Vertical scaling is important: vertical distances often 1-3 magnitudes smaller than horizontal
+  <li>Display: side-by-side or stacked
+  <li>Interactive cutting planes for exploration of stacked surfaces
+</ul>
+</section>
+
+<section>
+   <h3>Multiple surface visualization</h3>
+<p>Side by side: Bare Earth and Vegetated Surfaces derived from lidar data
+<p>Stacked with crossections: Groundwater, Bare Earth and Vegetated Surfaces 
+<p> Image composite - SECREF lidar, cutting plane
+</section>
+
+<section>
+   <h3>Multiple surface visualization</h3>
+<p>Difference over time: trees cut down, buildings added
+<p> Image composite - SECREF 2001 - 2013 
+</section>
+
+<section>
+   <h3>Multiple surface visualization</h3>
+<p>Difference over time: migrating dune
+<p> Image composite - Jockey's ridge, (also Hunt lib?) 
+</section>
+
+<section>
+   <h3>Visualization of 3D vector data</h3>
+<p>Urban environment
+<p> Image composite - examples from GRASS, ArcGIS, GE
+</section>
+
+<section>
+   <h3>Animations </h3>
+<p> When to use animations: 
+<ul>
+  <li>dynamic simulations: ocean surge, flooding, pollution, migration, urban growth
+  <li>time series of data : temperature, precipitation, melting of ice cap, urban growth
+  <li>analysis or illustration of a method – changing a parameter
+</ul>
+<p> Image composite - simulation: 2D anim surge, data: cape fear
+</section>
+
+<section>
+   <h3>Animations 2D</h3>
+<p> 2D animations examples
+<p> Image composite - simulation: 2D urban growth, data: urban growth
+</section>
+
+<section>
+   <h3>Animations in 3D </h3>
+<p> Dynamic animation in 3D space viewed in perspective
+<ul>
+Fly-by : single static surface explored by moving viewing position – Google Earth, Fly-by
+Dynamic surfaces: series of changing surfaces (color map, surface or both), static viewing position
+Cutting planes: slicing through stacked surfaces or volumes
+</ul>
+<p> Image composite - flow: particles and depth, solar on CC
+</section>
+
+<section>
+   <h3>Animations in 3D: examples </h3>
+<p> Jockey's ridge
+</section>
+
+<section>
+   <h3>Animations in 3D </h3>
+<p>Volume data 
+<p>See more examples here (create this as html animation galery:
+<p class=credit>http://courses.ncsu.edu/mea592/common/media/dynamicgis/dynamicgis.html</p>
+</section>
+
+<section>
+  <h3>Web-based visualization</h3>
+<p>Maps: MapStory
+<p>Visualizations: point cloud viewer
+<p> Image composite - commet-like flow 
+<p> links to resources
+</section>
+
+<section>
+ <h3>Summary</h3>
+<ul>
+  <li>display of raster and vector data: scaling properties
+  <li>color ramps for raster data, relief shading
+  <li>color and symbols for vector data
+  <li>map elements
+  <li>3D visualization: single and multiple surfaces
+  <li>dynamic visualization with animations
+  <li>Web GIS cartography: MapStory, CartoDB, WorldMap, flows
+</ul>
+</section>
+
+<section>
+ <h3>Reading, resources</h3>
+<ul>
+<li>Color ramps
+  <ul>
+  <li> Brewer
+  <li>http://wikipedia.org/wiki/Histogram_equalization
+  <li>http://www.generation5.org/content/2004/histogramEqualization.asp
+  </ul>
+<li>web based visualization
+</section>
+
