@@ -97,8 +97,13 @@ set -e
 # print commands before executing
 set -o xtrace
 
-# start monitor to rendered images (generated code)
+# start monitor to render images (generated code)
 d.mon cairo
+"""
+
+code_for_end = r"""
+# end monitor (generated code)
+d.mon stop=cairo
 """
 
 replaced_files = []
@@ -126,6 +131,7 @@ for line in fileinput.input():
     elif html_comment_end.search(line):
         in_html_comment = False
         continue
+    # TODO: skip the other parsing if in comment and not end of comment
     elif file_content_start.search(line):
         in_file_content = True
         tmp_file = open(file_name_capture.search(line).group(1), 'w')
@@ -170,3 +176,5 @@ for line in fileinput.input():
             sys.stdout.write(line)
         else:
             sys.stdout.write("# %s" % line)
+
+sys.stdout.write(code_for_end)
