@@ -214,8 +214,9 @@ to the file you are saving the image in, or you must know the current working
 directory.
 
 <pre><code>
-d.vect census_centr icon=basic/circle fcol=green size=10 
-d.vect census_wake2000 col=red  type=boundary
+d.vect census_centr icon=basic/circle fill_color=green size=10
+d.vect census_wake2000 color=red fill_color=none
+d.legend.vect
 d.out.file vect_to_points
 </code></pre>
 
