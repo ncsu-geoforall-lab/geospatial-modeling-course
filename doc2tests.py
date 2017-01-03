@@ -75,7 +75,9 @@ text_replacemets = [
 
 text_replacemets.extend(common_replacements)
 
-file_path_extraction = re.compile(r'<a href="([^"]+)">([^<]+)</a>', re.IGNORECASE)
+file_path_extraction = re.compile(r'<a href="([^"]+)"[^>]*>([^<]+)</a>', re.IGNORECASE)
+file_from_url_extraction = re.compile(r'<a href="([^"]+)/([^"/]+)"[^>]*>([^<]+)</a>', re.IGNORECASE)
+download_attribute_presence = re.compile(r'<a href="([^"]+)"[^>]* download[^>]*>([^<]+)</a>', re.IGNORECASE)
 
 code_replacemets = [
     (re.compile('d.mon wx.'), 'd.mon cairo'),
@@ -120,11 +122,27 @@ for line in fileinput.input():
         path = file_path_match.group(1)
         name = file_path_match.group(2)
         if not name in replaced_files and not path.startswith('http'):
+            print "### >>>", name , path, "### ###"
             replaced_files.append(name)
             code_replacemets.append(
                 (re.compile('=' + name), '=' + path))
             code_replacemets.append(
                 (re.compile('="' + name + '"'), '="' + path + '"'))
+        elif path.startswith('http'):
+            print "### ###", path, "### ###"
+            if download_attribute_presence.search(line):
+                print "### ###", line, "### ###"
+                sys.stdout.write(
+                    '# download the linked file (generated code)\n'
+                    '#wget "%s"\n' % path
+                )
+                if path.endswith('.zip'):
+                    match = file_from_url_extraction.search(line)
+                    name = match.group(2)
+                    sys.stdout.write(
+                    '# uncompress the downloaded file (generated code)\n'
+                    'unzip "%s"\n' % name
+                )
 
     if html_comment_start.search(line) and not html_comment_end.search(line):
         in_html_comment = True
