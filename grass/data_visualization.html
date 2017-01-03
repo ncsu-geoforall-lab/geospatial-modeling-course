@@ -255,13 +255,31 @@ d.vect roadsmajor color=yellow
 d.out.file mylandsat
 </code></pre>
 
-<h3>Export NC precipitation stations data to kml and post in Google Earth</h3>
-If your are running the command in GUI do not forget to click point for data type.
-To view the data in Google Earth just drag and drop the kml file in the Google Earth window.
+<h3>Export NC precipitation stations data to KML and post in Google Earth</h3>
+
+To see what you are exporting, add the <em>precip_30ynormals</em> raster
+or use the following command:
 
 <pre><code>
-g.region nc_500m
-v.out.ogr precip_30ynormals output=c:\temp\precipitation.kml format=KML type=point
+d.vect precip_30ynormals
+</code></pre>
+
+You may need to use right click in <em>Layers</em> to zoom to the extent
+of the whole vector map. Then use <em class="module">v.out.ogr</em> to
+export the vector map in the KML format.
+If your are running the command in GUI do not forget to click point for
+data type. To view the data in Google Earth just drag and drop the KML
+file in the Google Earth window.
+
+<pre><code>
+v.out.ogr precip_30ynormals output=precipitation.kml format=KML type=point
+</code></pre>
+
+You need to set the file path to the desired directory or work using the
+current working directory. On MS Windows, you may do something like this:
+
+<pre data-run="no"><code>
+v.out.ogr precip_30ynormals output=C:\temp\precipitation.kml format=KML type=point
 </code></pre>
 
 <h3>Optional part</h3>
