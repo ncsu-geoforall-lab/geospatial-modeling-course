@@ -146,6 +146,7 @@ r.colors elevlidD_6m raster=elevation
 <!-- d.erase -->
 d.rast elevlidD_6m
 </code></pre>
+
 <!--
 <p>
 Patching discrete raster layers over continuous raster:
@@ -181,7 +182,8 @@ r.colors composite rules=rastcomposite_color.txt
 d.rast composite
 d.out.file composite
 </code></pre>
-  -->
+-->
+
 <h3>Map Algebra</h3>
 See <em class="module">r.mapcalc</em> manual page for syntax and functions.
 <!-- # p. 107-108  -->
@@ -288,7 +290,9 @@ d.rast urban2_30m
 
 <!-- p. 110-111<br> -->
 <h4>Handling null values</h4>
-<!-- Replace lakes in the landclass96 map with more accurate representation.<br>
+
+<!--
+Replace lakes in the landclass96 map with more accurate representation.<br>
 From raster map lakes, we divide lakes by 1000 because the lake map has
 large numbers that would have required custom color table.
 
@@ -296,7 +300,8 @@ large numbers that would have required custom color table.
 r.mapcalc "luselakes = if(isnull(lakes), landclass96, lakes/1000)"
 d.rast luselakes
 d.out.file luselakes
-</code></pre> -->
+</code></pre>
+-->
 
 <p>
 <!--
