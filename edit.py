@@ -4,7 +4,7 @@ import sys
 import fileinput
 import re
 
-block_start = re.compile(r'^\s*<pre><code>\s*$')
+block_start = re.compile(r'^\s*<pre ?.*><code ?.*>\s*$')
 
 for line in fileinput.input():
     # ignore header
