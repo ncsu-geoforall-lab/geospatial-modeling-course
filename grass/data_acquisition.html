@@ -382,7 +382,7 @@ And the full path, e.g. "C:\path_to_my_file\roadsmajor.shp", would be used
 instead of "roadsmajor.shp".
 
 <pre data-run="no"><code>
-v.in.ogr input=gdc.shp output=geodetic_points
+v.import input=gdc.shp output=geodetic_points
 v.out.ogr input=roadsmajor output=roadsmajor.shp
 </code></pre>
 
@@ -418,7 +418,7 @@ like "C:\path_to_my_file\lc96ras_cut.tif" or
 and platform you are using.
 
 <pre><code>
-r.in.gdal input=lc96ras_cut.tif output=landuse96_subset
+r.import input=lc96ras_cut.tif output=landuse96_subset
 </code></pre>
 
 <h4>Exporting raster files as ASCII grid and GeoTIFF</h4>
