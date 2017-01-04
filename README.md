@@ -25,7 +25,8 @@ The (static) website for this course is using GitHub pages and the URL is:
 
 Old URLs (for archival purposes):
 
-* http://courses.ncsu.edu/gis582/common/
+* https://ncsu-osgeorel.github.io/geospatial-modeling-course
+* http://courses.ncsu.edu/gis582/common
 * https://courses.ncsu.edu/mea582/common/GIST.html
 
 
