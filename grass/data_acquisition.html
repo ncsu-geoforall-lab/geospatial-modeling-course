@@ -82,24 +82,25 @@ You might already have the right map layers in your Layer Manager, so you don't 
 The CLI instructions can also be used for running the assignments on Linux and Mac as scripts.
 </i>
 
-<h3>GRASS GIS location and mapset</h3>
+<h3>GRASS GIS Location and Mapset</h3>
 If you don't already have GRASS GIS spatial database nc_spm_08_grass7
 downloaded, you can find it on
 <a href="../logistics.html#data">Course logistics page</a>.
 <p>
 Before starting with GRASS GIS it is important to understand that
-GRASS GIS uses the concept of LOCATION, MAPSET and computational region to support
+GRASS GIS uses the concept of <em>Location</em>, <em>Mapset</em> 
+and <em>computational region</em> to support
 efficient analysis and modeling without the need to subset and resample
-data. LOCATION is a project space that has common coordinate system.
-Each LOCATION can have several MAPSETS, one is called PERMANENT
+data. Location is a project space that has common coordinate system.
+Each Location can have several Mapsets, one is called PERMANENT
 to store baseline data, others are set by users. You can modify
-the data only in your current MAPSET, but you can view or copy
-data from other MAPSETS. See also
+the data only in your current Mapset, but you can view or copy
+data from other Mapsets. See also
 <a href="http://grass.osgeo.org/grass71/manuals/grass_database.html">structure of GRASS database</a>.
 
 <p>
 <b>DO NOT MOVE</b> the files under
-LOCATION directory using non-GRASS tools.
+Location directory using non-GRASS tools.
 
 <p>
 Suggested workflow is to create a new mapset for each assignment
@@ -330,7 +331,7 @@ You can save your project into a GRASS workspace file *.gxw under <em>File</em> 
 
 <p>
 In this section we will cover importing and exporting of raster and vector
-data which are in the same projection as the GRASS location we work in.
+data which are in the same projection as the GRASS Location we work in.
 
 Cases where the projection differs are covered in a <a href="import.html">separate guide</a>.
 
@@ -436,7 +437,46 @@ r.out.gdal input=elev_ned_30m output=elev_ned_30m.ascii format=AAIGrid
 r.out.gdal input=basin_50K output=basin_50K.tif
 </code></pre>
 
-<h4>Optional: Add WMS layer</h4>
+<h3>Creating new GRASS Location</h3>
+We will create new Locations based on EPSG code and based on
+georeferenced file.
+<p> First we create a new Location with Spatial Reference System (SRS) given by
+    EPSG code 3404.
+    <span class="question">Which SRS has EPSG 3404 and what are its characteristics?</span>
+    
+<p>
+Launch <em>Location Wizard</em>
+from Layer Manager menu > <em>Settings</em> > <em>GRASS working environment</em> >
+ <em>Create new location</em><br>
+or from GRASS Startup window > <em>Select GRASS Location</em> > <em>New</em>.<br>
+In <em>Project Location</em> field type "nc_spf" > <em>Next</em><br>
+Select method <em>Select EPSG code of spatial reference system</em> > <em>Next</em><br>
+Type EPSG code 3404 > <em>Next</em> > OK > Finish<br>
+Set default region extents? > No<br>
+
+In this new location review the projection information:
+<pre><code>
+g.proj -p
+</code></pre>
+
+<p>Another way to set up a GRASS Location uses SRS information from a georeferenced file.
+Again launch the <em>Location Wizard</em>:
+<p>
+In <em>Project Location</em> field type "nc_spm" > <em>Next</em><br>
+Select method <em>Read projection and datum terms from a georeferenced data file</em> > <em>Next</em><br>
+Browse to downloaded file <a href="data/lc96ras_cut.tif">lc96ras_cut.tif</a> >
+<em>Next</em> > Finish<br>
+<em>Import data?</em> > Yes > OK<br>
+
+Review again the projection information:
+<pre><code>
+g.proj -p
+</code></pre>
+
+
+
+
+<h3>Optional: Add WMS layer</h3>
 View and download orthophoto through web mapping service.
 Requires good internet connection. If it doesn't work, report the problem
 including any error message in the report.<br>
