@@ -102,7 +102,7 @@ for DIR in resources
 do
     mkdir -p $OUTDIR/$DIR
 
-    for FILE in `ls $DIR/*.pdf $DIR/*.docx $DIR/*.tex`
+    for FILE in `ls $DIR/*.pdf $DIR/*.docx $DIR/*.odt $DIR/*.tex $DIR/*.png`
     do
         cp $FILE $OUTDIR/$DIR
     done
