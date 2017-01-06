@@ -1,14 +1,11 @@
 % Assignment report LaTeX template
 % for class Geospatial Modeling and Analysis
-% GIS/MEA582-601 Spring 2014
+% GIS/MEA582-601
 
 
 \documentclass[10pt]{article}
 \usepackage[utf8]{inputenc}
-% comment the following line when compiling the real document (it causes demo mode where images are black)
-\usepackage[demo]{graphicx}
-% uncomment the following line when compiling the real document
-% \usepackage{graphicx}
+\usepackage{graphicx}
 \usepackage[colorlinks=false]{hyperref}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -147,29 +144,28 @@ at several spatial extents and resolutions\ldots
 % sizes are predifined in the preamble (before \begin{document}) but can be changed
 % filename can be without directory when it is in the directories specfied in the preamble
 % filename's extension can be ommited for .png, .jpg and .pdf
-% don't forget to replace \usepackage[demo]{graphicx} by \usepackage{graphicx}
 \begin{figure}[htbp]
   \centering
   \begin{subfigure}[b]{\twobytwoimgwidth}
-    \includegraphics[width=\textwidth]{filename}
+    \includegraphics[width=\textwidth]{report_template_image}
     \caption{}
 %     \label{fig:afigure}
   \end{subfigure}%
   ~ % ~, \quad, \qquad etc. or \\
   \begin{subfigure}[b]{\twobytwoimgwidth}
-    \includegraphics[width=\textwidth]{filename}
+    \includegraphics[width=\textwidth]{report_template_image}
     \caption{}
 %     \label{fig:}
   \end{subfigure}
   \\[0.01\textheight]
     \begin{subfigure}[b]{\twobytwoimgwidth}
-    \includegraphics[width=\textwidth]{filename}
+    \includegraphics[width=\textwidth]{report_template_image}
     \caption{}
 %     \label{fig:}
   \end{subfigure}
   ~
   \begin{subfigure}[b]{\twobytwoimgwidth}
-    \includegraphics[width=\textwidth]{filename}
+    \includegraphics[width=\textwidth]{report_template_image}
     \caption{}
 %     \label{fig:}
   \end{subfigure}%
@@ -227,7 +223,7 @@ and that it can be different from the resolution of the displayed raster.
 % more templates to include figures
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\oneimgwidth]{filename}
+  \includegraphics[width=\oneimgwidth]{report_template_image}
   \caption{Image description}
   \label{fig:figure-internal-label}
 \end{figure}
@@ -235,13 +231,13 @@ and that it can be different from the resolution of the displayed raster.
 \begin{figure}[htbp]
   \centering
   \begin{subfigure}[b]{\twoimgwidth}
-    \includegraphics[width=\textwidth]{filename}
+    \includegraphics[width=\textwidth]{report_template_image}
     \caption{Left figure}
 %     \label{fig:}
   \end{subfigure}%
   ~ % ~, \quad, \qquad etc. or \\
   \begin{subfigure}[b]{\twoimgwidth}
-    \includegraphics[width=\textwidth]{filename}
+    \includegraphics[width=\textwidth]{report_template_image}
     \caption{Right figure}
 %     \label{fig:}
   \end{subfigure}
