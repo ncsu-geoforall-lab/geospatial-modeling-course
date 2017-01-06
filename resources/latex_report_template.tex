@@ -24,15 +24,18 @@
 \newcommand{\asevenmodule}[1]{\emph{#1}}
 \newcommand{\module}[1]{\emph{#1}}
 \newcommand{\grasslink}{\href{http://grass.osgeo.org/}{GRASS GIS}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\authorName}{Your Name}
-\newcommand{\classSemestr}{Spring 2017}
-\newcommand{\classId}{GIS/MEA582}
-\newcommand{\className}{Geospatial Modeling and Analysis}
-\newcommand{\classWeb}{\url{http://ncsu-geoforall-lab.github.io/geospatial-modeling-course}}
-\newcommand{\assignmentTopic}{Assignment report \LaTeX{} template}
+% you can fill the following and use the commands in the header,
+% the title, and the PDF metadata
+% now, plain text is used and repeated
+\newcommand{\authorName}{}
+\newcommand{\classSemestr}{}
+\newcommand{\classId}{}
+\newcommand{\className}{}
+\newcommand{\assignmentTopic}{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -43,7 +46,7 @@
 % 
 % % default fancy page style
 \fancyhf{}
-\fancyhead[R]{\textit{\classId, \classSemestr, \authorName}}
+\fancyhead[R]{\textit{GIS/MEA582, Spring 2017, Your Name}}
 
 \fancyfoot[R]{\thepage}
 % 
@@ -54,21 +57,18 @@
 \renewcommand{\footrulewidth}{0pt}
 }
 % 
-\title{\classId, \classSemestr \\ \className \\ \assignmentTopic}
-\author{\authorName}
+\title{GIS/MEA582, Spring 2017 \\ Geospatial Modeling and Analysis \\ Assignment report \LaTeX{} template}
+\author{Your Name}
 \date{\today}
 % 
 % 
 \hypersetup{
-    pdftitle={\assignmentTopic},
-    pdfsubject={\classId, \className, \classSemestr},
-    pdfauthor={\authorName},
+    pdftitle={Assignment report \LaTeX{} template},
+    pdfsubject={GIS/MEA582, Spring 2017, Geospatial Modeling and Analysis},
+    pdfauthor={Your Name},
     pdfkeywords={GIS} {GRASS} {GRASS GIS} {open source}
                 {free and open source} {ArcGIS} {ArcMap} {ESRI},
 }
-
-
-
 
 % rules for floats
 % setting rules which are much less strict than default
