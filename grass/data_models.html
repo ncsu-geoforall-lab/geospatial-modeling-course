@@ -93,7 +93,7 @@ The elevation map "elev_ned10m_nn" looks the same as the original one,
 so now check the resampled elevation surface using the aspect map:
 
 <pre><code>
-r.slope.aspect elev_ned10m_nn aspect=aspect_ned10m_nn
+r.slope.aspect elevation=elev_ned10m_nn aspect=aspect_ned10m_nn
 </code></pre>
 
 <p>
@@ -122,8 +122,8 @@ Check the interpolated elevation surfaces using aspect maps.
 <pre><code>
 r.resamp.interp elev_ned_30m out=elev_ned10m_bil meth=bilinear
 r.resamp.interp elev_ned_30m out=elev_ned10m_bic meth=bicubic
-r.slope.aspect elev_ned10m_bil aspect=aspect_ned10m_bil
-r.slope.aspect elev_ned10m_bic aspect=aspect_ned10m_bic
+r.slope.aspect elevation=elev_ned10m_bil aspect=aspect_ned10m_bil
+r.slope.aspect elevation=elev_ned10m_bic aspect=aspect_ned10m_bic
 d.rast aspect_ned10m_bil
 d.rast aspect_ned10m_bic
 </code></pre>

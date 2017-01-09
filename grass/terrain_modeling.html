@@ -171,8 +171,8 @@ Be patient, it can take a few minutes to run depending on the computer power.<br
 
 <pre><code>
 g.region res=1 -ap
-v.surf.rst elev_lid793016_be elevation=elev_lid793016_be_1m npmin=120 segmax=25 dmin=1
-v.surf.rst elev_lid793016_1r elevation=elev_lid793016_1r_1m npmin=120 segmax=25 tension=100 smooth=0.5 dmin=1
+v.surf.rst input=elev_lid793016_be elevation=elev_lid793016_be_1m npmin=120 segmax=25 dmin=1
+v.surf.rst input=elev_lid793016_1r elevation=elev_lid793016_1r_1m npmin=120 segmax=25 tension=100 smooth=0.5 dmin=1
 r.colors elev_lid793016_be_1m color=elevation
 r.colors elev_lid793016_1r_1m color=elevation
 d.rast elev_lid793016_be_1m

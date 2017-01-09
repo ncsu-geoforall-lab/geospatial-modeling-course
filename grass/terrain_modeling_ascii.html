@@ -224,8 +224,8 @@ and higher tension for multiple return data<br>
 <pre><code>
 g.region rural_1m -p
 v.extract elev_lidrural_mrpts out=elev_lidrur_first type=point where="Return=1"
-v.surf.rst elev_lid792_bepts elevation=elev_lidrural_1m npmin=120 segmax=25
-v.surf.rst elev_lidrur_first elevation=elev_lidrurfirst_1m npmin=120 segmax=25 tension=100 smooth=0.5
+v.surf.rst input=elev_lid792_bepts elevation=elev_lidrural_1m npmin=120 segmax=25
+v.surf.rst input=elev_lidrur_first elevation=elev_lidrurfirst_1m npmin=120 segmax=25 tension=100 smooth=0.5
 <!-- d.erase -->
 d.rast elev_lidrural_1m
 d.rast elev_lidrurfirst_1m

@@ -208,7 +208,7 @@ You should see a <a href="img/firestations_table.png">table like this</a>.<br>
 Export firestations with traveltime less than 0.1 hr:
 
 <pre><code>
-v.out.ascii myfirestations separator=space precision=3 columns=ID,LOCATION,CVLAG where="CVLAG&lt;0.1 AND CVLAG&gt;0"
+v.out.ascii input=myfirestations separator=space precision=3 columns=ID,LOCATION,CVLAG where="CVLAG&lt;0.1 AND CVLAG&gt;0"
 </code></pre>
 
 <p>

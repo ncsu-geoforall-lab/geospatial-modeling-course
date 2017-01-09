@@ -53,7 +53,7 @@ without the need to specify the full path to the file.
 # for SW Wake area at 10m resolution
 </font>
 g.region swwake_10m -p
-r.watershed -s elevation thresh=50000 accum=flowaccum_10m length=lsfac2d
+r.watershed -s elevation=elevation thresh=50000 accum=flowaccum_10m length=lsfac2d
 r.colors lsfac2dfp co=gyr -e
 # <b>erase and zoom display to computational region</b>
 d.erase
@@ -81,8 +81,8 @@ and which models stronger influence of slope?</span>
 
 <pre><code>
 g.region raster=elev_lid792_1m -p
-r.slope.aspect elev_lid792_1m slope=slope_1m aspect=aspect_1m
-r.flow elev_lid792_1m flowaccumulation=flowacc_1m
+r.slope.aspect elevation=elev_lid792_1m slope=slope_1m aspect=aspect_1m
+r.flow elevation=elev_lid792_1m flowaccumulation=flowacc_1m
 r.mapcalc "lsfac3d_1m = 1.2 * pow(flowacc_1m * 1./22.1,0.2) * pow(sin(slope_1m)/0.09,1.3)"
 r.mapcalc "lsfac3d_s1_1m = 1.5 * pow(flowacc_1m * 1./22.1,0.5) * pow(sin(slope_1m)/0.09,1.0)"
 r.colors lsfac3d_s1_1m color=gyr -e
@@ -180,8 +180,8 @@ Compute change of sediment flow in the x and y directions
 and then change in the direction of flow using divergence.<br>
 
 <pre><code>
-r.slope.aspect qsx dx=qsx_dx
-r.slope.aspect qsy dy=qsy_dy
+r.slope.aspect elevation=qsx dx=qsx_dx
+r.slope.aspect elevation=qsy dy=qsy_dy
 r.mapcalc "erdep = qsx_dx + qsy_dy"
 r.info -r erdep
 r.colors erdep rules=erdep_color.txt

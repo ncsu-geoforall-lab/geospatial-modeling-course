@@ -111,7 +111,7 @@ d.rast elevfacility_1m
 Prepare input maps (slope and aspect):
 
 <pre><code>
-r.slope.aspect elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m
+r.slope.aspect elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m
 </code></pre>
 
 <h4>Incidence angles and cast shadows</h4>
@@ -119,7 +119,7 @@ r.slope.aspect elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m
 Compute the sun position on Dec. 22 at 2:25pm, EST (no map output expected):
 
 <pre><code>
-r.sunmask -s elevfacility_1m year=2001 month=12 day=22 hour=14 minute=25 sec=0 timezone=-5
+r.sunmask -s elevation=elevfacility_1m year=2001 month=12 day=22 hour=14 minute=25 sec=0 timezone=-5
 </code></pre>
 
 <p>
@@ -129,7 +129,7 @@ We assign histogram equalized color table - <span class="question">can you expla
 <span class="question">What is the value on the roof? How is it related to day/time?</span>
 
 <pre><code>
-r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m incidout=incid_elevfac_1m day=356 time=14.416667
+r.sun elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m incidout=incid_elevfac_1m day=356 time=14.416667
 r.info incid_elevfac_1m
 r.colors -e incid_elevfac_1m co=bcyr
 d.rast incid_elevfac_1m
@@ -146,7 +146,7 @@ r.mapcalc "shadow_1m = if(isnull(incid_elevfac_1m), 1, null())"
 r.colors shadow_1m color=grey
 d.rast elevfacility_1m
 d.rast shadow_1m
-r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m incidout=incid_elevfac7_1m day=356 time=7.50
+r.sun elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m incidout=incid_elevfac7_1m day=356 time=7.50
 r.mapcalc "shadow7_1m = if(isnull(incid_elevfac7_1m), 1, null())"
 d.rast shadow7_1m
 d.out.file shadows
@@ -159,9 +159,9 @@ Optionally display the radiation maps draped over elevation elevfacility_1m in 3
 to see relation between terrain geometry and solar radiation.
 
 <pre><code>
-r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=356 glob_rad=g356 insol_time=its356
+r.sun elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=356 glob_rad=g356 insol_time=its356
 r.colors g356 co=gyr -e
-r.sun elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=172 glob_rad=g172 insol_time=its172
+r.sun elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=172 glob_rad=g172 insol_time=its172
 r.colors g172 co=gyr -e
 d.rast g356
 d.legend g356 at=25,50,1,3
@@ -178,8 +178,8 @@ Try to find good color tables (custom, hist. equalized, to see the pattern).
 
 <pre><code>
 g.region raster=elev_ned_30m -p
-r.slope.aspect elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m
-r.sun elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m linke_value=2.5 albedo_value=0.2 beam_rad=b356 diff_rad=d356 refl_rad=r356 insol_time=it356 day=356
+r.slope.aspect elevation=elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m
+r.sun elevation=elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m linke_value=2.5 albedo_value=0.2 beam_rad=b356 diff_rad=d356 refl_rad=r356 insol_time=it356 day=356
 </code></pre>
 <!-- d.erase -->
 Zoom to the new computational region and display the following layers:<br>
