@@ -116,7 +116,7 @@ A list of what should be changed, updated or checked for new semester
 in the web pages.
 
 * change dates in the schedule (in this repository)
-* update link to the Moodle side if needed
+* update links to the Moodle side
 * create a new page for project titles and link it
 * email students with link to the website and to Moodle
 
