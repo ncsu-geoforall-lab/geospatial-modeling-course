@@ -250,163 +250,435 @@ def bash_to_python(string):
         output.append('Image(filename="map.png")')
     return ["\n".join(output)]
 
+class DummyProcessor(object):
+    def __getattr__(self, name):
+        class Attr(object):
+            def __init__(self, name):
+                self._name = name
+            def __call__(self, *args, **kwargs):
+                output = self._name
+                for arg in args:
+                    if arg:
+                        output += " " + arg
+                for key, value in kwargs.items():
+                    output += " %s=%s" % (key, value)
+                print output
+        return Attr(name)
 
-class DocumentationDocument(object):
-    pass
 
-# TODO: it would be probably better to first split document into
+# first split document into
 # blocks/cells of code and text and than convert each of the items
-# create a subclass and override the handler methods
-class MyHTMLParser(HTMLParser):
-    def __init__(self, grass, gisdbase, location, mapset):
-        HTMLParser.__init__(self)
-        self.pre_opened = False
-        self.code_opened = False
-        self.close_pre = False
-        self.close_code = False
-        self.handle_pre_start = False
-        self.handle_pre_end = False
-        
-        self.in_pre = False
+class Splitter(object):
+    r"""
+
+    >>> t = "<h2>Display</h2>\n\n<pre><code>\nd.rast elevation\n</code></pre>\n\nAnd that's it.\n"
+    >>> p = Processor()
+    >>> s = Splitter(p)
+    >>> s.split(t)
+    >>> p.finish()
+    >>> len(p.blocks)
+    3
+    >>> p.blocks[0]['block_type']
+    'text'
+    >>> p.blocks[0]['content']
+    ['<h2>Display</h2>', '']
+    >>> p.blocks[2]['content']
+    ['', "And that's it."]
+
+    >>> t2 = "Display\n\n<!--\n<pre><code>\nd.erase\n</code></pre>\n-->\n\nEnd.\n"
+    >>> p = Processor()
+    >>> s = Splitter(p)
+    >>> s.split(t2)
+    >>> p.finish()
+    >>> len(p.blocks)
+    1
+    >>> p.blocks[0]['block_type']
+    'text'
+    >>> print "\n".join(p.blocks[0]['content'])
+    Display
+    <BLANKLINE>
+    <!--
+    <pre><code>
+    d.erase
+    </code></pre>
+    -->
+    <BLANKLINE>
+    End.
+
+    >>> t2 = "Text.\n<pre data-run=\"no\"><code>\nd.legend\n</code></pre>\nText.\n"
+    >>> p = Processor()
+    >>> s = Splitter(p)
+    >>> s.split(t2)
+    >>> p.finish()
+    >>> len(p.blocks)
+    1
+    >>> p.blocks[0]['block_type']
+    'text'
+    >>> print "\n".join(p.blocks[0]['content'])
+    Text.
+    <pre data-run="no"><code>
+    d.legend
+    </code></pre>
+    Text.
+
+    >>> t2 = "Text.\n<pre data-run=\"no\"><code>\nd.legend\n</code></pre>\nText.\n"
+    >>> p = Processor()
+    >>> s = Splitter(p)
+    >>> s.split(t2)
+    >>> p.finish()
+    >>> len(p.blocks)
+    1
+    >>> p.blocks[0]['block_type']
+    'text'
+    >>> print "\n".join(p.blocks[0]['content'])
+    Text.
+    <pre data-run="no"><code>
+    d.legend
+    </code></pre>
+    Text.
+
+    >>> s = Splitter(DummyProcessor())
+    >>> s.split(t)
+    add_text <h2>Display</h2>
+    add_text
+    start_code <pre><code>
+    add_code d.rast elevation
+    end_code </code></pre>
+    add_text
+    add_text And that's it.
+
+    >>> t3 = "Text.\n<pre data-filename=\"mycolor.txt\">\n50 blue\n70 aqua\n</pre>\nText."
+    >>> s = Splitter(DummyProcessor())
+    >>> s.split(t3)
+    add_text Text.
+    start_file_content <pre data-filename="mycolor.txt">
+    add_file_content 50 blue
+    add_file_content 70 aqua
+    end_file_content </pre>
+    add_text Text.
+
+    """
+    def __init__(self, processor):
+        self.processor = processor
+        self.code_start = re.compile(r'^<pre><code>$')
+        self.code_end = re.compile(r'^</code></pre>$')
+        self.file_content_start = re.compile(r'^<pre data-filename=.*>$')
+        self.file_content_end = re.compile(r'^</pre>$')
+        self.comment_start = re.compile(r'^\s*<!--')
+        self.comment_end = re.compile(r'-->\s*$')
         self.in_code = False
-        self.in_code_block = False
-        self.in_precode = False
-
-        self.pre_data_run_no = False
-        self.pre_to_file = None
-
         self.in_file_content = False
-        self.in_html_comment = False
+        self.in_block_comment = False
 
-        self.nb = nb.new_notebook()
-        self.nb['metadata']['kernelspec'] = {
-            "display_name": "Python 2",
-            "language": "python",
-            "name": "python2"
+    def split(self, text):
+        for line in text.splitlines():
+            if self.file_content_start.search(line) and not self.in_block_comment:
+                self.in_file_content = True
+                self.processor.start_file_content(line)
+                continue
+            elif self.in_file_content and self.file_content_end.search(line):
+                self.in_file_content = False
+                self.processor.end_file_content(line)
+                continue
+            elif self.code_start.search(line) and not self.in_block_comment:
+                self.in_code = True
+                self.processor.start_code(line)
+                continue
+            elif self.in_code and self.code_end.search(line):
+                self.in_code = False
+                self.processor.end_code(line)
+                continue
+            elif self.comment_start.search(line) and not self.comment_end.search(line):
+                self.in_block_comment = True
+            elif self.in_block_comment and self.comment_end.search(line):
+                self.in_block_comment = False
+            if self.in_code:
+                self.processor.add_code(line)
+            elif self.in_file_content:
+                self.processor.add_file_content(line)
+            else:
+                self.processor.add_text(line)
+
+
+class Processor(object):
+    """
+
+    >>> p = Processor()
+    >>> p.start_code('')
+    >>> p.add_code('g.region raster=elevation')
+    >>> p.add_code('r.surf.fractal output=fractals')
+    >>> p.add_code('d.rast fractals')
+    >>> p.add_code('d.legend fractals')
+    >>> p.end_code('')
+    >>> p.blocks[0]['block_type']
+    'code'
+    >>> p.blocks[0]['content']
+    ['g.region raster=elevation', 'r.surf.fractal output=fractals', 'd.rast fractals', 'd.legend fractals']
+
+    >>> p.start_text('')
+    >>> p.add_text('Some text')
+    >>> p.end_text('')
+    >>> len(p.blocks)
+    2
+    >>> p.blocks[0]['block_type']
+    'code'
+    >>> p.blocks[1]['block_type']
+    'text'
+
+    """
+    def __init__(self):
+        self._current_code = None
+        self._current_file_content = None
+        self._current_text = None
+        self._blocks = []
+
+        # text is background content
+        self.start_text()
+
+        self.filename_capture = re.compile(r'<pre data-filename="(.*?)">')
+
+    @property
+    def blocks(self):
+        """"""
+        return self._blocks
+
+    def finish(self):
+        if self._current_text:
+            self.end_text()
+
+    def add_block(self, block_type, content, attrs=None):
+        block = {
+            'block_type': block_type,
+            'content': content,
         }
+        if attrs:
+            block['attrs'] = attrs
+        self._blocks.append(block)
 
+    def start_text(self, text=None):
+        self._current_text = []
+
+    def add_text(self, text):
+        if self._current_text is None:
+            raise RuntimeError("Text block is not active at: %s" % text)
+        self._current_text.append(text)
+
+    def end_text(self, text=None):
+        # empty text blocks are ignored
+        if not self._current_text or not any(self._current_text):
+            self._current_text = None
+            return
+        self.add_block(block_type='text', content=self._current_text)
+        self._current_text = None
+
+    def start_code(self, text=None):
+        self.end_text()
+        self._current_code = []
+
+    def add_code(self, text):
+        self._current_code.append(text)
+
+    def end_code(self, text=None):
+        self.add_block(block_type='code', content=self._current_code)
+        self._current_code = None
+        self.start_text()
+
+    def start_file_content(self, text=None):
+        self.end_text()
+        self._current_file_content = []
+
+        if text:
+            match = self.filename_capture.search(text)
+            if match:
+                self._current_filename = match.group(1)
+        if not self._current_filename:
+            raise ValueError("File name needed for the file content (%s)" % text)
+
+    def add_file_content(self, text):
+        self._current_file_content.append(text)
+
+    def end_file_content(self, text=None):
+        attrs = {'filename': self._current_filename}
+        self.add_block(block_type='file_content', content=self._current_file_content, attrs=attrs)
+        self.start_text()
+
+
+class HTMLBashCodeToPythonNotebookConverter(HTMLParser):
+    r"""
+
+    >>> n = nb.new_notebook()
+    >>> c = HTMLBashCodeToPythonNotebookConverter(n)
+    >>> c.feed("g.region raster=elevation\n<!-- d.erase -->\nd.rast elevation")
+    >>> c.finish()
+    >>> len(n['cells'])
+    1
+    >>> print(n['cells'][0]['source'])
+    gs.run_command('g.region', raster="elevation")
+    gs.run_command('d.erase')
+    gs.run_command('d.rast', map="elevation")
+    Image(filename="map.png")
+
+    """
+    def __init__(self, notebook, grass=None, gisdbase=None, location=None, mapset=None):
+        HTMLParser.__init__(self)
+
+        self.nb = notebook
         self.data = ''
-        # used to carry hyperlink data
-        self.link_url = None
 
-        self.download_files = []
-
-        # to be refactored to a writer class
         self.grass = grass
         self.gisdbase = gisdbase
         self.location = location
         self.mapset = mapset
 
-    def flush_text(self):
+    def handle_data(self, data):
+        self.data += data
+
+    def handle_entityref(self, name):
+        c = unichr(name2codepoint[name])
+        self.data += c
+
+    def handle_comment(self, data):
+        if data.strip().startswith('d.erase'):
+            self.data += data.strip()
+
+    def finish(self):
+        cell = ''
+        for line in self.data.splitlines():
+            line = re.sub('<!--.*-->', '', line)
+            skip_line = False
+            for ignored_line in ignored_lines:
+                if ignored_line.search(line):
+                    skip_line = True
+            if not skip_line:
+                for regexp, replacement in code_replacemets:
+                    line = regexp.sub(replacement, line)
+                if line:
+                    cell += line + "\n"
+            previous_code_line = line
+        if re.search('^grass.?.?$', cell):
+            cells = start_of_grass_session(
+                cell, self.grass, self.gisdbase, self.location, self.mapset)
+        else:
+            cells = bash_to_python(cell.strip())
+        for cell in cells:
+            self.nb['cells'].append(nb.new_code_cell(cell))
+        self.data = ''
+
+
+class HTMLFileContentToPythonNotebookConverter(HTMLParser):
+    r"""
+
+    >>> n = nb.new_notebook()
+    >>> c = HTMLFileContentToPythonNotebookConverter(n, filename="test.txt")
+    >>> c.feed("50 blue\n70 aqua\n")
+    >>> c.finish()
+    >>> len(n['cells'])
+    1
+    >>> print(n['cells'][0]['source'])
+    %%file test.txt
+    50 blue
+    70 aqua
+
+    """
+    def __init__(self, notebook, filename):
+        HTMLParser.__init__(self)
+
+        self.nb = notebook
+        self.filename = filename
+        self.data = ''
+
+    def handle_data(self, data):
+        self.data += data
+
+    def handle_entityref(self, name):
+        c = unichr(name2codepoint[name])
+        self.data += c
+
+    def finish(self):
+        cell = ''
+        # process pre content as file
+        cell = "%%%%file %s\n%s" % (self.filename, self.data.strip())
+        self.nb['cells'].append(nb.new_code_cell(cell))
+        self.data = ''
+
+
+class HTMLToMarkdownNotebookConverter(HTMLParser):
+    r"""
+
+    >>> n = nb.new_notebook()
+    >>> c = HTMLToMarkdownNotebookConverter(n)
+    >>> c.feed("Text.\n<pre>\nPre-formatted.\n</pre>\nText.")
+    >>> c.finish()
+    >>> print(n['cells'][0]['source'])
+    Text.
+    ```
+    Pre-formatted.
+    ```
+    Text.
+
+    >>> n = nb.new_notebook()
+    >>> c = HTMLToMarkdownNotebookConverter(n)
+    >>> c.feed("Text.\n<pre data-run=\"no\"><code>\nd.legend\n</code></pre>\nText.")
+    >>> c.finish()
+    >>> print(n['cells'][0]['source'])
+    Text.
+    ```
+    d.legend
+    ```
+    Text.
+    """
+    def __init__(self, notebook):
+        HTMLParser.__init__(self)
+
+        self.in_pre = False
+
+        self.nb = notebook
+        self.data = ''
+        # used to carry hyperlink data
+        self.link_url = None
+        # used to carry hyperlink data
+        self.link_url = None
+
+        self.download_files = []
+
+    def finish(self):
         # process text
         cell = self.data.strip()
         if cell:
             self.nb['cells'].append(nb.new_markdown_cell(cell))
             self.data = ''
 
-    def add_file_downloads(self):
-        cell = "# a proper directory is already set, download files\nimport urllib\n"
-        for file in self.download_files:
-            name = file.split('/')[-1]
-            cell += 'urllib.urlretrieve("%s", "%s")\n' % (file, name)
-        cell = cell.strip()
-        download_text_index = None
-        for i, existing_cell in enumerate(self.nb['cells']):
-            if existing_cell.source.startswith("Download all text files"):
-                download_text_index = i
-                break
-        if download_text_index is None:
-            # TODO: better guess than 2?
-            self.nb['cells'].insert(2, nb.new_code_cell(cell))
-        else:
-            # insert before
-            self.nb['cells'].insert(download_text_index, nb.new_code_cell(cell))
-            if not self.nb['cells'][download_text_index - 1].source:
-                del self.nb['cells'][download_text_index - 1]
-
-    def finish_session(self):
-        code = "# end the GRASS session\nos.remove(rcfile)"
-        self.nb['cells'].append(nb.new_code_cell(code))
-
     def handle_starttag(self, tag, attrs):
-        #print "Encountered a start tag:", tag, attrs
-        code_block_started = False
-        if tag == 'pre':
-            self.pre_opened = True
-            self.handle_pre_start = True
-            self.in_pre = True
+        if re.search("^h(\d)$", tag):
+            # TODO: check std heading syntax
+            nchars = int(tag[1])
+            self.data += '#' * nchars + " "
+        elif tag == 'li':
+            if self.data[-1] != "\n":
+                self.data += "\n"
+            self.data += '* '
+        elif tag == 'em':
+            # TODO: more robust test
+            # TODO: list to module
+            # if 'class' in attrs and 'module' in attrs['class']:
+            self.data += '_'
+        elif tag == 'a':
+            self.data += '['
+            # possibly just store last tag attrs
             for key, value in attrs:
-                if key == 'data-run' and value == 'no':
-                    self.pre_data_run_no = True
+                if key == 'href':
+                    self.link_url = value
                     break
-                if key == 'data-filename':
-                    self.pre_to_file = value
-            if self.pre_to_file:
-                self.handle_pre_start = False
-                self.pre_opened = False
-                self.in_code_block = True
-                code_block_started = True
-        if tag == 'code':
-            self.code_opened = True
-            self.in_code = True
-            if self.in_pre:
-                self.code_opened = False
-                self.in_precode = True
-                if not self.pre_data_run_no:
-                    self.in_code_block = True
-                    code_block_started = True
-                    self.handle_pre_start = False
-
-        if code_block_started:
-            self.flush_text()
-
-        if not self.in_code_block:
-            if tag != 'pre' and self.handle_pre_start:
-                self.data += "```"#START"
-                self.handle_pre_start = False
-                self.handle_pre_end = True
-            if re.search("^h(\d)$", tag):
-                # TODO: check std heading syntax
-                nchars = int(tag[1])
-                self.data += '#' * nchars + " "
-            elif tag == 'li':
-                if self.data[-1] != "\n":
-                    self.data += "\n"
-                self.data += '* '
-            elif tag == 'em':
-                # TODO: more robust test
-                # TODO: list to module
-                # if 'class' in attrs and 'module' in attrs['class']:
-                self.data += '_'
-            elif tag == 'a':
-                self.data += '['
-                # possibly just store last tag attrs
-                for key, value in attrs:
-                    if key == 'href':
-                        self.link_url = value
-                        break
-            elif tag == 'code':
-                self.data += '`'
-            #elif tag == 'blockquote':
-            #    self.data += '\n\n\t'
+        elif tag == 'code' and not self.in_pre:
+            self.data += '`'
+        elif tag == 'pre':
+            self.in_pre = True
+            self.data += '```'
+        #elif tag == 'blockquote':
+        #    self.data += '\n\n\t'
 
 
     def handle_endtag(self, tag):
-        #print "Encountered an end tag :", tag
-
-        code_block_ended = False
-        if tag == 'pre':
-            self.in_pre = False
-            if self.in_code_block and self.in_codepre:
-                code_block_ended = True
-            self.pre_data_run_no = False
-            if self.pre_to_file:
-                code_block_ended = True
-        if tag == 'code':
-            self.in_code = False
-            if self.in_code_block and self.in_precode:
-                code_block_ended = True
-
         #if tag == 'blockquote':
         #    self.data += "\n\n"
         if tag == 'em':
@@ -417,73 +689,47 @@ class MyHTMLParser(HTMLParser):
             if self.link_url.startswith('data/'):
                 self.download_files.append("http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/grass/" + self.link_url)
             self.link_url = None
-        elif tag == 'pre' and self.handle_pre_end:
-            self.data += '```'#END'
-            self.handle_pre_end = False
-        elif tag == 'code' and not self.in_code_block:
+        elif tag == 'pre':
+            self.data += '```'
+            self.in_pre = False
+        elif tag == 'code' and not self.in_pre:
             self.data += '`'
 
-        if code_block_ended:
-            cell = ''
-            self.in_code_block = False
-            self.in_precode = False
-            self.in_codepre = False
-            if self.pre_to_file:
-                # process pre content as file
-                cell = "%%%%file %s\n%s" % (self.pre_to_file, self.data.strip())
-                self.nb['cells'].append(nb.new_code_cell(cell))
-                self.data = ''
-                self.pre_to_file = None
-                return
-            for line in self.data.splitlines():
-                line = re.sub('<!--.*-->', '', line)
-                skip_line = False
-                for ignored_line in ignored_lines:
-                    if ignored_line.search(line):
-                        skip_line = True
-                if not skip_line:
-                    #sys.stdout.write("line %d: %s" % (line_count, line)) # debug
-                    for regexp, replacement in code_replacemets:
-                        line = regexp.sub(replacement, line)
-                    if line:
-                        cell += line + "\n"
-                previous_code_line = line
-            if re.search('^grass.?.?$', cell):
-                cells = start_of_grass_session(
-                    cell, self.grass, self.gisdbase, self.location, self.mapset)
-            else:
-                cells = bash_to_python(cell.strip())
-            #print cell
-            for cell in cells:
-                self.nb['cells'].append(nb.new_code_cell(cell))
-            self.data = ''
-
     def handle_data(self, data):
-        #print "Encountered some data  :", data
-        if not self.in_code_block and self.handle_pre_start:
-            self.data += "```"#DATA>>>" + data + "<<<"
-            self.handle_pre_start = False
-            self.handle_pre_end = True
         self.data += data
 
     def handle_entityref(self, name):
-        if not self.in_code_block and self.handle_pre_start:
-            self.data += "```ENTITY"
-            self.handle_pre_start = False
-            self.handle_pre_end = True
         if name == 'ndash':
             self.data += "--"
         else:
             c = unichr(name2codepoint[name])
-            #print "Named ent:", c
             self.data += c
 
-    def handle_comment(self, data):
-        #print "Encountered some data  :", data
-        if self.in_code_block and data.strip().startswith('d.erase'):
-            self.data += data
 
-# instantiate the parser and fed it some HTML
+def add_file_downloads(notebook, filenames):
+    cell = "# a proper directory is already set, download files\nimport urllib\n"
+    for filename in filenames:
+        name = filename.split('/')[-1]
+        cell += 'urllib.urlretrieve("%s", "%s")\n' % (filename, name)
+    cell = cell.strip()
+    download_text_index = None
+    for i, existing_cell in enumerate(notebook['cells']):
+        if existing_cell.source.startswith("Download all text files"):
+            download_text_index = i
+            break
+    if download_text_index is None:
+        # TODO: better guess than 2?
+        notebook['cells'].insert(2, nb.new_code_cell(cell))
+    else:
+        # insert before
+        notebook['cells'].insert(download_text_index, nb.new_code_cell(cell))
+        if not notebook['cells'][download_text_index - 1].source:
+            del notebook['cells'][download_text_index - 1]
+
+
+def finish_session(notebook):
+    code = "# end the GRASS session\nos.remove(rcfile)"
+    notebook['cells'].append(nb.new_code_cell(code))
 
 
 def main():
@@ -504,15 +750,49 @@ def main():
     input_ = args.files[0]
     output = args.files[1]
 
-    parser = MyHTMLParser(args.grass, gisdbase=args.gisdbase, location=args.location, mapset=args.mapset)
-    parser.feed(open(input_).read())
-    parser.flush_text()
-    parser.add_file_downloads()
-    parser.finish_session()
+    processor = Processor()
+    splitter = Splitter(processor)
+    splitter.split(open(input_).read())
+    processor.finish()
+
+    notebook = nb.new_notebook()
+    notebook['metadata']['kernelspec'] = {
+        "display_name": "Python 2",
+        "language": "python",
+        "name": "python2"
+    }
+
+    filenames = []
+
+    for block in processor.blocks:
+        if block['block_type'] == 'code':
+            c = HTMLBashCodeToPythonNotebookConverter(notebook, args.grass, gisdbase=args.gisdbase, location=args.location, mapset=args.mapset)
+            c.feed("\n".join(block['content']))
+            c.finish()
+        elif block['block_type'] == 'file_content':
+            c = HTMLFileContentToPythonNotebookConverter(
+                notebook, filename=block['attrs']['filename'])
+            c.feed("\n".join(block['content']))
+            c.finish()
+        elif block['block_type'] == 'text':
+            c = HTMLToMarkdownNotebookConverter(notebook)
+            c.feed("\n".join(block['content']))
+            c.finish()
+            filenames.extend(c.download_files)
+
+    add_file_downloads(notebook, filenames)
+    finish_session(notebook)
 
     with open(output, 'w') as f:
-        nbf.write(parser.nb, f)
+        nbf.write(notebook, f)
+
+
+def test():
+    import doctest
+    doctest.testmod()
 
 
 if __name__ == '__main__':
+    if len(sys.argv) == 2 and sys.argv[1] == '--doctest':
+        sys.exit(test())
     main()
