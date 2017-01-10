@@ -4,6 +4,8 @@ mkdir -p $BUILD_DIR
 
 ./copy-common-files.py --dst-dir=$BUILD_DIR
 
-./build-slides.py --outdir=$BUILD_DIR \
-    --outfile=about.html \
-    about.html
+for FILE in `ls *.html|grep -v foot|grep -v head`
+do
+    ./build-slides.py --outdir=$BUILD_DIR \
+        --outfile=$FILE $FILE
+done
