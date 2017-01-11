@@ -147,7 +147,7 @@ for automatic rendering of maps is checked on.
 You can also use the first button <em>Display map</em> in Map Display to render maps.
 <p>
 Alternatively, you can add raster layer by pasting this command into the
-<em>Console</em>:
+<em>Console</em> tab:
 
 <pre><code>
 d.rast elevation
@@ -257,50 +257,104 @@ d.vect boundary_county type=boundary
 d.out.file nc_precip_stations
 </code></pre>
 
+
 <h3>Managing data</h3>
+
 We will learn how to find more information about the data, copy and rename maps.
+
+<h4>List existing data</h4>
+
+Browse raster and vector data in the provided database using
+the <em>Data</em> tab in the <em>Layer Manager</em>.
+The tree shows locations and mapsets in your GRASS GIS database.
 <p>
-List raster, vector and region (saved extents) data in the provided database:<br>
-In GUI: File > Manage maps > List.
-<p>
-Or paste the following command into the <em>Console</em>:
+You can also paste the following command into the <em>Console</em>
+to list the raster and vector maps:
 
 <pre><code>
-g.list -f type=raster,vector,region
+g.list -f type=raster,vector
 </code></pre>
 
+You can also use left mouse click in the <em>Data</em> tab to add maps
+into <em>Layers</em> and display them this way.
+
 <p>
-List only vector maps starting with "s":<br>
-In GUI: <em>File</em> > <em>Manage Maps</em> > <em>List</em>.<br>
-In tab <em>Required</em> -> select type vector map(s)
-and in tab <em>Pattern</em> type s* for <em>Map name search pattern</em>.
+Now list only vector maps which start with "s":
+In the <em>Console</em> tab enter to the <em>Search</em> box the
+following <code>v:^s</code> which limits the search to
+vectors using <code>v:</code> which start (<code>^</code>) with the
+letter <code>s</code>.
+
 <p>
-Or paste the following command into the <em>Console</em>:
+Or use <em class="module">g.list</em> in the <em>Console</em> tab:
 
 <pre><code>
 g.list type=vector pattern="s*"
 </code></pre>
+
+Note that <em class="module">g.list</em> by default uses different
+pattern matching syntax than the <em>Console</em> tab.
+If you use the <em class="module">g.list</em> dialog in GUI,
+in tab <em>Required</em> select type <em>vector map(s)</em>
+and in tab <em>Pattern</em> enter <em>s*</em> for the
+<em>Map name search pattern</em> field.
+
+<p>
+Now list saved computational regions (which are extents and
+resolutions bookmarked in the database):
+In the <em>File</em> menu or in the <em>Modules</em> tab:
+Find <em>Manage Maps</em> > <em>List</em> to get the
+<em class="module">g.list</em> dialog.
+In the dialog tab <em>Required</em> select type
+<em>region definition(s)</em>. Then hit Enter or press <em>Run</em>.
+
+<p>
+Or just paste the following command into the <em>Console</em> tab:
+
+<pre><code>
+g.list -p type=region
+</code></pre>
+
+Alternatively, you can type <code>g.list</code> into
+the <em>Console</em> and hit Enter to get the module dialog that way.
+
+<h4>Coordinate system, spatial extent, and resolution</h4>
 
 <p>
 Find the working coordinate system and spatial extent:<br>
 In GUI: <em>Settings</em> > <em>Map projections</em> > <em>Display map projection</em><br>
 In GUI: <em>Settings</em> > <em>Region</em> > <em>Display Region</em><br>
 <p>
-Or paste the following command into the <em>Console</em>:
+Or paste the following command into the <em>Console</em> tab:
 
 <pre><code>
 g.proj -p
 g.region -pl
 </code></pre>
 
+<h4>Copy and remove data</h4>
+
+You can copy and remove maps using the <em>Data</em> tab in the
+<em>Layer Manager</em>.
+
 <p>
-Find out how to copy, rename and remove maps:<br>
-GUI: <em>File</em> > <em>Manage maps</em> > <em>Copy</em> > select/type in names from,to<br>
-GUI: <em>File</em> > <em>Manage maps</em> > <em>Rename</em> > select/type in names from,to<br>
-GUI: <em>File</em> > <em>Manage maps</em> > <em>Delete</em> > select type and name and check <em>Force removal</em>.<br>
-Note that you can only remove maps from the current working mapset.
+First find the raster map named <code>geology_30m</code> in the
+<code>PERMANENT</code> mapset and use right click to <em>Copy</em> it.
+Then find again the current mapset and use right click and
+<em>Paste</em> to create a copy the <code>geology_30m</code> in
+the current mapset. You will be prompted for the new name, change it
+to <code>mygeology</code>.
+
 <p>
-Or paste the following command into the <em>Console</em>:
+Than let's say we want to rename it. Use right click again on the new
+copy, select <em>Rename</em> and type <code>mygeology_30m</code>.
+Finally, let's delete this copy using right click and <em>Delete</em>.
+
+<p>
+The above instructions for copying, renaming, and deleting can be done
+in the <em>Console</em> using the modules <em class="module">g.copy</em>,
+<em class="module">g.rename</em>, and <em class="module">g.remove</em>
+as follows:
 
 <pre><code>
 g.copy raster=geology_30m,mygeology
@@ -310,7 +364,24 @@ g.remove type=raster name=mygeology_30m -f
 </code></pre>
 
 <p>
-<strong>Note:</strong> You can also use <em>Data</em> tab in <em>Layer Manager</em> to display, list, copy and remove maps.
+You can find these modules in the GUI in the <em>File</em> menu or
+in the <em>Modules</em> tab under <em>Manage Maps</em>.
+
+<p>
+Note that you can only remove maps from the current mapset
+and also note that the <em>Data</em> tab asks for confirming the removal
+and the <em class="module">g.remove</em> requires you to use the
+<code>-f</code> flag.
+
+<p>
+Or paste the following command into the <em>Console</em> tab:
+
+<pre><code>
+g.copy raster=geology_30m,mygeology
+g.rename raster=mygeology,mygeology_30m
+g.list raster
+g.remove type=raster name=mygeology_30m -f
+</code></pre>
 
 <p>
 Find information about individual maps layers and their attributes:<br>
