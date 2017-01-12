@@ -47,7 +47,7 @@ in_html_comment = False
 in_code = False
 
 ignored_lines = [
-    re.compile(r'grass70'),
+    re.compile(r'grass7.'),
     re.compile(r'cd'),
     re.compile(r'cd.*'),
     #re.compile(r'\s*d\.mon'),
