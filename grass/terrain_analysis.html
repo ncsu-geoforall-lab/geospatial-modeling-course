@@ -280,42 +280,69 @@ d.rast tc_rstct10_2m
 # if available, use v.generalize to reduce number of points in elev_lid792_cont1m
 # and interpolate
 <font color="#000066">
-# optional
-# p. 132
-# compute cut and fill for 4m deep excavation to build a facility
-# set the region, display facility on top of orthophoto
-# set MASK to facility map and find min elevation
-</font>
+-->
+
+<h3>Optional: Cut and fill and volume</h3>
+
+<!-- p. 132 -->
+
+Compute cut and fill for 4m deep excavation to build a facility.
+First, set the region and display facility on top of orthophoto.
+
+<pre><code>
 g.region rural_1m -p
-d.erase
+<!-- d.erase -->
 d.rast ortho_2001_t792_1m
 d.rast facility
+</code></pre>
+
+Then set (raster) mask to the facility map and find minimum elevation
+within the facility:
+
+<pre><code>
 r.mask raster=facility
 r.univar elevation
-<font color="#000066">
-# [...]
-# minimum: 123.521
-# bottom of 4m excavation will be 123.52-4=119.52m
-</font>
-r.mapcalc "excavation = elevation-119.52"
-d.rast excavation
+</code></pre>
+
+Minimum which you obtain should be 123.521m.
+Bottom of 4m excavation will be then
+
+<pre>
+123.52 - 4 = 119.52
+</pre>
+
+Use raster algebra to create the excavation:
+
+<pre><code>
+r.mapcalc "excavation = elevation - 119.52"
 r.univar excavation
-<font color="#000066">
-# [...]
-# minimum: 4.00057
-# maximum: 9.50554
-</font>
+d.rast excavation
+</code></pre>
+
+Minimum you get should be 4.00057 and maximum 9.50554.
+Note that the excavation is limited by the mask we set earlier,
+so we can now do global operation to compute the volume
+which applies just the the facility.
+
+<pre><code>
 r.volume excavation
-<font color="#000066">
-# REMOVE MASK! so that it does not affect your future work
-</font>
-g.remove rast=MASK
-# or
+</code></pre>
+
+Now remove mask. This is important so that
+your future work is not affected.
+
+<pre><code>
 r.mask -r
-<font color="#000066">
-# optional: compute polar histogram if available
-# can you explain the difference in polar histograms?
-</font>
+</code></pre>
+
+<!--
+<h3>Optional: Compute polar histogram</h3>
+
+Can you explain the difference in polar histograms?
+
+<pre><code>
+g.region raster=myaspect
 d.polar aspect_int_10m
 d.polar myaspect
+</code></pre>
 -->
