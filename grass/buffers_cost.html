@@ -14,7 +14,7 @@ Text files with recode rules, color rules and site locations:
 <li><a href="data/noise_cats.txt">noise_cats.txt</a></li>
 <li><a href="data/friction_rules.txt">friction_rules.txt</a></li>
 <li><a href="data/friction_color.txt">friction_color.txt</a></li>
-<li><a href="data/fire_pt.txt">fire_pt.txt</a></li>
+<li><a href="data/fire_pt.json">fire_pt.json</a></li>
 <li><a href="data/lostperson.txt">lostperson.txt</a></li>
 </ul>
 
@@ -148,6 +148,16 @@ d.out.file myspeedmap
 </code></pre>
 
 <p>
+Import the accident point location from GeoJSON file <a href="data/fire_pt.json">fire_pt.json</a><br>
+Run <em class="module">v.in.ogr</em> from GUI, use file browser to provide full path to the file,
+or run the command assuming the file is in your working directory.
+
+<pre><code>
+v.in.ogr input=fire_pt.json output=fire_pt
+</code></pre>
+
+
+<p>
 Assign travel time to cross a 30m grid cell in hours.<br>
 Note that cost in GRASS GIS is defined as travel time per <em>cell</em>.
 <p>
@@ -157,19 +167,9 @@ You can modify the expression to get time in minutes.
 
 <pre><code>
 r.mapcalc "streets_travtime = 0.018641/streets_speed"
-r.cost -k streets_travtime output=streets_cost start_coordinates=634886,224328
+r.cost -k streets_travtime output=streets_cost start_points=fire_pt
 </code></pre>
 
-<p>
-Import the accident point location given in <a href="data/fire_pt.txt">fire_pt.txt</a>
-so that you can display it on the map.<br>
-Run <em class="module">v.in.ascii</em> from GUI, use file browser to provide full path to the file
-or enter values interactively by pasting the coords into the provided space,
-or run the command assuming the file is in your working directory.
-
-<pre><code>
-v.in.ascii input=fire_pt.txt output=fire_pt separator=space
-</code></pre>
 
 <p>
 <!-- <font color="#000066">
@@ -263,6 +263,9 @@ and change display to 3D.
 
 <h4>Compute accessibility map for help in search for lost person</h4>
 Create friction map based on land cover.<br>
+Reminder: Time to time, you should remove or at least uncheck previously
+used map layers in the <em>Layer Manager</em>, so the layers are not rendered
+when you don't need them anymore.<br>
 First display land cover classes:
 
 <pre><code>
@@ -290,11 +293,6 @@ d.legend friction2 at=5,50,2,5
 </code></pre>
 
 <p>
-Reminder: Time to time, you should remove or at least uncheck previously
-used map layers in the <em>Layer Manager</em>, so the layers are not rendered
-when you don't need them anymore.
-
-<p>
 Compute the cost map and generate isochrones:
 
 <pre><code>
@@ -315,16 +313,17 @@ v.in.ascii input=lostperson.txt output=lostperson separator=comma
 # or use echo (in linux only)
 </font>
 echo "635576,216485" | v.in.ascii out=lostperson separator=","-->
-Display the results:
+Uncheck the friction map and display the results:
 
 <pre><code>
 <!-- d.erase -->
+r.colors -e map=walkcost color=viridis
 d.rast lakes
 d.rast walkcost
 d.vect streets_wake
-d.vect walkcost color=brown
-d.vect walkcost color=red where=level=6000 width=2
-d.vect lostperson size=20 color=black fill_color=black icon=basic/marker
+d.vect walkcost color=red
+d.vect walkcost color=red where=level=6000 width=3
+d.vect lostperson color=yellow fill_color=yellow icon=basic/marker size=30
 d.legend walkcost at=5,50,2,5
 d.out.file mywalkcostmap
 </code></pre>
