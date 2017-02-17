@@ -177,7 +177,8 @@ if you know Python at least a little bit.
 
 <p>
 The simplest way to execute the Python code
-which uses GRASS GIS packages is to use Python shell tab in the Layer Manager.
+which uses GRASS GIS packages is to use Simple Python editor integrated
+in GRASS GIS accessible from the toolbar or the Python tab in the Layer Manager.
 Another option is to write the Python code in your favorite plain text editor
 like Notepad++ (note that Python editors are plain text editors).
 Then run the script in GRASS GIS using the main menu File -> Launch script.
@@ -190,7 +191,8 @@ how to write simple and more advanced scripts.
 Here are some examples relevant to the assignment.
 
 <p>
-Interpolation using different number of points:
+Interpolation using different number of points (modify the list
+of numbers of points):
 
 <pre><code>
 import grass.script as gs
@@ -201,7 +203,8 @@ for npoints in [1, 20]:
                              output=name, column='value', npoints=npoints)
 </code></pre>
 
-Computing statistics but showing only some for different number of points:
+Computing statistics but showing only some for different number of points
+(you can combine the code with the code above):
 
 <pre><code>
 import grass.script as gs
@@ -216,7 +219,8 @@ for npoints in [1, 20]:
     print stats['min'], stats['max']
 </code></pre>
 
-Setting the color table and computing shaded relief for changing power:
+Setting the color table and computing shaded relief for changing power
+(you need to create the maps before that):
 
 <pre><code>
 import grass.script as gs
@@ -234,7 +238,7 @@ for power in [0.5, 1, 2, 5]:
         output='elev_idw_1m_power_{}_shaded'.format(power))
 </code></pre>
 
-Creating a PNG with histogram for changing power:
+Creating a PNG image with histogram for changing power:
 
 <pre><code>
 import grass.script as gs
