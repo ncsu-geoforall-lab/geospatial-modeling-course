@@ -251,17 +251,25 @@ for power in [0.5, 1, 2, 5]:
     gs.run_command('d.mon', stop='cairo')
 </code></pre>
 
-Commands often used when using the scripts:
+Here are two commands often used when using the scripts.
+First is setting the computational. We can do that in a script,
+but it better and more general to do it before executing the script:
+
+<pre><code>
+g.region region=rural_1m
+</code></pre>
+
+When we want to run the script again, we first need to remove the created
+raster maps:
 
 <pre><code>
 g.remove type=raster pattern="elev_idw_1m_npoints_*"
-</code></pre>
-
-<pre><code>
-g.region vector=elev_lid792_randpts res=1
 </code></pre>
 
 In case you don't know anything about Python scripting
 but you still want to try something this might be a good start together
 with some (free) courses at
 <a href="https://www.codecademy.com/learn/python">Codecademy</a>.
+To learn more about using Python in GRASS GIS, see the introduction to the
+<a href="https://grass.osgeo.org/grass72/manuals/libpython/script_intro.html">grass.script</a>
+package.
