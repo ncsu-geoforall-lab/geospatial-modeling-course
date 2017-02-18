@@ -238,7 +238,7 @@ Click 'OK'
 </pre>
 
 <h4>Handling null values</h4>
-Check whether the land use map correctly classifies lakes as water.
+<!-- Check whether the land use map correctly classifies lakes as water.
 
 <pre>
 File->Add Data->Add Data...
@@ -249,7 +249,7 @@ Select 'Spatial Analyst->Map Algebra->Raster Calculator
 Type in the expression: Con(IsNull("lakes"), "landcl96", "lakes" / 1000) 
 Set output raster to '.\Map_algebra\luselakes'
 Click 'OK'
-</pre>
+</pre> -->
 
 <p>
 Create a map where all land use categories > 1 are set to null:
