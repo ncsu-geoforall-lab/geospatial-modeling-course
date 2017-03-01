@@ -1,52 +1,58 @@
 <h2>Geomorphometry I: Terrain Modeling (data in ASCII files)</h2>
-<!--<p><B>Analyze multiple return lidar data and create DEM and DSM,
-convert between different representations </B></p>-->
 
 <p>
 Resources: <a href="http://grass.osgeo.org/grass72/manuals/index.html">
-GRASS GIS overview and manual</a>,
-<a href="http://liblas.org/"> libLAS tools for lidar data conversions</a>
 
-On MSWindows, it is recommended to use GUI equivalents of d.* commands:</font><br>
-use their GUI equivalents,
-see assignment <a href="data_visualization.html">Data display and visualization</a>
 <p>
 Download the ASCI (x,y,z) lidar bare earth data
 <a href="data/lid_be_pts.txt">lid_be_pts.txt</a><br>
 Download the ASCI (x,y,z) lidar multiple return data
 <a href="data/lid_mr_pts.txt">lid_mr_pts.txt</a><br>
-<!--
-Download the Raleigh 2013 lidar data in State Plane CS, units feet as<br>
-<a href="../media/01/0793_016_first_ground.txt.zip">0793_016_first.txt and 0793_016_ground.txt files</a><br>
-<a href="../media/01/0793_016_xyzirnc_ncspf.zip">all return txt file</a><br>
-and the related <a href=../media/01/nc_spf.zip>LOCATION</a>
--->
 
 
 <h3>Start GRASS GIS</h3>
+Start GRASS - click on GRASS icon or type<br>
 
 <pre><code>
 grass72
 </code></pre>
 
 <p>
-in the startup pannel<br>
-GIS data directory: type path to GRASS datasets<br>
-LOCATION: select nc_spm_08<br>
-MAPSET: use mapset with your unity ID or user1<br>
-Enter GRASSS<br>
+In startup pannel set <b>GIS Data Directory</b> to path to datasets,
+for example on MS Windows, <code>C:\Users\myname\grassdata</code>.<br>
+For <b>Project location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
+for <b>Accessible mapset</b> create a new mapset (called e.g. HW_terrain_modeling).<br>
+Click <b>Start GRASS</b>.
+
+<p>
+Change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>
+cd
+</code></pre>
+Download all files (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the file
+without the need to specify the full path to the file.
 
 
 <h3>Bare earth data</h3>
 
-Analyze bare earth and multiple return lidar data properties<br>
-download the ASCI (x,y,z) lidar data <a href="data/lid_be_pts.txt">lid_be_pts.txt</a><br>
-compute a raster map representing number of points<br>
-per 2m and 6m grid cell to assess the point density<br>
-Run r.in.xyz from GUI to find the path to the external lid_be_pts.txt<br>
-do not forget to zoom to computational region<br>
-you can use horizontal legends by using at=6,10,2,30 and resize<br>
-you map display to create white space above and below the image<br>
+Analyze bare earth and multiple return lidar data properties.
+First, download the ASCI (x,y,z) lidar data
+<a href="data/lid_be_pts.txt">lid_be_pts.txt</a>
+and then compute a raster map representing number of points
+per 2m and 6m grid cell to assess the point density.
+If you are unsure about the current working directory and where your
+text file with point is, run <em class="module">r.in.xyz</em> from GUI
+to find the path to the external <tt>lid_be_pts.txt</tt>.
+Do not forget to zoom to computational region
+to check its extent and see the resulting data.
+You can use horizontal legends by resizing legend into wide short
+rectangle or by using at=6,10,2,30 in the command line.
+You can resize the <em>Map Display</em> to create white space above
+and below the raster map image.
 
 <pre><code>
 g.region rural_1m res=2 -p
@@ -68,8 +74,8 @@ r.univar lid_be_binn2m
 <h3>Range of coordinates at lower resolution</h3>
 
 <p>
-patch and overlay planimetry to see that there are<br>
-no points in areas with buildings<br>
+Patch and overlay planimetry to see that there are
+no points in areas with buildings:
 
 <pre><code>
 v.patch P079214,P079215,P079218,P079219 out=planimetry_rural
@@ -78,8 +84,10 @@ d.out.file mylidben2m
 </code></pre>
 
 <p>
-decrease resolution and try again<br>
-run from GUI or define fullpath for r.in.xyz<br>
+Decrease resolution and try the above steps with
+the <em class="module">r.in.xyz</em> module again.
+Again, run it from GUI, define full path, or manage your current
+working directory.
 
 <pre><code>
 g.region rural_1m res=6 -ap
@@ -90,12 +98,11 @@ d.legend lid_be_binn6m at=2,20,2,5
 d.out.file mylidben6m
 r.report lid_be_binn6m unit=p
 r.univar lid_be_binn6m
-
 </code></pre>
 
 <p>
-compute a raster map representing mean elevation for each 6m cell<br>
-it will still have a few holes<br>
+Compute a raster map representing mean elevation for each 6m cell.
+It will still have a few holes.
 
 <pre><code>
 r.in.xyz input=lid_be_pts.txt out=lid_be_binmean6m meth=mean
@@ -107,11 +114,10 @@ r.colors lid_mr_binmean6m co=elevation
 d.rast lid_mr_binmean6m
 d.legend lid_mr_binmean6m at=2,40,2,5
 d.out.file mylidmrmean6m
-
 </code></pre>
 
 <p>
-compute range<br>
+Compute range:
 
 <pre><code>
 r.in.xyz input=lid_be_pts.txt out=lid_be_binrange6m meth=range
@@ -124,8 +130,8 @@ d.legend lid_mr_binrange6m at=2,40,2,5
 </code></pre>
 
 <p>
-identify the features that are associated with large range values<br>
-display with vector data<br>
+Identify the features that are associated with large range values.
+Display with vector data.
 
 <pre><code>
 d.vect planimetry_rural
@@ -135,19 +141,21 @@ d.out.file mylidmrrange6m
 </code></pre>
 
 <p>
-display only the high values of range (0.5-20m) overlayed over orthophoto<br>
-what landcover is associated with large range in multiple return data?<br>
-which landscape features may be lost at 6m resolution?<br>
+Display only the high values of range (0.5-20m) overlayed over orthophoto.
+<span class="question">What landcover is associated with large range in multiple return data?</span>
+
+<p>
+<span class="question">Which landscape features may be lost at 6m resolution?</span>
 
 <pre><code>
 g.region rural_1m -p
 </code></pre>
 
 <p>
-do not forget to zoom/set the display to computational region<br>
-to display only selected interval of values in GUI<br>
-Add raster > Required select lid_be_binrange6m<br>
-Tab Selection > List of values to be displayed > type in 0.5-20.<br>
+Do not forget to zoom/set the display to computational region
+to display only selected interval of values in GUI.
+Add raster > Required tab, select <tt>lid_be_binrange6m</tt>
+In Selection tab, set List of values to be displayed to <tt>0.5-20</tt>.
 
 <pre><code>
 <!-- d.erase -->
@@ -156,7 +164,6 @@ d.rast lid_be_binrange6m val=0.5-20.
 <!-- d.erase -->
 d.rast ortho_2001_t792_1m
 d.rast lid_mr_binrange6m val=0.5-20.
-
 </code></pre>
 
 
