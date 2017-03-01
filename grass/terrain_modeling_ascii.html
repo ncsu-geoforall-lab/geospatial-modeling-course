@@ -163,20 +163,15 @@ d.rast lid_mr_binrange6m val=0.5-20.
 <h3>Interpolation</h3>
 
 <p>
-we now know how dense the data are and what is the range within cell<br>
-if we need 1m resolution DEM for our application<br>
-this analysis tells us that we need to interpolate<br>
-<!--
-# linux only: find how many points (number of lines) in the file
-</font>
-wc -l lid_be_pts.txt
-# here is the answer 319214: (no need to do it on windows)
--->
-import the ascii lidar data as vector points<br>
-import only points in the rural area  without building a table (Tab Points)<br>
-number of column used as z is 3<br>
-and using z-coordinate for elevation (Tab Optional, Create 3D vector map)<br>
-assuming that the txt file is in your current directory<br>
+We now know how dense the data are and what is the range within cell.<br>
+If we need 1m resolution DEM for our application
+this analysis tells us that we need to interpolate.
+<p>
+Import the ascii lidar data as vector points.<br>
+Import only points in the rural area without building a table (-t flag in tab Points),
+number of column used as z is 3 (third column),
+and using z-coordinate for elevation (Tab Optional, Create 3D vector map).<br>
+We assume that the txt file is in your current working directory.
 
 <pre><code>
 g.region rural_1m -p
@@ -184,8 +179,7 @@ v.in.ascii -ztr input=lid_be_pts.txt out=elev_lid_bepts z=3
 </code></pre>
 
 <p>
-display bare ground and multiple return points over orthophoto<br>
-don't forget to set display to new resolution set by region<br>
+Display bare ground and multiple return points over orthophoto:
 
 <pre><code>
 <!-- d.erase -->
@@ -193,15 +187,15 @@ d.rast ortho_2001_t792_1m
 </code></pre>
 
 <p>
-our imported points<br>
+Display our imported points:
 
 <pre><code>
 d.vect elev_lid_bepts size=2 col=red
 </code></pre>
 
 <p>
-points available in the data set<br>
-(elev_lid_bepts and elev_lid792_bepts should be identical)<br>
+Display points available in the data set
+(elev_lid_bepts and elev_lid792_bepts should be identical):
 
 <pre><code>
 d.vect elev_lidrural_mrpts size=4 col=0:100:0
@@ -215,11 +209,11 @@ d.vect elev_lid792_bepts size=2 col=yellow
 v.build elev_lid792_bepts
 v.build elev_lidrural_mrpts
 <font color="#000066"> -->
-extract first return to get points for DSM<br>
-interpolate DEM and DSM (more about interpolation in the interpolation assignment)<br>
-we use default parameters except for number of points used for<br>
-segmentation and interpolation - segmax and npmin<br>
-and higher tension for multiple return data<br>
+Extract first return to get points for DSM.<br>
+Interpolate DEM and DSM (more about interpolation in the interpolation assignment).<br>
+We use default parameters except for number of points used for
+segmentation and interpolation - segmax and npmin
+and higher tension for multiple return data:
 
 <pre><code>
 g.region rural_1m -p
@@ -232,22 +226,21 @@ d.rast elev_lidrurfirst_1m
 </code></pre>
 
 <p>
-use wxnviz (3D view) with cutting planes to compare the bare earth and terrain surface<br>
-switch off all layers except for elev_lidrural_1m and elev_lidrurfirst_1m<br>
-switch to 3D view<br>
-make sure fine resolution is set to 1 for all surfaces<br>
-assign each surface constant color, add constant plane z=90 for reference<br>
-create crossections using cutting plane,<br>
-shade the crossection using the color by bottom surface option<br>
-save image for report, if you don't have tiff support, use screen capture tool<br>
-if you don't remember this, see screen capture video for
+Remove all layers except for elev_lidrural_1m and elev_lidrurfirst_1m and
+switch to 3D view with cutting planes to compare the bare earth and terrain surface.<br>
+Make sure fine resolution is set to 1 for all surfaces.
+Assign each surface constant color, add constant plane z=90 for reference.
+Create crossections using cutting plane,
+shade the crossection using the color by bottom surface option.<br>
+Save image for report.
+If you don't remember this, see screen capture video for
 <a href="https://youtu.be/xo_jJHgtbR4">GRASS GIS 3D view</a>.
 
 
 <h3>Multiple returns</h3>
 
 <p>
-find out where we have multiple returns<br>
+Find out where we have multiple returns:
 
 <pre><code>
 g.region rural_1m -p
@@ -256,24 +249,22 @@ d.rast ortho_2001_t792_1m
 </code></pre>
 
 <p>
-condition for subset in GUI:<br>
-Add vector>Selection>type return=1 into WHERE condition of SQL statement<br>
-you need to add the points 4 times to create a map that will have<br>
-all sets of returns<br>
+Condition for subset in GUI:
+Add vector > Selection > type return=1 into WHERE condition of SQL statement.<br>
+You need to add the points 4 times to create a map that will have<br>
+all sets of returns.
 
 <pre><code>
 d.vect elev_lidrural_mrpts where=return=1 col=red size=2
-</code></pre>
-
-<p>
-can you guess what is in the area that does not have any 1st return points?<br>
-
-<pre><code>
 d.vect elev_lidrural_mrpts where=return=2 col=green size=3
 d.vect elev_lidrural_mrpts where=return=3 col=blue
 d.vect elev_lidrural_mrpts where=return=4 col=yellow
 d.out.file lidreturns
 </code></pre>
+
+<p>
+<span class="question">Can you guess what is in the area that does not have any 1st return points?</span>
+
 
 <!-- add here TIN using the new module if available -->
 
