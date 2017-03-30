@@ -79,7 +79,13 @@ FILES="`./extract-links.py "topics/.+html" schedule.html`"
 TITLE="Topics"
 HEAD_TEXT=""
 # if this gets longer, it must go to a file
-FOOT_TEXT="<img src='../img/grass_index.png' style='max-width: 90%;'>"
+FOOT_TEXT="<h3>Related courses</h3>
+
+To learn more about these topics, here are some
+<a href=\"https://geospatial.ncsu.edu/osgeorel/\">related courses</a>
+which may be useful for you.
+<p>
+<img src='../img/grass_index.png' style='max-width: 90%;'>"
 DIR="topics"
 
 TGT_FILE=$OUTDIR/$DIR/index.html
