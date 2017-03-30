@@ -85,7 +85,7 @@ To learn more about these topics, here are some
 <a href=\"https://geospatial.ncsu.edu/osgeorel/\">related courses</a>
 which may be useful for you.
 <p>
-<img src='../img/grass_index.png' style='max-width: 90%;'>"
+<img src='../img/graphics.png' style='max-width: 90%;'>"
 DIR="topics"
 
 TGT_FILE=$OUTDIR/$DIR/index.html
