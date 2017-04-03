@@ -82,7 +82,7 @@ HEAD_TEXT=""
 FOOT_TEXT="<h3>Related courses</h3>
 
 To learn more about these topics, here are some
-<a href=\"https://geospatial.ncsu.edu/osgeorel/\">related courses</a>
+<a href=\"https://geospatial.ncsu.edu/osgeorel/courses.html\">related courses</a>
 which may be useful for you.
 <p>
 <img src='../img/graphics.png' style='max-width: 90%;'>"
