@@ -8,6 +8,7 @@ Outline:
     <li>methods for computing flow direction (D8, Dinf), flow tracing (SFD, MFD, uniform, weighted)
     <li>methods for flow tracing through depressions and flat areas
         (filling, carving, hybrid, least cost path)
+    <li>principle of stream extraction from a DEM and watershed delineation
 </ul>
 <h4>Lecture</h4>
 <ul>
@@ -39,7 +40,7 @@ Outline:
 MERGE INTO SINGLE LECTURE - more complex modeling and general approach goes to PhD course
 -->
 
-<h3 id="hydrology_2" class="subtopic">7.B Modeling Geospatial Processes: Hydrologic modeling</h3>
+<h3 id="hydrology_2" class="subtopic">7.B Modeling Geospatial Processes: Hydrologic and Erosion modeling</h3>
 Outline:
 <ul>
     <li>spatially explicit modeling: principles and applications, role of GIS</li>
@@ -47,15 +48,21 @@ Outline:
     <li>general approaches and methods: empirical and physics based components of models</li>
     <li>steady state, continuous time and dynamic models and related modeling tools</li>
     <li>spatial hydrologic modeling: processes and methods</li>
+    <li>spatial modeling of erosion, sediment transport and landscape evolution</li>
+    <li>deriving input parameters, analysis and visualization of modeling results</li>
+    <li>simulating impact of landuse and climate change</li>
 </ul>
 <h4>Lecture</h4>
 <ul>
-    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/GIS_Anal_LHydroSpr2010.ppt">Lecture slides: Geospatial modeling and hydrology</a>
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/GIS_Anal_LHydroSpr2010.ppt">Lecture slides I: Geospatial modeling and hydrology</a>
+    <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/GIS_Anal_LErosionSpr2011.ppt">Lecture slides II: Erosion modeling</a>
     <li><a href="https://youtu.be/MovxE_73os8">Lecture Geospatial Modeling</a>
     <li><a href="https://youtu.be/v0jj4UKJmoQ">Lecture Geospatial Hydrologic Modeling</a>
+    <li><a href="https://youtu.be/9OwjmOuS8gs">Lecture Geospatial Erosion Modeling</a>
+    <li><a href="https://youtu.be/2uFhPzIvoXk">Lecture Geospatial Erosion Modeling applications</a>
 </ul>
 
-<h3 id="hydrology_erosion">Modeling Geospatial Processes: Erosion modeling</h3>
+<!--<h3 id="hydrology_erosion">Modeling Geospatial Processes: Erosion modeling</h3>
 
 Outline:
 <ul>
@@ -66,19 +73,18 @@ Outline:
 <h4>Lecture</h4>
 <ul>
     <li><a href="http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/GIS_Anal_LErosionSpr2011.ppt">Lecture slides: Erosion modeling</a>
-<!--<li><a href="giserosion5.pdf">Review paper: Geospatial Erosion Modeling</a>-->
     <li><a href="https://youtu.be/9OwjmOuS8gs">Lecture Geospatial Erosion Modeling</a>
     <li><a href="https://youtu.be/2uFhPzIvoXk">Lecture Geospatial Erosion Modeling applications</a>
 </ul>
+-->
 Supplemental materials:
 <ul>
+<!--<li><a href="giserosion5.pdf">Review paper: Geospatial Erosion Modeling</a>-->
     <li><a href="http://ncsu-geoforall-lab.github.io/erosion-modeling-tutorial/">Soil erosion and deposition modeling tutorial</a> (material under development)
     <li><a href="http://www4.ncsu.edu/~hmitaso/gmslab/reports/CerlErosionTutorial/denix/denixstart.html">Erosion modeling tutorial</a> (old but useful document)
 </ul>
 <h4>Assignment B:</h4>
 <!--
-<P><i>see <a href="../GIS_anal_schedule/index.html"><b>Schedule</b></a>
-to find out whether this assignment is optional or mandatory for your course section</i></P>
 <UL>
       <LI>compute wetness index
       <LI>compute and compare erosion topographic factor based on hillslope length and on contributing area </LI>
@@ -92,11 +98,11 @@ to find out whether this assignment is optional or mandatory for your course sec
     <li>Approach:
         <a href="../grass/hydrology_erosion.html">GRASS solution</a>,
         <a href="../arcgis/hydrology_erosion.html">ArcGIS solution</a>
-    <li>Optional: process based hydrologic modeling using path sampling method: SIMWE
+    <li>Optional: process based hydrologic modeling using path sampling method (SIMWE)
     <ul><li><a href="../grass/simwe.html">GRASS solution: SIMWE</a></li></ul>
 </ul>
    <h3> Homework 7 A and B:</h3>
-        Prepare a paper where you compare different methods for flowrouting and watershed analysis,
+        Prepare a paper where you compare different methods for flowrouting and watershed analysis, compute flooded area, and
     explain and discuss impact of model parameters and land use scenarios on
     spatial pattern and magnitude of erosion as simulated by simple GIS-based models.
 
