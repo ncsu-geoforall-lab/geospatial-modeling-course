@@ -103,37 +103,47 @@ d.out.file slope_int
 </code></pre>
 
 <h3>Compute slope along road</h3>
-
-Compute slope of a bus route. You will need the <em>myslope</em> raster
-map created earlier. First extract values from slope map layer:
+First set the region to the extent of the bus route #11 and to 10m resolution.
+Then convert the vector line of the route to raster using the direction of the route.
 
 <pre><code>
-g.region raster=elevation res=20
-v.to.rast input=busroute11 type=line output=busroute11 use=dir
-r.mapcalc "route_slope = if(busroute11, myslope)"
+g.region vect=busroute11 align=elevation res=10 -p
+v.to.rast input=busroute11 type=line output=busroute11_dir use=dir
+r.colors map=busroute11_dir color=aspect
+d.rast busroute11_dir
+d.legend busroute11_dir
 </code></pre>
 
-Then compute slope in the direction of the route:
+Compute the steepest slope of the topography along the route by assigning
+the values of slope derived from a DEM in the first part of this assignment
+to the grid cells along the route.
 
 <pre><code>
-v.to.rast input=busroute11 type=line output=busroute11_dir use=dir
+r.mapcalc "route_slope = if(busroute11_dir, myslope)"
+</code></pre>
+
+Then compute the slope in the direction of the route using the difference between aspect of the topography
+and the route direction angles.
+
+<pre><code>
 r.mapcalc "route_slope_dir = abs(atan(tan(myslope) * cos(myaspect - busroute11_dir)))"
 r.colors map=route_slope,route_slope_dir color=slope
 </code></pre>
 
-Display, zoom if necessary, and compute univariate statistics and comment on the difference of two results.
+Display the results along with the elevation contours and compute univariate statistics.
+Comment on the difference of the two results.
 
 <pre><code>
-r.univar route_slope
-r.univar route_slope_dir
-
-d.shade shade=elevation_shade color=myslope brighten=20
 r.contour input=elevation output=contours step=2
 d.vect contours
 d.rast route_slope
+d.legend route_slope
 d.out.file route_slope
 d.rast route_slope_dir
 d.out.file route_slope_dir
+
+r.univar route_slope
+r.univar route_slope_dir
 </code></pre>
 
 <h3>Curvatures</h3>
