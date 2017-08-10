@@ -42,9 +42,8 @@ on your computer after you graduate.
         <ul>
             <li>
                 use the stand-alone installer package
-                <a href="https://grass.osgeo.org/download/software/ms-windows">GRASS GIS 7.2 (stable)</a>,
-                choose 32bit or 64bit depending
-                on your computer (32bit should work anywhere).
+                <a href="https://grass.osgeo.org/download/software/ms-windows">GRASS GIS 7.2.1 (stable)</a>,
+                choose 32bit or 64bit depending on your computer.
                 Alternatively, if you are a more advanced user, you can
                 explore other available versions at the same page, for
                 example daily builds of the development version which
@@ -69,16 +68,17 @@ on your computer after you graduate.
                 tap from <a href="https://github.com/OSGeo/homebrew-osgeo4mac">OSGeo</a>.
                 In terminal, execute:
                 <pre>brew tap osgeo/osgeo4mac
-brew install grass7</pre>
+brew install numpy
+brew install liblas --build-from-source
+brew install grass7 --with-liblas</pre>
             </li>
             <li>
                 If you have older system or have SIP disabled,
                 you can download and install
                 <a href="http://grassmac.wikidot.com/frameworks">required frameworks</a> and
                 <a href="http://grassmac.wikidot.com/downloads">GRASS GIS</a>
-                (start with the frameworks and then install GRASS GIS).
-                The latest GRASS GIS 7.2 release is not available yet
-                in this way, so use 7.0 instead.
+                (start with the frameworks and then install GRASS GIS, download
+                the one from June 13th.
             </li>
         </ul>
     </li>
@@ -186,8 +186,8 @@ Instructions:
 <ul>
     <li>Create folders for your GIS data in a directory where you have permissions to write, for example:
         <ul>
-            <li>MS Windows: C:\Users\myname\grassdata and C:\Users\myname\arcdata</li>
-            <li>Mac OS or Linux: ideally in your home directory, e.g. /home/myname/grassdata</li>
+            <li>MS Windows: C:\Users\myname\Documents\grassdata and C:\Users\myname\Documents\arcdata</li>
+            <li>Mac OS or Linux: ideally in your home directory, e.g. /home/myname/Documents/grassdata</li>
         </ul>
     </li>
     <li>After downloading, unpack the datasets and copy GRASS GIS location into grassdata and ArcGIS geodatabase into arcdata</li>
