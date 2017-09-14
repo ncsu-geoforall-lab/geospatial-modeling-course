@@ -423,13 +423,19 @@ r.mask -r
 </code></pre>
 
 <h4>Zonal statistics</h4>
-Compute % area for each category in each zipcode.
+
+First, set the computational region:
+
+<pre><code>
+g.region raster=urban2_30m
+</code></pre>
+
+Then, compute % area for each category in each zipcode.
 <span class="question">Which zipcode has the most high density development?</span>
 
 <pre><code>
-r.stats -pl zipcodes,landuse96_28m
+r.stats -pl zipcodes,urban2_30m
 </code></pre>
-
 
 <!-- p. 113<br> -->
 <h4>Working with relative coordinates</h4>
