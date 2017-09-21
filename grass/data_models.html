@@ -105,8 +105,6 @@ d.rast aspect_ned10m_nn
 </code></pre>
 
 <p>
-Save the displayed map and <span class="question">explain what is going on in the report
-and how it differs from the aspect computed from the original elevation map?</span><br>
 To save the map, click in <em>Map Display</em> to on the button
 <em>Save display to graphic file"</em> or alternatively,
 use the following command:
@@ -129,7 +127,7 @@ d.rast aspect_ned10m_bic
 </code></pre>
 
 <p>
-Save the displayed map and in your report, compare the result with
+Save the displayed maps and in your report, compare the results with
 the previously computed nearest neighbor result.<br>
 In <em>Map Display</em> click button <em>Save display to graphic file</em>,
 or use the following in the command line:
@@ -137,6 +135,7 @@ or use the following in the command line:
 <pre><code>
 d.out.file aspect_bic
 </code></pre>
+<span class="question">Why is the aspect computed by the nearest neighbor method different from the one computed by bilinear interpolation?</span><br>
 
 <h3>Resampling to lower resolution</h3>
 
