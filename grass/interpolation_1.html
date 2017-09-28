@@ -135,16 +135,21 @@ d.rast elev_cont_4mvor
 d.out.file elev_cont_vor -->
 <h3>Optional: create TIN model</h3>
 Convert z-value stored as attribute "value" to z-coordinate.<br>
-Compute TIN and visualize it as 3D vector data:<br>
-Keep only "level90", "elev_idw_1m" and "elev_rand_tin" switched on.<br>
-For "elev_rand_tin" > <em>Properties</em> under Tab Selection switch off everything except for boundary.<br>
-Switch the view from 2D to 3D and remove elev_idw_1m.
+Compute TIN:<br>
 
 <pre><code>
 v.to.3d elev_lid792_randpts output=elev_lid792_randpts3d column=value
 v.delaunay elev_lid792_randpts3d output=elev_rand_tin
 r.mapcalc "level90 = 90"
 </code></pre>
+
+Visualize the TIN as 3D vector data:<br>
+Keep only "level90" and "elev_rand_tin" switched on
+(remove or uncheck everything else).<br>
+Switch the view from 2D to 3D.
+Go to <em>Data > Vector</em> and unckeck <em>Show vector points</em>.
+In <em>Vector lines</em>, change color from black to gray
+and set <em>Display</em> from <em>on surface</em> to <em>as 3D</em>.
 
 
 <!-- #some of the below is obsolete
