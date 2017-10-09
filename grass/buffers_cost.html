@@ -57,8 +57,10 @@ d.rast lakes_buff
 </code></pre>
 
 <p>
-List categories in land use map to identify cat numbers for developed areas.
-Then run <em class="module">r.mapcalc</em>:
+List categories in land use map to identify category numbers for developed areas.
+Then run <em class="module">r.mapcalc</em> to extract the developed areas within the buffers
+and use <em class="module">r.support</em> to assign the labels from the original buffer raster 
+to the new developed buffer raster map (needed for legend): 
 
 <pre><code>
 r.category landuse96_28m
