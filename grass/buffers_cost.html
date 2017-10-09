@@ -66,6 +66,7 @@ to the new developed buffer raster map (needed for legend):
 r.category landuse96_28m
 r.mapcalc "developed_lake = if(landuse96_28m==1 || landuse96_28m==2, lakes_buff, null())"
 r.support developed_lake raster=lakes_buff
+r.category developed_lake
 </code></pre>
 
 <p>
