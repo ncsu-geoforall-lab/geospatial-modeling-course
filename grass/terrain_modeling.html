@@ -211,7 +211,7 @@ d.rast elev_lid793016_1r_1m_bsp
 Hide legend and switch off all map layers except for the last 2 interpolated ones.<br>
 Use 3D view with cutting planes to compare the bare earth and terrain surface.<br>
 Make sure fine resolution is set to 1 for all surfaces.<br>
-Assign each surface constant color, add constant plane for reference.<br>
+Assign each surface constant color, add constant plane at 75m elevation for reference.<br>
 Shade the crossection using the color by bottom surface option.<br>
 If you don't remember this, see screen capture video for 3d view.
 
@@ -227,6 +227,45 @@ visualization tool to visualize the LAS file from this assignment.
 Explore the provided visualization tools in plas.io and create images
 showing different properties of the point cloud or the visualization
 techniques and how they would be useful for further analysis.
+
+<!--
+Edit and add as optional from MEA592 multid and lidar - useful task that has been missing
+
+Compute different surfaces by binning while exploring what different returns and classes show.
+Then create a raster map of classes: 1 - ground, 2 - vegetation, 3 - buildings
+
+lasinfo tile_0793_016_spm.las
+#	341246 Unclassified (1) 
+#	560224 Ground (2) 
+#	25 Low Point (noise) (7) 
+#	844382 Reserved for ASPRS Definition (11) 
+
+# create DSM
+
+r.in.lidar -o input=tile_0793_016_spm.las output=tile16_all_max method=max resolution=10 class_filter=1,2
+
+# create surface based on last return (represents canopy)
+
+r.in.lidar -o input=tile_0793_016_spm.las output=tile16_last_mean resolution=10 method=mean return_filter=last class_filter=1,2
+
+# create surface representing ground based on already classified points
+
+r.in.lidar -o input=tile_0793_016_spm.las output=tile16_ground_mean resolution=10 class_filter=2
+
+# combine surfaces and create classes: 1 - ground, 2 - vegetation, 3 - buildings
+
+r.mapcalc "classes = if( ! isnull(tile16_last_mean), 2, if( !isnull( tile16_ground_mean), 1, if( !isnull(tile16_all_max),3, null())))"
+
+# set colors, copy and paste the following color rules into "or enter values directly" text field located in Define tab (option rules)
+
+r.colors map=classes 
+1 220:220:180
+2 0:180:0
+3 150:0:0
+
+# leave just raster map 'tile16_surface_elev' in Layer Manager, hide legend
+# got to 3D view, set surface resolution 1 and color to map 'classes'
+-->
 
 <!--
 # optional
