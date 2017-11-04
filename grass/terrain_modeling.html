@@ -130,14 +130,16 @@ Compute range of elevation values in each grid cell:
 
 <pre><code>
 r.in.lidar input=tile_0793_016_spm.las output=lid_be_binrange2m class_filter=2 method=range
+r.colors lid_be_binrange2m color=bcyr -e
 r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binrange2m return_filter=first method=range
+r.colors lid_1r_binrange2m color=bcyr -e
 d.rast lid_be_binrange2m
 d.legend lid_be_binrange2m at=2,40,2,5
 d.rast lid_1r_binrange2m
 d.legend lid_1r_binrange2m at=2,40,2,5
 </code></pre>
 
-<!--
+<!-- why is this commented out? the default result does not show anything
 <p>
 In the first return we have huge range at one or more cells, so we adjust
 the color table to histogram equalized and redraw:
