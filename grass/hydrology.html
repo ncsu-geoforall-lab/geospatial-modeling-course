@@ -96,6 +96,7 @@ r.fill.dir input=elevation output=elev_fill1 direction=dir1 areas=unres1
 r.fill.dir input=elev_fill1 output=elev_fill2 direction=dir2 areas=unres2
 r.fill.dir input=elev_fill2 output=elev_fill3 direction=dir3 areas=unres3
 r.mapcalc "depr_bin = if((elevation-elev_fill3) &lt; 0., 1, null())"
+r.colors depr_bin color=blues
 </code></pre>
 
 <p>
@@ -107,7 +108,7 @@ display the new results, compare the derived depressions with actual lakes:
 d.rast elevation
 d.vect roadsmajor
 d.rast depr_bin
-d.vect lakes type=area fill_color=aqua
+d.vect lakes type=area fill_color=blue
 d.out.file depressions
 </code></pre>
 
