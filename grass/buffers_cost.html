@@ -222,6 +222,16 @@ You should get something like the following:
 637386.831 222569.152 21 0 1721 Trailwood Dr 0.071
 633178.155 221353.037 52 27 6000 Holly Springs Rd 0.060
 </pre>
+
+<p>
+To get the computed time, you can also query the cumulative cost raster directly
+using coordinates (in this example it's Western Blvd firestation),
+or using GUI query tool by selecting the cost layer and clicking on the map:
+
+<pre><code>
+r.what map=streets_cost coordinates=635940.262,225912.796 separator=space
+</code></pre>
+
 <p>
 Find the least cost path for the two closest stations:
 
