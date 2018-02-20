@@ -54,7 +54,7 @@ without the need to specify the full path to the file.
 <!-- p.90 -->
 Compute areas for each category at two different resolutions.
 <p>
-<span class="question">Are results equal? Explain (see also Lecture 1)</span>.
+<span class="question">Are results equal? Explain in detail why (see also Lecture 1).</span>
 Copy and paste the report from the output window or
 save the report in a text file: <em>Output window</em> > <em>Save</em>.
 Use fixed width font (e.g., Courier, Andale Mono  in your report to preserve formatting).
@@ -108,8 +108,8 @@ d.out.file landuse96_modezip
 <h3>Apply neighborhood operators</h3>
 <!-- p.127<br> -->
 Use neighborhood operator to compute land use diversity map.<br>
-<span class="question">How diverse is land use in NCSU area?</span><br>
-<span class="question">Explore how different sizes of the neighborhood used alter the results?</span><br>
+<span class="question">How diverse is land use in NCSU area based on the following calculation?</span><br>
+<span class="question">Explore how different sizes of the neighborhood used alter the results and why?</span><br>
 Before you start to display the new results,
 remove all previously added map layers from the <em>Layer Manager</em>.
 
@@ -127,7 +127,8 @@ r.report lu_divers unit=p
 <p>
 Use neighborhood operator to smooth the SRTM elevation map and 
 compare the global statistical measures for the original and smoothed DEM.
-<span class="question">How would size of the neighborhood influence the result?</span>
+<span class="question">How does the size of the neighborhood influence the result?</span>
+(You can test different sizes yourself.)
 
 <pre><code>
 g.region raster=elev_srtm_30m -p
