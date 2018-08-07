@@ -83,12 +83,12 @@ Use GUI to display the histogram: in <em>Map Display</em> > <em>Analyze</em> > <
 <pre><code>
 r.mapcalc "elev_int = int(elevation)"
 r.slope.aspect elevation=elev_int aspect=aspect_int_10m slope=slope_int_10m
-<d.erase
+d.erase
 d.histogram slope_int_10m
 d.histogram myslope
 d.histogram aspect_int_10m
 d.histogram myaspect
-<d.erase
+d.erase
 d.rast myslope
 </code></pre>
 
@@ -173,7 +173,7 @@ For 3D view, switch off everything except for elevation surface that you want to
 Drape topographic parameters raster maps over DEMs as color.
 
 <pre><code>
-<d.erase
+d.erase
 d.rast elev_lid_1m
 d.rast pc_lid_1m
 d.out.file profcurvature1
@@ -190,7 +190,7 @@ You can use multiple displays to compare the results side-by-side.
 g.region rural_1m  -p
 v.surf.rst input=elev_lid792_bepts elevation=elev_lidt15_1m aspect=asp_lidt15_1m pcurvature=pc_lidt15_1m tcurvature=tc_lidt15_1m npmin=120 segmax=25 tension=15 smooth=1.
 v.surf.rst input=elev_lidrural_mrpts elevation=elev_lidmrt15_1m aspect=asp_lidmrt15_1m pcurvature=pc_lidmrt15_1m tcurvature=tc_lidmrt15_1m npmin=120 segmax=25 tension=15 smooth=1.
-<d.erase
+d.erase
 d.rast elev_lidt15_1m
 d.rast pc_lidt15_1m
 d.out.file profcurvature2
@@ -246,7 +246,7 @@ Which landforms have high standard deviation and what does it mean?</span>
 
 <pre><code>
 g.region raster=NH_2008_1m -p
-<d.erase
+d.erase
 d.rast NH_2008_1m
 r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_min method=minimum
 r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_max method=maximum
@@ -301,7 +301,7 @@ First, set the region and display facility on top of orthophoto.
 
 <pre><code>
 g.region rural_1m -p
-<d.erase
+d.erase
 d.rast ortho_2001_t792_1m
 d.rast facility
 </code></pre>

@@ -175,7 +175,7 @@ Before the next computation, remove all map layers from the <em>Layer Manager</e
 because we don't need to see them anymore.
 
 <pre><code>
-<d.erase
+d.erase
 r.resamp.stats landuse96_28m out=landuse96_100m method=mode
 d.rast landuse96_100m
 </code></pre>
@@ -286,7 +286,7 @@ and type in speed limits 25,35,45,55,65; move legend with mouse as needed.
 Alternatively, use the following commands:
 
 <pre><code>
-<d.erase
+d.erase
 d.rast streets_speed_30m 
 d.legend streets_speed_30m at=5,30,2,5 use=25,35,45,55,65 
 </code></pre>
@@ -322,7 +322,7 @@ You may want to remove all previously used layers from the <em>Layer Manager</em
 before you start these new computations.
 
 <pre><code>
-<d.erase
+d.erase
 g.region raster=streams_derived -p
 d.rast streams_derived
 r.thin streams_derived output=streams_derived_t
@@ -355,7 +355,7 @@ before you start these new computations.
 
 <pre><code>
 g.region raster=basin_50K -p
-<d.erase
+d.erase
 d.rast basin_50K
 r.to.vect -sv basin_50K output=basin_50Kval type=area
 d.vect -c basin_50Kval

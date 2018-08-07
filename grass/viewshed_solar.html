@@ -46,7 +46,7 @@ r.viewshed elev_ned_30m output=tower_165_los coordinates=642212,224767 observer_
 
 Display result on shaded relief:
 <pre><code>
-<d.erase
+d.erase
 d.his hue=tower_165_los intensity=elevation_shade
 d.vect streets_wake
 d.vect viewpoints size=10 color=orange icon=basic/marker
@@ -68,7 +68,7 @@ r.report -n tower_los_lu30m unit=p,h
 Display only the following layers and save result:
 
 <pre><code>
-<d.erase
+d.erase
 d.rast tower_los_lu30m
 d.vect streets_wake
 d.legend tower_los_lu30m at=25,50,1,3
@@ -85,7 +85,7 @@ r.viewshed elev_ned_30m output=redhat_25_los coordinates=638898,224528 observer_
 Display only the following layers and save result:
 
 <pre><code>
-<d.erase
+d.erase
 d.rast redhat_25_los
 d.vect streets_wake
 d.vect viewpoints size=10 col=red icon=basic/marker
@@ -107,7 +107,7 @@ Remove all layers and zoom to the region.
 g.region rural_1m -p
 r.mapcalc "elevfacility_1m = if(isnull(facility), elev_lid792_1m,138.)"
 r.colors elevfacility_1m color=elevation
-<d.erase
+d.erase
 d.rast elevfacility_1m
 </code></pre>
 
@@ -189,7 +189,7 @@ r.sun elevation=elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m linke_value=2.
 Zoom to the new computational region and display the following layers:<br>
 
 <pre><code>
-<d.erase
+d.erase
 d.rast b356
 d.legend b356 at=2,30,2,6
 d.out.file beamrad356

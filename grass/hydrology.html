@@ -75,7 +75,7 @@ Generate shaded map and display:
 with the official stream map?</span>
 
 <pre><code>
-<d.erase
+d.erase
 d.his hue=basin_10K intensity=elevation_shade brighten=40
 d.vect basin_10K type=boundary
 d.rast lakes
@@ -104,7 +104,7 @@ Remove all previously used layers from the <em>Layer Manager</em> and
 display the new results, compare the derived depressions with actual lakes:
 
 <pre><code>
-<d.erase
+d.erase
 d.rast elevation
 d.vect roadsmajor
 d.rast depr_bin
@@ -125,7 +125,7 @@ r.watershed -as elevation=elev_lid792_1m threshold=5000 accumulation=accum_5K dr
 Remove previous layers. Display extracted streams over aerial image:
 
 <pre><code>
-<d.erase
+d.erase
 d.rast ortho_2001_t792_1m
 d.rast accum_5K values=1000-1000000
 </code></pre>
@@ -197,7 +197,7 @@ Compare upslope and downslope flow lines:
 Remove or switch off all previous layers.
 
 <pre><code>
-<d.erase
+d.erase
 g.region raster=elev_lid792_1m -p
 r.flow elevation=elev_lid792_1m flowline=flowlines flowlength=flowlg_1m flowaccumulation=flowacc_1m
 r.flow -u elevation=elev_lid792_1m flowlength=flowlgup_1m flowaccumulation=flowaccup_1m
