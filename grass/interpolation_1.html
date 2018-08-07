@@ -30,7 +30,7 @@ Compute aspect to evaluate the surface geometry.
 
 <pre><code>
 g.region rural_1m -p
-<!-- d.erase -->
+<d.erase
 v.voronoi elev_lid792_randpts output=elev_vor
 d.vect elev_vor size=1 -c type=area,centroid
 v.info -c elev_vor
@@ -42,7 +42,7 @@ r.slope.aspect elevation=elev_vor_1m aspect=asp_vor_1m
 <p>
 Display the resulting elevation map and aspect map.
 <pre><code>
-<!-- d.erase -->
+<d.erase
 d.rast elev_vor_1m
 d.rast asp_vor_1m
 d.vect elev_lid792_randpts size=1 color=red
@@ -62,7 +62,7 @@ v.info -c elev_lid792_randpts
 v.surf.idw elev_lid792_randpts output=elev_idw_1m column=value
 r.colors elev_idw_1m color=elevation
 r.slope.aspect elevation=elev_idw_1m aspect=asp_idw_1m
-<!-- d.erase -->
+<d.erase
 d.rast elev_idw_1m
 d.rast asp_idw_1m
 d.vect elev_lid792_randpts size=2 color=red

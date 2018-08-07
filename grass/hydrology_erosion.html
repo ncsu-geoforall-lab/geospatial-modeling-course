@@ -92,7 +92,7 @@ r.colors lsfac3d_1m raster=lsfac3d_s1_1m
 </code></pre>
 
 Display layers and save outputs:
-<!-- d.erase -->
+<d.erase
 <pre><code>
 d.rast lsfac3d_1m
 d.vect elev_lid792_cont1m
@@ -137,7 +137,7 @@ r.colors soillossgrow_1m raster=soillossbare_1m
 r.support map=soillossbare_1m units="ton/(acre.year)"
 r.support map=soillossgrow_1m units="ton/(acre.year)"
 </code></pre>
-<!-- d.erase -->
+<d.erase
 Remove previous layers and display the new ones:
 <pre><code>
 d.rast soillossbare_1m
