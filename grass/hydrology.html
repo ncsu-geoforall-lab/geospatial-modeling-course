@@ -74,8 +74,8 @@ Generate shaded map and display:
 <span class="question">How can you modify the mapcalc expression to make stream origins fit better
 with the official stream map?</span>
 
-<!-- d.erase -->
 <pre><code>
+<!-- d.erase -->
 d.his hue=basin_10K intensity=elevation_shade brighten=40
 d.vect basin_10K type=boundary
 d.rast lakes
@@ -196,8 +196,8 @@ Compare upslope and downslope flow lines:
 <p>
 Remove or switch off all previous layers.
 
-<!-- d.erase -->
 <pre><code>
+<!-- d.erase -->
 g.region raster=elev_lid792_1m -p
 r.flow elevation=elev_lid792_1m flowline=flowlines flowlength=flowlg_1m flowaccumulation=flowacc_1m
 r.flow -u elevation=elev_lid792_1m flowlength=flowlgup_1m flowaccumulation=flowaccup_1m

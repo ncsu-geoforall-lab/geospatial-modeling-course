@@ -45,8 +45,8 @@ r.viewshed elev_ned_30m output=tower_165_los coordinates=642212,224767 observer_
 </code></pre>
 
 Display result on shaded relief:
-<!-- d.erase -->
 <pre><code>
+<!-- d.erase -->
 d.his hue=tower_165_los intensity=elevation_shade
 d.vect streets_wake
 d.vect viewpoints size=10 color=orange icon=basic/marker
@@ -64,9 +64,11 @@ r.colors tower_los_lu30m raster=landclass96
 r.category tower_los_lu30m raster=landclass96
 r.report -n tower_los_lu30m unit=p,h
 </code></pre>
-<!-- d.erase -->
+
 Display only the following layers and save result:
+
 <pre><code>
+<!-- d.erase -->
 d.rast tower_los_lu30m
 d.vect streets_wake
 d.legend tower_los_lu30m at=25,50,1,3
@@ -79,9 +81,11 @@ We can also do visibility from former RedHat headquarters:
 <pre><code>
 r.viewshed elev_ned_30m output=redhat_25_los coordinates=638898,224528 observer_elevation=25 max_distance=10000
 </code></pre>
-<!-- d.erase -->
+
 Display only the following layers and save result:
+
 <pre><code>
+<!-- d.erase -->
 d.rast redhat_25_los
 d.vect streets_wake
 d.vect viewpoints size=10 col=red icon=basic/marker
@@ -181,9 +185,11 @@ g.region raster=elev_ned_30m -p
 r.slope.aspect elevation=elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m
 r.sun elevation=elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m linke_value=2.5 albedo_value=0.2 beam_rad=b356 diff_rad=d356 refl_rad=r356 insol_time=it356 day=356
 </code></pre>
-<!-- d.erase -->
+
 Zoom to the new computational region and display the following layers:<br>
+
 <pre><code>
+<!-- d.erase -->
 d.rast b356
 d.legend b356 at=2,30,2,6
 d.out.file beamrad356
