@@ -73,7 +73,6 @@ pre {
 }
 
 code {
-    color: black;
     font-size: 120%;
 }
 
@@ -341,6 +340,8 @@ hr {
 /* FAQ or other Q&As */
 
 .qa dt {
-    font-weight: normal;
-    font-style: italic;
+    font-weight: bold;
+    font-style: normal;
+    padding-top: 0.5em;
+    color: #444;
 }
