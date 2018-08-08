@@ -1,7 +1,7 @@
 <h2>Geospatial Analysis I: global, zonal and focal operations, map algebra</h2>
 <p>Resources:
 <ul>
-<li><a href="http://grass.osgeo.org/grass72/manuals/index.html">
+<li><a href="http://grass.osgeo.org/grass74/manuals/index.html">
 GRASS GIS overview and manual</a></li>
 <li> <a href="data_acquisition.html#commands">Recommendations</a>
 and <a href="./grass_intro.html">tutorial</a>
@@ -35,7 +35,7 @@ for <b>Accessible mapset</b> create a new mapset (called e.g. HW_map_algebra) an
 click <b>Start GRASS</b>.
 
 <pre><code>
-grass72
+grass74
 </code></pre>
 
 <p>
@@ -117,7 +117,7 @@ remove all previously added map layers from the <em>Layer Manager</em>.
 g.region raster=landuse96_28m -p
 r.info -g landuse96_28m
 r.neighbors landuse96_28m output=lu_divers method=diversity size=7
-<!-- d.erase -->
+d.erase
 d.rast lu_divers
 d.legend lu_divers at=70,15,5,10 -v
 d.vect streets_wake
@@ -149,7 +149,7 @@ Before displaying new data, remove older map layers from <em>Layer Manager</em>.
 g.region raster=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m -p
 r.patch input=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m output=elevlidD_6m
 r.colors elevlidD_6m raster=elevation
-<!-- d.erase -->
+d.erase
 d.rast elevlidD_6m
 </code></pre>
 
@@ -332,7 +332,7 @@ once you set a new one.
 
 <pre><code>
 g.region raster=elevation -p
-<!-- d.erase -->
+d.erase
 d.rast elevation
 d.rast landuse96_28m
 r.mapcalc "low_elev_developed = if((elevation &lt; 100 &amp;&amp; elevation > 60) &amp;&amp; (landuse96_28m == 1 || landuse96_28m == 2),1,null())"
@@ -395,7 +395,7 @@ the <em>Layer Manager</em>.
 
 <pre><code>
 g.region raster=ortho_2001_t792_1m res=10 -ap
-<!-- d.erase -->
+d.erase
 d.rast ortho_2001_t792_1m
 </code></pre>
 
@@ -451,7 +451,7 @@ before we start to work on a new task.
 
 <pre><code>
 g.region raster=elev_srtm_30m -p
-<!-- d.erase -->
+d.erase
 r.mapcalc "elev_srtm30m_smooth = (elev_srtm_30m[-1,-1]   \
            + elev_srtm_30m[-1,0] + elev_srtm_30m[-1,1] \
            + elev_srtm_30m[0,-1] + elev_srtm_30m[0,0]  \

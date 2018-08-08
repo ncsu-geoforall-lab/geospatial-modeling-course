@@ -1,7 +1,7 @@
 <h2>Spatial interpolation and approximation II: splines</h2>
 <p>Resources:
 <ul>
-<li><a href="http://grass.osgeo.org/grass72/manuals/index.html">
+<li><a href="http://grass.osgeo.org/grass74/manuals/index.html">
 GRASS GIS overview and manual</a></li>
 <li> <a href="data_acquisition.html#commands">Recommendations</a>
 and <a href="./grass_intro.html">tutorial</a>
@@ -20,7 +20,7 @@ Text files with color rules:
 Start GRASS - click on GRASS icon or type<br>
 
 <pre><code>
-grass72
+grass74
 </code></pre>
 
 <p>
@@ -63,7 +63,7 @@ Save images for your report.
 r.colors asp_rstdef_1m color=aspect
 r.colors asp_rstt10_1m color=aspect
 r.colors asp_rstt160_1m color=aspect
-<!-- d.erase -->
+d.erase
 d.rast elev_rstdef_1m
 d.rast asp_rstdef_1m
 d.out.file asp_rst_t40
@@ -115,7 +115,7 @@ and drape the deviations maps as color.
 <pre><code>
 r.colors elev_rstsm10_devi rules=deviations_color.txt
 r.colors elev_rstdef_devi raster=elev_rstsm10_devi
-<!-- d.erase -->
+d.erase
 d.rast elev_rstdef_devi
 d.rast elev_rstsm10_devi
 d.legend elev_rstsm10_devi at=2,50,2,6
@@ -141,7 +141,7 @@ and drape the crossvalidation map "elev_rstdef_cv" as color.
 <pre><code>
 v.surf.rst input=elev_rstdef_cv elevation=elev_rstdef_cv zcolumn=flt1
 r.colors elev_rstdef_cv raster=elev_rstsm10_devi
-<!-- d.erase -->
+d.erase
 d.rast elev_rstdef_cv
 d.vect elev_rstdef_cv size=2
 d.legend elev_rstdef_cv at=2,50,2,6
@@ -200,7 +200,7 @@ Zoom to computational region when displaying the result.
 
 <pre><code>
 r.colors precip_annual_500m rules=precip_color.txt
-<!-- d.erase -->
+d.erase
 d.rast precip_annual_500m
 d.legend precip_annual_500m at=2,30,2,5 range=970,2400
 </code></pre>

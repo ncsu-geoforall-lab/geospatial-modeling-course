@@ -1,7 +1,7 @@
 <h2>Geospatial Data Introduction</h2>
 
 <p>Resources:
-<a href="http://grass.osgeo.org/grass72/manuals/index.html">
+<a href="http://grass.osgeo.org/grass74/manuals/index.html">
 GRASS GIS overview and manual</a>
 
 
@@ -38,7 +38,7 @@ Tutorials:
 <ul><li>Video tutorial (no sound, switch on annotations):
 <a href="https://www.youtube.com/watch?v=9fcBvYetIsM">
     <strong>Getting started with GRASS GIS GUI</strong></a>.
-Note: recorded with newest version of GRASS GIS 7.2,
+Note: recorded with GRASS GIS 7.2,
 some details can differ.</li>
 <li>Screenshot-based tutorial demonstrates these options:
 <a href="./grass_intro.html">
@@ -48,7 +48,7 @@ some details can differ.</li>
 <!--<br><i>Older, but may be still useful:</i><a href="https://youtu.be/xqsnwtlP-2Y"> Getting started, video</a>, the screen capture is done on Mac with GRASS6.4.1RC1.-->
 <p>
 Instructions for both
-<b><a href="http://grass.osgeo.org/grass72/manuals/wxGUI.html">GUI</a></b>
+<b><a href="http://grass.osgeo.org/grass74/manuals/wxGUI.html">GUI</a></b>
 and command line approach are provided in the introductory assignments,
 but the instructions will be mostly command line later on.
 Feel free to use the approach that suits you the best.
@@ -97,7 +97,7 @@ Each Location can have several Mapsets, one is called PERMANENT
 to store baseline data, others are set by users. You can modify
 the data only in your current Mapset, but you can view or copy
 data from other Mapsets. See also
-<a href="http://grass.osgeo.org/grass72/manuals/grass_database.html">structure of GRASS database</a>.
+<a href="http://grass.osgeo.org/grass74/manuals/grass_database.html">structure of GRASS database</a>.
 
 <p>
 <b>DO NOT MOVE</b> the files under
@@ -116,7 +116,7 @@ and specifies the extent and resolution at which raster operation are performed.
 <p>
 Start GRASS - click on GRASS icon or on Linux type:
 <pre><code>
-grass72
+grass74
 </code></pre>
 
 <p>
@@ -250,7 +250,7 @@ you can use
 
 <pre><code>
 g.region nc_500m -p
-<!-- d.erase -->
+d.erase
 d.rast elev_state_500m
 d.vect precip_30ynormals icon=basic/marker
 d.vect boundary_county type=boundary

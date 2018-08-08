@@ -1,7 +1,7 @@
 <h2>Spatial interpolation and approximation I: methods</h2>
 <p>Resources:
 <ul>
-<li><a href="http://grass.osgeo.org/grass72/manuals/index.html">
+<li><a href="http://grass.osgeo.org/grass74/manuals/index.html">
 GRASS GIS overview and manual</a></li>
 <li> <a href="data_acquisition.html#commands">Recommendations</a>
 and <a href="./grass_intro.html">tutorial</a>
@@ -12,7 +12,7 @@ how to use GUI from the first assignment</li>
 Start GRASS - click on GRASS icon or type<br>
 
 <pre><code>
-grass72
+grass74
 </code></pre>
 
 <p>
@@ -30,7 +30,7 @@ Compute aspect to evaluate the surface geometry.
 
 <pre><code>
 g.region rural_1m -p
-<!-- d.erase -->
+d.erase
 v.voronoi elev_lid792_randpts output=elev_vor
 d.vect elev_vor size=1 -c type=area,centroid
 v.info -c elev_vor
@@ -42,7 +42,7 @@ r.slope.aspect elevation=elev_vor_1m aspect=asp_vor_1m
 <p>
 Display the resulting elevation map and aspect map.
 <pre><code>
-<!-- d.erase -->
+d.erase
 d.rast elev_vor_1m
 d.rast asp_vor_1m
 d.vect elev_lid792_randpts size=1 color=red
@@ -62,7 +62,7 @@ v.info -c elev_lid792_randpts
 v.surf.idw elev_lid792_randpts output=elev_idw_1m column=value
 r.colors elev_idw_1m color=elevation
 r.slope.aspect elevation=elev_idw_1m aspect=asp_idw_1m
-<!-- d.erase -->
+d.erase
 d.rast elev_idw_1m
 d.rast asp_idw_1m
 d.vect elev_lid792_randpts size=2 color=red
@@ -276,5 +276,5 @@ but you still want to try something this might be a good start together
 with some (free) courses at
 <a href="https://www.codecademy.com/learn/python">Codecademy</a>.
 To learn more about using Python in GRASS GIS, see the introduction to the
-<a href="https://grass.osgeo.org/grass72/manuals/libpython/script_intro.html">grass.script</a>
+<a href="https://grass.osgeo.org/grass74/manuals/libpython/script_intro.html">grass.script</a>
 package.
