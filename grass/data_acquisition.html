@@ -40,10 +40,11 @@ Tutorials:
     <strong>Getting started with GRASS GIS GUI</strong></a>.
 Note: recorded with GRASS GIS 7.2,
 some details can differ.</li>
-<li>Screenshot-based tutorial demonstrates these options:
+<!-- <li>Screenshot-based tutorial demonstrates these options:
 <a href="./grass_intro.html">
     <strong>Getting started with GRASS GIS GUI</strong>
-</a></li></ul>
+</a></li> -->
+</ul>
 
 <!--<br><i>Older, but may be still useful:</i><a href="https://youtu.be/xqsnwtlP-2Y"> Getting started, video</a>, the screen capture is done on Mac with GRASS6.4.1RC1.-->
 <p>
@@ -165,9 +166,6 @@ Command line equivalent: paste into the <em>Console</em> and press Enter:
 <pre><code>
 d.shade shade=elevation_shade color=elevation brighten=30
 </code></pre>
-
-Note: depending on your installed GRASS version, the names of the <em class="module">d.shade</em>
-module can be different. Open the <em class="module">d.shade</em> dialog to find the correct options.
 
 
 <p>
@@ -318,20 +316,6 @@ g.list -p type=region
 Alternatively, you can type <code>g.list</code> into
 the <em>Console</em> and hit Enter to get the module dialog that way.
 
-<h4>Coordinate system, spatial extent, and resolution</h4>
-
-<p>
-Find the working coordinate system and spatial extent:<br>
-In GUI: <em>Settings</em> > <em>Map projections</em> > <em>Display map projection</em><br>
-In GUI: <em>Settings</em> > <em>Region</em> > <em>Display Region</em><br>
-<p>
-Or paste the following command into the <em>Console</em> tab:
-
-<pre><code>
-g.proj -p
-g.region -pl
-</code></pre>
-
 <h4>Copy and remove data</h4>
 
 You can copy and remove maps using the <em>Data</em> tab in the
@@ -372,16 +356,6 @@ Note that you can only remove maps from the current mapset
 and also note that the <em>Data</em> tab asks for confirming the removal
 and the <em class="module">g.remove</em> requires you to use the
 <code>-f</code> flag.
-
-<p>
-Or paste the following command into the <em>Console</em> tab:
-
-<pre><code>
-g.copy raster=geology_30m,mygeology
-g.rename raster=mygeology,mygeology_30m
-g.list raster
-g.remove type=raster name=mygeology_30m -f
-</code></pre>
 
 <p>
 Find information about individual maps layers and their attributes:<br>
@@ -440,12 +414,27 @@ Export the roadsmajor map as a shape file:
 <ul>
 <li><em>File</em> > <em>Export</em> > <em>Common formats</em></li>
 <li>Select roadsmajor as <em>Name of input vector map</em></li>
-<li>Type C:\mydirectory\roadsmajor path as OGR output datasource name
+<li>Type (or browse) C:\mydirectory\roadsmajor.shp path as OGR output datasource name
 (path should be to a directory where you have write permission)</li>
+<li>Select <em>ESRI_Shapefile</em> in <em>Data format to write</em></li>
 <li>click <em>Run</em></li>
 </ul>
 You can then display the roadsmajor in ArcGIS.
 
+<h4>Coordinate system, spatial extent, and resolution</h4>
+<p>
+Find the working coordinate system and spatial extent:<br>
+In GUI: <em>Settings</em> > <em>Map projections</em> > <em>Display map projection</em><br>
+In GUI: <em>Settings</em> > <em>Region</em> > <em>Display Region</em><br>
+<p>
+Or paste the following command into the <em>Console</em> tab:
+
+<pre><code>
+g.proj -p
+g.region -pl
+</code></pre>
+
+<!-- 
 <h4>Import and export of vectors when scripting</h4>
 
 <p>
@@ -465,7 +454,7 @@ On MS Windows it is often easier to do the import through GUI
 to get the correct path to your data.<br>
 On Mac, Linux and other systems you can use current working directory
 and/or auto-complete in the system command line to avoid typing the full path;
-you can of course use GUI if you prefer.
+you can of course use GUI if you prefer. -->
 
 
 <h4>Import raster file provided in GeoTIFF format</h4>
