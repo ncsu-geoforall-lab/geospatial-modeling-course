@@ -11,100 +11,104 @@ to the Modeling folder. Unpack the package containing orthophoto.
 
 
 <h3>Bring lidar data into ArcGIS</h3>
-There are multiple ways of handling lidar data in ArcGIS and improvements are being added to new version of the software. We will follow the step by step, not automated workflow. For other workflows refer to the FYI section at the end of the assignment 
-<h3>Analyze bare earth lidar data</h3>
-<h4>Create a Multipoint file from .las point cloud</h4>
-<pre>Turn on the 3D Analyst Extension
-Menu -> Customize ->Extensions...
-Open the ArcToolbox (if not already open)
-Select '3D Analyst->Conversion->From File->LAS to Multipoint'
-Set 'Input' to 'tile_0793_016_spm.las'
-Set 'Output Feature Class' to '.\Modeling\lidar_be'
-Set 'Average Point Spacing' to '0.5'
-In 'Input Class Codes' type '2'
-Set 'Coordinate System' to 'NAD_1983_StatePlane_North_Carolina_FIPS_3200' (you can type 32119 in the search window)
-Click 'OK'
-</pre>
-
-<p>
-<h4>Compute a raster map representing number of points per cell (at 2 different resolutions)</h4>.<br>
-Calculating for 2m x 2m cell:
-<pre>
-Open the ArcToolbox
-Select 'Conversion Tools->To Raster->Point to Raster'
-Set 'Input Features' to 'lidar_be'
-Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Modeling\bin_count2m'
-Set 'Cell assignment type' to 'COUNT'
-Set Cellsize' to '2'                            
-Click 'OK'
-</pre>
-
-<p>
-Calculate for 6m x 6m cell:
-
-<pre>
-Open the ArcToolbox (if not already open)
-Select 'Conversion Tools->To Raster->Point to Raster'
-Set 'Input Features' to 'lidar_be'
-Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Modeling\bin_count6m'
-Set 'Cell assignment type' to 'COUNT'
-Set Cellsize' to '6'                             
-Click 'OK'
-</pre>
-
-<h4>Compute raster maps representing different elevation statistics for each cell</h4>
-Compute mean:
-<pre>
-Open the ArcToolbox (if not already open)
-Select 'Conversion Tools->To Raster->Point to Raster'
-Set 'Input Features' to 'lidar_be'
-Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Modeling\bin_mean6m'
-Set 'Cell assignment type' to 'MEAN'
-Set Cellsize' to '6'                            
-Click 'OK'
-</pre>
-
-<p>
-Compute range:
-
-<pre>
-Open the ArcToolbox (if not already open)
-Select 'Conversion Tools->To Raster->Point to Raster'
-Set 'Input Features' to 'lidar_be'
-Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Modeling\bin_range6m'
-Set 'Cell assignment type' to 'RANGE'
-Set Cellsize' to '6'                            
-Click 'OK'
-</pre>
-
-<p>
-Compute variation (standard deviation):
-
-<pre>
-Open the ArcToolbox (if not already open)
-Select 'Conversion Tools->To Raster->Point to Raster'
-Set 'Input Features' to 'lidar_be'
-Set 'Value field' to 'Z'
-Set 'Output Raster Dataset' to '.\Modeling\bin_var6m'
-Set 'Cell assignment type' to 'STANDARD_DEVIATION'
-Set Cellsize' to '6'                            
-Click 'OK'
-</pre>
-
-<p>
-Find how many points are there:
-
-<pre>
-<i>right click</i> 'lidar_be->Open Attribute Table'
-</pre>
-
+There are multiple ways of handling lidar data in ArcGIS. We will use LAS datasets and multipoint files. For other workflows refer to the FYI section at the end of the assignment 
 <h3>Analyze multiple return lidar data</h3>
+<h4>Create a LAS dataset from .las point cloud</h4>
+LAS datasets provide a way to quickly view the properties of a point cloud. You can also use binning or TINs to create a DSM or DEM. This is especially useful if you want to process several .las files at once.
+<pre>Open ArcToolbox
+Select 'Data Management->LAS Dataset->Create LAS Dataset'
+Set 'Input Files' to 'tile_0793_016_spm.las'
+Set 'Output LAS Dataset' to '.\Modeling\lidar_all'
+Set 'Coordinate System' to 'NAD_1983_HARN_StatePlane_North_Carolina_FIPS_3200' (you can type 3358 in search window)
+Check 'Compute Statistics'
+Click 'OK'
+</pre>
 
-Add some background data:
+<h4>View LAS dataset properties and filter points</h4>
+<pre>Open ArcCatalog
+Right click on LAS dataset and select 'Properties...'
+Select the 'Files' tab and take note of average point spacing (will use in later step).
+Select the 'Statistics' tab to view point statistics by returns and classes.
+Click 'Ok'</pre>
+<span class="question">What percentage of the points are classified as ground? </span>
+<pre>Open ArcMap and add the LAS dataset to the layer manager ('Add data' button or drag and drop from ArcCatalog)
+Right click on LAS dataset in Layers and click 'Properties...'
+Select 'Filter' tab.
+Try applying several filter settings using classes and returns and view the results.
+Check box next to '2 Ground' under 'Classification Codes'</pre>
+<span class="question">What is the difference between 'Last Return' and 'Last of Many'?</span>
+
+<p>With the LAS dataset filtered for ground points only, now we can analyze the point density of ground points and create a DEM with binning.
+<p>
+<h4>Compute a raster map representing number of points per cell (at two different resolutions)</h4>
+Calculate point density at 2m resolution:
+<pre>
+Open ArcToolbox
+Select 'Data Management->LAS Dataset->LAS Point Statistics as Raster'
+Set 'Input Features' to 'lidar_all'
+Set 'Output Raster' to '.\Modeling\ground_count2m'
+Set 'Method' to 'POINT_COUNT'
+Set 'Sampling Type' to 'CELLSIZE'
+Set 'Sampling Value' to '2'                            
+Click 'OK'
+Right click on resulting raster in Layers and select 'Properties'
+Click 'Symbology' tab and change color ramp to something appropriate.
+Set 'Display NoData as' to red to highlight any areas with zero points.
+</pre>
+
+<p>
+Calculate point density at 6m resolution:
+
+<pre>
+Open ArcToolbox
+Select 'Data Management->LAS Dataset->LAS Point Statistics as Raster'
+Set 'Input Features' to 'lidar_all'
+Set 'Output Raster' to '.\Modeling\ground_count2m'
+Set 'Method' to 'POINT_COUNT'
+Set 'Sampling Type' to 'CELLSIZE'
+Set 'Sampling Value' to '6'                            
+Click 'OK'
+Right click on resulting raster in Layers and select 'Properties'
+Click 'Symbology' tab and change color ramp to something appropriate.
+Set 'Display NoData as' to red to highlight any areas with zero points.
+</pre>
+
+<h4>Compute a raster map representing range of elevation values per cell at 6m resolution</h4>
+
+<pre>
+Open ArcToolbox
+Select 'Data Management->LAS Dataset->LAS Point Statistics as Raster'
+Set 'Input Features' to 'lidar_all'
+Set 'Output Raster' to '.\Modeling\ground_range6m'
+Set 'Method' to 'Z_RANGE'
+Set 'Sampling Type' to 'CELLSIZE'
+Set 'Sampling Value' to '6'                            
+Click 'OK'
+</pre>
+
+<h4>Use binning to compute a raster map representing average elevation per cell for ground points</h4>
+<span class="question">Based on the point density rasters created in the previous steps, what would be an appropriate resolution for binning the ground points? What does the range raster tell you about binning at this resolution?</span>
+
+<pre>
+Ensure that the LAS dataset is still filtered to include only class 2 (ground) points.
+Open ArcToolbox
+Select 'Conversion Tools->To Raster->LAS Dataset to Raster'
+Set 'Input LAS Dataset' to 'lidar_all'
+Set 'Output Raster' to '.\Modeling\ground_mean6m'
+Set 'Value field' to 'ELEVATION'
+Set 'Interpolation Type' to 'Binning'
+Set 'Cell Assignment Type' to 'Average'
+Set 'Void Fill Method' to 'LINEAR'
+Set 'Sampling Type' to 'CELLSIZE'
+Set 'Sampling Value' to '6'                            
+Click 'OK'
+</pre>
+
+
+<h3>Use multipoint file to interpolate DSM from multiple return lidar data</h3>
+LAS to multipoint can be used to create a vector point file from a point cloud. The points can be filtered by class or return and then interpolated to create a raster.
+
+<p>Add some background data to give context:
 
 <pre>
 Select Menu File -> Add Data -> Add Data...
@@ -112,24 +116,26 @@ Select ncshape.mdb/streets_wake
 Select ncshape.mdb/lakes
 Select ncshape.mdb/streams
 </pre>
-<h4>Create a Multipoint file from .las point cloud</h4>
-<pre>Turn on the 3D Analyst Extension
-Menu -> Customize ->Extensions...
-Open the ArcToolbox (if not already open)
-Select '3D Analyst->Conversion->From File->LAS to Multipoint'
-Set 'Input' to 'tile_0793_016_spm.las'
-Set 'Output Feature Class' to '.\Modeling\lidar_mr'
-Set 'Average Point Spacing' to '0.5'
-Leave the 'Input Class Codes' empty
-Set 'Coordinate System' to 'NAD_1983_StatePlane_North_Carolina_FIPS_3200' (you can type 32119 in the search window)
-Click 'OK'
-</pre>
 <p>
-Display bare ground and multiple return points over orthophoto:
+Display orthophoto:
 
 <pre>
 Select Menu 'File -> Add Data -> Add Data...'
 Select ./Modeling/ortho_0793_016_ncspm.tif
+</pre>
+
+<h4>Create Multipoint files from .las point cloud and interpolate DSM</h4>
+<pre>Turn on the 3D Analyst Extension
+Menu -> Customize ->Extensions...
+Open the ArcToolbox
+Select '3D Analyst->Conversion->From File->LAS to Multipoint'
+Set 'Input' to 'tile_0793_016_spm.las'
+Set 'Output Feature Class' to '.\Modeling\lidar_first'
+Set 'Average Point Spacing' to value listed in Files tab of LAS dataset properties, noted earlier.
+Leave the 'Input Class Codes' empty
+For 'Input Return Value', uncheck 'ANY_RETURNS' and check '1'
+Set 'Coordinate System' to 'NAD_1983_StatePlane_North_Carolina_FIPS_3200' (you can type 3358 in the search window)
+Click 'OK'
 </pre>
 
 <p>
@@ -137,35 +143,31 @@ Interpolate DSM:
 
 <pre>
 Check out a Geostatistical Analyst Extension license
-<i>right click</i> on the empty space next to the Main Toolbar ->Geostatistical Analyst
+Turn on the Geostatistical Analyst Extension
+Menu -> Customize ->Extensions...
+Add Geostatistical Analyst toolbar by right clicking on the empty space next to the Main Toolbar -> check Geostatistical Analyst
 Select 'Geostatistical Analyst Toolbar->Geostatistical Wizard'
 Under 'Deterministic Methods' select 'Radial Basis Function' 
-Set 'Source Dataset' to 'lidar_mr'
+Set 'Source Dataset' to 'lidar_first'
 Set 'Data Field' to 'Z' (or 'Shape.Z')
 Click 'Next'
 Under 'General Properties->Kernel Functions' select 'Spline with Tension'
 Click 'Finish'
-To the Method Report Click 'OK'
+Click 'OK' to close report
 </pre>
 
 <p>
-Find out where we have multiple returns. First export first return:
+Find out what areas have multiple returns:
 <pre>
 Select '3D Analyst->Conversion->From File->LAS to Multipoint'
-Set 'Output Feature Class' to '.\Modeling\lidar_r1'
-Fill the rest as before but in 'Input return values' check 1 (uncheck ANY_RETURNS)
+Set 'Output Feature Class' to '.\Modeling\lidar_multi'
+Fill the rest as before but in 'Input return values', uncheck 'ANY_RETURNS' and check all values greater than 1. (2-8)
 </pre>
 
-And then second return:
-<pre>
-Select '3D Analyst->Conversion->From File->LAS to Multipoint'
-Set 'Output Feature Class' to '.\Modeling\lidar_r2'
-Fill the rest as before but in 'Input return values' check 2 (uncheck ANY_RETURNS)
-</pre>
-Overlay with orthophoto. Where do we have second return points?
+Overlay result with orthophoto. <span class="question">Where do we have multiple returns?</span>
 
 <h3>Optional - display the multiple return data as points in ArcScene</h3>
-Start ArcScene, add lidar_r1 and lidar_r2 and manipulate with the 3D scene.
+Start ArcScene, add lidar_multi and manipulate with the 3D scene.
 
 
 
