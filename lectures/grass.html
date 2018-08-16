@@ -189,3 +189,103 @@ processing server and spatial data publishing server
 </p>
 </section>
 
+
+<section>
+<h3>GRASS GIS: Interfaces</h3>
+<ul>
+<li>Functionality divided into modules <span class="small">(over 500)</span>
+<li>Modules can be accessed using:
+    <ul>
+        <li>Graphical User Interface (GUI)
+        <li>Command Line Interface (CLI)
+        <li>Python
+    </ul>
+</ul>
+<br>
+<img src="img/grass_count_and_modules.png" class="stretch">
+</section>
+
+
+<section>
+<h3>GUI</h3>
+<ul>
+<li>The interface for desktop
+</ul>
+<br>
+<img src="img/grass_gui.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Command Line</h3>
+<ul>
+<li>The baseline interface for efficiency and reproducibility
+<li>Available in GUI as Console with autocomplete functions
+</ul>
+<pre>r.fill.dir input=elev output=fill direction=dir
+</pre>
+<img src="img/grass_cli.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Python</h3>
+<ul>
+    <li>grass package part of GRASS GIS
+    <li>access to modules, but also to internal C functions
+    <li>integrated Python editor
+    <li>integrates with Jupyter Notebooks
+</ul>
+<pre><code>import grass.script as gs
+gs.run_command('r.fill.dir', input='elev',
+               output='fill', direction='dir')
+</code></pre>
+<img src="img/pyedit.png" class="stretch">
+</section>
+
+
+<section>
+<h3>3rd Party Interfaces</h3>
+<ul>
+<li>QGIS <small class="small">(Processing Plugin and GRASS Plugin)</small>
+<li>R <small class="small">(rgrass7 package)</small>
+<li>...
+</ul>
+<br>
+<img src="img/qgis_processing.png" class="stretch">
+</section>
+
+
+<section>
+<h3>3rd Party Interfaces</h3>
+<ul>
+<li>Tangible Landscape
+    <ul>
+        <li>tangible user interface to GRASS GIS and Blender
+        <li>by NC State University, Center for Geospatial Analytics
+    </ul>
+</ul>
+<p>
+<iframe data-autoplay width="700" height="350" src="https://www.youtube.com/embed/Uje8ORyhBaQ?rel=0&amp;showinfo=0&amp;loop=1&amp;playlist=Uje8ORyhBaQ" frameborder="0" allowfullscreen></iframe>
+</section>
+
+
+<section>
+<h3>Spatial Database</h3>
+<ul>
+<li>All spatial data in GRASS GIS are stored in GRASS GIS Database.
+<li>Database divided into locations and mapsets.
+</ul>
+<br>
+<img src="img/grass_gui.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Selecting Mapset</h3>
+<ul>
+<li>Selecting database, location, and mapset
+</ul>
+<br>
+<img src="img/grass_gui.png" class="stretch">
+</section>
