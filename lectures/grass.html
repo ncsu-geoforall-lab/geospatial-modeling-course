@@ -1,0 +1,191 @@
+<section>
+    <h2>
+        Introduction to<br>
+        GRASS GIS
+    </h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova
+        <br>
+        and Vaclav Petras</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+<h3>Outline (Learning Objectives)</h3>
+<p>
+This lecture is a brief introduction to GRASS GIS software
+and overview of its features in the context of this course and
+open source software in general.
+</p>
+<ul>
+    <li>
+</ul>
+</section>
+
+
+<section>
+<h3>Open Source and Licensing</h3>
+<ul>
+<li>According to Stallman (2002),
+    there are four freedoms that as a <em>user</em> you should have:
+    <ul>
+        <li>the freedom to use the software for any purpose,
+        <li>the freedom to change the software to suit your needs,
+        <li>the freedom to share the software, and
+        <li>the freedom to share the changes you make.
+    </ul>
+</ul>
+<figure>
+<img src="img/gpl_logo.svg" style="width: 30%">
+<figcaption><small>Logo of GNU GPL license, version 3</small></figcaption>
+</figure>
+<p>
+<small>
+Stallman, R. M. (2002). Free software, free society: selected essays. Ed. by J. Gay. 1st. ed. OCLC:
+253840339. Boston, Mass: Free Software Foundation. 220 pp. ISBN 978-1-882114-98-6.
+</small>
+</section>
+
+
+<section>
+<h3>Free, Libre, and Open Source</h3>
+
+<ul>
+<li>
+    free software (FS),
+    open source software (OSS),
+    free and open source software (FOSS),
+    free, libre and open source software (FLOSS)
+<li>the term <em>open source</em> is often used for simplicity
+    <ul>
+        <li>often used by developers as it refers to a development model
+    </ul>
+<li>the term <em>FOSS</em> is often used in geospatial community
+    <ul>
+        <li><em>free</em> refers to user's freedom
+        <li><em>open source</em> refers to open development model
+        <li><em>FOSS4G</em> (free and open source software for geospatial)
+    </ul>
+</ul>
+</section>
+
+
+<section>
+<h3>Commercial and FOSS</h3>
+
+<ul>
+<li>FOSS can be used commercially
+<li>FOSS can be commercial but not proprietary
+<li>FOSS can be used to build closed platforms
+<li>Famous examples (non-geospatial):
+<ul>
+    <li>Red Hat Enterprise Linux/CentOS
+    <li>Android/Android Open Source Project
+    <li>Chrome/Chromium, Firefox
+    <li>WordPress, Drupal
+    <li>Python, R
+    <li>
+        <a href="https://code.facebook.com/projects/">Apple</a>,
+        <a href="https://code.facebook.com/projects/">Google</a>,
+        <a href="https://code.facebook.com/projects/">Facebook</a>,
+        <a href="https://www.linux.com/news/featured-blogs/200-libby-clark/787161-how-amazon-web-services-uses-linux-and-open-source">Amazon</a>,
+        <a href="https://netflix.github.io/">Netflix</a>
+</ul>
+</ul>
+
+</section>
+
+
+<section>
+<h3>FOSS Ecosystem: Example of a Scientific Desktop Setup</h3>
+<dl>
+<dt>QGIS, GRASS GIS</dt>
+<dd>
+GIS, remote sensing, cartography
+</dd>
+<dt>R, Octave, Python</dt>
+<dd>
+statistics, linear algebra, scripting, automation
+</dd>
+<dt>SQLite, PostgreSQL with PostGIS, LibreOffice</dt>
+<dd>
+database, tabular data
+</dd>
+<dt>Inkscape, Gimp, ImageMagic</dt>
+<dd>
+vector graphics, raster graphics
+</dd>
+</dl>
+<ul class="small">
+    <li>Portability: works on Mac, Linux, Windows
+    <li>Interoperability: programs designed to work with others
+</ul>
+</section>
+
+
+<section>
+<h3>FOSS Ecosystem: Example of a Service Setup</h3>
+
+<dl>
+<dt>GRASS GIS, R, SAGA GIS, GDAL</dt>
+<dd>
+backend processing
+</dd>
+<dt>OpenLayers or Leaflet, Django or Flask</dt>
+<dd>
+front end
+</dd>
+<dt>PostgreSQL with PostGIS</dt>
+<dd>
+database (spatial and non-spatial data storage)
+<!--<span class="small">(native connection between GRASS GIS and PostGIS)</span>-->
+</dd>
+<dt>ZOO-Project, PyWPS, GeoServer, or QGIS Server</dt>
+<dd>
+processing server and spatial data publishing server
+<!--<span class="small">(OGC WPS, native support for GRASS GIS)</span>-->
+<!--<span class="small">(MapServer can read directly from GRASS GIS database)</span>-->
+</dd>
+</dl>
+
+<ul class="small">
+    <li>Flexibility: standards and open formats allows to switch different components
+    <li>Scalability: can be copied to more machines at no cost
+</ul>
+</section>
+
+<section>
+<h3>GRASS GIS: History</h3>
+<ul>
+<li>1983 started at US Army CERL
+    <span class="small">
+        as land management system
+    </span>
+<li>evolved into general purpose GIS
+<li>1999 GNU GPL, international team of developers
+<li>35 years of GRASS GIS development in 2018
+<li>check out <a href="https://trac.osgeo.org/grass/timeline">last change</a>
+    <span class="small">(probably just few hours ago)</span>
+<li>last release Jun 12, 2018 <span class="small">[last checked Aug 2018]</span>
+</ul>
+<img src="img/grass_logo_development.png" class="stretch">
+</section>
+
+
+<section data-years="1983 1987">
+<h3>GRASS GIS: Historical Video</h3>
+<p class="small">
+    Historical promotional video from 1987 narrated by William Shatner
+</p>
+<iframe width="560" height="315" scrolling="no" src="https://av.tib.eu/player/12963" frameborder="0" allowfullscreen></iframe>
+<p class="small">
+    watching 1 minute is sufficient to get the idea,
+    optionally you can watch the whole 15 minutes
+    and see metadata and transcript at
+    <a href="https://doi.org/10.5446/12963">doi.org/10.5446/12963</a>
+</p>
+</section>
+

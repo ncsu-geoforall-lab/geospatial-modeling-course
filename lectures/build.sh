@@ -9,3 +9,11 @@ do
     ./build-slides.py --outdir=$BUILD_DIR \
         --outfile=$FILE $FILE
 done
+
+for SUBDIR in img
+do
+    # copy only if directory exists
+    if [ -d "$SUBDIR" ]; then
+        cp -r $SUBDIR $BUILD_DIR
+    fi
+done
