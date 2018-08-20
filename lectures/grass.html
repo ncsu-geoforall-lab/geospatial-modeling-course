@@ -175,7 +175,7 @@ processing server and spatial data publishing server
 </section>
 
 
-<section data-years="1983 1987">
+<section>
 <h3>GRASS GIS: Historical Video</h3>
 <p class="small">
     Historical promotional video from 1987 narrated by William Shatner
@@ -187,6 +187,25 @@ processing server and spatial data publishing server
     and see metadata and transcript at
     <a href="https://doi.org/10.5446/12963">doi.org/10.5446/12963</a>
 </p>
+</section>
+
+
+<section>
+<h3>GRASS GIS: Research</h3>
+<ul>
+<li>Solar radiation model (r.sun)
+    <ul>
+        <li>available since 1993
+        <li>major changes in 1996, 1999, 2002, 2003, 2006, 2008, 2017
+        <li>parallelized version in 7.4
+    </ul>
+<li>by Jaroslav Hofierka et al.
+</ul>
+<br>
+<img src="img/summer_solstice_centennial.gif" class="stretch">
+<p><small>
+summer solstice dynamics on lidar DEM (Centennial Campus)
+</small></p>
 </section>
 
 
@@ -224,6 +243,58 @@ processing server and spatial data publishing server
 </ul>
 <pre>r.fill.dir input=elev output=fill direction=dir
 </pre>
+<img src="img/grass_cli.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Naming of Modules</h3>
+<table style="font-size: smaller;"><tbody>
+    <tr>
+        <th>Prefix</th>
+        <th>Functionality</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>r.</td>
+        <td>raster processing</td>
+        <td>r.mapcalc: raster map algebra</td>
+    </tr>
+    <tr>
+        <td>v.</td>
+        <td>vector processing</td>
+        <td>v.surf.rst: interpolation from points</td>
+    </tr>
+    <tr>
+        <td>g.</td>
+        <td>general management</td>
+        <td>g.remove: removes maps</td>
+    </tr>
+    <tr>
+        <td>d.</td>
+        <td>display and rendering</td>
+        <td>d.rast: display raster map</td>
+    </tr>
+    <!-- not relevant to 582 course and not enough space
+    <tr>
+        <td>i.</td>
+        <td>imagery processing</td>
+        <td>i.segment: image segmentation</td>
+    </tr>
+        <tr>
+        <td>r3.</td>
+        <td>3D raster processing</td>
+        <td>r3.stats: 3D raster statistics</td>
+    </tr>
+    <tr>
+        <td>t.</td>
+        <td>temporal data processing</td>
+        <td>t.rast.aggregate: temporal aggregation</td>
+    </tr>
+    -->
+</tbody></table>
+<small>There is more: i., t., r3., m., ps.</small>
+<br>
 <img src="img/grass_cli.png" class="stretch">
 </section>
 
@@ -277,7 +348,7 @@ gs.run_command('r.fill.dir', input='elev',
 <li>Database divided into locations and mapsets.
 </ul>
 <br>
-<img src="img/grass_gui.png" class="stretch">
+<img src="img/grass_data_tab.png" class="stretch">
 </section>
 
 
@@ -287,5 +358,5 @@ gs.run_command('r.fill.dir', input='elev',
 <li>Selecting database, location, and mapset
 </ul>
 <br>
-<img src="img/grass_gui.png" class="stretch">
+<img src="img/grass_startup.png" class="stretch">
 </section>
