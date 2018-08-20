@@ -344,8 +344,19 @@ gs.run_command('r.fill.dir', input='elev',
 <section>
 <h3>Spatial Database</h3>
 <ul>
-<li>All spatial data in GRASS GIS are stored in GRASS GIS Database.
-<li>Database divided into locations and mapsets.
+<li>All spatial data in GRASS GIS are stored in a GRASS GIS Database.
+    <ul>
+        <li>Usually a directory named <code>grassdata</code>.
+    </ul>
+<li>The database divided into <em>locations</em>. 
+    <ul>
+        <li>All data in one location have the same SRS.
+    </ul>
+<li>Each location divided into <em>mapsets</em>.
+    <ul>
+        <li>Mapsets help organize the data.
+        <li>A special mapset called PERMANENT is present in every location.
+    </ul>
 </ul>
 <br>
 <img src="img/grass_data_tab.png" class="stretch">
