@@ -61,6 +61,7 @@ FOOT_TEXT="<img src='../img/grass_index.png' style='max-width: 90%;'>
 <p>
 If you are a non-NCSU visitor, you may find these additional pages useful:
 <ul>
+    <li><a href='../topics/grass.html'>Introduction to GRASS GIS</a>
     <li><a href='../lectures.html'>Lectures</a>
     <li><a href='../logistics.html#software'>Software download instructions</a>
     <li><a href='../logistics.html#data'>Dataset download instructions</a>\
