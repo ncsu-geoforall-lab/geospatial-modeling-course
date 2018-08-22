@@ -192,6 +192,121 @@ processing server and spatial data publishing server
 
 
 <section>
+<h3>GRASS GIS: Processing Capabilities Overview</h3>
+    <dl style="font-size: 70%;">
+        <dt>raster and 3D raster</dt>
+        <dd>
+            map algebra, DEM, interpolation, flow, neighborhood, solar, cost surfaces, ...
+        </dd>
+        <dt>imagery (remote sensing)</dt>
+        <dd>
+            rectification, multispectral, classification, segmentation, PCA, FFT, ...
+        </dd>
+        <dt>vector and database</dt>
+        <dd>
+            buffers, overlays, networks, topology, attribute management, SQL, ...
+        </dd>
+        <dt>spatio-temporal data (time series)</dt>
+        <dd>
+            sampling, statistics, aggregation, temporal topology, algebra, ...
+        </dd>
+    </dl>
+<img src="img/grass_modeler_skyview.png" class="stretch">
+</section>
+
+
+<section>
+<h3>GRASS GIS: General Capabilities Overview</h3>
+    <dl style="font-size: 70%;">
+        <dt>visualization</dt>
+        <dd>
+            2D display, 3D visualization, temporal visualization, PNG, PS and PDF maps, ...
+        </dd>
+        <dt>interoperability</dt>
+        <dd>
+            import from and export to different formats, WMS, ...
+        </dd>
+        <dt>extensibility</dt>
+        <dd>
+            scriptable (e.g. Python), custom tools (typically Python or C), ...
+        </dd>
+    </dl>
+<img src="img/drone_3d.png" class="stretch">
+</section>
+
+
+<section>
+<h3>GRASS GIS as a Software</h3>
+<ul>
+    <li>portable:
+        <ul>
+            <li>many operating systems: MS Windows, Mac OS, Linux, ...
+            <li>32bit and 64bit versions
+            <li>high-end desktops, low-end laptops,
+                Raspberry Pi,
+                High-Performance Computing clusters, ...
+        </ul>
+    <li>single integrated software
+    <li>functionality divided into modules
+    <li>written in C and Python
+</ul>
+<img src="img/grass_hexagons_3d_white_outlier.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Naming of Modules</h3>
+<table style="font-size: smaller;"><tbody>
+    <tr>
+        <th>Prefix</th>
+        <th>Functionality</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>r.</td>
+        <td>raster processing</td>
+        <td>r.mapcalc: raster map algebra</td>
+    </tr>
+    <tr>
+        <td>v.</td>
+        <td>vector processing</td>
+        <td>v.surf.rst: interpolation from points</td>
+    </tr>
+    <tr>
+        <td>g.</td>
+        <td>general management</td>
+        <td>g.remove: removes maps</td>
+    </tr>
+    <tr>
+        <td>d.</td>
+        <td>display and rendering</td>
+        <td>d.rast: display raster map</td>
+    </tr>
+    <!-- not relevant to 582 course and not enough space
+    <tr>
+        <td>i.</td>
+        <td>imagery processing</td>
+        <td>i.segment: image segmentation</td>
+    </tr>
+        <tr>
+        <td>r3.</td>
+        <td>3D raster processing</td>
+        <td>r3.stats: 3D raster statistics</td>
+    </tr>
+    <tr>
+        <td>t.</td>
+        <td>temporal data processing</td>
+        <td>t.rast.aggregate: temporal aggregation</td>
+    </tr>
+    -->
+</tbody></table>
+<small>There is more: i., t., r3., m., ps.</small>
+<br>
+<img src="img/grass_cli.png" class="stretch">
+</section>
+
+
+<section>
 <h3>GRASS GIS: Research</h3>
 <ul>
 <li>Solar radiation model (r.sun)
@@ -244,58 +359,6 @@ summer solstice dynamics on lidar DEM (Centennial Campus)
 </ul>
 <pre>r.fill.dir input=elev output=fill direction=dir
 </pre>
-<img src="img/grass_cli.png" class="stretch">
-</section>
-
-
-<section>
-<h3>Naming of Modules</h3>
-<table style="font-size: smaller;"><tbody>
-    <tr>
-        <th>Prefix</th>
-        <th>Functionality</th>
-        <th>Example</th>
-    </tr>
-    <tr>
-        <td>r.</td>
-        <td>raster processing</td>
-        <td>r.mapcalc: raster map algebra</td>
-    </tr>
-    <tr>
-        <td>v.</td>
-        <td>vector processing</td>
-        <td>v.surf.rst: interpolation from points</td>
-    </tr>
-    <tr>
-        <td>g.</td>
-        <td>general management</td>
-        <td>g.remove: removes maps</td>
-    </tr>
-    <tr>
-        <td>d.</td>
-        <td>display and rendering</td>
-        <td>d.rast: display raster map</td>
-    </tr>
-    <!-- not relevant to 582 course and not enough space
-    <tr>
-        <td>i.</td>
-        <td>imagery processing</td>
-        <td>i.segment: image segmentation</td>
-    </tr>
-        <tr>
-        <td>r3.</td>
-        <td>3D raster processing</td>
-        <td>r3.stats: 3D raster statistics</td>
-    </tr>
-    <tr>
-        <td>t.</td>
-        <td>temporal data processing</td>
-        <td>t.rast.aggregate: temporal aggregation</td>
-    </tr>
-    -->
-</tbody></table>
-<small>There is more: i., t., r3., m., ps.</small>
-<br>
 <img src="img/grass_cli.png" class="stretch">
 </section>
 
@@ -431,4 +494,18 @@ gs.run_command('r.fill.dir', input='elev',
         </ul>
 </ul>
 <img src="img/grass_bug_in_equation.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Summary</h3>
+<ul>
+    <li>
+        <ul>
+            <li>
+            <li>
+        </ul>
+</ul>
+<br>
+<img src="img/grass_logo.png" class="stretch">
 </section>
