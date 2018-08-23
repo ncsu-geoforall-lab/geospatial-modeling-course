@@ -357,6 +357,19 @@ summer solstice dynamics on lidar DEM (Centennial Campus)
 
 
 <section>
+<h3>GUI for modules</h3>
+<ul>
+    <li>All modules have standardized, unified interface layout.
+</ul>
+<br>
+<img src="img/r_neighbors_dialog.png" class="stretch">
+<p><small>
+Standard dialog (form) for the r.neighbors module
+</small></p>
+</section>
+
+
+<section>
 <h3>Command Line</h3>
 <ul>
 <li>The baseline interface for efficiency and reproducibility
@@ -381,6 +394,27 @@ gs.run_command('r.fill.dir', input='elev',
                output='fill', direction='dir')
 </code></pre>
 <img src="img/pyedit.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Duality between GUI and commands</h3>
+<div class="left">
+    <img src="img/r_in_lidar_dialog.png" style="width: 100%;">
+</div>
+<div class="left">
+    <small>Command line (Bash):</small>
+    <br>
+    <img src="img/r_in_lidar_command_in_bash.png" style="width: 100%;">
+    <small>Python:</small>
+    <br>
+    <img src="img/r_in_lidar_command_in_python.png" style="width: 100%;">
+</div>
+<p><small>
+Examples in the documentation and class instructions are usually
+provided as commands which can be used to fill in the GUI, write Python
+code, or run them directly.
+</small></p>
 </section>
 
 
