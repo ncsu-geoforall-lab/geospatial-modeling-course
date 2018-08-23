@@ -1,231 +1,5 @@
 <h2>Projects</h2>
 
-You can find data for your project in this list of <a href="resources/data_providers.html">data providers</a>.
-
-<h3>Topics</h3>
-You can use a topic from your thesis or expand a project that you have
-worked on in other classes, but make sure that your <em>project
-includes a component that requires processing and/or analysis of continuous field(s)</em>,
-such as elevation, precipitation, chemical concentrations, etc.
-<p>
-You can collaborate on the projects, for example by studying different regions
-and then compare the results. Or you can select
-a common area (e.g. SW Wake county) and do several analyses related to sustainability
-and energy efficiency, for example design biking paths and electric vehicle routes,
-map solar energy potential, map areas with high runoff potential that need
-land use change, and asses erosion risk for areas with planned development.
-<p>
-If you do not have a project that you could use as a starting point,
-bellow are some ideas you can use.
-
-<ul>
-<li><b>Coastal dynamics</b>
-    <ul>
-        <li>beach/dune evolution and coastal erosion from lidar time series
-        <li>sea level rise impact on barrier islands
-        <li>large coastal dunes migration analysis and visualization, implications for management
-        <li><em>data sources:</em>
-            <a href="http://www.csc.noaa.gov/digitalcoast/data/index.html">Digital Coast</a>
-            and critically explore
-            <a href="http://sealevel.climatecentral.org/ssrf/north-carolina">Sea level rise impact</a>
-            interactive web map
-    </ul>
-<li><b>Solar irradiation and energy potential</b>
-    <ul>
-        <li>locations and buildings with best potential for solar energy in your neighborhood
-        <li>spatial and temporal patterns of solar irradiation as input for ecosystem management
-        <li>compare solar energy estimates from various sources:
-            <a href="http://pvwatts.nrel.gov/">NREL PVWatts Calculator</a>,
-            <a href="http://pvmapper.org/">PVMapper</a>,
-            <a href="http://geomodelsolar.eu/">GeoModel Solar</a>,
-            your own high resolution computation
-        <li><em>data sources:</em>
-            <a href="http://lidar.cr.usgs.gov/">USGS</a> for multiple return lidar data,
-            check also <a href="http://nconemap.com/">NC OneMap</a> for county data for building footprints
-            and <a href="http://www.data.gov/">Data.gov</a> as a general U.S. Government open data catalog
-    </ul>
-<li><b>Lidar data processing and Watershed analysis</b>
-    <ul>
-        <li>Mapping forest canopy height, understory vegetation and vegetation growth from lidar
-        <li>Mapping landforms
-        <li>Watershed analysis - stream mapping, stream buffer effectiveness, land use impacts
-        <li>data available for Shenandoah National Park,
-            Mammoth Cave National Park, North Carolina and many other regions
-    </ul>
-<li><b>Cost surfaces and least cost paths</b>
-    <ul>
-        <li>find suitable locations/routes for hiking trails, biking paths
-        <li>find routes and solar charging station locations for alternative vehicles
-    </ul>
-<li><b>Hazards mapping and response management</b>
-    <ul>
-    <li>assess impact of natural disasters (hurricanes, floods, tornadoes, fires)
-        and provide analysis for responders and future disaster prevention/mitigation
-    <li>see <a href="http://hdds.usgs.gov/">USGS Emergency Response (HDDS)</a> website
-    </ul>
-<li><b>Process modeling</b>
-    <ul>
-        <li>soil erosion modeling for different land use alternatives
-        <li>air pollution: linking plume simulation with GIS, pollution distribution along roads
-    </ul>
-<li><b>Utilities planning and assessment</b>
-   <ul>
-        <li>identify optimal path for utilities infrastructure: pipes, cables, power lines
-            that minimize cost and environmental impacts and fulfill a set of desired parameters
-   </ul>
-<li><b>Comparison of algorithms</b>
-    <ul>
-        <li>take several algorithms related to this class topics
-            and compare results, speed, and scalability of implementations
-            in one or more software packages
-            (for example, extend the wiki page
-            <a href="https://grasswiki.osgeo.org/wiki/Performance_comparison_GRASS_vs._ArcGIS">Performance comparison GRASS vs. ArcGIS</a>)
-        <li>compare standard raster analysis and analysis using hexagonal grid
-            (created by <em class="module">v.mkgrid</em>)
-    </ul>
-<li><b>Reproduce a scientific paper</b>
-    <ul>
-        <li>reproduce the following paper using GRASS GIS or QGIS in area of your choosing:
-            T. Törnros, H. Dorn, S. Hahmann, A. Zipf (2015):
-            <a href="http://www.isprs-ann-photogramm-remote-sens-spatial-inf-sci.net/II-3-W5/353/2015/isprsannals-II-3-W5-353-2015.pdf">Uncertainties of Completeness Measures in Openstreetmap - a Case Study for Buildings in a Medium-Sized German City</a>
-    </ul>
-</li>
-<li><b>Open source GIS scripting and development</b>
-    <ul>
-        <li>development or co-development of a new GRASS GIS module
-            (see, for example a
-            <a href="http://www4.ncsu.edu/~jlloyd/Lloydj_MEA582f11/Lloyd_ProjectPaper_mea582f11.pdf">report on testing and enhancing v.transect addon</a>), suggestions:
-            <ul>
-                <li><em class="module">v.kernel</em>
-                    wrapper with detection hotspots which are 10% of areas/values, e.g. using histogram,
-                    and with other convenient features
-                <li><em>r3.patch</em> (similar to
-                    <em class="module">r.patch</em>)
-                    can be implemented using Python and
-                    <em class="module">r.mapcalc</em>
-                    or, by an advanced programmer, in C
-                <li>find an interesting scientific article
-                    and implement GRASS GIS module based on that article (see e.g.
-                    <a href="http://grass.osgeo.org/grass74/manuals/addons/r.local.relief.html">r.local.relief</a> and its references)
-                <li>read <a href="https://github.com/wenzeslaus/python-grass-addon">How to write a Python GRASS GIS 7 addon</a>
-                <li>update
-                    <a href="https://grass.osgeo.org/grass64/manuals/addons/r.wind.sun.py.html">r.wind.sun</a>
-                    addon (calculates visual impact of aerogenerators and photovoltaic panels;
-                    see also the <a href="https://trac.osgeo.org/grass/browser/grass-addons/grass6/raster/r.wind.sun/r.wind.sun.py?rev=67404">source code</a>)
-                    for GRASS GIS 7 and split it into two if needed
-            </ul>
-        <li>
-            using open source software (e.g. GRASS GIS or QGIS)
-            re-implement an existing script, tool or toolbox which is
-            currently tied to proprietary software
-            <ul>
-                <li>
-                    series of scripts for Geomorphometry &amp; Gradient
-                    Metrics toolbox (Evans et al. 2014), available at:
-                    <a href="http://evansmurphy.wixsite.com/evansspatial/arcgis-gradient-metrics-toolbox">http://evansmurphy.wix.com/evansspatial</a>
-                </li>
-            </ul>
-        </li>
-        <li>improvements in existing GRASS GIS functionality
-            <ul>
-                <li>unify color tables for slope, aspect and curvatures
-                    used in <em class="module">r.slope.aspect</em>,
-                    <em class="module">v.surf.rst</em>, <em class="module">r.param.scale</em>
-                    and other related modules
-            </ul>
-        <li>development of a web or mobile application, for example with GRASS GIS as a backend
-        <li>possible continuation in
-            <a href="http://http://wiki.osgeo.org/wiki/Google_Summer_of_Code">Google Summer of Code</a>
-        <li>Feel free to explore other open source GIS, for example <a href="http://www.qgis.org">QGIS</a>
-    </ul>
-<li><b>Open source GIS testing</b>
-    <ul>
-        <li>testing a selected GRASS GIS module under development or a release candidate
-            or test different versions (Linux versus MS Windows, 64bit versus 32bit, ...)
-        <li>testing of an existing GRASS GIS module
-            (see, for example a
-            <a href="resources/WendelS_Project_GIS582601s15.pdf">report on creating a test suite for r.watershed</a>)
-        <li>testing of
-            <a href="https://grass.osgeo.org/grass74/manuals/addons/r.futures.html">r.futures</a>,
-            a module implementing urban growth model which is being
-            developed at NCSU
-    </ul>
-<li><b>Enhancing open source GIS documentation</b>
-    <ul>
-        <li>tutorials for GRASS GIS and extended descriptions and examples for GRASS GIS modules
-            to be included in the official documentation
-            <ul>
-                <li>extend documentation for
-                    <em class="module">v.kernel</em>,
-                    add explanations of different kernels and constants
-                <li>add examples and descriptions to
-                    <em class="module">r.topmodel</em>
-                    documentation
-                <li>add examples and applications to
-                    <em class="module">r.topidx</em>
-                    documentation
-                <li>add examples and images to
-                    <em class="module">r.sun</em>
-                    and <em class="module">r.sunmask</em>
-                    documentation and extend
-                    <a href="http://grass.osgeo.org/grass74/manuals/addons/r.sun.hourly.html">r.sun.hourly</a>
-                    and
-                    <a href="http://grass.osgeo.org/grass74/manuals/addons/r.sun.daily.html">r.sun.daily</a>
-                    documentation
-                <li>create a tutorial or an overview of
-                <a href="http://grass.osgeo.org/grass74/manuals/keywords.html#statistics">GRASS GIS statistical modules</a>
-                for raster
-                <li>update and rewrite the
-                    <a href="http://grass.osgeo.org/uploads/grass/history_docs/mapcalc-algebra.pdf">original r.mapcalc tutorial</a>
-                    to GRASS GIS 7 and HTML,
-                    <a href="http://daringfireball.net/projects/markdown/">Markdown</a>, or
-                    <a href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">reStructredText</a>
-                <li>browse
-                    <a href="http://grass.osgeo.org/grass74/manuals/full_index.html">GRASS GIS manual</a>
-                    and
-                    <a href="http://grass.osgeo.org/grass74/manuals/addons/">GRASS GIS Addons manuals</a>
-                    and find a module related to this class with insufficient
-                    documentation according to your judgment
-            </ul>
-        <li>create equivalent of assignments for this class in
-            <a href="http://qgis.org/">QGIS</a> using
-            <a href="http://docs.qgis.org/2.8/en/docs/user_manual/processing/">QGIS Processing</a>
-            with SAGA and GRASS GIS algorithms
-        <li>rewrite the assignments for this class using
-            <a href="http://grass.osgeo.org/grass74/manuals/libpython/script_intro.html">GRASS GIS Python API</a>,
-            <a href="http://docs.qgis.org/2.8/en/docs/user_manual/processing/scripts.html">QGIS Processing Python API</a>
-            or <a href="https://www.r-project.org/">R</a>
-            with <a href="https://cran.r-project.org/web/packages/rgrass7/rgrass7.pdf">rgrass7</a> package
-    </ul>
-<li><b>Analyze OpenStreetMap data</b>
-    <ul>
-        <li>verify and map coffee and food options on and near campus or in your neighborhood,
-            determine walking, biking and riding distances (using raster-based algorithms)
-            <ul>
-                <li>part of this project possibly is adding some data to OSM
-                <li>use for example QGIS to get the OSM data
-            </ul>
-        <li>develop a class material (one lecture and assignment) about getting OSM data
-            into GRASS GIS or QGIS and analyzing the data using raster-based algorithms
-    </ul>
-</ul>
-
-<p>
-Things to consider:
-<ul>
-  <li>Well defined research question</li>
-  <li>Availability of data</li>
-  <li>Amount of work needed to process the data</li>
-  <li>Availability of tools</li>
-  <li>Intermediate results in case time runs out</li>
-  <li>Answer to research question in form of map(s), 3D images</li>
-  <li>Start selection of your topic next week,
-    getting all your data ready may be time consuming</li>
-  <li><em>Project must include a component that requires processing and/or analysis
-    of continuous field(s), such as elevation, precipitation, chemical concentrations, continuous cost surfaces, etc.</em></li>
-</ul>
-
-
 <h3>Project pre-proposal and final proposal</h3>
 
 Pre-proposal sections: Define research question, select location, list available data, methods (theory), tools
@@ -301,6 +75,256 @@ Further notes:
     <li>Spelling errors are unacceptable</li>
     <li>Images: make sure that all grid cells are rendered when it is important - both for 2D and in 3D, both in ArcGIS and GRASS GIS or convert to vector if you have line features that need to be preserved. Use well designed color tables and sufficient number of classes in ArcGIS to avoid losing information in maps.</li>
   </ul>
+
+
+<h4>Data</h4>
+
+You can find potential data for your project in this list of
+<a href="resources/data_providers.html">data providers</a>.
+
+
+<h3>Topics</h3>
+
+You can use a topic from your thesis or expand a project that you have
+worked on in other classes, but make sure that your <em>project
+includes a component that requires processing and/or analysis of continuous field(s)</em>,
+such as elevation, precipitation, chemical concentrations, etc.
+<p>
+You can collaborate on the projects, for example by studying different regions
+and then compare the results. Or you can select
+a common area (e.g. SW Wake county) and do several analyses related to sustainability
+and energy efficiency, for example design biking paths and electric vehicle routes,
+map solar energy potential, map areas with high runoff potential that need
+land use change, and asses erosion risk for areas with planned development.
+<p>
+If you do not have a project that you could use as a starting point,
+bellow are some ideas you can use.
+<p>
+If you are already using GIS in your work, you are
+encouraged to pick a topic from the development, documentation and
+testing category to move your skills to the next level.
+
+<h4>Applications in science and engineering</h4>
+
+<ul>
+<li><b>Coastal dynamics</b>
+    <ul>
+        <li>beach/dune evolution and coastal erosion from lidar time series
+        <li>sea level rise impact on barrier islands
+        <li>large coastal dunes migration analysis and visualization, implications for management
+        <li><em>data sources:</em>
+            <a href="http://www.csc.noaa.gov/digitalcoast/data/index.html">Digital Coast</a>
+            and critically explore
+            <a href="http://sealevel.climatecentral.org/ssrf/north-carolina">Sea level rise impact</a>
+            interactive web map
+    </ul>
+<li><b>Solar irradiation and energy potential</b>
+    <ul>
+        <li>locations and buildings with best potential for solar energy in your neighborhood
+        <li>spatial and temporal patterns of solar irradiation as input for ecosystem management
+        <li>compare solar energy estimates from various sources:
+            <a href="http://pvwatts.nrel.gov/">NREL PVWatts Calculator</a>,
+            <a href="http://pvmapper.org/">PVMapper</a>,
+            <a href="http://geomodelsolar.eu/">GeoModel Solar</a>,
+            your own high resolution computation
+        <li><em>data sources:</em>
+            <a href="http://lidar.cr.usgs.gov/">USGS</a> for multiple return lidar data,
+            check also <a href="http://nconemap.com/">NC OneMap</a> for county data for building footprints
+            and <a href="http://www.data.gov/">Data.gov</a> as a general U.S. Government open data catalog
+    </ul>
+<li><b>Lidar data processing and Watershed analysis</b>
+    <ul>
+        <li>Mapping forest canopy height, understory vegetation and vegetation growth from lidar
+        <li>Mapping landforms
+        <li>Watershed analysis - stream mapping, stream buffer effectiveness, land use impacts
+        <li>data available for Shenandoah National Park,
+            Mammoth Cave National Park, North Carolina and many other regions
+    </ul>
+<li><b>Cost surfaces and least cost paths</b>
+    <ul>
+        <li>find suitable locations/routes for hiking trails, biking paths
+        <li>find routes and solar charging station locations for alternative vehicles
+    </ul>
+<li><b>Hazards mapping and response management</b>
+    <ul>
+    <li>assess impact of natural disasters (hurricanes, floods, tornadoes, fires)
+        and provide analysis for responders and future disaster prevention/mitigation
+    <li>see <a href="http://hdds.usgs.gov/">USGS Emergency Response (HDDS)</a> website
+    </ul>
+<li><b>Process modeling</b>
+    <ul>
+        <li>soil erosion modeling for different land use alternatives
+        <li>air pollution: linking plume simulation with GIS, pollution distribution along roads
+    </ul>
+<li><b>Utilities planning and assessment</b>
+   <ul>
+        <li>identify optimal path for utilities infrastructure: pipes, cables, power lines
+            that minimize cost and environmental impacts and fulfill a set of desired parameters
+   </ul>
+<li><b>Comparison of algorithms</b>
+    <ul>
+        <li>take several algorithms related to this class topics
+            and compare results, speed, and scalability of implementations
+            in one or more software packages
+            (for example, extend the wiki page
+            <a href="https://grasswiki.osgeo.org/wiki/Performance_comparison_GRASS_vs._ArcGIS">Performance comparison GRASS vs. ArcGIS</a>)
+        <li>compare standard raster analysis and analysis using hexagonal grid
+            (created by <em class="module">v.mkgrid</em>)
+    </ul>
+<li><b>Reproduce a scientific paper</b>
+    <ul>
+        <li>reproduce the following paper using GRASS GIS or QGIS in area of your choosing:
+            T. Törnros, H. Dorn, S. Hahmann, A. Zipf (2015):
+            <a href="http://www.isprs-ann-photogramm-remote-sens-spatial-inf-sci.net/II-3-W5/353/2015/isprsannals-II-3-W5-353-2015.pdf">Uncertainties of Completeness Measures in Openstreetmap - a Case Study for Buildings in a Medium-Sized German City</a>
+    </ul>
+</li>
+<li><b>Analyze OpenStreetMap data</b>
+    <ul>
+        <li>verify and map coffee and food options on and near campus or in your neighborhood,
+            determine walking, biking and riding distances (using raster-based algorithms)
+            <ul>
+                <li>part of this project possibly is adding some data to OSM
+                <li>use for example QGIS to get the OSM data
+            </ul>
+        <li>develop a class material (one lecture and assignment) about getting OSM data
+            into GRASS GIS or QGIS and analyzing the data using raster-based algorithms
+    </ul>
+</ul>
+
+<p>
+Things to consider:
+<ul>
+  <li>Well defined research question</li>
+  <li>Availability of data</li>
+  <li>Amount of work needed to process the data</li>
+  <li>Availability of tools</li>
+  <li>Intermediate results in case time runs out</li>
+  <li>Answer to research question in form of map(s), 3D images</li>
+</ul>
+
+<h4>Development, testing and documentation</h4>
+
+<ul>
+<li><b>Open source GIS scripting and development</b>
+    <ul>
+        <li>development or co-development of a new GRASS GIS module
+            (see, for example a
+            <a href="http://www4.ncsu.edu/~jlloyd/Lloydj_MEA582f11/Lloyd_ProjectPaper_mea582f11.pdf">report on testing and enhancing v.transect addon</a>), suggestions:
+            <ul>
+                <li><em class="module">v.kernel</em>
+                    wrapper with detection hotspots which are 10% of areas/values, e.g. using histogram,
+                    and with other convenient features
+                <li><em>r3.patch</em> (similar to
+                    <em class="module">r.patch</em>)
+                    can be implemented using Python and
+                    <em class="module">r.mapcalc</em>
+                    or, by an advanced programmer, in C
+                <li>find an interesting scientific article
+                    and implement GRASS GIS module based on that article (see e.g.
+                    <a href="http://grass.osgeo.org/grass74/manuals/addons/r.local.relief.html">r.local.relief</a> and its references)
+                <li>read <a href="https://github.com/wenzeslaus/python-grass-addon">How to write a Python GRASS GIS 7 addon</a>
+                <li>update
+                    <a href="https://grass.osgeo.org/grass64/manuals/addons/r.wind.sun.py.html">r.wind.sun</a>
+                    addon (calculates visual impact of aerogenerators and photovoltaic panels;
+                    see also the <a href="https://trac.osgeo.org/grass/browser/grass-addons/grass6/raster/r.wind.sun/r.wind.sun.py?rev=67404">source code</a>)
+                    for GRASS GIS 7 and split it into two if needed
+            </ul>
+        <li>
+            using open source software (e.g. GRASS GIS or QGIS)
+            re-implement an existing script, tool or toolbox which is
+            currently tied to proprietary software
+            <ul>
+                <li>
+                    series of scripts for Geomorphometry &amp; Gradient
+                    Metrics toolbox (Evans et al. 2014), available at:
+                    <a href="http://evansmurphy.wixsite.com/evansspatial/arcgis-gradient-metrics-toolbox">http://evansmurphy.wix.com/evansspatial</a>
+                </li>
+            </ul>
+        </li>
+        <li>improvements in existing GRASS GIS functionality
+            <ul>
+                <li>unify color tables for slope, aspect and curvatures
+                    used in <em class="module">r.slope.aspect</em>,
+                    <em class="module">v.surf.rst</em>, <em class="module">r.param.scale</em>
+                    and other related modules
+            </ul>
+        <li>development of a web or mobile application, for example with GRASS GIS as a backend
+        <li>possible continuation in
+            <a href="http://http://wiki.osgeo.org/wiki/Google_Summer_of_Code">Google Summer of Code</a>
+        <li>Feel free to explore other open source GIS, for example <a href="http://www.qgis.org">QGIS</a>
+    </ul>
+<li><b>Class development</b>
+    <ul>
+        <li>create equivalent of one or more assignments for this class in
+            <a href="http://qgis.org/">QGIS</a> using
+            <a href="http://docs.qgis.org/2.8/en/docs/user_manual/processing/">QGIS Processing</a>
+            with SAGA or GRASS GIS algorithms
+        <li>rewrite the assignments for this class using
+            <a href="http://grass.osgeo.org/grass74/manuals/libpython/script_intro.html">GRASS GIS Python API</a>,
+            <a href="http://docs.qgis.org/2.8/en/docs/user_manual/processing/scripts.html">QGIS Processing Python API</a>
+            or <a href="https://www.r-project.org/">R</a>
+            with <a href="https://cran.r-project.org/web/packages/rgrass7/rgrass7.pdf">rgrass7</a> package
+    </ul>
+<li><b>Open source GIS testing</b>
+    <ul>
+        <li>testing a selected GRASS GIS module under development or a release candidate
+            or test different versions (Linux versus MS Windows, 64bit versus 32bit, ...)
+        <li>testing of an existing GRASS GIS module
+            (see, for example a
+            <a href="resources/WendelS_Project_GIS582601s15.pdf">report on creating a test suite for r.watershed</a>)
+        <li>testing of
+            <a href="https://grass.osgeo.org/grass74/manuals/addons/r.futures.html">r.futures</a>,
+            a module implementing urban growth model which is being
+            developed at NCSU
+    </ul>
+<li><b>Enhancing open source GIS documentation</b>
+    <ul>
+        <li>tutorials for GRASS GIS and extended descriptions and examples for GRASS GIS modules
+            to be included in the official documentation
+            <ul>
+                <li>extend documentation for
+                    <em class="module">v.kernel</em>,
+                    add explanations of different kernels and constants
+                <li>add examples and descriptions to
+                    <em class="module">r.topmodel</em>
+                    documentation
+                <li>add examples and applications to
+                    <em class="module">r.topidx</em>
+                    documentation
+                <li>add examples and images to
+                    <em class="module">r.sun</em>
+                    and <em class="module">r.sunmask</em>
+                    documentation and extend
+                    <a href="http://grass.osgeo.org/grass74/manuals/addons/r.sun.hourly.html">r.sun.hourly</a>
+                    and
+                    <a href="http://grass.osgeo.org/grass74/manuals/addons/r.sun.daily.html">r.sun.daily</a>
+                    documentation
+                <li>create a tutorial or an overview of
+                <a href="http://grass.osgeo.org/grass74/manuals/keywords.html#statistics">GRASS GIS statistical modules</a>
+                for raster
+                <li>update and rewrite the
+                    <a href="http://grass.osgeo.org/uploads/grass/history_docs/mapcalc-algebra.pdf">original r.mapcalc tutorial</a>
+                    to GRASS GIS 7 and HTML,
+                    <a href="http://daringfireball.net/projects/markdown/">Markdown</a>, or
+                    <a href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">reStructredText</a>
+                <li>browse
+                    <a href="http://grass.osgeo.org/grass74/manuals/full_index.html">GRASS GIS manual</a>
+                    and
+                    <a href="http://grass.osgeo.org/grass74/manuals/addons/">GRASS GIS Addons manuals</a>
+                    and find a module related to this class with insufficient
+                    documentation according to your judgment
+            </ul>
+    </ul>
+</ul>
+
+<h4>Selecting the topic</h4>
+
+<ul>
+  <li>Start selection of your topic next week,
+    getting all your data ready may be time consuming</li>
+  <li><em>Project must include a component that requires processing and/or analysis
+    of continuous field(s), such as elevation, precipitation, chemical concentrations, continuous cost surfaces, etc.</em></li>
+</ul>
 
 
 <h3>Past project titles</h3>
