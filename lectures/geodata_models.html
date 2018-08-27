@@ -1,0 +1,200 @@
+<section>
+    <h2><b>Geospatial data models</b></h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h3>Outline: learning objectives</h3>
+<p>
+<ul>
+  <li>raster and vector data models
+  <li>data models transformations
+  <li>geospatial data formats
+  <li>data repositories, wms services, metadata
+  <li>open science: <br>
+      open data, open source software, open access
+</ul>
+</section>
+
+<section>
+   <h3>Geospatial data models</h3>
+<p>
+Mapped, georeferenced data are transformed into discrete GIS representations using
+<ul>
+  <li>raster (regular grid) or,
+  <li>vector (feature: point, line, area/polygon) 
+  <li>specialized representations: hexagonal grid, meshes
+</ul>
+<p>geospatial data models img
+</section>
+
+<section>
+   <h3>Geospatial data models</h3>
+<p>
+Two different types of objects/phenomena
+<p>
+<ul>
+<li><b>continuous fields: w=f(x,y), w=f(x,y,z)</b>
+  <ul>
+  <li>each point in space is assigned a distinct value, 
+      change between two neighboring points is relatively small: elevation, precipitation
+  <li>represented by raster data model, 
+  <li>vector model is also used: meshes, TIN, isolines or points. 
+  </ul>
+<li><b>discrete objects/features: lines, points or areas with attributes</b>
+  <ul>
+  <li>represented by vector data model as geometry(shape) with attribute table or object based (geodatabase); 
+  <li>raster representation is also used : roads, streams, census blocks, land use, schools
+  </ul>
+</ul>
+</section>
+
+<section>
+   <h3>Geospatial data models: Raster</h3>
+<p>
+Continuous: elevation, precipitation
+Discrete: land use, roads
+<p>Image Image
+</section>
+
+<section>
+   <h3>Raster data model 2D</h3>
+<p>
+<ul>
+  <li>header + matrix of values (INT, FP, DP)
+  <li>continuous field : value assigned to a grid point
+  <li>discrete object : cat value assigned to pixel (area)
+  <li>imagery - several bands
+  <li>spatial extent and resolution
+<p>Image elevations, speed limit
+</section>
+
+<section>
+   <h3>Raster data model for volumes</h3>
+<p>
+<ul>
+ <li>set of 2D raster layers can be used to represent soil horizons or geological layers 
+ <li>combined representation: 
+ <ul>
+  <li>continuous (horizontally) 
+  <li>discrete (vertically)
+ </ul> 
+<p>Image animation soil layers
+</section>
+
+<section>
+   <h3>Raster data model for volumes</h3>
+<p>
+3D raster - voxel model
+<ul>
+  <li>header + 3D matrix of values 
+  <li>vertical resolution is usually much finer than horizontal
+  <li>mostly used for 3D continuous representation w=f(x,y,z)
+</ul>
+<p>Image soils from Jeff W, get from Anna
+</section>
+
+<section>
+   <h3>Geospatial data models: vector</h3>
+<p>
+Discrete: streets, streams, geodetic points, census blocks
+Continuous: elevation contours (isolines), precipitation (points)
+<p>Image Image
+</section>
+
+<section>
+   <h3>Vector data: geometry and attributes</h3>
+<p>
+<ul>
+ <li>geometry: 
+  <ul>
+  <li>[x,y,(z)] points representing points, lines, areas
+  <li>topology: nodes, vertices, centroids, line, polyline, boundary, polygon
+  </ul>
+ <li>attributes:
+ <ul>
+ <li> points, lines and areas are abstract representations 
+      of complex features (firestation – point, road – centerline, ...)
+ <li>attributes of these features are stored in data management systems
+ </ul>
+</ul>
+</section>
+
+<section>
+   <h3>Vector data: 3D models</h3>
+<p>
+Oblique photogrammetry, lidar - 3D models of cities now common
+  <p>3D vector data geometry: face, kernel volume
+<p>Image Image
+</section>
+
+<section>
+   <h3>Common geospatial data formats</h3>
+<p>specific implementation of data model, 
+<br>open standard or proprietary
+<p>
+Raster
+<ul>
+<li>GIS (ascii and binary): ArcGRID, GRASS, SURFER
+<li>Imagery: MrSID, GeoTIFF, BIN, JPEG2000
+<li>Graphics:  GIF, JPG, PNG, Bitmap
+<li>HDF, NetCDF
+</ul>
+<p>
+Vector
+<ul>
+<li>KML, Shape, ArcSDE, GML, MapInfo, TIGER
+<li>PostGIS, OracleSpatial
+</ul>
+</section>
+
+<section>
+<h3>data repositories</h3>
+Data repositories, WMS, WPS, WebGIS
+
+</section>
+
+<section>
+  <h3>open science: </h3>
+<p>open data, open source software, open access
+<p>OSGeo, geo4all
+</section>
+
+<section>
+  <h3>Open source geospatial resources</h3>
+<p>OSGeo: Web GIS(many), QGIS, GRASS GIS, libraries
+<p>R, pySAL
+</section>
+
+<section>
+  <h3>Intro to GRASS GIS</h3>
+<p>history, data management, structure
+<p>more in assignments
+</section>
+
+<section>
+ <h3>Summary</h3>
+<ul>
+  <li>geospatial data acquisition
+  <li>projections, coordinate transformations, georeferencing
+  <li>raster and vector data models
+  <li>geospatial data formats
+  <li>data repositories, wms services, metadata
+  <li>open science: open data, open source software, open access
+</ul>
+</section>
+
+<section>
+ <h3>Reading, resources</h3>
+links
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
