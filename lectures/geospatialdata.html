@@ -52,7 +52,8 @@ Emergence of autonomous platforms: air, ground, water </p>
  <li class="fragment">Terra: MODIS: temperature, 250m; ASTER: radiance, DEM, 15m  
  <li class="fragment"><a href="https://earth.esa.int/web/sentinel/user-guides/sentinel-2-msi">
 SENTINEL-2 MSI: landcover, 10m, multispectral</a>
- <li class="fragment">Planets: new generation of small satellites: 170 small satellites mapping Earth daily at 3m resolution
+ <li class="fragment">
+<a href="https://www.planet.com/company">PLANET:</a> new generation of small satellites: 170 small satellites mapping Earth daily at 3m resolution
 </ul>
 See <a href="https://earthdata.nasa.gov/user-resources/remote-sensors">overview of Remote Sensors by NASA</a>
 <p>
@@ -62,36 +63,46 @@ See <a href="https://earthdata.nasa.gov/user-resources/remote-sensors">overview 
    <h3>Remote sensing: active </h3>
 <p>Satellite and airborne platforms and sensors, examples:
 <ul>
- <li class="fragment">Shuttle Radar Topography Mission (SRTM) 2001: 30m resolution elevation for almost entire globe
+ <li class="fragment"><a href="https://www2.jpl.nasa.gov/srtm/">
+Shuttle Radar Topography Mission (SRTM) 2001</a>: 30m resolution elevation for almost entire globe
  <li class="fragment">InSAR: high accuracy deformation mapping
  <li class="fragment">Lidar: airborne surveys - high resolution elevation data, including vegetation structure
 </ul>
 <p>
 See <a href="https://earthdata.nasa.gov/user-resources/remote-sensors">overview of Remote Sensors by NASA</a>
+<br><font class=credit>Images and data by NASA and NCSU MEAS</font>
 </section>
 
 <section>
    <h3>Satellite Remote Sensing</h3>
 <p>SRTM and LANDSAT example for Panama:
-<p><img width="50%" src="img/data_acquisition/panamaSRTM90m.jpg">
-<br><img width="50%" src="img/data_acquisition/PanamaPtsLandsat.jpg">
+<p>
+<img width="25%" src="img/data_acquisition/srtmanim_small.gif">
+<img width="50%" src="img/data_acquisition/panamaSRTM90m.jpg">
+<br>
+<img width="25%" src="img/data_acquisition/LandsatETMengineer.jpg">
+<img width="50%" src="img/data_acquisition/PanamaPtsLandsat.jpg">
 </section>
 
 <section>
    <h3>Satellite Remote Sensing</h3>
-<p>PLANETS example for Jockey's Ridge:
-<p>link to Planets animation
-<p>Credits
+<p>PLANET example for Jockey's Ridge change between September 2017 and July 18 mapped at 3m resolution:
+<p>
+<iframe width="560" height="315" scrolling="no" src="img/data_acquisition/sep17_july18.mp4" frameborder="0" allowfullscreen></iframe>
+<p>
+<font class=credit>Data by planet.com</font>
 </section>
 
 <section>
    <h3>Airborne Remote Sensing</h3>
-<p>Lidar and orthophoto example for NCSU agricultural fields
-<p><img height="200" src="img/lidar.jpg">
-<p><img height="200" src="img/ortho.jpg">
+<p>Lidar and orthophoto example for NCSU agricultural fields - sub-meter resolution mapping:
+<!--<p><img height="200" src="img/data_acquisition/airborne_lidar_mapping_schematic.jpg">-->
+<p><img width="60%" src="img/lidarmrpts3dcolored.jpg">
+<img width="25%" src="img/data_acquisition/SECREF2010_googlemap.jpg">
 <p>Most current systems combine active and passive sensors
 </section>
 
+<!--
 <section>
    <h3>Airborne Remote Sensing</h3>
 <p>Small unmanned aerial system (sUAS) example for NCSU agricultural fields
@@ -103,18 +114,16 @@ See <a href="https://earthdata.nasa.gov/user-resources/remote-sensors">overview 
 
 <section>
    <h3>Ground-based passive </h3>
-<p>360 deg cameras - static, mobile
-<p><img height="200" src="img/system.jpg">
-<p><img height="200" src="img/ortho.jpg">
-<p><img height="200" src="img/dsm.jpg">
+<p>360 deg cameras - static and mobile
+<p><img width="45%" src="img/data_acquisition/Jordanhall_orthophoto.jpg">
+<p><img width="45%" src="img/data_acquisition/ortho.jpg">
 </section>
+-->
 
 <section>
-   <h3>Ground-based active</h3>
-<p>RTK GPS, lidar
-<p><img height="200" src="img/system.jpg">
-<p><img height="200" src="img/ortho.jpg">
-<p>Active and passive are often combined for autonomous vehicles
+   <h3>Ground and water</h3>
+<p>RTK GPS, sonar
+<p><img width="70%" src="img/data_acquisition/GeodynRTKGPS1sm.jpg">
 </section>
 
 <section>
@@ -184,16 +193,16 @@ Projected reference systems (there are many):
 <p><img height="200" src="img/data_acquisition/crs_projected.jpg">
 </ul>
 <p>
-Learn more about cartographic projections
-<br><a href="www.progonos.com/furuti/MapProj/Normal/TOC/cartTOC.html">
-www.progonos.com/furuti/MapProj/Normal/TOC/cartTOC.html</a>
+Learn more about 
+<br><a href="http://www.progonos.com/furuti/MapProj/Normal/TOC/cartTOC.html">
+cartographic projections</a>
 </p>
 </section>
 
 <section>
    <h3>National and state CRS</h3>
 <p>
-Defined by (VERIFY and update) 
+Defined by:
 <ul>
 <li>Reference spheroid/geoid and datum: <br> e.g. GRS80-NAD83, WGS84
 <li>Projection and its parameters, e.g. : 
@@ -204,7 +213,6 @@ Defined by (VERIFY and update)
   </ul>
 <li>Vertical datum: e.g. NAVD88 <font class=credit> North american Vertical Datum 1988</font>
 </ul>
-<p>Read more here 
 </section>
 
 <section>
@@ -232,7 +240,8 @@ and elipsoid to plane projection (3358), the units on the map are meters, not de
 <section>
    <h3>Popular Visualization CRS</h3> 
 <p>
-Most common in on-line mapping systems: Pseudo-Mercator
+Most common in on-line mapping systems: 
+<br>Pseudo-Mercator
 <p>
 EPSG statement
 <p class=small>We have reviewed the coordinate reference system used by Google, etc.
@@ -252,12 +261,12 @@ http://geography.about.com/library/weekly/aa030201b.htm
    <h3>Popular Visualization CRS</h3>
 <p>
 The reference system was eventually included as
-<a href="https://epsg.io/3857">3857</a>
+<a href="https://epsg.io/3857">EPSG 3857</a>
 <!--3785--> 
 - it is not recommended for professional work
-    <p><img src="img/geo4allmap2012.png" height="400">
-<p>show open stret map global versus winkel tripel projection and animated gif
-http://www.math.ubc.ca/~israel/m103/mercator/mercator.html
+    <p><img src="img/data_acquisition/mercatorproj.gif" width="60%">
+<p>See explanation of the animation and equations in an article about
+<a href="http://www.math.ubc.ca/~israel/m103/mercator/mercator.html">Mercator</a>
 </section>
 
 <section>
@@ -268,9 +277,11 @@ Representation of coordinate systems in GIS
  <li>EPSG codes   
  <li>ESRI PRJ file 
  <li>PROJ format 
-<p class=credit>EPSG translated to input parameters of the PROJ software
+<p ><small>EPSG translated to input parameters of the PROJ software
 <br>NAD83(High Accuracy Reference Network HARN) / North Carolina
-<br><3358> +proj=lcc +lat_1=36.16666666666666 +lat_2=34.33333333333334 +lat_0=33.75 +lon_0=-79 +x_0=609601.22 +y_0=0 +ellps=GRS80 +units=m +no_defs
+<br><3358> +proj=lcc +lat_1=36.16666666666666 +lat_2=34.33333333333334 
+<br>+lat_0=33.75 +lon_0=-79 +x_0=609601.22 +y_0=0 +ellps=GRS80 +units=m +no_defs
+</small>
 </p>
 </ul>
 </p>
@@ -297,29 +308,19 @@ common CRS, then perform analysis and modeling
 </section>
 
 <section>
-   <h3>Geospatial data models</h3>
-<p>
-Mapped, georeferenced data are transformed into discrete GIS representations using
-<ul>
-  <li>raster (regular grid) or,
-  <li>vector (feature: point, line, area/polygon) 
-  <li>specialized (e.g., hexagon grid, quadtrees / octtrees, meshes)
-</ul>
-<p>geospatial data models
-</section>
-
-<section>
  <h3>Summary</h3>
 <ul>
-  <li>geospatial data acquisition
-  <li>projections, coordinate transformations, georeferencing
+  <li>we provided overview of modern technologies for geospatial data acquisition
+  <li>we explained the concept of coordinate reference systems and related standards
 </ul>
 </section>
 
+<!--
 <section>
  <h3>Reading, resources</h3>
 links
 </section>
+-->
 
 <div class="parent-page">
     <!-- &#x1f3e0; -->
