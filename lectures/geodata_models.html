@@ -9,15 +9,14 @@
 </section>
 
 <section>
-    <h3>Outline: learning objectives</h3>
+    <h3>Learning objectives</h3>
 <p>
 <ul>
-  <li>raster and vector data models
-  <li>data models transformations
-  <li>geospatial data formats
-  <li>data repositories, wms services, metadata
-  <li class="fragment">Identify and use on-line geospatial data repositories </li>
-  <li>open science: <br>
+  <li class="fragment">Define raster and vector data models
+  <li class="fragment">Understand and use data models transformations
+  <li class="fragment">Recognize geospatial data formats
+  <li class="fragment">Identify and use on-line geospatial data repositories and services</li>
+  <li class="fragment">Explain principles of open science: <br>
       open data, open source software, open access
 </ul>
 </section>
@@ -27,38 +26,71 @@
 <p>
 Mapped, georeferenced data are transformed into discrete GIS representations using
 <ul>
-  <li>raster (regular grid) or,
-  <li>vector (feature: point, line, area/polygon) 
-  <li>specialized representations: hexagonal grid, meshes
+  <li class="fragment">raster (regular grid) data model
+  <li class="fragment">vector (feature) data model 
+  <li class="fragment">specialized representations: hexagonal grid, meshes
 </ul>
 <p>geospatial data models img
 </section>
 
 <section>
-   <h3>Geospatial data models</h3>
-<p>
-Two different types of objects/phenomena
+   <h3>Geospatial objects and phenomena</h3>
 <p>
 <ul>
-<li><b>continuous fields: w=f(x,y), w=f(x,y,z)</b>
+<li>Continuous fields
   <ul>
-  <li>each point in space is assigned a distinct value, 
-      change between two neighboring points is relatively small: elevation, precipitation
-  <li>represented by raster data model, 
-  <li>vector model is also used: meshes, TIN, isolines or points. 
+    <li class="fragment">elevation surfaces</li>
+    <li class="fragment">temperature, precipitation</li>
+    <li class="fragment">concentration of chemicals in soil or water bodies</li>
   </ul>
-<li><b>discrete objects/features: lines, points or areas with attributes</b>
+<p>
+<li>Discrete features: lines, points or areas with attributes
   <ul>
-  <li>represented by vector data model as geometry(shape) with attribute table or object based (geodatabase); 
-  <li>raster representation is also used : roads, streams, census blocks, land use, schools
+    <li class="fragment">roads, buildings, cell towers</li>
+    <li class="fragment">land use types, administrative units</li>
   </ul>
+<p>
+<li>Some phenomena can be treated as both types
+    <ul>
+    <li class="fragment">agricultural fields, soil properties</li>
+    </ul>
 </ul>
 </section>
 
 <section>
-   <h3>Geospatial data models: Raster</h3>
+   <h3>Continuous fields</h3>
+<p>
+  <ul>
+  <li class="fragment">each point in space is assigned a distinct value
+      and change in values between two neighboring points is relatively small</li>
+  <li class="fragment">mathematical representation as bi-variate or multi-variate function <i>w=f(x,y), w=f(x,y,z)</i></li>
+  <li class="fragment">often represented by <b>raster data model</b>,</li>
+  <li class="fragment">vector model is also used: meshes, isolines or points.</li>
+  </ul>
+EXAMPLES img
+</section>
+
+<section>
+   <h3>Discrete objects / features</h3>
+<p>
+  <ul>
+  <li>lines, points, areas, or volumes with attributes
+  <li>represented by <b>vector data model</b> as geometry(shape) with attribute database;
+  <li>raster representation is also used
+  </ul>
+EXAMPLES IMG
+</section>
+
+<section>
+   <h3>Continuous fields: raster data model</h3>
 <p>
 Continuous: elevation, precipitation
+<p>Image Image
+</section>
+
+<section>
+   <h3>Discrete features: raster data model</h3>
+<p>
 Discrete: land use, roads
 <p>Image Image
 </section>
@@ -67,16 +99,14 @@ Discrete: land use, roads
    <h3>Raster data model 2D</h3>
 <p>
 <ul>
-  <li>header + matrix of values (INT, FP, DP)
+  <li>header + matrix of values (INT, FP, DP), spatial extent and <b>resolution</b>
   <li>continuous field : value assigned to a grid point
-  <li>discrete object : cat value assigned to pixel (area)
-  <li>imagery - several bands
-  <li>spatial extent and resolution
-<p>Image elevations, speed limit
+  <li>discrete object : category value assigned to pixel (area)
+</ul>
 </section>
 
 <section>
-   <h3>Raster data model for volumes</h3>
+   <h3>Raster data model for volumes I</h3>
 <p>
 <ul>
  <li>set of 2D raster layers can be used to represent soil horizons or geological layers 
@@ -85,11 +115,12 @@ Discrete: land use, roads
   <li>continuous (horizontally) 
   <li>discrete (vertically)
  </ul> 
+</ul>
 <p>Image animation soil layers
 </section>
 
 <section>
-   <h3>Raster data model for volumes</h3>
+   <h3>Raster data model for volumes II</h3>
 <p>
 3D raster - voxel model
 <ul>
@@ -131,7 +162,86 @@ Continuous: elevation contours (isolines), precipitation (points)
 <p>
 Oblique photogrammetry, lidar - 3D models of cities now common
   <p>3D vector data geometry: face, kernel volume
+<p>3D cities, building interior, 
 <p>Image Image
+</section>
+
+<section>
+   <h3>Data model modifications </h3>
+<ul>
+  <li>Changing raster resolution 
+  <li>Changing vector geometry type
+</ul>
+</section>
+
+<section>
+   <h3>Raster data  - changing resolution</h3>
+<p>Resolution: size of the grid cell (pixel) in map units (m)
+<ul>
+  <li>discrete: nearest neighbor resampling
+  <li>continuous: re-interpolation
+</ul>
+<p> Image composite: slide 31 with equations
+</section>
+
+<section>
+   <h3>Increasing resolution</h3>
+<p>Effect of resampling / reinterpolation on the resulting raster
+<p> Image composite: slide 30 also a note from 33
+</section>
+
+<section>
+   <h3>Decreasing resolution</h3>
+<ul>
+  <li>discrete: nearest neighbor resampling, mode (most common)
+  <li>continuous: re-interpolation, average, nearest neighbor
+</ul>
+<p> Image composite: slide 35
+</section>
+
+<section>
+   <h3>Changing vector geometry</h3>
+<p>
+<ul>
+  <li>lines or areas to points
+  <li>points to lines
+  <li>generalization
+</ul>
+<p> Image composite: slide 35
+</section>
+
+<section>
+   <h3>Conversion between data models</h3>
+<p>
+<ul>
+ <li>vector to raster
+ <ul>
+  <li>continuous: spatial interpolation
+  <li>discrete: nearest neighbor
+ </ul>
+ <li>raster to vector
+ <ul>
+  <li>continuous: point sampling, isolines
+  <li>discrete: nearest neighbor, grid center or boundary
+ </ul>
+</ul>
+<p>
+Image composite - professional mapping
+</section>
+
+<section>
+   <h3>Conversion between data models</h3>
+<p>Examples see slide 48,50
+<ul>
+ <li>vector to raster
+ <ul>
+  <li>continuous: spatial interpolation
+  <li>discrete: nearest neighbor
+ </ul>
+ <li>raster to vector
+</ul>
+<p>
+Image composite - professional mapping
 </section>
 
 <section>
@@ -173,16 +283,8 @@ Data repositories, WMS, WPS, WebGIS
 </section>
 
 <section>
-  <h3>Intro to GRASS GIS</h3>
-<p>history, data management, structure
-<p>more in assignments
-</section>
-
-<section>
  <h3>Summary</h3>
 <ul>
-  <li>geospatial data acquisition
-  <li>projections, coordinate transformations, georeferencing
   <li>raster and vector data models
   <li>geospatial data formats
   <li>data repositories, wms services, metadata
