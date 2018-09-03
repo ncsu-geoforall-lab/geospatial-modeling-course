@@ -23,14 +23,14 @@
 
 <section>
    <h3>Geospatial data models</h3>
-<p>
-Mapped, georeferenced data are transformed into discrete GIS representations using
+<p> Mapped data, modeling or analysis results are represented using
 <ul>
   <li class="fragment">raster (regular grid) data model
   <li class="fragment">vector (feature) data model 
-  <li class="fragment">specialized representations: hexagonal grid, meshes
+  <li class="fragment">specialized representations: meshes
 </ul>
-<p>geospatial data models img
+<p>
+<img height="200" src="img/data_models/datatypescomposit.jpg">
 </section>
 
 <section>
@@ -53,6 +53,7 @@ Mapped, georeferenced data are transformed into discrete GIS representations usi
 <li>Some phenomena can be treated as both types
     <ul>
     <li class="fragment">agricultural fields, soil properties</li>
+    <li class="fragment">population densities</li>
     </ul>
 </ul>
 </section>
@@ -65,44 +66,58 @@ Mapped, georeferenced data are transformed into discrete GIS representations usi
       and change in values between two neighboring points is relatively small</li>
   <li class="fragment">mathematical representation as bi-variate or multi-variate function <i>w=f(x,y), w=f(x,y,z)</i></li>
   <li class="fragment">often represented by <b>raster data model</b>,</li>
-  <li class="fragment">vector model is also used: meshes, isolines or points.</li>
+  <li class="fragment">vector model is also used: isolines, meshes, or points.</li>
   </ul>
-EXAMPLES img
+<p class="fragment">
+<img height="160" src="img/data_models/dem_1m.jpg">
+<img height="160" src="img/data_models/elcont1m_gen00.jpg">
+<img height="160" src="img/data_models/TINgrassnvizrand2.jpg">
+<img height="120" src="img/data_acquisition/lidarmrpts3dcolored.jpg">
+</p>
 </section>
 
 <section>
    <h3>Discrete objects / features</h3>
 <p>
   <ul>
-  <li>lines, points, areas, or volumes with attributes
-  <li>represented by <b>vector data model</b> as geometry(shape) with attribute database;
-  <li>raster representation is also used
+  <li class="fragment">lines, points, areas, or volumes with attributes
+  <li class="fragment">represented by <b>vector data model</b> as geometry(shape) with attribute database;
+  <li class="fragment">raster representation is also used
   </ul>
-EXAMPLES IMG
-</section>
-
-<section>
-   <h3>Continuous fields: raster data model</h3>
-<p>
-Continuous: elevation, precipitation
-<p>Image Image
-</section>
-
-<section>
-   <h3>Discrete features: raster data model</h3>
-<p>
-Discrete: land use, roads
-<p>Image Image
+<p class="fragment">
+<img height="220" src="img/data_models/streetsnoiseviewshedlu.jpg">
+<img height="220" src="img/data_models/rasterdiscr_roads.jpg">
+</p>
 </section>
 
 <section>
    <h3>Raster data model 2D</h3>
 <p>
 <ul>
-  <li>header + matrix of values (INT, FP, DP), spatial extent and <b>resolution</b>
+  <li>header: spatial extent and <b>resolution</b>, followed by matrix of values (INT, FP, DP),
   <li>continuous field : value assigned to a grid point
   <li>discrete object : category value assigned to pixel (area)
 </ul>
+<img height="350" src="img/data_models/raster_cont_discr.jpg">
+</section>
+
+<section>
+   <h3>Raster data model: continuous fields</h3>
+<p>
+<small>elevation, precipitation</small>
+<p class="fragment">
+<img height="250" src="img/lid2013_1r_3ft_3d.jpg">
+<img height="250" src="img/data_models/preciptopo3d.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Raster data model: discrete features</h3>
+<p>
+Discrete: land use, roads
+<p>
+<img height="280" src="img/data_models/raster_discr3dlu.jpg">
+<img height="280" src="img/data_models/rasterdiscr_roads.jpg">
 </section>
 
 <section>
@@ -112,11 +127,12 @@ Discrete: land use, roads
  <li>set of 2D raster layers can be used to represent soil horizons or geological layers 
  <li>combined representation: 
  <ul>
-  <li>continuous (horizontally) 
-  <li>discrete (vertically)
+  <li>continuous (horizontally) and  discrete (vertically)
  </ul> 
 </ul>
-<p>Image animation soil layers
+<br>
+<img height="280" src="img/data_models/horiz2.gif">
+<p><small>Cross-sections through 3D model of soil horizons</small>
 </section>
 
 <section>
@@ -128,19 +144,10 @@ Discrete: land use, roads
   <li>vertical resolution is usually much finer than horizontal
   <li>mostly used for 3D continuous representation w=f(x,y,z)
 </ul>
-<p>Image soils from Jeff W, get from Anna
 </section>
 
 <section>
-   <h3>Geospatial data models: vector</h3>
-<p>
-Discrete: streets, streams, geodetic points, census blocks
-Continuous: elevation contours (isolines), precipitation (points)
-<p>Image Image
-</section>
-
-<section>
-   <h3>Vector data: geometry and attributes</h3>
+   <h3>Vector data model: geometry and attributes</h3>
 <p>
 <ul>
  <li>geometry: 
@@ -163,6 +170,14 @@ Continuous: elevation contours (isolines), precipitation (points)
 Oblique photogrammetry, lidar - 3D models of cities now common
   <p>3D vector data geometry: face, kernel volume
 <p>3D cities, building interior, 
+<p>Image Image
+</section>
+
+<section>
+   <h3>Vector data model</h3>
+<p>
+Discrete: streets, streams, geodetic points, census blocks
+Continuous: elevation contours (isolines), precipitation (points)
 <p>Image Image
 </section>
 
