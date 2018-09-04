@@ -205,8 +205,8 @@ the way in which constituent parts are interrelated or arranged.
 <p>
 Polygons: vertices+nodes=boundaries, centroids 
 <p>
-<img height="300" src="img/data_models/vectovertices_census.png">
-<img height="300" src="img/data_models/census_nodesvertcentrlb2.png">
+<!--<img height="300" src="img/data_models/vectovertices_census.png">-->
+<img height="380" src="img/data_models/census_nodesvertcentrlb2.png">
 </section>
 
 <!--
@@ -435,7 +435,8 @@ but subset is extracted and stored in a different data structure
 
 <section>
    <h3>Common geospatial data formats</h3>
-<p>Format: specific implementation of data model, open standard or proprietary
+<p>Format: specific implementation of data model, 
+<br>open standard or proprietary
 <p> Raster
 <ul class="fragment">
 <li>GIS (ascii and binary): GeoTIFF, ArcGRID, GRASS, SURFER
@@ -452,22 +453,22 @@ Vector
 </section>
 
 <section>
-   <h3>Common geospatial data formats</h3>
-<p>Format: specific implementation of data model, open standard or proprietary
-<p> Raster
-<ul class="fragment">
-<li>GIS (ascii and binary): GeoTIFF, ArcGRID, GRASS, SURFER
-<li>Imagery: MrSID, GeoTIFF, BIN, JPEG2000, IMG
-<li>Graphics:  GIF, JPG, PNG, Bitmap
-<li>HDF, NetCDF
-</ul>
+   <h3>Geospatial data format conversion</h3>
 <p>
-Vector
-<ul class="fragment">
-<li>KML, Shape, ArcSDE, GML, MapInfo, TIGER
-<li>PostGIS, OracleSpatial
-</ul>
-<!--add metadata-->
+Format description is usually stored with data: automated format recognition and conversion
+<p class="fragment"> 
+General library for geospatial raster and vector format conversions:
+<br>Geospatial Data Abstraction Library (GDAL/OGR)
+<br><strong>gdal.osgeo.org</strong>
+<p class="fragment">
+given format - <strong>single abstract model</strong> - new format
+</p>
+<p class="fragment">
+GDAL includes command line utilities for data processing
+</p>
+<p class="fragment">
+Coupled with PROJ library it also provides coordinate system transformations
+</p>
 </section>
 
 <section>
@@ -483,21 +484,27 @@ Webpage with links to relevant services</a>
 </section>
 
 <section>
-  <h3>Open science: </h3>
+  <h3>Open science </h3>
 <p>open data, open source software, open access
-<p>OSGeo, geo4all
+<p>Learn more: 
+<a href="https://ncsu-geoforall-lab.github.io/open-science-course/topics/open-science.html">What is Open Science</a>
 </section>
 
+<!--
 <section>
   <h3>Open source geospatial resources</h3>
+<p>OSGeo, geo4all
 <p>OSGeo: Web GIS(many), QGIS, GRASS GIS, libraries
 <p>R, pySAL
 </section>
+-->
 
 <section>
  <h3>Summary</h3>
 <ul>
   <li>raster and vector data models
+  <li>modifying raster and vector data models
+  <li>converting between raster and vector data models
   <li>geospatial data formats
   <li>data repositories, wms services, <!--metadata-->
   <li>open science: open data, open source software, open access
