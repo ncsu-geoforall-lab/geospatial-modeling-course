@@ -175,10 +175,11 @@ the object of perception, experience, etc
  <li><b>Geometry:</b> 
   <ul>
   <li>Points [x,y,(z)] represent point, line, or polygon(area) features
-  <li>Set of points create elements of feature geometry: line: nodes, vertices, polyline; polygon: centroid, boundary 
+  <li>Set of points create elements of feature geometry: <b>line</b>: nodes, vertices; <b>polygon</b>: centroid, boundary 
   <li><a href="https://en.wikipedia.org/wiki/Topology">Topology</a> defines how the elements of 
 feature geometry are interrelated and organized (don't confuse with topography!)
- <li>Topology in GIS 
+ <li>Topology ensures integrity of features and efficiency by defining shared coincident geometry (shared 
+boundaries, nodes). 
   </ul>
 <p>
  <li><b>Attributes</b> are stored in data management systems
@@ -191,16 +192,30 @@ the way in which constituent parts are interrelated or arranged.
 
 <section>
    <h3>Vector data model geometry</h3>
+<p>Elements: vertices(red), nodes(blue)
+<p>Point data: no topology; Line data: vertices, nodes
 <p>
-<img height="200" src="img/data_models/Voxelphfenc.gif">
-Discrete: streets, streams, geodetic points, census blocks
-<p>Image Image
+<img height="200" src="img/data_models/pointdata.png"> 
+<img height="280" src="img/data_models/roads_nodes_vert.png">
 </section>
 
+<section>
+   <h3>Vector data model geometry</h3>
+<p>Elements: vertices(red), nodes(blue), centroids(green)
+<p>
+Polygons: vertices+nodes=boundaries, centroids 
+<p>
+<img height="300" src="img/data_models/vectovertices_census.png">
+<img height="300" src="img/data_models/census_nodesvertcentrlb2.png">
+</section>
+
+<!--
 <section>
    <h3>Vector data model: discrete features</h3>
 <p>
 Discrete: streets, streams, geodetic points, census blocks
+<img height="250" src="img/data_models/vectorast_census.png">
+<img height="250" src="img/data_models/vectorast_census.png">
 <p>Image Image
 </section>
 
@@ -210,20 +225,30 @@ Discrete: streets, streams, geodetic points, census blocks
 Continuous: elevation contours (isolines), precipitation (points)
 <p>Image Image
 </section>
+-->
 
 <section>
    <h3>Vector data: 3D models</h3>
+<p><small>Learn more in 
+<a href="http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/schedule.html">GIS595 UAS mapping for 3D modeling course</a>
+</small>
 <p>
-Oblique photogrammetry, lidar - 3D models of cities now common
-  <p>3D vector data geometry: face, kernel volume
-<p>3D cities, building interior, 
-<p>Image Image
+<div class="sketchfab-embed-wrapper"><iframe width="640" height="480" src="https://sketchfab.com/models/3b3e1a037183477eacd3eeb7d7f009aa/embed" frameborder="0" allow="autoplay; fullscreen; vr" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+<p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;">
+    <a href="https://sketchfab.com/models/3b3e1a037183477eacd3eeb7d7f009aa?utm_medium=embed&utm_source=website&utm_campaign=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">Centennial Campus Textiles Buildings</a>
+    by <a href="https://sketchfab.com/osgeolab?utm_medium=embed&utm_source=website&utm_campaign=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">NCSU GeoForAll Lab</a>
+    on <a href="https://sketchfab.com?utm_medium=embed&utm_source=website&utm_campaign=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a>
+</p>
+</div>
 </section>
 
 <section>
    <h3>Data model modifications </h3>
+<p>
 <ul>
   <li>Changing raster resolution 
+<p>
   <li>Changing vector geometry type
 </ul>
 </section>
@@ -232,25 +257,82 @@ Oblique photogrammetry, lidar - 3D models of cities now common
    <h3>Raster data  - changing resolution</h3>
 <p>Resolution: size of the grid cell (pixel) in map units (m)
 <ul>
-  <li>discrete: nearest neighbor resampling
-  <li>continuous: re-interpolation
+<li>continuous fields: re-interpolation
+  <ul>
+    <li>the higher res. raster values are <b>interpolated</b> using the values of the neighboring lower res. cells
+    <li>methods: bi-linear, bi-cubic, spline
+  </ul>
+<p class="fragment">
+  <li>discrete raster data: nearest neighbor resampling
+  <ul>
+     <li>assigns the higher res. cell the <b>same value</b> as the nearest lower res. cell 
+     <li>resulting raster has only the values present in the input raster
+  </ul>
+</p>
 </ul>
-<p> Image composite: slide 31 with equations
+<p>
+See <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">Wikipedia for more detailed explanation and equations</a> 
 </section>
 
 <section>
-   <h3>Increasing resolution</h3>
-<p>Effect of resampling / reinterpolation on the resulting raster
-<p> Image composite: slide 30 also a note from 33
+   <h3>Increasing resolution: continuous</h3>
+<p>Elevation at 30m resolution resampled to 10m resolution 
+<p>
+<img width="95%" src="img/data_models/rast_resampl_elev.jpg">
+<p>Raster values are observed elevations
+</section>
+
+<section>
+   <h3>Increasing resolution: discrete</h3>
+<p>Geology at 30m resolution resampled to 10m resolution
+<p>
+<img width="95%" src="img/data_models/rast_resampl_geol.jpg">
+<p>Raster values are classes of observed geology
+<!--change geology example to more realistic landcover-->
+</section>
+
+<section>
+   <h3>Increasing resolution: compare</h3>
+<p>Effect of resampling / reinterpolation on the results
+<img height="480" src="img/data_models/rast_resampl_geol_elev.jpg">
+<!--change geology example to more realistic landcover-->
+</section>
+
+<section>
+   <h3>Increasing resolution: compare</h3>
+<p>From 30m resolution to 20m resolution
+<p>
+<br>
+<div class="left" style="max-width:40%">
+<ul>
+  <li>grid cells do not align,
+  <li>elevation: no "flats"
+  <li>geology: area for each class may change 
+</ul>
+</div>
+<div class="right" style="max-width:50%">
+<img width="90%" src="img/data_models/rast_resampl_geol_elev_30_20.jpg">
+</div>
+<!--change geology example to more realistic landcover-->
+</section>
+
+
+<section>
+   <h3>Decreasing resolution</h3>
+<ul>
+  <li>continuous: re-interpolation, average, min, max, nearest neighbor
+</ul>
+<p> 
+<img height="300" src="img/data_models/rast_resampl_elev_down.jpg">
 </section>
 
 <section>
    <h3>Decreasing resolution</h3>
 <ul>
-  <li>discrete: nearest neighbor resampling, mode (most common)
-  <li>continuous: re-interpolation, average, nearest neighbor
+  <li>discrete: nearest neighbor resampling, mode (most common class)
 </ul>
-<p> Image composite: slide 35
+<p> 
+<img height="300" src="img/data_models/rast_resampl_geol_down.png">
 </section>
 
 <section>
