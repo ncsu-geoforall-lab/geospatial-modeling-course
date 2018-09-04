@@ -262,8 +262,8 @@ Continuous: elevation contours (isolines), precipitation (points)
     <li>the higher res. raster values are <b>interpolated</b> using the values of the neighboring lower res. cells
     <li>methods: bi-linear, bi-cubic, spline
   </ul>
-<p class="fragment">
-  <li>discrete raster data: nearest neighbor resampling
+<p>
+  <li class="fragment">discrete raster data: nearest neighbor resampling
   <ul>
      <li>assigns the higher res. cell the <b>same value</b> as the nearest lower res. cell 
      <li>resulting raster has only the values present in the input raster
@@ -303,14 +303,14 @@ See <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">Wikipedia for 
 <p>From 30m resolution to 20m resolution
 <p>
 <br>
-<div class="left" style="max-width:40%">
+<div class="left" style="max-width:30%">
 <ul>
   <li>grid cells do not align,
   <li>elevation: no "flats"
   <li>geology: area for each class may change 
 </ul>
 </div>
-<div class="right" style="max-width:50%">
+<div class="right" style="max-width:60%">
 <img width="90%" src="img/data_models/rast_resampl_geol_elev_30_20.jpg">
 </div>
 <!--change geology example to more realistic landcover-->
@@ -336,14 +336,41 @@ See <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">Wikipedia for 
 </section>
 
 <section>
-   <h3>Changing vector geometry</h3>
+   <h3>Changing vector data</h3>
 <p>
 <ul>
-  <li>lines or areas to points
-  <li>points to lines
-  <li>generalization
+  <li>Converting vector data type
+  <ul>
+   <li>lines to points, areas to lines or points
+   <li>points to lines: network building or interpolation may be needed
+   <li>usually preserves the shape
+  </ul>
+<p>
+  <li class="fragment">Generalization
+  <ul>
+   <li>simplifying geometry while preserving important information 
+   <li>both data geometry and type can be modified
+   <li>line to simplified line, polygon to simplified polygon or point
+   <li>selecting subset of features 
+   <li>important when combining local, state and national scale data
+  </ul>
+  </li>
+</p>
 </ul>
-<p> Image composite: slide 35
+</section>
+
+<section>
+   <h3>Changing vector data type</h3>
+<p>
+Data geometry is not modified,
+but subset is extracted and stored in a different data structure
+<p>
+<small>Topology building is required for conversions point to line, line to polygon</small>
+<p>
+<img height="200" src="img/data_models/census_nodesvertcentrlb2.png">
+<!--<img height="150" src="img/data_models/vectopoints_census.png.png">-->
+<img height="200" src="img/data_models/vectovertices_census.png">
+<img height="200" src="img/data_models/vectorboundary.png">
 </section>
 
 <section>
@@ -352,62 +379,111 @@ See <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">Wikipedia for 
 <ul>
  <li>vector to raster
  <ul>
-  <li>continuous: spatial interpolation
+  <li>continuous: spatial interpolation (covered by a separate topic)
   <li>discrete: nearest neighbor
  </ul>
- <li>raster to vector
+<p>
+ <li class="fragment">raster to vector
  <ul>
   <li>continuous: point sampling, isolines
   <li>discrete: nearest neighbor, grid center or boundary
  </ul>
 </ul>
 <p>
-Image composite - professional mapping
 </section>
 
 <section>
-   <h3>Conversion between data models</h3>
-<p>Examples see slide 48,50
+   <h3>Vector to raster data</h3>
 <ul>
- <li>vector to raster
- <ul>
-  <li>continuous: spatial interpolation
-  <li>discrete: nearest neighbor
- </ul>
- <li>raster to vector
+  <li>lines, areas: nearest neighbor
+  <li>areas: attribute value applies to the entire polygon
+<small> – only complete polygons can be converted to be fully valid</small>
 </ul>
 <p>
-Image composite - professional mapping
+<img height="350" src="img/data_models/vect_to_rast.jpg">
+</section>
+
+<section>
+   <h3>Raster to vector data</h3>
+<p>Continuous data: sampling points, isolines 
+<p>
+<img height="400" src="img/data_models/rast_to_vect_cont.jpg">
+</section>
+
+<section>
+   <h3>Raster to vector data</h3>
+<p>
+<ul>
+  <li>points – center of grid cell
+  <li>lines, polygon border lines: connected grid cell centers
+  <li>thinning and smoothing is often performed for lines 
+</ul>
+<p>
+<img height="360" src="img/data_models/rast_to_vect_discr.jpg">
+</section>
+
+<section>
+   <h3>Raster to vector data</h3>
+<p>
+<ul>
+   <li>areas – boundary, centroid, requires building topology 
+   <li>connects points on grid cell boundary
+</ul>
+<p>
+<img height="380" src="img/data_models/rast_to_vect_discr_area.jpg">
 </section>
 
 <section>
    <h3>Common geospatial data formats</h3>
-<p>specific implementation of data model, 
-<br>open standard or proprietary
-<p>
-Raster
-<ul>
-<li>GIS (ascii and binary): ArcGRID, GRASS, SURFER
-<li>Imagery: MrSID, GeoTIFF, BIN, JPEG2000
+<p>Format: specific implementation of data model, open standard or proprietary
+<p> Raster
+<ul class="fragment">
+<li>GIS (ascii and binary): GeoTIFF, ArcGRID, GRASS, SURFER
+<li>Imagery: MrSID, GeoTIFF, BIN, JPEG2000, IMG
 <li>Graphics:  GIF, JPG, PNG, Bitmap
 <li>HDF, NetCDF
 </ul>
 <p>
 Vector
-<ul>
+<ul class="fragment">
 <li>KML, Shape, ArcSDE, GML, MapInfo, TIGER
 <li>PostGIS, OracleSpatial
 </ul>
 </section>
 
 <section>
-<h3>data repositories</h3>
-Data repositories, WMS, WPS, WebGIS
-
+   <h3>Common geospatial data formats</h3>
+<p>Format: specific implementation of data model, open standard or proprietary
+<p> Raster
+<ul class="fragment">
+<li>GIS (ascii and binary): GeoTIFF, ArcGRID, GRASS, SURFER
+<li>Imagery: MrSID, GeoTIFF, BIN, JPEG2000, IMG
+<li>Graphics:  GIF, JPG, PNG, Bitmap
+<li>HDF, NetCDF
+</ul>
+<p>
+Vector
+<ul class="fragment">
+<li>KML, Shape, ArcSDE, GML, MapInfo, TIGER
+<li>PostGIS, OracleSpatial
+</ul>
+<!--add metadata-->
 </section>
 
 <section>
-  <h3>open science: </h3>
+<h3>Data repositories</h3>
+Data repositories: WMS, WPS, WebGIS
+<ul>
+  <li>Web mapping Service
+  <li>Web Processing Service
+</ul>
+<p>
+See<a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/data_providers.html">
+Webpage with links to relevant services</a>
+</section>
+
+<section>
+  <h3>Open science: </h3>
 <p>open data, open source software, open access
 <p>OSGeo, geo4all
 </section>
@@ -423,14 +499,9 @@ Data repositories, WMS, WPS, WebGIS
 <ul>
   <li>raster and vector data models
   <li>geospatial data formats
-  <li>data repositories, wms services, metadata
+  <li>data repositories, wms services, <!--metadata-->
   <li>open science: open data, open source software, open access
 </ul>
-</section>
-
-<section>
- <h3>Reading, resources</h3>
-links
 </section>
 
 <div class="parent-page">
