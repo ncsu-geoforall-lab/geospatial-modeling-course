@@ -19,6 +19,7 @@
   <li>3D visualization: single and multiple surfaces
   <li>dynamic visualization with animations
   <li>Web GIS cartography: MapStory, CartoDB, WorldMap
+  <li>tangible interaction
 </ul>
 </section>
 
@@ -31,23 +32,27 @@
 <section>
    <h3>Display of raster and vector data</h3>
 <p>
-data displayed on computer screen are rasters 
-<p>
-raster data zoom in: pixels show up, reinterpolate raster data to avoid visible pixels
-vector data zoom in: display is scalable, preserves shape 
-<p>
-<p> Image composite - raster and vector zoom in #5
+<ul>
+ <li class="fragment">all data displayed on computer screen are rasters 
+ <li class="fragment">raster data display: as we zoom in, pixels show up, we can reinterpolate to avoid visible pixels
+ <li class="fragment">vector data display: scalable, preserves shape as we zoom-in
+</ul>
+<p class="fragment">
+<img height="350" src="img/data_visualize/raster_vect_displ_zoom.jpg">
+</p>
 </section>
 
 <section>
    <h3>Display of large rasters</h3>
-<p>
-If raster rows or columns are greater than those of map display,
-not all pixels are visible: example raster lines representation is broken 
-<br>solution? convert to vector representation
-<p>
+<ul>
+  <li>If the number of rows or columns in a raster is greater than those of map display,
+not all pixels are visible
+  <li class="fragment">raster lines representation is broken 
+  <li class="fragment">solution? convert to vector representation
 </ul>
-<p> Image composite - discontinuous streams #7
+<p class="fragment"> <img height="350" src="img/data_visualize/raster_large_streams.jpg">
+<img height="350" src="img/data_visualize/raster_large_streamszoom.jpg">
+</p>
 </section>
 
 <section>
@@ -301,9 +306,14 @@ Cutting planes: slicing through stacked surfaces or volumes
 
 <section>
   <h3>Web-based visualization</h3>
-<p>Maps: MapStory
-<p>Visualizations: point cloud viewer
-<p> Image composite - commet-like flow 
+Interactive 3D visualization supported by WebGL
+<p> <a href="http://plas.io"> Point cloud viewer</a>
+</section>
+
+<section>
+  <h3>Web-based visualization</h3>
+Real-time, interactive dynamic visualization
+<p><p><small><a href="https://earth.nullschool.net">Ocean Currents</a>2018 Cameron Beccario </small></p>
 <p> links to resources
 </section>
 
