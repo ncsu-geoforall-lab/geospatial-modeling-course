@@ -35,7 +35,7 @@
 <ul>
  <li class="fragment">all data displayed on computer screen are rasters 
  <li class="fragment">raster data display: as we zoom in, pixels show up, we can reinterpolate to avoid visible pixels
- <li class="fragment">vector data display: scalable, preserves shape as we zoom-in
+ <li class="fragment">vector data display: scalable, preserves shape 
 </ul>
 <p class="fragment">
 <img height="350" src="img/data_visualize/raster_vect_displ_zoom.jpg">
@@ -57,59 +57,63 @@ not all pixels are visible
 
 <section>
    <h3>Working with color</h3>
-<p>
-Color definition as RGB ....., hue and intensity
-hue, lightness, and saturation
-<p>
-Color for raster data: discrete or continuous 
-(interpolated RGB values based on the values in the raster map)
-<p>
-Color for vector data: discrete by definition
+<ul>
+ <li>Color definition components: hue, lightness, and saturation
+ <li>Quantitative representation: % Red, Green, Blue
+ <li>Color for raster data: discrete or continuous 
+ <li>Continuous interpolates RGB values based on the values in the raster map
+ <li>Color for vector data: discrete by definition
+</ul>
 <p>
 Learn more about color
-<br><a href="link.html"> color ramps</a>
-<p>categorical and quantitative differences in data visualization
-<p>https://morphocode.com/the-use-of-color-in-maps/
-<p>https://www.axismaps.com/guide/general/using-colors-on-maps/
-</p>
+<small>
+<ul>
+<li><a href="link.html"> color ramps</a>
+<li>categorical and quantitative differences in data visualization
+<li>https://morphocode.com/the-use-of-color-in-maps/
+<li>https://www.axismaps.com/guide/general/using-colors-on-maps/
+</ul>
+</small>
 </section>
 
 <section>
    <h3>Colors for discrete raster data</h3>
-<p>
-quantitative data: intensity as function of values
-example: soil erodibility 
-<p>qualitative data: constant intensity, discrete hue
-<p> Image composite - erodibility and landuse examples #10
+<ul>
+<li>Quantitative data: constant hue, color intensity is a function of values
+<li>Qualitative data: constant intensity, varied discrete hue
+</ul>
+<p class="fragment"> 
+<img height="320" src="img/data_visualize/soilsKfac_discrleg.png">
+<img height="320" src="img/data_visualize/soils_rural_1mID.png"> </p>
+<p> Soil erodibility and Soil ID maps
 <p>Brewer - example of discrete color ramps for cartography
 </section>
 
 <section>
    <h3>Colors for continuous raster data</h3>
-<p>
-Continuous data are quantitative data 
-<p>continuous color ramps highlight the continuous property
-<p class="credit">(note: default is often greyscale with uniform interval)</p>
-<p>discrete color ramp limits the information but makes the interval values easier to identify
-<p> Image composite - histogram and color ramp cont and discrete
+<ul>
+<li>continuous color highlights continuous property
+<li>discrete color limits the information but makes the interval values easier to identify
+</ul>
+<p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_elev.jpg">
+<p class="credit">(note: default color ramp for FP maps is often greyscale with uniform interval)</p>
 </section>
 
 <section>
    <h3>Colors for continuous raster data</h3>
 <p>
 Distribution of color based on uniform raster data intervals
-<p class="credit">Works for Wake, for NC highlights that most NC is flat coastal plane
-but we don't see the topography structure
-<p> Image composite - histogram and color ramp Wake and NC
+<p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_histeq1.jpg"></p<
+<p><small>Works for Wake, for NC highlights that most NC is flat coastal plane but we don't see the topography structure </small></p>
 </section>
 
 <section>
    <h3>Histogram equalized color</h3>
 <p>
 Distribution of color based on histogram of raster data values
-<p class="credit"> highlights topography structure, distorts the elevation differences
-<p> Image composite - histogram equalized and custom color ramp NC
-<p>Equation or graph?
+<p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_histeq2.jpg">
+<p> <small>highlights topography structure, distorts the elevation differences</small>
+<p>add equation or graph?
 </section>
 
 <section>
