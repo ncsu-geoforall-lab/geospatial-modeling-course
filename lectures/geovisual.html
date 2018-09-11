@@ -30,6 +30,14 @@
 </section>
 
 <section>
+  <h3>Global Weather Conditions </h3>
+<p>
+Explore
+<a href="https://earth.nullschool.net/about.html">earth</a> by Cameron Beccario
+<p>Display air and ocean movement and conditions in different global cartographic projections
+</section>
+
+<section>
    <h3>Display of raster and vector data</h3>
 <p>
 <ul>
@@ -72,6 +80,8 @@ Learn more about color
 <li>categorical and quantitative differences in data visualization
 <li>https://morphocode.com/the-use-of-color-in-maps/
 <li>https://www.axismaps.com/guide/general/using-colors-on-maps/
+<li>https://www.vis4.net/blog/2013/09/mastering-multi-hued-color-scales/
+<li>show interactive color picker http://tristen.ca/hcl-picker/#/hlc/6/1/21313E/EFEE69
 </ul>
 </small>
 </section>
@@ -104,47 +114,80 @@ Learn more about color
 <p>
 Distribution of color based on uniform raster data intervals
 <p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_histeq1.jpg"></p<
-<p><small>Works for Wake, for NC highlights that most NC is flat coastal plane but we don't see the topography structure </small></p>
+<p><small>Uniform intervals work for DEM in Piedmont, but for entire NC it highlights that most NC is flat coastal 
+plane but we don't see its subtle topography structure </small></p>
 </section>
 
 <section>
    <h3>Histogram equalized color</h3>
 <p>
-Distribution of color based on histogram of raster data values
+Distribution of color based on histogram of raster data values and a custom color ramp
 <p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_histeq2.jpg">
-<p> <small>highlights topography structure, distorts the elevation differences</small>
+<p> <small>highlights topography structure but distorts the elevation differences</small>
 <p>add equation or graph?
 </section>
 
 <section>
-   <h3>Color for data with non-linear distributions</h3>
-<p>
-Example: flow accumulation data range over several magnitudes
-<p>Display with uniform interval, histogram equalized and logarithmic color ramps
-<p> Image composite - flowaccumulation uniform, hist eq, log
-<p>split into 3 slides
-<p>Equation or graph?
-</section>
-
-<section>
-   <h3>Relief shading</h3>
-<p>
-Color composite (intensity+hue) highlights the relationship between the theme values
-represented by color and the surface (topography) structure
-<p>
+   <h3>Color for non-linear distributions</h3>
 <ul>
-  <li>intensity: shaded relief (illuminated topography in greyscale)
-  <li>hue: theme values (elevation, watersheds, land cover as color map)
+<li>Flow accumulation data range over several magnitudes
+<li>Uniform interval color ramp
+</ul> 
+<p> <img height="380" src="img/data_visualize/accum_50K_30mabs.png">
+<p class="credit">add actual numbers</p>
+</section>
+
+<section>
+   <h3>Color for non-linear distributions</h3>
+<ul>
+<li>Flow accumulation data range over several magnitudes
+<li>Histogram equalized color ramp
+</ul> 
+<p> <img height="380" src="img/data_visualize/flowacc_histeq_lg.png">
+<p class="credit">add actual numbers</p>
+</section>
+
+<section>
+   <h3>Color for non-linear distributions</h3>
+<ul>
+<li>Flow accumulation data range over several magnitudes
+<li>Logarithmic color ramp
+</ul> 
+<p> <img height="380" src="img/data_visualize/flowacc_log_lg.jpg">
+<p class="credit">add actual numbers</p>
+</section>
+
+<section>
+   <h3>Maps with relief shading</h3>
+<ul>
+<li>Color composite highlights relationship between 
+<ul>
+  <li>the theme values represented by hue and 
+  <li>surface structure represented by intensity (lightness)
+  <li>derived as shaded relief (illuminated topography in greyscale)
+  <li>hue: theme values (e.g., elevation, flow, land cover)
 </ul>
-<p> Image composite - elevation map with relief shading
-<p> Equations for illuminated relief and composite
+</ul>
+<p> <img height="380" src="img/data_visualize/relief_shade_color.jpg">
+<p><small>Add equations for illuminated relief and img composite</small>
 </section>
 
 <section>
    <h3>Relief shading</h3>
-<p>
-Watersheds with streams
-<p> Image composite - watersheds map with relief shading
+<p>Resulting color composite for elevation theme
+<p> <img height="420" src="img/data_visualize/rastercont_elev.jpg">
+</section>
+
+<section>
+   <h3>Relief shading</h3>
+<p>Color composite for flow accumulation with elevation
+<p> <img height="420" src="img/data_visualize/accum_1m_log.jpg">
+</section>
+
+<section>
+   <h3>Cost surface shading</h3>
+<p>Color composite for proximity to roads surface
+<p> <img height="420" src="img/data_visualize/costsurf_roads.jpg">
 </section>
 
 <section>
@@ -161,42 +204,56 @@ follow conventions for baseline data, national standards
   <li>general rules for quantitative and qualitative data apply
   <li>relation between symbol size, line width and scale
   <li>adding labels: complex algorithms for automated positioning of labels 
+(simulated annealing)
 </ul>
 </p>
 </section>
 
+<!--
 <section>
    <h3>Vector data display</h3>
 <p> examples from GRASS, ArcGIS, online maps (OSM, Google), USGS standards
 <p> Image composite - watersheds map with relief shading
 </section>
+-->
 
 <section>
   <h3>From image to map</h3>
-<p>Display of raster and vector data does not make a map
-<p>Map: cartographic representation of geospatial data
-<p> Image composite - display of raster and vector data
+<ul>
+<li>Display of raster and vector data does not make a map
+<li>Map: cartographic representation of geospatial data
+<li>Map elements position the image on earth and explain the content
+</ul>
+</section>
+
+<section>
+  <h3>Coordinate system grid</h3>
+<ul>
+<li>Compare the geodetic(geographic) and projected grid
+</ul>
+<p> <img height="340" src="img/data_visualize/cartogrid_ll.png">
+<img height="340" src="img/data_visualize/cartogrid_xy.png">
 </section>
 
 <section>
 <h3>Map elements</h3>
 <ul>
 <li>data frame - map content image
-<p>placed outside the map image:
+<li>placed outside the map image
+<ul>
 <li>legend and title
 <li>scale and north arrow
-<li>coordinates 
-<li>citation, metadata
+<li>coordinates, citation, metadata
 </ul>
-<p> Image composite - display of raster and vector data with map elements,
-compare the projected and geographic grid
+</ul>
+<p> <img height="320" src="img/data_visualize/Pareviewshedarc.jpg">
+<p class=credit>Image from report by Pare, GIS582</p>
 </section>
 
 <section>
    <h3>Visualization in 3D perspective</h3>
 <p> Viewing and analyzing 3D data
 <ul>
-<li> on-line viewers (GE, NASA Wolrd Wind), GPS navigation
 <li> Projection of 3D object into a 2D space: perspective
 <li> Parameters:
   <ul>
@@ -206,9 +263,10 @@ compare the projected and geographic grid
   <li>surface color: raster map, vector data
   </ul>
 </ul>
-<p> Image composite - 2D to 3D view, GE, GPS nav
+<p><img height="180" src="img/data_visualize/vis3dcomposits.jpg">
 </section>
 
+<!--
 <section>
    <h3>Properties of 3D perspective</h3>
 <p>Different properties than 2D display 
@@ -246,15 +304,14 @@ compare the projected and geographic grid
 <section>
    <h3>Multiple surface visualization</h3>
 <p>Side by side: Bare Earth and Vegetated Surfaces derived from lidar data
-<p>Stacked with crossections: Groundwater, Bare Earth and Vegetated Surfaces 
-<p> Image composite - SECREF lidar, cutting plane
+<p><img height="400" src="img/data_visualize/lidnvizmultiplesurf.jpg">
 </section>
 
 <section>
    <h3>Multiple surface visualization</h3>
-<p>Difference over time: trees cut down, buildings added
-<p> Image composite - SECREF 2001 - 2013 
-</section>
+<p>Stacked with crossections: Groundwater, Bare Earth and Vegetated Surfaces
+<p><img height="400" src="img/data_visualize/nvizcutplanelwDEMDSMS.jpg">
+</section
 
 <section>
    <h3>Multiple surface visualization</h3>
@@ -269,20 +326,21 @@ compare the projected and geographic grid
 </section>
 
 <section>
-   <h3>Animations </h3>
+   <h3>Multi-temporal data </h3>
 <p> When to use animations: 
 <ul>
-  <li>dynamic simulations: ocean surge, flooding, pollution, migration, urban growth
-  <li>time series of data : temperature, precipitation, melting of ice cap, urban growth
+  <li>dynamic simulations: ocean surge, flooding, wind, pollution, migration, urban growth
+  <li>time series of data : migrating landforms, temperature, precipitation, melting of ice cap, urban growth
   <li>analysis or illustration of a method – changing a parameter
 </ul>
-<p> Image composite - simulation: 2D anim surge, data: cape fear
+<p> Image composite - simulation: 2D anim surge, Cape fear
 </section>
 
 <section>
    <h3>Animations 2D</h3>
 <p> 2D animations examples
 <p> Image composite - simulation: 2D urban growth, data: urban growth
+<p>planets, google earth engine and many others
 </section>
 
 <section>
@@ -299,6 +357,16 @@ Cutting planes: slicing through stacked surfaces or volumes
 <section>
    <h3>Animations in 3D: examples </h3>
 <p> Jockey's ridge
+</section>
+
+<section>
+   <h3>Space-time cube: landforms </h3>
+<p> Jockey's ridge
+</section>
+
+<section>
+   <h3>Space-time cube: people density </h3>
+<p> Webcams data
 </section>
 
 <section>
