@@ -25,16 +25,13 @@
 
 <section>
   <h3>Role of geovisualization</h3>
-<p>visual analytics
-<p>communication of geospatial information
-</section>
-
-<section>
-  <h3>Global Weather Conditions </h3>
-<p>
-Explore
-<a href="https://earth.nullschool.net/about.html">earth</a> by Cameron Beccario
-<p>Display air and ocean movement and conditions in different global cartographic projections
+<ul>
+<li>Visual analytics
+<li>Communication of geospatial information
+<li>Example: Explore Global Weather Conditions at
+<strong>
+<a href="https://earth.nullschool.net/about.html">earth</a></strong> by Cameron Beccario
+</ul>
 </section>
 
 <section>
@@ -69,14 +66,13 @@ not all pixels are visible
  <li>Color definition components: hue, lightness, and saturation
  <li>Quantitative representation: % Red, Green, Blue
  <li>Color for raster data: discrete or continuous 
- <li>Continuous interpolates RGB values based on the values in the raster map
- <li>Color for vector data: discrete by definition
+ <li>Continuous <strong>interpolates</strong> RGB values based on the values in the raster map
+ <li>Color for vector data: usually discrete by definition
 </ul>
 <p>
 Learn more about color
 <small>
 <ul>
-<li><a href="link.html"> color ramps</a>
 <li>categorical and quantitative differences in data visualization
 <li>https://morphocode.com/the-use-of-color-in-maps/
 <li>https://www.axismaps.com/guide/general/using-colors-on-maps/
@@ -111,10 +107,10 @@ Learn more about color
 
 <section>
    <h3>Colors for continuous raster data</h3>
-<p>
-Distribution of color based on uniform raster data intervals
-<p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_histeq1.jpg"></p<
-<p><small>Uniform intervals work for DEM in Piedmont, but for entire NC it highlights that most NC is flat coastal 
+<p> <small>
+Distribution of color based on uniform raster data intervals</small>
+<p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_histeq1.jpg"> </p>
+<p><small>Uniform intervals work for elevations in Piedmont, but for entire NC this approach highlights that most NC is flat coastal 
 plane but we don't see its subtle topography structure </small></p>
 </section>
 
@@ -134,7 +130,7 @@ Distribution of color based on histogram of raster data values and a custom colo
 <li>Uniform interval color ramp
 </ul> 
 <p> <img height="380" src="img/data_visualize/accum_50K_30mabs.png">
-<p class="credit">add actual numbers</p>
+<p class="credit">The flow accumulation values range between 1 and 73000</p>
 </section>
 
 <section>
@@ -144,7 +140,7 @@ Distribution of color based on histogram of raster data values and a custom colo
 <li>Histogram equalized color ramp
 </ul> 
 <p> <img height="380" src="img/data_visualize/flowacc_histeq_lg.png">
-<p class="credit">add actual numbers</p>
+<p class="credit">The flow accumulation values range between 1 and 73000</p>
 </section>
 
 <section>
@@ -154,7 +150,7 @@ Distribution of color based on histogram of raster data values and a custom colo
 <li>Logarithmic color ramp
 </ul> 
 <p> <img height="380" src="img/data_visualize/flowacc_log_lg.jpg">
-<p class="credit">add actual numbers</p>
+<p class="credit">The flow accumulation values range between 1 and 73000</p>
 </section>
 
 <section>
@@ -188,13 +184,15 @@ Distribution of color based on histogram of raster data values and a custom colo
    <h3>Cost surface shading</h3>
 <p>Color composite for proximity to roads surface
 <p> <img height="420" src="img/data_visualize/costsurf_roads.jpg">
+<p><small>Surface can be abstract, such as cost surface, in this case proximity 
+to the main highways based on street networks</small>
 </section>
 
 <section>
    <h3>Vector data display</h3>
 <p>
 Topic covered by thematic cartography,
-follow conventions for baseline data, national standards 
+often follow established conventions or national standards 
 <p class=small>
 <ul>
   <li>lines: color and symbols
@@ -239,7 +237,7 @@ follow conventions for baseline data, national standards
 <h3>Map elements</h3>
 <ul>
 <li>data frame - map content image
-<li>placed outside the map image
+<li>elements outside the map image
 <ul>
 <li>legend and title
 <li>scale and north arrow
@@ -266,26 +264,23 @@ follow conventions for baseline data, national standards
 <p><img height="180" src="img/data_visualize/vis3dcomposits.jpg">
 </section>
 
-<!--
 <section>
    <h3>Properties of 3D perspective</h3>
 <p>Different properties than 2D display 
 <ul>
-<li> paralel lines intersect in XX point
+<li> paralel lines intersect in vanishing point(s)
 <li> scale depends on distance from the viewer
-<li> 3D ortho view: viewing position in infinity above center of the image
+<li> 3D ortho view: viewing position is in infinity above the image center
 <li> only visible part of surface is rendered
-<li> interactive exploration important for viewing obstructed data
+<li> interactive exploration is important for viewing obstructed data
 </ul>
-<p> Image composite - illustrate the points above
 </section>
 
 <section>
    <h3>Light and shading</h3>
-<p>Importnat for visual representation of surface structure
-<p>Useful for indentification of subtle features or artifacts
-</ul>
-<p> Image composite - light sphere
+<p>Important for visual representation of surface structure
+<p>Useful for identification of subtle features or artifacts
+<p><img height="350" src="img/data_visualize/nvizlightnew.jpg">
 </section>
 
 <section>
@@ -310,15 +305,16 @@ follow conventions for baseline data, national standards
 <section>
    <h3>Multiple surface visualization</h3>
 <p>Stacked with crossections: Groundwater, Bare Earth and Vegetated Surfaces
-<p><img height="400" src="img/data_visualize/nvizcutplanelwDEMDSMS.jpg">
-</section
+<p><img height="350" src="img/data_visualize/nvizcutplanelwDEMDSMS.jpg">
+</section>
 
 <section>
    <h3>Multiple surface visualization</h3>
 <p>Difference over time: migrating dune
-<p> Image composite - Jockey's ridge, (also Hunt lib?) 
+<p><img height="350" src="img/data_visualize/jr_74_17_cut3.jpg">
 </section>
 
+<!--
 <section>
    <h3>Visualization of 3D vector data</h3>
 <p>Urban environment
