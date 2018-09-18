@@ -111,24 +111,24 @@
 <section>
    <h3>Global statistics: discrete data</h3>
 <p>Map layer to number(s)
-<p> Soil properties: erodibility mean OK, soil type ID use mode
-<p>Image composit: slide 9
-<p>this slide can be skipped
+<p> Soil properties: soil erodibility mean 0.248 
+<p> Soil type ID: mode (most common soil type)
+<img height="300" src="img/data_visualize/soilsKfac_discrleg.png">
+<img height="300" src="img/data_visualize/soils_rural_1mID.png">
 </section>
 
 <section>
    <h3>Zonal statistics: continuous data</h3>
-<p>Continous data map layer to discrete data map layer
-<p>Example from hydrology: 
-<p>mean slope for a watershed to estimate how fast water is moving through it
 <ul>
-  <li>Raster 1: discrete raster (watershed)
-  <li>Raster 2: continuous field (slope) 
-  <li>Resulting raster 3:  mean slope each watershed (discrete raster)
-  <li>Resulting raster 4:  standard deviation of mean slope for each watershed (discrete raster)
-  <li>What does it mean for the movement of water if stdv is high relative to mean?
+<li>Continous data map layer to discrete data map layer
+<li>Example from hydrology: compute mean slope for a watershed as input for computing how fast water will move through it
 </ul>
-Image composit: see slide 12
+<p class="fragment"> <img height="230" src="img/analysis_basicraster/watersheds2d.png">
+<img class="fragment" height="230" src="img/analysis_basicraster/slope.png">
+<img class="fragment" height="230" src="img/analysis_basicraster/zonal_basinslope.png">
+<p class="fragment"><small>Watersheds (discrete), Slope (continuous), Mean slope for wach watershed (discrete)
+<p class="fragment">You can also compute standard deviation of mean slope for each watershed,
+what does it mean for the movement of water if stdv is high relative to mean?</small></p>
 </section>
 
 <section>
