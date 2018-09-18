@@ -1,5 +1,6 @@
 <section>
-    <h2><b>Basic raster operations</b></h2>
+    <h2><b>Geospatial Analysis</b></h2>
+    <h3>Basic raster operations</h3>
     <p style="margin-top: 0.5em">
         Helena Mitasova</p>
     <p class="title-foot">
@@ -9,120 +10,107 @@
 </section>
 
 <section>
-    <h3>Outline (learning objectives)</h3>
+    <h2>Learning objectives</h2>
 <p>
 <ul>
-  <li>changing resolution in raster data
-  <li>raster to vector, vector to raster conversion
-  <li>global and zonal statistics
-  <li>neighborhood (focal) operations
-  <li>raster map algebra
+  <li>Explain global and zonal statistics
+<p>
+  <li>Define neighborhood operations
+<p>
+  <li>Understand raster map algebra
+<p>
   <ul>
-  <li>expressions, operators, functions and variables
-  <li>basic calculations, integer and floating point data
-  <li>"if" conditions, handling NULLs and creating masks
+   <li>expressions, operators, functions and variables
+   <li>basic calculations, integer and floating point data
+   <li>"if" conditions, handling NULLs and creating masks
   </ul>
-  <li>raster map patching and overlay
-  <li>raster map reclassification and rescaling
-</ul>
-</section>
-
-<section>
-   <h3>Raster data  - changing resolution</h3>
-<p>Resolution: size of the grid cell (pixel) in map units (m)
-<ul>
-  <li>discrete: nearest neighbor resampling
-  <li>continuous: re-interpolation
-</ul>
-<p> Image composite: slide 31 with equations 
-</section>
-
-<section>
-   <h3>Increasing resolution</h3>
-<p>Effect of resampling / reinterpolation on the resulting raster
-<p> Image composite: slide 30 also a note from 33
-</section>
-
-<section>
-   <h3>Decreasing resolution</h3>
-<ul>
-  <li>discrete: nearest neighbor resampling, mode (most common)
-  <li>continuous: re-interpolation, average, nearest neighbor
-</ul>
-<p> Image composite: slide 35
-</section>
-
-<section>
-   <h3>Conversion between data models</h3>
 <p>
-<ul>
- <li>vector to raster 
- <ul>
- <li>continuous: spatial interpolation
- <li>discrete: nearest neighbor
- </ul>
- <li>raster to vector 
- <ul>
- <li>continuous: point sampling, isolines 
- <li>discrete: nearest neighbor, grid center or boundary
- </ul>
-</ul>
+  <li>Define raster mosaicking and patching
 <p>
-Image composite - professional mapping
-</section>
-
-<section>
-   <h3>Conversion between data models</h3>
-<p>Examples see slide 48,50
-<ul>
- <li>vector to raster 
- <ul>
- <li>continuous: spatial interpolation
- <li>discrete: nearest neighbor
- </ul>
- <li>raster to vector 
+  <li>Explain raster map reclassification and rescaling
 </ul>
-<p>
-Image composite - professional mapping
 </section>
 
 <section>
    <h3>Summary statistics</h3>
 <p>
-<ul>
-  <li><b>Continuous raster data:</b> 
+  <p><b>Continuous raster data:</b> 
   <ul>
-   <li>stored numbers are values quantifying the phenomenon
-   <li>univariate statistics: min, max, mean, standard deviation, 
-   <li>histogram (requires discretization into bins) 
+    <li class="fragment">stored numbers are values quantifying the phenomenon
+    <li class="fragment">univariate statistics: min, max, mean, standard deviation, median 
+    <li class="fragment">histogram (requires discretization into bins) 
   </ul>
-  <li><b>Discrete raster data:</b>
+<p class="fragment"> Can be applied as <b>global, zonal, or focal </b> operations
+</section>
+
+<section>
+   <h3>Summary statistics</h3>
+<p>
+  <p><b>Discrete raster data:</b>
   <ul>
-   <li> stored numbers can be values (quantitative data) or category numbers (qualitative data)
-   <li>univariate statistics can be applied only to quantitative attributes 
-   <li>mode (most frequent cat), diversity (number of different cats)  apply to category data 
+   <li class="fragment">stored numbers can be values (quantitative data) or category numbers (qualitative data)
+   <li class="fragment">values apply to an area rather than grid cell
+   <li class="fragment">univariate statistics can be applied only to quantitative attributes
+   <li class="fragment">mode (most frequent cat), diversity (number of different cats)  apply to category data
 </ul>
-<p> Can be applied as <b>global, zonal, or focal </b> operations
+<p class="fragment"> Can be applied as <b>global, zonal, or focal </b> operations
 </section>
 
 <section>
    <h3>Global statistics: continuous data</h3>
-<p> Continuous raster data: elevation from different sources
-<p> mean, stdv, histogram, equations
-<p>Image composit: slide 7
-<p> helps us identify data anomalies and potential artifacts 
+<ul>
+ <li>Map layer to number(s)
+ <li> Compare elevation data from different sources using mean, standard deviation and histogram
+ <li> Identify data anomalies and potential artifacts 
+</ul>
 </section>
 
 <section>
    <h3>Global statistics: continuous data</h3>
-<p> Continuous raster data: elevation from different sources
-<p> correlation matrix, regression, eq
-<p>Image composit: slide 8
-<p> helps us decide which data set to use for our application
+<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
+<img height="180" src="img/analysis_basicraster/elev_dem1mhist.png">
+</p>
+<p class="fragment"> <img height="190" src="img/analysis_basicraster/elev_rural_10m.jpg">
+<img height="190" src="img/analysis_basicraster/elevrur_ned10hist.png">
+<p class="fragment"> <img height="90" src="img/analysis_basicraster/elevstats_table_1m10m.png">
+</section>
+
+<section>
+   <h3>Global statistics: continuous data</h3>
+<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
+<img height="180" src="img/analysis_basicraster/elev_dem1mhist.png">
+</p>
+<p class="fragment"> <img height="190" src="img/analysis_basicraster/elev_rural_30m.jpg">
+<img height="190" src="img/analysis_basicraster/elevrur_ned30hist.png">
+</p>
+<p class="fragment"> <img height="90" src="img/analysis_basicraster/elevstats_table.png">
+</section>
+
+<section>
+   <h3>Global statistics: continuous data</h3>
+<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
+<img height="180" src="img/analysis_basicraster/elev_dem1mhist.png">
+</p>
+<p class="fragment"> <img height="190" src="img/analysis_basicraster/elev_rural_srtm30m.jpg">
+<img height="190" src="img/analysis_basicraster/elevrur_srtm30hist.png">
+</p>
+<p class="fragment"> <img height="70" src="img/analysis_basicraster/elevstats_table_30mnedsrtm.png">
+</section>
+
+<section>
+   <h3>Global statistics: continuous data</h3>
+<p>Elevation from different sources: correlation matrix
+<p> <img height="180" src="img/analysis_basicraster/elev_correl.png">
+<p>
+<img height="130" src="img/analysis_basicraster/elev_dem1mhist.png">
+<img height="130" src="img/analysis_basicraster/elevrur_ned10hist.png">
+<img height="130" src="img/analysis_basicraster/elevrur_ned30hist.png">
+<img height="130" src="img/analysis_basicraster/elevrur_srtm30hist.png">
 </section>
 
 <section>
    <h3>Global statistics: discrete data</h3>
+<p>Map layer to number(s)
 <p> Soil properties: erodibility mean OK, soil type ID use mode
 <p>Image composit: slide 9
 <p>this slide can be skipped
@@ -130,6 +118,7 @@ Image composite - professional mapping
 
 <section>
    <h3>Zonal statistics: continuous data</h3>
+<p>Continous data map layer to discrete data map layer
 <p>Example from hydrology: 
 <p>mean slope for a watershed to estimate how fast water is moving through it
 <ul>
@@ -144,6 +133,7 @@ Image composit: see slide 12
 
 <section>
    <h3>Zonal statistics: category data</h3>
+<p>Discrete data map layer to discrete data map layer
 <p>Example from land use analysis:
 <p>Find prevailing land cover in zipcodes/census blocks? to support regional planning
 <ul>
