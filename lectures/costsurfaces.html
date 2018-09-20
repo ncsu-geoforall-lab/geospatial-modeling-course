@@ -1,0 +1,134 @@
+<section>
+    <h2><b>Geospatial Analysis</b></h2>
+    <h3>proximity, buffers, cost surfaces</h3>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h2>Learning objectives</h2>
+<p>
+<ul>
+  <li>Understand different metrics for distance
+<p>
+  <li>Define buffer operation
+<p>
+  <li>Explain concept of cost surfaces
+<p>
+  <li>Understand least cost path 
+</ul>
+</section>
+
+<section>
+   <h3>Measuring distance</h3>
+<p>
+  <ul>
+   <li>Euclidean: shortest distance in plane
+   <li>Geodesic: shortest distance over curved surface, great circle on sphere: orthodrome
+   <li>equation: http://mathworld.wolfram.com/GreatCircle.html
+   <li>Lp metrics on meshes or grids
+   <li>Linear referencing systems
+  </ul>
+<p class="fragment"> Can be applied as <b>global, zonal, or focal </b> operations
+</section>
+
+<section>
+   <h3>Measuring distance: spheroid</h3>
+<p>
+   Geodesic: shortest distance over curved surface, great circle on sphere: orthodrome
+<p class="fragment"> 
+<img height="350" src="img/analysis_costsurf/oxodrome.png">
+</section>
+
+<section>
+   <h3>Measuring distance: networks</h3>
+<ul>
+ <li>Generalized distance: Lp metrics for measuring distance on meshes or grids
+ <li>distance between a(x1,y1) and b(x2,y2)
+ <li>dp(a,b)=[(x1-x2)p + (y1-y2)p]1/p
+ <li>p=2 : Euclidean distance
+ <li>p=1 : Manhattan (Taxicab, City block) metric
+<p>
+  <li>Linear Referencing Systems: location is defined by its linear distance from a known point on a route (e.g. milepost on a highway), and distance is measured along segments of a network; used for roads, utilities, waterways
+</ul>
+</section>
+
+<section>
+   <h3>Measuring distance: networks</h3>
+Manhattan metric, Linear Referencing Systems
+<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
+<img class="fragment" height="190" src="img/analysis_basicraster/elev_rural_10m.jpg">
+</section>
+
+<section>
+   <h3>Measuring feature length</h3>
+<ul>
+  <li>feature length is scale dependent 
+  <li>what is the length of NC coastline? Neuse river?
+  <li>vector model: length depends on level of detail (point density representing the feature)
+  <li>raster model: resolution and level of detail
+  <li>fractals
+</ul>
+</section>
+
+<section>
+   <h3>Measuring feature length</h3>
+Length of NC coastline
+<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
+<img class="fragment" height="190" src="img/analysis_basicraster/elev_rural_10m.jpg">
+</section>
+
+
+<section>
+   <h3>Global statistics: continuous data</h3>
+<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
+<img height="180" src="img/analysis_basicraster/elev_dem1mhist.png">
+</p>
+<p class="fragment"> <img height="190" src="img/analysis_basicraster/elev_rural_10m.jpg">
+<img height="190" src="img/analysis_basicraster/elevrur_ned10hist.png">
+<p class="fragment"> <img height="90" src="img/analysis_basicraster/elevstats_table_1m10m.png">
+</section>
+
+
+<section>
+   <h3>Global statistics: discrete data</h3>
+<p>Map layer to number(s)
+<p> Soil properties: soil erodibility mean 0.248 
+<p> Soil type ID: mode (most common soil type)
+<img height="300" src="img/data_visualize/soilsKfac_discrleg.png">
+<img height="300" src="img/data_visualize/soils_rural_1mID.png">
+</section>
+
+<section>
+   <h3>Zonal statistics: continuous data</h3>
+<ul>
+<li>Agregates continous data to discrete areas 
+<li>Hydrology example: mean slope for watersheds to estimate how fast water moves through it 
+</ul>
+<p class="fragment"> <img height="240" src="img/analysis_basicraster/watersheds2d.png">
+<img class="fragment" height="240" src="img/analysis_basicraster/slope.png">
+<img class="fragment" height="240" src="img/analysis_basicraster/zonal_basinslope.png">
+<p class="fragment"><small>Watersheds (discrete), Slope (continuous), Mean slope for wach watershed (discrete)</small>
+</section>
+
+
+<section>
+ <h3>Summary</h3>
+<ul>
+  <li>measuring distance
+  <li>buffers
+  <li>cost surfaces
+</ul>
+</section>
+
+<section>
+ <h3>Reading, resources</h3>
+links
+</section>
+
+
+
