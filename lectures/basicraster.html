@@ -120,70 +120,71 @@
 <section>
    <h3>Zonal statistics: continuous data</h3>
 <ul>
-<li>Continous data map layer to discrete data map layer
-<li>Example from hydrology: compute mean slope for a watershed as input for computing how fast water will move through it
+<li>Agregates continous data to discrete areas 
+<li>Hydrology example: mean slope for watersheds to estimate how fast water moves through it 
 </ul>
-<p class="fragment"> <img height="230" src="img/analysis_basicraster/watersheds2d.png">
-<img class="fragment" height="230" src="img/analysis_basicraster/slope.png">
-<img class="fragment" height="230" src="img/analysis_basicraster/zonal_basinslope.png">
-<p class="fragment"><small>Watersheds (discrete), Slope (continuous), Mean slope for wach watershed (discrete)
-<p class="fragment">You can also compute standard deviation of mean slope for each watershed,
-what does it mean for the movement of water if stdv is high relative to mean?</small></p>
+<p class="fragment"> <img height="240" src="img/analysis_basicraster/watersheds2d.png">
+<img class="fragment" height="240" src="img/analysis_basicraster/slope.png">
+<img class="fragment" height="240" src="img/analysis_basicraster/zonal_basinslope.png">
+<p class="fragment"><small>Watersheds (discrete), Slope (continuous), Mean slope for wach watershed (discrete)</small>
 </section>
 
 <section>
    <h3>Zonal statistics: category data</h3>
-<p>Discrete data map layer to discrete data map layer
-<p>Example from land use analysis:
-<p>Find prevailing land cover in zipcodes/census blocks? to support regional planning
 <ul>
-  <li>Raster 1: discrete raster (zipcodes)
-  <li>Raster 2: discrete raster (land use)
-  <li>Resulting raster 3:  most frequent land use 
-  <li>Resulting raster 4:  number of different categories 
-  <li>guess the classes in the results or compare 96 and 2011
+<li>Agregates discrete data to discrete areas
+<li>Land use analysis example: map prevailing land cover for each zipcodes
 </ul>
-<p>Image composit: see slide 14
+<p class="fragment"> <img height="240" src="img/analysis_basicraster/zipcodes_rast.png">
+<img class="fragment" height="240" src="img/analysis_basicraster/landuse96_shade.jpg">
+<img class="fragment" height="240" src="img/analysis_basicraster/landusebyzip.png">
+<p class="fragment"><small>Zipcode areas(discrete), land cover (discrete), most common land cover (discrete)</small>
+<pclass="fragment"><small>HI developed, LI developed, South. pine, Hardwoods, Cultivated Herbaceous</small>
 </section>
 
 <section>
    <h3>Neighborhood operations</h3>
 <ul>
-<li>Focal operations: value at a grid cell is function of its neighborhood values.
-<li>Grid cell neighborhood – moving window, square or circular 
+<li>Focal operations: value at a grid cell is function of the values at neighboring grid cells
+<li>Grid cell neighborhood is defined by a moving window, square or circular 
 <li>Same rules apply for continuous and discrete data as for global and zonal stats
-<li>Basic univariate statistics, special filters (image processing app)
+<li>Basic univariate statistics, filters, image processing
 </ul>
 </section>
 
 <section>
    <h3>Neighborhood operations: smoothing</h3>
 <p>Smoothing noise in DEM: focal mean with 5x5 window
-<p>Show equation
-<p>Image composit: see slide 18
+<p class="fragment"> <img height="240" src="img/analysis_basicraster/rneighbor_avg_srtm_in.jpg">
+<p><img class="fragment" height="230" src="img/analysis_basicraster/rneighbor_avg_srtm_out.jpg">
 </section>
 
 <section>
-   <h3>Neighborhood operations: focal diversity</h3>
-<p>Diversity in landuse? skip this?
-<p>Image composit: see slide 20
-</section>
-
-<section>
-   <h3>Raster map algebra</h3>
-<p>
-Computes a new raster map using expression built by applying logical and/or arithmetic operators, 
-mathematical functions to existing raster maps representing variables:
-<p>
-newmap = expression (map1, map2, ...map3)
-<p>
-Local: Expression is applied on per-cell basis
+   <h3>Neighborhood operations: diversity</h3>
+<p>Number of different LU classes in 7x7 window
+<p class="fragment"> <img height="240" src="img/analysis_basicraster/rneighbor_mode_lu_in.png">
+<img height="240" src="img/analysis_basicraster/lu96_legbig.png">
+</p>
+<p class="fragment"><img height="230" src="img/analysis_basicraster/rneighbor_mode_lu_out.png">
+<img height="180" src="img/analysis_basicraster/lu_divers_lg.png">
+</p>
 </section>
 
 <section>
    <h3>Raster map algebra</h3>
 <p>
-Each software has its own syntax and set of operators and functions, examples:
+Computes a new raster map using an expression built by applying logical and/or arithmetic operators, 
+or mathematical functions to existing raster maps:
+<p>
+<strong>newmap = expression (map1, map2, ...map3)</strong>
+<p>
+Local operation: Expression is applied on per-cell basis
+</section>
+
+<section>
+   <h3>Raster map algebra</h3>
+<p>
+Each software has its own syntax, operators and functions:
 <ul>
 <li>Logical operators and functions: 
 <ul>
@@ -191,11 +192,11 @@ Each software has its own syntax and set of operators and functions, examples:
   <li>and, or, not, ...; 
   <li>if(x), if(x,a,b)
 </ul>
-<li>Arithm. Operators
+<li>Arithmetic Operators
 <ul>
 <li> +, -, *, / 
 </ul>
-<li>Math. Functions: 
+<li>Mathematical Functions: 
 <ul>
 <li>exp(x,y),sin(x),log(x)
 <li>min(x1,x2,..), max(), median()
@@ -217,6 +218,26 @@ highforest = "if(landclass96==5 && elevation > 120., elevation, null())”
 ArcGIS expression
 ADD
 <p>Image composit: see slide 30
+</section>
+
+<section>
+   <h3>Raster map algebra: arithmetics</h3>
+<ul>
+<li>Integer and floating point matters for arithmetic expressions:
+<li>F(map1_int, map2_int) -> map_int
+<li>F(map1_int, map2_fp) -> map_fp
+<p>
+<li>Example: compute ndvi index from Landsat integer maps
+<li>ndvi=(tm4-tm3)/(tm4+tm3)
+<li>ndvi=float(tm4-tm3)/float(tm4+tm3)
+<li>ndvi=1.*(tm4-tm3)/(tm4+tm3)
+</ul>
+</section>
+
+<section>
+   <h3>Raster map algebra: int and fp</h3>
+<p>
+example slide 25
 </section>
 
 <section>
@@ -246,34 +267,27 @@ ADD
 </section>
 
 <section>
-   <h3>Raster map algebra: null data</h3>
-<p>
-example slide 32
-</section>
-
-<section>
-   <h3>Raster map algebra: null data</h3>
-<p>
-example slide 33
-</section>
-
-<section>
    <h3>More raster map algebra</h3>
 <p>
 learn more in assignments and in manuals
 </section>
 
+<section>
+   <h3>Patching and Mosaicking</h3>
+<p>
+</section>
 
+<section>
+   <h3>Reclassification and rescaling</h3>
+<p>
+</section>
 
 <section>
  <h3>Summary</h3>
 <ul>
-  <li>geospatial data acquisition
-  <li>projections, coordinate transformations, georeferencing
-  <li>raster and vector data models
-  <li>geospatial data formats
-  <li>data repositories, wms services, metadata
-  <li>open science: open data, open source software, open access
+  <li>global and zonal statistics
+  <li>neighborhood operations
+  <li>map algebra
 </ul>
 </section>
 
