@@ -167,7 +167,7 @@ v.surf.rst input=tile_0793_016 elevation=tile_0793_016_elevation slope=tile_0793
 
 In case the CRS of the file doesn't match the CRS
 used in the GRASS Location, reprojection can be done before importing
-using <em>las2las</em> tool.
+using <em>las2las</em> tool from libLAS.
 
 <p>
 The following example command is for reprojecting tiles
@@ -175,6 +175,17 @@ in NAD83/North Carolina in feet (EPSG:2264)
 into NAD83/North Carolina in meters (EPSG:3358):
 <pre><code>
 las2las --a_srs=EPSG:2264 --t_srs=EPSG:3358 -i input_spf.las -o output_spm.las
+</code></pre>
+
+<h4>Importing data in LAS version 1.4 or newer</h4>
+
+The LAS version 1.4 is not backwards compatible for readers expecting
+LAS 1.2. Unfortunately, libLAS supports only 1.2 and not 1.4.
+Fortunately, PDAL can convert to the version 1.2 using the translate
+tool:
+
+<pre><code>
+pdal translate --input=input_v14.las --writers.las.minor_version=2 --output=output_v12.las
 </code></pre>
 
 <h4>Importing data with broken projection information</h4>
