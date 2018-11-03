@@ -1,0 +1,139 @@
+<section>
+    <h2><b>Flow routing and watershed analysis</b></h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h2>Learning objectives</h2>
+<p>
+<ul>
+  <li>cumulative terrain parameters based on flow tracing: definitions and general approach 
+(flow path length, flow accumulation, stream networks, watershed boundaries, ridge lines)
+  <li>methods for computing flow direction (D8, Dinf), flow tracing (SFD, MFD, uniform, weighted)
+  <li>methods for flow tracing through depressions and flat areas (filling, carving, hybrid, least cost path)
+  <li>principle of stream extraction from a DEM 
+  <li>watershed delineation
+</ul>
+</section>
+
+<section>
+   <h3>Cumulative flow parameters</h3>
+<p>
+  <ul>
+  <li>flow path length, 
+  <li>flow accumulation
+  <li>stream networks 
+  <li>contributing areas, watershed boundaries
+  <li>ridge lines
+  </ul>
+<p>Flow tracing over DEM is used to derive these parameters
+</section>
+
+<section>
+   <h3>Computing flow direction</h3>
+What is flow direction:
+<ul>
+ <li class="fragment">direction of gradient vector
+ <li class="fragment">aspect (orientation of hillslope)
+</ul>
+<p>How to derive flow direction from a DEM?
+<ul>
+ <li class="fragment">D8, D16 (discrete)
+ <li class="fragment">D-infinity (continuous)
+</ul>
+</section>
+
+<section>
+   <h3>Discrete flow direction</h3>
+D8 algorithm: 
+<ul>
+<li>8 directions: aspect discretized to 0, 45, 90, ... degrees
+<li>estimated from elevation differences between the given grid cell and its 8 neighboring cells
+<li>flow direction is in the direction of meximum elevation difference
+</ul>
+<p> <img height="380" src="img/flow/D8.jpg">
+</section>
+
+<section>
+   <h3>Continuous flow direction</h3>
+D-infinity algorithm
+<ul>
+  <li>aspect derived from a continuous function (polynomial or spline)
+  <li>linear interpolation of aspect along the grid cell edges to trace flowlines
+</ul>
+<p> <img height="380" src="img/flow/Dinf.jpg">
+</section>
+
+<section>
+   <h3>Flow routing</h3>
+Tracing flow in the gradient direction to compute 
+<ul>
+ <li>flowlines
+ <li>flow path length 
+ <li>flow accumulation
+</ul>
+<p> <img height="180" src="img/flow/flowlines.jpg">
+</section>
+
+<section>
+   <h3>Flow lines</h3>
+<p>
+<ul>
+   <li>Lines along the steepest slope - in the direction of gradient
+   <li>Perpendicular to contours
+  <li>D8 flowlines - along grid lines and diagonals
+  <li>Dinf:linear interpolation of aspect along the grid cell edges to trace flowlines
+</ul>
+<p class="fragment">
+<img height="350" src="img/flow/flowlines.png">
+</section>
+
+<section>
+   <h3>Flow path length</h3>
+<p>Definition and applications
+<ul>
+  <li>length of the flow line from the given cell to the outlet used to compute time to concentration (steady state flow)
+
+  <li>hillslope length - from the given cell to a  flat or depression, used for erosion modeling using Universal Soil Loss Equation (USLE) - measure of steady state flow depth for a  uniform hillslope
+</ul>
+</section>
+
+<section>
+   <h3>Flow path length</h3>
+<p>how far is the given cell from the outlet
+<p>what is the length of a hillslope above a given cell
+<img height="300" src="img/flow/length_to_outlet.png">
+<img height="300" src="img/flow/hillslope_length.png">
+</section>
+
+<section>
+   <h3>Flow accumulation</h3>
+<ul>
+ <li>number of cells draining into a given cell = number of flow lines passing through each cell
+ <li>size of the upslope contributing area (horizontal, in cell units)
+ <li>measure of steady state flow depth
+</ul>
+<p class="fragment"> <img height="240" src="img/flow/flowaccum.png">
+<img class="fragment" height="240" src="img/flow/flowaccum3D.png">
+</section>
+
+
+<section>
+ <h3>Summary</h3>
+<ul>
+<li>flow
+</ul>
+</section>
+
+<section>
+ <h3>Reading, resources</h3>
+links
+</section>
+
+
+
