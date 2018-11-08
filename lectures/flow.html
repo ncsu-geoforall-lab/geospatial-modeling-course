@@ -12,12 +12,12 @@
     <h2>Learning objectives</h2>
 <p>
 <ul>
-  <li>cumulative terrain parameters based on flow tracing: definitions and general approach 
+  <li>define cumulative terrain parameters based on flow tracing 
 (flow path length, flow accumulation, stream networks, watershed boundaries, ridge lines)
-  <li>methods for computing flow direction (D8, Dinf), flow tracing (SFD, MFD, uniform, weighted)
-  <li>methods for flow tracing through depressions and flat areas (filling, carving, hybrid, least cost path)
-  <li>principle of stream extraction from a DEM 
-  <li>watershed delineation
+  <li>understand methods for computing flow direction (D8, Dinf), flow tracing (SFD, MFD, uniform, weighted)
+  <li>identify methods for flow tracing through depressions and flat areas (filling, carving, hybrid, least cost path)
+  <li>understand principle of stream extraction from a DEM 
+  <li>perform watershed delineation
 </ul>
 </section>
 
@@ -118,6 +118,15 @@ Tracing flow in the gradient direction to compute
  <li>size of the upslope contributing area (horizontal, in cell units)
  <li>measure of steady state flow depth
 </ul>
+<p class="fragment"> <img height="240" src="img/flow/flowaccum.png">
+<img class="fragment" height="240" src="img/flow/flowaccum3D.png">
+</section>
+
+<section>
+   <h3>Flow accumulation</h3>
+Measure of steady state flow depth when raindrop from the farthest grid cell reaches the outlet
+<p>
+Evolution of steady state flow as water moves through the landscape
 <p class="fragment"> <img height="240" src="img/flow/flowaccum.png">
 <img class="fragment" height="240" src="img/flow/flowaccum3D.png">
 </section>
