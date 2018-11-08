@@ -116,7 +116,7 @@ Tracing flow in the gradient direction to compute
 <ul>
  <li>number of cells draining into a given cell = number of flow lines passing through each cell
  <li>size of the upslope contributing area (horizontal, in cell units)
- <li>measure of steady state flow depth
+ <li>measure of steady state flow depth under uniform conditions
 </ul>
 <p class="fragment"> <img height="240" src="img/flow/flowaccum.png">
 <img class="fragment" height="240" src="img/flow/flowaccum3D.png">
@@ -124,13 +124,101 @@ Tracing flow in the gradient direction to compute
 
 <section>
    <h3>Flow accumulation</h3>
-Measure of steady state flow depth when raindrop from the farthest grid cell reaches the outlet
+Measure of steady state flow depth reached when a raindrop from the farthest grid cell reaches the outlet
 <p>
-Evolution of steady state flow as water moves through the landscape
-<p class="fragment"> <img height="240" src="img/flow/flowaccum.png">
-<img class="fragment" height="240" src="img/flow/flowaccum3D.png">
+Evolution of steady state flow as water moves through the landscape with steady rainfall rate and uniform flow velocity
+<p class="fragment"> <img height="240" src="img/flow/water.gif">
 </section>
 
+<section>
+   <h3>Flow routing methods</h3>
+<ul>
+  <li>single flow direction (SFD) moves entire unit of flow into a single downslope cell: flow dispersal on hillslopes with convex tangential curvature is not captured
+  <li>multiple flow direction (MFD) partitions flow into two or more downslope directions 
+  <li>both can be implemented with D8 or Dinf
+</ul>
+</section>
+
+<section>
+   <h3>Flow routing methods</h3>
+Flow accumulation as results of single flow direction routing with D8 and D-inf flow direction
+<p class="fragment"> <img height="240" src="img/flow/flowd8.png">
+<img class="fragment" height="240" src="img/flow/flowdinf.png">
+</section>
+
+<section>
+   <h3>Flow routing methods</h3>
+Flow accumulation as results of multiple flow direction routing 
+<img class="fragment" height="240" src="img/flow/flowdinf.png">
+<p class="fragment"> <img height="240" src="img/flow/flowmfd.png">
+</section>
+
+<section>
+   <h3>Weighted flow routing</h3>
+Each cell is assigned weight proportional to amount of water it produces 
+(rainfall excess available for runoff) , e.g. based on soil properties or land cover
+<img class="fragment" height="240" src="img/flow/luweights.png">
+<p class="fragment"> <img height="240" src="img/flow/flow_weights.png">
+</section>
+
+<section>
+   <h3>Stream extraction</h3>
+<ul>
+ <li>automated stream mapping: extracting connected stream network from flow accumulation map
+ <li>Stream raster map is derived using map algebra using flow accumulation threshold
+ <li>Result is converted to vector representation, build connected stream network
+ <li>Stream origin is dynamic, often driven by groundwater: additional information is needed,
+ machine learning can be used
+</ul>
+</section>
+
+<section>
+   <h3>Stream extraction</h3>
+Flow accumulation from 30m NED, method: SFD D8
+and a vectorized extracted stream network 
+<p><img class="fragment" height="240" src="img/flow/flowacc.png">
+<p class="fragment"> <img height="240" src="img/flow/streamsvect.png">
+</section>
+
+<section>
+   <h3>Flow routing in flat areas</h3>
+<ul>
+ <li>to create connected stream network flow needs to be routed through flats and depressions
+ <li class="fragment">integer DEMs, lakes or filled depressions create flat areas 
+ <li class="fragment">flat areas: zero slope and undefined aspect
+ <li class="fragment">solutions: 
+ <ul>
+ <li class="fragment">iterative assignment of direction from the first draining cell
+ <li class="fragment">imposed gradient (small change in elevation)
+ </ul>
+</ul>
+</section>
+
+<section>
+   <h3>Flow routing through depressions</h3>
+<ul>
+ <li>depressions "trap" flow
+ <li class="fragment">sources of depressions in DEMs: 
+ <ul>
+ <li class="fragment">real features 
+ <li class="fragment">noise, measurements errors
+ <li class="fragment">processing artifacts
+ </ul>
+</ul>
+<p><img class="fragment" height="240" src="img/flow/depression.png">
+</section>
+
+<section>
+   <h3>Handling depressions: filling</h3>
+Works well for small depressions
+<p><img class="fragment" height="240" src="img/flow/depression.png">
+</section>
+
+<section>
+   <h3>Handling depressions: carving</h3>
+Works well for small depressions
+<p><img class="fragment" height="240" src="img/flow/depression.png">
+</section>
 
 <section>
  <h3>Summary</h3>
