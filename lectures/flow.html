@@ -9,13 +9,12 @@
 </section>
 
 <section>
-    <h2>Learning objectives</h2>
+    <h3>Learning objectives</h3>
 <p>
 <ul>
-  <li>define cumulative terrain parameters based on flow tracing 
-(flow path length, flow accumulation, stream networks, watershed boundaries, ridge lines)
-  <li>understand methods for computing flow direction (D8, Dinf), flow tracing (SFD, MFD, uniform, weighted)
-  <li>identify methods for flow tracing through depressions and flat areas (filling, carving, hybrid, least cost path)
+  <li>define cumulative terrain parameters based on flow routing 
+  <li>understand methods for computing flow direction and flow routing 
+  <li>identify methods for flow routing through depressions and flat areas 
   <li>understand principle of stream extraction from a DEM 
   <li>perform watershed delineation
 </ul>
@@ -23,142 +22,170 @@
 
 <section>
    <h3>Cumulative flow parameters</h3>
+<p>Flow routing over DEM is used to derive the following parameters and features:
 <p>
   <ul>
-  <li>flow path length, 
-  <li>flow accumulation
-  <li>stream networks 
-  <li>contributing areas, watershed boundaries
-  <li>ridge lines
+  <li class="fragment">flow path length 
+  <li class="fragment">flow accumulation
+  <li class="fragment">stream networks 
+  <li class="fragment">contributing areas
+  <li class="fragment">watershed boundaries
   </ul>
-<p>Flow tracing over DEM is used to derive these parameters
 </section>
 
 <section>
    <h3>Computing flow direction</h3>
-What is flow direction:
+<p class="fragment">What is flow direction:
 <ul>
- <li class="fragment">direction of gradient vector
+ <li class="fragment">direction of surface gradient vector
  <li class="fragment">aspect (orientation of hillslope)
 </ul>
-<p>How to derive flow direction from a DEM?
+<p class="fragment">Methods to derive flow direction from a DEM?
 <ul>
- <li class="fragment">D8, D16 (discrete)
- <li class="fragment">D-infinity (continuous)
+ <li class="fragment">discrete: D8, D16 
+ <li class="fragment">continuous: D-infinity 
 </ul>
 </section>
 
 <section>
    <h3>Discrete flow direction</h3>
-D8 algorithm: 
+<p>
+D8 algorithm
+<p>
 <ul>
-<li>8 directions: aspect discretized to 0, 45, 90, ... degrees
+<li>aspect discretized to 8 directions: 0, 45, 90, ... degrees
 <li>estimated from elevation differences between the given grid cell and its 8 neighboring cells
-<li>flow direction is in the direction of meximum elevation difference
+<li>flow direction is in the direction of maximum elevation difference
 </ul>
-<p> <img height="380" src="img/flow/D8.jpg">
+<p> <img height="380" src="img/flow_erosion/D8.jpg">
 </section>
 
 <section>
    <h3>Continuous flow direction</h3>
-D-infinity algorithm
-<ul>
-  <li>aspect derived from a continuous function (polynomial or spline)
-  <li>linear interpolation of aspect along the grid cell edges to trace flowlines
-</ul>
-<p> <img height="380" src="img/flow/Dinf.jpg">
+<p>
+D-infinity algorithm: gradient direction derived from a continuous function (polynomial or spline)
+<p> <img height="380" src="img/flow_erosion/aspectarrows.png">
 </section>
 
 <section>
    <h3>Flow routing</h3>
 Tracing flow in the gradient direction to compute 
+<p>
 <ul>
  <li>flowlines
  <li>flow path length 
  <li>flow accumulation
 </ul>
-<p> <img height="180" src="img/flow/flowlines.jpg">
+<p> <img height="180" src="img/flow_erosion/flowlines.jpg">
 </section>
 
 <section>
    <h3>Flow lines</h3>
 <p>
 <ul>
-   <li>Lines along the steepest slope - in the direction of gradient
+   <li>Lines along the steepest slope: in gradient direction
    <li>Perpendicular to contours
   <li>D8 flowlines - along grid lines and diagonals
-  <li>Dinf:linear interpolation of aspect along the grid cell edges to trace flowlines
+  <li>Dinf: linear interpolation of aspect along the grid cell edges to trace continuous flowlines
 </ul>
-<p class="fragment">
-<img height="350" src="img/flow/flowlines.png">
-</section>
-
-<section>
-   <h3>Flow path length</h3>
-<p>Definition and applications
-<ul>
-  <li>length of the flow line from the given cell to the outlet used to compute time to concentration (steady state flow)
-
-  <li>hillslope length - from the given cell to a  flat or depression, used for erosion modeling using Universal Soil Loss Equation (USLE) - measure of steady state flow depth for a  uniform hillslope
-</ul>
-</section>
-
-<section>
-   <h3>Flow path length</h3>
-<p>how far is the given cell from the outlet
-<p>what is the length of a hillslope above a given cell
-<img height="300" src="img/flow/length_to_outlet.png">
-<img height="300" src="img/flow/hillslope_length.png">
-</section>
-
-<section>
-   <h3>Flow accumulation</h3>
-<ul>
- <li>number of cells draining into a given cell = number of flow lines passing through each cell
- <li>size of the upslope contributing area (horizontal, in cell units)
- <li>measure of steady state flow depth under uniform conditions
-</ul>
-<p class="fragment"> <img height="240" src="img/flow/flowaccum.png">
-<img class="fragment" height="240" src="img/flow/flowaccum3D.png">
-</section>
-
-<section>
-   <h3>Flow accumulation</h3>
-Measure of steady state flow depth reached when a raindrop from the farthest grid cell reaches the outlet
 <p>
-Evolution of steady state flow as water moves through the landscape with steady rainfall rate and uniform flow velocity
-<p class="fragment"> <img height="240" src="img/flow/water.gif">
+<img height="250" src="img/flow_erosion/rflowfigure.jpg">
+<img height="250" src="img/flow_erosion/flowlines_and_contours.png">
+<p><small>Flowlines derived using D-infinity algorithm</small>
+</section>
+
+<section>
+   <h3>Flow path length</h3>
+<p>
+<ul>
+<li>length of a hillslope upslope from a given cell 
+<li>distance of given cell from the outlet 
+</ul>
+<p>
+<img height="300" src="img/flow_erosion/flowlgdown.jpg">
+&nbsp;&nbsp;
+<img height="300" src="img/flow_erosion/flowlgup.jpg">
+<p><small>upslope flow tracing: hillslope length &nbsp;&nbsp;&nbsp;&nbsp; downslope flow tracing: distance from an outlet</small>
+</section>
+
+<section>
+   <h3>The longest path to outlet</h3>
+<ul>
+  <li>length of the flow line from the grid cell that is the farthest from the outlet
+  <li>when water from this cell reaches outlet, all cells have drained to outlet 
+  <li>the longest path to outlet is used to compute time to concentration (time to steady state flow)
+</ul>
+</section>
+
+<section>
+   <h3>Flow accumulation at grid cell</h3>
+<ul>
+ <li>number of flow lines generated from each cell passing through a given grid cell
+ <li>number of grid cells draining into a given grid cell 
+ <li>size of the upslope contributing area for a given grid cell (horizontal area, in cell units)
+ <li>measure of steady state flow for uniform conditions
+</ul>
+<p> <img height="260" src="img/flow_erosion/flowlines_flowaccum.jpg">
+</section>
+
+<section>
+   <h3>Flow accumulation across landscape</h3>
+<p>
+Evolution of steady state flow as water moves through the landscape 
+with steady rainfall and uniform flow velocity
+<p> <img height="450" src="img/flow_erosion/water.gif">
+</section>
+
+<section>
+   <h3>Flow accumulation at steady state</h3>
+<p>
+Measure of steady state flow depth when all flowlines reached the outlet or the edge of the map
+<p> <img height="400" src="img/flow_erosion/Flow3d_irwineldsdac5.png">
+<p><small>Flow accumulation represented as exagerrated 3D surface added to the elevation model highlights
+the steady state flow accumulation </small>
 </section>
 
 <section>
    <h3>Flow routing methods</h3>
 <ul>
-  <li>single flow direction (SFD) moves entire unit of flow into a single downslope cell: flow dispersal on hillslopes with convex tangential curvature is not captured
-  <li>multiple flow direction (MFD) partitions flow into two or more downslope directions 
+  <li><strong>Single Flow Direction (SFD)</strong> moves entire unit of flow into a single downslope cell: 
+does not capture flow dispersal on hillslopes with convex tangential curvature
+  <li><strong>Multiple flow direction (MFD)</strong> partitions flow into two or more downslope directions 
   <li>both can be implemented with D8 or Dinf
 </ul>
+<p> <img height="260" src="img/flow_erosion/flowdispersal.jpg">
+<p><small>D-inf SFD flow accumulation over convex hillsope (shoulder), note discrete stripes in flow direction </small>
 </section>
 
 <section>
    <h3>Flow routing methods</h3>
-Flow accumulation as results of single flow direction routing with D8 and D-inf flow direction
-<p class="fragment"> <img height="240" src="img/flow/flowd8.png">
-<img class="fragment" height="240" src="img/flow/flowdinf.png">
+<p>
+Flow accumulation as a result of SFD routing <br>with D8 and D-inf flow direction
+<p class="fragment"> <img height="350" src="img/flow_erosion/flowD8dem.jpg">
+<img class="fragment" height="350" src="img/flow_erosion/flowdinfdem.jpg">
 </section>
 
 <section>
    <h3>Flow routing methods</h3>
-Flow accumulation as results of multiple flow direction routing 
-<img class="fragment" height="240" src="img/flow/flowdinf.png">
-<p class="fragment"> <img height="240" src="img/flow/flowmfd.png">
+Flow accumulation as a result of SFD and MFD routing 
+<p>
+<img class="fragment" height="350" src="img/flow_erosion/accum5K_gr65_sep09b.jpg">
+<img class="fragment" height="350" src="img/flow_erosion/accum5K_gr65_mfd.jpg">
 </section>
 
 <section>
    <h3>Weighted flow routing</h3>
-Each cell is assigned weight proportional to amount of water it produces 
-(rainfall excess available for runoff) , e.g. based on soil properties or land cover
-<img class="fragment" height="240" src="img/flow/luweights.png">
-<p class="fragment"> <img height="240" src="img/flow/flow_weights.png">
+Each cell is assigned weight proportional to the amount of runoff it produces 
+(rainfall excess available for runoff after infiltration and vegetation intercept)
+<p class="fragment"> <img height="340" src="img/flow_erosion/landclass_30m.jpg">
+<img class="fragment" height="340" src="img/flow_erosion/accum_runoffdiff_30m3d.jpg">
+</section>
+
+<section>
+   <h3>Weighted flow routing</h3>
+Spatially variable runoff reflects the impact of developed areas on flow accumulation
+<p class="fragment"> <img height="340" src="img/flow_erosion/accum_runoffuni_30m3d.jpg">
+<img class="fragment" height="340" src="img/flow_erosion/accum_runoffvar_30m3d.jpg">
 </section>
 
 <section>
@@ -174,10 +201,9 @@ Each cell is assigned weight proportional to amount of water it produces
 
 <section>
    <h3>Stream extraction</h3>
-Flow accumulation from 30m NED, method: SFD D8
+Flow accumulation from 30m NED, method: SFD D8, threshold accumulation: 100 cells,
 and a vectorized extracted stream network 
-<p><img class="fragment" height="240" src="img/flow/flowacc.png">
-<p class="fragment"> <img height="240" src="img/flow/streamsvect.png">
+<p><img class="fragment" height="380" src="img/flow_erosion/stream_extract.jpg">
 </section>
 
 <section>
@@ -205,20 +231,15 @@ and a vectorized extracted stream network
  <li class="fragment">processing artifacts
  </ul>
 </ul>
-<p><img class="fragment" height="240" src="img/flow/depression.png">
+<p><img class="fragment" height="240" src="img/flow_erosion/depression.png">
 </section>
 
 <section>
-   <h3>Handling depressions: filling</h3>
-Works well for small depressions
-<p><img class="fragment" height="240" src="img/flow/depression.png">
+   <h3>Handling depressions</h3>
+Filling, carving, hybrid, least cost path
+<p><img class="fragment" height="340" src="img/flow_erosion/depressionfill_scheme.png">
 </section>
 
-<section>
-   <h3>Handling depressions: carving</h3>
-Works well for small depressions
-<p><img class="fragment" height="240" src="img/flow/depression.png">
-</section>
 
 <section>
  <h3>Summary</h3>
