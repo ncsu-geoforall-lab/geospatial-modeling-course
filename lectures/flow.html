@@ -145,12 +145,13 @@ the steady state flow accumulation </small>
 
 <section>
    <h3>Flow routing methods</h3>
-<ul>
-  <li class="fragment"><strong>Single Flow Direction (SFD)</strong> moves entire unit of flow into a single downslope cell: 
-does not capture flow dispersal on hillslopes with convex tangential curvature
-  <li class="fragment"><strong>Multiple flow direction (MFD)</strong> partitions flow into two or more downslope directions 
+<ul class="left">
+  <li class="fragment"><strong>Single Flow Direction (SFD)</strong> moves entire unit of flow into a single downslope cell
+    <small>(does not capture flow dispersal on hillslopes with convex tangential curvature)</small>
+  <li class="fragment"><strong>Multiple flow direction (MFD)</strong> partitions flow into two or more downslope directions
   <li class="fragment">both can be implemented with D8 or Dinf
 </ul>
+<img class="right" src="img/flow_erosion/mdf_photo.jpg">
 <!--
 <p> <img height="260" src="img/flow_erosion/flowdispersal.jpg">
 <p><small>D-inf SFD flow accumulation over convex hillsope (shoulder), note discrete stripes in flow direction </small>
@@ -259,7 +260,7 @@ Depressions in lidar-based DEM and flow accumulation using DEM filling
    <h3>Depressions: algorithm comparison </h3>
 <p>
 <ul>
- <li>Filling with single stream(black) and multiple parallel streams (grey) across filled depression
+ <li>Filling with single stream (black) and multiple parallel streams (grey) across filled depression
 <li>Least cost path stream (red) and on-ground stream location from GPS (blue points)
 </ul>
 <p><img height="350" src="img/flow_erosion/lcp_fill1_fill2_compare.jpg">
