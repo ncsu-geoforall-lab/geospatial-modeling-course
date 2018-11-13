@@ -101,9 +101,9 @@ Tracing flow in the gradient direction to compute
 <li>distance of given cell from the outlet 
 </ul>
 <p>
-<img height="300" src="img/flow_erosion/flowlgdown.jpg">
+<img height="350" src="img/flow_erosion/flowlgdown.jpg">
 &nbsp;&nbsp;
-<img height="300" src="img/flow_erosion/flowlgup.jpg">
+<img height="350" src="img/flow_erosion/flowlgup.jpg">
 <p><small>upslope flow tracing: hillslope length &nbsp;&nbsp;&nbsp;&nbsp; downslope flow tracing: distance from an outlet</small>
 </section>
 
@@ -197,7 +197,7 @@ Spatially variable runoff reflects the impact of developed areas on flow accumul
  <li class="fragment">Stream raster map is derived using map algebra based on flow accumulation threshold
  <li class="fragment">Result is converted to vector representation of a connected stream network
  <li class="fragment">Stream origin is dynamic, often driven by groundwater: 
-additional information is needed for accurate identificatio, machine learning can be used
+additional information is needed for accurate identification
 </ul>
 </section>
 
@@ -244,14 +244,15 @@ Filling, carving, hybrid, least cost path
    <h3>Depressions filling: lidar DEM</h3>
 Depressions in lidar-based DEM and flow accumulation using DEM filling
 <p><img height="400" src="img/flow_erosion/depressions_lidardem.jpg">
+<p><small>Many depressions are artificial lakes where bridges or roads create dams</small>
 </section>
 
 <section>
    <h3>Depressions filling: radar DSM</h3>
 <p>Radar (SRTM, IFSARE) DSM include vegetation surface leading to complex, nested depressions
-<p>Filling alters elevation in large areas
 <p><img height="340" src="img/flow_erosion/depressions_ifsare.jpg">
 <img height="340" src="img/flow_erosion/filled_dem.jpg">
+<p><small>Filling alters elevation in large areas</small>
 </section>
 
 <section>
@@ -277,7 +278,7 @@ do not match the DEM
 Modified DEM with connected stream network where each grid cell drains into the outlet
 <ul>
   <li>hydrologically conditioned DEM does not have depressions or flat areas
-  <li>it should not be referred to as hydrologically correct, because - all wetlands are removed
+  <li>it should not be referred to as hydrologically correct, because all wetlands are removed
 </ul>
 </section>
 
@@ -286,7 +287,7 @@ Modified DEM with connected stream network where each grid cell drains into the 
 <p>
 Measured as horizontal accuracy of stream centerline
 <ul>
- <li class="fragment">topographic maps (blue lines) - have often the lowest accuracy, old
+ <li class="fragment">topographic maps (blue lines) - have often the lowest accuracy, and the data are old
  <li class="fragment">National Hydrographic Data - updated, structured representation of stream and river networks
  <li class="fragment">extracted from lidar-based DEMs - better, but accuracy low in coastal plane, improved new lidar mapping
  <li class="fragment">digitized from high resolution orthophotos and on ground surveys - most accurate except forested areas
@@ -306,23 +307,56 @@ Measured as horizontal accuracy of stream centerline
 <p>
 USGS Hydrologic units: hierarchy of drainage areas for national river network
 <br>see more at http://water.usgs.gov/GIS/huc.html 
-
 </section>
 
+<section>
+   <h3>Watersheds</h3>
+<p>Watershed and its subwatershes 
+<p><img height="400" src="img/flow_erosion/subwatersheds.jpg">
+</section>
 
+<section>
+   <h3>Watershed analysis</h3>
+Most common types of watershed analysis:
+<ul>
+ <li>find watershed boundaries for a given outlet, for example, stream gauge 
+ <li>find contributing area for a given stream segment
+ <li>partition a region  into watersheds with the given approximate size
+</ul>
+</section>
+
+<section>
+   <h3>Watershed analysis</h3>
+<p>
+ Watershed boundaries for a given outlet
+<p>
+<p><img height="400" src="img/flow_erosion/watershed_from_outlet.jpg">
+</section>
+
+<section>
+   <h3>Watershed analysis</h3>
+<p>
+ Partition of a region  into watersheds
+<p><img height="400" src="img/flow_erosion/watersheds2d.png">
+</section>
 
 
 <section>
  <h3>Summary</h3>
 <ul>
-<li>flow
+<li>we have defined cumulative terrain parameters based on flow routing: flow length, flow accumulation
+<li>we have learned about methods for computing flow direction (D8, Dinf) and flow routing SFD, MFD
+<li>we discussed flow through flat areas and depressions
+<li>we have applied flow routing to extract streams and watersheds
 </ul>
 </section>
 
+<!--
 <section>
  <h3>Reading, resources</h3>
 links
 </section>
+-->
 
 
 
