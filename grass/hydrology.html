@@ -127,7 +127,7 @@ Remove previous layers. Display extracted streams over aerial image:
 <pre><code>
 d.erase
 d.rast ortho_2001_t792_1m
-d.rast accum_5K values=1000-1000000
+d.rast accum_5K values=1500-1000000
 </code></pre>
 
 <p>
@@ -162,11 +162,11 @@ r.report basin_A30 unit=h,a
 </code></pre>
 
 <h3>Assess and mitigate impact of the road on flowrouting</h3>
-Compare the extracted streams (accum > 800) with official stream data:
+Compare the extracted streams (accum > 1500) with official stream data:
 
 <pre><code>
 d.rast ortho_2001_t792_1m
-d.rast accum_5K values=800-1000000
+d.rast accum_5K values=1500-1000000
 d.vect streets_wake color=red
 d.vect streams color=green
 </code></pre>
@@ -184,7 +184,7 @@ d.rast elev_lidcarved_1m
 Explain the advantage and disadvantage of carving.</span>
 
 <pre><code>
-r.watershed -as elevation=elev_lidcarved_1m threshold=50000 accumulation=accumc_5K1m
+r.watershed -as elevation=elev_lidcarved_1m accumulation=accumc_5K1m
 d.rast accumc_5K1m values=1500-10000000
 d.vect streams
 d.out.file streamcarved
