@@ -1,0 +1,366 @@
+<section>
+    <h2><b>Hydrologic and Erosion Modeling</b></h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h3>Learning objectives</h3>
+<p>
+<ul>
+ <li>spatially explicit modeling: principles and applications, role of GIS
+ <li>geospatial aspects of models: spatially averaged and distributed models
+ <li>general approaches and methods: empirical and physics based components of models
+ <li>steady state, continuous time and dynamic models and related modeling tools
+ <li>spatial hydrologic modeling: processes and methods
+ <li>spatial modeling of erosion, sediment transport and landscape evolution
+ <li>deriving input parameters, analysis and visualization of modeling results
+ <li>simulating impact of landuse and climate change
+</ul>
+</section>
+
+<section>
+   <h3>Geospatial modeling of processes</h3>
+<p>Numerical simulations: tools for gaining new knowledge - virtual experiments
+<p>Models of Earth processes have are evolved 
+<ul>
+ <li class="fragment">from: empirical, spatially averaged, static 
+ <li class="fragment">to: process-based, distributed, dynamic with 
+     the aim to predict modeled quantity at any point in space and time
+</ul>
+ <p class="fragment">Most models combine several approaches
+</section>
+
+<section>
+   <h3>Empirical and process-based models</h3>
+<p class="fragment">Empirical:
+<ul>
+ <li class="fragment">based on statistical models derived from experimental data
+ <li class="fragment">applicable only to landscapes under same conditions
+</ul>
+<p class="fragment">Process-based
+<ul>
+ <li class="fragment">based on physical laws, such as continuity and mass conservation equations 
+</ul>
+<p class="fragment">Empirical / statistical methods often have physics based interpretations,
+physics based equations often have empirical parameters
+<p class="fragment">ML, AI - empirical approach
+</section>
+
+<section>
+   <h3>Geospatial representation</h3>
+<p>
+<ul>
+  <li>the modeled quantities (water depth, concentration of pollutants) depend on position on Earth
+  <li>they are represented by continuous georeferenced fields 
+</ul>
+<p class="fragment">To support numerical modeling the fields are discretized: 
+<ul>
+  <li class="fragment">spatially averaged units: polygons (hydrologic units, subwatersheds, hillslope elements) - complex geometrical shape is replaced by tilted plane 
+  <li class="fragment">spatially distributed representation: meshes (irregular, raster)  or random particles 
+</ul>
+<!--<p> <img height="380" src="img/flow_erosion/D8.jpg">-->
+</section>
+
+<section>
+   <h3>Spatially averaged and distributed models</h3>
+<p>
+<p> <img height="330" src="img/flow_erosion/aspectarrows.png">
+</section>
+
+<section>
+   <h3>Spatially averaged and distributed models</h3>
+<p>
+<p> <img height="330" src="img/flow_erosion/aspectarrows.png">
+</section>
+
+<section>
+   <h3>Static and dynamic models</h3>
+<p>Empirical, statistical models - usually steady state
+<p>Process-based or hybrid models - capture dynamic processes
+<p> <img height="330" src="img/flow_erosion/aspectarrows.png">
+</section>
+
+<section>
+   <h3>Geospatial modeling challenges</h3>
+<p>
+<ul>
+ <li>data intensive - large heterogeneous data sets
+ <li>complex, multiscale spatial interactions
+ <li>high level of uncertainty and difficult validation
+</ul>
+<p><small>Physics : predictions at the electronic level are with 6-12 digits accuracy 
+Geosciences: 50% differences between measurements and model could be satisfactory</small>
+</section>
+
+<section>
+   <h3>Modeling of processes in GIS</h3>
+<p>
+<ul>
+<li class="fragment">workflow using GIS tools: simple empirical models with physics based components 
+<li class="fragment">models fully integrated as modules: complex physics-based or empirical models
+<li class="fragment">models linked to GIS as extensions or add-ons: common structure and interface
+<li class="fragment">complex modeling systems linked through data - GIS is used for generating input data, analysis and visualization of the results, but the model is independent from GIS.
+<li class="fragment">complex modeling systems that incorporate selected GIS capabilities
+</ul>
+</section>
+
+<section>
+   <h3>Hydrologic modeling</h3>
+<p>surface water flow (overland flow, channels), subsurface flow, groundwater
+</section>
+
+<section>
+   <h3>Process-based Hydrologic Models</h3>
+Steady state water flow
+<ul>
+<li>flow accumulation by D8, passes through depression as least cost path
+<li>flow acumulation by D-inf, depression is a sink
+<li>kinematic wave - water accumulates in the sink 
+<li>diffusion term allows water to pass through depression
+<li>channel defined through depression as preferential flow
+<li>require hydrologically conditioned DEM
+</ul>
+composit image - split into two lides
+<p> <img height="280" src="img/flow_erosion/flowlines_flowaccum.jpg">
+</section>
+
+<section>
+   <h3>Flow accumulation across landscape</h3>
+<p>
+Evolution of steady state flow as water moves through the landscape 
+with steady rainfall and uniform flow velocity
+<p> <img height="430" src="img/flow_erosion/water.gif">
+</section>
+
+<section>
+   <h3>Flow accumulation at steady state</h3>
+<p>
+Measure of steady state flow depth when all flowlines reached the outlet or the edge of the map
+<p> <img height="380" src="img/flow_erosion/Flow3d_irwineldsdac5.png">
+<p><small>Flow accumulation represented as exagerrated 3D surface added to the elevation model highlights
+the steady state flow accumulation </small>
+</section>
+
+<section>
+   <h3>Flow routing methods</h3>
+<ul class="left">
+  <li class="fragment"><strong>Single Flow Direction (SFD)</strong> moves entire unit of flow into a single downslope cell
+    <small>(does not capture flow dispersal on hillslopes with convex tangential curvature)</small>
+  <li class="fragment"><strong>Multiple flow direction (MFD)</strong> partitions flow into two or more downslope directions
+  <li class="fragment">both can be implemented with D8 or Dinf
+</ul>
+<img class="right" src="img/flow_erosion/mdf_photo.jpg">
+<!--
+<p> <img height="260" src="img/flow_erosion/flowdispersal.jpg">
+<p><small>D-inf SFD flow accumulation over convex hillsope (shoulder), note discrete stripes in flow direction </small>
+-->
+</section>
+
+<section>
+   <h3>Flow routing methods</h3>
+<p>
+Flow accumulation as a result of SFD routing <br>with D8 and D-inf flow direction
+<p class="fragment"> <img height="380" src="img/flow_erosion/flowD8dem.jpg">
+<img class="fragment" height="380" src="img/flow_erosion/flowdinfdem.jpg">
+</section>
+
+<section>
+   <h3>Flow routing methods</h3>
+Flow accumulation as a result of SFD and MFD routing  with D8 flow direction
+<p>
+<img class="fragment" height="380" src="img/flow_erosion/accum5K_gr65_sep09b.jpg">
+<img class="fragment" height="380" src="img/flow_erosion/accum5K_gr65_mfd.jpg">
+</section>
+
+<section>
+   <h3>Weighted flow routing</h3>
+Each cell is assigned weight proportional to the amount of runoff it produces 
+(rainfall excess available for runoff after infiltration and vegetation intercept)
+<p> <img height="340" src="img/flow_erosion/landclass_30m.jpg">
+<img height="340" src="img/flow_erosion/accum_runoffdiff_30m3d.jpg">
+<p><small>Land use map with developed areas (orange) and associated runoff weights - in blue areas 
+all water gets routed, in grey areas only a fraction</small> 
+</section>
+
+<section>
+   <h3>Weighted flow routing</h3>
+Spatially variable runoff reflects the impact of developed areas on flow accumulation
+<p > <img height="340" src="img/flow_erosion/accum_runoffuni_30m3d.jpg">
+<img height="340" src="img/flow_erosion/accum_runoffvar_30m3d.jpg">
+</section>
+
+<section>
+   <h3>Stream extraction</h3>
+<ul>
+ <li class="fragment">Automated stream mapping: extracting connected stream network from flow accumulation map
+ <li class="fragment">Stream raster map is derived using map algebra based on flow accumulation threshold
+ <li class="fragment">Result is converted to vector representation of a connected stream network
+ <li class="fragment">Stream origin is dynamic, often driven by groundwater: 
+additional information is needed for accurate identification
+</ul>
+</section>
+
+<section>
+   <h3>Stream extraction</h3>
+Flow accumulation from 30m NED using SFD D8 method, threshold accumulation: 100 cells,
+and a vectorized extracted stream network 
+<p><img height="380" src="img/flow_erosion/stream_extract.jpg">
+</section>
+
+<section>
+   <h3>Flow routing in flat areas</h3>
+<ul>
+ <li>to create connected stream network flow needs to be routed through flats and depressions
+ <li class="fragment">integer DEMs, lakes or filled depressions create flat areas 
+ <li class="fragment">flat areas: zero slope and undefined aspect
+ <li class="fragment">solutions: 
+ <ul>
+ <li class="fragment">iterative assignment of direction from the first draining cell
+ <li class="fragment">imposed gradient (small change in elevation)
+ </ul>
+</ul>
+</section>
+
+<section>
+   <h3>Flow routing through depressions</h3>
+<p>Depressions "trap" flow
+<p>Sources of depressions in DEMs: 
+ <ul>
+ <li class="fragment">real topographic features 
+ <li class="fragment">noise, measurements errors
+ <li class="fragment">processing artifacts
+</ul>
+<!--<p><img class="fragment" height="240" src="img/flow_erosion/depression.png">-->
+</section>
+
+<section>
+   <h3>Handling depressions</h3>
+Filling, carving, hybrid, least cost path
+<p><img height="340" src="img/flow_erosion/depressionfill_scheme.png">
+</section>
+
+<section>
+   <h3>Depressions filling: lidar DEM</h3>
+Depressions in lidar-based DEM and flow accumulation using DEM filling
+<p><img height="400" src="img/flow_erosion/depressions_lidardem.jpg">
+<p><small>Many depressions are artificial lakes where bridges or roads create dams</small>
+</section>
+
+<section>
+   <h3>Depressions filling: radar DSM</h3>
+<p>Radar (SRTM, IFSARE) DSM include vegetation surface leading to complex, nested depressions
+<p><img height="340" src="img/flow_erosion/depressions_ifsare.jpg">
+<img height="340" src="img/flow_erosion/filled_dem.jpg">
+<p><small>Filling alters elevation in large areas</small>
+</section>
+
+<section>
+   <h3>Depressions: algorithm comparison </h3>
+<p>
+<ul>
+ <li>Filling with single stream (black) and multiple parallel streams (grey) across filled depression
+<li>Least cost path stream (red) and on-ground stream location from GPS (blue points)
+</ul>
+<p><img height="350" src="img/flow_erosion/lcp_fill1_fill2_compare.jpg">
+</section>
+
+<section>
+   <h3>Depressions: carving</h3>
+<p>Carving streams from digitized stream data may introduce artifacts, if the digitized streams
+do not match the DEM 
+<p><img height="400" src="img/flow_erosion/carved_dem.jpg">
+</section>
+
+<section>
+   <h3>Hydrologically conditioned DEM</h3>
+<p>
+Modified DEM with connected stream network where each grid cell drains into the outlet
+<ul>
+  <li>hydrologically conditioned DEM does not have depressions or flat areas
+  <li>it should not be referred to as hydrologically correct, because all wetlands are removed
+</ul>
+</section>
+
+<section>
+   <h3>Stream extraction accuracy</h3>
+<p>
+Measured as horizontal accuracy of stream centerline
+<ul>
+ <li class="fragment">topographic maps (blue lines) - have often the lowest accuracy, and the data are old
+ <li class="fragment">National Hydrographic Data - updated, structured representation of stream and river networks
+ <li class="fragment">extracted from lidar-based DEMs - better, but accuracy low in coastal plane, improved new lidar mapping
+ <li class="fragment">digitized from high resolution orthophotos and on ground surveys - most accurate except forested areas
+ <li class="fragment">structures require additional information (bridges are represented as dams in DEMs)
+</ul>
+</section>
+
+<section>
+   <h3>Watersheds</h3>
+<p>
+<ul>
+ <li>watershed - important land management unit
+ <li>water and mass from a watershed drains to a single point: outlet
+ <li>other terms for watershed: (drainage) basin, catchment, contributing area
+ <li>watersheds can be organized into hierarchies based on the size of contributing area
+</ul>
+<p>
+USGS Hydrologic units: hierarchy of drainage areas for national river network
+<br>see more at http://water.usgs.gov/GIS/huc.html 
+</section>
+
+<section>
+   <h3>Watersheds</h3>
+<p>Watershed and its subwatershes 
+<p><img height="400" src="img/flow_erosion/subwatersheds.jpg">
+</section>
+
+<section>
+   <h3>Watershed analysis</h3>
+Most common types of watershed analysis:
+<ul>
+ <li>find watershed boundaries for a given outlet, for example, stream gauge 
+ <li>find contributing area for a given stream segment
+ <li>partition a region  into watersheds with the given approximate size
+</ul>
+</section>
+
+<section>
+   <h3>Watershed analysis</h3>
+<p>
+ Watershed boundaries for a given outlet
+<p>
+<p><img height="400" src="img/flow_erosion/watershed_from_outlet.jpg">
+</section>
+
+<section>
+   <h3>Watershed analysis</h3>
+<p>
+ Partition of a region  into watersheds
+<p><img height="400" src="img/flow_erosion/watersheds2d.png">
+</section>
+
+
+<section>
+ <h3>Summary</h3>
+<ul>
+<li>we have defined cumulative terrain parameters based on flow routing: flow length, flow accumulation
+<li>we have learned about methods for computing flow direction (D8, Dinf) and flow routing SFD, MFD
+<li>we discussed flow through flat areas and depressions
+<li>we have applied flow routing to extract streams and watersheds
+</ul>
+</section>
+
+<!--
+<section>
+ <h3>Reading, resources</h3>
+links
+</section>
+-->
+
+
+
