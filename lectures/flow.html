@@ -341,6 +341,29 @@ Most common types of watershed analysis:
 <p><img height="400" src="img/flow_erosion/watersheds2d.png">
 </section>
 
+<section>
+   <h3>Wetness index</h3>
+<p>measure of topographic potential for zones of saturation
+<p>w = ln (A/tan s)
+<ul>
+<li>A is upslope contributing area per unit contour width, 
+<li>s is slope
+<li>w increases with larger A (more water) and lower slope (slower water flow).
+</ul>
+<p>
+<small>Estimating w in GIS:
+<ul>
+<li>A - flow accumulation MFD, weighted to account for soil and cover variability
+<li>s  - slope module (3x3 neighborhood polynomial or spline)
+<li>Compute the expression using map algebra or a dedicated module/tool
+</ul>
+</small>
+</section>
+
+<section>
+   <h3>Wetness index</h3>
+<p><img height="420" src="img/flow_erosion/wettnessindex.jpg">
+</section>
 
 <section>
  <h3>Summary</h3>
@@ -348,7 +371,7 @@ Most common types of watershed analysis:
 <li>we have defined cumulative terrain parameters based on flow routing: flow length, flow accumulation
 <li>we have learned about methods for computing flow direction (D8, Dinf) and flow routing SFD, MFD
 <li>we discussed flow through flat areas and depressions
-<li>we have applied flow routing to extract streams and watersheds
+<li>we have applied flow routing to extract streams and watersheds and to compute wetness index
 </ul>
 </section>
 
