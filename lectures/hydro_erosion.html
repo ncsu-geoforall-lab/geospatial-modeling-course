@@ -12,37 +12,39 @@
     <h3>Learning objectives</h3>
 <p>
 <ul>
- <li>spatially explicit modeling: principles and applications, role of GIS
- <li>geospatial aspects of models: spatially averaged and distributed models
- <li>general approaches and methods: empirical and physics based components of models
- <li>steady state, continuous time and dynamic models and related modeling tools
+ <li>empirical and physics based components of models
+ <li>spatially averaged and distributed models
+ <li>steady state, continuous time and dynamic models 
  <li>spatial hydrologic modeling: processes and methods
- <li>spatial modeling of erosion, sediment transport and landscape evolution
- <li>deriving input parameters, analysis and visualization of modeling results
- <li>simulating impact of landuse and climate change
+ <li>modeling of erosion, sediment transport and deposition
 </ul>
 </section>
 
 <section>
    <h3>Geospatial modeling of processes</h3>
-<p>Numerical simulations: tools for gaining new knowledge - virtual experiments
-<p>Models of Earth processes have are evolved 
 <ul>
+<li>Numerical simulations: tools for gaining new knowledge - <b>virtual experiments</b>
+<li>Geospatial simulations: the modeled quantities are function of a location on Earth
+<li>Geospatial models have evolved:
+<ul>
+<p>
  <li class="fragment">from: empirical, spatially averaged, static 
+<p>
  <li class="fragment">to: process-based, distributed, dynamic with 
      the aim to predict modeled quantity at any point in space and time
+</ul>
 </ul>
  <p class="fragment">Most models combine several approaches
 </section>
 
 <section>
    <h3>Empirical and process-based models</h3>
-<p class="fragment">Empirical:
+<p class="fragment"><b>Empirical:</b>
 <ul>
- <li class="fragment">based on statistical models derived from experimental data
+ <li class="fragment">statistical models derived from experimental data
  <li class="fragment">applicable only to landscapes under same conditions
 </ul>
-<p class="fragment">Process-based
+<p class="fragment"><b>Process-based</b>
 <ul>
  <li class="fragment">based on physical laws, such as continuity and mass conservation equations 
 </ul>
@@ -54,27 +56,26 @@ physics based equations often have empirical parameters
 <section>
    <h3>Geospatial representation</h3>
 <p>
-<ul>
-  <li>the modeled quantities (water depth, concentration of pollutants) depend on position on Earth
-  <li>they are represented by continuous georeferenced fields 
-</ul>
+ Modeled quantities are usually represented by continuous georeferenced fields 
 <p class="fragment">To support numerical modeling the fields are discretized: 
 <ul>
   <li class="fragment">spatially averaged units: polygons (hydrologic units, subwatersheds, hillslope elements) - complex geometrical shape is replaced by tilted plane 
-  <li class="fragment">spatially distributed representation: meshes (irregular, raster)  or random particles 
+  <li class="fragment">spatially distributed representation: structured and unstructured meshes, or random particles 
 </ul>
 <!--<p> <img height="380" src="img/flow_erosion/D8.jpg">-->
 </section>
 
 <section>
-   <h3>Spatially averaged and distributed models</h3>
-<p>
+   <h3>Spatially averaged models</h3>
+Spatially averaged models predict the variable for each averaged unit, such as watershed,
+the result is discrete polygons or a number
 <p> <img height="330" src="img/flow_erosion/aspectarrows.png">
 </section>
 
 <section>
-   <h3>Spatially averaged and distributed models</h3>
-<p>
+   <h3>Spatially distributed models</h3>
+<p>Spatially distributed or spatially explicit models predict 
+the variable at any point in space, the result is continuous field
 <p> <img height="330" src="img/flow_erosion/aspectarrows.png">
 </section>
 
@@ -104,8 +105,9 @@ Geosciences: 50% differences between measurements and model could be satisfactor
 <li class="fragment">workflow using GIS tools: simple empirical models with physics based components 
 <li class="fragment">models fully integrated as modules: complex physics-based or empirical models
 <li class="fragment">models linked to GIS as extensions or add-ons: common structure and interface
-<li class="fragment">complex modeling systems linked through data - GIS is used for generating input data, analysis and visualization of the results, but the model is independent from GIS.
-<li class="fragment">complex modeling systems that incorporate selected GIS capabilities
+<li class="fragment">complex modeling systems linked through data: GIS is used for input data processing, 
+results analysis and visualization, but the model is independent from GIS.
+<li class="fragment">complex modeling systems can incorporate selected GIS capabilities
 </ul>
 </section>
 
@@ -115,59 +117,65 @@ Geosciences: 50% differences between measurements and model could be satisfactor
 </section>
 
 <section>
-   <h3>Process-based Hydrologic Models</h3>
-Steady state water flow
+   <h3>Spatially Distributed Hydrologic Models</h3>
+Geometry driven and process-based continuity equation:
 <ul>
-<li>flow accumulation by D8, passes through depression as least cost path
-<li>flow acumulation by D-inf, depression is a sink
-<li>kinematic wave - water accumulates in the sink 
-<li>diffusion term allows water to pass through depression
-<li>channel defined through depression as preferential flow
-<li>require hydrologically conditioned DEM
+<li class="fragment">flow accumulation by D8, passes through depression as least cost path, no ponding
+<br><img height="180" src="img/flow_erosion/D8_lcp.jpg">
+<li class="fragment">flow acumulation by D-inf, depression is a sink
+<br><img height="180" src="img/flow_erosion/Dinf_sink.jpg">
+<li class="fragment">kinematic wave - water accumulates in the sink  to infinity
+<br><img height="180" src="img/flow_erosion/kinemwave.jpg">
 </ul>
-composit image - split into two lides
-<p> <img height="280" src="img/flow_erosion/flowlines_flowaccum.jpg">
+The last 2 options require hydrologically conditioned DEM
 </section>
 
 <section>
-   <h3>Flow accumulation across landscape</h3>
-<p>
-Evolution of steady state flow as water moves through the landscape 
+   <h3>Spatially Distributed Hydrologic Models</h3>
+Bivariate continuity equation with diffusion term
+<ul>
+<li class="fragment">diffusion term allows water to pass through depression
+<br><img height="180" src="img/flow_erosion/water_simwe_diff.jpg">
+<li class="fragment">channel defined through depression as preferential flow
+<br><img height="180" src="img/flow_erosion/water_simwe_channel.jpg">
+</ul>
+The last 2 options require hydrologically conditioned DEM
+</section>
+
+<section>
+   <h3>Dynamic Hydrologic Models</h3>
+Flow routing across landscape: geometry-based,
+evolution of steady state flow as water moves through the landscape 
 with steady rainfall and uniform flow velocity
-<p> <img height="430" src="img/flow_erosion/water.gif">
+<img height="380" src="img/flow_erosion/water.gif">
 </section>
 
 <section>
-   <h3>Flow accumulation at steady state</h3>
+   <h3>Dynamic Hydrologic Models</h3>
+Flow routing across landscape: process-based
+<img height="380" src="img/flow_erosion/water_diffusion.gif">
+</section>
+
+<section>
+   <h3>Path sampling method</h3>
 <p>
-Measure of steady state flow depth when all flowlines reached the outlet or the edge of the map
-<p> <img height="380" src="img/flow_erosion/Flow3d_irwineldsdac5.png">
-<p><small>Flow accumulation represented as exagerrated 3D surface added to the elevation model highlights
-the steady state flow accumulation </small>
-</section>
-
-<section>
-   <h3>Flow routing methods</h3>
-<ul class="left">
-  <li class="fragment"><strong>Single Flow Direction (SFD)</strong> moves entire unit of flow into a single downslope cell
-    <small>(does not capture flow dispersal on hillslopes with convex tangential curvature)</small>
-  <li class="fragment"><strong>Multiple flow direction (MFD)</strong> partitions flow into two or more downslope directions
-  <li class="fragment">both can be implemented with D8 or Dinf
+<ul>
+  <li>based on duality between particle and field representation
+  <li>path samples represent water evolving according to the shallow 
+      water bivariate continuity equation - drift and diffusion
+  <li>Green's function
 </ul>
-<img class="right" src="img/flow_erosion/mdf_photo.jpg">
-<!--
-<p> <img height="260" src="img/flow_erosion/flowdispersal.jpg">
-<p><small>D-inf SFD flow accumulation over convex hillsope (shoulder), note discrete stripes in flow direction </small>
--->
+<p class="fragment"> <img height="380" src="img/flow_erosion/flowD8dem.jpg">
+<p><small>Variable rainfall excess and flow velocity</small>
 </section>
 
 <section>
-   <h3>Flow routing methods</h3>
-<p>
-Flow accumulation as a result of SFD routing <br>with D8 and D-inf flow direction
+   <h3>Multiscale modeling: nested grids</h3>
+<p> 10m resolution combined with 2m resolution: particles are split when they enter high resolution area
 <p class="fragment"> <img height="380" src="img/flow_erosion/flowD8dem.jpg">
-<img class="fragment" height="380" src="img/flow_erosion/flowdinfdem.jpg">
+<p>Other approaches: unstructured meshes, nested meshes
 </section>
+
 
 <section>
    <h3>Flow routing methods</h3>
