@@ -116,10 +116,18 @@ A list of what should be changed, updated or checked for new semester
 in the web pages.
 
 * change dates in the schedule (in this repository)
-* update links to the Moodle side
+* update links to the Moodle site
 * create a new page for project titles and link it
+* search for all other occurrences of string `term-changes` and update
 * email students with link to the website and to Moodle
 
+The `term-changes` should be added to all places which needs to be
+changed each semester (term). To HTML it should be added as a class.
+All occurrences can be found using:
+
+```
+grep -IrnE term-changes --exclude-dir=build
+```
 
 Automatic indexes
 -----------------
