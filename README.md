@@ -140,7 +140,15 @@ grep -IrnE grassXY --exclude=README.md --exclude-dir={build,.git}
 ./replace_string.sh grassXY grassXZ
 ```
 
-Now run the grep command again, to get what the script does not handle.
+Now run the *grep* command again, to get what the script does not
+handle.
+
+Find also other locations where a specific GRASS GIS version is
+mentioned (replace `X` and `Y` with version number):
+
+```
+grep -IrnE "[^0-9]X\.Y[^0-9]" --exclude=README.md --exclude-dir={build,.git}
+```
 
 Automatic indexes
 -----------------
