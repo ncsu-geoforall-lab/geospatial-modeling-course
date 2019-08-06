@@ -150,6 +150,43 @@ mentioned (replace `X` and `Y` with version number):
 grep -IrnE "[^0-9]X\.Y[^0-9]" --exclude=README.md --exclude-dir={build,.git}
 ```
 
+Testing GRASS GIS assignments
+-----------------------------
+
+Prepare new directory and mapset:
+
+```
+mkdir test
+cd test
+ln -s ../grass/data data
+grass -c -e ~/grassdata/nc_spm_08_grass7/test/
+```
+
+For each assignment:
+
+```
+../doc2tests.py < ../grass/buffers_cost.html > test.sh
+chmod u+x test.sh
+grass ~/grassdata/nc_spm_08_grass7/test/ --exec ./test.sh
+```
+
+Now, inspect the output and files in the directory.
+
+Then delete the created maps and images.
+
+```
+grass ~/grassdata/nc_spm_08_grass7/test/ --exec g.remove type=raster,vector patter="*" -f
+rm *.png
+```
+
+After all tests, remove the directory and the mapset:
+
+```
+cd ..
+rm -r test
+rm -r ~/grassdata/nc_spm_08_grass7/test/
+```
+
 Automatic indexes
 -----------------
 
