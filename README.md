@@ -127,7 +127,7 @@ changed each semester (term). To HTML it should be added as a class.
 All occurrences can be found using:
 
 ```
-grep -IrnE term-changes --exclude-dir=build
+grep -IrnE term-changes --exclude=README.md --exclude-dir=build
 ```
 
 Automatic indexes
