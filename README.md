@@ -120,6 +120,7 @@ in the web pages.
 * update links to the Moodle site
 * create a new page for project titles and link it
 * search for all other occurrences of string `term-changes` and update
+* update to current GRASS GIS release
 * email students with link to the website and to Moodle
 
 The `term-changes` should be added to all places which needs to be
@@ -127,8 +128,19 @@ changed each semester (term). To HTML it should be added as a class.
 All occurrences can be found using:
 
 ```
-grep -IrnE term-changes --exclude=README.md --exclude-dir=build
+grep -IrnE term-changes --exclude=README.md --exclude-dir={build,.git}
 ```
+
+### Updating for new GRASS GIS releases
+
+Update commands URLs for documentation:
+
+```
+grep -IrnE grassXY --exclude=README.md --exclude-dir={build,.git}
+./replace_string.sh grassXY grassXZ
+```
+
+Now run the grep command again, to get what the script does not handle.
 
 Automatic indexes
 -----------------
