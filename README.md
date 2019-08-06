@@ -5,7 +5,7 @@ NCSU GIS/MEA582: Geospatial Modeling and Analysis
 Authors
 -------
 
-Copyright 2008-2016 by
+Copyright 2008-2019 by
 
  * Helena Mitasova
  * Rob Austin
@@ -15,6 +15,7 @@ Copyright 2008-2016 by
 
 Course developed at North Carolina State University.
 
+See the license below.
 
 Online version of the materials
 -------------------------------
