@@ -70,7 +70,7 @@ the object of perception, experience, etc
   <li class="fragment">each point in space is assigned a distinct value,
       change in values between neighboring points is small</li>
   <li class="fragment">mathematical representation: bi-variate or multi-variate 
-  continuous functions <i>w=f(x,y), w=f(x,y,z), w=f(x,y,z,t)</i></li>
+  continuous functions $w=f(x,y), w=f(x,y,z), w=f(x,y,z,t)$</li>
   <li class="fragment">often represented by <b>raster data model</b>,</li>
   <li class="fragment">vector model is also used: isolines, meshes, or points.</li>
   </ul>
@@ -87,7 +87,7 @@ the object of perception, experience, etc
 <p>
   <ul>
   <li class="fragment">lines, points, or areas with attributes
-  <li class="fragment">represented by <b>vector data model</b> as geometry(shape) with attribute table;
+  <li class="fragment">represented by <b>vector data model</b> as geometry(shape) with attribute table
   <li class="fragment">raster representation is also used
   </ul>
 <p class="fragment">
@@ -131,15 +131,16 @@ the object of perception, experience, etc
 </section>
 
 <section>
-   <h3>Raster data model: 3D </h3>
+   <h3>Raster data model: 3D hybrid</h3>
 <p>
 <div class="left" style="max-width:50%">
 <ul>
- <li>set of 2D raster layers can be used to represent soil horizons or geological layers 
- <li>combined representation: 
+ <li>vertical stack of 2D raster layers 
+ <li class="fragment">can be used to represent soil horizons or geological layers 
+ <li class="fragment">combined representation: 
  <ul>
-  <li>continuous (horizontally)
-  <li>discrete (vertically)
+  <li class="fragment">continuous (horizontally)
+  <li class="fragment">discrete (vertically)
  </ul> 
 </ul>
 </div>
@@ -150,13 +151,13 @@ the object of perception, experience, etc
 </section>
 
 <section>
-   <h3>Raster data model: 3D</h3>
+   <h3>Raster data model: 3D grid</h3>
 <p>
 <ul>
   <li>header + 3D matrix of values, voxel model 
-  <li>spatial extent N,S,E,W,<b>Top, Bottom</b>
-  <li>vertical resolution is usually much finer than horizontal
-  <li>mostly used for 3D continuous representation w=f(x,y,z)
+  <li class="fragment">spatial extent N,S,E,W,<b>Top, Bottom</b>
+  <li class="fragment">vertical resolution is usually much finer than horizontal
+  <li class="fragment">often used for 3D continuous representation $w=f(x,y,z)$
 </ul>
 <img height="200" src="img/data_models/Voxelcodbox.gif">
 <img height="120" src="img/data_models/lgsoilcorg.gif">
@@ -174,11 +175,11 @@ the object of perception, experience, etc
 <ul>
  <li><b>Geometry:</b> 
   <ul>
-  <li>Points [x,y,(z)] represent point, line, or polygon(area) features
-  <li>Set of points create elements of feature geometry: <b>line</b>: nodes, vertices; <b>polygon</b>: centroid, boundary 
-  <li><a href="https://en.wikipedia.org/wiki/Topology">Topology</a> defines how the elements of 
+  <li class="fragment">Points [x,y,(z)] represent point, line, or polygon(area) features
+  <li class="fragment">Set of points create elements of feature geometry: <b>line</b>: nodes, vertices; <b>polygon</b>: centroid, boundary 
+  <li class="fragment"><a href="https://en.wikipedia.org/wiki/Geospatial_topology">Geospatial Topology</a> defines how the elements of 
 feature geometry are interrelated and organized (don't confuse with topography!)
- <li>Topology ensures integrity of features and efficiency by defining shared coincident geometry (shared 
+ <li class="fragment">Topology ensures integrity of features and efficiency by defining shared coincident geometry (shared 
 boundaries, nodes). 
   </ul>
 <p>
@@ -193,10 +194,17 @@ the way in which constituent parts are interrelated or arranged.
 <section>
    <h3>Vector data model geometry</h3>
 <p>Elements: vertices(red), nodes(blue)
-<p>Point data: no topology; Line data: vertices, nodes
-<p>
-<img height="200" src="img/data_models/pointdata.png"> 
-<img height="280" src="img/data_models/roads_nodes_vert.png">
+<div class="left" style="max-width:45%">
+<p>Point data: no topology
+<img height="150" src="img/data_models/pointdata.png"> 
+<img height="180" src="img/data_models/pointcloud.png"> 
+</div>
+
+<div class="right" style="max-width:55%">
+<p>Line data: vertices, nodes
+<br>
+<img height="300" src="img/data_models/roads_nodes_vert.png">
+</div>
 </section>
 
 <section>
@@ -481,6 +489,9 @@ Data repositories: WMS, WPS, WebGIS
 <p>
 See<a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/data_providers.html">
 Webpage with links to relevant services</a>
+<p>
+Lidar point clouds on AWS
+<a href="https://usgs.entwine.io/data/view.html?r=%22https://s3-us-west-2.amazonaws.com/usgs-lidar-public/USGS_LPC_NC_Sandy_L14_2014_LAS_2015%22">Jockey's Ridge after Sandy</a>
 </section>
 
 <section>
