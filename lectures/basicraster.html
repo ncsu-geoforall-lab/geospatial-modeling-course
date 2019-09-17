@@ -32,89 +32,91 @@
 </section>
 
 <section>
-   <h3>Summary statistics</h3>
+   <h3>Summary statistics: continuous data</h3>
 <p>
-  <p><b>Continuous raster data:</b> 
   <ul>
     <li class="fragment">stored numbers are values quantifying the phenomenon
-    <li class="fragment">univariate statistics: min, max, mean, standard deviation, median 
+    <li class="fragment">univariate statistics: min, max, mean, standard deviation, median, ... 
     <li class="fragment">histogram (requires discretization into bins) 
   </ul>
 <p class="fragment"> Can be applied as <b>global, zonal, or focal </b> operations
+<p class="fragment"> <small>See relevant equations and additional metrics in 
+<a href="http://www.spatialanalysisonline.com/HTML/index.html?statistical_measures_and_relat.htm"> Supplemental material</a>
+</small>
 </section>
 
 <section>
-   <h3>Summary statistics</h3>
+   <h3>Summary statistics: discrete data</h3>
 <p>
-  <p><b>Discrete raster data:</b>
   <ul>
    <li class="fragment">stored numbers can be values (quantitative data) or category numbers (qualitative data)
-   <li class="fragment">values apply to an area rather than grid cell
+   <li class="fragment">values apply to an area rather than grid point
    <li class="fragment">univariate statistics can be applied only to quantitative attributes
-   <li class="fragment">mode (most frequent cat), diversity (number of different cats)  apply to category data
+   <li class="fragment">majority (mode or most frequent category), diversity (number of different categories)  apply to category data
 </ul>
 <p class="fragment"> Can be applied as <b>global, zonal, or focal </b> operations
+<p class="fragment"> <small>See relevant equations and additional metrics in 
+<a href="http://www.spatialanalysisonline.com/HTML/index.html?statistical_measures_and_relat.htm"> Supplemental material</a>
+</small>
 </section>
 
 <section>
-   <h3>Global statistics: continuous data</h3>
+   <h3>Global statistics</h3>
+<p>Continuous data example
 <ul>
- <li>Map layer to number(s)
- <li> Compare elevation data from different sources using mean, standard deviation and histogram
- <li> Identify data anomalies and potential artifacts 
+ <li>Compare elevation data from different sources using mean, standard deviation and histogram
+ <li>Identify data anomalies and potential artifacts 
 </ul>
 </section>
 
 <section>
-   <h3>Global statistics: continuous data</h3>
-<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
-<img height="180" src="img/analysis_basicraster/elev_dem1mhist.png">
+   <h3>Global statistics: compare DEMs</h3>
+<p> <img height="200" src="img/analysis_basicraster/dem_1m.jpg">
+<img height="200" src="img/analysis_basicraster/elev_dem1mhist.png">
 </p>
-<p class="fragment"> <img height="190" src="img/analysis_basicraster/elev_rural_10m.jpg">
-<img height="190" src="img/analysis_basicraster/elevrur_ned10hist.png">
-<p class="fragment"> <img height="90" src="img/analysis_basicraster/elevstats_table_1m10m.png">
+<p class="fragment"> <img height="200" src="img/analysis_basicraster/elev_rural_10m.jpg">
+<img height="200" src="img/analysis_basicraster/elevrur_ned10hist.png">
+<p class="fragment"> <img height="70" src="img/analysis_basicraster/elevstats_table_1m10m.png">
 </section>
 
 <section>
-   <h3>Global statistics: continuous data</h3>
-<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
-<img height="180" src="img/analysis_basicraster/elev_dem1mhist.png">
+   <h3>Global statistics: compare DEMs</h3>
+<p> <img height="200" src="img/analysis_basicraster/dem_1m.jpg">
+<img height="200" src="img/analysis_basicraster/elev_dem1mhist.png">
 </p>
-<p class="fragment"> <img height="190" src="img/analysis_basicraster/elev_rural_30m.jpg">
-<img height="190" src="img/analysis_basicraster/elevrur_ned30hist.png">
+<p class="fragment"> <img height="200" src="img/analysis_basicraster/elev_rural_30m.jpg">
+<img height="200" src="img/analysis_basicraster/elevrur_ned30hist.png">
 </p>
-<p class="fragment"> <img height="90" src="img/analysis_basicraster/elevstats_table.png">
+<p class="fragment"> <img height="70" src="img/analysis_basicraster/elevstats_table.png">
 </section>
 
 <section>
-   <h3>Global statistics: continuous data</h3>
-<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
-<img height="180" src="img/analysis_basicraster/elev_dem1mhist.png">
+   <h3>Global statistics: compare DEMs</h3>
+<p> <img height="200" src="img/analysis_basicraster/elev_rural_30m.jpg">
+<img height="200" src="img/analysis_basicraster/elevrur_ned30hist.png">
 </p>
-<p class="fragment"> <img height="190" src="img/analysis_basicraster/elev_rural_srtm30m.jpg">
-<img height="190" src="img/analysis_basicraster/elevrur_srtm30hist.png">
+<p class="fragment"> <img height="200" src="img/analysis_basicraster/elev_rural_srtm30m.jpg">
+<img height="200" src="img/analysis_basicraster/elevrur_srtm30hist.png">
 </p>
-<p class="fragment"> <img height="70" src="img/analysis_basicraster/elevstats_table_30mnedsrtm.png">
+<p class="fragment"> <img height="60" src="img/analysis_basicraster/elevstats_table_30mnedsrtm.png">
 </section>
 
 <section>
-   <h3>Global statistics: continuous data</h3>
-<p>Elevation from different sources: correlation matrix
-<p> <img height="180" src="img/analysis_basicraster/elev_correl.png">
+   <h3>Global statistics: compare DEMs</h3>
 <p>
-<img height="130" src="img/analysis_basicraster/elev_dem1mhist.png">
-<img height="130" src="img/analysis_basicraster/elevrur_ned10hist.png">
-<img height="130" src="img/analysis_basicraster/elevrur_ned30hist.png">
-<img height="130" src="img/analysis_basicraster/elevrur_srtm30hist.png">
+<img height="200" src="img/analysis_basicraster/elev_dem1mhist.png">
+<img height="200" src="img/analysis_basicraster/elevrur_ned10hist.png">
+<p>
+<img height="200" src="img/analysis_basicraster/elevrur_ned30hist.png">
+<img height="200" src="img/analysis_basicraster/elevrur_srtm30hist.png">
 </section>
 
 <section>
-   <h3>Global statistics: discrete data</h3>
-<p>Map layer to number(s)
+   <h3>Global statistics: discrete soil data</h3>
 <p> Soil properties: soil erodibility mean 0.248 
-<p> Soil type ID: mode (most common soil type)
-<img height="300" src="img/data_visualize/soilsKfac_discrleg.png">
-<img height="300" src="img/data_visualize/soils_rural_1mID.png">
+<p> Soil type ID: majority (most common soil type)
+<img height="330" src="img/data_visualize/soilsKfac_discrleg.png">
+<img height="330" src="img/data_visualize/soils_rural_1mID.png">
 </section>
 
 <section>
@@ -126,29 +128,29 @@
 <p class="fragment"> <img height="240" src="img/analysis_basicraster/watersheds2d.png">
 <img class="fragment" height="240" src="img/analysis_basicraster/slope.png">
 <img class="fragment" height="240" src="img/analysis_basicraster/zonal_basinslope.png">
-<p class="fragment"><small>Watersheds (discrete), Slope (continuous), Mean slope for wach watershed (discrete)</small>
+<p class="fragment"><small>Watersheds (discrete zones), Slope (continuous variable): Mean slope for each watershed</small>
 </section>
 
 <section>
    <h3>Zonal statistics: category data</h3>
 <ul>
 <li>Agregates discrete data to discrete areas
-<li>Land use analysis example: map prevailing land cover for each zipcodes
+<li>Land use analysis example: map prevailing land cover for each zipcode
 </ul>
 <p class="fragment"> <img height="240" src="img/analysis_basicraster/zipcodes_rast.png">
 <img class="fragment" height="240" src="img/analysis_basicraster/landuse96_shade.jpg">
 <img class="fragment" height="240" src="img/analysis_basicraster/landusebyzip.png">
-<p class="fragment"><small>Zipcode areas(discrete), land cover (discrete), most common land cover (discrete)</small>
-<pclass="fragment"><small>HI developed, LI developed, South. pine, Hardwoods, Cultivated Herbaceous</small>
+<p class="fragment"><small>Zipcodes (discrete zones), Land cover 1996 (discrete variable): Most common land cover</small>
+<p class="fragment"><small>HI developed, LI developed, Southern pine, Hardwoods, Cultivated Herbaceous</small>
 </section>
 
 <section>
    <h3>Neighborhood operations</h3>
 <ul>
-<li>Focal operations: value at a grid cell is function of the values at neighboring grid cells
-<li>Grid cell neighborhood is defined by a moving window, square or circular 
-<li>Same rules apply for continuous and discrete data as for global and zonal stats
-<li>Basic univariate statistics, filters, image processing
+<li class="fragment">Value at a grid cell is function of the values at neighboring grid cells
+<li class="fragment">Grid cell neighborhood is defined by a moving window, square or circular 
+<li class="fragment">Same rules apply for continuous and discrete data as for global and zonal stats
+<li class="fragment">Basic univariate statistics, filters, image processing
 </ul>
 </section>
 
@@ -156,16 +158,15 @@
    <h3>Neighborhood operations: smoothing</h3>
 <p>Smoothing noise in DEM: focal mean with 5x5 window
 <p class="fragment"> <img height="240" src="img/analysis_basicraster/rneighbor_avg_srtm_in.jpg">
-<p><img class="fragment" height="230" src="img/analysis_basicraster/rneighbor_avg_srtm_out.jpg">
+<br><img class="fragment" height="230" src="img/analysis_basicraster/rneighbor_avg_srtm_out.jpg">
 </section>
 
 <section>
    <h3>Neighborhood operations: diversity</h3>
 <p>Number of different LU classes in 7x7 window
-<p class="fragment"> <img height="240" src="img/analysis_basicraster/rneighbor_mode_lu_in.png">
-<img height="240" src="img/analysis_basicraster/lu96_legbig.png">
-</p>
-<p class="fragment"><img height="230" src="img/analysis_basicraster/rneighbor_mode_lu_out.png">
+<p class="fragment"> <img height="230" src="img/analysis_basicraster/rneighbor_mode_lu_in.png">
+<img height="230" src="img/analysis_basicraster/lu96_legbig.png">
+<br><img class="fragment" height="230" src="img/analysis_basicraster/rneighbor_mode_lu_out.png">
 <img height="180" src="img/analysis_basicraster/lu_divers_lg.png">
 </p>
 </section>
