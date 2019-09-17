@@ -224,9 +224,10 @@ for extensive set of supported operators and mathematical functions</small>
    <h3>Map algebra: logical expressions</h3>
 <p class="small">"highforest = if(landclass96==5 && elevation > 120., elevation, null())”</p>
 <p>
-<img height="200" src="img/analysis_basicraster/landclass96sh.jpg">
-<img height="200" src="img/analysis_basicraster/elevation_shade10m.jpg">
-<img height="200" src="img/analysis_basicraster/highforest.jpg">
+<img height="240" src="img/analysis_basicraster/landclass96sh.png">
+<img height="240" src="img/analysis_basicraster/elevation_shade10m.jpg">
+<img height="240" src="img/analysis_basicraster/highforest.jpg">
+<p class="fragment"><small>How will the map look like if we use OR (||) instead of AND (&&) ?</small>
 </section>
 
 <section>
@@ -247,55 +248,98 @@ for extensive set of supported operators and mathematical functions</small>
    <h3>Raster map algebra: int and fp</h3>
 <p>ndvi=(tm4-tm3)/(tm4+tm3)
 <p>
-<img height="200" src="img/analysis_basicraster/lsat7_2002_30.png">
-<img height="200" src="img/analysis_basicraster/lsat7_2002_40.png">
-<p>
-<img height="200" src="img/analysis_basicraster/ndvi_0.png">
+<img height="240" src="img/analysis_basicraster/lsat7_2002_30.png">
+<img height="240" src="img/analysis_basicraster/lsat7_2002_40.png">
+<img height="240" src="img/analysis_basicraster/ndvi_0.png">
 </section>
 
 <section>
    <h3>Raster map algebra: int and fp</h3>
 <p>ndvi=float(tm4-tm3)/float(tm4+tm3)
 <p>
-<img height="200" src="img/analysis_basicraster/lsat7_2002_30.png">
-<img height="200" src="img/analysis_basicraster/lsat7_2002_40.png">
-<p>
-<img height="200" src="img/analysis_basicraster/ndvi_fp.png">
+<img height="240" src="img/analysis_basicraster/lsat7_2002_30.png">
+<img height="240" src="img/analysis_basicraster/lsat7_2002_40.png">
+<img height="240" src="img/analysis_basicraster/ndvi_fp.png">
 </section>
 
 <section>
    <h3>Raster map algebra: math functions</h3>
 <p>
-better example?
-<p>
 Example: for all forested areas, compute sediment transport capacity using the following equation 
 <p>equations
 <p class=small>GRASS GIS expression
+<p class=small>
 "sediment = if(landclass96==5, exp(contrib_area,1.5) * sin(slope), null())”</p>
-<p>Image composit: create new
+</section>
+
+<section>
+   <h3>Map algebra: math functions</h3>
+<p>Generate new surfaces:
+<p> $z =  x +  y + 100$
+<p>plane = row() + col() + 98
+<p class="fragment">
+<img height="250" src="img/analysis_basicraster/tiltedplaneNW.jpg">
+<img height="250" src="img/analysis_basicraster/tiltedplane_mapalgebra.jpg">
+<p class="fragment"><small>Tilted plane</small>
+</section>
+
+<section>
+   <h3>Map algebra: math functions</h3>
+<p>Generate new surfaces:
+<p>
+$z = \sin (0.4x) + 0.3 \cos(y) + 80$
+<p class="fragment">
+<img height="380" src="img/analysis_basicraster/waves2_3delev.jpg">
+<img height="250" src="img/analysis_basicraster/waves_leg.jpg">
+<p class="fragment"><small>Smooth, simplified surface</small>
 </section>
 
 <section>
    <h3>Raster map algebra: null data</h3>
 <p>
 <ul>
-<li>Raster maps can include NULL data (no-data), each software has its own rules how to handle them in map algebra operations
-<li>General rule: If a cell is null in at least one map (variable) then it is null in the resulting map
-<li>"If “ statements can test for null and/or assign a cell null value based on the if condition
-<li>Special operators can be implemented to extend the rules applied to nulls
+<li class="fragment">Raster maps can include NULL data (no-data), each software has its own rules how to handle them in map algebra operations
+<li class="fragment">General rule: If a cell is null in at least one map (variable) then it is null in the resulting map
+<li class="fragment">"If “ statements can test for null and/or assign a cell null value based on the if condition
+<li class="fragment">Special operators can be implemented to extend the rules applied to nulls
 </ul>
 </section>
 
 <section>
-   <h3>More raster map algebra</h3>
+   <h3>Example: null data handling</h3>
 <p>
-learn more in assignments and in manuals
-Create a new raster using mathematical function - plane, trigonometric function etc.
+Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM, 
+<p class=small> elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</p>
+<p class="fragment">
+<img height="350" src="img/analysis_basicraster/mapcalc_nulls_in.jpg"></p>
+</section>
+
+<section>
+   <h3>Example: null data handling</h3>
+<p>
+Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM,
+<p class=small> elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</p>
+<p class="fragment">
+<img height="350" src="img/analysis_basicraster/mapcalc_nulls_out.jpg"></p>
+<p class="fragment">Use “if” statement to limit the computation to no-NULL areas</p>
 </section>
 
 <section>
    <h3>Patching and Mosaicking</h3>
-<p>
+<ul>
+<li class="fragment">Merging several neighboring raster maps into a single raster
+<li class="fragment">“Filling-in” nulls in base raster map with values from additional raster maps 
+<li class="fragment">Order of maps matters for patching
+<li class="fragment">Issues: resolution, extension that is not aligned, no-data slivers due to projection
+</ul>
+</section>
+
+<section>
+   <h3>Mosaicking</h3>
+Merging several neighboring raster maps into a single raster (mosaic)
+<p class="fragment">
+<img height="350" src="img/analysis_basicraster/patch_tiles.jpg"></p>
+<p>First mosaic, then reproject to avoid potential slivers that need to be interpolated
 </section>
 
 <section>
