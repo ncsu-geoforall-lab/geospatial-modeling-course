@@ -185,46 +185,54 @@ Local operation: Expression is applied on per-cell basis
 <section>
    <h3>Raster map algebra</h3>
 <p>
-Each software has its own syntax, operators and functions:
+Each software has its own syntax, operators and functions
 <ul>
-<li>Logical operators and functions: 
+<li class="fragment">Logical operators and functions: 
 <ul>
-  <li>less than, equal, 
-  <li>and, or, not, ...; 
-  <li>if(x), if(x,a,b)
+  <li class="fragment">less than, equal, 
+  <li class="fragment">and, or, not, ...; 
+  <li class="fragment">if(x), if(x,a,b)
 </ul>
-<li>Arithmetic Operators
+<p>
+<li class="fragment">Arithmetic Operators
 <ul>
-<li> +, -, *, / 
+<li class="fragment"> +, -, *, / 
 </ul>
-<li>Mathematical Functions: 
+<p>
+<li class="fragment">Mathematical Functions: 
 <ul>
-<li>exp(x,y),sin(x),log(x)
-<li>min(x1,x2,..), max(), median()
+<li class="fragment">exp(x,y),sin(x),log(x)
+<li class="fragment">min(x1,x2,..), max(), median()
 </ul>
+<p class="fragment"><small>See GRASS GIS <a href="https://grass.osgeo.org/grass76/manuals/r.mapcalc.html">map algebra manual page</a>
+for extensive set of supported operators and mathematical functions</small>
 </section>
 
 <section>
-   <h3>Raster map algebra: logical expressions</h3>
+   <h3>Map algebra: logical expressions</h3>
 <p>
 <ul>
-<li> apply to both continuous and discrete (category) data and their combination 
-<li>use for complex reclassification, masking and overlays
+<li>continuous and discrete (category) data and their combination 
+<li>reclassification, sub-setting, masking, overlays
 <li>Example: find all forested areas with elevation > 120m
-use more meaningful example
 </ul>
-<p class=small>GRASS GIS expression
-highforest = "if(landclass96==5 && elevation > 120., elevation, null())”
-<p class=small>
-ArcGIS expression
-ADD
-<p>Image composit: see slide 30
+<p>GRASS GIS expression
+<p class="small">"highforest = if(landclass96==5 && elevation > 120., elevation, null())”</p>
 </section>
 
 <section>
-   <h3>Raster map algebra: arithmetics</h3>
+   <h3>Map algebra: logical expressions</h3>
+<p class="small">"highforest = if(landclass96==5 && elevation > 120., elevation, null())”</p>
+<p>
+<img height="200" src="img/analysis_basicraster/landclass96sh.jpg">
+<img height="200" src="img/analysis_basicraster/elevation_shade10m.jpg">
+<img height="200" src="img/analysis_basicraster/highforest.jpg">
+</section>
+
+<section>
+   <h3>Map algebra: arithmetic operators</h3>
+<p>Integer and floating point matters for arithmetic expressions:
 <ul>
-<li>Integer and floating point matters for arithmetic expressions:
 <li>F(map1_int, map2_int) -> map_int
 <li>F(map1_int, map2_fp) -> map_fp
 <p>
@@ -237,8 +245,22 @@ ADD
 
 <section>
    <h3>Raster map algebra: int and fp</h3>
+<p>ndvi=(tm4-tm3)/(tm4+tm3)
 <p>
-example slide 25
+<img height="200" src="img/analysis_basicraster/lsat7_2002_30.png">
+<img height="200" src="img/analysis_basicraster/lsat7_2002_40.png">
+<p>
+<img height="200" src="img/analysis_basicraster/ndvi_0.png">
+</section>
+
+<section>
+   <h3>Raster map algebra: int and fp</h3>
+<p>ndvi=float(tm4-tm3)/float(tm4+tm3)
+<p>
+<img height="200" src="img/analysis_basicraster/lsat7_2002_30.png">
+<img height="200" src="img/analysis_basicraster/lsat7_2002_40.png">
+<p>
+<img height="200" src="img/analysis_basicraster/ndvi_fp.png">
 </section>
 
 <section>
@@ -249,10 +271,7 @@ better example?
 Example: for all forested areas, compute sediment transport capacity using the following equation 
 <p>equations
 <p class=small>GRASS GIS expression
-sediment = "if(landclass96==5, exp(contrib_area,1.5) * sin(slope), null())”
-<p class=small>
-ArcGIS expression
-ADD
+"sediment = if(landclass96==5, exp(contrib_area,1.5) * sin(slope), null())”</p>
 <p>Image composit: create new
 </section>
 
@@ -271,6 +290,7 @@ ADD
    <h3>More raster map algebra</h3>
 <p>
 learn more in assignments and in manuals
+Create a new raster using mathematical function - plane, trigonometric function etc.
 </section>
 
 <section>
