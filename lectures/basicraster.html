@@ -321,7 +321,7 @@ Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM,
 <p class=small> elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</p>
 <p class="fragment">
 <img height="350" src="img/analysis_basicraster/mapcalc_nulls_out.jpg"></p>
-<p class="fragment">Use “if” statement to limit the computation to no-NULL areas</p>
+<p class="fragment"><small>Use “if” statement to limit the computation to no-NULL areas</small></p>
 </section>
 
 <section>
@@ -339,12 +339,29 @@ Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM,
 Merging several neighboring raster maps into a single raster (mosaic)
 <p class="fragment">
 <img height="350" src="img/analysis_basicraster/patch_tiles.jpg"></p>
-<p>First mosaic, then reproject to avoid potential slivers that need to be interpolated
+<p class="small">First mosaic, then reproject to avoid potential slivers that need to be interpolated</p>
 </section>
 
 <section>
-   <h3>Reclassification and rescaling</h3>
+   <h3>Reclassification</h3>
 <p>
+Reclassification / recoding: transformation rules used to convert between raster value types and classes:
+<p>change interval or list of values $(w_i, w_j)$  to a new value $v_k$ or interval of values $(v_k,v_l)$
+<p>Interval: 
+<ul>
+<li>Equal value
+<li>Natural breaks (based on histogram breaks)
+<li>Equal area (histogram equalized)
+</ul>
+</section>
+
+<section>
+   <h3>Reclassification example</h3>
+<p>Aspect: continuous values in degrees to discrete classes in cardinal directions
+<p class="fragment">
+<img height="270" src="img/analysis_basicraster/aspect360.jpg">
+<img height="270" src="img/analysis_basicraster/aspect-reclass.png">
+<small>0- 45 = 4 East, 45-135 = 1 North, 135-225 = 2 West, 225-315 = 3 South, 315-360 = 4 East,</small>
 </section>
 
 <section>
