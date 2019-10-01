@@ -1,5 +1,5 @@
 <section>
-    <h2><b>Spatial Interpolation: methods</b></h2>
+    <h2><b>Spatial Interpolation: Methods</b></h2>
     <p style="margin-top: 0.5em">
         Helena Mitasova</p>
     <p class="title-foot">
@@ -12,103 +12,235 @@
     <h3>Outline (learning objectives)</h3>
 <p>
 <ul>
-  <li>display of raster and vector data: scaling properties
-  <li>color ramps for raster data, relief shading
-  <li>color and symbols for vector data
-  <li>map elements
-  <li>3D visualization: single and multiple surfaces
-  <li>dynamic visualization with animations
-  <li>Web GIS cartography: MapStory, CartoDB, WorldMap
-  <li>tangible interaction
+ <li>spatial interpolation: definition, applications
+ <li>methods and their properties
+ <li>voronoi and TIN
+ <li>IDW
+ <li>geostatistics
+ <li>radial basis functions and splines 
 </ul>
 </section>
 
 <section>
-  <h3>Role of geovisualization</h3>
+  <h3>When to use bi-variate interpolation</h3>
+Bi-variate: Find surface representation based on values measured at 2D points
 <ul>
-<li class="fragment">Visual analytics
-<li class="fragment">Communication of geospatial information
-<li class="fragment">Example: Explore Global Weather Conditions at
-<strong>
-<a href="https://earth.nullschool.net/about.html">earth</a></strong> by Cameron Beccario
+<li class="fragment">convert scattered points, profiles, isolines to raster: gridding
+<li class="fragment">resample raster data to higher resolution 
+<li class="fragment">compute denser or smoother mesh representation 
 </ul>
 </section>
 
 <section>
-   <h3>Display of raster and vector data</h3>
+   <h3>Scattered points to raster</h3>
 <p>
+From given scattered points to points at regular grid
+<p class="fragment"> <img height="450" src="img/spatial_interpolation/pointstogrid.jpg">
+</p>
+</section>
+
+<section>
+   <h3>When to use bi-variate interpolation</h3>
+<p>
+From given scattered points to points at regular grid
+<p>
+ <img height="250" src="img/lidarmrpts3dcolored.jpg">
+ <img height="250" src="img/nvizcutplanelwDEMDSMS.jpg">
+</p>
+</section>
+
+<section>
+  <h3>When to use tri-variate interpolation</h3>
+Tri-variate: Find volume representation based on values measured at 3D points
 <ul>
- <li class="fragment">all data displayed on computer screen are rasters 
- <li class="fragment">raster data display: as we zoom in, pixels show up, we can reinterpolate to avoid visible pixels
- <li class="fragment">vector data display: scalable, preserves shape 
+<li class="fragment">resample 3D raster data to higher resolution
+<li class="fragment">convert scattered 3D points, profiles, to 3D grid
+<li class="fragment">compute denser or smoother mesh representation
 </ul>
+</section>
+
+<section>
+  <h3>When to use tri-variate interpolation</h3>
+Tri-variate: Find volume representation based on values measured at 3D points
+<p>
+<img height="350" src="img/spatial_interpolation/soilpts.gif">
+<img height="370" src="img/spatial_interpolation/clayfenc.gif">
+  <br class="fragment"><small>Soil properties: clay content</small>
+</p>
+</section>
+
+<section>
+  <h3>Quad-variate interpolation</h3>
+Find continuous space-time representation based on values measured at 3D points over time
+<ul>
+<li class="fragment">resample series of 3D raster data to higher spatio-temporal resolution
+<li class="fragment">convert scattered 4D points to 4D grid (3D grid series)
+</ul>
+<p class="fragment"> <img height="320" src="img/data_visualize/wellnew.gif">
+  <br class="fragment"><small>Sampling points of groundwater pollution in space and time</small>
+</p>
+</section>
+
+<section>
+  <h3>Quad-variate interpolation</h3>
+Groundwater pollution over 10 years - 3D space + time
+<p class="fragment"> <img height="400" src="img/data_visualize/well456.gif">
+</p>
+</section>
+
+<section>
+   <h3>Spatial interpolation: foundations</h3>
+<p>
+Problem definition 
+<ul>
+<li class="fragment">find a function which passes through (or close to) the given set of discrete points and then
+<li class="fragment">use this function to estimate the values at unsampled points – usually a regular grid
+</ul>
+</section>
+
+<section>
+   <h3>Mathematical formulation</h3>
+Bi-variate interpolation and approximation can be formulated as follows:
+<p>
+Given $m$-points $(x_i, y_i, z_i), i=1,m$ find such $F(x,y)$ that for each $i=1,m$
 <p class="fragment">
-<img height="350" src="img/data_visualize/raster_vect_displ_zoom.jpg">
-</p>
+           $$z_i=F(x_i,y_i)$$  or 
+           $$z_i=F(x_i,y_i) + e(x_i,y_i)$$ 
+<p  class="fragment">
+and compute $z_k=F(x_k,y_k)$ where $(x_k,y_k)$ are grid points
+<p class="fragment">
+<b>Why is this a difficult problem?</b>
 </section>
 
 <section>
-   <h3>Display of large rasters</h3>
-  If the number of rows or columns in a raster is greater than those of map display,
-not all pixels are visible
-<p class="fragment"> <img height="390" src="img/data_visualize/raster_large_streams.jpg">
-<img height="390" src="img/data_visualize/raster_large_streamszoom.jpg">
-  <br class="fragment"><small>raster lines representation is broken: convert to vector representation </small>
-</p>
+   <h3>Interpolation problem solution</h3>
+Problem does not have a unique solution: 
+<p> 
+<img height="420" src="img/spatial_interpolation/interp1d.gif"> </p>
 </section>
 
 <section>
-   <h3>Working with color</h3>
-<ul>
- <li class="fragment">Color definition components: hue, lightness, and saturation
- <li class="fragment">Quantitative representation: % Red, Green, Blue
- <li class="fragment">Color for raster data: discrete or continuous 
- <li class="fragment">Continuous <strong>interpolates</strong> RGB values based on the values in the raster map
- <li class="fragment">Color for vector data: usually discrete by definition
-</ul>
+   <h3>Interpolation problem solution</h3>
+Problem does not have a unique solution:
 <p>
-Learn more about color
-<small>
-<ul>
-<li>categorical and quantitative differences in data visualization
-<li><a href="https://morphocode.com/the-use-of-color-in-maps/">Color in Maps</a>
-<li><a href="https://www.axismaps.com/guide/general/using-colors-on-maps/">More about Color in Maps</a>
-<li><a href="https://www.vis4.net/blog/2013/09/mastering-multi-hued-color-scales/">Multihued Color Scales</a>
-<li><a href="http://tristen.ca/hcl-picker/#/hlc/6/1/21313E/EFEE69">Interactive color picker </a>
-</ul>
-</small>
+<img height="320" src="img/spatial_interpolation/soils_rural_1mID.png"> </p>
 </section>
 
 <section>
-   <h3>Colors for discrete raster data</h3>
-<ul>
-<li>Quantitative data: constant hue, color intensity is a function of values
-<li>Qualitative data: constant intensity, varied discrete hue
-</ul>
-<p class="fragment"> 
-<img height="320" src="img/data_visualize/soilsKfac_discrleg.png">
-<img height="320" src="img/data_visualize/soils_rural_1mID.png"> </p>
-<p> Soil erodibility and Soil ID maps
-<p>Brewer - example of discrete color ramps for cartography
+   <h3>Interpolation problem solution</h3>
+Problem does not have a unique solution:
+<p>
+<img height="320" src="img/spatial_interpolation/soils_rural_1mID.png"> </p>
 </section>
 
 <section>
-   <h3>Colors for continuous raster data</h3>
-<ul>
-<li>continuous color highlights continuous property
-<li>discrete color limits the information but makes the interval values easier to identify
-</ul>
-<p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_elev.jpg">
-<p class="credit">(note: default color ramp for FP maps is often greyscale with uniform interval)</p>
+   <h3>Interpolation problem solution</h3>
+Problem does not have a unique solution:
+<p>additional conditions are needed
+<p>
+<img height="320" src="img/spatial_interpolation/soils_rural_1mID.png"> </p>
 </section>
 
 <section>
-   <h3>Colors for continuous raster data</h3>
-<p> <small>
-Distribution of color based on uniform raster data intervals</small>
-<p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_histeq1.jpg"> </p>
-<p><small>Uniform intervals work for elevations in Piedmont, but for entire NC this approach highlights that most NC is flat coastal 
-plane but we don't see its subtle topography structure </small></p>
+   <h3>Interpolation conditions</h3>
+<ul>
+  <li class="fragment"><b>Locality </b>: each point influences the surface only up to certain distance
+   or value at a given point will be similar to values at nearby points
+   <li class="fragment"><b>Geostatistical</b>: surface is one realization of a random function with spatial covariance 
+   <li class="fragment"><b>Smoothness</b> surface should be as smooth as possible while passing through or close to the data points
+</ul>
+<!--<p class="credit">(note: default color ramp for FP maps is often greyscale with uniform interval)</p>-->
+</section>
+
+<section>
+   <h3>Interpolation general equation</h3>
+Spatial interpolation function $F(r)$ can be expressed as:
+<p>
+$$
+F(r) = T(r) + ∑ λ_j R(r,r_j)  \;    j=1,m
+$$
+<ul>
+<li> $r = (x,y)$ is location of a grid point, 
+<li>$r_j=(x_j,y_j$) is location of a measured point
+<li>$T$ is trend (low order polynomial), 
+<li>$λ_j$ are coefficients 
+<li>$R(r,r_j)$ is a function of distance between unsampled and measured point (radial basis function, model variogram)
+</ul>
+</section>
+
+<section>
+   <h3>Local interpolation methods</h3>
+Only a small subset of $n$ neighboring points is used
+<p>
+<ul>
+ <li class="fragment">Voronoi polygons 
+ <li class="fragment">Triangular Irregular Network (TIN) - based
+ <li class="fragment">Inverse distance weighted method
+</ul>
+</section>
+
+<section>
+   <h3>Voronoi (Thiessen)  polygons</h3>
+Voronoi polygon edges are equidistant to 2 given points 
+and define a <b>unique nearest neighborhood</b> around each point.
+<p>
+<img height="320" src="img/spatial_interpolation/voronoi_tin_zm.png"> </p>
+<p><a href="http://alexbeutel.com/webgl/voronoi.html"> Voronoi diagram generator</a>
+</section>
+
+<section>
+   <h3>Voronoi (Thiessen)  polygons</h3>
+<p>
+Voronoi polygons are derived from the measured data - a measured point is at the center of a Voronoi polygon 
+<p>
+Value at an unsampled point $z(x,y)$ is the same as the measured value $z(x_j,y_j)$
+at the center of the Voronoi polygon $V_j$ within which the unsampled point is located:
+$$ T(x,y) = 0 $$
+$$z(x,y) = λ z(x_j,y_j)$$ 
+<ul>
+<li>$\lambda = 1$, if $(x,y)$ is within $V_j$  
+<li>$\lambda = 0$, if $(x,y)$ is outside $V_j$
+<li>and $j = 1,m$, where $m$ is the number of points
+</section>
+
+<section>
+   <h3>Voronoi polygons</h3>
+2m resolution DEM computed using Voronoi polygons:
+ includes only measured values and the surface is not continuous 
+<p>
+<img height="380" src="img/spatial_interpolation/IntF1a.gif"> </p>
+</section>
+
+<section>
+   <h3>Linear TIN-based method</h3>
+<p>
+<img height="380" src="img/spatial_interpolation/IntTinF1b.gif"> </p>
+</section>
+
+<section>
+   <h3>Inverse distance weight method</h3>
+<p>
+<img height="380" src="img/spatial_interpolation/IntIDWF1c.gif"> </p>
+</section>
+
+<section>
+   <h3>Kriging</h3>
+<p>
+<img height="380" src="img/spatial_interpolation/IntkrigF1d.gif"> </p>
+</section>
+
+<section>
+   <h3>Splines</h3>
+<p>
+<img height="380" src="img/spatial_interpolation/InttopogrF1e.gif"> </p>
+<img height="380" src="img/spatial_interpolation/IntRSTF1f.gif"> </p>
+</section>
+
+<section>
+   <h3>Summary</h3>
+Can you guess the interpolation method?
+<p>
+<img height="450" src="img/interpolationBW.jpg"> </p>
 </section>
 
 <section>
@@ -116,7 +248,6 @@ plane but we don't see its subtle topography structure </small></p>
 <p>
 Distribution of color based on histogram of raster data values and a custom color ramp
 <p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_histeq2.jpg">
-<p> <small>highlights topography structure but distorts the elevation differences</small>
 <p>add equation or graph?
 </section>
 
