@@ -57,10 +57,9 @@ Find volume representation based on values measured at 3D points
   <h3>When to use tri-variate interpolation</h3>
 Tri-variate: Find volume representation based on values measured at 3D points
 <p>
-<img height="350" src="img/spatial_interpolation/soilpts.gif">
+<img height="360" src="img/spatial_interpolation/soilpts.gif">
 <img height="370" src="img/spatial_interpolation/clayfenc.gif">
-  <br class="fragment"><small>Soil properties: clay content</small>
-</p>
+<p class="fragment"><small>Soil properties: clay content</small>
 </section>
 
 <section>
@@ -71,8 +70,7 @@ Find continuous space-time representation based on values measured at 3D points 
 <li class="fragment">convert scattered 4D points to 4D grid (3D grid series)
 </ul>
 <p class="fragment"> <img height="320" src="img/data_visualize/wellnew.gif">
-  <br class="fragment"><small>Sampling points of groundwater pollution in space and time</small>
-</p>
+<p class="fragment"><small>Sampling points of groundwater pollution in space and time</small>
 </section>
 
 <section>
@@ -96,7 +94,8 @@ Problem definition
    <h3>Scattered points to raster</h3>
 <p>
 From given scattered points to points at regular grid
-<p class="fragment"> <img height="450" src="img/spatial_interpolation/pointstogrid.jpg">
+<p class="fragment"> <img height="400" src="img/spatial_interpolation/scattered_pts.jpg">
+<p class="fragment"> <img height="400" src="img/spatial_interpolation/pointstogrid.jpg">
 </p>
 </section>
 
@@ -106,7 +105,7 @@ Bi-variate interpolation and approximation can be formulated as follows:
 <p>
 Given $m$-points $(x_i, y_i, z_i), i=1,m$ find such $F(x,y)$ that for each $i=1,m$
 <p class="fragment">
-           $$z_i=F(x_i,y_i)$$  or 
+           $$z_i=F(x_i,y_i)$$   
            $$z_i=F(x_i,y_i) + e(x_i,y_i)$$ 
 <p  class="fragment">
 and compute $z_k=F(x_k,y_k)$ where $(x_k,y_k)$ are grid points
@@ -118,21 +117,21 @@ and compute $z_k=F(x_k,y_k)$ where $(x_k,y_k)$ are grid points
    <h3>Interpolation problem solution</h3>
 Problem does not have a unique solution: 
 <p> 
-<img height="420" src="img/spatial_interpolation/interp1d.gif"> </p>
+<img height="350" src="img/spatial_interpolation/interp1d_nn.png"> </p>
 </section>
 
 <section>
    <h3>Interpolation problem solution</h3>
 Problem does not have a unique solution:
 <p>
-<img height="320" src="img/spatial_interpolation/soils_rural_1mID.png"> </p>
+<img height="350" src="img/spatial_interpolation/interp1d_lin.png"> </p>
 </section>
 
 <section>
    <h3>Interpolation problem solution</h3>
 Problem does not have a unique solution:
 <p>
-<img height="320" src="img/spatial_interpolation/soils_rural_1mID.png"> </p>
+<img height="350" src="img/spatial_interpolation/interp1d_curve.png"> </p>
 </section>
 
 <section>
@@ -140,7 +139,7 @@ Problem does not have a unique solution:
 Problem does not have a unique solution:
 <p>additional conditions are needed
 <p>
-<img height="320" src="img/spatial_interpolation/soils_rural_1mID.png"> </p>
+<img height="350" src="img/spatial_interpolation/interp1d_all.png"> </p>
 </section>
 
 <section>
@@ -164,7 +163,7 @@ $$
 <ul>
 <li> $r = (x,y)$ is location of a grid point, 
 <li>$r_j=(x_j,y_j$) is location of a measured point
-<li>$T$ is trend (low order polynomial), 
+<li>$T(r)$ is trend (low order polynomial), 
 <li>$λ_j$ are coefficients 
 <li>$R(r,r_j)$ is a function of distance between unsampled and measured point (radial basis function, model variogram)
 </ul>
@@ -195,16 +194,16 @@ define <b>unique nearest neighborhood</b> around each point
 <p>
 Voronoi polygons are derived from the measured data - the measured point is at the center of a Voronoi polygon 
 <p class="fragment">
-Value at an unsampled point $z(x,y)$ is the same as the measured value $z(x_j,y_j)$
+Value at an unsampled point $z(x,y)$ is <b>the same</b> as the measured value $z(x_j,y_j)$
 at the center of the Voronoi polygon $V_j$ within which the unsampled point is located:
 <p class="fragment">
 $$ T(x,y) = 0 $$
 $$z(x,y) = λ z(x_j,y_j)$$ 
 <p class="fragment">
 <ul>
-<li>$\lambda = 1$, if $(x,y)$ is within $V_j$  
-<li>$\lambda = 0$, if $(x,y)$ is outside $V_j$
-<li>and $j = 1,m$, where $m$ is the number of points
+<li class="fragment">$\lambda = 1$, if $(x,y)$ is within $V_j$  
+<li class="fragment">$\lambda = 0$, if $(x,y)$ is outside $V_j$
+<li class="fragment">and $j = 1,m$, where $m$ is the number of points
 </ul>
 </section>
 
@@ -221,15 +220,15 @@ $$z(x,y) = λ z(x_j,y_j)$$
 <section>
    <h3>Linear TIN-based method</h3>
 <p>
-Value $z(x,y)$ at a unsampled point is a linear combination of values 
+Value $z(x,y)$ at an unsampled point is a linear combination of values 
 at 3 nearby points $z(x_j,y_j)$ that form vertices of a triangle
-<p>
+<p class="fragment">
 $$ T(r) = 0 $$
 $$z(x,y) = ∑ \lambda_j z(x_j,y_j) / \lambda_T \;  j=1,2,3$$
 <ul>
-<li>$\lambda_j$ is weight proportional to the area of a triangle 
+<li class="fragment">$\lambda_j$ is weight proportional to the area of a triangle 
 defined by the unsampled point and two given points
-<li>$\lambda_T$ is is weight proportional to the area of a triangle
+<li class="fragment">$\lambda_T$ is is weight proportional to the area of a triangle
 defined by the measured points
 </ul>
 </section>
@@ -240,7 +239,7 @@ defined by the measured points
 Delaunay triangulation for a set of points P in a plane fulfills 
 the condition that no point in P is inside the circumcircle of any triangle in DT(P).
 <p>
-<img height="380" src="img/spatial_interpolation/IntF1a.gif"> </p>
+<img height="380" src="img/spatial_interpolation/DelaunayTIN1.png"> </p>
 </section>
 
 <section>
@@ -249,7 +248,7 @@ the condition that no point in P is inside the circumcircle of any triangle in D
 Delaunay triangulation for a set of points P in a plane fulfills 
 the condition that no point in P is inside the circumcircle of any triangle in DT(P).
 <p>
-<img height="380" src="img/spatial_interpolation/IntF1a.gif"> </p>
+<img height="380" src="img/spatial_interpolation/DelaunayTIN2.png"> </p>
 </section>
 
 <section>
@@ -257,7 +256,7 @@ the condition that no point in P is inside the circumcircle of any triangle in D
 <p>
 Voronoi (Thiessen) polygons and Delaunay triangulation create dual graphs. 
 <p>
-<img height="380" src="img/spatial_interpolation/IntF1a.gif"> </p>
+<img height="380" src="img/spatial_interpolation/DelaunayTIN_Voronoi.png"> </p>
 </section>
 
 <section>
@@ -265,7 +264,7 @@ Voronoi (Thiessen) polygons and Delaunay triangulation create dual graphs.
 <ul>
  <li>2m resolution DEM computed using linear interpolation on TIN:
   <li>includes measured and interpolated values
-  <li>surface is continuous, but the first order derivatives are not
+  <li>surface is continuous, but the derivatives are not
 </ul>
 <p>
 <img height="380" src="img/spatial_interpolation/IntTinF1b.gif"> </p>
@@ -276,10 +275,9 @@ Voronoi (Thiessen) polygons and Delaunay triangulation create dual graphs.
 <ul>
  <li>given points are along isolines, unsampled points are on grid
  <li>linear interpolation along steepest slope lines between two neighboring isolines
- <li>surface is continuous, but the first order derivatives are not
 </ul>
 <p>
-<img height="380" src="img/spatial_interpolation/IntTinF1b.gif"> </p>
+<img height="380" src="img/spatial_interpolation/interp_lin_isolines.jpg"> </p>
 </section>
 
 <section>
@@ -319,7 +317,7 @@ $$z(x,y) = ∑ \lambda_j z(x_j,y_j) / ∑ \lambda_j \;  j=1,..., n$$
 Value at a unsampled grid point is a weighted average of values measured at $n$ nearby points:
 $$z(x,y) = ∑ \lambda_j z(x_j,y_j) / ∑ \lambda_j \;  j=1,..., n$$
 <p>
-<img height="380" src="img/spatial_interpolation/IntIDWF1c.gif"> </p>
+<img height="380" src="img/spatial_interpolation/idw_pointselect.png"> </p>
 </section>
 
 <section>
@@ -333,18 +331,22 @@ the measured points is much larger than the distance between grid points</small>
 </section>
 
 <section>
-   <h3>Geostatistical approach to interpolation</h3>
-<ul>
-<li class="fragment">surface is one realization of a random function with spatial covariance
-<li class="fragment">the function is given by model variogram (best fit of the empirical variogram)
-<li class="fragment">universal kriging includes trend term
-<li class="fragment">implemented as global or local function
-</ul>
+   <h3>Inverse distance weighted method</h3>
+Impact of power parameter on the resulting surface
+<p>
+<img height="460" src="img/spatial_interpolation/idw_precip_contours2d.png"> </p>
+</section>
+
+<section>
+   <h3>Inverse distance weighted method</h3>
+Impact of power parameter on the resulting surface: p=0.5 and p=5
+<p>
+<img height="250" src="img/spatial_interpolation/idw_precip_p05_3dpts.png"> </p>
+<img height="250" src="img/spatial_interpolation/idw_precip_p5_3d_pts.jpg"> </p>
 </section>
 
 <section>
    <h3>Geostatistical approach to interpolation</h3>
-Kriging:
 <ul>
 <li class="fragment">surface is one realization of a random function with spatial covariance
 <li class="fragment">the function is given by model variogram (best fit of the empirical variogram)
@@ -371,7 +373,7 @@ The coefficients $λ_j$ are found by solving system of $m$ linear equations
 </section>
 
 <section>
-   <h3>Geostatistical approach to interpolation</h3>
+   <h3>Geostatistical approach</h3>
 We assume that the points that are close to each other have smaller differences in measured values 
 than the points that are farther appart 
 <p>
@@ -390,7 +392,6 @@ Many model functions can be used: spherical, exponential, Gaussian, …
 <section>
    <h3>Model variogram</h3>
 <p>Terms: sill - semivariogram at infinity, nugget - semivariogram at 0, range - distance to sill
-<img height="380" src="img/spatial_interpolation/IntkrigF1d.gif"> </p>
 <p>(from Geostat_ITCCov3.pdf, D.G. Rossiter)
 </section>
 
@@ -405,8 +406,8 @@ discussed in the next section, not the function itself
 <section>
    <h3>Splines</h3>
 <p>
-<img height="340" src="img/spatial_interpolation/InttopogrF1e.gif"> </p>
-<img height="340" src="img/spatial_interpolation/IntRSTF1f.gif"> </p>
+<img height="300" src="img/spatial_interpolation/InttopogrF1e.gif"> </p>
+<img height="300" src="img/spatial_interpolation/IntRSTF1f.gif"> </p>
 </section>
 
 <section>
@@ -414,6 +415,17 @@ discussed in the next section, not the function itself
 Can you guess the interpolation method?
 <p>
 <img height="450" src="img/interpolationBW.jpg"> </p>
+</section>
+
+<section>
+   <h3>Summary</h3>
+<ul>
+<li class="fragment">Instead of a single universal solution that would automatically optimize its parameters to the given data set and application we now have a large number of different interpolation and approximation methods and their implementations and no robust automated approach for choosing the right one
+<li class="fragment">Sound knowledge of interpolated phenomenon and the methods is needed to do it correctly
+<li class="fragment">But – if there is sufficient amount of uniformly distributed data, most methods will provide good results 
+<li class="fragment">Keep interpolation in mind when collecting data (e.g. parallel far apart but densely sampled profiles are difficult to interpolate)
+</ul>
+
 </section>
 
 
