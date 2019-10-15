@@ -168,9 +168,9 @@ Single and multibeam sonar
 
 <section>
    <h3>Point cloud patterns</h3>
-Scattered points in horizontal and vertical dimensions
+<!--Scattered points in horizontal and vertical dimensions-->
 <p class="fragment"> <img height="260" src="img/geomorph_terrain/points_lidar_gps.jpg">
-<p>Jockey's lidar, Vasek Wake lidar
+<!--<p>Jockey's lidar, Vasek Wake lidar-->
 </section>
 
 <section>
@@ -296,6 +296,12 @@ If input are points on contours: flats on the top of hills or ridges if no peaks
 </section>
 
 <section>
+   <h3>3D parametric meshes</h3>
+<p> <img height="355" src="img/geomorph_terrain/textileschool_mesh_payam.png">
+</p>
+</section>
+
+<section>
    <h3>Point clouds</h3>
 <p>
 <ul>
@@ -318,8 +324,7 @@ If input are points on contours: flats on the top of hills or ridges if no peaks
 <section>
    <h3>Multiple return point clouds</h3>
 <p> 
-<img height="355" src="img/geomorph_terrain/MRlidar.jpg">
- <img height="355" src="img/geomorph_terrain/lidarfirstbeptscoverbldg.png">
+<img height="355" src="img/geomorph_terrain/points3d.png">
 </p>
 </section>
 
@@ -342,9 +347,9 @@ If input are points on contours: flats on the top of hills or ridges if no peaks
 
 <section>
    <h3>Multiple return point clouds</h3>
-<p>All return and bare ground points
-<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
- <img height="355" src="img/spatial_interpolation/pointstogrid.jpg">
+<p>
+<img height="355" src="img/geomorph_terrain/MRlidar.jpg">
+ <img height="355" src="img/geomorph_terrain/lidarfirstbeptscoverbldg.png">
 </p>
 <p>Bare ground points are sparser in vegetated areas
 </section>
@@ -362,11 +367,12 @@ Binning: fast method for analyzing point clouds and generating DEMs using per-ce
 </ul>
 </section>
 
+<!--
 <section>
    <h3>Point density</h3>
 <p>Number of bare earth points in each 2m and 6m resolution cell
-<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
- <img height="355" src="img/spatial_interpolation/pointstogrid.jpg">
+<p> <img height="355" src="img/geomorph_terrain/scattered_pts.jpg">
+ <img height="355" src="img/geomorph_terrain/pointstogrid.jpg">
 </p>
 <p>Bare ground points are sparser in vegetated areas, at 2m resolution there are many no data grid cells
 </section>
@@ -374,7 +380,7 @@ Binning: fast method for analyzing point clouds and generating DEMs using per-ce
 <section>
    <h3>Point density</h3>
 <p>Number of points from ground based lidar scanner in each 40cm grid cell
-<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
+<p> <img height="355" src="img/geomorph_terrain/scattered_pts.jpg">
 </p>
 <p>Density of points depends on distance and angle and is highly variable
 </section>
@@ -382,7 +388,7 @@ Binning: fast method for analyzing point clouds and generating DEMs using per-ce
 <section>
    <h3>Point elevation range within a cell</h3>
 <p>Range of bare earth elevations zmax-zmin in each cell at 6m resolution
-<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
+<p> <img height="355" src="img/geomorph_terrain/scattered_pts.jpg">
 </p>
 <p>Large range along the edge of the pond
 </section>
@@ -390,50 +396,60 @@ Binning: fast method for analyzing point clouds and generating DEMs using per-ce
 <section>
    <h3>Point elevation mean within a cell</h3>
 <p>Mean bare earth elevation for each 6m cell and interpolated 1m resolution DTM
-<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
+<p> <img height="355" src="img/geomorph_terrain/scattered_pts.jpg">
 <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
 </section>
+-->
 
 <section>
    <h3>Point elevation mean: Jockey's Ridge</h3>
 <p>Jockey's Ridge 1999, unfiltered single return lidar point cloud: 1m grid cell binning using maximum elevation
-<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
+<p> <img height="355" src="img/geomorph_terrain/lidstorast1m.jpg">
 <p>Result has many NULL cells – what to do?
 </section>
 
 <section>
    <h3>Point elevation mean: Jockey's Ridge</h3>
 <p>Jockey's Ridge 1999, 3m grid cell binning using mean elevation
-<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
+<p> <img height="355" src="img/geomorph_terrain/lidstorast.jpg">
 <p>Result is somewhat fuzzy – what to do?
 </section>
 
 <section>
    <h3>Interpolated DEM: Jockey's Ridge</h3>
 <p>Jockey's Ridge 1999, 1m DEM interpolated by RST spline method
-<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
+<p> <img height="355" src="img/geomorph_terrain/liddfdm1e.jpg">
 </section>
 
 <section>
    <h3>Point density: 2013 Wake county lidar</h3>
-<p>Number of points per 1m grid cell: all returns and bare ground
-<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
-<img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
+<p>Number of points per 1m grid cell: all returns and first return 
+<p> <img height="300" src="img/geomorph_terrain/lid2013_all_n_3ftb.png">
+<img height="300" src="img/geomorph_terrain/lid2013_1r_n_3ftb.png">
 </p>
-<p>Density of points depends on distance and angle and is highly variable
 </section>
 
 <section>
-   <h3>Interpolated DTM and DSM</h3>
-<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
-<img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
+   <h3>Point density: 2013 Wake county lidar</h3>
+<p>Number of points per 1m grid cell: all returns and bare ground returns
+<p> <img height="300" src="img/geomorph_terrain/lid2013_all_n_3ftb.png">
+<img height="300" src="img/geomorph_terrain/lid2013_be_n_3ftb.png">
+</p>
+</section>
+
+<section>
+   <h3>Interpolated DTM</h3>
+<p> <img height="400" src="img/geomorph_terrain/lid2013_be_3ft_3d.jpg">
 </section>
 
 <section>
    <h3>Interpolated DSM</h3>
-<p>Interpolated first return surface with orthophoto draped 
-over it: note the outlier and power lines 
-<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
+<img height="400" src="img/geomorph_terrain/lid2013_1r_3ft_3d.jpg">
+</section>
+
+<section>
+   <h3>Lidar and Mayan City</h3>
+<p> <img height="455" src="img/geomorph_terrain/LidarMayancityBelize.jpg">
 </section>
 
 <section>
