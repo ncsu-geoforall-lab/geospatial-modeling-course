@@ -24,7 +24,7 @@
 <section>
   <h3>Terrain surface  parameters</h3>
 <ul>
-<li class="fragment">Derived  from discrete representation of $z=f(x,y)xi$
+<li class="fragment">Derived  from discrete representation of $z=f(x,y)$
 <li class="fragment">Summary parameters  quantify property for entire surface or its subregion: volume, surface area, fractal dimension, roughness
 <li class="fragment">Point geometry parameters quantify geometry at each point of the surface: gradient, curvatures
 <li class="fragment">Cumulative flow parameters 
@@ -71,22 +71,22 @@ $$
 
 <section>
    <h3>Elevation surface gradient</h3>
-For the surface represented by a continuous bivariate function 
-$$
-z = f(x,y) 
-$$
-we can compute a vector: 
+Given a surface  $z = f(x,y)$, where $f(x,y)$ is a continuous bivariate function,
+we can define a gradient: 
+<p>
 $$ 
 \nabla z = ({\partial z \over \partial x}, {\partial z \over \partial y}) = (f_x,f_y)
 $$
+<p>
 where $f_x$ and $f_y$ are first order partial derivatives of $f(x,y)$ 
 <p>
 leading to a vector field that represents the <b>maximum rate of change</b> in elevation 
-and points in the direction of <b>steepest</b> increase in slope
+and points in the direction of this change
+<p>
 <small><a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/partial-derivatives/v/partial-derivatives-introduction">
 What is partial derivative</a> and a
 <a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/partial-derivatives/v/formal-definition-of-partial-derivatives">
-Formal definition</a> </small>
+formal definition</a> </small>
 </section>
 
 <section>
@@ -98,7 +98,153 @@ $$
 <small>show numbers</small>
 </section>
 
+<section>
+   <h3>Steepest slope angle</h3>
+Given the surface gradient $\nabla z = (f_x,f_y)$, 
+the steepest slope angle $\gamma$ is a function of the gradient vector magnitude
+<p class="fragment">
+$$ \tan \gamma = \sqrt (f_x^2 + f_y^2) $$
+<p class="fragment"> or expressed in percent
+<p class="fragment">
+$$ s = 100 \sqrt (f_x^2 + f_y^2) $$
+</section>
 
+<section>
+   <h3>Steepest slope angle</h3>
+<ul>
+ <li class="fragment">steepest slope measures maximum rate of change in elevation at a given point on surface
+ <li class="fragment">it is the angle between the surface normal (fx,fy,fz?) and vertical vectors (0,0,fz?)
+ <li class="fragment">rise over run in the direction of maximum elevation change
+ <li class="fragment">controls flow velocity and sun inclination angle
+</ul>
+<p>add a drawing here
+</section>
+
+<section>
+   <h3>Steepest slope angle map</h3>
+$$ \gamma = \arctan \sqrt (f_x^2 + f_y^2) $$
+<p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+<small>show numbers</small>
+</section>
+
+<section>
+   <h3>Aspect angle </h3>
+Steepest slope direction angle is the direction of gradient vector
+<p class="fragment">
+$$ \tan \alpha = f_x / f_y $$
+<p class="fragment">
+equation that takes into account the quadrants
+<p class="fragment">
+$$ \tan \alpha = f_x / f_y $$
+<ul>
+ <li class="fragment">it is the angle between the surface normal (fx,fy,fz?) and a tangent to the contour 
+ <li class="fragment">measures hillslope orientation
+ <li class="fragment">controls flow direction and sun inclination angle
+</ul>
+</section>
+
+<section>
+   <h3>Aspect angle</h3>
+$$ \tan \alpha = f_x / f_y $$
+<p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+<small>show numbers</small>
+</section>
+
+<section>
+   <h3>Slope angle in a given direction</h3>
+Slope can be measured at any direction $\beta$:
+$$ \gamma_d = slope times angle $$
+<p class="fragment">Slope angle $\beta$ is always smaller than slope given by gradient magnitude
+<p>add diagram
+</section>
+
+<section>
+   <h3>Slope angle in a given direction</h3>
+Slope along the road , versus steepest slope angle
+<p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+<small>show numbers</small>
+</section>
+
+<section>
+   <h3>Steepest slope and aspect: DEM </h3>
+Slope and aspect derived from a 10m resolution DTM
+<p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+</section>
+
+<section>
+   <h3>Slope and aspect: integer DEM </h3>
+Impact of integer elevation values in meters on slope pattern
+and a slope and aspect histograms
+<p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+</section>
+
+<section>
+   <h3>Computing slope and aspect from DEM </h3>
+Given a matrix of elevation values - a DEM, estimate slope and aspect:
+<ul>
+  <li class="fragment">Steepest elevation difference: D8 approach
+  <li class="fragment">Polynomial approximation on 3x3 neighborhood, many versions using second order polynomials
+  <li class="fragment">Spline approximation on raster or directly from point data
+</ul>
+</section>
+
+<section>
+   <h3>Computing slope and aspect from DEM </h3>
+Polynomial approximation on 3x3 moving window:
+$$ z(x,y)=a_0+a_1 x + a_2 y + a_3 xy + a_4 x^2 + a_5 y^2 $$
+<ul>
+   <li class="fragment">we can write 9 equations to solve for $a_i$ parameters 
+   <li class="fragment">more equations than needed - we use weighted least squares to fit the polynomial to the 9 grid points
+  <li class="fragment"> the solution leads to - ADD
+</ul>
+<p>window image <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+</section>
+
+<section>
+   <h3>Computing slope and aspect from DEM </h3>
+Now we can compute $f_x$ and $f_y$:
+$$
+f_x = a_1 + a_3y + 2a_4x = {(z_{i-1,j-1} - z_{i+1,j-1)} + 2(z_{i-1,j} - z_{i+1,j)} + (z_{i-1,j+1} -z_{i+1,j+1)}} \over {8 \Delta x} 
+$$
+<p>
+$$
+f_y = a_2 + a_3x + 2a_4y = {(z_{i-1,j-1} - z_{i-1,j+1)} + 2(z_{i,j-1} - z_{i,j+1)} + (z_{i+1,j-1} -z_{i+1,j+1)}} \over {8 \Delta y} 
+$$
+Then slope and aspect will be - add equation
+and see also the code for r.slope.aspect
+<p>window image <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+</section>
+
+<section>
+   <h3>Computing slope and aspect from points </h3>
+Given a set of scattered points, estimate slope and aspect:
+<ul>
+  <li class="fragment">Spline approximation on raster or directly from point data
+</ul>
+</section>
+
+<section>
+   <h3>Steepest slope and aspect: DSM </h3>
+Slope and aspect derived from lidar 1st return point cloud using RST method
+(smoothing spline with tension)
+<p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+</section>
+
+<section>
+   <h3>Surface curvatures</h3>
+Curvature at a point: inverse of the radius of a circle tangent to the surface at this point in a given direction [m-1]
+Convex, concave, high value - smaller circle
+<p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+</section>
+
+<section>
+   <h3>Surface curvatures</h3>
+<ul>
+  <li class="fragment">In general, surface has different curvatures in different directions
+<li class="fragment">Principal directions have max and min curvatures, gaussian and mean are function of principal curvatures
+<li class="fragment">Geomorphometric curvatures: profile, tangential / plan
+</ul>
+</section>
 
 <section>
    <h3>Learn more</h3>
