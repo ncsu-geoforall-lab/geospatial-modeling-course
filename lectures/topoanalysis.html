@@ -159,8 +159,10 @@ $$ \tan \alpha = f_y / f_x $$
 
 <section>
    <h3>Slope angle in a given direction</h3>
-Slope $\gamma_t$ measured at <b>a direction</b> $\alpha_t$ id given as:
-$$ \gamma_t = \gamma \cos(\alpha - \alpha_t) $$
+Slope $\gamma_t$ measured at <b>a direction</b> $\alpha_t$ is given as:
+<p>
+$$ \tan \gamma_t =  \tan \gamma \cos(\alpha - \alpha_t) $$
+<p>
 <ul>
 <li> where $\gamma$ is the steepest slope angle.
 <li> $\alpha$ is  the steepest slope direction 
@@ -179,13 +181,15 @@ Slope along the road , versus steepest slope angle
 </section>
 
 <section>
-   <h3>Slope and aspect from DEM </h3>
-Given a matrix of elevation values - a DEM, estimate slope and aspect:
+   <h3>Steepest slope and aspect from DEM </h3>
+Methods to estimate slope and aspect from a DEM:
+<p>
 <ul>
-  <li class="fragment">Steepest elevation difference: D8 approach
+  <li class="fragment">Maximum elevation difference: D8 approach
   <li class="fragment">Polynomial approximation on 3x3 neighborhood, many versions using second order polynomials
-  <li class="fragment">Spline approximation on raster or directly from point data
+  <li class="fragment">Spline approximation directly from point data
 </ul>
+<p>In following slides with refer to <b>steepest slope</b> as <b>slope</b>
 </section>
 
 <section>
@@ -204,62 +208,114 @@ $$ z(x,y)=a_0+a_1 x + a_2 y + a_3 xy + a_4 x^2 + a_5 y^2 $$
    <h3>Slope and aspect from DEM </h3>
 <!--Now we can compute $f_x$ and $f_y$: $$f_x = a_1 + a_3y + 2a_4x, f_y = a_2 + a_3x + 2a_4y$$-->
 After substitution for $a_i$ we get
-
-$$
-f_x = {{(z_{i-1,j-1} - z_{i+1,j-1}) + 2(z_{i-1,j} - z_{i+1,j}) + (z_{i-1,j+1} -z_{i+1,j+1})} \over {8 \Delta x}} 
-$$
-
-$$
-f_y = {{(z_{i-1,j-1} - z_{i-1,j+1}) + 2(z_{i,j-1} - z_{i,j+1}) + (z_{i+1,j-1} -z_{i+1,j+1})} \over {8 \Delta y}} 
-$$
+<p class="fragment">
+$$ f_x = \left [z_{i-1,j-1} - z_{i+1,j-1} + 2(z_{i-1,j} - z_{i+1,j}) + z_{i-1,j+1} -z_{i+1,j+1} \right ] / 8 \Delta x $$
+<p class="fragment">
+$$ f_y = \left [z_{i-1,j-1} - z_{i-1,j+1} + 2(z_{i,j-1} - z_{i,j+1}) + z_{i+1,j-1} -z_{i+1,j+1} \right ] / 8 \Delta y $$
+<p class="fragment">
 Then slope and aspect is $ \tan \gamma = \sqrt{f_x^2 + f_y^2}, \tan \alpha = f_y / f_x$
 <p>window image <img height="300" src="img/analysis_basicraster/surfacearea2.jpg">
 </section>
 
 <section>
-   <h3>Steepest slope and aspect: DEM </h3>
+   <h3>Slope and aspect: DEM </h3>
 Slope and aspect derived from a 10m resolution DTM
 <p class="fragment"> <img height="320" src="img/data_visualize/slope.png">
-<p class="fragment"> <img height="320" src="img/data_visualize/slope.png">
+ <img height="320" src="img/data_visualize/slope.png">
 </section>
 
 <section>
    <h3>Slope and aspect: integer DEM </h3>
 Impact of integer elevation values in meters on slope pattern
-and a slope and aspect histograms
-<p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+and slope and aspect histograms
+<p class="fragment"> <img height="420" src="img/topoanalysis/slope_integers.jpg">
 </section>
 
 <section>
-   <h3>Computing slope and aspect from points </h3>
+   <h3>Shape metrics: curvatures</h3>
+Curvature at a point: inverse of the radius of a circle tangent to a curve $[m^{-1}]$
+<p class="fragment"> <img height="320" src="img/topoanalysis/surfacearea2.jpg">
+<p class="fragment">Blue: Concave, Orange: Convex.  
+<p class="fragment">High curvature value is associated with smaller circle
+</section>
+
+<section>
+   <h3>Surface curvatures</h3>
+<ul>
+<li class="fragment">In general, surface has <b>different curvatures in different directions</b>
+<li class="fragment">Maximum and minimum curvatures curvatures at a point are in perpendicular directions: <b>principal curvatures</b> 
+$\kappa_1, \kappa_2$
+<li class="fragment">Gaussian and Mean curvatures are function of principal curvatures
+<li class="fragment">Geomorphometric curvatures are related to processes: profile, tangential / plan
+</ul>
+</section>
+
+<section>
+   <h3>Profile curvature</h3>
+<ul>
+<li class="fragment">measured in the direction of gradient - along the flowline
+<li class="fragment">measures rate of change in slope
+    <ul>
+    <li class="fragment">convex: increasing slope - flow acceleration, 
+    <li class="fragment">concave: decreasing slope - flow deceleration
+    </ul>
+</ul>
+image from illinois?
+</section>
+
+<section>
+   <h3>Tangential and plan curvatures</h3>
+<ul>
+<li class="fragment">measured in the direction perpendicular to gradient, in the direction of a tangent to contourline
+<li class="fragment">measures rate of change in aspect, curvature of contours
+    <ul>
+    <li class="fragment">convex: flow divergence, 
+    <li class="fragment">concave: flow convergence
+    </ul>
+</ul>
+image from illinois?
+</section>
+
+<section>
+   <h3>Curvatures and flow</h3>
+<p class="fragment"> <img height="320" src="img/topoanalysis/curvatures_flow.jpg">
+</section>
+
+<section>
+   <h3>Curvatures equations</h3>
+Given a surface  $z = f(x,y)$, where $f(x,y)$ is a continuous bivariate function,
+we can compute the geomorphometric curvatures using first and second order partial
+derivatives of $f(x,y)$:
+<p class="fragment">
+$$
+kp= (fxx fx2 + 2fxy fx fy + fyy fy2 ) / p √q3
+$$
+<p class="fragment">
+$$
+kt= (fxx fy2 - 2fxy fx fy + fyy fx2 ) / p √q
+$$
+<p class="fragment">
+where $k_p$ is the profile curvature, $k_t$ is the tangential curvature,
+</section>
+
+<section>
+   <h3>Slope and aspect from points </h3>
 Given a set of scattered points, estimate slope and aspect:
 <ul>
-  <li class="fragment">Spline approximation on raster or directly from point data
+  <li class="fragment">Partial derivatives of a suitable spline function, usually simultaneously with interpolation
+  <li class="fragment">Partial derivatives of a local ipolynomial approximation function
 </ul>
+ADD reference to MG 1993 II or write equations
 </section>
 
 <section>
-   <h3>Steepest slope and aspect: DSM </h3>
+   <h3>Slope and aspect from points </h3>
 Slope and aspect derived from lidar 1st return point cloud using RST method
 (smoothing spline with tension)
-<p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+<p class="fragment"> <img height="350" src="img/topoanalysis/rstanal_slopelg.jpg">
+ <img height="350" src="img/topoanalysis/rstanal_aspt15.jpg">
 </section>
 
-<section>
-   <h3>Surface curvatures</h3>
-Curvature at a point: inverse of the radius of a circle tangent to the surface at this point in a given direction [m-1]
-Convex, concave, high value - smaller circle
-<p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
-</section>
-
-<section>
-   <h3>Surface curvatures</h3>
-<ul>
-  <li class="fragment">In general, surface has different curvatures in different directions
-<li class="fragment">Principal directions have max and min curvatures, gaussian and mean are function of principal curvatures
-<li class="fragment">Geomorphometric curvatures: profile, tangential / plan
-</ul>
-</section>
 
 <section>
    <h3>Learn more</h3>
