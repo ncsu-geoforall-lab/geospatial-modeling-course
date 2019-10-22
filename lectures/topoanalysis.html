@@ -115,7 +115,7 @@ and the steepest slope angle $\gamma$ is
 <p class="fragment">
 $$ \tan \gamma = \sqrt{f_x^2 + f_y^2} $$
 <ul>
-<li class="fragment"> angle between horizontal plane and surface tangent, 
+<li class="fragment"> angle between horizontal plane and surface tangent
 <li class="fragment"> rise over run in direction of max elevation change
 </ul>
 <p class="fragment">
@@ -127,7 +127,8 @@ $$ (f_x,f_y)=({\partial z \over \partial x}, {\partial z \over \partial y})$$
 <section>
    <h3>Steepest slope angle map</h3>
 $$ \gamma = \arctan \sqrt {f_x^2 + f_y^2} $$
-<p class="fragment"> <img height="380" src="img/topoanalysis/slopearrows.png">
+<p> <img height="360" src="img/topoanalysis/slopearrows.png">
+<img height="200" src="img/topoanalysis/slope_lg.png">
 <ul>
 <li class="fragment">values range between 0 - 90 degrees
 <li class="fragment">controls flow velocity and sun inclination angle
@@ -141,20 +142,21 @@ Steepest slope <b>direction</b> angle is given by the direction of gradient vect
 $$ \tan \alpha = {f_y \over f_x} $$
 <ul>
 <li class="fragment"> values range between 0 - 360 degrees
-<li class="fragment"> signs of $f_x, f_y$ need to be taken into account to determine the angle in relation to
-the 0 deg direction (E or N)
+<li class="fragment"> signs of $f_x, f_y$ need to be considered to determine the angle in relation to
+the $0^{\circ}$ direction (E or N)
  <li class="fragment">measures hillslope orientation
  <li class="fragment">controls flow direction and sun inclination angle
 </ul>
 <p class="fragment"><small>
- when only $f_x = 0, \tan \alpha = \inf$ and $\alpha = 90 \deg$, but when $f_x = f_y = 0$ then $\alpha$ is undefined  
+ when only $f_x = 0, \tan \alpha = \inf$ and $\alpha = 90 degrees$, but when $f_x = f_y = 0$ then $\alpha$ is undefined  
 </small>
 </section>
 
 <section>
    <h3>Aspect angle map</h3>
 $$ \tan \alpha = f_y / f_x $$
-<p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+<p> <img height="320" src="img/topoanalysis/aspectarrowscropped.png">
+<img height="220" src="img/topoanalysis/aspect360grey_lg.jpg">
 </section>
 
 <section>
@@ -176,7 +178,7 @@ $$ \tan \gamma_t =  \tan \gamma \cos(\alpha - \alpha_t) $$
 
 <section>
    <h3>Slope angle in a road direction</h3>
-Slope along the road , versus steepest slope angle
+Slope along the road, versus steepest slope angle
 <p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
 </section>
 
@@ -189,52 +191,51 @@ Methods to estimate slope and aspect from a DEM:
   <li class="fragment">Polynomial approximation on 3x3 neighborhood, many versions using second order polynomials
   <li class="fragment">Spline approximation directly from point data
 </ul>
-<p>In following slides with refer to <b>steepest slope</b> as <b>slope</b>
+<p class="fragment">In following slides we refer to <b>steepest slope</b> as <b>slope</b>
 </section>
 
 <section>
    <h3>Slope and aspect from DEM </h3>
 Polynomial approximation on 3x3 moving window:
-$$ z(x,y)=a_0+a_1 x + a_2 y + a_3 xy + a_4 x^2 + a_5 y^2 $$
+<p>
+$$ z = f(x,y)=a_0+a_1 x + a_2 y + a_3 xy + a_4 x^2 + a_5 y^2 $$
 <ul>
    <li class="fragment">we can write 9 equations to solve for $a_i$ parameters 
    <li class="fragment">more equations than needed - we use weighted least squares to fit the polynomial to the 9 grid points
-  <li class="fragment"> the solution leads to - ADD
 </ul>
-<p>window image <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+<p><img height="320" src="img/topoanalysis/movingwindow3x3a.png">
 </section>
 
 <section>
    <h3>Slope and aspect from DEM </h3>
 <!--Now we can compute $f_x$ and $f_y$: $$f_x = a_1 + a_3y + 2a_4x, f_y = a_2 + a_3x + 2a_4y$$-->
-After substitution for $a_i$ we get
+After substitution for $a_i$ where $f_x=a_1, f_y=a_2$:
 <p class="fragment">
 $$ f_x = \left [z_{i-1,j-1} - z_{i+1,j-1} + 2(z_{i-1,j} - z_{i+1,j}) + z_{i-1,j+1} -z_{i+1,j+1} \right ] / 8 \Delta x $$
 <p class="fragment">
 $$ f_y = \left [z_{i-1,j-1} - z_{i-1,j+1} + 2(z_{i,j-1} - z_{i,j+1}) + z_{i+1,j-1} -z_{i+1,j+1} \right ] / 8 \Delta y $$
 <p class="fragment">
 Then slope and aspect is $ \tan \gamma = \sqrt{f_x^2 + f_y^2}, \tan \alpha = f_y / f_x$
-<p>window image <img height="300" src="img/analysis_basicraster/surfacearea2.jpg">
+<br><img height="320" src="img/topoanalysis/movingwindow3x3b.png">
 </section>
 
 <section>
    <h3>Slope and aspect: DEM </h3>
 Slope and aspect derived from a 10m resolution DTM
-<p class="fragment"> <img height="320" src="img/data_visualize/slope.png">
- <img height="320" src="img/data_visualize/slope.png">
+<p class="fragment"> <img height="320" src="img/topoanalysis/slopeaspect10m.jpg">
 </section>
 
 <section>
    <h3>Slope and aspect: integer DEM </h3>
 Impact of integer elevation values in meters on slope pattern
 and slope and aspect histograms
-<p class="fragment"> <img height="420" src="img/topoanalysis/slope_integers.jpg">
+<p class="fragment"> <img height="440" src="img/topoanalysis/slope_integers.jpg">
 </section>
 
 <section>
    <h3>Shape metrics: curvatures</h3>
 Curvature at a point: inverse of the radius of a circle tangent to a curve $[m^{-1}]$
-<p class="fragment"> <img height="320" src="img/topoanalysis/surfacearea2.jpg">
+<p class="fragment"> <img height="300" src="img/topoanalysis/curvatures_radius.png">
 <p class="fragment">Blue: Concave, Orange: Convex.  
 <p class="fragment">High curvature value is associated with smaller circle
 </section>
@@ -243,9 +244,9 @@ Curvature at a point: inverse of the radius of a circle tangent to a curve $[m^{
    <h3>Surface curvatures</h3>
 <ul>
 <li class="fragment">In general, surface has <b>different curvatures in different directions</b>
-<li class="fragment">Maximum and minimum curvatures curvatures at a point are in perpendicular directions: <b>principal curvatures</b> 
-$\kappa_1, \kappa_2$
-<li class="fragment">Gaussian and Mean curvatures are function of principal curvatures
+<li class="fragment"><b>Principal curvatures: </b>maximum and minimum curvatures $\kappa_1, \kappa_2$
+at a point, in perpendicular directions 
+<li class="fragment">Mean and Gaussian curvatures: $\kappa_M = (\kappa_1 + \kappa_2) /\, 2, \kappa_G = (\kappa_1 \kappa_2) /\, 2$
 <li class="fragment">Geomorphometric curvatures are related to processes: profile, tangential / plan
 </ul>
 </section>
@@ -255,12 +256,12 @@ $\kappa_1, \kappa_2$
 <ul>
 <li class="fragment">measured in the direction of gradient - along the flowline
 <li class="fragment">measures rate of change in slope
+<p>
     <ul>
-    <li class="fragment">convex: increasing slope - flow acceleration, 
+    <li class="fragment">convex: increasing slope - flow acceleration 
     <li class="fragment">concave: decreasing slope - flow deceleration
     </ul>
 </ul>
-image from illinois?
 </section>
 
 <section>
@@ -268,44 +269,79 @@ image from illinois?
 <ul>
 <li class="fragment">measured in the direction perpendicular to gradient, in the direction of a tangent to contourline
 <li class="fragment">measures rate of change in aspect, curvature of contours
+<p>
     <ul>
-    <li class="fragment">convex: flow divergence, 
+    <li class="fragment">convex: flow divergence 
     <li class="fragment">concave: flow convergence
     </ul>
 </ul>
-image from illinois?
 </section>
 
 <section>
    <h3>Curvatures and flow</h3>
-<p class="fragment"> <img height="320" src="img/topoanalysis/curvatures_flow.jpg">
+<p class="fragment"> <img height="420" src="img/topoanalysis/curvatures_flow.png">
 </section>
 
 <section>
    <h3>Curvatures equations</h3>
-Given a surface  $z = f(x,y)$, where $f(x,y)$ is a continuous bivariate function,
-we can compute the geomorphometric curvatures using first and second order partial
-derivatives of $f(x,y)$:
+Given a surface  $z = f(x,y)$, we compute the geomorphometric curvatures as follows:
 <p class="fragment">
 $$
-kp= (fxx fx2 + 2fxy fx fy + fyy fy2 ) / p √q3
+\kappa_p= (f_{xx} f_x^2 + 2f_{xy} f_x f_y + f_{yy} f_y^2 ) / p \sqrt{q^3}
 $$
 <p class="fragment">
 $$
-kt= (fxx fy2 - 2fxy fx fy + fyy fx2 ) / p √q
+\kappa_t= (f_{xx} f_y^2 - 2f_{xy} f_x f_y + f_{yy} f_x^2 ) / p \sqrt{q}
 $$
-<p class="fragment">
-where $k_p$ is the profile curvature, $k_t$ is the tangential curvature,
+<ul>
+<li class="fragment"> $\kappa_p$ is the profile curvature, $\kappa_t$ is the tangential curvature,
+<li class="fragment"> $p=f_x^2+f_y^2$ and $q = p+1$
+<li class="fragment"> $f_{xx}, f_{yy}, f_{xy}$ are second order partial derivatives of $f(x,y)$
+(differences of differences)
+</ul>
 </section>
 
 <section>
-   <h3>Slope and aspect from points </h3>
-Given a set of scattered points, estimate slope and aspect:
+   <h3>Curvatures from DEM </h3>
+Methods to estimate curvatures from a DEM:
+<p>
+<ul>
+  <li class="fragment">Configuration of elevation differences
+  <li class="fragment">Polynomial approximation on 3x3 neighborhood, many versions using second order polynomials
+  <li class="fragment">Spline approximation directly from point data
+</ul>
+</section>
+
+<section>
+   <h3>Curvatures from DEM </h3>
+Polynomial approximation on 3x3 moving window:
+$$ z = f(x,y)=a_0+a_1 x + a_2 y + a_3 xy + a_4 x^2 + a_5 y^2 $$
+<ul>
+   <li class="fragment">we use weighted least squares to fit the polynomial 
+   <li class="fragment">we estimate  $f_x, f_y, f_{xx}, f_{yy}, f_{xy}$ using weighted elevation differences
+and differences of differences
+   <li class="fragment">we copmute the curvatures using equations for $\kappa_p, \kappa_t$
+</ul>
+<p class="fragment"><img height="320" src="img/topoanalysis/movingwindow3x3c.png">
+<!--Now we can compute $f_x$ and $f_y$ in x=y=0: $$f_x = a_1, f_y = a_2, f_{xx}=2a_4, f_{yy}=2a_5 f_{xy}=a_3$$-->
+</section>
+
+<section>
+   <h3>Curvature maps</h3>
+Profile and tangential curvatures computed from 10m resolution DEM
+<p class="fragment">
+<p><img height="300" src="img/topoanalysis/curvatures10m.jpg">
+</section>
+
+<section>
+   <h3>Slope, aspect and curvatures from points </h3>
+Given a set of scattered points, estimate slope, aspect, and curvatures:
+<p>
 <ul>
   <li class="fragment">Partial derivatives of a suitable spline function, usually simultaneously with interpolation
-  <li class="fragment">Partial derivatives of a local ipolynomial approximation function
+  <li class="fragment">More than 100 points may be used to compute the function - larger forms can be analyzed
+  <li class="fragment">Partial derivatives of a local polynomial approximation function
 </ul>
-ADD reference to MG 1993 II or write equations
 </section>
 
 <section>
@@ -314,8 +350,58 @@ Slope and aspect derived from lidar 1st return point cloud using RST method
 (smoothing spline with tension)
 <p class="fragment"> <img height="350" src="img/topoanalysis/rstanal_slopelg.jpg">
  <img height="350" src="img/topoanalysis/rstanal_aspt15.jpg">
+ <img height="150" src="img/topoanalysis/aspect_lgcolor.png">
 </section>
 
+<section>
+   <h3>Curvatures from points </h3>
+Profile and tangential curvatures derived from lidar 1st return points using RST method
+<p class="fragment"> <img height="350" src="img/topoanalysis/rstanal_pct15n.jpg">
+ <img height="350" src="img/topoanalysis/rstanal_tct15n.jpg">
+</section>
+
+<section>
+<h3>Impact of tension on curvature</h3>
+Tangential curvature computed using RST with high and lower tension
+<p>
+<img height="360" src="img/topoanalysis/rstanal_tclid1stdefco.png">
+<img height="360" src="img/topoanalysis/rstanal_tclid1stt15co.png">
+</section>
+
+<section>
+<h3>Impact of tension on slope and curvature</h3>
+<img height="450" src="img/topoanalysis/splines_slope_curvature.jpg">
+</section>
+
+<section>
+<h3>Impact of tension on slope and curvature</h3>
+<img height="400" src="img/lidar_tension_curv.gif">
+</section>
+
+<section>
+<h3>Landforms</h3>
+<ul>
+<li>Combining the geometry at a point
+<p>
+<ul>
+<li>Ridge: Tang. curvature convex and profile curvature convex/concave
+<li>Valley: Tang. curvature concave - profile convex/concave
+<li>Peak: gradient = 0, convex-convex
+<li>Pit: gradient = 0, concave-concave
+<li>Saddle: gradient = 0: concave-convex 
+</ul>
+<p>
+<li>Geomorphons
+</ul>
+</section>
+
+<section>
+<h3>Basic Landforms map</h3>
+Impact of moving window on landform mapping
+<p>
+<img height="350" src="img/topoanalysis/landforms_9c1m.jpg">
+<img height="350" src="img/topoanalysis/landforms_45c1m.jpg">
+</section>
 
 <section>
    <h3>Learn more</h3>
