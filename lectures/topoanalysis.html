@@ -64,11 +64,11 @@ $$
 <section>
    <h3>Point topographic parameters</h3>
 <p>
-Measure geometric properties at any point of the topographic surface
+Measure geometric properties at any point of the elevation surface
 <ul>
 <li class="fragment">steepness, orientation, and shape 
 <li class="fragment">derivation based on differential geometry
-<li class="fragment">computed from raster DEM using elevation differencing
+<li class="fragment">computed from raster DEM 
 <li class="fragment">computed directly from scattered points using interpolation function with suitable properties
 </ul>
 </section>
@@ -170,16 +170,22 @@ $$ \tan \gamma_t =  \tan \gamma \cos(\alpha - \alpha_t) $$
 <li> $\alpha$ is  the steepest slope direction 
 </ul>
 <p class="fragment">Slope angle $\gamma_t$ is always smaller than $\gamma$
-<p>add diagram
 <p class="fragment"> <small>Directional derivative: ${\partial z \over \partial s} = f_x \cos \alpha_t + f_y \sin \alpha_t$
 </small>
 
 </section>
 
 <section>
-   <h3>Slope angle in a road direction</h3>
-Slope along the road, versus steepest slope angle
-<p class="fragment"> <img height="320" src="img/analysis_basicraster/surfacearea2.jpg">
+   <h3>Slope along a bus line </h3>
+<p> <img height="450" src="img/topoanalysis/bus_toposlope_cont.jpg">
+</section>
+
+<section>
+   <h3>Slope angle in the road direction</h3>
+Steepest slope angle and slope in the direction of bus line
+<p> 
+<img height="350" src="img/topoanalysis/bus_route_toposlope.png">
+<img height="350" src="img/topoanalysis/bus_routeslope.png">
 </section>
 
 <section>
@@ -222,7 +228,7 @@ Then slope and aspect is $ \tan \gamma = \sqrt{f_x^2 + f_y^2}, \tan \alpha = f_y
 <section>
    <h3>Slope and aspect: DEM </h3>
 Slope and aspect derived from a 10m resolution DTM
-<p class="fragment"> <img height="320" src="img/topoanalysis/slopeaspect10m.jpg">
+<p class="fragment"> <img height="350" src="img/topoanalysis/slopeaspect10m.jpg">
 </section>
 
 <section>
@@ -279,7 +285,7 @@ at a point, in perpendicular directions
 
 <section>
    <h3>Curvatures and flow</h3>
-<p class="fragment"> <img height="420" src="img/topoanalysis/curvatures_flow.png">
+<p class="fragment"> <img height="450" src="img/topoanalysis/curvatures_flow.png">
 </section>
 
 <section>
@@ -330,16 +336,17 @@ and differences of differences
    <h3>Curvature maps</h3>
 Profile and tangential curvatures computed from 10m resolution DEM
 <p class="fragment">
-<p><img height="300" src="img/topoanalysis/curvatures10m.jpg">
+<p><img height="350" src="img/topoanalysis/curvatures10m.jpg">
 </section>
 
 <section>
-   <h3>Slope, aspect and curvatures from points </h3>
-Given a set of scattered points, estimate slope, aspect, and curvatures:
+   <h3>Topographic parameters from points </h3>
+Given a set of scattered points $(x_i,y_i,z_i)$, $i=1,...,n$ estimate slope, aspect, and curvatures:
 <p>
 <ul>
   <li class="fragment">Partial derivatives of a suitable spline function, usually simultaneously with interpolation
   <li class="fragment">More than 100 points may be used to compute the function - larger forms can be analyzed
+<p>
   <li class="fragment">Partial derivatives of a local polynomial approximation function
 </ul>
 </section>
@@ -358,6 +365,7 @@ Slope and aspect derived from lidar 1st return point cloud using RST method
 Profile and tangential curvatures derived from lidar 1st return points using RST method
 <p class="fragment"> <img height="350" src="img/topoanalysis/rstanal_pct15n.jpg">
  <img height="350" src="img/topoanalysis/rstanal_tct15n.jpg">
+ <img height="150" src="img/topoanalysis/rstanal_pcleg.jpg">
 </section>
 
 <section>
@@ -366,11 +374,12 @@ Tangential curvature computed using RST with high and lower tension
 <p>
 <img height="360" src="img/topoanalysis/rstanal_tclid1stdefco.png">
 <img height="360" src="img/topoanalysis/rstanal_tclid1stt15co.png">
+ <img height="150" src="img/topoanalysis/rstanal_pcleg.jpg">
 </section>
 
 <section>
 <h3>Impact of tension on slope and curvature</h3>
-<img height="450" src="img/topoanalysis/splines_slope_curvature.jpg">
+<img height="460" src="img/topoanalysis/splines_slope_curvature.jpg">
 </section>
 
 <section>
@@ -405,12 +414,13 @@ Impact of moving window on landform mapping
 
 <section>
    <h3>Learn more</h3>
+See the supplemental material for 
+<a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/topics/geomorphometry_basics.html">
+5.B Spatial and temporal terrain analysis topic</a>
+<!--
 Find more examples in the 2014 lecture, MEA592-004/GIS595-002:
 Multidimensional Geospatial Modeling material and GIS595 UAS course
-</section>
-
-<section>
-   <h3>Summary</h3>
+-->
 </section>
 
 <div class="parent-page">
