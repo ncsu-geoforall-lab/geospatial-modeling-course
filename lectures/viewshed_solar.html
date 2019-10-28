@@ -1,0 +1,157 @@
+<section>
+    <h2><b>Viewshed analysis and solar radiation</b></h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h2>Learning objectives</h2>
+<p>
+<ul>
+ <li>understand line of sight, 
+ <li>define viewshed, cumulative viewshed and viewscape
+ <li>explain components of solar radiation in complex terrain
+ <li>understand cast shadow and solar inclination angle
+ <li>explain cumulative solar radiation, solar energy potential 
+</ul>
+</section>
+
+<section>
+   <h3>Line of sight</h3>
+<p>
+Line of sight analysis is used to identify points on the terrain surface 
+along a given line that are visible or invisible from a given point on this line.
+<p>LoS or ray tracing is used for:
+  <ul>
+   <li class="fragment">visibility analysis 
+   <li class="fragment">emitor-receptor systems design 
+taking into account decay of signal with distance, for example, to optimize locations of cell towers 
+  </ul>
+</section>
+
+<section>
+   <h3>Computing Line of sight</h3>
+<p>
+Given a viewing point A and a target B, we define
+$$
+tan \alpha = (z_B-z_A )/ d_{BA}
+$$
+B is not visible from A if, 
+<ul>
+ <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is greater than  $\alpha$
+ <li class="fragment">if any point C is above the line that connects AB
+</ul>
+<p class="fragment"> 
+<img height="350" src="img/viewshed_solar/los.png">
+</section>
+
+<section>
+   <h3>Computing Line of sight</h3>
+<p>
+Given a viewing point A and a target B, we define
+$$
+tan \alpha = (z_B-z_A )/ d_{BA}
+$$
+B is visible from A if, 
+<ul>
+ <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is smaller than  $\alpha$
+ <li class="fragment">if any point C is below the line that connects AB
+</ul>
+<p class="fragment"> 
+<img height="350" src="img/viewshed_solar/los.png">
+</section>
+
+<section>
+   <h3>Viewshed</h3>
+<ul>
+<li class="fragment">region defined by a set of grid cells (or triangles) visible from a given viewing point
+<li class="fragment">computed by applying LOS analysis from the viewing point to each cell within a given distance
+<li class="fragment">can be implemented for TIN or raster DEMs
+<p>
+<li class="fragment">binary visibility map (yes/no)
+<li class="fragment"> angle above/below horizontal plane
+<li class="fragment"> relative elevation above/under horizontal plane
+<li class="fragment">what is visible from the given point
+<li class="fragment">from where one can see the given point
+</ul>
+</section>
+
+<section>
+   <h3>Viewshed example 1</h3>
+<ul>
+ <li>Visibility analysis for finding a location for a webcam to support real-time monitoring of a watershed
+ <li>Height of webcam location above the surface 1.75 and 6m, 1m resolution DTM
+</ul>
+<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
+</section>
+
+<section>
+   <h3>Viewshed example 2</h3>
+<ul>
+ <li>Visibility analysis from building, 30m resolution DTM 
+ <li>Elevation and relative height above the surface 
+ <li>landuse and point of interest within viewshed: <b>viewscape</b>
+</ul>
+<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
+</section>
+
+<section>
+   <h3>Viewshed example 3</h3>
+Link to Payam's presentation
+</section>
+
+<section>
+   <h3>Cumulative Viewshed </h3>
+Cumulative viewshed: set of grid cells visible from a set of points (e.g. along a road)
+applications 
+find a path that has minimum or maximum visibility
+optimize distribution of signal sources to achieve the maximum coverage
+limit development to areas that are not visible - e.g. from the Blue Ridge Parkway
+minimize visibility of wind turbines
+</section>
+
+
+
+<section>
+   <h3>Global statistics: continuous data</h3>
+<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
+<img height="180" src="img/analysis_basicraster/elev_dem1mhist.png">
+</p>
+<p class="fragment"> <img height="190" src="img/analysis_basicraster/elev_rural_10m.jpg">
+<img height="190" src="img/analysis_basicraster/elevrur_ned10hist.png">
+<p class="fragment"> <img height="90" src="img/analysis_basicraster/elevstats_table_1m10m.png">
+</section>
+
+
+<section>
+   <h3>Global statistics: discrete data</h3>
+<p>Map layer to number(s)
+<p> Soil properties: soil erodibility mean 0.248 
+<p> Soil type ID: mode (most common soil type)
+<img height="300" src="img/data_visualize/soilsKfac_discrleg.png">
+<img height="300" src="img/data_visualize/soils_rural_1mID.png">
+</section>
+
+
+<section>
+ <h3>Summary</h3>
+<ul>
+  <li>measuring distance
+  <li>buffers
+  <li>cost surfaces
+</ul>
+</section>
+
+<section>
+ <h3>Reading, resources</h3>
+links
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
