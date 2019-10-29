@@ -22,47 +22,47 @@
 
 <section>
    <h3>Line of sight</h3>
-<p>
-Line of sight analysis is used to identify points on the terrain surface 
-along a given line that are visible or invisible from a given point on this line.
-<p>LoS or ray tracing is used for:
+<ul>
+  <li>Line of sight analysis is used to identify points on the terrain surface 
+      along a given line that are visible from a given point on this line.
+  <li>LoS or ray tracing is used for:
   <ul>
    <li class="fragment">visibility analysis 
    <li class="fragment">emitor-receptor systems design 
 taking into account decay of signal with distance, for example, to optimize locations of cell towers 
   </ul>
+</ul>
 </section>
 
 <section>
    <h3>Computing Line of sight</h3>
 <p>
-Given a viewing point A and a target B, we define
-$$
-tan \alpha = (z_B-z_A )/ d_{BA}
-$$
+Given a viewing point A and a target B, 
+<!--$$ \tan \alpha = (z_B-z_A )/ d_{BA} $$
+ <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is greater than  $\alpha$
+-->
 B is not visible from A if, 
 <ul>
- <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is greater than  $\alpha$
- <li class="fragment">if any point C is above the line that connects AB
+ <li class="fragment">any point C is above the line that connects AB
+ <li class="fragment">where the points C are a projection of AB on the surface 
 </ul>
-<p class="fragment"> 
-<img height="350" src="img/viewshed_solar/los.png">
+<p> 
+<img height="350" src="img/viewshed_solar/lineofsight_nonvisible.jpg">
 </section>
 
 <section>
    <h3>Computing Line of sight</h3>
 <p>
-Given a viewing point A and a target B, we define
-$$
-tan \alpha = (z_B-z_A )/ d_{BA}
-$$
+Given a viewing point A and a target B, 
+<!--we define $$ tan \alpha = (z_B-z_A )/ d_{BA} $$ 
+ <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is smaller than  $\alpha$
+-->
 B is visible from A if, 
 <ul>
- <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is smaller than  $\alpha$
- <li class="fragment">if any point C is below the line that connects AB
+ <li class="fragment">all points C are below the line that connects AB
 </ul>
 <p class="fragment"> 
-<img height="350" src="img/viewshed_solar/los.png">
+<img height="350" src="img/viewshed_solar/lineofsight_visible.jpg">
 </section>
 
 <section>
@@ -75,7 +75,8 @@ B is visible from A if,
 <li class="fragment">binary visibility map (yes/no)
 <li class="fragment"> angle above/below horizontal plane
 <li class="fragment"> relative elevation above/under horizontal plane
-<li class="fragment">what is visible from the given point
+<p>
+<li class="fragment"> shows what is visible from the given point or
 <li class="fragment">from where one can see the given point
 </ul>
 </section>
@@ -84,63 +85,126 @@ B is visible from A if,
    <h3>Viewshed example 1</h3>
 <ul>
  <li>Visibility analysis for finding a location for a webcam to support real-time monitoring of a watershed
- <li>Height of webcam location above the surface 1.75 and 6m, 1m resolution DTM
+ <li>Height of webcam above the surface 1.75 and 6m, computed from 1m resolution DTM
 </ul>
-<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
+<p> <img height="380" src="img/viewshed_solar/viewshed_lw_webcam.jpg">
 </section>
 
 <section>
    <h3>Viewshed example 2</h3>
 <ul>
- <li>Visibility analysis from building, 30m resolution DTM 
- <li>Elevation and relative height above the surface 
- <li>landuse and point of interest within viewshed: <b>viewscape</b>
+ <li>Visibility analysis from buildings, 30m resolution DTM 
+ <li>Elevation and relative height above the surface: 4 and 32 story building 
 </ul>
-<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
+<p> <img height="320" src="img/viewshed_solar/nc_RHlos.jpg">
+ <img height="320" src="img/viewshed_solar/nc_towerlos3D.jpg">
 </section>
 
 <section>
    <h3>Viewshed example 3</h3>
-Link to Payam's presentation
+<p>Viewshed and viewscape analysis of landscape with vegetation using lidar data 
+developed by 
+<a href="https://drive.google.com/open?id=0B8j08KoSleFQOFdWZ0pNaXJUdUE">Payam Tabrizian</a>
+ <p><b>Viewscape:</b> Landscape composition and features within viewshed
+<p><small>Tabrizian P., Mitasova H. FOSS4G Boston presentation illustrationUsing open-source 
+tools and high-resolution geospatial data to estimate landscapes’ visual attributes. FOSS4G 2017 - Boston, August 2017.
+Related paper is under review.
+</small>
 </section>
 
 <section>
    <h3>Cumulative Viewshed </h3>
-Cumulative viewshed: set of grid cells visible from a set of points (e.g. along a road)
-applications 
-find a path that has minimum or maximum visibility
-optimize distribution of signal sources to achieve the maximum coverage
-limit development to areas that are not visible - e.g. from the Blue Ridge Parkway
-minimize visibility of wind turbines
+<p>Set of grid cells visible from a set of points: 
+<ul>
+   <li>find a path that has minimum or maximum visibility
+   <li>optimize distribution of signal sources to achieve the maximum coverage
+   <li>limit development to areas that are not visible - e.g. from the Blue Ridge Parkway
+   minimize visibility of wind turbines
+</ul>
 </section>
-
-
 
 <section>
-   <h3>Global statistics: continuous data</h3>
-<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
-<img height="180" src="img/analysis_basicraster/elev_dem1mhist.png">
-</p>
-<p class="fragment"> <img height="190" src="img/analysis_basicraster/elev_rural_10m.jpg">
-<img height="190" src="img/analysis_basicraster/elevrur_ned10hist.png">
-<p class="fragment"> <img height="90" src="img/analysis_basicraster/elevstats_table_1m10m.png">
+   <h3>Solar radiation</h3>
+<p>
+Solar radiation controls the surface energy and water balance 
+and thus affects the atmospheric, biophysical and hydrologic processes. 
+<p>It also provides a source of renewable energy.
 </section>
-
 
 <section>
-   <h3>Global statistics: discrete data</h3>
-<p>Map layer to number(s)
-<p> Soil properties: soil erodibility mean 0.248 
-<p> Soil type ID: mode (most common soil type)
-<img height="300" src="img/data_visualize/soilsKfac_discrleg.png">
-<img height="300" src="img/data_visualize/soils_rural_1mID.png">
+   <h3>Surface net radiation</h3>
+<p>Spatially and temporally variable and depends on
+<ul>
+ <li class="fragment"> orientation of Earth relative to Sun (or position of sun relative to given point on earth)
+ <li class="fragment">topography: slope, aspect and shadowing
+ <li class="fragment">clouds and other atmospheric properties
+ <li class="fragment">surrounding surface properties (land cover)
+</ul>
 </section>
 
+<section>
+   <h3>Solar radiation components</h3>
+<p>
+<img height="400" src="img/viewshed_solar/solar_rad_comp.png">
+</section>
 
+<section>
+   <h3>Sun position</h3>
+<p>
+Sun position for a given date, time, and a location on Earth (usually map center), for example:
+<ul>
+  <li>2001.12.22, day number 356, time: 14:25:00
+  <li>long: -78.678856, lat: 35.736160, timezone: -5.000
+</ul>
+is given by
+<ul>
+   <li class="fragment">azimuth (measured in horizontal plane ): 212.7934...
+   <li class="fragment">solar altitude (sun angle above horizon, inclination): 23.1924
+</ul>
+<p class="fragment"><img height="200" src="img/viewshed_solar/sun_position2.gif">
+</section>
+
+<section>
+   <h3>Sun position and time</h3>
+<p>
+Sun position for a given date, time, and a location on Earth (usually map center), for example:
+<ul>
+  <li>2001.12.22, day number 356, time: 14:25:00
+  <li>long: -78.678856, lat: 35.736160, timezone: -5.000
+</ul>
+is given by
+<ul>
+   <li class="fragment">azimuth (measured in horizontal plane ): 212.7934...
+   <li class="fragment">solar altitude (sun angle above horizon, inclination): 23.1924
+   <li class="fragment">sun declination (angle between solar beam and earth equator) winter solstices: -23.4405 (sun above the Tropic of Capricorn)
+   <li class="fragment">sunrise time (without refraction cor.): 07:26:30
+   <li class="fragment">sunset time (without refraction cor.): 17:00:28
+   <li class="fragment">atm. refraction correction: inclination > 0 before sunrise
+</ul>
+<p class="fragment"><img height="200" src="img/viewshed_solar/sun_position2.gif">
+</section>
+
+<section>
+   <h3>Solar incidence angle</h3>
+<p>
+Angle between the terrain normal and solar beam
+<ul>
+   <li class="fragment"> terrain normal: 3D vector orthogonal to the plane tangent to terrain surface at a given point,
+   <li class="fragment"> horizontal projection of terrain normal is a gradient vector  
+   <li class="fragment"> coordinates of surface normal are function of slope and aspect (or $f_x,f_y$)
+<p>
+   <li>solar beam is defined by solar inclination and azimuth
+</ul>
+<p class="fragment"><img height="180" src="img/viewshed_solar/solarincidangle.gif">
+<p class="fragment"><small>See e.g. 8.1.8 in Hengl et al., 2008, Geomorphometry or A.62 in Neteler et al., 2008 Appendix
+</small>
+</section>
+
+<!--
 <section>
  <h3>Summary</h3>
 <ul>
-  <li>measuring distance
+  <li>
   <li>buffers
   <li>cost surfaces
 </ul>
@@ -150,6 +214,7 @@ minimize visibility of wind turbines
  <h3>Reading, resources</h3>
 links
 </section>
+-->
 
 <div class="parent-page">
     <!-- &#x1f3e0; -->
