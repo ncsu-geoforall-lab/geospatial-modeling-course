@@ -41,7 +41,7 @@ Given a viewing point A and a target B,
 <!--$$ \tan \alpha = (z_B-z_A )/ d_{BA} $$
  <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is greater than  $\alpha$
 -->
-B is not visible from A if, 
+<br>B is not visible from A if, 
 <ul>
  <li class="fragment">any point C is above the line that connects AB
  <li class="fragment">where the points C are a projection of AB on the surface 
@@ -57,7 +57,7 @@ Given a viewing point A and a target B,
 <!--we define $$ tan \alpha = (z_B-z_A )/ d_{BA} $$ 
  <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is smaller than  $\alpha$
 -->
-B is visible from A if, 
+<br>B is visible from A if, 
 <ul>
  <li class="fragment">all points C are below the line that connects AB
 </ul>
@@ -102,6 +102,15 @@ B is visible from A if,
 
 <section>
    <h3>Viewshed example 3</h3>
+<ul>
+ <li>Visibility analysis from buildings, 1m resolution DSM
+</ul>
+<p> <img height="350" src="img/viewshed_solar/view_Hunt_dem_1m.png">
+ <img height="350" src="img/viewshed_solar/view_JH2_dem15_1m.png">
+</section>
+
+<section>
+   <h3>Viewshed example 4</h3>
 <p>Viewshed and viewscape analysis of landscape with vegetation using lidar data 
 developed by 
 <a href="https://drive.google.com/open?id=0B8j08KoSleFQOFdWZ0pNaXJUdUE">Payam Tabrizian</a>
@@ -116,9 +125,9 @@ Related paper is under review.
    <h3>Cumulative Viewshed </h3>
 <p>Set of grid cells visible from a set of points: 
 <ul>
-   <li>find a path that has minimum or maximum visibility
-   <li>optimize distribution of signal sources to achieve the maximum coverage
-   <li>limit development to areas that are not visible - e.g. from the Blue Ridge Parkway
+   <li class="fragment">find a path that has minimum or maximum visibility
+   <li class="fragment">optimize distribution of signal sources to achieve the maximum coverage
+   <li class="fragment">limit development to areas that are not visible - e.g. from the Blue Ridge Parkway
    minimize visibility of wind turbines
 </ul>
 </section>
@@ -145,43 +154,40 @@ and thus affects the atmospheric, biophysical and hydrologic processes.
 <section>
    <h3>Solar radiation components</h3>
 <p>
-<img height="400" src="img/viewshed_solar/solar_rad_comp.png">
+<img height="420" src="img/viewshed_solar/solar_rad_comp.png">
 </section>
 
 <section>
    <h3>Sun position</h3>
 <p>
-Sun position for a given date, time, and a location on Earth (usually map center), for example:
+Given a date, time, and a location, for example:
 <ul>
   <li>2001.12.22, day number 356, time: 14:25:00
   <li>long: -78.678856, lat: 35.736160, timezone: -5.000
 </ul>
-is given by
+<p>sun position is given by
+<p>
 <ul>
-   <li class="fragment">azimuth (measured in horizontal plane ): 212.7934...
-   <li class="fragment">solar altitude (sun angle above horizon, inclination): 23.1924
+   <li class="fragment">solar azimuth (measured in horizontal plane ): 212.7934...
+   <li class="fragment">solar altitude (sun angle above horizon): 23.1924
 </ul>
-<p class="fragment"><img height="200" src="img/viewshed_solar/sun_position2.gif">
+<p class="fragment"><img height="220" src="img/viewshed_solar/sun_position2.gif">
 </section>
 
 <section>
-   <h3>Sun position and time</h3>
-<p>
-Sun position for a given date, time, and a location on Earth (usually map center), for example:
+   <h3>Sun position parameters</h3>
 <ul>
-  <li>2001.12.22, day number 356, time: 14:25:00
-  <li>long: -78.678856, lat: 35.736160, timezone: -5.000
+  <li>2001.12.22, day number 356, time: 14:25:00, long: -78.678856, lat: 35.736160, timezone: -5.000
 </ul>
-is given by
+<p>
 <ul>
-   <li class="fragment">azimuth (measured in horizontal plane ): 212.7934...
-   <li class="fragment">solar altitude (sun angle above horizon, inclination): 23.1924
-   <li class="fragment">sun declination (angle between solar beam and earth equator) winter solstices: -23.4405 (sun above the Tropic of Capricorn)
+   <li class="fragment">solar azimuth: 212.7934...
+   <li class="fragment">solar altitude or inclination: 23.1924
+   <li class="fragment">sun declination (angle between solar beam and earth equator) winter solstice: -23.4405 (sun above the Tropic of Capricorn)
    <li class="fragment">sunrise time (without refraction cor.): 07:26:30
    <li class="fragment">sunset time (without refraction cor.): 17:00:28
    <li class="fragment">atm. refraction correction: inclination > 0 before sunrise
 </ul>
-<p class="fragment"><img height="200" src="img/viewshed_solar/sun_position2.gif">
 </section>
 
 <section>
@@ -189,32 +195,102 @@ is given by
 <p>
 Angle between the terrain normal and solar beam
 <ul>
-   <li class="fragment"> terrain normal: 3D vector orthogonal to the plane tangent to terrain surface at a given point,
-   <li class="fragment"> horizontal projection of terrain normal is a gradient vector  
-   <li class="fragment"> coordinates of surface normal are function of slope and aspect (or $f_x,f_y$)
-<p>
-   <li>solar beam is defined by solar inclination and azimuth
+   <li class="fragment">solar beam: defined by solar inclination and azimuth
+   <li class="fragment">terrain normal: function of slope and aspect (or $f_x,f_y$)
+   <li class="fragment"> terrain normal: 3D vector orthogonal to the plane tangent to terrain surface,
+   <li class="fragment"> horizontal projection of terrain normal is gradient  
 </ul>
-<p class="fragment"><img height="180" src="img/viewshed_solar/solarincidangle.gif">
+<p class="fragment"><img height="250" src="img/viewshed_solar/solarincidangle.gif">
 <p class="fragment"><small>See e.g. 8.1.8 in Hengl et al., 2008, Geomorphometry or A.62 in Neteler et al., 2008 Appendix
 </small>
 </section>
 
-<!--
 <section>
- <h3>Summary</h3>
+   <h3>Solar incidence angle map</h3>
+<p>Solar incidence angle for winter solstice around 2pm, lat=35.736160, including a building with cast shadow
+<p><img height="420" src="img/viewshed_solar/solarincangleshadow.jpg">
+</section>
+
+<section>
+   <h3>Solar incidence angle dynamics</h3>
+<p>Solar incidence angle dynamics during summer and winter solstice for a small valley at 45 deg lat.
+<p><img height="320" src="img/viewshed_solar/rsuns.gif">
+</section>
+
+<section>
+   <h3>Solar incidence angle dynamics</h3>
+<p>Solar incidence angle dynamics during summer and winter solstice for a small valley at 45 deg lat.
+<p><img height="320" src="img/viewshed_solar/rsuns.gif">
+<img height="320" src="img/viewshed_solar/rsunw.gif">
+</section>
+
+<section>
+   <h3>Solar radiation</h3>
+<p>Solar beam (direct) radiation for inclined plane in [W/m2] is function of: 
 <ul>
-  <li>
-  <li>buffers
-  <li>cost surfaces
+  <li class="fragment">solar incidence angle 
+  <li class="fragment">solar constant [W/m2] 
+  <li class="fragment">atmospheric factors (clear sky):
+<ul>
+  <li class="fragment">Linke turbidity factor (atm. turbidity due to aerosols - reduces direct radiation)
+<!--  <li class="fragment">relative optical air mass --> 
+  <li class="fragment">Rayleigh optical thickness (thickness of clear atm., function of surface pressure)
+</ul>
+  <li class="fragment">computed as cumulative solar radiation: daily, monthly, seasonal, annual
 </ul>
 </section>
 
 <section>
- <h3>Reading, resources</h3>
-links
+   <h3>Components of solar radiation</h3>
+<p>Cumulative beam solar radiation $[W/m^2]$, diffuse and reflected radiation
+for day 356 (winter solstice) computed with 0.5hr time step
+<p class="fragment"><img height="300" src="img/viewshed_solar/solarbeam356.jpg">
+<img height="220" src="img/viewshed_solar/solardiff356.jpg"> 
+<img height="220" src="img/viewshed_solar/solarrefl356.jpg"> 
 </section>
--->
+
+<section>
+   <h3>Winter and summer solar radiation</h3>
+<p>Spatial pattern of cumulative direct beam solar radiation $W/m^2$ for different days 356 and 180
+<p class="fragment"><img height="360" src="img/viewshed_solar/solarbeam356.jpg">
+<img height="360" src="img/viewshed_solar/solarbeam180.jpg">
+</section>
+
+<section>
+   <h3>Solar radiation duration</h3>
+<p>Spatial pattern of solar radiation duration $[hr]$ for different days 356 and 180
+<p class="fragment"><img height="380" src="img/viewshed_solar/solartime356.jpg">
+<img height="380" src="img/viewshed_solar/solartime180.jpg">
+<p class="fragment">sunrise 4.8hr, sunset 19.20hr, sunrise 7.2hr, sunset 16.30hr
+</section>
+
+<section>
+   <h3>Solar radiation dynamics</h3>
+<p>Centennial Campus during winter solstice 
+<p><img height="400" src="img/viewshed_solar/winter_solstice_centennial.gif">
+</section>
+
+<section>
+   <h3>Solar radiation dynamics</h3>
+<p>Centennial Campus during summer solstice 
+<p><img height="400" src="img/viewshed_solar/summer_solstice_centennial.gif">
+</section>
+
+<section>
+ <h3>Reading, resources</h3>
+<p>See <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/topics/viewsheds_solar.html">Supplemental material links</a>
+</section>
+
+<section>
+ <h3>Summary</h3>
+<ul>
+  <li>geometry of line of sight and viewsheds
+  <li>viewshed and viescape applications
+  <li>sun position and solar radiation principles
+  <li>dynamics and spatial variability of solar radiation
+  <li>solar radiation examples
+</ul>
+</section>
 
 <div class="parent-page">
     <!-- &#x1f3e0; -->
