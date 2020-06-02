@@ -1,0 +1,26 @@
+name: Publish the website
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build-deploy:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the website
+      run: |
+        ./build.sh
+        cd lectures
+        ./build.sh
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: ./build/
+        force_orphan: true

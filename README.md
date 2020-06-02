@@ -100,14 +100,19 @@ You can look at the pages using e.g.
 If you don't see the changes you have made, delete the file in the build
 directory and build again (the mechanism to recognize changes is not smart).
 
+To build lectures go to the lecture directory and run the `build.sh`
+for lectures script there, i.e.:
+
+    cd lectures
+    ./build.sh
+
+It is important to always be in the directory where the `build.sh`
+script is for each part.
 
 ### Publishing the pages
 
-One should not forget to commit and push changes to the repository
-when publishing so that changes are shared with other contributors.
-This is ensured using a script `publish.sh`.
-The script will require you to have all all changes committed and pushed
-and then it will publish them.
+Once the changed and committed and pushed to the master branch, the
+website will be deployed automatically using GitHub Actions.
 
 
 New semester checklist
