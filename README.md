@@ -5,7 +5,7 @@ NCSU GIS/MEA582: Geospatial Modeling and Analysis
 Authors
 -------
 
-Copyright 2008-2019 by
+Copyright 2008-2020 by
 
  * Helena Mitasova
  * Rob Austin
@@ -13,7 +13,9 @@ Copyright 2008-2019 by
  * Vaclav Petras
  * Paul Paris
 
-Course developed at North Carolina State University.
+Course developed at North Carolina State University,
+Center for Geospatial Analytics and
+Department of Marine, Earth, and Atmospheric Sciences.
 
 See the license below.
 
@@ -134,6 +136,15 @@ All occurrences can be found using:
 
 ```
 grep -IrnE term-changes --exclude=README.md --exclude-dir={build,.git}
+```
+
+### New calendar year changes
+
+Change the copyright years in this readme and in `foot.html`.
+Confirm with:
+
+```
+grep -Irn "[^0-9]old_year_here[^0-9]"
 ```
 
 ### Updating for new GRASS GIS releases
