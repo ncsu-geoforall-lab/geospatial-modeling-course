@@ -1,6 +1,7 @@
 NCSU GIS/MEA582: Geospatial Modeling and Analysis
 =================================================
 
+![Publish the website](https://github.com/ncsu-geoforall-lab/geospatial-modeling-course/workflows/Publish%20the%20website/badge.svg?branch=master)
 
 Authors
 -------
