@@ -1,0 +1,180 @@
+<h2>Spatial interpolation and approximation I: methods</h2>
+<p>Resources:
+<a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI Academy</a>
+<p>
+Launch ArcGIS Pro and login with ArcGIS Online credentials if required.
+Select New> Map> Create New Project.
+Create a new project "assignment2a" in your preferred workspace,
+in the instructions below we are using the default C:\Users\myname\Documents\ArcGIS\Projects\ folder.
+<p>
+Use your judgement to decide which maps to include in your report.
+
+<h3>Compute DEM based on voronoi polygons</h3>
+Compute DEM based on voronoi polygons and check it with hillshade.<br>
+Compute and display voronoi polygons with centroids (clear data frame).
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
+select elev_lid792_randpts
+'OK'
+
+In the Geoprocessing pane, search for and select the 'Create Thiessen Polygons' tool
+Set 'Input Features' to 'elev_lid792_randpts'
+Set 'Output Feature Class' to 'elev_vor.shp'
+Set 'Output Fields' to 'All fields'    
+Click 'Run'
+In the Geoprocessing pane, search for and select the 'Feature to Point' tool
+Set 'Input Features' to 'elev_vor'
+Set 'Output Feature Class' to 'vor_center.shp'
+Leave the 'Inside' box unchecked
+Click 'Run'
+</pre>
+
+<p>
+Convert to raster and display with standard elevation color.
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Polygon To Raster' tool
+Set 'Input Feature' to 'elev_vor'
+Set 'Value Field' to 'value_'
+Set 'Output Raster Dataset' to 'elev_vor2m'
+Set 'Cellsize' to '2'         
+Click 'Run'
+</pre>
+
+<p>
+Set the Raster Analyst Cell Size to 2m in Environment Settings.
+
+<pre>
+On the top ribbon->'Analysis' tab->'Geoprocessing' group->'Environments'->'Raster Analysis' section
+NOTE: this will set the default cell size to 2 units (meters) for all subsequent processing.
+Set 'Cell Size' to a value of 2 by typing in the box
+Click 'OK'
+</pre>
+
+<p>
+Check the result using hillshade.
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Hillshade' tool
+Set 'Input Raster' to 'elev_vor2m'
+Set 'Output Raster' to 'Hillsh_vor_2m'
+Click 'Run'
+</pre>
+
+<h3>Interpolate DEM using TIN and check it in a Scene or with hillshade</h3>
+First create TIN:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Create TIN' tool
+Set 'Output TIN' to 'elev_lid792_TIN'
+Set Input Feature Class to 'elev_lid792_randpts'
+Set the 'height field' to 'value_'
+Set 'Type' to 'Mass_Points'
+Click 'Run'
+</pre>
+
+<p>
+Interpolate TIN to raster DEM.<br>
+<pre>
+In the Geoprocessing pane, search for and select the 'TIN to Raster' tool
+Set 'Input Tin' to 'elev_lid792_TIN'
+Set Output Raster to tinrast_2m
+Change the 'Sampling Distance' to 'CELLSIZE' and sampling value to '2'
+Leave all else as default
+Click 'Run'
+</pre>
+
+<p>
+Display as hillshade:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Hillshade' tool
+Set 'Input Raster' to 'tinrast_2m'
+Set 'Output Raster' to 'Hlshtinrast2m'
+Click 'Run'
+</pre>
+
+Alternatively, convert your map to a Local Scene and visualize as described in the previous assignment.
+
+<h4>Create the Terrain Model using the Terrain Wizard in ArcCatalog.</h4>
+<p>
+A terrain dataset is a multiresolution, TIN-based surface built from lidar/sonar/photogrammetric measurements stored as features in a geodatabase. 
+
+<p>
+Create a new feature dataset called 'terrain' in the your assignment 3 geodatabase.
+<pre>
+In the Geoprocessing pane, search for and select the 'Create Feature Dataset' tool
+Set 'Output geodatabase' to the project geodatabase
+Set 'feature dataset name' to 'terrain'
+Set 'coordinate system' to match elev_lid792_randpts
+click "Run"
+</pre>
+
+<p>
+Add the feature class data that will be used to create the terrain
+<pre>
+In the Geoprocessing pane, search for and select the 'Feature class to feature class' tool
+Set 'input features' to 'elev_lid792_randpts'
+Set 'output location' to 'terrain'
+Set 'output feature class' to 'elev_lid792_rand_fc'
+</pre>
+
+<p>
+Run the Create Terrain tool
+<pre>
+In the Geoprocessing pane, search for and select the 'Create Terrain' tool
+Set 'Input feature dataset' to 'terrain'
+Set 'Output Terrain' to 'elev_lid792_TER'
+Set the 'Average point spacing' to '1' (average distance between points)
+Set 'Pyramid type' to 'Z tolerance'
+Click 'Run'
+</pre>
+
+Build Terrain pyramids
+In the Geoprocessing pane, search for and select the 'Add terrain pyramid level' tool
+<p>
+NOTE: There seems to be a bug here.  It will not run.  The following instructions should be correct but are untested
+
+<p>
+Add the feature class to the terrain
+<pre>
+In the Geoprocessing pane, search for and select the 'Feature class to terrain' tool
+Set 'input terrain' to 'terrain'
+Set 'input features' to 'elev_lid792_randpts'
+Set 'height field' to 'value_'
+Click "Run"
+</pre>
+
+Compute a raster DEM from Terrain, 
+<pre>
+In the Geoprocessing pane, search for and select the 'Terrain to Raster' tool
+Set 'Input Terrain' to 'elev_lid792_TER'
+Set Output Raster 'terrast_2m'
+Change the 'Sampling Distance' to 'CELLSIZE' and value to '2' 
+Leave all else as default
+Click 'Run'
+</pre>
+
+<h3>Interpolate DEM using IDW and check it with hillshade</h3>
+
+Interpolate DEM using IDW:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'IDW' tool
+Set 'Input point features' to 'elev_lid792_randpts'
+Set 'Z value field' to 'value_'
+Set 'Output Raster' to 'elev_idw_2m'
+Leave the other inputs as defaults
+Click 'Run'
+</pre>
+
+<p>
+Check the interpolated elevation surface using hillshade:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Hillshade' tool
+Set 'Input raster' to 'elev_idw_2m'
+Set 'Output Raster' to 'Hillsh_idw_2m'
+</pre>

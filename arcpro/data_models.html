@@ -1,0 +1,228 @@
+<h2>Data models</h2>
+<p>Resources:
+<a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI Academy</a>
+<p>
+Launch ArcGIS Pro and login with ArcGIS Online credentials if required.
+Select New> Map> Create New Project.
+Create a new project "assignment2a" in your preferred workspace,
+in the instructions below we are using the default C:\Users\myname\Documents\ArcGIS\Projects\ folder.
+<p>
+Use your judgement to decide which maps to include in your report.
+Please use the export to image method from the previous lesson rather than screen shots of the whole program.
+
+<p>Find the geoprocessing tools used in the assignment in the<em>Geoprocessing</em> pane.
+You can search or browse the toolboxes.
+
+<h3>Convert Data from Raster to Raster: change resolution</h3>
+
+<p>
+Compare resampling by nearest neighbor for discrete and continuous raster maps:
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select elev_ned
+select landcl96
+"OK"
+You can also browse to the dataset in the catalog pane and drag a feature or raster onto the map frame or contents pane.
+
+In the Geoprocessing pane, search for and select the "resample" tool.
+Set 'Input Raster' to 'landcl96'
+Set 'Output raster' to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\Assignment2a.gdb\landcl_10m'
+Set 'Output Cell Size' for x and y each to '10'
+Set 'Resampling Technique' to 'NEAREST'
+Click 'Run'
+
+In the Geoprocessing pane, search for and select the "resample" tool.
+Set 'Input Raster' to 'elev_ned'
+Set 'Output raster' to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\Assignment2a.gdb\ned_10m_nn'
+Set 'Output Cell Size' for x and y each to '10'
+Set 'Resampling Technique' to 'NEAREST'
+Click 'Run'
+</pre>
+
+<p>
+Check the resampled elevation surface using the aspect map:
+
+<pre>
+In the Geoprocessing pane, search for and select the "aspect" tool.
+Set 'Input Raster' to 'ned_10m_nn'
+Set 'Output Raster' to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\Assignment2a.gdb\aspect_10m_nn'
+Leave method as 'Planar'
+Click 'Run'
+</pre>
+
+<p>
+Reinterpolate DEMs (continuous raster data) using bilinear and bicubic interpolation:
+
+<pre>
+In the Geoprocessing pane, search for and select the "resample" tool.
+Set 'Input Raster' to 'elev_ned'
+Set 'Output raster' to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\Assignment2a.gdb\ned_10m_bi'
+Set 'Output Cell Size' for x and y each to '10'
+Set 'Resampling Technique' to 'Bilinear'
+Click 'Run'
+
+In the Geoprocessing pane, search for and select the "resample" tool.
+Set 'Input Raster' to 'elev_ned'
+Set 'Output raster' to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\Assignment2a.gdb\ned_10m_bc'
+Set 'Output Cell Size' for x and y each to '10'
+Set 'Resampling Technique' to 'Cubic'
+Click 'Run'
+</pre>
+
+<p>
+Check the interpolated elevation surface using aspect maps:
+
+<pre>
+In the Geoprocessing pane, search for and select the "aspect" tool.
+Set 'Input Surface' to 'ned_10m_bi'
+Set 'Output raster' to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\Assignment2a.gdb\aspect_10m_bi'
+Click 'Run'
+
+In the Geoprocessing pane, search for and select the "aspect" tool.
+Set 'Input Surface' to 'ned_10m_bc'
+Set 'Output raster' to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\Assignment2a.gdb\aspect_10m_bc'
+Click 'Run'
+</pre>
+
+<p>
+Resampling to lower resolution (downscaling) for continuous field data:
+
+<pre>
+In the Geoprocessing pane, search for and select the "Aggregate" tool.
+Set 'Input raster' to 'elev_ned'
+Set 'Output raster' to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\Assignment2a.gdb\el_90m_mean'
+Set 'Cell factor' to 3
+Set 'Aggregation technique' to 'MEAN'
+Click 'Run'
+</pre>
+
+<p>
+Resampling to lower resolution (downscaling) for discrete categories:
+
+
+<pre>
+In the Geoprocessing pane, search for and select the "resample" tool.
+Set 'Input raster' to 'landcl96'
+Set 'Output raster' to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\Assignment2a.gdb\landcl_mode'
+Set 'Output Cell Size' for x and y each to '90'
+Set 'Resampling technique' to 'Majority'
+Click 'Run'
+</pre>
+
+<h3>Convert Data from Vector to Raster using a working region</h3>
+Convert SW Wake subarea of geology layer to 30m raster.
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
+Select 'geology'
+Select 'swwake_10m'
+
+In the Geoprocessing pane, search for and select the "Polygon To Raster" tool.
+Set Input Features to 'geology'
+Set Value Field to 'GEO_NAME'
+Set Output Raster Dataset to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\Assignment2a.gdb\rast_geo'
+Set Cellsize to 30
+Leave the remaining fields as their defaults
+Click 'Run'
+</pre>
+
+<p>
+Adjust the working region:
+
+<pre>
+Click 'Environments' tab (top of geoprocessing pane pane)
+Under 'Processing Extent' Set the processing extent to 'Same as layer' and select 'swwake_10m'
+Click 'Run'
+</pre>
+
+<p>
+Convert SW Wake subset of streets_wake layer
+to 30m raster representing speed limit:
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to 'C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb'
+Select 'streets_wake'
+
+In the Geoprocessing pane, search for and select the "PolyLine To Raster" tool.
+Set Input Features to 'streets_wake'
+Set Value Field to 'SPEED'
+Set Output Raster Dataset to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\Assignment2a.gdb\rast_spdroads'
+Set Cellsize to 30
+Leave the remaining fields as their defaults
+Click 'Run'
+</pre>
+
+<p>
+Adjust the working region:
+
+<pre>
+Click 'Environments' tab (top of geoprocessing pane pane)
+Under 'Processing Extent' Set the processing extent to 'Same as layer' and select 'swwake_10m'
+Click 'Run'
+</pre>
+
+<p>
+Convert point data to raster.
+We will try this without loading the point layer into the map first:
+
+<pre>
+In the Geoprocessing pane, search for and select the "Point To Raster" tool.
+Set Input Features to 'C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb\Schools_Wake'
+Set Value Field to 'CORECAPACI'
+Set Output Raster Dataset to sw_rast
+Set Cellsize to 200
+Click 'Run'
+</pre>
+
+<h3>Convert Data from Raster to Vector</h3>
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to 'C:\Users\myname\Documents\ArcGIS\582data\ncsrast.gdb'
+Select 'bas_50k'
+# The raster 'bas_50k' is floating point, convert the values to integer (check with RMC on 'bas_50k'-->Properties. Look at 'Pixel Type')
+
+In the Geoprocessing pane, search for and select the "Raster Calculator" tool.
+Type in the expression  Int("bas_50k")
+Set Output to bas_50kint
+Click 'Run'
+
+In the Geoprocessing pane, search for and select the "Raster To Polygon" tool.
+Set Input Raster to 'bas_50kint'
+Set Field to 'Value'
+Set 'Output Polygon Features' to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\Assignment2a.gdb\bas_50Kpoly
+Uncheck 'Simplify Polygons' if checked.
+Click 'Run'
+</pre>
+
+<h3>
+Export data to format readable by other software</h3>
+
+Export vector data to shapefile:
+
+<pre>
+From the Catalog Tab"
+Navigate to and open: ncshape.gdb
+RMC roadsmajor->Export->To Shapefile
+Set Output Location to 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a'
+Set output Feature Class to 'roads_shp'
+Click 'Run'
+</pre>
+
+<p>
+Export raster data to grid ascii:
+
+<pre>
+In the Geoprocessing pane, search for and select the "Raster to ASCII" tool.
+Set Input Raster to ncrast.gdb\landcl96
+Set output ASCII to: 'C:\Users\username\Documents\ArcGIS\Projects\Assignment2a\landcl96.asc
+Click 'Run'
+
+Navigate to and open landcl96.asc in NotePad
+Examine the contents
+Close landcl96.asc
+</pre>

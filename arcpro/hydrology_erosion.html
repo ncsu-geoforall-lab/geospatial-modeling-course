@@ -1,0 +1,252 @@
+<h3>Erosion modeling</h3>
+<p>Resources:
+<a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
+
+
+Task: Compute soil detachment and net erosion/deposition using simple GIS-based models
+
+<p>
+Create the assignment working directory (folder) .\Erosion<br>
+Start ArcMap:
+
+<pre>
+Start->Programs->ArcGIS->ArcMap
+</pre>
+
+<p>
+Check out a Spatial Analyst Extension license:
+
+<pre>
+Under Tools->Extensions make sure there is a check next to 'Spatial Analyst'
+Select View->Toolbars->Spatial Analyst to activate the extension
+</pre>
+Set your workspace and scratch workspace to C:\path\.Erosion
+<pre>
+Geoprocessing>Environments>Workspace
+</pre>
+<h3>Compute soil detachment rate using USLE3D</h3>
+
+Compute a map of soil detachment rate using USLE3D equation which assumes that there is no deposition.<br>
+This represents detachment limited sediment transport by overland flow.<br>
+<pre>
+E = RKLSCP
+</pre>
+<p>where
+<ul>
+<li>E is the annual soil detachment rate (soil loss)</li>
+<li>R is the rainfall</li>
+<li>K is the soil</li>
+<li>C is the land cover</li>
+<li>P is the preventive measures factor</li>
+<li>LS = 1.4 * (U/22.1)**0.4 * (sin (slope)/0.09)**1.2<br>
+LS is the topography factor, U is contributing area per unit width (function of flow accumulation)</li>
+</ul>
+<p>
+For units and explanation of constants see <a href="../resources/erosion_notes.pdf"><b>Erosion modeling notes</b></a><br>
+
+<p>
+First compute slope, and flow accumulation for the elevation raster map e_lid792 (NOT elid_792):
+
+
+<pre>
+In ArcMap
+Add the raster feature layer: ncrast.mdb/e_lid792  (NOT elid_792)
+Open the ArcToolbox
+</pre>
+
+<p>
+Compute slope_1m map using the Slope function, we will use it later:
+
+<pre>
+Select 'Spatial Analyst Tools->Surface->Slope'
+input: e_lid792 output: slope_1m
+keep DEGREES for units
+</pre>
+
+<p>
+Compute the flow accumulation map Flowacc:
+
+<pre>
+Compute Fill input=e_lid792 output=Fill_e_lid
+Compute FlowDirection input=Fill_e_lid ouput=FlowDir_fil
+Compute FlowAccumulation input=FlowDir_fil output=Flowacc
+</pre>
+
+<h4>LS factor</h4>
+Build an expression in the Spatial Analyst Raster Calculator for lsfac map
+using the Flowacc and slope_1m layers you just generated.<br>
+<p>
+Note that the lsfac map represents the topographic factor LS used in the USLE3D model.<br>
+Flowacc map multiplied by resolution is the contributing area per unit width U.
+
+<pre>
+In the ArcToolbox, Select 'Spatial Analyst->Map Algebra->Raster Calculator
+</pre>
+
+<p>
+Type in the expression for lsfac layer (make sure you have spaces around operators).<br>
+Slope should be in radians,
+flowaccumulation is in number of cells so we multiply by resolution:
+
+<pre>
+1.4 * (Power("Flowacc" * 1. / 22.1 , 0.4) * Power(Sin("slope_1m" * math.pi/180.0) / 0.09, 1.2))
+Set the output raster to lsfac
+Click 'OK'
+</pre>
+
+<h4>Soil loss</h4>
+
+Now build the expression for soil detachment rate E (soil loss) s_loss. From the formula
+<pre>
+E = RKLSCP
+</pre>
+We computed LS factor
+R factor is considered to be constant and set to 270.0
+K factor values can be added as a layer ncrast.mdb/soils_kf
+C factior values can be added as a layer ncrast.mdb/cfactb
+P factor (prevention measures) is here taken to = 1.
+<p>
+Multiplying all the factors in Raster Calculator we will compute the raster map of erosion rate
+<pre>
+In the ArcToolbox, Select 'Spatial Analyst->Map Algebra->Raster Calculator
+expression=
+270.0 * "cfactb" * "lsfac" * "soils_kf"
+output=s_loss
+</pre>
+
+Adjust color table for the s_loss map - histogram equalized color ramp may be needed
+<span class="question">Find average soil loss rate in the area from the s_loss map</span> (in Properties:Source).
+
+
+<h3>USPED model</h3>
+Compute net erosion and deposition as a divergence of sediment flow vector field.<br>
+Note that custom color tables that cover entire range of values
+including negative are important in this section.
+
+<p>
+We have already computed slope_1m and flowaccumulation, but we will also need direction of flow.<br>
+Compute aspect_1m map (direction of flow, direction of gradient vector) using the Aspect function:
+
+<pre>
+'Spatial Analyst Tools->Surface->Aspect'
+input=e_lid792, output=aspect_1m
+</pre>
+
+<p>
+Build an expression for sflowtopo (topographic factor LS for sediment flow T)
+using the Raster Calculator.<br>
+For the exponents use m=n=1, resolution is 1.
+
+<pre>
+In the ArcToolbox, Select 'Spatial Analyst->Map Algebra->Raster Calculator
+expression=
+"Flowacc" * 1. * Sin("slope_1m" * math.pi/180.0)
+output raster = sflowtopo
+</pre>
+
+<p>
+OR use m=1.3 and n=1.2 for study areas with extensive rills.<br>
+In this case, channels/streams will have large erosion rates due to high values of flowaccumulation.
+
+
+<pre>
+In the ArcToolbox, Select 'Spatial Analyst->Map Algebra->Raster Calculator
+expression=
+(Power("Flowacc" * 1. , 1.3) * Power((Sin("slope_1m" * math.pi/180.0)), 1.2))
+output raster = sflowtopo2
+</pre>
+
+<h4>Compute divergence of sediment flow</h4>
+First compute components of sediment flow in x and y direction:
+Calculate qsx
+<pre>
+In the ArcToolbox, Select 'Spatial Analyst->Map Algebra->Raster Calculator
+expression=
+"sflowtopo" * "soils_kf" * "cfactb" * 270. * Cos((- "aspect_1m" + 450.) * math.pi / 180.0)
+Output raster = qsx
+</pre>
+Calculate qsy
+<pre>
+In the ArcToolbox, Select 'Spatial Analyst->Map Algebra->Raster Calculator
+expression=
+"sflowtopo" * "soils_kf" * "cfactb" * 270. * Sin((- "aspect_1m" + 450.) * math.pi / 180.0)
+Output raster = qsy
+</pre>
+
+<p>
+Compute components of change in sediment flow in x and y direction
+as partial derivatives of sediment flow field, derived from slope and aspect
+ - see eqs 1,2,3 from <a href="http://www4.ncsu.edu/~hmitaso/gmslab/reports/cerl99/rep99.html">here</a>.
+
+<pre>
+In ArcToolbox
+'Spatial Analyst Tools->Surface->Slope'
+input=qsx, output=Slope_qsx
+</pre>
+
+<p>
+In the same way compute Aspect_qsx, Slope_qsy and Aspect_qsy
+
+<pre>
+In ArcToolbox
+'Spatial Analyst Tools->Surface->Aspect'
+input=qsx, output=Aspect_qsx
+'Spatial Analyst Tools->Surface->Slope'
+input=qsy, output=Slope_qsy
+In ArcToolbox
+'Spatial Analyst Tools->Surface->Aspect'
+input=qsy, output=Aspect_qsy
+</pre>
+Compute qsx_dx and qsy_dy
+<pre>
+'Spatial Analyst->Map Algebra->Raster Calculator:
+expression=
+Cos((- "Aspect_qsx" + 450) * math.pi / 180.0) * Tan("Slope_qsx" * math.pi/180.0)
+output=qsx_dx
+expression=
+Sin((- "Aspect_qsy" + 450) * math.pi / 180.0) * Tan("Slope_qsy" * math.pi/180.0)
+output=qsy_dy
+</pre>
+
+<p>
+Finally compute net erosion deposition:
+
+<pre>
+'Spatial Analyst->Map Algebra->Raster Calculator:
+expression="qsx_dx" + "qsy_dy"
+output=erdep
+</pre>
+
+<p>
+Assign an appropriate color classification scheme to the erdep raster and generate a map for the report.<br>
+
+Note: the differences in the erdep are subtle and the default color table will almost assuredly render<br>
+the erosion deposition map in a way that little detail is revealed. <br>
+You are free to experiment with the the tools in Arc in order to define classification scheme which will
+reveal the erosion/deposition pattern.<br>
+Here's an option that should yield pretty good contrast between erosion and deposition:
+
+<pre>
+Open Layer Properties for the erdep layer
+Under the Symbology tab‚
+Select Classified from options (Unique Values, Classified, Stretched, Discrete) in the left column
+Set Classes to 11
+Choose a broad, divergent color ramp from the Color Ramp drop down field
+that ranges from brown grading through white to green
+Click on Classify
+Edit the eleven break values (located in column on far right in Classification dialog to:
+-250000.00  (data minimum)
+-50.00
+-5.00
+-1.00
+-0.10
+0.10
+1.00
+5.00
+50.00
+330000.00    (data maximum)
+Click OK
+Click Apply
+</pre>
+
+You should now see the erosion and deposition areas rendered with pretty good contrast.

@@ -1,0 +1,278 @@
+<h2>Geospatial Analysis I: global, zonal and focal operations, map algebra</h2>
+<p>Resources:
+<a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
+
+Create folder Map_algebra in your preferred workspace.
+Include resulting maps into your report 
+(use your judgment to decide which results to include).
+
+<p>
+Start ArcMap:
+
+<pre>
+Start->Programs->ArcGIS->ArcMap
+</pre>
+
+<h3>Compute zonal statistics for feature data</h3>
+Add landuse feature class data.
+
+<pre>
+File->Add Data->Add Data...  ./ncrast.mdb/landcl96
+<i>right click</i> landcl96->Open Attribute Table
+</pre>
+
+<p>
+Add a field (column) to the attribute table:
+
+<pre>
+<i>left click</i> Table Options menu (upper right corner of Table window) icon->Add Field...
+
+Set Name to 'Acreage' and Type to 'Double'
+</pre>
+
+<p>
+Calculate acres (populate the Acreages field):
+
+<pre>
+<i>right click</i> the column heading and select 'Field Calculator'
+</pre>
+<p>
+You may see the pop-up window with the warning:
+<i>You are about to do a calculate outside of an edit session. This method is faster than calculating in an edit session, but there is no way to undo your results once the calculation begins. Do you wish to continue?</i>
+Click YES
+<pre>
+<i>double left click</i> on Count to populate equation in the bottom menu
+Click on Multiply * button
+Type in 812.25 (i.e. area of each cell in square meters) 
+Click 'OK'
+Note the new values in the Acreages field
+Close the Table
+</pre>
+
+<p>
+Compute %area for each category in each zipcode zone.
+Add zipcode data:
+
+<pre>
+File->Add Data->Add Data... ./ncrast.mdb/zipcodes
+</pre>
+
+<p>
+Check out a Spatial Analyst Extension license:
+
+<pre>
+<i>left click</i> Customize Menu->Extensions...  check Spatial Analyst
+
+Open the ArcToolbox
+Select Spatial Analyst Tools->Zonal->Tabulate Area
+Set Input Raster or feature zone data to 'zipcodes'
+Set Zone field to 'VALUE'
+Set Input Raster or feature class data to 'landcl96'
+Set Class field to 'VALUE'
+Set Output Table to '.\Map_algebra\zip_sum'
+Set Processing cell size to 28.5
+Click 'OK'
+</pre>
+
+<p>
+View the Tabulate results:
+
+<pre>
+Click on the 'List by Source' button at the top of the Table of Contents (TOC)
+<i>right click</i> zip_sum->Open
+</pre>
+<span class="question">Explain how the data are presented.</span>
+
+<h3>Handling NULL data</h3>
+Create a copy of SRTM DSM map, converting cells with elevation=0 to NULL:
+
+<pre>
+File->Add Data->Add Data... ncrast.mdb/elev_srt
+<i>right click</i> elev_srt->Data->Export Data...
+Set the Location to '.\Map_algebra'
+Set the format to 'GRID' and the Name to 'elev_srt2'
+Click 'Save'
+Click 'Yes' to add the GRID layer to the TOC
+</pre>
+
+<p>
+Replace cells with elevation = 0 to nodata / NULL (i.e. -9999 for ArcGIS):
+
+<pre>
+Open the ArcToolbox (if not already open)
+Select Spatial Analyst Tools->Conditional->Set Null
+Set Input Conditional Raster to 'elev_srt2'
+Set the Expression to VALUE = 0
+Set Input false raster or constant value to 'elev_srt2'
+Set Output raster to .\Map_algebra\elev_srt3
+Click 'OK'
+</pre>
+
+<h3>Reclassification</h3>
+Recode a 360-direction aspect map to 8 directions (D8):
+
+<pre>
+File->Add Data->Add Data...  .\ncrast.mdb\aspect
+select Spatial Analyst->Reclass->Reclassify
+Set Input raster to aspect
+Click the 'Classify' Button
+Set the Method to 'Equal Interval' and Classes to '8'
+Click 'OK'
+Set the Output Raster to '.\Map_algebra\aspect_d8'
+Click 'OK'
+</pre>
+
+<h3>Mosaicking</h3>
+Patching raster data (often called mosaicking):
+
+<pre>
+File->Add Data->Add Data...
+Select ncrast.mdb/elid_782 (hold down control key to select multiple layers)
+   select ncrast.mdb/elid_783
+   select ncrast.mdb/elid_792
+   select ncrast.mdb/elid_793
+
+Open the ArcToolbox (if not already open)
+Open Data Management Tools->Raster->Raster Dataset->Mosaic To New Raster
+Set Input Rasters to 'elid_782' , 'elid_783' , 'elid_792' , 'elid_793'
+Set Output Location to '.\Map_algebra\'
+Set Raster dataset name to 'elev_6m'
+Set Number of Bands to 1
+Set Pixel type to 32_BIT_FLOAT
+Leave the remaining fields as their defaults
+Click 'OK'
+</pre>
+
+<p>
+Optional - have a look at the patched DEM in ArcScene.
+
+<h3>Creating a subset</h3>
+Create a subset of the map elevation for a subregion:
+
+<pre>
+File->Add Data->Add Data...
+Select ./ncrast.mdb/elev
+(Note: hold down control key to select multiple layers)
+Select ncrast.mdb/ortho01
+Open the ArcToolbox (if not already open)
+Select Spatial Analyst Tools->Extraction->Extract by Mask
+Set Input Raster to 'elev'
+Set Input raster of feature mask data to 'ortho01'
+Set the out put raster to '.\Map_algebra\elev_mask'
+Click 'OK'
+</pre>
+
+<h3>Map Algebra</h3>
+
+Compute Normalized Difference Vegetation Index (NDVI)
+<p>
+<span class="question">Explain the difference between FP and INT handling.</span><br>
+(Note: make sure you have spaces around operators (=,-,/) ).
+
+<pre>
+File->Add Data->Add Data...
+Select ./ncrast.mdb/lsat7_40
+Select ./ncrast.mdb/lsat7_30
+Open the ArcToolbox (if not already open)
+Select 'Spatial Analyst->Map Algebra->Raster Calculator
+Type in the expression:
+   ("lsat7_40" - "lsat7_30") / ("lsat7_40" + "lsat7_30")
+   Set Output raster to './Map_algebra/ndvi1
+Click 'OK'
+Select 'Spatial Analyst->Raster Calculator
+Type in the expression: 
+   Float("lsat7_40" - "lsat7_30") / Float("lsat7_40" + "lsat7_30")
+   Set Output raster to './Map_algebra/ndvi2
+Click 'OK'
+Assign the ndvi2 map a color ramp that has green for high values
+</pre>
+
+<p>
+Compute the difference between the SRTM DSM and lidar-based NED DEM:
+
+<pre>
+File->Add Data->Add Data...
+Select ncrast.mdb/elev_ned
+Select ncrast.mdb/elev_srt
+Open the ArcToolbox (if not already open)
+Select 'Spatial Analyst->Map Algebra->Raster Calculator
+Type in the expression: "elev_srt" - "elev_ned"  
+Set Output raster to './Map_algebra/elev_diff
+Click 'OK'
+</pre>
+
+<p>
+Create a custom color table to distinguish the negative and positive values:
+
+<pre>
+<i>right click</i> elev_diff->Properties
+Click on Symbology tab
+Select a 'Red to Green' color ramp
+Click 'OK'
+</pre>
+
+<h4>Working with the conditional function</h4>
+Create map of urban areas:
+
+<pre>
+File->Add Data->a Add Data...
+Select ncrast.mdb/landcl96
+Open the ArcToolbox (if not already open)
+Select 'Spatial Analyst->Map Algebra->Raster Calculator
+Type in the expression: Con( ("landcl96" == 1) | ("landcl96" == 2),"landcl96",0)  
+(Note: in ArcGIS 10 map algebra components are case-sensitive - i.e. con != Con) 
+Set Output raster to './Map_algebra/calcmap5a
+Click 'OK'
+</pre>
+
+<p>
+Alternatively use the 'pick' operation:
+
+<pre>
+Open the ArcToolbox (if not already open)
+Select Spatial Analyst Tools->Conditional->Pick
+Set input position raster to landcl96
+Set the input rasters as constant values: 1 and 2. 
+Enter 1 and then 2 such that there are two entries (each value is on its own line).
+Set output raster to '.\Map_algebra\urban_pick'
+Click 'OK'
+</pre>
+
+<h4>Handling null values</h4>
+<!-- Check whether the land use map correctly classifies lakes as water.
+
+<pre>
+File->Add Data->Add Data...
+Select ncrast.mdb/landcl96 (this layer may already be present in your project)
+Select ncrast.mdb/lakes
+Open the ArcToolbox (if not already open)
+Select 'Spatial Analyst->Map Algebra->Raster Calculator
+Type in the expression: Con(IsNull("lakes"), "landcl96", "lakes" / 1000) 
+Set output raster to '.\Map_algebra\luselakes'
+Click 'OK'
+</pre> -->
+
+<p>
+Create a map where all land use categories > 1 are set to null:
+
+<pre>
+Open the ArcToolbox (if not already open)
+Select 'Spatial Analyst->Map Algebra->Raster Calculator'
+Type in the expression: SetNull( "landcl96" > 1, "landcl96" )     
+Set output raster to '.\Map_algebra\developed'
+Click 'OK'
+</pre>
+
+<p>
+Create mask for areas with elevation between 60 and 100m and land use 1 or 2:
+
+<pre>
+File->Add Data->Add Data...
+Select ncrast.mdb/landcl96 (this layer may already be present in your project)
+Select ncrast.mdb/elev   (this layer may already be present in your project)
+Open the ArcToolbox (if not already open)
+select 'Spatial Analyst->Map Algebra->Raster Calculator'
+Type in the expression: 
+SetNull( (("elev" &lt; 100) &amp; ("elev" > 60)) &amp; (("landcl96" == 1) | ("landcl96" == 2)), 1)
+Set output raster to 'mask'
+</pre>

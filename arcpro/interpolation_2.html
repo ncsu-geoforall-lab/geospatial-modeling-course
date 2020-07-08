@@ -1,0 +1,74 @@
+<h2>Spatial interpolation and approximation II</h2>
+<p>Resources:
+<a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI Academy</a>
+<p>
+Launch ArcGIS Pro and login with ArcGIS Online credentials if required.
+Select New> Map> Create New Project.
+Create a new project "assignment2a" in your preferred workspace,
+in the instructions below we are using the default C:\Users\myname\Documents\ArcGIS\Projects\ folder.
+<p>
+Use your judgement to decide which maps to include in your report.
+
+<h3>Interpolation using splines</h3>
+Interpolate elevation surfaces from spot point heights using the Spline tool 
+in the Spatial Analyst toolbox.<br>
+Use three different weights (0.1, 1, 1000) to control the tension, and thus, the resulting surface character.<br>
+For the first interpolation, you'll leave the Weight field blank, accepting the default 0.1 value.<br>
+In subsequent interpolations, you'll enter the explicit weights.
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
+select elev_lid792_randpts
+'OK'
+
+In the Geoprocessing pane, search for and select the 'Spline' tool
+Set 'Input Point Features' to 'elev_lid792_randpts'
+Set 'Z value field' to 'value_'
+Set 'Output Raster' to 'elev_tps'
+Set 'Output cell size' to '2'
+Set to Spline Type to 'TENSION'
+Leave the other inputs as defaults 
+Click 'Run'
+</pre>
+
+<p>
+Evaluate impact of interpolation function parameters on the resulting surface
+using hillshade.
+<p>
+
+<pre>
+Top ribbon->Analysis->Geoprocessing Group->Raster Analysis->cell size
+enter '2' for cell size
+Click 'OK'
+In the Geoprocessing pane, search for and select the 'Hillshade' tool
+Set 'Input raster' to 'elev_tps'
+Set 'Output Raster' to 'Hillsh_tps'
+Leave the other inputs as defaults
+Click 'Run'
+</pre>
+
+<p>
+Repeat the spline interpolations above, using weights of 1 and then 1000,<br>
+and generate the associated hill shade surfaces.<br>
+Compare the three hill shade surfaces, and discuss your findings in your report.<br>
+(Tip, use the 'history' tab to reload and change values for previously run geoprocessing tools)   
+
+<h3>Interpolate surface using Radial Basis Functions</h3>
+Use the Geostatistical Analyst tool's Radial Basis Functions to generate at least
+two different elevation surfaces by selecting different Kernel functions.<br>
+In the first surface you'll use the RBF multi-quadric method.<br>
+In the second, you'll choose Regularized Spline.
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Radial Basis Functions' tool
+Set the 'input features' to 'elev_lid792_randpts'
+Set the 'Z value' to 'value_'
+Set the 'output raster' to 'elev_lid792_multi'
+Set the Radial basis function to 'Multiquadric'
+Click 'Run'
+</pre>
+
+<p>
+Rerun the interpolation in the Radial Basis Functions tool using<br>
+Kernal Type = Completely Regularized Spline and compare your results.
