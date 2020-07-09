@@ -1,32 +1,27 @@
-<h2>Geomorphometry II: Spatial and Temporal Terrain Analysis</h2>
+<h2<h2>Geomorphometry II: Spatial and Temporal Terrain Analysis</h2>
 <p>Resources:
-<a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
-
-
+<a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI Academy (Formerly ESRI virtual campus)</a>
 <p>
-Create the assignment working directory (folder) .\Analysis.<br>
-Start ArcMap.<br>
-Disable background processing.
-
-
-<pre>
-Start->Programs->ArcGIS->ArcMap
-Geoprocessing -> Geoporocessing Options... -> Uncheck "Enable" Background Processing
-</pre>
+Launch ArcGIS Pro and login with ArcGIS Online credentials if required.
+Select New> Map> Create New Project.
+Create a new project in your preferred workspace,
+in the instructions below we are using the default C:\Users\myname\Documents\ArcGIS\Projects\ folder.
+<p>
+Use your judgement to decide which maps to include in your report.
+<p>
 
 <h3>Compute basic topographic parameters from 10m NED</h3>
 
 <pre>
-In ArcMap
-Select File->Add Data->Add Data...
-Select ncrast.mdb/elev
-Check out a Spatial Analyst Extension license
-Open the ArcToolbox
-Select 'Spatial Analyst Tools->Surface->Slope'
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select 'elev'
+In the Geoprocessing pane, search for and select the 'Slope' tool
 Set 'Input raster' to 'elev'
-Set 'Output raster' to '.\Analysis\Slope_elev'
+Set 'Output raster' to 'Slope_elev'
 Set 'Output measurement' to 'DEGREE'
-Click 'OK'
+Leave other fields as defaults
+Click 'Run'
 </pre>
 
 <p>
@@ -37,17 +32,18 @@ with two color shades and light color in the middle.
 <h3>Compute topographic parameters from SRTM DEM and compare with NED</h3>
 
 <pre>
-In ArcMap
-Select File->Add Data->Add Data...
-Select ncrast.mdb/elev_srt
-Open the ArcToolbox (if it's not already open)
-Select 'Spatial Analyst Tools->Surface->Slope'
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select 'elev_srt'
+In the Geoprocessing pane, search for and select the 'Slope' tool
 Set 'Input raster' to 'elev_srt'
 Set 'Output raster' to '.\Analysis\Slope_el_srt'
 Set 'Output measurement' to 'DEGREE'
-Click 'OK'
+Leave other fields as defaults
+Click 'Run'
 
-<i>right mouse click</i> 'Slope_el_srt->Properties->Symbology->Classify 
+<i>right mouse click</i> 'Slope_el_srt->Symbology->primary symbology 'Classify' 
+Histogram tab->more->'Show Statistics'
 </pre>
 
 <p>
@@ -59,70 +55,48 @@ Use a previously created TIN or create a new one,<br>
 see the first assignment of two covering the topic of Spatial interpolation.
 
 <pre>
-In ArcMap
-Select File->Add Data->Add Data...
-Select ncshape.mdb/elev_lid792_randpts
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
+select elev_lid792_randpts
+'OK'
 </pre>
 
 <p>
 Create TIN 'tin' in 3D Analyst from these points if you don't have it already:
 
 <pre>
-Open ArcToolbox (if it's not already open)
-Select 3D Analyst Tools->Data Management->TIN->Create TIN
-Set 'Output TIN' to .\Analysis\lid792_tin
-Set 'Input feature class' to elev_lid792_randpts
-In the Input feature class list, find the "height_field" (2nd field from left). 
-Click on the entry for the elev_lid792_randpts (Shape_Z is displayed by default). 
-By clicking on the field it should convert to a drop-down list. 
-Click the down arrow to display your list of options and select "Value_".  
-Click 'OK'
+In the Geoprocessing pane, search for and select the 'Create TIN' tool
+Set 'Output TIN' to 'lid792_TIN'
+Set Input Feature Class to 'elev_lid792_randpts'
+Set the 'height field' to 'value_'
+Set 'Type' to 'Mass_Points'
+Click 'Run'
 </pre>
 
 <p>
-<!-- # compute slope
-Open the ArcToolbox (if it's not already open)
-Select '3D Analyst Tools-> terrain and TIN Surface -> Surface Slope'
-Set 'Input Surface' to 'lid792_tin'
-Set 'Output Feature Class' as '.\Analysis\lid792_tin_SurfaceSlope' 
-Set 'Slope Units' to 'DEGREE'
-Click 'OK'
-
-# do the same for Surface Aspect to create: '.\Analysis\lid792_tin_SurfaceAspect' -->
 Compute slope.<br>
-The output from this process is a polygon feature class whose attribute (found
-in the slope class field) consists of the slopes binned into 7 classes.<br>
-The default (ESRI) breaks (bins) are at 0.57, 1.43, 2.66, 5.71, 12.13, 24.89,
-45.0, 90.0.
-
 <pre>
-Open the ArcToolbox (if it's not already open)
-Select '3D Analyst Tools-> Triangulated Surface -> Surface Slope'
+In the Geoprocessing pane, search for and select the 'Surface Slope' tool
 Set 'Input Surface' to 'lid792_tin'
-Set 'Output Feature Class' as '.\Analysis\lid792_tin_SurfaceSlope' 
+Set 'Output Feature Class' as 'tin_SurfaceSlope' 
 Set 'Slope Units' to 'DEGREE'
-Click 'OK'
+Click 'Run'
 </pre>
 
 <p>
-Do the same for Surface Aspect to create: '.\Analysis\lid792_tin_SurfaceAspect'.<br>
-As with slope, the aspect that comes from this process is in the form of a
-polygon feature class whose aspect attribute is binned into eight 45 degree wide<br>
-directions (code = 1 - 8 ).<br>
-These are: N, NE, E, SE, S, SW, W, and NW, respectively.<br>
-Assign suitable colors to the slope and aspect polygons.
+Do the same for Surface Aspect to create: 'tin_SurfaceAspect'.<br>
 
 <p>
 Derive slope from 1m raster DEM:
 
 <pre>
-Select File->Add Data->Add Data...
-Select ncrast.mdb/elid_792
-Open the ArcToolbox (if it's not already open)
-Select '3D Analyst Tools -> Raster Surface -> Slope'
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select 'elid_792'
+In the Geoprocessing pane, search for and select the 'Slope' tool
 Set 'Input raster' to 'elid_792'
-Set 'Output raster' to '.\Analysis\slope_elid72'
-Click 'OK'
+Set 'Output raster' to 'slope_elid72'
+Click 'Run'
 </pre>
 
 <p>
@@ -130,7 +104,8 @@ Choose similar color table as for the TIN. To get more continuous color table:
 
 <pre>
 <i>right mouse click</i> 'Slope_elid72' 
-Select 'Properties -> Symbology"
+Select 'Symbology'
+Method "Natural Breaks'
 Change Classes to 32
 Click 'OK'
 </pre>
