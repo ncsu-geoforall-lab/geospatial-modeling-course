@@ -26,7 +26,7 @@ Launch ArcGIS Pro and login with ArcGIS Online credentials if required.
 Select New> Map> Create New Project.  Give the project a meaningful name like “Assignment1.”
 Set the location to a directory where you have permissions to write.
 We will use the default C:\Users\username\Documents\ArcGIS\Projects
-On the ribbon, click the View tab. In the Windows group, click Reset Panes Reset Panes and click Reset Panes for Geoprocessing.
+On the ribbon, click the View tab. In the Windows group, click 'Reset Panes' and then click 'Reset Panes for Geoprocessing'
 (This ensures that the Contents, Geoprocessing and Catalog panes are open and that other panes are closed)
 
 <p>
@@ -38,7 +38,7 @@ Click the dataset to add it to the map.
 Examine the descriptive attributes associated with the bridge features. 
 
 <pre>
-RMC on the Bridges entry in the Table of Contents and select "Attribute Table" from
+RMC on the Bridges entry in the Table of Contents and select 'Attribute Table' from
 the context menu.
 </pre>
 
@@ -50,7 +50,7 @@ Create a new geodatabase to store data:
 
 <pre>
 Find the Catalog tab on the right side of the ArcGIS Pro map window.
-RMC on “folders” and "add a new folder" connection to your data folder C:\Users\username\Documents\ArcGIS\582data
+RMC on “folders” and 'add a new folder' connection to your data folder C:\Users\username\Documents\ArcGIS\582data
 Navigate to and expand your assignment1 project folder connection.
 </pre>
 
@@ -86,8 +86,8 @@ Click 'Run'.
 Adding Raster Data into Data Frame:
 
 <pre>
-On the Map tab, in the Layer group, click "Add Data"
-Browse to C:\Users\username\Documents\ArcGIS\582data\ncrast.gdb and select the elev raster layer, "OK."
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\username\Documents\ArcGIS\582data\ncrast.gdb and select the elev raster layer, 'OK.'
 </pre>
 You can also browse to a dataset in the catalog pane and drag a feature or raster onto the map frame or contents pane.
 
@@ -103,14 +103,14 @@ of the three bridge entries in the TOC.
 Zoom to the elev raster layer:
 
 <pre>
-RMC on elev and select "Zoom to Layer"
+RMC on elev and select 'Zoom to Layer'
 </pre>
 
 <p>
 Change color scheme:
 
 <pre>
-RMC elev-> and select "Symbology"
+RMC elev-> and select 'Symbology'
 Change the Color Ramp (Color Scheme drop down menu) to one that
 represents elevation intuitively (it makes sense to you)
 </pre>
@@ -119,8 +119,8 @@ represents elevation intuitively (it makes sense to you)
 Add hillshade data into the data frame:
 
 <pre>
-On the Map tab, in the Layer group, click "Add Data"
-Select elev_sh from the ncrast.gdb geodatabase and click "OK"
+On the Map tab, in the Layer group, click 'Add Data'
+Select elev_sh from the ncrast.gdb geodatabase and click 'OK'
 </pre>
 
 <p>
@@ -128,15 +128,15 @@ Change the transparency of the hillshade:
 
 <pre>
 Select the elev_sh layer in the contents window
-Select the "Appearance" tab from the top ribbon
-Set Transparency to 70% in the "Effects" group of the ribbon
+Select the 'Appearance' tab from the top ribbon
+Set Transparency to 70% in the 'Effects' group of the ribbon
 </pre>
 
 <p>
 Display vector points and lines:
 
 <pre>
-On the Map tab, in the Layer group, click "Add Data"
+On the Map tab, in the Layer group, click 'Add Data'
 Add streets_wake, roadsmajor, schools_wake from the ncshape.gdb geodatabase
 Hint: press and hold the control key to add multiple data layers
 </pre>
@@ -145,9 +145,9 @@ Hint: press and hold the control key to add multiple data layers
 Change the line style:
 
 <pre>
-RMC roadsmajor and select "Symbology"
-Click next to "symbol" on the line represnting the road symbol
-Select the "Properties" tab in the symbology pane
+RMC roadsmajor and select 'Symbology'
+Click next to 'symbol' on the line represnting the road symbol
+Select the 'Properties' tab in the symbology pane
 Change the color to red and the width to 1.6
 Click 'Apply'
 
@@ -159,20 +159,20 @@ Change the point style:
 <pre>
 LMC directly on the symbol for schools_wake in the Contents pane (shortcut to the
 symbol selector)
-On the "Gallery" tab in the symbology pane, search or select "School"
-On the "Properties" tab in the symbology pane, Change the size to 14
-Click "Apply"
+On the 'Gallery' tab in the symbology pane, search or select 'School'
+On the 'Properties' tab in the symbology pane, Change the size to 14
+Click 'Apply'
 </pre>
 
 <p>
 Trim the Vector Display to Match the Raster's Geographic Extent:
 
 <pre>
-RMC "Map" at the top Contents pane
-Select "Clip Layers"->Clip to custom extent
-Expand "extent of a layer" and select elev or elev_sh raster layer.
+RMC 'Map' at the top Contents pane
+Select 'Properties'->'Clip Layers'->'Clip to custom extent'
+Expand 'extent of a layer' and select elev or elev_sh raster layer.
 Click 'Apply'
-Click 'Apply'
+Click 'OK'
 </pre>
 
 <p>
@@ -183,8 +183,8 @@ display in the are covered by the elev and hillshade rasters.
 Save the map for your report:
 
 <pre>
-Select the "Share" tab from the top ribbon->Export Group->Map  (Save the file to your Assign1 workspace as pdf or png)
-Click "Export"
+Select the 'Share' tab from the top ribbon->Export Group->Map  (Save the file to your Assign1 workspace as pdf or png)
+Click 'Export'
 </pre>
 
 <p>

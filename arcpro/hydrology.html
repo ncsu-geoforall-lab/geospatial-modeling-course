@@ -1,48 +1,46 @@
 <h2>Flow routing and watershed analysis</h2>
-<p>Resources:
-<a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
-
+p>Resources:
+<a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI Academy</a>
 <p>
-Create the assignment working directory (folder) .\Hydro<br>
-Start ArcMap<br>
-
-<pre>
-Start->Programs->ArcGIS->ArcMap
-</pre>
+Launch ArcGIS Pro and login with ArcGIS Online credentials if required.
+Select New> Map> Create New Project.
+Create a new project in your preferred workspace,
+in the instructions below we are using the default C:\Users\myname\Documents\ArcGIS\Projects\ folder.
+<p>
+Use your judgement to decide which maps to include in your report.
 
 <h3>Derive flow pattern and streams from 10m NED</h3>
 
 Fill the sinks in DEM:
 
 <pre>
-In ArcMap: add the raster feature layer ncrast.mdb/elev
-Open the ArcToolbox
-Select 'Spatial Analyst Tools->Hydrology->Fill'
-Set 'Input' to 'elev'
-Set 'Output Raster' to '.\Hydro\Fill_elev1'
-Click 'OK'
+In the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select 'elev'
+In the Geoprocessing pane, search for and select the 'Fill' tool
+Set 'Input surface raster' to 'elev'
+Set 'Output Surface Raster' to 'Fill_elev1'
+Click 'Run'
 </pre>
 
 <p>
 Compute flow direction:
 
 <pre>
-In ArcToolbox
-Select 'Spatial Analyst Tools->Hydrology->Flow Direction'
-Set 'Input' to 'Fill_elev1'
-Set 'Output Raster' to '.\Hydro\FlowDir_fill1'
-Click 'OK'
+In the Geoprocessing pane, search for and select the 'Flow Direction' tool
+Set 'Input surface raster' to 'Fill_elev1'
+Set 'Output flow direction raster' to 'FlowDir_fill1'
+Click 'Run'
 </pre>
 
 <p>
 Compute flow accumulation:
 
 <pre>
-In ArcToolbox
-Select 'Spatial Analyst Tools->Hydrology->Flow Accumulation'
-Set 'Input' to 'FlowDir_fill1'
-Set 'Output Raster' to '.\Hydro\FlowAcc_fill1'
-Click 'OK'
+In the Geoprocessing pane, search for and select the 'Flow Accumulation' tool
+Set 'Input flow direction raster' to 'FlowDir_fill1'
+Set 'Output accumulation raster' to 'FlowAcc_fill1'
+Click 'Run'
 </pre>
 
 <p>
@@ -54,7 +52,10 @@ Compare with streams digitized from high resolution orthophoto:
 
 
 <pre>
-In ArcMap add ncshape.mdb/streams
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
+select 'streams'
+'OK'
 </pre>
 
 <p>
@@ -63,58 +64,81 @@ Change color to red: <span class="question">how do the derived streams fit with 
 <p>
 Derive drainage basins:
 <pre>
-
-In ArcToolbox
-Select 'Spatial Analyst Tools->Hydrology->Basin'
-Set 'Input' to 'FlowDir_fill1'
-Set 'Output Raster' to '.\Hydro\Basins_fill1'
-Click 'OK'
+In the Geoprocessing pane, search for and select the 'Basin' tool
+Set 'Input d8 flow direction raster' to 'FlowDir_fill1'
+Set 'Output Raster' to 'Basins_fill1'
+Click 'Run'
 </pre>
 
 <p>
 Derive flow path length:
 
 <pre>
-In ArcToolbox
-Select 'Spatial Analyst Tools->Hydrology->Flow Length'
-Set 'Input' to 'FlowDir_fill1'
-Set 'Output Raster' to '.\Hydro\flowlength'
-Click 'OK'
+In the Geoprocessing pane, search for and select the 'Flow Length' tool
+Set 'Input flow direction raster' to 'FlowDir_fill1'
+Set 'Output Raster' to 'flowlength'
+Click 'Run'
 </pre>
 
 <h3>Derive stream network and watersheds from 30m NED</h3>
-Set your workspace and scratch workspace to C:\path\.Hydro
+<!--Set your workspace and scratch workspace to C:\path\.Hydro
 <pre> 
 Geoprocessing>Environments>Workspace
 Add ncrast/elev_ned
 </pre>
+This is done when you set up the project in arcpro-->
+
 First check whether we have sinks, if yes, fill them in.
 <pre>
-Spatial Analyst Tools->Hydrology->Flow Direction
-input=elev_ned output=FlowDir_el30
-Spatial Analyst Tools->Hydrology->Sink
-input=FlowDir_el30 output=sinks30
-Spatial Analyst Tools->Hydrology->Fill
-input=elev_ned output=Fill_elev30
+In the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select 'elev_ned'
+In the Geoprocessing pane, search for and select the 'Flow Direction' tool
+Set 'Input surface raster' tp 'elev_ned' 
+Set 'Output flow direction raster' to 'FlowDir_el30'
+Click 'Run'
+
+In the Geoprocessing pane, search for and select the 'Sink' tool
+Set 'input d8 flow direction raster' to 'FlowDir_el30'
+Set 'output raster' to 'sinks30'
+Click 'Run'
+
+In the Geoprocessing pane, search for and select the 'Fill' tool
+Set 'Input surface raster' to 'elev_ned'
+Set 'Output Surface Raster' to 'Fill_elev30'
+Click 'Run'
 </pre>
 Compute flow direction and flow accumulation 
 <pre>
-Spatial Analyst Tools->Hydrology->Flow Direction
-input=Fill_elev30 output=FlowDir_fil30
-Spatial Analyst Tools->Hydrology->Flow Accumulation
-input=FlowDir_fil30 output=Flowacc_fil30
+In the Geoprocessing pane, search for and select the 'Flow Direction' tool
+Set 'Input surface raster' to 'Fill_elev30'
+Set 'Output flow direction raster' to 'FlowDir_fil30'
+Click 'Run'
+
+In the Geoprocessing pane, search for and select the 'Flow Accumulation' tool
+Set 'Input flow direction raster' to 'FlowDir_fil30'
+Set 'Output accumulation raster' to 'Flowacc_fil30'
+Click 'Run'
 </pre>
+
 Extract streams from flow accumulation using map algebra
 <pre>
-Spatial Analyt Tools>Map Algebra>Raster Calculator
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
 expression= Con( "Flowacc_fil30" > 10000, 1, 0 ) output=Streams_der30
+Click 'Run'
 </pre>
 Create stream links from the stream raster and derive watersheds draining into these stream links:
 <pre>
-Spatial Analyst Tools->Hydrology->Stream Link
-input=Streams_der30 flow dir raster=FlowDir_fil30 output=Source30
-Spatial Analyst Tools->Hydrology->Watershed
-input=FlowDir_fil30 Pour point=Source30 output=Watersheds30
+In the Geoprocessing pane, search for and select the 'Stream Link' tool
+Set 'Input stream raster' to 'Streams_der30'
+Set 'Input flow dir raster' to 'FlowDir_fil30'
+Set 'Output' to 'Source30'
+
+In the Geoprocessing pane, search for and select the 'Watershed' tool
+Set Input d8 flow direction raster to 'FlowDir_fil30'
+Set 'Input raster or Pour point data' to 'Source30'
+Leave 'Pour point field' set to 'value'
+Set 'Output' to 'Watersheds30'
 </pre>
 
 

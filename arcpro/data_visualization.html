@@ -41,7 +41,7 @@ Save as layer to preserve the new color scheme and labels:
 
 <pre>
 RMC on the landcl96 entry in the Contents ->'Sharing'->'Save as layer file...'
-Save as landcl96.lyr in your assignment 2b folder
+Save as landcl96.lyr in your assignment folder
 </pre>
 
 <p>
@@ -63,10 +63,10 @@ select 'geology'
 select 'elev'
 'OK'
 RMC elev->Symbology
-In the 'Symbology' pane, select 'Classify'
+In the 'Symbology' pane, Change 'Strech' to 'Classify'
 Set the method to 'Equal Interval'
 Set Classes to 10
-On the 'Advanced symbolol options' tab of the 'Symbology' pane->'Data Exclusion'
+On the 'Advanced symbol options' tab of the 'Symbology' pane->'Data Exclusion'-> enter '0-100'
 Select the "Appearance" tab from the top ribbon
 Set Transparency to 50% in the "Effects" group of the ribbon
 </pre>
@@ -88,7 +88,7 @@ Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
 select 'slope'
 'OK'
 RMC slope->Symbology
-Choose the 'Red to Green' color ramp
+Choose the 'Green to Red' color ramp
 Change the Stretch Type to 'Histogram Equalize'
 </pre>
 
@@ -97,13 +97,13 @@ Change the Stretch Type to 'Histogram Equalize'
 Make a map with a legend, scale and grid:
 
 <pre>
-Turn off all layers except landcl96 in the TOC
+Turn off all layers except landcl96 in the Contents pane
 </pre>
 <p>
 add the streams layer
 <pre>
 On the Map tab, in the Layer group, click 'Add Data'
-Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
 select 'streams'
 'OK'
 Change the streams color to blue 
@@ -115,14 +115,16 @@ Change the color to a blue and line width to 1.25
 Toggle to Layout View: 
 Select the 'Insert' tab from the top ribbon, project group->'New Layout'
 Select a template appropriate for your map
+On the topr ribbon->Insert tab->Map frames group-> add a 'Map Frame' 
+by dragging a box on the layout
 </pre>
 
 <p>
 Assign a fixed scale for the layout:
 
 <pre>
-In the map layout window, Contents pane, RMC Mapframe->Properties
-Click the 'Dispay Options' tab in the 'Element' pane
+In the map layout window, Contents pane, RMC 'Map Frame'->Properties
+Click the 'Dispay Options' tab in the 'Element/Format Map Frame' pane
 Select 'Fixed Scale' under constraint and set it to 1:50,000
 </pre>
 
@@ -215,7 +217,7 @@ Change the Hillshade to 50% transparency
 2. Hillshade generated with the "Raster Functions" tool:
 
 <pre>
-Open the Raster Functions pane.
+On the Analysis ribbon --> Raster group->'Raster Functions' pane
 Expand the Surface functions and select the Hillshade option (or search for Hillshade in the Raster Functions pane).
 Select 'elev' as the raster
 Set the Z to 3 to exaggerate the height variation in the terrain
@@ -250,7 +252,8 @@ Or create a new Local Scene:
 
 <pre>
 Start a new projectSelect 'Local Scene' from the templates
-Add data-> .\ncrast.gdb\elev
+On the Map tab, in the Layer group, click 'Add Data'
+Add 'ncrast.gdb\elev'
 </pre>
 
 <p>
@@ -258,7 +261,8 @@ Display 2-dimensional data as a 3-D surface (to render in 3-D):
 
 Add a ground elevation surface:
 <pre>
-Add data->'Elevation source'->.\ncrast.gdb\elev
+On the Map tab, in the Layer group, click 'Add Data'->'Elevation source'
+Add 'ncrast.gdb\elev'
 </pre>
 
 <p>
@@ -275,7 +279,8 @@ In the Drawing group, for Vertical Exaggeration, type 10
 Drape a vector feature over the 3-D (raster) surface:
 
 <pre>
-Add  .\ncshape.gdb\streets_wake
+On the Map tab, in the Layer group, click 'Add Data'
+Add  'ncshape.gdb\streets_wake'
 It may add the layer to the 3d layers in the contents pane.  
 If so, Drag the layer to the 2d Layers group above 'elev'
 </pre>
@@ -296,7 +301,7 @@ Choose one of the color ramps
 Change the background color (useful for enhancing visualization).
 
 <pre>
-RMC 'Map_3d' in the 'Contents' pane->Properties
+RMC 'Scene' in the 'Contents' pane->Properties ***May be Map_3d instead of scene***
 Go to the 'General' tab
 Choose the black color patch from the color palette drop-down menu
 Click 'OK'.
