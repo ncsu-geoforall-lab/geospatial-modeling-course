@@ -1,14 +1,14 @@
 <h2>Viewshed and solar radiation analysis</h2>
 <p>Resources:
-<a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
-
-<pre>
-Create a ./Viewshed folder on your computer
-Start ArcMap
-Load the Spatial Analysis Extension
-</pre>
-
-
+<a href="http://www.lib.ncsu.edu/gis/virtcamp.html">ESRI Academy</a>
+<p>
+Launch ArcGIS Pro and login with ArcGIS Online credentials if required.
+Select New> Map> Create New Project.
+Create a new project in your preferred workspace,
+in the instructions below we are using the default C:\Users\myname\Documents\ArcGIS\Projects\ folder.
+<p>
+Use your judgement to decide which maps to include in your report.
+<p>
 <h3>Viewshed Analysis</h3>
 
 <pre>
@@ -17,14 +17,13 @@ Add the point feature class fire_pt
 </pre>
 
 <p>
-Use Viewshed tool (not Viewshed 2) to compute the area visible from the fire_pt location.
+Use Viewshed tool (not 'Viewshed 2' or the 'Ready to use tool') to compute the area visible from the fire_pt location.
 <pre>
-Open the ArcToolbox
-ToolBox Spatial Analyst Tools->Surface->Viewshed 
-Set input surface to elev_ned
-Set observer feature to fire_pt 
-Give your viewshed a name, and store it in your ./Viewshed folder
-Click OK to run the analysis
+In the Geoprocessing pane, search for and select the 'Viewshed' tool
+Set input surface to 'elev_ned'
+Set observer feature to 'fire_pt'
+Set output raster to 'viewshe_elev1'
+Click 'Run'
 </pre>
 
 <p>
@@ -37,23 +36,23 @@ How much area (in sq. meters) do these visible cells represent?</span><br>
 <p><strong>Rerun the viewshed, with elevation offset at the fire_pnt site at +60 m.</strong>
 <p>Add the field OFFSETA to the fire_pt attribute table. 
 <pre>
-<i>right mouse click</i> on the fire_pt layer > Open Attribute Table
-<i>left mouse click</i> on the first icon in the Attribute Table toolbar > Add Field
-Type the name OFFSETA
-Click 'OK'
-In the Editor Toolbar (open if not visible) <i>left mouse click</i> on the Editor button > Start Editing
-Choose the layer fire_pt and click 'OK'
-In the fire_pt Attribute Table type '60' in the OFFSETA column
-In the Editor Toolbar <i>left mouse click</i> on the Editor button > Stop Editing
-Click 'Yes' to save your edits
+<i>RMC</i> on the fire_pt layer > Open Attribute Table
+<i>LMC</i> on the first icon in the Attribute Table toolbar > Field:Add
+Type the name OFFSETA in the new field name row then hit the enter key
+Fields tab on the ribbon->changes->'save'
+Click the 'X' to close the fields tab
+In the fire_pt Attribute Table, double LMC and then type '60' in the OFFSETA column
+You can close the attribute table
+Edit tab on the ribbon->manage edits->'save'
 </pre>
+
 <p>Rerun the viewshed
 <pre>
-ToolBox Spatial Analyst Tools->Surface->Viewshed 
-Set input surface to elev_ned
-Set observer feature to fire_pt 
-Give your viewshed a name, but different from the first one and store it in your ./Viewshed folder
-Click OK to run the analysis
+In the Geoprocessing pane, search for and select the 'Viewshed' tool
+Set input surface to 'elev_ned'
+Set observer feature to 'fire_pt'
+Set output raster to 'viewshe_elev60'
+Click 'Run'
 </pre>
 <p>
 <span class="question">Now, how many cell are visible in this viewshed?<br>
@@ -63,24 +62,23 @@ to the observer?</span>
 <strong>Rerun the viewshed again, using the +60 m observer, but this time limit your search radius to 2000m.</strong>
 <p>Add the fields RADIUS1 and RADIUS2 to the fire_pt attribute table. 
 <pre>
-<i>right mouse click</i> on the fire_pt layer > Open Attribute Table
-<i>left mouse click</i> on the first icon in the Attribute Table toolbar > Add Field
-Type the name RADIUS1
-Click 'OK'
+<i>RMC</i> on the fire_pt layer > Open Attribute Table
+<i>LMC</i> on the first icon in the Attribute Table toolbar > Field:Add
+Type the name RADIUS1 in the new field name row then hit the enter key
 Add another column and name it RADIUS2
-In the Editor Toolbar (open if not visible) <i>left mouse click</i> on the Editor button > Start Editing
-Choose the layer fire_pt and click 'OK'
-In the fire_pt Attribute Table type '0' in the ORADIUS1 column and '2000' in the RADIUS2 column
-In the Editor Toolbar <i>left mouse click</i> on the Editor button > Stop Editing
-Click 'Yes' to save your edits
+Fields tab on the ribbon->changes->'save'
+Click the 'X' to close the fields tab
+In the fire_pt Attribute Table, double LMC and then type '0' in the RADIUS1 column and '2000' in the RADIUS2 column
+You can close the attribute table
+Edit tab on the ribbon->manage edits->'save'
 </pre>
 <p>Rerun the viewshed
 <pre>
-ToolBox Spatial Analyst Tools->Surface->Viewshed 
-Set input surface to elev_ned
-Set observer feature to fire_pt 
-Give your viewshed a name, choose a different namet one and store it in your ./Viewshed folder
-Click OK to run the analysis
+In the Geoprocessing pane, search for and select the 'Viewshed' tool
+Set input surface to 'elev_ned'
+Set observer feature to 'fire_pt'
+Set output raster to 'viewshe_elev60_2000'
+Click 'Run'
 </pre>
 <p>
 <span class="question">How many cells are visible in this viewshed?
@@ -90,7 +88,7 @@ How much ground area is visible?</span>
 <p>
 
 <pre>
-add two fields: AZIMUTH1 and AZIMUTH2 (as doubles) to the fire_pt Attribute table (see instructions above)
+Add two fields: AZIMUTH1 and AZIMUTH2 (as doubles) to the fire_pt Attribute table (see instructions above)
 Start editing (see instructions above)
 modify RADIUS1 and RADIUS2 fields: RADIUS1 =  '1000', RADIUS2 =  '2000', 
 and populate: AZIMUTH1=45, and AZIMUTH2=135.
@@ -99,14 +97,11 @@ and populate: AZIMUTH1=45, and AZIMUTH2=135.
 <p>
 <span class="question">How many cells and area are visible now?</span>
 <p>
-To expand our repertoire a bit, let's next add our own data,
+Now let's next add our own data,
 but instead of a single point, let's add a pair to the project<br>
-(so that you know how to do this) and run one more
-(just one, I promise) viewshed analysis.<br>
+
 <p>
-You can do this with any point data you wish, but if you don't have one handy,<br>
-here's the coordinates (in NC State Plane NAD83) for Red Hat's Headquarters
-over on Centennial Campus:
+Here are the the coordinates (in NC State Plane NAD83) for a building on Centennial Campus:
 
 <pre>
 x=638898 and y=224528
@@ -130,26 +125,21 @@ X,Y
 </pre>
 
 <p>
-Load your points to ArcGIS:
+Load your points to ArcGIS Pro:
 
 <pre>
-Add XY Data. (File->Add Data->Add XY Data...)
+In the Map tab, in the Layer group, click 'Add Data'->'XY Point data'
+A new tool will open in the geoprocessing pane
 browse for your saved .txt file
+Set Output feature class to 'xy_points'
 Set 'X Field' to 'X' and 'Y Field' to 'Y'
-Click 'OK'
-Click 'OK' for the warning
+Make sure the coordinate system is correct
+Click 'Run'
 </pre>
 
-<p>
-Convert it from the resulting event to a  shape file.
-
-<pre>
-<i> right mouse click</i> on the .txt Events
-Data > Export Data
-save in the ./Viewshed folder and click 'Yes' to add the layer to the project
 Open the Attribute Table of newly created shapefile
 Add the fields OFFSETA, VERT1, VERT2, AZIMUTH1, and AZIMUTH2. 
-Populate (in the editing mode)
+Populate 
 point FID=0: 
 OFFSETA=35m, VERT1=12, VERT2=-12, AZIMUTH1=300, AZIMUTH2=60. 
 For point FID=1: 
@@ -170,23 +160,18 @@ his counterpart on the Red Hat Building?</span>
 <h3>Solar radiation analysis</h3>
 Perform solar radiation analysis in Spatial Analyst:
 
-<pre>
-Display the Arc Toolbox. 
-Select Geoprocessing->Environments. 
-Under Workspace set the Current Workspace to point to the ncrast,mdb geodatabase
-</pre>
-
 <p>
 Compute the incident solar radiation for the summer solstice (day number=172)
 
 <pre>
-Spatial Analysis Toolbox > Solar Radiation > Area Solar Radiation
-use elev_ned for the input raster
+In the Geoprocessing pane, search for and select the 'Area Solar Radiation' tool
+Set input raster = elev_ned
 Set the output raster = ned_solar172
 Set the latitude = 35.7716 (~for Raleigh, NC)
 Set the Time Configuration to Within a day
 Set the Date/Time settings-Day number of year to 172
 the remainder of the fields can be left at their default values.
+Click 'Run'
 </pre>
 
 <p>
@@ -200,7 +185,7 @@ Determine the difference in radiation energy between the two solstice extremes
 by differencing the two radiation rasters just created.<br>
 
 <pre>
-Spatial Analyst > Map Algebra > Raster Calculator
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
 Set output to solar_diff
 In the calculator's expression field type:
 "ned_solar172" - "ned_solar356"
