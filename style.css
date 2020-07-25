@@ -312,7 +312,7 @@ hr {
 
 /* width of first column */
 .schedule td:first-child {
-    width: 7em;
+    width: 8em;
 }
 
 /* do table using alternate colors of rows */
