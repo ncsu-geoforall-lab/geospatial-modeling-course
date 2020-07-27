@@ -18,7 +18,7 @@ to constrain analyses results to the extents defined by intersection of input fe
 <pre>
 Analysis tab on the ribbon Geoprocessing->Environments-> 'Processing extent'
 Choose 'Intersection of Inputs' from the drop down menu.
-Click 'OK'
+Click 'Run'
 </pre>
 
 <!--<p>
@@ -33,7 +33,7 @@ select 'streets_wake'
 In the 'Contents' pane, RMC 'Map'-> 'extent' tab of the Map properties window
 Select 'Use a Custom Extent' 
 Select 'elev' from 'extent of a layer'
-Click 'OK'
+Click 'Run'
 </pre>
 ***This is not working on pro 2.5***-->
 
@@ -76,7 +76,7 @@ Set 'Value field' to 'SPEED'
 Set 'Output Raster Dataset to 'str_speed'
 Set Cellsize to 30
 Leave the others as defaults 
-Click 'OK'
+Click 'Run'
 </pre>
 
 <p>
@@ -87,7 +87,7 @@ Analysis tab on the ribbon Geoprocessing->Environments-> 'Workspace'
 verify workspace is set to the assignment  gdb you created at the begining of this assignment
 Under 'Raster Analysis' set the 'Cell Size' to 'Same as layer str_speed'
 Under 'Raster Analysis' set the  'Mask' to 'boundary_wake' in the ncshape.gdb
-Click 'OK'
+Click 'Run'
 </pre>
 
 <p>
@@ -98,7 +98,7 @@ Assign null values a speed of 5.
 In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
 Type in the expression: Con(IsNull("str_speed"),5,"str_speed") 
 Set the Output raster to 'str_speed2'
-Click 'OK'
+Click 'Run'
 </pre>
 
 <p>
@@ -117,7 +117,7 @@ Set the 'Output raster' to str_trv
 <p>
 Create a fire location
 <pre>
-Browse to your project GDB
+Browse to your project GDB in the 'Catalog' pane
 right click->new->feature class
 set name to 'fire_pt'
 select 'point'
@@ -126,7 +126,7 @@ add the layer to your map
 From the 'edit' ribbon->'features' group->'Create'
 From the 'create features' pane->selec fire_pt
 RMC on the map-> 'Absolute x,y,x'
-paste '634886' ofr x and '224328' for y.  Hit the enter key to add the point
+paste '634886' for x and '224328' for y.  Hit the enter key to add the point
 'Edit' ribbon->'manage edits' group->save.
 clear the selection in the 'selection' group of the 'edit 'window
 </pre>

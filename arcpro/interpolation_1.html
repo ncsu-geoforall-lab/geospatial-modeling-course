@@ -98,7 +98,7 @@ Click 'Run'
 
 Alternatively, convert your map to a Local Scene and visualize as described in the previous assignment.
 
-<h4>Create the Terrain Model using the Terrain Wizard in ArcCatalog.</h4>
+<h4>Create the Terrain Model using the Terrain Wizard</h4>
 <p>
 A terrain dataset is a multiresolution, TIN-based surface built from lidar/sonar/photogrammetric measurements stored as features in a geodatabase. 
 
@@ -119,6 +119,7 @@ In the Geoprocessing pane, search for and select the 'Feature class to feature c
 Set 'input features' to 'elev_lid792_randpts'
 Set 'output location' to 'terrain'
 Set 'output feature class' to 'elev_lid792_rand_fc'
+Click 'Run'
 </pre>
 
 <p>
@@ -132,10 +133,22 @@ Set 'Pyramid type' to 'Z tolerance'
 Click 'Run'
 </pre>
 
-Build Terrain pyramids
+Build Terrain Pyramids
+<pre>
 In the Geoprocessing pane, search for and select the 'Add terrain pyramid level' tool
+Set 'Input terrain' to 'elev_lid792_TER'
+For 'Pyramid levels definition' type each of the following on a new line:
+1 5000
+2.5 10000
+5 25000
+10 50000
+Click 'Run'
+</pre>
+
 <p>
-NOTE: There seems to be a bug here.  It will not run.  The following instructions should be correct but are untested
+Using the settings above, the full-resolution data is used in map displays up to a scale of 1:5,000, 
+Between 1:5,000 and 1:10,000, only the data necessary to achieve an approximate vertical tolerance of 2.5, relative to the full-resolution data, is used. 
+Between 1:10,000 and 1:25,000, a tolerance of 5 is used. For any scale smaller, a tolerance of 10 is used to display the terrain data.
 
 <p>
 Add the feature class to the terrain
