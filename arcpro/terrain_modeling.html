@@ -78,7 +78,6 @@ On the 'Mask' tab, Set 'NoData' to red to highlight any areas with zero points.
 
 <pre>In the Geoprocessing pane, search for and select the 'LAS Point Statistics as Raster' tool
 Set 'Input LAS' to 'lidar_all'
-Set 'Input Features' to 'lidar_all'
 Set 'Output Raster' to 'ground_range6m'
 Set 'Method' to 'Range of Elevation Values'
 Set 'Sampling Type' to 'CELLSIZE'
@@ -143,7 +142,7 @@ Interpolate DSM:
 In the Geoprocessing pane, search for and select the 'Radial Basis Functions' tool
 Set 'Input features' to 'lidar_first'
 Set 'Z field' to 'Shape.Z'
-Set 'Output raster' to 'lidar_spine'
+Set 'Output raster' to 'lidar_spline'
 Set 'Radial basis function' to 'Spline with Tension'
 Click 'Run'
 </pre>
@@ -154,7 +153,7 @@ Find out what areas have multiple returns:
 In the Geoprocessing pane, search for and select the 'LAS to Multipoint' tool
 Set 'Input' to 'tile_0793_016_spm.las'
 Set 'Output ' to 'lidar_multi'
-Fill the rest as before but in 'Return values', uncheck 'ANY_RETURNS' and check all values greater than 1. (2-8)
+Fill the rest as before but in 'Return values', uncheck 'All_RETURNS' and check values greater than 1. (2-8)
 </pre>
 
 Overlay result with orthophoto. <span class="question">Where do we have multiple returns?</span>
