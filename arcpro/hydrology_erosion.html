@@ -154,6 +154,7 @@ output raster = sflowtopo2
 First compute components of sediment flow in x and y direction:
 Calculate qsx
 <pre>
+Be sure the 'cfactb' layer from earlier is in your map or you will recieve an error-
 In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
 expression=
 "sflowtopo" * "soils_kf" * "cfactb" * 270. * Cos((- "aspect_1m" + 450.) * math.pi / 180.0)
