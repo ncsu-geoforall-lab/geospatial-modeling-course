@@ -405,22 +405,23 @@ Cases where the projection differs are covered in a <a href="import.html">separa
 
 Download Shapefile with geodetic points:
 <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/geod_pts_spm.zip">geod_pts_spm.zip</a>.
-Save and unzip it on Desktop or a directory where you have read/write permissions.
+Save and extract (unzip) it on Desktop or a directory where you have read/write permissions.
+Note where are the extracted files as you will use the extracted Shapefile
+in the next step.
 
 <p>
 To import file in GUI use:
 <ul>
-<li><em>File</em> > <em>Import vector data</em> > <em>Common import formats</em>.</li>
-<li>In the dialog, select <em>Source type</em> > <em>Directory</em>.</li>
-<li>Use <em>Browse</em> button to find the path to the directory "geod_pts_spm"
-to fill the <em>Source name</em> field.</li>
+<li><em>File > Import vector data > Simplified vector import with reprojection</em>.</li>
+<li>Use <em>Browse</em> button to find the "gdc.shp" file you extracted earlier.
+to fill the <em>Source input</em> field.</li>
 <li>Then click on <em>Import</em> button.</li>
 </ul>
 <!--
 Zoom to computational region to keep the spatial extent at working region<br>
 -->
 In case the imported point data was not displayed automatically,
-use <em>Add vector</em> to display the data
+use <em>File > Add vector</em> to display the data
 and zoom to the vector layer.<br>
 Compare the imported vector with "streets_wake" vector
 to see how they are distributed.
@@ -428,14 +429,24 @@ to see how they are distributed.
 <p>
 Export the roadsmajor map as a shape file:
 <ul>
-<li><em>File</em> > <em>Export</em> > <em>Common formats</em></li>
-<li>Select roadsmajor as <em>Name of input vector map</em></li>
-<li>Type (or browse) C:\mydirectory\roadsmajor.shp path as OGR output datasource name
-(path should be to a directory where you have write permission)</li>
+<li><em>File > Export vector map > Common export formats</em></li>
+<li>Select "roadsmajor" as <em>Name of input vector map</em></li>
+<li>Use <em>Browse</em> to find a directory to export the data to,
+e.g. your Desktop.
+This will fill out the <em>Name of OGR output datasource</em> field
+with something like "C:\mydirectory\roadsmajor.shp".
+Do not forget to specify the full path to your output files otherwise you might
+have hard time finding them especially on MS Windows.
+(Also note that you need to have write permissions for that directory.)
+</li>
 <li>Select <em>ESRI_Shapefile</em> in <em>Data format to write</em></li>
 <li>click <em>Run</em></li>
 </ul>
-You can then display the roadsmajor in ArcGIS.
+You can then display the exported roadsmajor data in ArcGIS.
+
+Note the names of the GRASS GIS modules which were used in the
+background during the import and export we just did:
+<em class="module">v.import</em> and <em class="module">v.out.ogr</em>.
 
 <h4>Coordinate system, spatial extent, and resolution</h4>
 <p>
@@ -481,20 +492,19 @@ Download a landuse raster in GeoTIFF format (referenced TIFF image):
 Save it on Desktop or in a directory of your choice.
 <p>
 To import file in GUI use:
-<em>File</em> > <em>Import raster data</em> > <em>Common import formats</em>.
-Keep the default <em>GeoTIFF</em> as the <em>Format</em>
-and use <em>Browse</em> button to find the path to downloaded "lc96ras_cut.tif" file.<br>
+<em>File > Import raster data > Simplified raster import with reprojection</em>.
+Use <em>Browse</em> button to find the path to the downloaded "lc96ras_cut.tif" file.<br>
 Make sure the file is checked on in the <em>List of GDAL layers</em>.
 Click <em>Import</em>.
 
 <p>
 On MS Windows, the import is often easier to do through GUI because of getting
-the correct path to your data. In general, you can use the
-command line alternative below.<br>
+the correct path to your data.
+However, in general, you can use the command line alternative below.<br>
 Note that it requires you to provide a full path to your input data,
 so you would have to replace "lc96ras_cut.tif" by something
-like "C:\path_to_my_file\lc96ras_cut.tif" or
-"/path_to_my_file/lc96ras_cut.tif" depending on the location of data
+like "C:\path_to\my_file\lc96ras_cut.tif" or
+"/path_to/my_file/lc96ras_cut.tif" depending on the location of data
 and platform you are using.
 
 <pre><code>
@@ -507,14 +517,20 @@ r.import input=lc96ras_cut.tif output=landuse96_subset
 Now, export raster files as ASCII grid and GeoTIFF.
 <p>
 Use <em>File</em> > <em>Export raster map</em> > <em>Common export formats</em>.<br>
-Do not forget to specify the full path to your output files otherwise you might
-have hard time finding them especially on MS Windows.<br>
+This is similar to the vector data export above.
+Again, do not forget to specify the full path to your output files otherwise you might
+have hard time finding them especially on MS Windows.
+Use GTiff and AAIGrid as <em>Raster data format to write</em>
+and use file extension appropriate for each format, i.e., <tt>.tif</tt>
+and <tt>.ascii</tt> respectively.
+<br>
 Alternatively, you can use command line but again, don't forget to specify
 full path to output file or set your working directory to desired location.
+Here are the commands:
 
 <pre><code>
-r.out.gdal input=elev_ned_30m output=elev_ned_30m.ascii format=AAIGrid
 r.out.gdal input=basin_50K output=basin_50K.tif
+r.out.gdal input=elev_ned_30m output=elev_ned_30m.ascii format=AAIGrid
 </code></pre>
 
 <h3>Creating new GRASS Location</h3>
