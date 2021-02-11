@@ -164,8 +164,24 @@ when used around operators and after comma.
 </dl>
 
 
-<h3 id="data_visualization">Data display and visualization</h3>
+<h3 id="data_visualization">Geospatial data models, display and visualization</h3>
 <dl class="qa">
+
+<dt>How do I approach the Methodology sections while working with two different 
+software packages, yet remaining “software independent?”</dt>
+<dd>
+In your methods section you should write your general, software independent methods:
+For example: We have compared methods for resampling raster data to higher and lower resolution, 
+highlighting the difference between methods used for continuous and discrete data. 
+We have resampled a 30m resolution DEM to 10m resolution DEM using nearest neighbor, 
+bilinear and bicubic methods (here you can add equations or references to literature for extra points). 
+Then we have used aspect derived from the resampled 10m DEMs to highlight the  differences between the methods.
+In the results you then show the outputs from GRASS and ArcGIS and comment on what you have observed, 
+e.g. :The nearest neighbor method resampling of DEMs has resulted in discontinuous checkerboard pattern 
+observed in both the ArcGIS and GRASS output, while both bicubic and bilinear methods preserved 
+the continuity of the DEM surface. It is important to note that the differences were not visible 
+in the elevation display but appeared in the derived aspect (and 3D representation if you chose to use it).
+You can try to explain what is causing the differences between the nn and bilinear methods.
 
 <dt>I'm not sure what setting the grid parameters "size=0:02" did.</dt>
 <dd>
