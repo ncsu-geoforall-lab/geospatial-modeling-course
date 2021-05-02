@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2><b>Spatial Interpolation: Methods</b></h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h3>Outline (learning objectives)</h3>
+<p>
+<ul>
+ <li>spatial interpolation: definition, applications
+ <li>methods and their properties
+ <li>voronoi polygons and linear interpolation on TIN
+ <li>inverse distance weighted method 
+ <li>geostatistical approach
+ <li>radial basis functions and splines 
+</ul>
+</section>
+
+<section>
+  <h3>When to use bi-variate interpolation</h3>
+Find surface representation based on values measured at 2D points
+<p>
+<ul>
+<li class="fragment">convert scattered points, profiles, isolines to raster: gridding
+<li class="fragment">resample raster data to higher resolution 
+<li class="fragment">compute denser or smoother mesh representation 
+</ul>
+</section>
+
+<section>
+   <h3>When to use bi-variate interpolation</h3>
+<p>
+From given scattered points to points to surfaces as rasters
+<p>
+ <img height="240" src="img/lidarmrpts3dcolored.jpg">
+ <img height="240" src="img/nvizcutplanelwDEMDSMS.jpg">
+</p>
+</section>
+
+<section>
+  <h3>When to use tri-variate interpolation</h3>
+Find volume representation based on values measured at 3D points
+<p>
+<ul>
+<li class="fragment">resample 3D raster data to higher resolution
+<li class="fragment">convert scattered 3D points, profiles, to 3D grid
+<li class="fragment">compute denser or smoother mesh representation
+</ul>
+</section>
+
+<section>
+  <h3>When to use tri-variate interpolation</h3>
+Tri-variate: Find volume representation based on values measured at 3D points
+<p>
+<img height="360" src="img/spatial_interpolation/soilpts.gif">
+<img height="370" src="img/spatial_interpolation/clayfenc.gif">
+<p class="fragment"><small>Soil properties: clay content</small>
+</section>
+
+<section>
+  <h3>Quad-variate interpolation</h3>
+Find continuous space-time representation based on values measured at 3D points over time
+<ul>
+<li class="fragment">resample series of 3D raster data to higher spatio-temporal resolution
+<li class="fragment">convert scattered 4D points to 4D grid (3D grid series)
+</ul>
+<p class="fragment"> <img height="320" src="img/data_visualize/wellnew.gif">
+<p class="fragment"><small>Sampling points of groundwater pollution in space and time</small>
+</section>
+
+<section>
+  <h3>Quad-variate interpolation</h3>
+Groundwater pollution over 10 years - 3D space + time
+<p class="fragment"> <img height="400" src="img/data_visualize/well456.gif">
+</p>
+</section>
+
+<section>
+   <h3>Spatial interpolation: foundations</h3>
+<p>
+Problem definition 
+<ul>
+<li class="fragment">find a function which passes through (or close to) the given set of discrete points and then
+<li class="fragment">use this function to estimate the values at unsampled points – usually a regular grid
+</ul>
+</section>
+
+<section>
+   <h3>Scattered points to raster</h3>
+<p>
+From given scattered points to points at regular grid
+<p> <img height="350" src="img/spatial_interpolation/scattered_pts.jpg">
+ <img height="350" src="img/spatial_interpolation/pointstogrid.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Mathematical formulation</h3>
+Bi-variate interpolation and approximation can be formulated as follows:
+<p>
+Given $m$-points $(x_i, y_i, z_i), i=1,m$ find such $F(x,y)$ that for each $i=1,m$
+<p class="fragment">
+           $$z_i=F(x_i,y_i)$$   
+           $$z_i=F(x_i,y_i) + e(x_i,y_i)$$ 
+<p  class="fragment">
+and compute $z_k=F(x_k,y_k)$ where $(x_k,y_k)$ are grid points
+<p class="fragment">
+<b>Why is this a difficult problem?</b>
+</section>
+
+<section>
+   <h3>Interpolation problem solution</h3>
+Problem does not have a unique solution: 
+<p> 
+<img height="350" src="img/spatial_interpolation/interp1d_nn.png"> </p>
+</section>
+
+<section>
+   <h3>Interpolation problem solution</h3>
+Problem does not have a unique solution:
+<p>
+<img height="350" src="img/spatial_interpolation/interp1d_lin.png"> </p>
+</section>
+
+<section>
+   <h3>Interpolation problem solution</h3>
+Problem does not have a unique solution:
+<p>
+<img height="350" src="img/spatial_interpolation/interp1d_curve.png"> </p>
+</section>
+
+<section>
+   <h3>Interpolation problem solution</h3>
+Additional conditions are needed
+<p>
+<img height="350" src="img/spatial_interpolation/interp1d_all.png"> </p>
+</section>
+
+<section>
+   <h3>Interpolation conditions</h3>
+<p>
+<ul>
+  <li class="fragment"><b>Locality </b>: each point influences the surface only up to certain distance
+   or value at a given point will be similar to values at nearby points
+   <li class="fragment"><b>Geostatistical</b>: surface is one realization of a random function with spatial covariance 
+   <li class="fragment"><b>Smoothness</b> surface should be as smooth as possible while passing through or close to the data points
+</ul>
+<!--<p class="credit">(note: default color ramp for FP maps is often greyscale with uniform interval)</p>-->
+</section>
+
+<section>
+   <h3>Interpolation general equation</h3>
+Spatial interpolation function $F(r)$ can be expressed as:
+<p>
+$$
+F(r) = T(r) + ∑ λ_j R(r,r_j)  \;    j=1,m
+$$
+<ul>
+<li> $r = (x,y)$ is location of a grid point, 
+<li>$r_j=(x_j,y_j$) is location of a measured point
+<li>$T(r)$ is trend (low order polynomial), 
+<li>$λ_j$ are coefficients 
+<li>$R(r,r_j)$ is a function of distance between unsampled and measured point (radial basis function, model variogram)
+</ul>
+</section>
+
+<section>
+   <h3>Local interpolation methods</h3>
+Only a small subset of $n$ neighboring points is used
+<p>
+<ul>
+ <li class="fragment">Voronoi polygons 
+ <li class="fragment">Triangular Irregular Network (TIN) - based
+ <li class="fragment">Inverse distance weighted method
+</ul>
+</section>
+
+<section>
+   <h3>Voronoi (Thiessen)  polygons</h3>
+Voronoi polygon edges are equidistant to 2 given points, 
+define <b>unique nearest neighborhood</b> around each point
+<p>
+<img height="320" src="img/spatial_interpolation/voronoi_tin_zm.png"> </p>
+<p><a href="http://alexbeutel.com/webgl/voronoi.html"> Voronoi diagram generator</a>
+</section>
+
+<section>
+   <h3>Voronoi (Thiessen)  polygons</h3>
+<p>
+Voronoi polygons are derived from the measured data - the measured point is at the center of a Voronoi polygon 
+<p class="fragment">
+Value at an unsampled point $z(x,y)$ is <b>the same</b> as the measured value $z(x_j,y_j)$
+at the center of the Voronoi polygon $V_j$ within which the unsampled point is located:
+<p class="fragment">
+$$ T(x,y) = 0 $$
+$$z(x,y) = λ z(x_j,y_j)$$ 
+<p class="fragment">
+<ul>
+<li class="fragment">$\lambda = 1$, if $(x,y)$ is within $V_j$  
+<li class="fragment">$\lambda = 0$, if $(x,y)$ is outside $V_j$
+<li class="fragment">and $j = 1,m$, where $m$ is the number of points
+</ul>
+</section>
+
+<section>
+   <h3>Voronoi polygons</h3>
+<ul>
+ <li>2m resolution DEM computed using Voronoi polygons:
+  <li>includes only measured values and the surface is not continuous 
+</ul>
+<p>
+<img height="380" src="img/spatial_interpolation/IntF1a.gif"> </p>
+</section>
+
+<section>
+   <h3>Linear TIN-based method</h3>
+<p>
+Value $z(x,y)$ at an unsampled point is a linear combination of values 
+at 3 nearby points $z(x_j,y_j)$ that form vertices of a triangle
+<p class="fragment">
+$$ T(r) = 0 $$
+$$z(x,y) = ∑ \lambda_j z(x_j,y_j) / \lambda_T \;  j=1,2,3$$
+<ul>
+<li class="fragment">$\lambda_j$ is weight proportional to the area of a triangle 
+defined by the unsampled point and two given points
+<li class="fragment">$\lambda_T$ is is weight proportional to the area of a triangle
+defined by the measured points
+</ul>
+</section>
+
+<section>
+   <h3>Delaunay triangulation</h3>
+<p>
+Delaunay triangulation for a set of points P in a plane fulfills 
+the condition that no point in P is inside the circumcircle of any triangle in DT(P).
+<p>
+<img height="380" src="img/spatial_interpolation/DelaunayTIN1.png"> </p>
+</section>
+
+<section>
+   <h3>Delaunay triangulation</h3>
+<p>
+Delaunay triangulation for a set of points P in a plane fulfills 
+the condition that no point in P is inside the circumcircle of any triangle in DT(P).
+<p>
+<img height="380" src="img/spatial_interpolation/DelaunayTIN2.png"> </p>
+</section>
+
+<section>
+   <h3>Delaunay TIN and Voronoi polygons</h3>
+<p>
+Voronoi (Thiessen) polygons and Delaunay triangulation create dual graphs. 
+<p>
+<img height="380" src="img/spatial_interpolation/DelaunayTIN_Voronoi.png"> </p>
+</section>
+
+<section>
+   <h3>Linear TIN-based method</h3>
+<ul>
+ <li>2m res. DEM computed using linear interpolation on TIN
+  <li>includes measured and interpolated values
+  <li>surface is continuous, but the derivatives are not
+</ul>
+<p>
+<img height="380" src="img/spatial_interpolation/IntTinF1b.gif"> </p>
+</section>
+
+<section>
+   <h3>Linear isoline-based method</h3>
+<ul>
+ <li>given points along isolines, unsampled points on grid
+ <li>linear interpolation along steepest slope lines between two neighboring isolines
+</ul>
+<p>
+<img height="380" src="img/spatial_interpolation/interp_lin_isolines.jpg"> </p>
+</section>
+
+<section>
+   <h3>Inverse distance weighted method</h3>
+<p>
+Inverse Distance Weighted Interpolation (IDW):
+<ul>
+<li class="fragment">the simplest and most common method
+<li class="fragment">value at an unsampled point is a weighted average of  values at nearby measured points 
+<li class="fragment">weights are usually inverse distance squared
+<li class="fragment">nearby measured points are defined as those located within a given distance or the closest n-points
+<li class="fragment">many modifications and improvements were developed 
+</ul>
+</section>
+
+<section>
+   <h3>Inverse distance weighted method</h3>
+<p>
+Value at a unsampled grid point is a weighted average of values measured at $n$ nearby points:
+
+$$ T(x,y) = 0 $$
+$$z(x,y) = ∑ \lambda_j z(x_j,y_j) / ∑ \lambda_j \;  j=1,..., n$$
+
+<ul>
+ <li class="fragment"> $\lambda_j = 1/d_j^p$ is weight proportional to power of distance between 
+      the measured point $(x_j,y_j)$ and unsampled point $(x,y)$, 
+ <li class="fragment"> $p$ is exponent, usually $p=2$
+ <li class="fragment">function passes through the data points
+ <li class="fragment">smoothing can be introduced by setting the weights as  $\lambda_j = 1/ (d_j^p + \beta)$, 
+     where $\beta$ is a smoothing parameter
+</ul>
+</section>
+
+<section>
+   <h3>Inverse distance weighted method</h3>
+<p>
+Value at a unsampled grid point is a weighted average of values measured at $n$ nearby points:
+$$z(x,y) = ∑ \lambda_j z(x_j,y_j) / ∑ \lambda_j \;  j=1,..., n$$
+<p>
+<img height="380" src="img/spatial_interpolation/idw_pointselect.png"> </p>
+</section>
+
+<section>
+   <h3>Inverse distance weighted method</h3>
+2m resolution DEM computed from points that are approximately 50m appart:
+leads to local peaks and pits around given points
+<p>
+<img height="380" src="img/spatial_interpolation/IntIDWF1c.gif"> </p>
+<p><small>bull's eye effect – circular contours when distance between 
+the measured points is much larger than the distance between grid points</small>
+</section>
+
+<section>
+   <h3>Inverse distance weighted method</h3>
+Impact of power parameter on the resulting surface
+<p>
+<img height="480" src="img/spatial_interpolation/idw_precip_contours2d.png"> </p>
+</section>
+
+<section>
+   <h3>Inverse distance weighted method</h3>
+Surfaces with power exponent p=0.5 and p=5
+<p>
+<img height="250" src="img/spatial_interpolation/idw_precip_p05_3dpts.png"> </p>
+<img height="250" src="img/spatial_interpolation/idw_precip_p5_3d_pts.jpg"> </p>
+</section>
+
+<section>
+   <h3>Geostatistical approach to interpolation</h3>
+<ul>
+<li class="fragment">surface is one realization of a random function with spatial covariance
+<li class="fragment">the function is given by model variogram (best fit of the empirical variogram)
+<li class="fragment">universal kriging includes trend term
+<li class="fragment">implemented as global or local function
+</ul>
+</section>
+
+<section>
+   <h3>Geostatistical approach to interpolation</h3>
+General equation
+<p>
+$$
+F(r) = T(r) + ∑ λ_j R(r,r_j)  \;    j=1,m
+$$
+<ul>
+<li class="fragment"> $r = (x,y)$ is location of a unsampled grid point,
+<li class="fragment">$r_j=(x_j,y_j$) is location of a measured point
+<li class="fragment">$T(r)$ is trend (low order polynomial),
+<li class="fragment">$λ_j$ are coefficients
+<li class="fragment">$R(r,r_j)$ is a model variogram (function of distance between unsampled and measured point)
+</ul>
+The coefficients $λ_j$ are found by solving system of $m$ linear equations
+</section>
+
+<section>
+   <h3>Geostatistical approach</h3>
+We assume that the points that are close to each other have smaller differences in measured values 
+than the points that are farther appart 
+<p>
+<ul>
+<li class="fragment">Model variogram $R(r,r_j)$ is derived by fitting a suitable function to empirical variogram 
+<li class="fragment">empirical variogram is derived from data as
+$$
+\gamma (h) = (1/m_h) ∑[z(r_i) - z(r_j)]^2 \;  i=1,…, m_h
+$$
+<small>which is mean difference in measured values $z$ for points that are separated 
+by a distance $h$ (with some tolerance defining the size of histogram bin)
+</small>
+<p>
+Many model functions can be used: spherical, exponential, Gaussian, … 
+</section>
+
+<section>
+   <h3>Model variogram</h3>
+<p>Terms: sill - semivariogram at infinity, nugget - semivariogram at 0, range - distance to sill
+<p>(from Geostat_ITCCov3.pdf, D.G. Rossiter)
+</section>
+
+<section>
+   <h3>Kriging</h3>
+One of possible results from kriging, roughness in the surface is due to local implementation, 
+discussed in the next section, not the function itself
+<p>
+<img height="380" src="img/spatial_interpolation/IntkrigF1d.gif"> </p>
+</section>
+
+<section>
+   <h3>Splines</h3>
+<p>
+<img height="250" src="img/spatial_interpolation/InttopogrF1e.gif"> 
+<img height="250" src="img/spatial_interpolation/IntRSTF1f.gif"> 
+</section>
+
+<section>
+   <h3>Summary</h3>
+Can you guess the interpolation method?
+<p>
+<img height="450" src="img/interpolationBW.jpg"> </p>
+</section>
+
+<section>
+   <h3>Summary</h3>
+<ul>
+<li class="fragment">Instead of a single universal solution that would automatically optimize its parameters to the given data set and application we now have a large number of different interpolation and approximation methods and their implementations and no robust automated approach for choosing the right one
+<li class="fragment">Sound knowledge of interpolated phenomenon and the methods is needed to do it correctly
+<li class="fragment">But – if there is sufficient amount of uniformly distributed data, most methods will provide good results 
+<li class="fragment">Keep interpolation in mind when collecting data (e.g. parallel far apart but densely sampled profiles are difficult to interpolate)
+</ul>
+
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>

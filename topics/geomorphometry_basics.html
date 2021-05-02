@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<li><a href="../topics/course_intro.html">Introduction</a></li>
+<li><a href="../logistics.html">Logistics</a></li>
+<li><a href="../topics/index.html">Topics</a></li>
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>5. Geomorphometry</h2>
+
+<h3 id="terrain_modeling" class="subtopic">5.A Terrain modeling</h3>
+Outline:
+<ul>
+    <li>3D mapping technologies: topography and bathymetry</li>
+    <li>mathematical and digital terrain models</li>
+    <li>point clouds, multiple return data, CLICK, LDART</li>
+    <li>triangular irregular networks</li>
+    <li>regular grid (raster), NED, SRTM, CRM</li>
+    <li>isolines</li>
+</ul>
+<h4>Lecture</h4>
+<p>Slides and recorded video:
+<ul>
+    <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Lterrain.pptx">Lecture Slides used in the video</a>
+    <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_LterrainJan2014.pptx">Lecture Slides with updates</a>
+    <li><a href="https://youtu.be/PLby6Hb6Euw">Lecture Terrain Mapping</a>
+    <li><a href="https://youtu.be/mEFqaLN15E0">Lecture Terrain Modeling</a>
+    <li><a href="https://youtu.be/h-TBWaNcEv4">Lecture Terrain Binning</a>
+    <li><a href="../lectures/geomorph_terrain.html">Lecture slides updated: Elevation surface modeling</a>
+</ul>
+Supplemental materials:
+<ul>
+    <li><a href="../resources/data_providers.html">Links to elevation data repositories</a>
+    <li><a href="https://grasswiki.osgeo.org/wiki/Processing_lidar_and_UAV_point_clouds_in_GRASS_GIS_(workshop_at_FOSS4G_Boston_2017)">Processing lidar and UAV point clouds in GRASS GIS workshop 2017</a>
+    <li><a href="https://geografia.science.upjs.sk/webshared/Laspublish/Tokaj/Tokaj.html">Explore shared point cloud data with  potree </a>
+<!--<li><a href="http://www.geodynamicsgroup.com/">Geodynamics - coastal mapping company</a>-->
+</ul>
+<h4>Assignment A:</h4>
+<!--
+<UL>
+   <LI>analyze bare earth and multiple return lidar data</li>
+   <LI>create and compare bare earth and terrain surface DEM</li>
+   <LI>derive contours from DEM</li>
+</UL>
+-->
+<ul>
+    <li>Approach:
+        <a href="../grass/terrain_modeling.html">GRASS solution</a>,
+        <a href="../arcpro/terrain_modeling.html">ArcGIS Pro solution</a>.
+    <li>The assignments use standard GIS tools to analyze the point clouds. Updates and links to
+        specialized lidar data processing tools are provided in GRASS and ArcGIS solution webpages.
+    <li><a href="../faq.html#terrain_modeling">Comments/answers to HW questions</a>
+</ul>
+
+<h3 id="terrain_analysis" class="subtopic">5.B Spatial and temporal terrain analysis</h3>
+Outline:
+<ul>
+    <li>summary parameters: volumes, surface areas</li>
+    <li>first and second order point parameters: general approach</li>
+    <li>methods for slope, aspect and curvatures using polynomial and spline approximation</li>
+    <li>combining parameters to map landforms and terrain features</li>
+    <li>computing parameters from noisy data, accuracy and uncertainty, scale and level of detail</li>
+    <li>raster time series analysis, quantification of coastal change</li>
+</ul>
+<h4>Lecture</h4>
+<p>Slides and recorded video:
+<ul>
+    <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Ltopoanal.ppt">Lecture Slides</a>
+    <li><a href="https://youtu.be/nVFxj-sSNY4">Lecture Topoanalysis Gradient parameters</a>
+    <li><a href="https://youtu.be/sIhzzKyRfsI">Lecture Topoanalysis Curvature parameters</a>
+    <li><a href="https://youtu.be/0bbcis1PVxY">Lecture Topoanalysis Time Series</a>
+    <li><a href="../lectures/topoanalysis.html">Lecture slides updated: Basic topographic analysis</a>
+</ul>
+Supplemental materials:
+<ul>
+    <li><a href="https://link-springer-com.prox.lib.ncsu.edu/chapter/10.1007/978-3-319-89303-7_6">Basic Landscape Analysis,</a> 
+    chapter from Petrasova et al., 2018, Tangible Modeling with Open Source GIS. Second edition. Springer.
+    <a href="https://link-springer-com.prox.lib.ncsu.edu/book/10.1007/978-3-319-89303-7">Available through NCSU library</a>
+    or <a href="https://link.springer.com/book/10.1007%2F978-3-319-89303-7">through Springer</a>
+
+    <li>Landscape dynamics from lidar:
+    <a href="http://fatra.cnr.ncsu.edu/~hmitaso/publwork/Mitasova_geomorph2011.pptx">Slides</a> 
+    <!-- <a href="http://proceedings.esri.com/library/userconf/geomorphometry11/videos/1-mitasova-lg.html">Keynote Video (56 minutes)</a>-->
+    from <a href="http://geomorphometry.org/content/geomorphometry-2011-programme">Geomorphometry 2011 conference</a>
+
+    <li><a href="https://link-springer-com.prox.lib.ncsu.edu/book/10.1007%2F978-1-4939-1835-5">
+    GIS-based Analysis of Coastal Lidar Time-Series,</a> Springer Brief booklet by Hardin et al., available through NCSU library
+    or <a href="https://link.springer.com/book/10.1007%2F978-1-4939-1835-5">through Springer</a>.
+    <!--<li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/JR_DucthD_pres3.pptx">Jockey's Ridge Slides</a>
+    (ongoing research project on coastal landscape dynamics)-->
+</ul>
+
+<h4>Assignment B</h4>
+<!--
+<UL>
+   <LI>compare slope, aspect and curvatures derived from NED, SRTM, and TIN  </li>
+   <LI>compute slope, aspect and curvatures from lidar point data
+      using splines with different tension parameters</li>
+   <LI>derive landforms by combining basic topographic
+       parameters, discuss impact of neighborhood size</li>
+   <LI>compute cut and fill volume and change in elevation surface area due to construction</li>
+   <LI>derive maps characterizing coastal terrain evolution using raster time series analysis</li>
+</UL>
+-->
+<ul>
+    <li>Approach:
+        <a href="../grass/terrain_analysis.html">GRASS solution</a>,
+		<a href="../arcpro/terrain_analysis.html">ArcGIS Pro solution</a>
+    <li><a href="../faq.html#terrain_analysis">Comments/answers to HW questions</a>
+</ul>
+   <h3>Homework 5. A and B</h3>
+        Prepare a paper on properties of lidar data and on computing topographic parameters from
+        digital elevation models.
+        Discuss how the topographic analysis methods and types of DEM influence the result.
+        Describe results of elevation time series analysis.
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2021.wolfware.ncsu.edu/course/view.php?id=6766">Moodle site</a></li>
+<li><a href="http://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="http://www.ncsu.edu/policies/prr-disclaimer.php">Disclaimer</a></li>
+<li><a href="http://oit.ncsu.edu/itaccess">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2021
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

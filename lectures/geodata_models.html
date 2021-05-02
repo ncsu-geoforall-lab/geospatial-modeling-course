@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2><b>Geospatial data models</b></h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h3>Learning objectives</h3>
+<p>
+<ul>
+  <li class="fragment">Define raster and vector data models
+  <li class="fragment">Understand and use data models transformations
+  <li class="fragment">Recognize geospatial data formats
+  <li class="fragment">Identify and use on-line geospatial data repositories and services</li>
+  <li class="fragment">Explain principles of open science: <br>
+      open data, open source software, open access
+</ul>
+</section>
+
+<section>
+   <h3>Geospatial data models</h3>
+<p> Mapped data, modeling or analysis results are represented in GIS using
+<ul>
+  <li class="fragment">raster (regular grid) data model
+  <li class="fragment">vector (feature) data model 
+  <li class="fragment">specialized representations: meshes
+</ul>
+<p>
+<img height="200" src="img/data_models/datatypescomposit.jpg">
+</section>
+
+<section>
+   <h3>Geospatial phenomena</h3>
+<p>
+<ul>
+<li>Continuous fields
+  <ul>
+    <li class="fragment">elevation surfaces</li>
+    <li class="fragment">temperature, precipitation</li>
+    <li class="fragment">concentration of chemicals in soil or water bodies</li>
+  </ul>
+<p>
+<li>Discrete features: lines, points or areas with attributes
+  <ul>
+    <li class="fragment">roads, buildings, cell towers</li>
+    <li class="fragment">land use types, administrative units</li>
+  </ul>
+<p>
+<li>Some phenomena can be treated as both types
+    <ul>
+    <li class="fragment">agricultural fields, soil properties</li>
+    <li class="fragment">population densities</li>
+    </ul>
+</ul>
+<aside class="notes">
+phenomenon
+anything that can be perceived as an occurrence or fact by the senses
+the object of perception, experience, etc
+</aside>
+</section>
+
+<section>
+   <h3>Continuous fields</h3>
+<p>
+  <ul>
+  <li class="fragment">each point in space is assigned a distinct value,
+      change in values between neighboring points is small</li>
+  <li class="fragment">mathematical representation: bi-variate or multi-variate 
+  continuous functions $w=f(x,y), w=f(x,y,z), w=f(x,y,z,t)$</li>
+  <li class="fragment">often represented by <b>raster data model</b>,</li>
+  <li class="fragment">vector model is also used: isolines, meshes, or points.</li>
+  </ul>
+<p class="fragment">
+<img height="160" src="img/data_models/dem_1m.jpg">
+<img height="160" src="img/data_models/elcont1m_gen00.jpg">
+<img height="160" src="img/data_models/TINgrassnvizrand2.jpg">
+<img height="120" src="img/data_acquisition/lidarmrpts3dcolored.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Discrete objects / features</h3>
+<p>
+  <ul>
+  <li class="fragment">lines, points, or areas with attributes
+  <li class="fragment">represented by <b>vector data model</b> as geometry(shape) with attribute table
+  <li class="fragment">raster representation is also used
+  </ul>
+<p class="fragment">
+<img height="220" src="img/data_models/streetsnoise.jpg">
+<img height="220" src="img/data_models/vectorast_census.png">
+<img height="220" src="img/data_models/rasterdiscr_roads.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Raster data model: 2D</h3>
+<p>
+<ul>
+  <li>header: spatial extent and <b>resolution</b>, followed by matrix of values (INT, FP, DP),
+  <li>continuous field : value assigned to a grid point
+  <li>discrete object : category value assigned to pixel (area)
+</ul>
+<p class="fragment">
+<img height="350" src="img/data_models/raster_cont_discr.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Raster data model: continuous fields</h3>
+<small>Elevation, 10m resolution (combined with shaded relief) </small> 
+<img height="220" src="img/data_models/rastercont_elev.jpg">
+<p>
+<small>Precipitation, 500m resolution (color map draped over elevation)</small>
+<img height="230" src="img/data_models/preciptopo3d.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Raster data model: discrete features</h3>
+<p>
+<small>Land use classes, 
+<br>Speed limits for roads and walking speed for off-road areas, 30m resolution</small>
+<p>
+<img height="280" src="img/data_models/raster_discr3dlu.jpg">
+<img height="280" src="img/data_models/rasterdiscr_roads.jpg">
+</section>
+
+<section>
+   <h3>Raster data model: 3D hybrid</h3>
+<p>
+<div class="left" style="max-width:50%">
+<ul>
+ <li>vertical stack of 2D raster layers 
+ <li class="fragment">can be used to represent soil horizons or geological layers 
+ <li class="fragment">combined representation: 
+ <ul>
+  <li class="fragment">continuous (horizontally)
+  <li class="fragment">discrete (vertically)
+ </ul> 
+</ul>
+</div>
+<div class="right" style="max-width:40%">
+<img width="90%" src="img/data_models/horiz2.gif">
+<p><small>Cross-sections through 3D model of soil horizons</small>
+</div>
+</section>
+
+<section>
+   <h3>Raster data model: 3D grid</h3>
+<p>
+<ul>
+  <li>header + 3D matrix of values, voxel model 
+  <li class="fragment">spatial extent N,S,E,W,<b>Top, Bottom</b>
+  <li class="fragment">vertical resolution is usually much finer than horizontal
+  <li class="fragment">often used for 3D continuous representation $w=f(x,y,z)$
+</ul>
+<img height="200" src="img/data_models/Voxelcodbox.gif">
+<img height="120" src="img/data_models/lgsoilcorg.gif">
+<img height="200" src="img/data_models/Voxelphfenc.gif">
+<img height="120" src="img/data_models/lg_soilph.gif">
+<p><small>Soil properties: Percent organic carbon, soil pH reaction </small>
+<!--<video height="300" controls loop autoplay> <source src="img/data_models/Voxelcodbox.mpg" type="video/mpg">-->
+</section>
+
+<section>
+   <h3>Vector data model</h3>
+<p>
+ Abstract representation of complex features 
+<br><small>school – point, road – centerline, park - polygon</small>
+<ul>
+ <li><b>Geometry:</b> 
+  <ul>
+  <li class="fragment">Points [x,y,(z)] represent point, line, or polygon(area) features
+  <li class="fragment">Set of points create elements of feature geometry: <b>line</b>: nodes, vertices; <b>polygon</b>: centroid, boundary 
+  <li class="fragment"><a href="https://en.wikipedia.org/wiki/Geospatial_topology">Geospatial Topology</a> defines how the elements of 
+feature geometry are interrelated and organized (don't confuse with topography!)
+ <li class="fragment">Topology ensures integrity of features and efficiency by defining shared coincident geometry (shared 
+boundaries, nodes). 
+  </ul>
+<p>
+ <li><b>Attributes</b> are stored in data management systems
+</ul>
+<aside class="notes">
+the study of geometric properties and spatial relations unaffected by the continuous change of shape or size of figures.
+the way in which constituent parts are interrelated or arranged.
+</aside>
+</section>
+
+<section>
+   <h3>Vector data model geometry</h3>
+<p>Elements: vertices(red), nodes(blue)
+<div class="left" style="max-width:45%">
+<p>Point data: no topology
+<img height="150" src="img/data_models/pointdata.png"> 
+<img height="180" src="img/data_models/pointcloud.png"> 
+</div>
+
+<div class="right" style="max-width:55%">
+<p>Line data: vertices, nodes
+<br>
+<img height="300" src="img/data_models/roads_nodes_vert.png">
+</div>
+</section>
+
+<section>
+   <h3>Vector data model geometry</h3>
+<p>Elements: vertices(red), nodes(blue), centroids(green)
+<p>
+Polygons: vertices+nodes=boundaries, centroids 
+<p>
+<!--<img height="300" src="img/data_models/vectovertices_census.png">-->
+<img height="380" src="img/data_models/census_nodesvertcentrlb2.png">
+</section>
+
+<!--
+<section>
+   <h3>Vector data model: discrete features</h3>
+<p>
+Discrete: streets, streams, geodetic points, census blocks
+<img height="250" src="img/data_models/vectorast_census.png">
+<img height="250" src="img/data_models/vectorast_census.png">
+<p>Image Image
+</section>
+
+<section>
+   <h3>Vector data model: continuous fields</h3>
+<p>
+Continuous: elevation contours (isolines), precipitation (points)
+<p>Image Image
+</section>
+-->
+
+<section>
+   <h3>Vector data: 3D models</h3>
+<p><small>Learn more in 
+<a href="http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/schedule.html">GIS595 UAS mapping for 3D modeling course</a>
+</small>
+<p>
+<div class="sketchfab-embed-wrapper"><iframe width="640" height="480" src="https://sketchfab.com/models/3b3e1a037183477eacd3eeb7d7f009aa/embed" frameborder="0" allow="autoplay; fullscreen; vr" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+<p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;">
+    <a href="https://sketchfab.com/models/3b3e1a037183477eacd3eeb7d7f009aa?utm_medium=embed&utm_source=website&utm_campaign=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">Centennial Campus Textiles Buildings</a>
+    by <a href="https://sketchfab.com/osgeolab?utm_medium=embed&utm_source=website&utm_campaign=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">NCSU GeoForAll Lab</a>
+    on <a href="https://sketchfab.com?utm_medium=embed&utm_source=website&utm_campaign=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a>
+</p>
+</div>
+</section>
+
+<section>
+   <h3>Data model modifications </h3>
+<p>
+<ul>
+  <li>Changing raster resolution 
+<p>
+  <li>Changing vector geometry type
+</ul>
+</section>
+
+<section>
+   <h3>Raster data  - changing resolution</h3>
+<p>Resolution: size of the grid cell (pixel) in map units (m)
+<ul>
+<li>continuous fields: re-interpolation
+  <ul>
+    <li>the higher res. raster values are <b>interpolated</b> using the values of the neighboring lower res. cells
+    <li>methods: bi-linear, bi-cubic, spline
+  </ul>
+<p>
+  <li class="fragment">discrete raster data: nearest neighbor resampling
+  <ul>
+     <li>assigns the higher res. cell the <b>same value</b> as the nearest lower res. cell 
+     <li>resulting raster has only the values present in the input raster
+  </ul>
+</p>
+</ul>
+<p>
+See <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">Wikipedia for more detailed explanation and equations</a> 
+</section>
+
+<section>
+   <h3>Increasing resolution: continuous</h3>
+<p>Elevation at 30m resolution resampled to 10m resolution 
+<p>
+<img width="95%" src="img/data_models/rast_resampl_elev.jpg">
+<p>Raster values are observed elevations
+</section>
+
+<section>
+   <h3>Increasing resolution: discrete</h3>
+<p>Geology at 30m resolution resampled to 10m resolution
+<p>
+<img width="95%" src="img/data_models/rast_resampl_geol.jpg">
+<p>Raster values are classes of observed geology
+<!--change geology example to more realistic landcover-->
+</section>
+
+<section>
+   <h3>Increasing resolution: compare</h3>
+<p>Effect of resampling / reinterpolation on the results
+<img height="480" src="img/data_models/rast_resampl_geol_elev.jpg">
+<!--change geology example to more realistic landcover-->
+</section>
+
+<section>
+   <h3>Increasing resolution: compare</h3>
+<p>From 30m resolution to 20m resolution
+<p>
+<br>
+<div class="left" style="max-width:30%">
+<ul>
+  <li>grid cells do not align,
+  <li>elevation: no "flats"
+  <li>geology: area for each class may change 
+</ul>
+</div>
+<div class="right" style="max-width:60%">
+<img width="90%" src="img/data_models/rast_resampl_geol_elev_30_20.jpg">
+</div>
+<!--change geology example to more realistic landcover-->
+</section>
+
+
+<section>
+   <h3>Decreasing resolution</h3>
+<ul>
+  <li>continuous: re-interpolation, average, min, max, nearest neighbor
+</ul>
+<p> 
+<img height="300" src="img/data_models/rast_resampl_elev_down.jpg">
+</section>
+
+<section>
+   <h3>Decreasing resolution</h3>
+<ul>
+  <li>discrete: nearest neighbor resampling, mode (most common class)
+</ul>
+<p> 
+<img height="300" src="img/data_models/rast_resampl_geol_down.png">
+</section>
+
+<section>
+   <h3>Changing vector data</h3>
+<p>
+<ul>
+  <li>Converting vector data type
+  <ul>
+   <li>lines to points, areas to lines or points
+   <li>points to lines: network building or interpolation may be needed
+   <li>usually preserves the shape
+  </ul>
+<p>
+  <li class="fragment">Generalization
+  <ul>
+   <li>simplifying geometry while preserving important information 
+   <li>both data geometry and type can be modified
+   <li>line to simplified line, polygon to simplified polygon or point
+   <li>selecting subset of features 
+   <li>important when combining local, state and national scale data
+  </ul>
+  </li>
+</p>
+</ul>
+</section>
+
+<section>
+   <h3>Changing vector data type</h3>
+<p>
+Data geometry is not modified,
+but subset is extracted and stored in a different data structure
+<p>
+<small>Topology building is required for conversions point to line, line to polygon</small>
+<p>
+<img height="200" src="img/data_models/census_nodesvertcentrlb2.png">
+<!--<img height="150" src="img/data_models/vectopoints_census.png.png">-->
+<img height="200" src="img/data_models/vectovertices_census.png">
+<img height="200" src="img/data_models/vectorboundary.png">
+</section>
+
+<section>
+   <h3>Conversion between data models</h3>
+<p>
+<ul>
+ <li>vector to raster
+ <ul>
+  <li>continuous: spatial interpolation (covered by a separate topic)
+  <li>discrete: nearest neighbor
+ </ul>
+<p>
+ <li class="fragment">raster to vector
+ <ul>
+  <li>continuous: point sampling, isolines
+  <li>discrete: nearest neighbor, grid center or boundary
+ </ul>
+</ul>
+<p>
+</section>
+
+<section>
+   <h3>Vector to raster data</h3>
+<ul>
+  <li>lines, areas: nearest neighbor
+  <li>areas: attribute value applies to the entire polygon
+<small> – only complete polygons can be converted to be fully valid</small>
+</ul>
+<p>
+<img height="350" src="img/data_models/vect_to_rast.jpg">
+</section>
+
+<section>
+   <h3>Raster to vector data</h3>
+<p>Continuous data: sampling points, isolines 
+<p>
+<img height="400" src="img/data_models/rast_to_vect_cont.jpg">
+</section>
+
+<section>
+   <h3>Raster to vector data</h3>
+<p>
+<ul>
+  <li>points – center of grid cell
+  <li>lines, polygon border lines: connected grid cell centers
+  <li>thinning and smoothing is often performed for lines 
+</ul>
+<p>
+<img height="360" src="img/data_models/rast_to_vect_discr.jpg">
+</section>
+
+<section>
+   <h3>Raster to vector data</h3>
+<p>
+<ul>
+   <li>areas – boundary, centroid, requires building topology 
+   <li>connects points on grid cell boundary
+</ul>
+<p>
+<img height="380" src="img/data_models/rast_to_vect_discr_area.jpg">
+</section>
+
+<section>
+   <h3>Common geospatial data formats</h3>
+<p>Format: specific implementation of data model, 
+<br>open standard or proprietary
+<p> Raster
+<ul class="fragment">
+<li>GIS (ascii and binary): GeoTIFF, ArcGRID, GRASS, SURFER
+<li>Imagery: MrSID, GeoTIFF, BIN, JPEG2000, IMG
+<li>Graphics:  GIF, JPG, PNG, Bitmap
+<li>HDF, NetCDF
+</ul>
+<p>
+Vector
+<ul class="fragment">
+<li>GeoPackage exchange format, KML, Shape, ArcSDE, GML, MapInfo, TIGER
+<li>PostGIS, OracleSpatial
+</ul>
+</section>
+
+<section>
+   <h3>Geospatial data format conversion</h3>
+<p>
+Format description is usually stored with data: automated format recognition and conversion
+<p class="fragment"> 
+General library for geospatial raster and vector format conversions:
+<br>Geospatial Data Abstraction Library (GDAL/OGR)
+<br><strong>gdal.osgeo.org</strong>
+<p class="fragment">
+given format - <strong>single abstract model</strong> - new format
+</p>
+<p class="fragment">
+GDAL includes command line utilities for data processing
+</p>
+<p class="fragment">
+Coupled with PROJ library it also provides coordinate system transformations
+</p>
+</section>
+
+<section>
+<h3>Data repositories</h3>
+Data repositories: WMS, WPS, WebGIS
+<ul>
+  <li>Web mapping Service
+  <li>Web Processing Service
+</ul>
+<p>
+See<a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/data_providers.html">
+Webpage with links to relevant services</a>
+<p>
+Lidar point clouds on AWS
+<a href="https://usgs.entwine.io/data/view.html?r=%22https://s3-us-west-2.amazonaws.com/usgs-lidar-public/USGS_LPC_NC_Sandy_L14_2014_LAS_2015%22">Jockey's Ridge after Sandy</a>
+</section>
+
+<section>
+  <h3>Open science </h3>
+<p>open data, open source software, open access
+<p>Learn more: 
+<a href="https://ncsu-geoforall-lab.github.io/open-science-course/topics/open-science.html">What is Open Science</a>
+</section>
+
+<!--
+<section>
+  <h3>Open source geospatial resources</h3>
+<p>OSGeo, geo4all
+<p>OSGeo: Web GIS(many), QGIS, GRASS GIS, libraries
+<p>R, pySAL
+</section>
+-->
+
+<section>
+ <h3>Summary</h3>
+<ul>
+  <li>raster and vector data models
+  <li>modifying raster and vector data models
+  <li>converting between raster and vector data models
+  <li>geospatial data formats
+  <li>data repositories, wms services, <!--metadata-->
+  <li>open science: open data, open source software, open access
+</ul>
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>

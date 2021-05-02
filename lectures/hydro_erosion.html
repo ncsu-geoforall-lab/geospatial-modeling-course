@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2><b>Hydrologic and Erosion Modeling</b></h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h3>Learning objectives</h3>
+<p>
+<ul>
+ <li>empirical and physics based components of models
+ <li>spatially averaged and distributed models
+ <li>steady state, continuous time and dynamic models 
+ <li>spatial hydrologic modeling: processes and methods
+ <li>modeling of erosion, sediment transport and deposition
+</ul>
+</section>
+
+<section>
+   <h3>Geospatial modeling of processes</h3>
+<ul>
+<li>Numerical simulations: tools for gaining new knowledge - <b>virtual experiments</b>
+<li>Geospatial simulations: the modeled quantities are function of a location on Earth
+<li>Geospatial models have evolved:
+<ul>
+<p>
+ <li class="fragment">from: empirical, spatially averaged, static 
+<p>
+ <li class="fragment">to: process-based, distributed, dynamic with 
+     the aim to predict modeled quantity at any point in space and time
+</ul>
+</ul>
+ <p class="fragment">Most models combine several approaches
+</section>
+
+<section>
+   <h3>Empirical models</h3>
+<ul>
+ <li class="fragment">statistical models derived from experimental or observed data
+ <li class="fragment">applicable only to landscapes under same conditions
+ <li class="fragment">empirical / statistical methods often have physics based interpretations
+ <li class="fragment">given sufficient data they can be very accurate (ML, AI)
+</ul>
+<p class="fragment"><small>Example: Universal Soil Loss Equation - factors are based on observations,
+but topographic LS factor also represents a special case of stream power </small>
+</section>
+
+<section>
+   <h3>Process-based models</h3>
+<ul>
+ <li class="fragment">derived from first principles, based on physical laws,
+such as continuity and mass conservation equations
+ <li class="fragment">refered to as mechanistic or deterministic models
+ <li class="fragment">may include stochastic components
+ <li class="fragment">can simulate the process under conditions not previously observed
+ <li class="fragment">physics based equations often have empirical parameters
+</ul>
+<p class="fragment"><small>Example: surface water flow model is based on St. Venant equation,
+but uses empirical Mannings coefficient for computing flow velocity</small>
+</section>
+
+<section>
+   <h3>Modeling components</h3>
+When performing simulations we need to consider:
+<p>
+<ul>
+  <li class="fragment"> <b>Modeled quantity [units]:</b> water, pollutant, vegetation, population density, individual organism, ...
+  <li class="fragment"> <b>Spatial and temporal scale</b>
+  <li class="fragment"> <b>Configuration space and interactions:</b> modeled quantity as function of environmental variables, e.g., topography, land cover, infrastructure...
+  <li class="fragment"> <b>Governing equations or rules:</b> continuity, mass preservation, diffusion, ...
+</ul>
+</section>
+
+<section>
+   <h3>Geospatial representation</h3>
+<p>
+ Modeled quantities and environmental variables can be represented by continuous georeferenced fields
+<p>To support numerical simulations these fields need to be discretized:
+<ul>
+  <li class="fragment"><b>spatially averaged units:</b> discrete polygons (hydrologic units, hillslope elements, landscape patches)
+  <li class="fragment"><b>spatially distributed representation:</b> structured and unstructured meshes, or random particles
+</ul>
+<p class="fragment">Modeled quantities can also evolve along networks or represent discrete objects (particles, agents)</p>
+</section>
+
+<section>
+   <h3>Spatially averaged models</h3>
+<ul>
+ <li>Spatially averaged models predict the modeled variable for each averaged unit, such as watershed,
+the result is discrete polygons or a number
+</ul>
+<p><img height="350" src="https://ncsu-geoforall-lab.github.io/geospatial-simulations-course/lectures/img/intro/spat_aggreg.jpg">
+</section>
+
+<section>
+   <h3>Spatially distributed models</h3>
+<ul>
+<li>Spatially distributed or spatially explicit models predict
+the variable at any point in space and the result is continuous field
+</ul>
+<p><img height="350" src="https://ncsu-geoforall-lab.github.io/geospatial-simulations-course/lectures/img/intro/spat_distr.png">
+</section>
+
+<section>
+   <h3>Coupled models for simulations of complex systems</h3>
+<ul>
+<li>Continuous time simulations of coupled processes
+<li class="fragment">problems: different spatial and temporal scales, discretization
+<li class="fragment">examples: SWAT, WEPP: weather, runoff, infiltration, crop growth, soil erosion, pollutant transport
+<li class="fragment">coupled agent based and continuous field models for complex human - nature systems simulations (MEDLANDS)
+</ul>
+</section>
+
+<section>
+   <h3>Geospatial modeling and GIS</h3>
+<p>
+<ul>
+<li class="fragment"><b>workflow using standard GIS tools</b>: simple empirical models with physics based components
+<li class="fragment"><b>models fully integrated as modules</b>: complex physics-based or empirical models
+<li class="fragment"><b>models linked to GIS as extensions or add-ons</b>: common structure and interface
+<li class="fragment"><b>complex modeling systems linked through data</b>: GIS is used for input data processing,
+results analysis and visualization, but the model is independent from GIS.
+<li class="fragment"><b>complex modeling systems can incorporate selected GIS capabilities</b>
+</ul>
+</section>
+
+
+<section>
+   <h3>Hydrologic modeling</h3>
+<p>surface water flow (overland flow, channels), 
+<p>subsurface flow, groundwater
+</section>
+
+<!--
+<section>
+   <h3>Spatially Distributed Hydrologic Models</h3>
+Geometry driven routing:
+<ul>
+<li>flow accumulation by D8, passes through depression as least cost path, no ponding
+<p><img height="280" src="img/flow_erosion/D8_lcp.jpg">
+</ul>
+</section>
+
+<section>
+   <h3>Spatially Distributed Hydrologic Models</h3>
+Geometry driven routing, requires DEM hydroconditioning for connected streams
+<ul>
+<li>flow acumulation by D-inf, depression is a sink
+<p><img height="180" src="img/flow_erosion/Dinf_sink.jpg">
+</ul>
+</section>
+
+<section>
+   <h3>Spatially Distributed Hydrologic Models</h3>
+Process-based continuity equation, requires DEM hydroconditioning for connected streams
+<ul>
+<li>kinematic wave - water accumulates in the sink  to infinity
+<p><img height="180" src="img/flow_erosion/kinemwave.jpg">
+</ul>
+</section>
+
+<section>
+   <h3>Spatially Distributed Hydrologic Models</h3>
+Bivariate continuity equation with diffusion term, captures ponding in depressions
+<ul>
+<li>diffusion term allows water to pass through depression
+<p><img height="180" src="img/flow_erosion/water_simwe_diff.jpg">
+</ul>
+</section>
+
+<section>
+   <h3>Spatially Distributed Hydrologic Models</h3>
+Bivariate continuity equation with diffusion term and channel input
+<ul>
+<li>channel defined through depression as preferential flow
+<p><img height="180" src="img/flow_erosion/water_simwe_channel.jpg">
+</ul>
+</section>
+
+<section>
+   <h3>Dynamic Hydrologic Models</h3>
+Flow routing across landscape: process-based
+<img height="380" src="img/flow_erosion/water_diffusion.gif">
+</section>
+
+<section>
+   <h3>Path sampling method</h3>
+<p>
+<ul>
+  <li>based on duality between particle and field representation
+  <li>path samples represent water evolving according to the shallow 
+      water bivariate continuity equation - drift and diffusion
+  <li>Green's function
+</ul>
+<p class="fragment"> <img height="380" src="img/flow_erosion/flowD8dem.jpg">
+<p><small>Variable rainfall excess and flow velocity</small>
+</section>
+
+<section>
+   <h3>Hydrologic modeling case studies</h3>
+<p> see the ppt slides, include Cary
+</section>
+
+<section>
+   <h3>Erosion modeling</h3>
+<p>
+Motivation: sustainable land use management
+- analysis of spatial pattern of sediment flow, 
+- identification sediment sources and sinks, 
+- design of conservation measures
+</section>
+
+<section>
+   <h3>Spatially distributed erosion models</h3>
+<p>
+<p> <img height="380" src="img/flow_erosion/flowD8dem.jpg">
+</section>
+
+<section>
+   <h3>Sediment transport modeling</h3>
+<p>
+<p> <img height="380" src="img/flow_erosion/flowD8dem.jpg">
+</section>
+
+
+<section>
+ <h3>Summary</h3>
+<ul>
+<li>we have defined types of models
+</ul>
+</section>
+-->
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+
+<!--
+<section>
+ <h3>Reading, resources</h3>
+links
+</section>
+-->
+
+
+
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>

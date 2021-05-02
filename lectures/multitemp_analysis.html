@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2><b>Geomorphometry II:</b></h2>
+    <h3><b>Multitemporal DEM analysis</b></h3>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h3>Outline (learning objectives)</h3>
+<p>
+<ul>
+   <li>raster time series analysis, 
+   <li>quantification of coastal change
+   <li>temporal framework
+</ul>
+</section>
+
+<section>
+  <h3>3D mapping technologies</h3>
+<ul>
+<li class="fragment">Continuous surface measured at discrete points
+<p>
+<ul>
+  <li class="fragment">Human selected points 
+  <li class="fragment">Automated point sampling 
+</ul>
+<p>
+<li class="fragment">Terrestrial (land) surface
+<ul>
+   <li class="fragment">Stereophotogrammetry: aerial and satellite imagery
+   <li class="fragment">Lidar: aerial and terrestrial
+   <li class="fragment">Interferometric radar: aerial, satellite, space shuttle
+   <li class="fragment">RTK GPS
+</ul>
+   <li class="fragment">Bathymetry mapping
+</ul>
+   <li class="fragment">single and multiple beam sonar
+</ul>
+</ul>
+</section>
+
+<section>
+   <h3>Ground-based 3D mapping</h3>
+<p>
+RTK GPS, terrestrial lidar
+<p>
+ <img height="360" src="img/geomorph_terrain/lidar_keren.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Ground-based mobile 3D mapping</h3>
+<p>
+ <img height="380" src="img/data_acquisition/GeodynRTKGPS1sm.jpg">
+<p>
+</section>
+
+<section>
+   <h3>Ground-based mobile 3D mapping</h3>
+<p>
+ <img height="380" src="img/geomorph_terrain/GeodynRTKGPSJR.jpg">
+<p>
+</section>
+
+<!--
+<section>
+   <h3>Underground 3D mapping</h3>
+<p>
+terrestrial lidar
+<p>
+ <img height="240" src="img/data_acquisition/reiglminingsm.jpg">
+ <img height="240" src="img/nvizcutplanelwDEMDSMS.jpg">
+</p>
+</section>
+-->
+
+<section>
+   <h3>Aerial 3D mapping</h3>
+<p>
+UAS and airplanes with lidar or camera for nadir and oblique imagery
+<p>
+ <img height="340" src="img/data_acquisition/airborne_lidar_mapping_schematic.jpg">
+ <img height="340" src="img/data_acquisition/takeoff.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Satellite 3D mapping</h3>
+<p>
+Shuttle Radar Topography, TanDEMX, Imagery
+<p>
+ <img height="240" src="img/data_acquisition/srtmanim_small.gif">
+</p>
+</section>
+
+<section>
+   <h3>Bathymetry 3D mapping</h3>
+<p>
+Single and multibeam sonar
+<p>
+ <img height="340" src="img/geomorph_terrain/GDsonarem3000.jpg">
+</p>
+</section>
+
+<section>
+  <h3>Digital elevation models</h3>
+<ul>
+   <li class="fragment">Digital Terrain Model (DTM):
+   <ul>
+   <li class="fragment">bare ground elevation surface
+   <li class="fragment">interface between solid Earth and atmosphere/anthroposphere/biosphere
+   </ul>
+<li class="fragment">Digital Surface Model (DSM):
+   <ul>
+   <li class="fragment">elevation surface including above ground features (vegetation, structures, ...)
+   <li class="fragment">interface between Earth surface with water, vegetation, structures and atmosphere
+   </ul>
+<li class="fragment">Digital Bathymetry Model (DBM)
+   <ul>
+   <li class="fragment">elevation surface at the bottom of water bodies
+   <li class="fragment">interface between solid Earth surface and hydrosphere (bottom surface of lakes, rivers and ocean)
+   <li class="fragment">Seamless topobathy: continuous solid earth surface, DTM+DBM
+   </ul>
+<li class="fragment">Digital Crop or Canopy Surface Model (DCM), Digital Urban Model (DUM), ....
+</ul>
+</section>
+
+<section>
+   <h3>DTM and DSM</h3>
+<p> Small rural watershed - NCSU experimental fields
+<p>
+ <img height="360" src="img/data_visualize/lidnvizmultiplesurf.jpg">
+</p>
+</section>
+
+<section>
+   <h3>DBM sonar and lidar</h3>
+<p>North Carolina coast
+<p>
+ <img height="300" src="img/geomorph_terrain/bathylidar_florida.jpg">
+ <img height="300" src="img/geomorph_terrain/bathy_multibeam.jpg">
+</p>
+</section>
+
+<section>
+   <h3>From 3D mapping to DEM</h3>
+</section>
+
+<section>
+   <h3>Result of 3D mapping</h3>
+<p>
+<ul>
+<li class="fragment">human selected points (photogrammetry and GPS)
+<li class="fragment">points along lines (digitized contours or profiles)
+<li class="fragment">point clouds (lidar, Structure from Motion)
+</ul>
+<p class="fragment"> Examples
+<p class="fragment"> <img height="260" src="img/geomorph_terrain/points_contours.jpg">
+</section>
+
+<section>
+   <h3>Point cloud patterns</h3>
+<!--Scattered points in horizontal and vertical dimensions-->
+<p class="fragment"> <img height="260" src="img/geomorph_terrain/points_lidar_gps.jpg">
+<!--<p>Jockey's lidar, Vasek Wake lidar-->
+</section>
+
+<section>
+  <h3>Digital Elevation Models</h3>
+<p>
+<ul>
+ <li class="fragment">Regular grid (raster) 
+ <li class="fragment">Unstructured meshes: Triangular Irregular Network (TIN) 
+ <li class="fragment">Contours - elevation isolines derived from grid or TIN 
+ <li class="fragment">Parametric Mesh: complex structures 
+ <li class="fragment">Unstructured point clouds: measured data 
+</ul>
+</section>
+
+<section>
+  <h3>Regular grid: raster DEM</h3>
+<p>
+Derived from measured points by gridding: 
+<p>
+<ul>
+<li class="fragment">if there is at least one point for each grid cell – binning, per-cell statistics
+<li class="fragment">if some grid cells do not include points – spatial interpolation or approximation
+</ul>
+</section>
+
+<section>
+   <h3>Scattered points to raster</h3>
+<p>
+From given scattered points to points at regular grid
+<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
+ <img height="355" src="img/spatial_interpolation/pointstogrid.jpg">
+</p>
+<p>Raster representation does not preserve the original data points
+</section>
+
+<section>
+  <h3>Raster DEM properties</h3>
+<ul>
+<li class="fragment">simple data structure and algorithms
+<li class="fragment">easy to combine with imagery
+<li class="fragment">uniform resolution - potential for undersampling and oversampling
+<li class="fragment">representation of faults and sharp breaklines requires very high resolution
+</ul>
+<p class="fragment"><small>Most public elevation data are distributed as raster DEM through 
+<a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/data_providers.html">
+On-line repositories</a></small>
+</section>
+
+<section>
+  <h3>Unstructured mesh: TIN</h3>
+<p>
+<ul>
+<li class="fragment">Triangular Irregular Network: constructed from the measured points by triangulation (before computer age this technique was used for manual interpolation of contours from surveyed points)
+<li class="fragment">Delaunay Triangulation: maximizes the smallest angle of the triangles to avoid skinny triangles
+<li class="fragment">Constrained Delaunay Triangulation – includes  predefined edges that cannot be flipped
+<li class="fragment">TIN is a vector data model representation, that usually preserves the original data points
+</ul>
+</section>
+
+<section>
+   <h3>Scattered points to TIN</h3>
+<p>
+From given scattered points to Delaunay TIN
+<p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
+ <img height="355" src="img/geomorph_terrain/tin2dstream.jpg">
+</p>
+</section>
+
+<section>
+   <h3>TIN properties</h3>
+<p>
+<ul>
+<li class="fragment">requires pre-defined breaklines for man-made features, valleys, faults, etc.
+<li class="fragment">density of TIN is adjusted to surface complexity 
+<li class="fragment">additional points may need to be interpolated to create smooth surface
+</ul>
+
+<p class="fragment">When to use TIN: 
+<ul>
+<li class="fragment">engineering applications, 
+<li class="fragment">manual modification of model is desired(design), 
+<li class="fragment">complex faults need to be represented, 
+<li class="fragment">multiscale representation for visualization
+</ul>
+</section>
+
+<section>
+   <h3>TIN issues</h3>
+<p>
+<ul>
+<li class="fragment">discontinuity in first derivative along edges: artificial triangular structures on the surface 
+<li class="fragment">dams can be created across valleys if stream is not defined as a breakline
+</ul>
+<p class="fragment"> <img height="365" src="img/geomorph_terrain/TINgrassnvizrand2.jpg">
+</p>
+</section>
+
+<section>
+   <h3>TIN issues</h3>
+<p>
+If input are points on contours: flats on the top of hills or ridges if no peaks are defined 
+<p> <img height="355" src="img/geomorph_terrain/TINgrassnviz2.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Elevation isolines: contours</h3>
+<ul>
+<li class="fragment">traditional approach for representation of elevation, drawn by hand from measured mass points by interpolating along triangle edges 
+<li class="fragment">automated procedures: from TIN or grid, 
+<li class="fragment">not very suitable for highly detailed, noisy  data such as lidar
+<li class="fragment">very useful when the surface has simple geometry
+<li class="fragment">selecting contour interval: depends on slope and resolution
+</ul>
+</section>
+
+<section>
+   <h3>Contours from lidar</h3>
+<p>
+<p> <img height="355" src="img/geomorph_terrain/contours_lidrough.png">
+ <img height="355" src="img/geomorph_terrain/contours_smooth.png">
+</p>
+</section>
+
+<section>
+   <h3>3D parametric meshes</h3>
+<p> <img height="355" src="img/geomorph_terrain/textileschool_mesh_payam.png">
+</p>
+</section>
+
+<section>
+   <h3>Point clouds</h3>
+<p>
+<ul>
+<li class="fragment">Set of $(x, y, z, r, i, ...)$ measured points reflected from Earth surface or objects on or above it, 
+<ul>
+<li class="fragment">$x,y,z$ are georeferenced coordinates, 
+<li class="fragment">r is the return number and 
+<li class="fragment">i is intensity, 
+<li class="fragment">r:g:b may be also measured 
+</ul>
+<li class="fragment">Formats 
+<ul>
+<li class="fragment">ASCII (x,y,z, ...) format 
+<li class="fragment">binary LAS and LAZ format: industry lidar data exchange format
+<li class="fragment">header, record info, x,y,z,i, scan dir, edge of flight line, time, classification, etc.
+</ul>
+</ul>
+</section>
+
+<section>
+   <h3>Multiple return point clouds</h3>
+<p> 
+<img height="355" src="img/geomorph_terrain/points3d.png">
+</p>
+</section>
+
+<section>
+   <h3>Point cloud processing</h3>
+<p>
+<ul>
+<li class="fragment">filtering outliers (birds etc.)
+<li class="fragment">resolving swath overlaps
+<li class="fragment">classification
+<ul>
+<li class="fragment">bare earth point extraction
+<li class="fragment">canopy extraction
+<li class="fragment">structures and power lines extraction 
+</ul>
+<li class="fragment">computing DEMs
+</ul>
+</p>
+</section>
+
+<section>
+   <h3>Multiple return point clouds</h3>
+<p>
+<img height="355" src="img/geomorph_terrain/MRlidar.jpg">
+ <img height="355" src="img/geomorph_terrain/lidarfirstbeptscoverbldg.png">
+</p>
+<p>Bare ground points are sparser in vegetated areas
+</section>
+
+<section>
+   <h3>Point cloud analysis: binning</h3>
+<p>
+Binning: fast method for analyzing point clouds and generating DEMs using per-cell processing
+<ul>
+<li class="fragment">analysis: number of points per cell, range, stddv 
+<li class="fragment">Methods for DEM: mean, min, max, nearest
+<li class="fragment">sufficient for many applications
+<li class="fragment">no need to import the points, on-fly raster generation
+<li class="fragment">may be noisy, include no-data spots
+</ul>
+</section>
+
+<!--
+<section>
+   <h3>Point density</h3>
+<p>Number of bare earth points in each 2m and 6m resolution cell
+<p> <img height="355" src="img/geomorph_terrain/scattered_pts.jpg">
+ <img height="355" src="img/geomorph_terrain/pointstogrid.jpg">
+</p>
+<p>Bare ground points are sparser in vegetated areas, at 2m resolution there are many no data grid cells
+</section>
+
+<section>
+   <h3>Point density</h3>
+<p>Number of points from ground based lidar scanner in each 40cm grid cell
+<p> <img height="355" src="img/geomorph_terrain/scattered_pts.jpg">
+</p>
+<p>Density of points depends on distance and angle and is highly variable
+</section>
+
+<section>
+   <h3>Point elevation range within a cell</h3>
+<p>Range of bare earth elevations zmax-zmin in each cell at 6m resolution
+<p> <img height="355" src="img/geomorph_terrain/scattered_pts.jpg">
+</p>
+<p>Large range along the edge of the pond
+</section>
+
+<section>
+   <h3>Point elevation mean within a cell</h3>
+<p>Mean bare earth elevation for each 6m cell and interpolated 1m resolution DTM
+<p> <img height="355" src="img/geomorph_terrain/scattered_pts.jpg">
+<img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
+</section>
+-->
+
+<section>
+   <h3>Point elevation mean: Jockey's Ridge</h3>
+<p>Jockey's Ridge 1999, unfiltered single return lidar point cloud: 1m grid cell binning using maximum elevation
+<p> <img height="355" src="img/geomorph_terrain/lidstorast1m.jpg">
+<p>Result has many NULL cells – what to do?
+</section>
+
+<section>
+   <h3>Point elevation mean: Jockey's Ridge</h3>
+<p>Jockey's Ridge 1999, 3m grid cell binning using mean elevation
+<p> <img height="355" src="img/geomorph_terrain/lidstorast.jpg">
+<p>Result is somewhat fuzzy – what to do?
+</section>
+
+<section>
+   <h3>Interpolated DEM: Jockey's Ridge</h3>
+<p>Jockey's Ridge 1999, 1m DEM interpolated by RST spline method
+<p> <img height="355" src="img/geomorph_terrain/liddfdm1e.jpg">
+</section>
+
+<section>
+   <h3>Point density: 2013 Wake county lidar</h3>
+<p>Number of points per 1m grid cell: all returns and first return 
+<p> <img height="300" src="img/geomorph_terrain/lid2013_all_n_3ftb.png">
+<img height="300" src="img/geomorph_terrain/lid2013_1r_n_3ftb.png">
+</p>
+</section>
+
+<section>
+   <h3>Point density: 2013 Wake county lidar</h3>
+<p>Number of points per 1m grid cell: all returns and bare ground returns
+<p> <img height="300" src="img/geomorph_terrain/lid2013_all_n_3ftb.png">
+<img height="300" src="img/geomorph_terrain/lid2013_be_n_3ftb.png">
+</p>
+</section>
+
+<section>
+   <h3>Interpolated DTM</h3>
+<p> <img height="400" src="img/geomorph_terrain/lid2013_be_3ft_3d.jpg">
+</section>
+
+<section>
+   <h3>Interpolated DSM</h3>
+<img height="400" src="img/geomorph_terrain/lid2013_1r_3ft_3d.jpg">
+</section>
+
+<section>
+   <h3>Lidar and Mayan City</h3>
+<p> <img height="455" src="img/geomorph_terrain/LidarMayancityBelize.jpg">
+</section>
+
+<section>
+   <h3>Learn more</h3>
+Find more examples in the 2014 lecture, MEA592-004/GIS595-002:
+Multidimensional Geospatial Modeling material and GIS595 UAS course
+</section>
+
+<section>
+   <h3>Summary</h3>
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>

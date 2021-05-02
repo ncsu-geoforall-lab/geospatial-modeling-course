@@ -1,0 +1,9 @@
+-0.85 red
+-0.4 orange
+-0.1 yellow
+-0.001 grey
+0.001 grey
+0.1 cyan
+0.4 aqua
+0.8 blue
+1.9 violet

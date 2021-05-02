@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2><b>Geomorphometry II:</b></h2>
+    <h3><b>Basic topographic analysis</b></h3>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h3>Outline (learning objectives)</h3>
+<p>
+<ul>
+  <li>summary parameters: volumes, surface areas
+  <li>first and second order point parameters 
+  <li>methods for slope, aspect and curvatures using polynomial and spline approximation
+  <li>computing parameters from noisy data, level of detail 
+  <li>combining parameters to map landforms and terrain features
+</ul>
+</section>
+
+<section>
+  <h3>Terrain surface  parameters</h3>
+<ul>
+<li class="fragment">Derived  from discrete representation of $z=f(x,y)$
+<p>
+<li class="fragment"><b>Summary parameters</b>
+  quantify property for entire surface or its subregion: volume, surface area, fractal dimension, roughness
+<li class="fragment"><b>Point geometry parameters</b> quantify geometry at each point of the surface: gradient, curvatures
+<li class="fragment"><b>Process-based parameters</b> quantify cumulative results of processes (flow, solar radiation, wetness)
+</ul>
+</section>
+
+<section>
+   <h3>Volume estimation</h3>
+<ul>
+<li> Volume - integral approximated as sum of cuboids:
+$$
+V=∑dx.dy.dz = dx.dy ∑ dz
+$$
+<li class="fragment">where $dx.dy$ is grid cell area, $dz = z_0-z_i$, is cell value difference, $z_0$ is constant, plane or curved surface
+<li class="fragment">computed as sum of grid cell values 
+<li class="fragment">can be applied as global or zonal metrics
+</ul>
+<p>
+ <img height="300" src="img/topoanalysis/volume_dz.png">
+</p>
+</section>
+
+<section>
+   <h3>Surface area</h3>
+<ul>
+<li class="fragment">sum of 3D triangle areas, depending on the direction of the diagonal: minimum and maximum surface 
+<li class="fragment"> alternative: 8 triangles connecting grid center with neighboring ones 
+<li class="fragment"> larger than 2D area 
+</ul>
+<p>
+ <img height="300" src="img/analysis_basicraster/surfacearea2.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Point topographic parameters</h3>
+<p>
+Measure geometric properties at any point of the elevation surface
+<ul>
+<li class="fragment">steepness, orientation, and shape 
+<li class="fragment">derivation based on differential geometry
+<li class="fragment">computed from raster DEM 
+<li class="fragment">computed directly from scattered points using interpolation function with suitable properties
+</ul>
+</section>
+
+<section>
+   <h3>Elevation surface gradient</h3>
+Given a surface  $z = f(x,y)$, where $f(x,y)$ is a continuous bivariate function,
+we can define a gradient: 
+<p class="fragment">
+$$ 
+\nabla z = ({\partial z \over \partial x}, {\partial z \over \partial y}) = (f_x,f_y)
+$$
+<p class="fragment">
+where $f_x$ and $f_y$ are first order partial derivatives of $f(x,y)$ 
+<p class="fragment">
+vector field that represents the <b>maximum rate of change</b> in elevation 
+and points in the direction of this change
+<p>
+<small><a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/partial-derivatives/v/partial-derivatives-introduction">
+What is partial derivative</a> and a
+<a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/partial-derivatives/v/formal-definition-of-partial-derivatives">
+formal definition</a> and
+<a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/gradient-and-directional-derivatives/v/why-the-gradient-is-the-direction-of-steepest-ascent">why it is direction of steepest ascent</a>
+</small>
+</section>
+
+<section>
+   <h3>Gradient vector field</h3>
+$$
+\nabla z = - (f_x,f_y)
+$$
+<p class="fragment"> <img height="400" src="img/topoanalysis/gradient_elev.png">
+<p class="fragment"> gradient vectors are perpendicular to contours
+</section>
+
+<section>
+   <h3>Steepest slope angle</h3>
+Given the surface gradient $\nabla z = (f_x,f_y)$, 
+the steepest slope magnitude $s[\%]$ is the gradient vector magnitude
+<p class="fragment">
+$$ s = 100 \sqrt {f_x^2 + f_y^2} $$
+<p class="fragment">
+and the steepest slope angle $\gamma$ is 
+<p class="fragment">
+$$ \tan \gamma = \sqrt{f_x^2 + f_y^2} $$
+<ul>
+<li class="fragment"> angle between horizontal plane and surface tangent
+<li class="fragment"> rise over run in direction of max elevation change
+</ul>
+<p class="fragment">
+<small>keep in mind that 
+$$ (f_x,f_y)=({\partial z \over \partial x}, {\partial z \over \partial y})$$
+</small>
+</section>
+
+<section>
+   <h3>Steepest slope angle map</h3>
+$$ \gamma = \arctan \sqrt {f_x^2 + f_y^2} $$
+<p> <img height="360" src="img/topoanalysis/slopearrows.png">
+<img height="200" src="img/topoanalysis/slope_lg.png">
+<ul>
+<li class="fragment">values range between 0 - 90 degrees
+<li class="fragment">controls flow velocity and sun inclination angle
+</ul>
+</section>
+
+<section>
+   <h3>Aspect angle </h3>
+Steepest slope <b>direction</b> angle is given by the direction of gradient vector
+<p class="fragment">
+$$ \tan \alpha = {f_y \over f_x} $$
+<ul>
+<li class="fragment"> values range between 0 - 360 degrees
+<li class="fragment"> signs of $f_x, f_y$ need to be considered to determine the angle in relation to
+the $0^{\circ}$ direction (E or N)
+ <li class="fragment">measures hillslope orientation
+ <li class="fragment">controls flow direction and sun inclination angle
+</ul>
+<p class="fragment"><small>
+ when only $f_x = 0, \tan \alpha = \inf$ and $\alpha = 90 degrees$, but when $f_x = f_y = 0$ then $\alpha$ is undefined  
+</small>
+</section>
+
+<section>
+   <h3>Aspect angle map</h3>
+$$ \tan \alpha = f_y / f_x $$
+<p> <img height="320" src="img/topoanalysis/aspectarrowscropped.png">
+<img height="220" src="img/topoanalysis/aspect360grey_lg.jpg">
+</section>
+
+<section>
+   <h3>Slope angle in a given direction</h3>
+Slope $\gamma_t$ measured at <b>a direction</b> $\alpha_t$ is given as:
+<p>
+$$ \tan \gamma_t =  \tan \gamma \cos(\alpha - \alpha_t) $$
+<p>
+<ul>
+<li> where $\gamma$ is the steepest slope angle.
+<li> $\alpha$ is  the steepest slope direction 
+</ul>
+<p class="fragment">Slope angle $\gamma_t$ is always smaller than $\gamma$
+<p class="fragment"> <small>Directional derivative: ${\partial z \over \partial s} = f_x \cos \alpha_t + f_y \sin \alpha_t$
+</small>
+
+</section>
+
+<section>
+   <h3>Slope along a bus line </h3>
+<p> <img height="450" src="img/topoanalysis/bus_toposlope_cont.jpg">
+</section>
+
+<section>
+   <h3>Slope angle in the road direction</h3>
+Steepest slope angle and slope in the direction of bus line
+<p> 
+<img height="350" src="img/topoanalysis/bus_route_toposlope.png">
+<img height="350" src="img/topoanalysis/bus_routeslope.png">
+</section>
+
+<section>
+   <h3>Steepest slope and aspect from DEM </h3>
+Methods to estimate slope and aspect from a DEM:
+<p>
+<ul>
+  <li class="fragment">Maximum elevation difference: D8 approach
+  <li class="fragment">Polynomial approximation on 3x3 neighborhood, many versions using second order polynomials
+  <li class="fragment">Spline approximation directly from point data
+</ul>
+<p class="fragment">In following slides we refer to <b>steepest slope</b> as <b>slope</b>
+</section>
+
+<section>
+   <h3>Slope and aspect from DEM </h3>
+Polynomial approximation on 3x3 moving window:
+<p>
+$$ z = f(x,y)=a_0+a_1 x + a_2 y + a_3 xy + a_4 x^2 + a_5 y^2 $$
+<ul>
+   <li class="fragment">we can write 9 equations to solve for $a_i$ parameters 
+   <li class="fragment">more equations than needed - we use weighted least squares to fit the polynomial to the 9 grid points
+</ul>
+<p><img height="320" src="img/topoanalysis/movingwindow3x3a.png">
+</section>
+
+<section>
+   <h3>Slope and aspect from DEM </h3>
+<!--Now we can compute $f_x$ and $f_y$: $$f_x = a_1 + a_3y + 2a_4x, f_y = a_2 + a_3x + 2a_4y$$-->
+After substitution for $a_i$ where $f_x=a_1, f_y=a_2$:
+<p class="fragment">
+$$ f_x = \left [z_{i-1,j-1} - z_{i+1,j-1} + 2(z_{i-1,j} - z_{i+1,j}) + z_{i-1,j+1} -z_{i+1,j+1} \right ] / 8 \Delta x $$
+<p class="fragment">
+$$ f_y = \left [z_{i-1,j-1} - z_{i-1,j+1} + 2(z_{i,j-1} - z_{i,j+1}) + z_{i+1,j-1} -z_{i+1,j+1} \right ] / 8 \Delta y $$
+<p class="fragment">
+Then slope and aspect is $ \tan \gamma = \sqrt{f_x^2 + f_y^2}, \tan \alpha = f_y / f_x$
+<br><img height="320" src="img/topoanalysis/movingwindow3x3b.png">
+</section>
+
+<section>
+   <h3>Slope and aspect: DEM </h3>
+Slope and aspect derived from a 10m resolution DTM
+<p class="fragment"> <img height="350" src="img/topoanalysis/slopeaspect10m.jpg">
+</section>
+
+<section>
+   <h3>Slope and aspect: integer DEM </h3>
+Impact of integer elevation values in meters on slope pattern
+and slope and aspect histograms
+<p class="fragment"> <img height="440" src="img/topoanalysis/slope_integers.jpg">
+</section>
+
+<section>
+   <h3>Shape metrics: curvatures</h3>
+Curvature at a point: inverse of the radius of a circle tangent to a curve $[m^{-1}]$
+<p class="fragment"> <img height="300" src="img/topoanalysis/curvatures_radius.png">
+<p class="fragment">Blue: Concave, Orange: Convex.  
+<p class="fragment">High curvature value is associated with smaller circle
+</section>
+
+<section>
+   <h3>Surface curvatures</h3>
+<ul>
+<li class="fragment">In general, surface has <b>different curvatures in different directions</b>
+<li class="fragment"><b>Principal curvatures: </b>maximum and minimum curvatures $\kappa_1, \kappa_2$
+at a point, in perpendicular directions 
+<li class="fragment">Mean and Gaussian curvatures: $\kappa_M = (\kappa_1 + \kappa_2) /\, 2, \kappa_G = (\kappa_1 \kappa_2) /\, 2$
+<li class="fragment">Geomorphometric curvatures are related to processes: profile, tangential / plan
+</ul>
+</section>
+
+<section>
+   <h3>Profile curvature</h3>
+<ul>
+<li class="fragment">measured in the direction of gradient - along the flowline
+<li class="fragment">measures rate of change in slope
+<p>
+    <ul>
+    <li class="fragment">convex: increasing slope - flow acceleration 
+    <li class="fragment">concave: decreasing slope - flow deceleration
+    </ul>
+</ul>
+</section>
+
+<section>
+   <h3>Tangential and plan curvatures</h3>
+<ul>
+<li class="fragment">measured in the direction perpendicular to gradient, in the direction of a tangent to contourline
+<li class="fragment">measures rate of change in aspect, curvature of contours
+<p>
+    <ul>
+    <li class="fragment">convex: flow divergence 
+    <li class="fragment">concave: flow convergence
+    </ul>
+</ul>
+</section>
+
+<section>
+   <h3>Curvatures and flow</h3>
+<p class="fragment"> <img height="450" src="img/topoanalysis/curvatures_flow.png">
+</section>
+
+<section>
+   <h3>Curvatures equations</h3>
+Given a surface  $z = f(x,y)$, we compute the geomorphometric curvatures as follows:
+<p class="fragment">
+$$
+\kappa_p= (f_{xx} f_x^2 + 2f_{xy} f_x f_y + f_{yy} f_y^2 ) / p \sqrt{q^3}
+$$
+<p class="fragment">
+$$
+\kappa_t= (f_{xx} f_y^2 - 2f_{xy} f_x f_y + f_{yy} f_x^2 ) / p \sqrt{q}
+$$
+<ul>
+<li class="fragment"> $\kappa_p$ is the profile curvature, $\kappa_t$ is the tangential curvature,
+<li class="fragment"> $p=f_x^2+f_y^2$ and $q = p+1$
+<li class="fragment"> $f_{xx}, f_{yy}, f_{xy}$ are second order partial derivatives of $f(x,y)$
+(differences of differences)
+</ul>
+</section>
+
+<section>
+   <h3>Curvatures from DEM </h3>
+Methods to estimate curvatures from a DEM:
+<p>
+<ul>
+  <li class="fragment">Configuration of elevation differences
+  <li class="fragment">Polynomial approximation on 3x3 neighborhood, many versions using second order polynomials
+  <li class="fragment">Spline approximation directly from point data
+</ul>
+</section>
+
+<section>
+   <h3>Curvatures from DEM </h3>
+Polynomial approximation on 3x3 moving window:
+$$ z = f(x,y)=a_0+a_1 x + a_2 y + a_3 xy + a_4 x^2 + a_5 y^2 $$
+<ul>
+   <li class="fragment">we use weighted least squares to fit the polynomial 
+   <li class="fragment">we estimate  $f_x, f_y, f_{xx}, f_{yy}, f_{xy}$ using weighted elevation differences
+and differences of differences
+   <li class="fragment">we copmute the curvatures using equations for $\kappa_p, \kappa_t$
+</ul>
+<p class="fragment"><img height="320" src="img/topoanalysis/movingwindow3x3c.png">
+<!--Now we can compute $f_x$ and $f_y$ in x=y=0: $$f_x = a_1, f_y = a_2, f_{xx}=2a_4, f_{yy}=2a_5 f_{xy}=a_3$$-->
+</section>
+
+<section>
+   <h3>Curvature maps</h3>
+Profile and tangential curvatures computed from 10m resolution DEM
+<p class="fragment">
+<p><img height="350" src="img/topoanalysis/curvatures10m.jpg">
+</section>
+
+<section>
+   <h3>Topographic parameters from points </h3>
+Given a set of scattered points $(x_i,y_i,z_i)$, $i=1,...,n$ estimate slope, aspect, and curvatures:
+<p>
+<ul>
+  <li class="fragment">Partial derivatives of a suitable spline function, usually simultaneously with interpolation
+  <li class="fragment">More than 100 points may be used to compute the function - larger forms can be analyzed
+<p>
+  <li class="fragment">Partial derivatives of a local polynomial approximation function
+</ul>
+</section>
+
+<section>
+   <h3>Slope and aspect from points </h3>
+Slope and aspect derived from lidar 1st return point cloud using RST method
+(smoothing spline with tension)
+<p class="fragment"> <img height="350" src="img/topoanalysis/rstanal_slopelg.jpg">
+ <img height="350" src="img/topoanalysis/rstanal_aspt15.jpg">
+ <img height="150" src="img/topoanalysis/aspect_lgcolor.png">
+</section>
+
+<section>
+   <h3>Curvatures from points </h3>
+Profile and tangential curvatures derived from lidar 1st return points using RST method
+<p class="fragment"> <img height="350" src="img/topoanalysis/rstanal_pct15n.jpg">
+ <img height="350" src="img/topoanalysis/rstanal_tct15n.jpg">
+ <img height="150" src="img/topoanalysis/rstanal_pcleg.jpg">
+</section>
+
+<section>
+<h3>Impact of tension on curvature</h3>
+Tangential curvature computed using RST with high and lower tension
+<p>
+<img height="360" src="img/topoanalysis/rstanal_tclid1stdefco.png">
+<img height="360" src="img/topoanalysis/rstanal_tclid1stt15co.png">
+ <img height="150" src="img/topoanalysis/rstanal_pcleg.jpg">
+</section>
+
+<section>
+<h3>Impact of tension on slope and curvature</h3>
+<img height="460" src="img/topoanalysis/splines_slope_curvature.jpg">
+</section>
+
+<section>
+<h3>Impact of tension on slope and curvature</h3>
+<img height="400" src="img/lidar_tension_curv.gif">
+</section>
+
+<section>
+<h3>Landforms</h3>
+<ul>
+<li>Combining the geometry at a point
+<p>
+<ul>
+<li>Ridge: Tang. curvature convex and profile curvature convex/concave
+<li>Valley: Tang. curvature concave - profile convex/concave
+<li>Peak: gradient = 0, convex-convex
+<li>Pit: gradient = 0, concave-concave
+<li>Saddle: gradient = 0: concave-convex 
+</ul>
+<p>
+<li>Geomorphons
+</ul>
+</section>
+
+<section>
+<h3>Basic Landforms map</h3>
+Impact of moving window on landform mapping
+<p>
+<img height="350" src="img/topoanalysis/landforms_9c1m.jpg">
+<img height="350" src="img/topoanalysis/landforms_45c1m.jpg">
+</section>
+
+<section>
+   <h3>Learn more</h3>
+See the supplemental material for 
+<a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/topics/geomorphometry_basics.html">
+5.B Spatial and temporal terrain analysis topic</a>
+<!--
+Find more examples in the 2014 lecture, MEA592-004/GIS595-002:
+Multidimensional Geospatial Modeling material and GIS595 UAS course
+-->
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>

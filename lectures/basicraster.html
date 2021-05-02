@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2><b>Geospatial Analysis</b></h2>
+    <h3>Basic raster operations</h3>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h2>Learning objectives</h2>
+<p>
+<ul>
+  <li>Explain global and zonal statistics
+<p>
+  <li>Define neighborhood operations
+<p>
+  <li>Understand raster map algebra
+<p>
+  <ul>
+   <li>expressions, operators, functions and variables
+   <li>basic calculations, integer and floating point data
+   <li>"if" conditions, handling NULLs and creating masks
+  </ul>
+<p>
+  <li>Define raster mosaicking and patching
+<p>
+  <li>Explain raster map reclassification and rescaling
+</ul>
+</section>
+
+<section>
+   <h3>Summary statistics: continuous data</h3>
+<p>
+  <ul>
+    <li class="fragment">stored numbers are values quantifying the phenomenon
+    <li class="fragment">univariate statistics: min, max, mean, standard deviation, median, ... 
+    <li class="fragment">histogram (requires discretization into bins) 
+  </ul>
+<p class="fragment"> Can be applied as <b>global, zonal, or focal </b> operations
+<p class="fragment"> <small>See relevant equations and additional metrics in 
+<a href="http://www.spatialanalysisonline.com/HTML/index.html?statistical_measures_and_relat.htm"> Supplemental material</a>
+</small>
+</section>
+
+<section>
+   <h3>Summary statistics: discrete data</h3>
+<p>
+  <ul>
+   <li class="fragment">stored numbers can be values (quantitative data) or category numbers (qualitative data)
+   <li class="fragment">values apply to an area rather than grid point
+   <li class="fragment">univariate statistics can be applied only to quantitative attributes
+   <li class="fragment">majority (mode or most frequent category), diversity (number of different categories)  apply to category data
+</ul>
+<p class="fragment"> Can be applied as <b>global, zonal, or focal </b> operations
+<p class="fragment"> <small>See relevant equations and additional metrics in 
+<a href="http://www.spatialanalysisonline.com/HTML/index.html?statistical_measures_and_relat.htm"> Supplemental material</a>
+</small>
+</section>
+
+<section>
+   <h3>Global statistics</h3>
+<p>Continuous data example
+<ul>
+ <li>Compare elevation data from different sources using mean, standard deviation and histogram
+ <li>Identify data anomalies and potential artifacts 
+</ul>
+</section>
+
+<section>
+   <h3>Global statistics: compare DEMs</h3>
+<p> <img height="200" src="img/analysis_basicraster/dem_1m.jpg">
+<img height="200" src="img/analysis_basicraster/elev_dem1mhist.png">
+</p>
+<p class="fragment"> <img height="200" src="img/analysis_basicraster/elev_rural_10m.jpg">
+<img height="200" src="img/analysis_basicraster/elevrur_ned10hist.png">
+<p class="fragment"> <img height="70" src="img/analysis_basicraster/elevstats_table_1m10m.png">
+</section>
+
+<section>
+   <h3>Global statistics: compare DEMs</h3>
+<p> <img height="200" src="img/analysis_basicraster/dem_1m.jpg">
+<img height="200" src="img/analysis_basicraster/elev_dem1mhist.png">
+</p>
+<p class="fragment"> <img height="200" src="img/analysis_basicraster/elev_rural_30m.jpg">
+<img height="200" src="img/analysis_basicraster/elevrur_ned30hist.png">
+</p>
+<p class="fragment"> <img height="70" src="img/analysis_basicraster/elevstats_table.png">
+</section>
+
+<section>
+   <h3>Global statistics: compare DEMs</h3>
+<p> <img height="200" src="img/analysis_basicraster/elev_rural_30m.jpg">
+<img height="200" src="img/analysis_basicraster/elevrur_ned30hist.png">
+</p>
+<p class="fragment"> <img height="200" src="img/analysis_basicraster/elev_rural_srtm30m.jpg">
+<img height="200" src="img/analysis_basicraster/elevrur_srtm30hist.png">
+</p>
+<p class="fragment"> <img height="60" src="img/analysis_basicraster/elevstats_table_30mnedsrtm.png">
+</section>
+
+<section>
+   <h3>Global statistics: compare DEMs</h3>
+<p>
+<img height="200" src="img/analysis_basicraster/elev_dem1mhist.png">
+<img height="200" src="img/analysis_basicraster/elevrur_ned10hist.png">
+<p>
+<img height="200" src="img/analysis_basicraster/elevrur_ned30hist.png">
+<img height="200" src="img/analysis_basicraster/elevrur_srtm30hist.png">
+</section>
+
+<section>
+   <h3>Global statistics: discrete soil data</h3>
+<p> Soil properties: soil erodibility mean 0.248 
+<p> Soil type ID: majority (most common soil type)
+<img height="330" src="img/data_visualize/soilsKfac_discrleg.png">
+<img height="330" src="img/data_visualize/soils_rural_1mID.png">
+</section>
+
+<section>
+   <h3>Zonal statistics: continuous data</h3>
+<ul>
+<li>Agregates continous data to discrete areas 
+<li>Hydrology example: mean slope for watersheds to estimate how fast water moves through it 
+</ul>
+<p class="fragment"> <img height="240" src="img/analysis_basicraster/watersheds2d.png">
+<img class="fragment" height="240" src="img/analysis_basicraster/slope.png">
+<img class="fragment" height="240" src="img/analysis_basicraster/zonal_basinslope.png">
+<p class="fragment"><small>Watersheds (discrete zones), Slope (continuous variable): Mean slope for each watershed</small>
+</section>
+
+<section>
+   <h3>Zonal statistics: category data</h3>
+<ul>
+<li>Agregates discrete data to discrete areas
+<li>Land use analysis example: map prevailing land cover for each zipcode
+</ul>
+<p class="fragment"> <img height="240" src="img/analysis_basicraster/zipcodes_rast.png">
+<img class="fragment" height="240" src="img/analysis_basicraster/landuse96_shade.jpg">
+<img class="fragment" height="240" src="img/analysis_basicraster/landusebyzip.png">
+<p class="fragment"><small>Zipcodes (discrete zones), Land cover 1996 (discrete variable): Most common land cover</small>
+<p class="fragment"><small>HI developed, LI developed, Southern pine, Hardwoods, Cultivated Herbaceous</small>
+</section>
+
+<section>
+   <h3>Neighborhood operations</h3>
+<ul>
+<li class="fragment">Value at a grid cell is function of the values at neighboring grid cells
+<li class="fragment">Grid cell neighborhood is defined by a moving window, square or circular 
+<li class="fragment">Same rules apply for continuous and discrete data as for global and zonal stats
+<li class="fragment">Basic univariate statistics, filters, image processing
+</ul>
+</section>
+
+<section>
+   <h3>Neighborhood operations: smoothing</h3>
+<p>Smoothing noise in DEM: focal mean with 5x5 window
+<p class="fragment"> <img height="240" src="img/analysis_basicraster/rneighbor_avg_srtm_in.jpg">
+<br><img class="fragment" height="230" src="img/analysis_basicraster/rneighbor_avg_srtm_out.jpg">
+</section>
+
+<section>
+   <h3>Neighborhood operations: diversity</h3>
+<p>Number of different LU classes in 7x7 window
+<p class="fragment"> <img height="230" src="img/analysis_basicraster/rneighbor_mode_lu_in.png">
+<img height="230" src="img/analysis_basicraster/lu96_legbig.png">
+<br><img class="fragment" height="230" src="img/analysis_basicraster/rneighbor_mode_lu_out.png">
+<img height="180" src="img/analysis_basicraster/lu_divers_lg.png">
+</p>
+</section>
+
+<section>
+   <h3>Raster map algebra</h3>
+<p>
+Computes a new raster map using an expression built by applying logical and/or arithmetic operators, 
+or mathematical functions to existing raster maps:
+<p>
+<strong>newmap = expression (map1, map2, ...map3)</strong>
+<p>
+Local operation: Expression is applied on per-cell basis
+</section>
+
+<section>
+   <h3>Raster map algebra</h3>
+<p>
+Each software has its own syntax, operators and functions
+<ul>
+<li class="fragment">Logical operators and functions: 
+<ul>
+  <li class="fragment">less than, equal, 
+  <li class="fragment">and, or, not, ...; 
+  <li class="fragment">if(x), if(x,a,b)
+</ul>
+<p>
+<li class="fragment">Arithmetic Operators
+<ul>
+<li class="fragment"> +, -, *, / 
+</ul>
+<p>
+<li class="fragment">Mathematical Functions: 
+<ul>
+<li class="fragment">exp(x,y),sin(x),log(x)
+<li class="fragment">min(x1,x2,..), max(), median()
+</ul>
+<p class="fragment"><small>See GRASS GIS <a href="https://grass.osgeo.org/grass78/manuals/r.mapcalc.html">map algebra manual page</a>
+for extensive set of supported operators and mathematical functions</small>
+</section>
+
+<section>
+   <h3>Map algebra: logical expressions</h3>
+<p>
+<ul>
+<li>continuous and discrete (category) data and their combination 
+<li>reclassification, sub-setting, masking, overlays
+<li>Example: extract map of elevations in all forested areas with elevation > 120m
+</ul>
+<p>GRASS GIS expression
+<p class="small">"highforest = if(landclass96==5 && elevation > 120., elevation, null())”</p>
+</section>
+
+<section>
+   <h3>Map algebra: logical expressions</h3>
+<p class="small">"highforest = if(landclass96==5 && elevation > 120., elevation, null())”</p>
+<p>
+<img height="240" src="img/analysis_basicraster/landclass96sh.png">
+<img height="240" src="img/analysis_basicraster/elevation_shade10m.jpg">
+<img height="240" src="img/analysis_basicraster/highforest.jpg">
+<p class="fragment"><small>How will the map look like if we use OR (||) instead of AND (&&) ?</small>
+</section>
+
+<section>
+   <h3>Map algebra: arithmetic operators</h3>
+<p>Integer and floating point matters for arithmetic expressions:
+<ul>
+<li>F(map1_int, map2_int) -> map_int
+<li>F(map1_int, map2_fp) -> map_fp
+<p>
+<li>Example: compute ndvi index from Landsat integer maps
+<li>ndvi=(tm4-tm3)/(tm4+tm3)
+<li>ndvi=float(tm4-tm3)/float(tm4+tm3)
+<li>ndvi=1.*(tm4-tm3)/(tm4+tm3)
+</ul>
+</section>
+
+<section>
+   <h3>Raster map algebra: int and fp</h3>
+<p>ndvi=(tm4-tm3)/(tm4+tm3)
+<p>
+<img height="240" src="img/analysis_basicraster/lsat7_2002_30.png">
+<img height="240" src="img/analysis_basicraster/lsat7_2002_40.png">
+<img height="240" src="img/analysis_basicraster/ndvi_0.png">
+</section>
+
+<section>
+   <h3>Raster map algebra: int and fp</h3>
+<p>ndvi=float(tm4-tm3)/float(tm4+tm3)
+<p>
+<img height="240" src="img/analysis_basicraster/lsat7_2002_30.png">
+<img height="240" src="img/analysis_basicraster/lsat7_2002_40.png">
+<img height="240" src="img/analysis_basicraster/ndvi_fp.png">
+</section>
+
+<section>
+   <h3>Raster map algebra: math functions</h3>
+<p>
+Example: for all forested areas, compute sediment transport capacity using the following equation 
+<p>equations
+<p class=small>GRASS GIS expression
+<p class=small>
+"sediment = if(landclass96==5, exp(contrib_area,1.5) * sin(slope), null())”</p>
+</section>
+
+<section>
+   <h3>Map algebra: math functions</h3>
+<p>Generate new surfaces:
+<p> $z =  x +  y + 100$
+<p>plane = row() + col() + 98
+<p class="fragment">
+<img height="250" src="img/analysis_basicraster/tiltedplaneNW.jpg">
+<img height="250" src="img/analysis_basicraster/tiltedplane_mapalgebra.jpg">
+<p class="fragment"><small>Tilted plane</small>
+</section>
+
+<section>
+   <h3>Map algebra: math functions</h3>
+<p>Generate new surfaces:
+<p>
+$z = \sin (0.4x) + 0.3 \cos(y) + 80$
+<p class="fragment">
+<img height="380" src="img/analysis_basicraster/waves2_3delev.jpg">
+<img height="250" src="img/analysis_basicraster/waves_leg.jpg">
+<p class="fragment"><small>Smooth, simplified surface</small>
+</section>
+
+<section>
+   <h3>Raster map algebra: null data</h3>
+<p>
+<ul>
+<li class="fragment">Raster maps can include NULL data (no-data), each software has its own rules how to handle them in map algebra operations
+<li class="fragment">General rule: If a cell is null in at least one map (variable) then it is null in the resulting map
+<li class="fragment">"If “ statements can test for null and/or assign a cell null value based on the if condition
+<li class="fragment">Special operators can be implemented to extend the rules applied to nulls
+</ul>
+</section>
+
+<section>
+   <h3>Example: null data handling</h3>
+<p>
+Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM, 
+<p class=small> elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</p>
+<p class="fragment">
+<img height="350" src="img/analysis_basicraster/mapcalc_nulls_in.jpg"></p>
+</section>
+
+<section>
+   <h3>Example: null data handling</h3>
+<p>
+Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM,
+<p class=small> elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</p>
+<p class="fragment">
+<img height="350" src="img/analysis_basicraster/mapcalc_nulls_out.jpg"></p>
+<p class="fragment"><small>Use “if” statement to limit the computation to no-NULL areas</small></p>
+</section>
+
+<section>
+   <h3>Patching and Mosaicking</h3>
+<ul>
+<li class="fragment">Merging several neighboring raster maps into a single raster
+<li class="fragment">“Filling-in” nulls in base raster map with values from additional raster maps 
+<li class="fragment">Order of maps matters for patching
+<li class="fragment">Issues: resolution, extension that is not aligned, no-data slivers due to projection
+</ul>
+</section>
+
+<section>
+   <h3>Mosaicking</h3>
+Merging several neighboring raster maps into a single raster (mosaic)
+<p class="fragment">
+<img height="350" src="img/analysis_basicraster/patch_tiles.jpg"></p>
+<p class="small">First mosaic, then reproject to avoid potential slivers that need to be interpolated</p>
+</section>
+
+<section>
+   <h3>Reclassification</h3>
+<p>
+Reclassification / recoding: transformation rules used to convert between raster value types and classes:
+<p>change interval or list of values $(w_i, w_j)$  to a new value $v_k$ or interval of values $(v_k,v_l)$
+<p>Interval: 
+<ul>
+<li>Equal value
+<li>Natural breaks (based on histogram breaks)
+<li>Equal area (histogram equalized)
+</ul>
+</section>
+
+<section>
+   <h3>Reclassification example</h3>
+<p>Aspect: continuous values in degrees to discrete classes in cardinal directions
+<p class="fragment">
+<img height="270" src="img/analysis_basicraster/aspect360.jpg">
+<img height="270" src="img/analysis_basicraster/aspect-reclass.png">
+<small>0- 45 = 4 East, 45-135 = 1 North, 135-225 = 2 West, 225-315 = 3 South, 315-360 = 4 East,</small>
+</section>
+
+<section>
+ <h3>Summary</h3>
+<ul>
+  <li>global and zonal statistics
+  <li>neighborhood operations
+  <li>map algebra
+</ul>
+</section>
+
+<section>
+ <h3>Reading, resources</h3>
+links
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>

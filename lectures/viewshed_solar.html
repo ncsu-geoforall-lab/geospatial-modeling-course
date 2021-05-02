@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2><b>Viewshed analysis and solar radiation</b></h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h2>Learning objectives</h2>
+<p>
+<ul>
+ <li>understand line of sight, 
+ <li>define viewshed, cumulative viewshed and viewscape
+ <li>explain components of solar radiation in complex terrain
+ <li>understand cast shadow and solar inclination angle
+ <li>explain cumulative solar radiation, solar energy potential 
+</ul>
+</section>
+
+<section>
+   <h3>Line of sight</h3>
+<ul>
+  <li>Line of sight analysis is used to identify points on the terrain surface 
+      along a given line that are visible from a given point on this line.
+  <li>LoS or ray tracing is used for:
+  <ul>
+   <li class="fragment">visibility analysis 
+   <li class="fragment">emitor-receptor systems design 
+taking into account decay of signal with distance, for example, to optimize locations of cell towers 
+  </ul>
+</ul>
+</section>
+
+<section>
+   <h3>Computing Line of sight</h3>
+<p>
+Given a viewing point A and a target B, 
+<!--$$ \tan \alpha = (z_B-z_A )/ d_{BA} $$
+ <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is greater than  $\alpha$
+-->
+<br>B is not visible from A if, 
+<ul>
+ <li class="fragment">any point C is above the line that connects AB
+ <li class="fragment">where the points C are a projection of AB on the surface 
+</ul>
+<p> 
+<img height="350" src="img/viewshed_solar/lineofsight_nonvisible.jpg">
+</section>
+
+<section>
+   <h3>Computing Line of sight</h3>
+<p>
+Given a viewing point A and a target B, 
+<!--we define $$ tan \alpha = (z_B-z_A )/ d_{BA} $$ 
+ <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is smaller than  $\alpha$
+-->
+<br>B is visible from A if, 
+<ul>
+ <li class="fragment">all points C are below the line that connects AB
+</ul>
+<p class="fragment"> 
+<img height="350" src="img/viewshed_solar/lineofsight_visible.jpg">
+</section>
+
+<section>
+   <h3>Viewshed</h3>
+<ul>
+<li class="fragment">region defined by a set of grid cells (or triangles) visible from a given viewing point
+<li class="fragment">computed by applying LOS analysis from the viewing point to each cell within a given distance
+<li class="fragment">can be implemented for TIN or raster DEMs
+<p>
+<li class="fragment">binary visibility map (yes/no)
+<li class="fragment"> angle above/below horizontal plane
+<li class="fragment"> relative elevation above/under horizontal plane
+<p>
+<li class="fragment"> shows what is visible from the given point or
+<li class="fragment">from where one can see the given point
+</ul>
+</section>
+
+<section>
+   <h3>Viewshed example 1</h3>
+<ul>
+ <li>Visibility analysis for finding a location for a webcam to support real-time monitoring of a watershed
+ <li>Height of webcam above the surface 1.75 and 6m, computed from 1m resolution DTM
+</ul>
+<p> <img height="380" src="img/viewshed_solar/viewshed_lw_webcam.jpg">
+</section>
+
+<section>
+   <h3>Viewshed example 2</h3>
+<ul>
+ <li>Visibility analysis from buildings, 30m resolution DTM 
+ <li>Elevation and relative height above the surface: 4 and 32 story building 
+</ul>
+<p> <img height="320" src="img/viewshed_solar/nc_RHlos.jpg">
+ <img height="320" src="img/viewshed_solar/nc_towerlos3D.jpg">
+</section>
+
+<section>
+   <h3>Viewshed example 3</h3>
+<ul>
+ <li>Visibility analysis from buildings, 1m resolution DSM
+</ul>
+<p> <img height="350" src="img/viewshed_solar/view_Hunt_dem_1m.png">
+ <img height="350" src="img/viewshed_solar/view_JH2_dem15_1m.png">
+</section>
+
+<section>
+   <h3>Viewshed example 4</h3>
+<p>Viewshed and viewscape analysis of landscape with vegetation using lidar data 
+developed by 
+<a href="https://drive.google.com/open?id=0B8j08KoSleFQOFdWZ0pNaXJUdUE">Payam Tabrizian</a>
+ <p><b>Viewscape:</b> Landscape composition and features within viewshed
+<p><small>Tabrizian P., Mitasova H. FOSS4G Boston presentation illustrationUsing open-source 
+tools and high-resolution geospatial data to estimate landscapes’ visual attributes. FOSS4G 2017 - Boston, August 2017.
+Related paper is under review.
+</small>
+</section>
+
+<section>
+   <h3>Cumulative Viewshed </h3>
+<p>Set of grid cells visible from a set of points: 
+<ul>
+   <li class="fragment">find a path that has minimum or maximum visibility
+   <li class="fragment">optimize distribution of signal sources to achieve the maximum coverage
+   <li class="fragment">limit development to areas that are not visible - e.g. from the Blue Ridge Parkway
+   minimize visibility of wind turbines
+</ul>
+</section>
+
+<section>
+   <h3>Solar radiation</h3>
+<p>
+Solar radiation controls the surface energy and water balance 
+and thus affects the atmospheric, biophysical and hydrologic processes. 
+<p>It also provides a source of renewable energy.
+</section>
+
+<section>
+   <h3>Surface net radiation</h3>
+<p>Spatially and temporally variable and depends on
+<ul>
+ <li class="fragment"> orientation of Earth relative to Sun (or position of sun relative to given point on earth)
+ <li class="fragment">topography: slope, aspect and shadowing
+ <li class="fragment">clouds and other atmospheric properties
+ <li class="fragment">surrounding surface properties (land cover)
+</ul>
+</section>
+
+<section>
+   <h3>Solar radiation components</h3>
+<p>
+<img height="420" src="img/viewshed_solar/solar_rad_comp.png">
+</section>
+
+<section>
+   <h3>Sun position</h3>
+<p>
+Given a date, time, and a location, for example:
+<ul>
+  <li>2001.12.22, day number 356, time: 14:25:00
+  <li>long: -78.678856, lat: 35.736160, timezone: -5.000
+</ul>
+<p>sun position is given by
+<p>
+<ul>
+   <li class="fragment">solar azimuth (measured in horizontal plane ): 212.7934...
+   <li class="fragment">solar altitude (sun angle above horizon): 23.1924
+</ul>
+<p class="fragment"><img height="220" src="img/viewshed_solar/sun_position2.gif">
+</section>
+
+<section>
+   <h3>Sun position parameters</h3>
+<ul>
+  <li>2001.12.22, day number 356, time: 14:25:00, long: -78.678856, lat: 35.736160, timezone: -5.000
+</ul>
+<p>
+<ul>
+   <li class="fragment">solar azimuth: 212.7934...
+   <li class="fragment">solar altitude or inclination: 23.1924
+   <li class="fragment">sun declination (angle between solar beam and earth equator) winter solstice: -23.4405 (sun above the Tropic of Capricorn)
+   <li class="fragment">sunrise time (without refraction cor.): 07:26:30
+   <li class="fragment">sunset time (without refraction cor.): 17:00:28
+   <li class="fragment">atm. refraction correction: inclination > 0 before sunrise
+</ul>
+</section>
+
+<section>
+   <h3>Solar incidence angle</h3>
+<p>
+Angle between the terrain normal and solar beam
+<ul>
+   <li class="fragment">solar beam: defined by solar inclination and azimuth
+   <li class="fragment">terrain normal: function of slope and aspect (or $f_x,f_y$)
+   <li class="fragment"> terrain normal: 3D vector orthogonal to the plane tangent to terrain surface,
+   <li class="fragment"> horizontal projection of terrain normal is gradient  
+</ul>
+<p class="fragment"><img height="250" src="img/viewshed_solar/solarincidangle.gif">
+<p class="fragment"><small>See e.g. 8.1.8 in Hengl et al., 2008, Geomorphometry or A.62 in Neteler et al., 2008 Appendix
+</small>
+</section>
+
+<section>
+   <h3>Solar incidence angle map</h3>
+<p>Solar incidence angle for winter solstice around 2pm, lat=35.736160, including a building with cast shadow
+<p><img height="420" src="img/viewshed_solar/solarincangleshadow.jpg">
+</section>
+
+<section>
+   <h3>Solar incidence angle dynamics</h3>
+<p>Solar incidence angle dynamics during summer and winter solstice for a small valley at 45 deg lat.
+<p><img height="320" src="img/viewshed_solar/rsuns.gif">
+</section>
+
+<section>
+   <h3>Solar incidence angle dynamics</h3>
+<p>Solar incidence angle dynamics during summer and winter solstice for a small valley at 45 deg lat.
+<p><img height="320" src="img/viewshed_solar/rsuns.gif">
+<img height="320" src="img/viewshed_solar/rsunw.gif">
+</section>
+
+<section>
+   <h3>Solar irradiance</h3>
+<p>Solar beam (direct) irradiance for inclined plane in $W/m^2$ is function of: 
+<ul>
+  <li class="fragment">solar incidence angle 
+  <li class="fragment">solar constant $[W/m^2$ 
+  <li class="fragment">atmospheric factors (clear sky):
+<ul>
+  <li class="fragment">Linke turbidity factor (atm. turbidity due to aerosols - reduces direct radiation)
+<!--  <li class="fragment">relative optical air mass --> 
+  <li class="fragment">Rayleigh optical thickness (thickness of clear atm., function of surface pressure)
+</ul>
+  <li class="fragment">computed as cumulative solar irradiance: daily $Wh/(m^2.day)$, monthly, seasonal, annual
+</ul>
+</section>
+
+<section>
+   <h3>Components of solar irradiance</h3>
+<p>Cumulative beam solar irradiance $[Wh/(m^2 day]$, diffuse and reflected irradiance
+for day 356 (winter solstice) computed with 0.5hr time step
+<p class="fragment"><img height="300" src="img/viewshed_solar/solarbeam356.jpg">
+<img height="220" src="img/viewshed_solar/solardiff356.jpg"> 
+<img height="220" src="img/viewshed_solar/solarrefl356.jpg"> 
+</section>
+
+<section>
+   <h3>Winter and summer solar irradiance</h3>
+<p>Spatial pattern of cumulative direct beam solar irradiance $[Wh/(m^2 day)]$ for different days 356 and 180
+<p class="fragment"><img height="360" src="img/viewshed_solar/solarbeam356.jpg">
+<img height="360" src="img/viewshed_solar/solarbeam180.jpg">
+</section>
+
+<section>
+   <h3>Solar radiation duration</h3>
+<p>Spatial pattern of solar radiation duration $[hr]$ for different days 356 and 180
+<p class="fragment"><img height="380" src="img/viewshed_solar/solartime356.jpg">
+<img height="380" src="img/viewshed_solar/solartime180.jpg">
+<p class="fragment">sunrise 4.8hr, sunset 19.20hr, sunrise 7.2hr, sunset 16.30hr
+</section>
+
+<section>
+   <h3>Solar radiation dynamics</h3>
+<p>Centennial Campus during winter solstice 
+<p><img height="400" src="img/viewshed_solar/winter_solstice_centennial.gif">
+</section>
+
+<section>
+   <h3>Solar radiation dynamics</h3>
+<p>Centennial Campus during summer solstice 
+<p><img height="400" src="img/viewshed_solar/summer_solstice_centennial.gif">
+</section>
+
+<section>
+ <h3>Reading, resources</h3>
+<p>See <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/topics/viewsheds_solar.html">Supplemental material links</a>
+</section>
+
+<section>
+ <h3>Summary</h3>
+<ul>
+  <li>geometry of line of sight and viewsheds
+  <li>viewshed and viescape applications
+  <li>sun position and solar radiation principles
+  <li>dynamics and spatial variability of solar radiation
+  <li>solar radiation examples
+</ul>
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>

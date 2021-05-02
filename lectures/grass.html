@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2>
+        Introduction to<br>
+        GRASS GIS
+    </h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova
+        <br>
+        and Vaclav Petras</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+<h3>Learning Objectives</h3>
+<p>
+This lecture is a brief introduction to GRASS GIS software
+and overview of its features in the context of this course and
+open source software in general.
+</p>
+<ul>
+    <li>
+</ul>
+</section>
+
+
+<section>
+<h3>Open Source and Licensing</h3>
+<ul>
+<li>According to Stallman (2002),
+    there are four freedoms that as a <em>user</em> you should have:
+    <ul>
+        <li>the freedom to use the software for any purpose,
+        <li>the freedom to change the software to suit your needs,
+        <li>the freedom to share the software, and
+        <li>the freedom to share the changes you make.
+    </ul>
+</ul>
+<figure>
+<img src="img/gpl_logo.svg" style="width: 30%">
+<figcaption><small>Logo of GNU GPL license, version 3</small></figcaption>
+</figure>
+<p>
+<small>
+Stallman, R. M. (2002). Free software, free society: selected essays. Ed. by J. Gay. 1st. ed. OCLC:
+253840339. Boston, Mass: Free Software Foundation. 220 pp. ISBN 978-1-882114-98-6.
+</small>
+</section>
+
+
+<section>
+<h3>Free, Libre, and Open Source</h3>
+
+<ul>
+<li>
+    free software (FS),
+    open source software (OSS),
+    free and open source software (FOSS),
+    free, libre and open source software (FLOSS)
+<li>the term <em>open source</em> is often used for simplicity
+    <ul>
+        <li>often used by developers as it refers to a development model
+    </ul>
+<li>the term <em>FOSS</em> is often used in geospatial community
+    <ul>
+        <li><em>free</em> refers to user's freedom
+        <li><em>open source</em> refers to open development model
+        <li><em>FOSS4G</em> (free and open source software for geospatial)
+    </ul>
+</ul>
+</section>
+
+
+<section>
+<h3>Commercial and FOSS</h3>
+
+<ul>
+<li>FOSS can be used commercially
+<li>FOSS can be commercial but not proprietary
+<li>FOSS can be used to build closed platforms
+<li>Famous FOSS examples (non-geospatial):
+<ul>
+    <li>Red Hat Enterprise Linux/CentOS
+    <li>Android/Android Open Source Project
+    <li>Chrome/Chromium, Firefox
+    <li>WordPress, Drupal
+    <li>Moodle
+    <li>Python, R
+    <li>
+        <a href="https://opensource.apple.com/">Apple</a>,
+        <a href="https://opensource.google.com/">Google</a>,
+        <a href="https://code.facebook.com/projects/">Facebook</a>,
+        <a href="https://www.linux.com/news/featured-blogs/200-libby-clark/787161-how-amazon-web-services-uses-linux-and-open-source">Amazon</a>,
+        <a href="https://netflix.github.io/">Netflix</a>
+</ul>
+</ul>
+
+</section>
+
+
+<section>
+<h3>FOSS Ecosystem: Example of a Scientific Desktop Setup</h3>
+<dl>
+<dt>QGIS, GRASS GIS</dt>
+<dd>
+GIS, remote sensing, cartography
+</dd>
+<dt>R, Octave, Python</dt>
+<dd>
+statistics, linear algebra, scripting, automation
+</dd>
+<dt>SQLite, PostgreSQL with PostGIS, LibreOffice</dt>
+<dd>
+database, tabular data
+</dd>
+<dt>Inkscape, Gimp, ImageMagic</dt>
+<dd>
+vector graphics, raster graphics
+</dd>
+</dl>
+<ul class="small">
+    <li>Portability: works on Mac, Linux, Windows
+    <li>Interoperability: programs designed to work with others
+</ul>
+</section>
+
+
+<section>
+<h3>FOSS Ecosystem: Example of a Service Setup</h3>
+
+<dl>
+<dt>GRASS GIS, R, SAGA GIS, GDAL</dt>
+<dd>
+backend processing
+</dd>
+<dt>OpenLayers or Leaflet, Django or Flask</dt>
+<dd>
+front end
+</dd>
+<dt>PostgreSQL with PostGIS</dt>
+<dd>
+database (spatial and non-spatial data storage)
+<!--<span class="small">(native connection between GRASS GIS and PostGIS)</span>-->
+</dd>
+<dt>ZOO-Project, PyWPS, GeoServer, or QGIS Server</dt>
+<dd>
+processing server and spatial data publishing server
+<!--<span class="small">(OGC WPS, native support for GRASS GIS)</span>-->
+<!--<span class="small">(MapServer can read directly from GRASS GIS database)</span>-->
+</dd>
+</dl>
+
+<ul class="small">
+    <li>Flexibility: standards and open formats allows to switch different components
+    <li>Scalability: can be copied to more machines at no cost
+</ul>
+</section>
+
+<section>
+<h3>GRASS GIS</h3>
+<ul>
+    <li>
+        Timeline:
+        <ul>
+        <li>1983 started at US Army CERL
+            <span class="small">
+                as land management system
+            </span>
+        <li>evolved into general purpose GIS
+        <li>1999 GNU GPL, international team of developers
+        <li>2008 OSGeo Project
+        <li>35 years of GRASS GIS development in 2018
+        <li>check out <a href="https://trac.osgeo.org/grass/timeline">last change</a>
+            <span class="small">(probably just few hours ago)</span>
+        <li>last release Jun 12, 2018 <span class="small">[last checked Aug 2018]</span>
+        </ul>
+</ul>
+<img src="img/grass_logo_development.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Historical Video</h3>
+<p class="small">
+    Historical promotional video from 1987 narrated by William Shatner
+</p>
+<iframe width="560" height="315" scrolling="no" src="https://av.tib.eu/player/12963" frameborder="0" allowfullscreen></iframe>
+<p class="small">
+    watching 1 minute is sufficient to get the idea,
+    optionally you can watch the whole 15 minutes
+    and see metadata and transcript at
+    <a href="https://doi.org/10.5446/12963">doi.org/10.5446/12963</a>
+</p>
+</section>
+
+
+<section>
+<h3>Processing Capabilities Overview</h3>
+    <dl style="font-size: 70%;">
+        <dt>raster and 3D raster</dt>
+        <dd>
+            map algebra, DEM, interpolation, flow, neighborhood, solar, cost surfaces, ...
+        </dd>
+        <dt>imagery (remote sensing)</dt>
+        <dd>
+            rectification, multispectral, classification, segmentation, PCA, FFT, ...
+        </dd>
+        <dt>vector and database</dt>
+        <dd>
+            buffers, overlays, networks, topology, attribute management, SQL, ...
+        </dd>
+        <dt>spatio-temporal data (time series)</dt>
+        <dd>
+            sampling, statistics, aggregation, temporal topology, algebra, ...
+        </dd>
+    </dl>
+<img src="img/grass_modeler_skyview.png" class="stretch">
+</section>
+
+
+<section>
+<h3>General Capabilities Overview</h3>
+    <dl style="font-size: 70%;">
+        <dt>visualization</dt>
+        <dd>
+            2D display, 3D visualization, temporal visualization, PNG, PS and PDF maps, ...
+        </dd>
+        <dt>interoperability</dt>
+        <dd>
+            import from and export to different formats, WMS, ...
+        </dd>
+        <dt>extensibility</dt>
+        <dd>
+            scriptable (e.g. Python), custom tools (typically Python or C), ...
+        </dd>
+    </dl>
+<img src="img/drone_3d.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Research Use</h3>
+<ul>
+<li>Used as a research platform and code repository
+<li>Example: Solar radiation model (r.sun)
+    <ul>
+        <li>available since 1993
+        <li>major changes in 1996, 1999, 2002, 2003, 2006, 2008, 2017
+        <li>parallelized version in 7.4
+    </ul>
+<li>by Jaroslav Hofierka et al.
+</ul>
+<br>
+<img src="img/summer_solstice_centennial.gif" class="stretch">
+<p><small>
+summer solstice dynamics on lidar DEM (Centennial Campus)
+</small></p>
+</section>
+
+
+<section>
+<h3>Software Description</h3>
+<ul>
+    <li>portable:
+        <ul>
+            <li>many operating systems: MS Windows, Mac OS, Linux, ...
+            <li>32bit and 64bit versions
+            <li>high-end desktops, low-end laptops,
+                Raspberry Pi,
+                High-Performance Computing clusters, ...
+        </ul>
+    <li>single integrated software
+    <li>functionality divided into modules
+    <li>written in C and Python
+</ul>
+<img src="img/grass_hexagons_3d_white_outlier.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Naming of Modules</h3>
+<table style="font-size: smaller;"><tbody>
+    <tr>
+        <th>Prefix</th>
+        <th>Functionality</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>r.</td>
+        <td>raster processing</td>
+        <td>r.mapcalc: raster map algebra</td>
+    </tr>
+    <tr>
+        <td>v.</td>
+        <td>vector processing</td>
+        <td>v.surf.rst: interpolation from points</td>
+    </tr>
+    <tr>
+        <td>g.</td>
+        <td>general management</td>
+        <td>g.remove: removes maps</td>
+    </tr>
+    <tr>
+        <td>d.</td>
+        <td>display and rendering</td>
+        <td>d.rast: display raster map</td>
+    </tr>
+    <!-- not relevant to 582 course and not enough space
+    <tr>
+        <td>i.</td>
+        <td>imagery processing</td>
+        <td>i.segment: image segmentation</td>
+    </tr>
+        <tr>
+        <td>r3.</td>
+        <td>3D raster processing</td>
+        <td>r3.stats: 3D raster statistics</td>
+    </tr>
+    <tr>
+        <td>t.</td>
+        <td>temporal data processing</td>
+        <td>t.rast.aggregate: temporal aggregation</td>
+    </tr>
+    -->
+</tbody></table>
+<small>There is more: i., t., r3., m., ps.</small>
+<br>
+<img src="img/grass_cli.png" class="stretch">
+</section>
+
+
+<section>
+<h3>User Interfaces</h3>
+<ul>
+<li>Functionality divided into modules <span class="small">(over 500)</span>
+<li>Modules can be accessed using:
+    <ul>
+        <li>Graphical User Interface (GUI)
+        <li>Command Line Interface (CLI)
+        <li>Python
+    </ul>
+</ul>
+<br>
+<img src="img/grass_count_and_modules.png" class="stretch">
+</section>
+
+
+<section>
+<h3>GUI</h3>
+<ul>
+<li>The interface for desktop
+</ul>
+<br>
+<img src="img/grass_gui.png" class="stretch">
+</section>
+
+
+<section>
+<h3>GUI for modules</h3>
+<ul>
+    <li>All modules have standardized, unified interface layout.
+</ul>
+<br>
+<img src="img/r_neighbors_dialog.png" class="stretch">
+<p><small>
+Standard dialog (form) for the r.neighbors module
+</small></p>
+</section>
+
+
+<section>
+<h3>Command Line</h3>
+<ul>
+<li>The baseline interface for efficiency and reproducibility
+<li>Available in GUI as Console with autocomplete functions
+</ul>
+<pre>r.fill.dir input=elev output=fill direction=dir
+</pre>
+<img src="img/grass_cli.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Python</h3>
+<ul>
+    <li>grass package part of GRASS GIS
+    <li>access to modules, but also to internal C functions
+    <li>integrated Python editor
+    <li>integrates with Jupyter Notebooks
+</ul>
+<pre><code>import grass.script as gs
+gs.run_command('r.fill.dir', input='elev',
+               output='fill', direction='dir')
+</code></pre>
+<img src="img/pyedit.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Duality between GUI and commands</h3>
+<div class="left">
+    <img src="img/r_in_lidar_dialog.png" style="width: 100%;">
+</div>
+<div class="left">
+    <small>Command line (Bash):</small>
+    <br>
+    <img src="img/r_in_lidar_command_in_bash.png" style="width: 100%;">
+    <small>Python:</small>
+    <br>
+    <img src="img/r_in_lidar_command_in_python.png" style="width: 100%;">
+</div>
+<p><small>
+Examples in the documentation and class instructions are usually
+provided as commands which can be used to fill in the GUI, write Python
+code, or run them directly.
+</small></p>
+</section>
+
+
+<section>
+<h3>3rd Party Interfaces</h3>
+<ul>
+<li>QGIS <small class="small">(Processing Plugin and GRASS Plugin)</small>
+<li>R <small class="small">(rgrass7 package)</small>
+<li>...
+</ul>
+<br>
+<img src="img/qgis_processing.png" class="stretch">
+</section>
+
+
+<section>
+<h3>3rd Party Interfaces</h3>
+<ul>
+<li>Tangible Landscape
+    <ul>
+        <li>tangible user interface to GRASS GIS and Blender
+        <li>by NC State University, Center for Geospatial Analytics
+    </ul>
+</ul>
+<p>
+<iframe data-autoplay width="700" height="350" src="https://www.youtube.com/embed/Uje8ORyhBaQ?rel=0&amp;showinfo=0&amp;loop=1&amp;playlist=Uje8ORyhBaQ" frameborder="0" allowfullscreen></iframe>
+<p><small>
+Modules running: v.surf.rst, r.contour, r.fill.dir, r.sim.water
+</small></p>
+</section>
+
+
+<section>
+<h3>Spatial Database</h3>
+<img src="img/grass_data_tab.svg" class="stretch"
+     alt="Example of GRASS GIS database structure into locations (based on SRS) and further to mapsets (for organization)">
+</section>
+
+
+<section>
+<h3>Selecting Mapset</h3>
+<ul>
+<li>Selecting database, location, and mapset
+</ul>
+<br>
+<img src="img/grass_startup.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Computational Region</h3>
+<ul>
+    <li>extent and resolution for raster computations
+</ul>
+<br>
+<img src="img/grass_computational_region.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Documentation: Public Author &amp; Accessible Code</h3>
+<img src="img/grass_module_author_source.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Documentation: Link to Research Papers</h3>
+<img src="img/grass_module_references.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Asking Questions</h3>
+<ul>
+    <li>Mailing list discussions (archived since 1991)
+    <li>GIS StackExchange, ...
+    <li>Commercial support
+<ul>
+<img src="img/grass_user_mailing_list.png" class="stretch">
+<p>
+</section>
+
+
+<section>
+<h3>Addons Repository</h3>
+<ul>
+    <li>user contributed modules, plugins, tools, functions
+    <li>distributed to users
+    <li>including compiled C and C++ for MS Windows
+    <li>automatically generated GUI
+        <span class="small">for Python and C/C++</span>
+</ul>
+<img src="img/grass_addons.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Peer-reviewed Implementation</h3>
+<ul>
+    <li>Example:
+        <ul>
+            <li>user tested the module
+            <li>discovered error in equation in code
+        </ul>
+</ul>
+<img src="img/grass_bug_in_equation.png" class="stretch">
+</section>
+
+
+<section>
+<h3>Summary</h3>
+<ul>
+    <li>Licensing: No "purchasing of licenses" needed for users
+    <li>Support: Community and commercial
+        <ul>
+            <li>Students: Start with course message board now; try mailing list or GIS StackExchange later on
+        </ul>
+    <li>Several user interfaces
+        <ul>
+            <li>Class instructions are using GUI and command line
+            <li>Python and Jupyter are recommended for the projects
+        </ul>
+    <li>Data in database, locations and mapsets
+    <li>Raster operations in a specified computational region
+</ul>
+<br>
+<img src="img/grass_logo.png" class="stretch">
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>

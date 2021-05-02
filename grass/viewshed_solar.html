@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<li><a href="../topics/course_intro.html">Introduction</a></li>
+<li><a href="../logistics.html">Logistics</a></li>
+<li><a href="../topics/index.html">Topics</a></li>
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Viewshed and solar energy potential analysis</h2>
+<p>Resources:
+<ul>
+<li><a href="https://grass.osgeo.org/grass78/manuals/index.html">
+GRASS GIS overview and manual</a></li>
+<li><a href="http://www.grassbook.org/"> GRASSbook</a></li>
+</ul>
+
+<p>
+Text files with site locations:
+<ul>
+<li><a href="data/viewshed_points.txt">viewshed_points.txt</a></li>
+</ul>
+
+<h3>Start GRASS GIS</h3>
+In startup pannel set <b>GRASS GIS Database Directory</b> to path to datasets,
+for example on MS Windows, <code>C:\Users\myname\grassdata</code>.
+For <b>GRASS Location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
+for <b>GRASS Mapset</b> create a new mapset (called e.g. HW_viewshed_solar) and
+click <b>Start GRASS session</b>.
+
+<pre><code>grass78
+</code></pre>
+
+<p>
+Change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+Download all text files (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
+
+<h3>Viewshed analysis</h3>
+Compute viewshed from a new 32 story tower located in downtown.<br>
+
+<pre><code>g.region raster=elev_ned_30m -ap
+v.in.ascii -z input=viewshed_points.txt output=viewpoints separator=, z=3
+r.viewshed elev_ned_30m output=tower_165_los coordinates=642212,224767 observer_elevation=165 max_distance=10000
+</code></pre>
+
+Display result on shaded relief:
+<pre><code>d.erase
+d.his hue=tower_165_los intensity=elevation_shade
+d.vect streets_wake
+d.vect viewpoints size=10 color=orange icon=basic/marker
+d.barscale at=3,6
+d.legend tower_165_los at=50,90,2,6
+d.out.file towerview_angle
+</code></pre>
+
+<p>
+Find out what is the landuse within the view using map algebra:
+
+<pre><code>r.mapcalc "tower_los_lu30m = if(tower_165_los,landclass96,null())"
+r.colors tower_los_lu30m raster=landclass96
+r.category tower_los_lu30m raster=landclass96
+r.report -n tower_los_lu30m unit=p,h
+</code></pre>
+
+Display only the following layers and save result:
+
+<pre><code>d.erase
+d.rast tower_los_lu30m
+d.vect streets_wake
+d.legend tower_los_lu30m at=25,50,1,3
+d.out.file towerviewlu
+</code></pre>
+
+<p>
+We can also do visibility from former RedHat headquarters:
+
+<pre><code>r.viewshed elev_ned_30m output=redhat_25_los coordinates=638898,224528 observer_elevation=25 max_distance=10000
+</code></pre>
+
+Display only the following layers and save result:
+
+<pre><code>d.erase
+d.rast redhat_25_los
+d.vect streets_wake
+d.vect viewpoints size=10 col=red icon=basic/marker
+d.out.file RHview
+</code></pre>
+
+<p>
+Use mapalgebra to compute landuse in the view,
+assign the visible land use map land use colors and category labels
+using <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.colors.html">r.colors</a></em> and <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.category.html">r.category</a></em> (see previous example)
+and use <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.report.html">r.report</a></em> -n to <span class="question">compare the size and land use composition within
+viewshed from the RBC tower and RH headquarters</span>.
+
+<h3>Solar radiation analysis</h3>
+
+Set the region and add the planned building to the DEM, we will use this new DEM for the analyses.<br>
+Remove all layers and zoom to the region.
+<pre><code>g.region rural_1m -p
+r.mapcalc "elevfacility_1m = if(isnull(facility), elev_lid792_1m,138.)"
+r.colors elevfacility_1m color=elevation
+d.erase
+d.rast elevfacility_1m
+</code></pre>
+
+<p>
+Prepare input maps (slope and aspect):
+
+<pre><code>r.slope.aspect elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m
+</code></pre>
+
+<h4>Incidence angles and cast shadows</h4>
+<p>
+Compute the sun position on Dec. 22 at 2:25pm, EST (no map output expected):
+
+<pre><code>r.sunmask -s elevation=elevfacility_1m year=2001 month=12 day=22 hour=14 minute=25 sec=0 timezone=-5
+</code></pre>
+
+<p>
+Calculate incidence angles including cast shadows.<br>
+We assign histogram equalized color table - <span class="question">can you explain why?</span>
+(hint: try the same color table without -e).<br>
+<span class="question">What is the value on the roof? How is it related to day/time?</span>
+
+<pre><code>r.sun elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m incidout=incid_elevfac_1m day=356 time=14.416667
+r.info incid_elevfac_1m
+r.colors -e incid_elevfac_1m co=bcyr
+d.rast incid_elevfac_1m
+d.legend incid_elevfac_1m at=25,50,1,3
+d.out.file incid_angle
+</code></pre>
+
+<p>
+Extract the cast shadow area for 14.4 hr and
+compute and extract shadow area for 7.5 hr:
+
+<pre><code>r.mapcalc "shadow_1m = if(isnull(incid_elevfac_1m), 1, null())"
+r.colors shadow_1m color=grey
+d.rast elevfacility_1m
+d.rast shadow_1m
+r.sun elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m incidout=incid_elevfac7_1m day=356 time=7.50
+r.mapcalc "shadow7_1m = if(isnull(incid_elevfac7_1m), 1, null())"
+d.rast shadow7_1m
+d.out.file shadows
+</code></pre>
+
+<h4>Solar radiation</h4>
+Compute global (beam+diffuse+refl) radiation for entire day during summer and winter solstice.<br>
+Display the radiation maps and also insolation time maps insol_time using same commands.<br>
+Optionally display the radiation maps draped over elevation elevfacility_1m in 3D view
+to see relation between terrain geometry and solar radiation.
+
+<pre><code>r.sun elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=356 glob_rad=g356 insol_time=its356
+r.colors g356 co=gyr -e
+r.sun elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=172 glob_rad=g172 insol_time=its172
+r.colors g172 co=gyr -e
+d.rast g356
+d.legend g356 at=25,50,1,3
+d.out.file solar_winter
+d.rast g172
+d.legend g172 at=25,50,1,3 range=8800,8867
+d.out.file solar_summer
+</code></pre>
+
+<p>
+Calculate direct solar radiation and insolation time for a larger region.<br>
+
+Try to find good color tables (custom, hist. equalized, to see the pattern).
+
+<pre><code>g.region raster=elev_ned_30m -p
+r.slope.aspect elevation=elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m
+r.sun elevation=elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m linke_value=2.5 albedo_value=0.2 beam_rad=b356 diff_rad=d356 refl_rad=r356 insol_time=it356 day=356
+</code></pre>
+
+Zoom to the new computational region and display the following layers:<br>
+
+<pre><code>d.erase
+d.rast b356
+d.legend b356 at=2,30,2,6
+d.out.file beamrad356
+d.rast it356
+d.legend it356 at=2,30,2,6
+d.out.file insol_time
+</code></pre>
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2021.wolfware.ncsu.edu/course/view.php?id=6766">Moodle site</a></li>
+<li><a href="http://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="http://www.ncsu.edu/policies/prr-disclaimer.php">Disclaimer</a></li>
+<li><a href="http://oit.ncsu.edu/itaccess">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2021
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

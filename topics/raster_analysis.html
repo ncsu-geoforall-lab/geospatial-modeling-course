@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<li><a href="../topics/course_intro.html">Introduction</a></li>
+<li><a href="../logistics.html">Logistics</a></li>
+<li><a href="../topics/index.html">Topics</a></li>
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>3. Geospatial Analysis</h2>
+
+<h3 id="map_algebra" class="subtopic">3.A Global, zonal and focal operations, map algebra</h3>
+Outline:
+<ul>
+    <li>global and zonal statistics, neighborhood, focal operations
+    <li>raster map algebra
+        <ul>
+            <li>expressions, operators, functions and variables
+            <li>basic calculations, integer and floating point data
+            <li>"if" conditions, handling NULLs and creating masks
+        </ul>
+    <li>raster map patching and overlay
+    <li>raster map reclassification and rescaling
+</ul>
+<h4>Lecture</h4>
+<ul>
+    <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Lmalgebra.ppt">Lecture Slides</a>
+    <li><a href="https://youtu.be/QiwfaPf1dKo">Lecture Global, Zonal, and Focal Statistics</a>
+    <li><a href="https://youtu.be/TSNvEu6USjU">Lecture Map Algebra and Reclassification</a>
+    <li><a href="../lectures/basicraster.html">Lecture slides updated: Basic raster operations</a>
+</ul>
+Supplemental materials:
+<ul>
+    <li><a href="http://www.spatialanalysisonline.com/HTML/index.html?statistical_measures_and_relat.htm">Statistical measures and related formulas</a>
+</ul>
+<h4>Assignment part A</h4>
+<ul>
+    <li>Approach:
+        <a href="../grass/map_algebra.html">GRASS solution</a>,
+		<a href="../arcpro/map_algebra.html">ArcGIS Pro solution</a>
+    <li><a href="../faq.html#map_algebra">Comments/answers to HW questions</a>
+</ul>
+
+<h3 id="buffers_cost" class="subtopic">3.B Buffers, cost surfaces, least cost path</h3>
+Outline:
+<ul>
+    <li>measuring distance, proximity operators
+    <li>point, line, and area buffers
+    <li>cost surfaces, least cost path
+</ul>
+<h4>Lecture</h4>
+<p>Slides and recorded video:
+<ul>
+    <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Lcost_surf.ppt">Lecture Slides used in the video</a>
+    <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Lcost_surf2012.pptx">Lecture Slides with updates</a>
+    <li><a href="https://youtu.be/bGDC-0qKFKg">Lecture Measuring distance</a>
+    <li><a href="https://youtu.be/1qdQTjdlaBA">Lecture Buffers</a>
+    <li><a href="https://youtu.be/4r8HP9WvzBo">Lecture Cost surfaces</a>
+<!--    <li><a href="../lectures/costsurfaces.html">Lecture slides updated: Buffers, cost surfaces, least cost path</a>-->
+</ul>
+Supplemental materials:
+<ul>
+    <li><a href="https://link-springer-com.prox.lib.ncsu.edu/chapter/10.1007/978-3-319-89303-7_10">
+ Trail Planning,</a>
+chapter from Petrasova et al., 2018, Tangible Modeling with Open Source GIS. Second edition. Springer.
+<a href="https://link-springer-com.prox.lib.ncsu.edu/book/10.1007/978-3-319-89303-7">Available free through NCSU library.</a>
+<!--    <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/LCP_feature_extraction.pptx">Example feature extraction using least cost path</a>-->
+    <li><a href="http://gracilis.carleton.ca/CUOSGwiki/index.php/Comparative_Analysis_of_Cost_Path_Analysis_In_Grass_GIS_and_ArcMap">Additional material</a> on least cost path analysis in both GRASS GIS and ArcGIS from Carleton University
+    <li><a href="https://www.smithsonianmag.com/innovation/this-mapping-tool-could-help-wilderness-firefighters-plan-escape-routes-180965253/">Firefighters escape route planning</a>
+    <li>Learn more about fractals 
+    <ul>
+    <li><a href="https://www.wired.com/2010/09/fractal-patterns-in-nature/">Fractal patterns in nature</a>
+    <li><a href="https://www.wired.com/2012/01/the-fractal-dimension-of-zip-codes/">Fractal dimension of zipcodes</a>
+    <li><a href="https://en.wikipedia.org/wiki/List_of_fractals_by_Hausdorff_dimension">Fractals by Hausdorff dimension</a>
+    </ul>
+</ul>
+
+<h4>Assignment part B</h4>
+<!--
+<ul>
+  <li> use buffers around lakes to find developed areas
+  <li> use buffers along the major roads to find neighborhoods and schools
+       that may be affected by noise pollution</li>
+  <li>assume there was an accident at a give site on Hwy 1. Compute cost surface for getting to the site
+from any point in the study region using the street map converted to raster. Find which
+firestation has the lowest cost to get there and find the shortest path. Find the 2nd and 3rd
+closest station and path. Discuss the issue of interchanges.
+<li> a child got lost around Lake Wheeler - compute the accessibility map to aid the search</li>
+</ul>
+-->
+<ul>
+    <li>Approach:
+        <a href="../grass/buffers_cost.html">GRASS solution</a>,
+        <a href="../arcpro/buffers_cost.html">ArcGIS Pro solution</a>
+    <li><a href="../faq.html#buffers_cost">Comments/answers to HW questions</a>
+</ul>
+<h3>Homework 3. A and B</h3>
+        Prepare a paper on applications of global and zonal statistics,
+        neighborhood operations and map algebra for analysis of continuous and discrete geospatial data.
+        In this paper also explain and demonstrate the use of buffers and cost surfaces
+        for solving proximity problems. Comment on specific results for the study area and given tasks.
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2021.wolfware.ncsu.edu/course/view.php?id=6766">Moodle site</a></li>
+<li><a href="http://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="http://www.ncsu.edu/policies/prr-disclaimer.php">Disclaimer</a></li>
+<li><a href="http://oit.ncsu.edu/itaccess">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2021
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

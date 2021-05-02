@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2><b>Geospatial data acquisition and integration</b></h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h3>Learning objectives</h3>
+<ul>
+  <li class="fragment">Understand the diversity of geospatial data sources</li>
+  <li class="fragment">Classify modern mapping technologies</li>
+  <li class="fragment">Understand the concept of georeferenced data</li>
+  <li class="fragment">Explain differences between the basic coordinate reference systems (CRS)</li>
+  <li class="fragment">Use CRS standards to find parameters for a given CRS</li>
+  <li class="fragment">Understand concept of re-projection between CRSs</li> 
+<!--<li class="fragment"><strong>Use</strong> the proper terminology and <strong>understand</strong> its meaning</li>-->
+</ul>
+</section>
+
+<section>
+   <h3>Geospatial data acquisition</h3>
+<p>Current revolution in mapping technologies: 
+<p>continuous data collection anywhere by anyone
+<p class=small>Have you ever collected geospatial data?
+<br> If yes - share with us where and how
+<br> DE students post answers on moodle forum 
+</section>
+
+<section>
+   <h3>Professional mapping technologies</h3>
+<p>
+<ul>
+ <li class="fragment">passive and active aerial and satellite sensors
+ <li class="fragment">ground-based surveys : (RTK)GPS, total station, lidar
+ <li class="fragment">in situ sensors: e.g., air quality, river stages, water quality, soil moisture
+</ul>
+<p class="fragment">
+Emergence of autonomous platforms: air, ground, water </p>
+<p class="fragment">
+<img height="200" src="img/data_acquisition/reiglminingsm.jpg">
+</section>
+
+<section>
+   <h3>Remote sensing: passive</h3>
+<p>Large number of satellite and airborne platforms and sensors, examples:  
+<ul>
+ <li class="fragment">Landsat 1-7: landcover since 1972, 30m, multispectral 
+ <li class="fragment">Terra: MODIS: temperature, 250m; ASTER: radiance, DEM, 15m  
+ <li class="fragment"><a href="https://earth.esa.int/web/sentinel/user-guides/sentinel-2-msi">
+SENTINEL-2 MSI: landcover, 10m, multispectral</a>
+ <li class="fragment">
+<a href="https://www.planet.com/company">PLANET:</a> new generation of small satellites: 170 small satellites mapping Earth daily at 3m resolution
+</ul>
+See <a href="https://earthdata.nasa.gov/user-resources/remote-sensors">overview of Remote Sensors by NASA</a>
+<p>
+</section>
+
+<section>
+   <h3>Remote sensing: active </h3>
+<p>Satellite and airborne platforms and sensors, examples:
+<ul>
+ <li class="fragment"><a href="https://www2.jpl.nasa.gov/srtm/">
+Shuttle Radar Topography Mission (SRTM) 2001</a>: 30m resolution elevation for almost entire globe
+ <li class="fragment">InSAR: high accuracy deformation mapping
+ <li class="fragment">Lidar: airborne surveys - high resolution elevation data, including vegetation structure
+</ul>
+<p>
+See <a href="https://earthdata.nasa.gov/user-resources/remote-sensors">overview of Remote Sensors by NASA</a>
+<br><font class=credit>Images and data by NASA and NCSU MEAS</font>
+</section>
+
+<section>
+   <h3>Satellite Remote Sensing</h3>
+<p>SRTM and LANDSAT example for Panama:
+<p>
+<img width="25%" src="img/data_acquisition/srtmanim_small.gif">
+<img width="50%" src="img/data_acquisition/panamaSRTM90m.jpg">
+<br>
+<img width="25%" src="img/data_acquisition/LandsatETMengineer.jpg">
+<img width="50%" src="img/data_acquisition/PanamaPtsLandsat.jpg">
+</section>
+
+<section>
+   <h3>Satellite Remote Sensing</h3>
+<p>PLANET images for Jockey's Ridge change between September 2017 and July 2018 mapped at 3m resolution:
+<p>
+<iframe width="560" height="315" scrolling="no" src="img/data_acquisition/sep17_july18.mp4" frameborder="0" allowfullscreen></iframe>
+<p>
+<font class=credit>Data by planet.com</font>
+</section>
+
+<section>
+   <h3>Airborne Remote Sensing</h3>
+<p>Lidar and orthophoto example for NCSU fields - sub-meter resolution mapping:
+<!--<p><img height="200" src="img/data_acquisition/airborne_lidar_mapping_schematic.jpg">-->
+<p><img width="60%" src="img/lidarmrpts3dcolored.jpg">
+<img width="25%" src="img/data_acquisition/SECREF2010_googlemap.jpg">
+<p>Most current systems combine active and passive sensors
+</section>
+
+<section>
+   <h3>Airborne Remote Sensing</h3>
+<p>Small unmanned aerial system (sUAS) Trimble UX5 mapping NCSU fields
+for crop growth monitoring:
+<br><small> Orthophoto 0.04 m resolution, Digital Surface Model 0.15 m res</small>
+<p>
+    <img width=15% src="img/data_acquisition/takeoff.jpg"> &nbsp;
+    <img width=35% src="img/data_acquisition/ngat2_dem02m_3d.jpg">
+    <img width=30% src="img/data_acquisition/2015_06_15_DSM_GCP_3dlg.jpg">
+<br>
+winter and summer DSM
+<p><a href="https://sketchfab.com/osgeolab/models">NCSU GeoForAll Lab 3D models from UAS on sketchfab</a>
+</section>
+
+<section>
+   <h3>Ground-based passive </h3>
+<p>360 deg cameras - static and mobile
+<p><img width="40%" src="img/data_acquisition/Jordanhall_orthophoto.jpg">
+<img width="50%" src="img/data_acquisition/Jordanhall_groundphoto.jpg">
+<p><font class=credit>Credits: Orthphoto from NC One Map, Ground-based image from Google streetview</font>
+</section>
+
+<section>
+   <h3>Ground and water</h3>
+<p>RTK GPS, sonar
+<br><img width="70%" src="img/data_acquisition/GeodynRTKGPS1sm.jpg">
+</section>
+
+<section>
+   <h3>Non-traditional data sources</h3>
+<p>Widespread GPS enabled technology: continuous data collection
+<p>
+<ul>
+ <li class="fragment">smartphones
+ <li class="fragment">webcams (AMOS)
+ <li class="fragment">citizen sUAS (drones)
+ <li class="fragment">mobile sensor networks : cars, bicycles, scooters
+ <li class="fragment">smart devices (internet of things): trash cans, utilities
+</ul>
+</section>
+
+<section>
+   <h3>Non-traditional data sources</h3>
+<p>
+From webcam to a spatio-temporal map
+<p>
+<a href="https://petrasovaa.github.io/amos-STC-presentation/foss4g_presentation.html#/">
+Pedestrian density patterns from webcams</a> by Anna Petrasova
+<p>
+</section>
+
+<section>
+   <h3>From mapping to GIS</h3>
+<p>
+Acquired data are transformed into georeferenced, 
+discrete representations of landscape features 
+<p>
+<ul>
+<li class="fragment">georeferencing (often in real-time using GPS)
+<li class="fragment">feature or theme extraction (e.g. image classification)
+<li class="fragment">building GIS data model representation <br>(geometry, attributes, time)
+</ul>
+</section>
+
+<section>
+   <h3>Georeferencing</h3>
+<p>
+Georeferenced data: location on Earth is represented in a <strong>Coordinate Referenced System (CRS)</strong> 
+<p>
+<ul>
+<li>geodetic (geographic) coordinate system: 
+<br>geoid -- ellipsoid -- latitude/longitude
+<p>
+<li>projected reference systems:
+<br>geoid -- ellipsoid -- developable surface -- plane -- x,y 
+</ul>
+</section>
+
+<section>
+   <h3>Geodetic (Geographic) CRS</h3>
+<p> geoid -- ellipsoid -- latitude/longitude
+<p><img height="200" src="img/data_acquisition/crs_elipsoid_latlong.jpg">
+<p><img height="250" src="img/data_acquisition/latlong.gif">
+<img height="250" src="img/data_acquisition/latlongareagrid.gif">
+</p>
+</section>
+
+<section>
+   <h3>Projected CRS</h3>
+<p>
+Projected reference systems (there are many):
+<br>geoid -- ellipsoid -- developable surface -- plane -- x,y 
+<p><img height="200" src="img/data_acquisition/crs_projected.jpg">
+</ul>
+<p>
+<br><a href="https://www.jasondavies.com/maps/transition/">Map projection transitions</a>
+<br><small>Not available anymore but kept for the record:<a href="http://www.progonos.com/furuti/MapProj/Normal/TOC/cartTOC.html"> Cartographic projections by Furuti</a> </small>
+</p>
+</section>
+
+<section>
+   <h3>National and state CRS</h3>
+<p>
+Defined by:
+<ul>
+<li>Reference spheroid/geoid and datum: <br> e.g. GRS80-NAD83, WGS84, NATR2022
+<li>Projection and its parameters, e.g. : 
+  <ul>
+  <li>Lambert Conformal Conic (LCC): states in US
+  <li>Universal Transverse Mercator (UTM): USGS, military
+  <li>Albers Equal Area (conic): USGS national map 
+  </ul>
+<li>Vertical datum: e.g. NAVD88 <font class=credit> North american Vertical Datum 1988</font>, NAPGD2022
+</ul>
+<p>
+<small><a href="https://geodesy.noaa.gov/datums/newdatums/index.shtml">NAD83 and NAVD88 to be replaced in 2022</a>
+with North American Terrestrial Reference Frame (NATR2022) and North American-Pacific Geopotential Datum of 2022 (NAPGD2022)</small>
+</section>
+
+<section>
+   <h3>CRS standards</h3>
+<p>
+International Organization of Oil and Gas Producers (OGP) Surveying and Positioning Committee,
+established standard for CRS definition with assigned EPSG codes
+(initiated by European Petroleum Survey Group - EPSG)
+<p>Find the codes and CRS representation in many formats here <a href="https://epsg.io/">epsg.io</a>
+Example: <a href="https://epsg.io/4326">EPSG:4326</a> WGS84 used in GPS
+<p>
+<small>Transition towards ISO WKT 19162:2018 international standard notation (WKT:well known text, text markup language)</small>
+</section>
+
+<section>
+   <h3>CRS for North Carolina</h3>
+<p>
+Search for NC at <a href="https://epsg.io/">epsg.io</a> returns 72! CRS
+<p>Explain EPSG 
+<a href="https://epsg.io/3358">3358</a>, 
+<a href="https://epsg.io/4152">4152</a>
+<p><small>Projected CRS EPSG 3358 includes geoid to elipsoid projection (EPSG 4152) 
+and elipsoid to plane projection (3358), the units on the map are meters, not degrees
+<br>New CRS: North Carolina State Plane Coordinate System (NCSPCS) 2022
+</small>
+</section>
+
+<section>
+   <h3>Popular Visualization CRS</h3> 
+<p>
+Most common in on-line mapping systems: 
+<br>Pseudo-Mercator
+<p>
+EPSG statement
+<p class=small>We have reviewed the coordinate reference system used by Google, etc.
+and believe that it is technically flawed. We will not devalue the EPSG dataset by 
+including such inappropriate geodesy and cartography.”
+<br>
+In 1989, North American professional geographic organizations  
+called for a ban on all rectangular coordinate maps (especially Mercator).
+</p>
+<p class=credit>
+http://geography.about.com/library/weekly/aa030201b.htm
+<br>http://demonstrations.wolfram.com/WorldMapProjections/
+</p>
+</section>
+
+<section>
+   <h3>Popular Visualization CRS</h3>
+<p>
+The reference system was eventually included as
+<a href="https://epsg.io/3857">EPSG 3857</a>
+<!--3785--> 
+- it is not recommended for professional work
+    <p><img src="img/data_acquisition/mercatorproj.gif" width="70%">
+<p>See explanation of the distortions animation and equations in an article about
+<a href="http://www.math.ubc.ca/~israel/m103/mercator/mercator.html">Mercator</a>
+</section>
+
+<section>
+   <h3>Popular Visualization CRS</h3>
+<p>
+World map in Pseudo Mercator with massive distortions farther from the equator,
+compared with Winkel-Tripel projection with more realistic representation
+    <p><img src="img/data_acquisition/PseudoMercatorworld.jpg" width="40%">
+    <img src="img/data_acquisition/Winkel-tripel-projection.jpg" width="50%">
+</section>
+
+<section>
+   <h3>Coordinate systems in GIS</h3>
+Representation of coordinate systems in GIS
+<ul>
+ <li>Metadata file
+ <li>EPSG codes   
+ <li>ESRI PRJ file 
+ <li>PROJ format 
+<p ><small>EPSG translated to input parameters of the PROJ software
+<br>NAD83(High Accuracy Reference Network HARN) / North Carolina
+<br><3358> +proj=lcc +lat_1=36.16666666666666 +lat_2=34.33333333333334 
+<br>+lat_0=33.75 +lon_0=-79 +x_0=609601.22 +y_0=0 +ellps=GRS80 +units=m +no_defs
+</small>
+</p>
+</ul>
+</p>
+</section>
+
+<section>
+   <h3>Coordinate transformations</h3>
+<p>
+Geospatial data often come in different CRS, e.g.:
+<ul>
+  <li>Federal agencies: Geodetic CRS (WGS84), Albers equal area, UTM
+ <li>State agencies: State Plane CRS
+ <li>Older data may have different datums (NAD27, NAD83)
+</ul>
+<p>
+Coordinate transformations
+<p>
+<b>x,y -> longitude, latitude -> x’,y’</b> 
+<p class=small>
+often performed on-fly, may be inaccurate and time consuming
+<br>for projects with high accuracy requirements: first reproject all data into a suitable
+common CRS, then perform analysis and modeling
+</p>
+</section>
+
+<section>
+ <h3>Summary</h3>
+<ul>
+  <li>we provided overview of modern technologies for geospatial data acquisition
+  <li>we explained the concept of coordinate reference systems and related standards
+</ul>
+</section>
+
+<!--
+<section>
+ <h3>Reading, resources</h3>
+links
+</section>
+-->
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>

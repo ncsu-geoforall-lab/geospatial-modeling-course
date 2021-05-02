@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2><b>Geospatial Modeling</b></h2>
+    <h3> GIS/MEA582 </h3>
+    <p style="margin-top: 0.5em"> Helena Mitasova</p> 
+<p> <a href="https://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>,
+<br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
+<p style="margin-top: 0.8em"> <img width="100%" src="img/hunt_vis.jpg"></p>
+</section>
+
+<section>
+    <h3>Course topics</h3>
+<p style="margin-top: 0.8em">
+<ul>
+  <li>Continuous and discrete geospatial data models
+  <li>Data display and 2D/3D geovisualization
+  <li>Raster-based geospatial analysis, map algebra
+  <li>Proximity analysis, buffers, cost surfaces and LCP
+  <li>Points to rasters - Spatial interpolation
+  <li>Terrain modeling and topographic analysis
+  <li>Viewshed, solar energy potential analysis
+  <li>Flow routing, watershed analysis, erosion modeling
+</ul>
+</p>
+<p><img height="120" src="img/cc_composit.png">
+</section>
+
+<section>
+<h3>Course structure</h3>
+<p style="margin-top: 0.8em">
+<ul>
+    <li>offered on-campus (spring) and on-line (spring and fall)  
+    <li>material can be accessed on-line any time
+    <li>lectures: software independent, slides with audio
+    <li>assignments: in <b>both</b> GRASS GIS and ArcGIS
+    <li>independent project
+</ul>
+<p>
+<img width="34%" src="img/course_header.jpg">
+<img width="54%" src="img/elevation_2d_grassgis_arcgis.jpg">
+</section>
+
+<section>
+   <h3>Data display and  geovisualization</h3>
+<p style="margin-top: 1.0em">
+<ul>
+<li>data display and visualization for data analysis  
+<li>communication of geospatial information
+</ul>
+<p><img width="98%" src="img/nc_elev_color.jpg">
+<p class=small>Selecting color ramp to highlight hidden spatial patterns: North Carolina elevation
+</section>
+
+<section>
+   <h3>Viewing data in 3D perspective</h3>
+<p>3D visualization is used in many assignments</p>
+<p><img width="37%" src="img/nvizcutplanelwDEMDSMS.jpg">
+<img width="37%" src="img/nvizcutplane_lwDSMDEMS2.jpg">
+<p class=small>Multiple surfaces based on lidar and cut-planes</p>
+<p><img width="90%" src="img/current_res_composits.jpg">
+<p class=small>DEMs with color maps: land cover, erosion, elevation
+</section>
+
+<section>
+   <h3>Dynamic  geovisualization</h3>
+<p style="margin-top: 0.8em">
+Time series of DEMs from digitized contours and lidar 
+<p> <img height="400" src="img/JR_animation_2014.gif">
+<p class=small>Jockey's Ridge sand dune migration: 1974 - 2014 </p>
+</section>
+
+<section>
+   <h3>Raster-based geospatial analysis</h3>
+<p>Techniques for efficient solutions of geospatial problems 
+<ul>
+  <li>global, zonal, focal and neighborhood operators
+  <li>map algebra
+</ul> 
+<p> <img height="250" src="img/Mapalgebra_ndvi.jpg">
+<p class=small>Computing NDVI (green vegetation index) from LANDSAT imagery using map algebra</p>
+</section>
+
+<section>
+   <h3>Proximity problem solving</h3>
+<p>Buffers, cost surfaces, least cost path
+<p><img height="300" src="img/leastcostpath.jpg">
+<p class="small">Finding least cost path from firestations to accident in SW Wake county 
+</section>
+
+<section>
+   <h3>Points to rasters: spatial interpolation</h3>
+<ul>
+<li>Using the values measured at irregularly distributed points we 
+compute the values at regular grid 
+<li>methods and their properties
+<li>implementation and application issues
+</ul> 
+<p><img width="100%" src="img/interpolation_methods.jpg">
+</section>
+
+<section>
+   <h3>Splines: tuning the tension</h3>
+<p>Result of interpolation depends on the selection of parameters, in this example,
+the lower the spline tension, the smoother the surface
+<p><img width="80%" src="img/lidar_tension_curv.gif">
+</section>
+
+<section>
+   <h3>Terrain modeling from lidar</h3>
+<p>
+From lidar point cloud to DEM and DSM 
+<p><img width="43%" src="img/lid2013_1r_n_3ftb.png">
+<img width="53%" src="img/lid2013_1r_3ft_3d.jpg">
+</section>
+
+<section>
+   <h3>Geomorphometry</h3>
+<ul>
+<li>Land surface geometry is measured by topographic parameters
+<li>we can derive basic landform classes from topographic parameters
+</ul>
+<img width="90%" src="img/landforms.jpg">
+<p class="small">profile curvature and landforms at two different levels of detail</p>
+</p>
+</section>
+
+<section>
+   <h3>Viewshed and solar energy</h3>
+<p>Problems based on ray-tracing: line of sight, radiation
+<p><img width="80%" src="img/summer_solstice_centennial.gif">
+<p class=small>Dynamics of cast shadows and solar energy potential on June 22
+</section>
+
+<section>
+   <h3>Modeling landscape processes</h3>
+Flow routing, watershed analysis and erosion modeling
+<p>
+<img  width="45%" src="img/flowsimwedem.jpg">
+<img  width="45%" src="img/uspederdepdem.jpg">
+</section>
+
+<section>
+<h3>Independent Project</h3>
+<ul>
+<li>Focused on student's research interests, 
+<li>any geospatial software can be used
+<li>should include a surface or continuous field component
+</ul>
+<p><img  height="350" src="img/project_anna.jpg">
+&nbsp;&nbsp;
+<img  height="350" src="img/projectfiregrass_vasekcr.png">
+<p class="credit">Anna Petrasova and Vaclav Petras</p>
+</section>
+
+<section>
+   <h3>Final Portfolio</h3>
+<ul>
+<p> 
+<li>Six assignment papers with insightful 2D and 3D graphics that represent the course foundation topics
+<p> 
+<li>Independent project paper : some evolve into papers for conferences or scientific journals
+</ul>
+<p><img  width="100%" src="img/assign_composit.jpg">
+</section>
+
+<section>
+ <h3>Resources</h3>
+  <ul>
+<p>
+  <li> <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/index.html">Course website</a> 
+  <br>http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/index.html
+<p>
+  <li> <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll laboratory</a>
+<br>https://geospatial.ncsu.edu/geoforall/
+  </ul>
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>
