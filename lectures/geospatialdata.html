@@ -113,22 +113,17 @@ See <a href="https://earthdata.nasa.gov/user-resources/remote-sensors">overview 
 
 <section>
    <h3>Airborne Remote Sensing</h3>
-<p>Small unmanned aerial system (sUAS) Trimble UX5 mapping NCSU fields
-for crop growth monitoring:
-<br><small> Orthophoto 0.04 m resolution, Digital Surface Model 0.15 m res</small>
+<p>3D construction site mapping at cm resolution using small unmanned aerial system  (drone)
 <p>
-    <img width=15% src="img/data_acquisition/takeoff.jpg"> &nbsp;
-    <img width=35% src="img/data_acquisition/ngat2_dem02m_3d.jpg">
-    <img width=30% src="img/data_acquisition/2015_06_15_DSM_GCP_3dlg.jpg">
-<p>
-winter and summer DSM
+    <img width=30% src="img/data_acquisition/Carypark_May2021.jpg">
+<p><small>Mapped in 2021 by William Reckling, NCSU graduate student</small>
 <p><small><a href="https://sketchfab.com/osgeolab/models">NCSU GeoForAll Lab 3D models from UAS on sketchfab,</a>
 learn in GIS584 Mapping and Analytics Using UAS</small>
 </section>
 
 <section>
    <h3>Ground-based passive </h3>
-<p>360 deg cameras - static and mobile
+<p>Airborne orthophoto compared with on-ground mobile 360 degree camera streetview
 <p><img width="40%" src="img/data_acquisition/Jordanhall_orthophoto.jpg">
 <img width="50%" src="img/data_acquisition/Jordanhall_groundphoto.jpg">
 <p><font class=credit>Credits: Orthphoto from NC One Map, Ground-based image from Google streetview</font>
@@ -139,14 +134,16 @@ learn in GIS584 Mapping and Analytics Using UAS</small>
 <p>Terrestrial lidar
 <p><img width="40%" src="img/data_acquisition/Lyonatstreambank_3.jpg">
 <img width="50%" src="img/data_acquisition/abank1_08_24_11_DTF_el.png">
-<p><font class=credit>Credits: Orthphoto from NC One Map, Ground-based image from Google streetview</font>
+<p><font class=credit>Credits: Photo and data by Nathan Lyons, NCSU graduate student, 3D model by Helena Mitasova </font>
 </section>
 
+<!-- see ppt how the complete slide should look like
 <section>
    <h3>Ground and water</h3>
 <p>RTK GPS, sonar
 <br><img width="70%" src="img/data_acquisition/GeodynRTKGPS1sm.jpg">
 </section>
+-->
 
 <section>
    <h3>Non-traditional data sources</h3>
@@ -159,6 +156,9 @@ learn in GIS584 Mapping and Analytics Using UAS</small>
  <li class="fragment">smart devices (internet of things): trash cans, utilities
 </ul>
 <img height=200 src="img/data_acquisition/nuenen_kde_all_rad3_3DW.jpg">
+<img height=200 src="img/data_acquisition/nuenen_kde_all_vjune19_rad7.jpg">
+<p><small>Time spent by group of people along a guided tour, displayed over lidar-based DSM
+<a href="https://journals.sagepub.com/doi/abs/10.1177/1096348020957075">Mitas et al., 2020</a></small>
 </section>
 
 <!--
@@ -183,6 +183,7 @@ discrete representations of landscape features
 <li class="fragment">georeferencing (often in real-time using GPS)
 <li class="fragment">feature or theme extraction (e.g. image classification)
 <li class="fragment">building GIS data model representation <br>(geometry, attributes, time)
+<li class="fragment">generating metadata
 </ul>
 </section>
 
@@ -204,8 +205,13 @@ Georeferenced data: location on Earth is represented in a <strong>Coordinate Ref
    <h3>Geodetic (Geographic) CRS</h3>
 <p> geoid -- ellipsoid -- latitude/longitude
 <p><img height="200" src="img/data_acquisition/crs_elipsoid_latlong.jpg">
-<p><img height="250" src="img/data_acquisition/latlong.gif">
-<img height="250" src="img/data_acquisition/latlongareagrid.gif">
+<img height="200" src="img/data_acquisition/latlong.gif">
+<!-- <img height="250" src="img/data_acquisition/latlongareagrid.gif">-->
+<ul>
+<li class="fragment">GPS, large regions, data exchange
+<li class="fragment">units: degree-minutes-seconds
+<li class="fragment">complex algorithms for distances, areas
+</ul>
 </p>
 </section>
 
@@ -215,10 +221,13 @@ Georeferenced data: location on Earth is represented in a <strong>Coordinate Ref
 Projected reference systems (there are many):
 <br>geoid -- ellipsoid -- developable surface -- plane -- x,y 
 <p><img height="200" src="img/data_acquisition/crs_projected.jpg">
+<ul>
+<li>developable surfaces: conic, cylindrical, azimuthal (plane)
+<li>type of distortion: conformal, equidistant, equal area
 </ul>
-<p>
-<br><a href="https://www.jasondavies.com/maps/transition/">Map projection transitions</a>
-<br><small>Not available anymore but kept for the record:<a href="http://www.progonos.com/furuti/MapProj/Normal/TOC/cartTOC.html"> Cartographic projections by Furuti</a> </small>
+<p> <small><a href="https://www.jasondavies.com/maps/transition/">Map projection transitions</a>
+<a href="https://web.archive.org/web/20160122040117/progonos.com/furuti/mapproj/normal/toc/carttoc.html">
+Cartographic projections by Furuti</a> </small>
 </p>
 </section>
 
