@@ -123,8 +123,8 @@ the object of perception, experience, etc
 <p>
 Land use classes 
 <p>
-<img height="280" src="img/data_models/raster_discr3dlu.jpg">
-<img height="280" src="img/data_models/lu96_legbig.png">
+<img height="320" src="img/data_models/raster_discr3dlu.jpg">
+<img height="320" src="img/data_models/lu96_legbig.png">
 </section>
 
 <section>
@@ -203,13 +203,13 @@ the way in which constituent parts are interrelated or arranged.
 <p>Elements: vertices(red), nodes(blue)
 <div class="left" style="max-width:45%">
 <p>Point data: no topology
-<img height="150" src="img/data_models/ncpfas_samples_pointdata.jpg"> 
-<img height="180" src="img/data_models/pointcloud.png"> 
+<img height="180" src="img/data_models/ncpfas_samples_pointdata.jpg"> 
+<img height="160" src="img/data_models/pointcloud.png"> 
 </div>
 
 <div class="right" style="max-width:55%">
 <p>Line data: vertices, nodes
-<br>
+<p>
 <img height="300" src="img/data_models/roads_nodes_vert.png">
 </div>
 </section>
@@ -220,42 +220,15 @@ the way in which constituent parts are interrelated or arranged.
 <p>
 Polygons: vertices+nodes=boundaries, centroids 
 <p>
-<!--<img height="300" src="img/data_models/vectovertices_census.png">-->
 <img height="380" src="img/data_models/census_nodesvertcentrlb2.png">
 </section>
 
-<!--
-<section>
-   <h3>Vector data model: discrete features</h3>
-<p>
-Discrete: streets, streams, geodetic points, census blocks
-<img height="250" src="img/data_models/vectorast_census.png">
-<img height="250" src="img/data_models/vectorast_census.png">
-<p>Image Image
-</section>
-
-<section>
-   <h3>Vector data model: continuous fields</h3>
-<p>
-Continuous: elevation contours (isolines), precipitation (points)
-<p>Image Image
-</section>
--->
-
 <section>
    <h3>Vector data: 3D models</h3>
-<p><small>Learn more in 
-<a href="http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/schedule.html">GIS595 UAS mapping for 3D modeling course</a>
-</small>
 <p>
-<div class="sketchfab-embed-wrapper"><iframe width="640" height="480" src="https://sketchfab.com/models/3b3e1a037183477eacd3eeb7d7f009aa/embed" frameborder="0" allow="autoplay; fullscreen; vr" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-
-<p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;">
-    <a href="https://sketchfab.com/models/3b3e1a037183477eacd3eeb7d7f009aa?utm_medium=embed&utm_source=website&utm_campaign=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">Centennial Campus Textiles Buildings</a>
-    by <a href="https://sketchfab.com/osgeolab?utm_medium=embed&utm_source=website&utm_campaign=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">NCSU GeoForAll Lab</a>
-    on <a href="https://sketchfab.com?utm_medium=embed&utm_source=website&utm_campaign=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a>
-</p>
-</div>
+Full 3D meshes: representation of structures 
+<p>
+<img height="400" src="img/data_models/ccuas_blender_mesh.jpg">
 </section>
 
 <section>
@@ -324,6 +297,7 @@ See <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">Wikipedia for 
   <li>elevation: no "flats"
   <li>geology: area for each class may change 
 </ul>
+<p>More complex downscaling techniques may be needed if the difference in resolution is large
 </div>
 <div class="right" style="max-width:60%">
 <img width="90%" src="img/data_models/rast_resampl_geol_elev_30_20.jpg">
@@ -335,7 +309,7 @@ See <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">Wikipedia for 
 <section>
    <h3>Decreasing resolution</h3>
 <ul>
-  <li>continuous: re-interpolation, average, min, max, nearest neighbor
+  <li>continuous: nearest neighbor, average, min, max, or re-interpolation
 </ul>
 <p> 
 <img height="300" src="img/data_models/rast_resampl_elev_down.jpg">
@@ -344,7 +318,7 @@ See <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">Wikipedia for 
 <section>
    <h3>Decreasing resolution</h3>
 <ul>
-  <li>discrete: nearest neighbor resampling, mode (most common class)
+  <li>discrete: nearest neighbor resampling, mode (most common or majority class)
 </ul>
 <p> 
 <img height="300" src="img/data_models/rast_resampl_geol_down.png">
