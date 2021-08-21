@@ -123,18 +123,17 @@ the object of perception, experience, etc
 <p>
 Land use classes 
 <p>
-<img height="320" src="img/data_models/raster_discr3dlu.jpg">
-<img height="320" src="img/data_models/lu96_legbig.png">
+<img height="340" src="img/data_models/raster_discr3dlu.jpg">
+<img height="340" src="img/data_models/lu96_legbig.png">
 </section>
 
 <section>
    <h3>Raster data model: discrete features</h3>
 <p>
-<small>Land use classes,
-<br>Speed limits for roads and walking speed for off-road areas, 30m resolution</small>
+<small>
+Roads: Speed limits for roads and walking speed for off-road areas, 30m resolution</small>
 <p>
-<img height="280" src="img/data_models/raster_discr3dlu.jpg">
-<img height="280" src="img/data_models/rasterdiscr_roads.jpg">
+<img height="340" src="img/data_models/rasterdiscr_roads.jpg">
 </section>
 
 <section>
@@ -200,7 +199,6 @@ the way in which constituent parts are interrelated or arranged.
 
 <section>
    <h3>Vector data model geometry</h3>
-<p>Elements: vertices(red), nodes(blue)
 <div class="left" style="max-width:45%">
 <p>Point data: no topology
 <img height="180" src="img/data_models/ncpfas_samples_pointdata.jpg"> 
@@ -208,7 +206,7 @@ the way in which constituent parts are interrelated or arranged.
 </div>
 
 <div class="right" style="max-width:55%">
-<p>Line data: vertices, nodes
+<p>Elements of line data: vertices, nodes
 <p>
 <img height="300" src="img/data_models/roads_nodes_vert.png">
 </div>
@@ -232,7 +230,7 @@ Full 3D meshes: representation of structures
 </section>
 
 <section>
-   <h3>Data model modifications </h3>
+   <h3>Modifications of data representation</h3>
 <p>
 <ul>
   <li>Changing raster resolution 
@@ -245,15 +243,15 @@ Full 3D meshes: representation of structures
    <h3>Raster data  - changing resolution</h3>
 <p>Resolution: size of the grid cell (pixel) in map units (m)
 <ul>
-<li>continuous fields: re-interpolation
+<li class="fragment">continuous fields: re-interpolation
   <ul>
-    <li>the higher res. raster values are <b>interpolated</b> using the values of the neighboring lower res. cells
+    <li>the higher resolution raster values are <b>interpolated</b> using the values of the neighboring lower resolution cells
     <li>methods: bi-linear, bi-cubic, spline
   </ul>
 <p>
   <li class="fragment">discrete raster data: nearest neighbor resampling
   <ul>
-     <li>assigns the higher res. cell the <b>same value</b> as the nearest lower res. cell 
+     <li>assigns the higher resolution cell the <b>same value</b> as the nearest lower resolution cell 
      <li>resulting raster has only the values present in the input raster
   </ul>
 </p>
@@ -267,7 +265,7 @@ See <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">Wikipedia for 
 <p>Elevation at 30m resolution resampled to 10m resolution 
 <p>
 <img width="95%" src="img/data_models/rast_resampl_elev.jpg">
-<p>Raster values are observed elevations
+<p>Input raster values are observed elevations, no additional detail is generated
 </section>
 
 <section>
@@ -325,7 +323,7 @@ See <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">Wikipedia for 
 </section>
 
 <section>
-   <h3>Changing vector data</h3>
+   <h3>Modifying vector data</h3>
 <p>
 <ul>
   <li>Converting vector data type
@@ -394,9 +392,11 @@ but subset is extracted and stored in a different data structure
 
 <section>
    <h3>Raster to vector data</h3>
-<p>Continuous data: sampling points, isolines 
+<p>Continuous data: isolines, sampling points 
 <p>
-<img height="400" src="img/data_models/rast_to_vect_cont.jpg">
+<img height="250" src="img/data_models/dem_1m.jpg">
+<img height="250" src="img/data_models/elcont1m_gen00.jpg">
+<img height="250" src="img/data_models/elevrandpts.jpg">
 </section>
 
 <section>
@@ -419,7 +419,7 @@ but subset is extracted and stored in a different data structure
    <li>connects points on grid cell boundary
 </ul>
 <p>
-<img height="380" src="img/data_models/rast_to_vect_discr_area.jpg">
+<img height="400" src="img/data_models/rast_to_vect_discr_area.jpg">
 </section>
 
 <section>
@@ -448,7 +448,7 @@ Format description is usually stored with data: automated format recognition and
 <p class="fragment"> 
 General library for geospatial raster and vector format conversions:
 <br>Geospatial Data Abstraction Library (GDAL/OGR)
-<br><strong>gdal.osgeo.org</strong>
+<br><strong><a href="gdal.org">gdal.org</a></strong>
 <p class="fragment">
 given format - <strong>single abstract model</strong> - new format
 </p>
@@ -470,11 +470,14 @@ Data repositories: WMS, WPS, WebGIS
 <p>
 See<a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/data_providers.html">
 Webpage with links to relevant services</a>
+<!--
 <p>
 Lidar point clouds on AWS
 <a href="https://usgs.entwine.io/data/view.html?r=%22https://s3-us-west-2.amazonaws.com/usgs-lidar-public/USGS_LPC_NC_Sandy_L14_2014_LAS_2015%22">Jockey's Ridge after Sandy</a>
+-->
 </section>
 
+<!--
 <section>
   <h3>Open science </h3>
 <p>open data, open source software, open access
@@ -482,7 +485,6 @@ Lidar point clouds on AWS
 <a href="https://ncsu-geoforall-lab.github.io/open-science-course/topics/open-science.html">What is Open Science</a>
 </section>
 
-<!--
 <section>
   <h3>Open source geospatial resources</h3>
 <p>OSGeo, geo4all
