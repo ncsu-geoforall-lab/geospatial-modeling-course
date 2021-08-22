@@ -14,23 +14,27 @@
 <ul>
   <li>display of raster and vector data: scaling properties
   <li>color ramps for raster data, relief shading
-  <li>color and symbols for vector data
-  <li>map elements
+<!--  <li>color and symbols for vector data
+  <li>map elements -->
   <li>3D visualization: single and multiple surfaces
   <li>dynamic visualization with animations
-  <li>Web GIS cartography: MapStory, CartoDB, WorldMap
   <li>tangible interaction
+  <li>Web GIS cartography <!--MapBox, Kepler, MapStory, CartoDB, WorldMap, Beccario Earth-->
 </ul>
 </section>
 
 <section>
   <h3>Role of geovisualization</h3>
+<p>
 <ul>
-<li class="fragment">Visual analytics
+<li class="fragment">Visual analytics: highlight spatial patterns or features
+<p>
 <li class="fragment">Communication of geospatial information
+<p>
 <li class="fragment">Example: Explore Global Weather Conditions at
 <strong>
 <a href="https://earth.nullschool.net/about.html">earth</a></strong> by Cameron Beccario
+<small>Near-real time dynamics, presented in several projections</small>
 </ul>
 </section>
 
@@ -38,9 +42,14 @@
    <h3>Display of raster and vector data</h3>
 <p>
 <ul>
- <li class="fragment">all data displayed on computer screen are rasters 
- <li class="fragment">raster data display: as we zoom in, pixels show up, we can reinterpolate to avoid visible pixels
- <li class="fragment">vector data display: scalable, preserves shape 
+<small>
+ <li class="fragment">all data displayed on computer screen are rasters, 
+what you see is controlled by the resolution of your map display 
+ <li class="fragment">raster data: as we zoom in, raster grid cells become visible,
+reinterpolate to higher resolution to smoothout the effect
+ <li class="fragment">vector data: vertices are connected by rasterized line, it is scalable, limited
+only by the dispaly resolution 
+</small>
 </ul>
 <p class="fragment">
 <img height="350" src="img/data_visualize/raster_vect_displ_zoom.jpg">
@@ -49,18 +58,19 @@
 
 <section>
    <h3>Display of large rasters</h3>
-  If the number of rows or columns in a raster is greater than those of map display,
-not all pixels are visible
-<p class="fragment"> <img height="390" src="img/data_visualize/raster_large_streams.jpg">
-<img height="390" src="img/data_visualize/raster_large_streamszoom.jpg">
-  <br class="fragment"><small>raster lines representation is broken: convert to vector representation </small>
+<small>  If the number of rows or columns in a raster is greater than those of map display,
+not all pixels are visible</small>
+<p class="fragment"> <img height="400" src="img/data_visualize/raster_large_streams.jpg">
+<img height="400" src="img/data_visualize/raster_large_streamszoom.jpg">
+  <br class="fragment"><small>Example:3000x3000 raster in 1000x1000 window only every third pixel shown,
+zoom to 500x500 subset shows all pixels. When lines representation is broken: convert to vector representation </small>
 </p>
 </section>
 
 <section>
    <h3>Working with color</h3>
 <ul>
- <li class="fragment">Color definition components: hue, lightness, and saturation
+ <li class="fragment">Color components: hue, lightness, and saturation
  <li class="fragment">Quantitative representation: % Red, Green, Blue
  <li class="fragment">Color for raster data: discrete or continuous 
  <li class="fragment">Continuous <strong>interpolates</strong> RGB values based on the values in the raster map
@@ -88,8 +98,9 @@ Learn more about color
 <p class="fragment"> 
 <img height="320" src="img/data_visualize/soilsKfac_discrleg.png">
 <img height="320" src="img/data_visualize/soils_rural_1mID.png"> </p>
-<p> Soil erodibility and Soil ID maps
+<p><small> Soil erodibility and Soil ID maps
 <p>Brewer - example of discrete color ramps for cartography
+</small>
 </section>
 
 <section>
@@ -99,7 +110,7 @@ Learn more about color
 <li>discrete color limits the information but makes the interval values easier to identify
 </ul>
 <p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_elev.jpg">
-<p class="credit">(note: default color ramp for FP maps is often greyscale with uniform interval)</p>
+<p><small>note: default color ramp for FP maps is often greyscale with uniform interval</small></p>
 </section>
 
 <section>
@@ -161,7 +172,7 @@ Distribution of color based on histogram of raster data values and a custom colo
   <li>hue: theme values (e.g., elevation, flow, land cover)
 </ul>
 </ul>
-<p> <img height="380" src="img/data_visualize/relief_shade_color.jpg">
+<p> <img height="360" src="img/data_visualize/relief_shade_color.jpg">
 <p><small>Add equations for illuminated relief and img composite</small>
 </section>
 
@@ -177,6 +188,7 @@ Distribution of color based on histogram of raster data values and a custom colo
 <p> <img height="420" src="img/data_visualize/accum_1m_log.jpg">
 </section>
 
+<!--
 <section>
    <h3>Cost surface shading</h3>
 <p>Color composite for proximity to roads surface
@@ -203,13 +215,6 @@ often follow established conventions or national standards
 </ul>
 </p>
 </section>
-
-<!--
-<section>
-   <h3>Vector data display</h3>
-<p> examples from GRASS, ArcGIS, online maps (OSM, Google), USGS standards
-<p> Image composite - watersheds map with relief shading
-</section>
 -->
 
 <section>
@@ -221,6 +226,7 @@ often follow established conventions or national standards
 </ul>
 </section>
 
+<!--
 <section>
   <h3>Coordinate system grid</h3>
 <ul>
@@ -229,6 +235,7 @@ often follow established conventions or national standards
 <p> <img height="340" src="img/data_visualize/cartogrid_ll.png">
 <img height="340" src="img/data_visualize/cartogrid_xy.png">
 </section>
+-->
 
 <section>
 <h3>Map elements</h3>
@@ -277,7 +284,7 @@ often follow established conventions or national standards
    <h3>Light and shading</h3>
 <p>Important for visual representation of surface structure
 <p>Useful for identification of subtle features or artifacts
-<p><img height="350" src="img/data_visualize/nvizlightnew.jpg">
+<p><img height="360" src="img/data_visualize/nvizlightnew.jpg">
 </section>
 
 <section>
@@ -305,23 +312,18 @@ often follow established conventions or national standards
 <p><img height="350" src="img/data_visualize/nvizcutplanelwDEMDSMS.jpg">
 </section>
 
+<!--
 <section>
    <h3>Multiple surface visualization</h3>
 <p>Difference over time: migrating dune
 <p><img height="350" src="img/data_visualize/jr_74_17_cut3.jpg">
 </section>
+-->
 
 <section>
    <h3>Dynamic Visualization</h3>
 <a href="https://ncsu-geoforall-lab.github.io/dynamic-surfaces-talk/texas.html#/">Dynamic Landscapes</a>
 <p>Talk on "Exploring changing landscapes with dynamic visualizations and tangible interaction"
-</section>
-
-<!--
-<section>
-   <h3>Visualization of 3D vector data</h3>
-<p>Urban environment
-<p> Image composite - examples from GRASS, ArcGIS, GE
 </section>
 
 <section>
@@ -364,13 +366,8 @@ Cutting planes: slicing through stacked surfaces or volumes
 </section>
 
 <section>
-   <h3>Space-time cube: people density </h3>
-<p> Webcams data
-</section>
-
-<section>
    <h3>Animations in 3D </h3>
-<p>Volume data 
+<p>Volume data: nitrogen, groundwater 
 <p>See more examples here (create this as html animation galery:
 <p class=credit>http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/dynamicgis</p>
 </section>
@@ -379,13 +376,7 @@ Cutting planes: slicing through stacked surfaces or volumes
   <h3>Web-based visualization</h3>
 Interactive 3D visualization supported by WebGL
 <p> <a href="http://plas.io"> Point cloud viewer</a>
-</section>
-
-<section>
-  <h3>Web-based visualization</h3>
-Real-time, interactive dynamic visualization
-<p><p><small><a href="https://earth.nullschool.net">Ocean Currents</a>2018 Cameron Beccario </small></p>
-<p> links to resources
+<p>links to supplemental material, kepler  
 </section>
 
 <section>
@@ -393,11 +384,10 @@ Real-time, interactive dynamic visualization
 <ul>
   <li>display of raster and vector data: scaling properties
   <li>color ramps for raster data, relief shading
-  <li>color and symbols for vector data
   <li>map elements
   <li>3D visualization: single and multiple surfaces
   <li>dynamic visualization with animations
-  <li>Web GIS cartography: MapStory, CartoDB, WorldMap, flows
+  <li>Web GIS cartography
 </ul>
 </section>
 
