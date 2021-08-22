@@ -34,23 +34,23 @@
 <li class="fragment">Example: Explore Global Weather Conditions at
 <strong>
 <a href="https://earth.nullschool.net/about.html">earth</a></strong> by Cameron Beccario
-<small>Near-real time dynamics, presented in several projections</small>
+<p><small>Near-real time dynamics, presented in several projections</small>
 </ul>
 </section>
 
 <section>
    <h3>Display of raster and vector data</h3>
 <p>
-<ul>
 <small>
+<ul>
  <li class="fragment">all data displayed on computer screen are rasters, 
 what you see is controlled by the resolution of your map display 
  <li class="fragment">raster data: as we zoom in, raster grid cells become visible,
 reinterpolate to higher resolution to smoothout the effect
  <li class="fragment">vector data: vertices are connected by rasterized line, it is scalable, limited
 only by the dispaly resolution 
-</small>
 </ul>
+</small>
 <p class="fragment">
 <img height="350" src="img/data_visualize/raster_vect_displ_zoom.jpg">
 </p>
@@ -59,7 +59,7 @@ only by the dispaly resolution
 <section>
    <h3>Display of large rasters</h3>
 <small>  If the number of rows or columns in a raster is greater than those of map display,
-not all pixels are visible</small>
+<br>not all pixels are visible</small>
 <p class="fragment"> <img height="400" src="img/data_visualize/raster_large_streams.jpg">
 <img height="400" src="img/data_visualize/raster_large_streamszoom.jpg">
   <br class="fragment"><small>Example:3000x3000 raster in 1000x1000 window only every third pixel shown,
@@ -92,14 +92,14 @@ Learn more about color
 <section>
    <h3>Colors for discrete raster data</h3>
 <ul>
-<li>Quantitative data: constant hue, color intensity is a function of values
-<li>Qualitative data: constant intensity, varied discrete hue
+<li>quantitative data: constant hue, color intensity is a function of values
+<li>qualitative data: constant intensity, varied discrete hue
 </ul>
 <p class="fragment"> 
 <img height="320" src="img/data_visualize/soilsKfac_discrleg.png">
 <img height="320" src="img/data_visualize/soils_rural_1mID.png"> </p>
 <p><small> Soil erodibility and Soil ID maps
-<p>Brewer - example of discrete color ramps for cartography
+<br>Brewer - example of discrete color ramps for cartography
 </small>
 </section>
 
@@ -110,7 +110,7 @@ Learn more about color
 <li>discrete color limits the information but makes the interval values easier to identify
 </ul>
 <p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_elev.jpg">
-<p><small>note: default color ramp for FP maps is often greyscale with uniform interval</small></p>
+<br><small>note: default color ramp for FP maps is often greyscale with uniform interval</small></p>
 </section>
 
 <section>
@@ -190,14 +190,6 @@ Distribution of color based on histogram of raster data values and a custom colo
 
 <!--
 <section>
-   <h3>Cost surface shading</h3>
-<p>Color composite for proximity to roads surface
-<p> <img height="420" src="img/data_visualize/costsurf_roads.jpg">
-<p><small>Surface can be abstract, such as cost surface, in this case proximity 
-to the main highways based on street networks</small>
-</section>
-
-<section>
    <h3>Vector data display</h3>
 <p>
 Topic covered by thematic cartography,
@@ -259,10 +251,10 @@ often follow established conventions or national standards
 <li> Projection of 3D object into a 2D space: perspective
 <li> Parameters:
   <ul>
-  <li>viewing position (height, distance and angle)
-  <li>surface position, z-scale, resolution 
-  <li>light and shading
-  <li>surface color: raster map, vector data
+  <li class="fragment">viewing position (height, distance and angle)
+  <li class="fragment">surface position, z-scale, resolution 
+  <li class="fragment">light and shading
+  <li class="fragment">surface color: raster map, vector data
   </ul>
 </ul>
 <p><img height="180" src="img/data_visualize/vis3dcomposits.jpg">
@@ -272,12 +264,12 @@ often follow established conventions or national standards
    <h3>Properties of 3D perspective</h3>
 <p>Different properties than 2D display 
 <ul>
-<li> paralel lines intersect in vanishing point(s)
-<li> scale depends on distance from the viewer
-<li> 3D ortho view: viewing position is in infinity above the image center
-<li> only visible part of surface is rendered
-<li> interactive exploration is important for viewing obstructed data
+<li class="fragment"> paralel lines intersect in vanishing point(s)
+<li class="fragment"> scale depends on distance from the viewer
+<li class="fragment"> only visible part of surface is rendered:
+interactive exploration is important for viewing obstructed data
 </ul>
+<p>Figure with scales and different viewpoints here
 </section>
 
 <section>
@@ -291,12 +283,12 @@ often follow established conventions or national standards
    <h3>Multiple surface visualization</h3>
 <p>Applications - use cases
 <ul>
-  <li>Lidar: bare ground and surface with vegetation
-  <li>Change in topography (coast, development)
-  <li>Geological or soil layers
-  <li>Vertical scaling is important: vertical distances often 1-3 magnitudes smaller than horizontal
-  <li>Display: side-by-side or stacked
-  <li>Interactive cutting planes for exploration of stacked surfaces
+  <li class="fragment">Lidar: bare ground and surface with vegetation
+  <li class="fragment">Change in topography (coast, development)
+  <li class="fragment">Geological or soil layers
+  <li class="fragment">Vertical scaling is important: vertical distances often 1-3 magnitudes smaller than horizontal
+  <li class="fragment">Display: side-by-side or stacked
+  <li class="fragment">Interactive cutting planes for exploration of stacked surfaces
 </ul>
 </section>
 
@@ -309,7 +301,8 @@ often follow established conventions or national standards
 <section>
    <h3>Multiple surface visualization</h3>
 <p>Stacked with crossections: Groundwater, Bare Earth and Vegetated Surfaces
-<p><img height="350" src="img/data_visualize/nvizcutplanelwDEMDSMS.jpg">
+<br><img height="250" src="img/data_visualize/nvizcutplanelwDEMDSMS.jpg">
+<br><img height="250" src="img/data_visualize/nvizcutplane_lwDSMDEMS2.jpg">
 </section>
 
 <!--
@@ -318,13 +311,13 @@ often follow established conventions or national standards
 <p>Difference over time: migrating dune
 <p><img height="350" src="img/data_visualize/jr_74_17_cut3.jpg">
 </section>
--->
 
 <section>
    <h3>Dynamic Visualization</h3>
 <a href="https://ncsu-geoforall-lab.github.io/dynamic-surfaces-talk/texas.html#/">Dynamic Landscapes</a>
 <p>Talk on "Exploring changing landscapes with dynamic visualizations and tangible interaction"
 </section>
+-->
 
 <section>
    <h3>Multi-temporal data </h3>
@@ -334,7 +327,8 @@ often follow established conventions or national standards
   <li>time series of data : migrating landforms, temperature, precipitation, melting of ice cap, urban growth
   <li>analysis or illustration of a method – changing a parameter
 </ul>
-<p> Image composite - simulation: 2D anim surge, Cape fear
+<br><img height="250" src="img/data_visualize/anim_storsurge.gif">
+<img height="250" src="img/data_visualize/NagsHead.gif">
 </section>
 
 <section>
@@ -352,17 +346,20 @@ Fly-by : single static surface explored by moving viewing position – Google Ea
 Dynamic surfaces: series of changing surfaces (color map, surface or both), static viewing position
 Cutting planes: slicing through stacked surfaces or volumes
 </ul>
-<p> Image composite - flow: particles and depth, solar on CC
+<p><img height="350" src="img/data_visualize/Balsfanimwalk.gif">
+<img height="350" src="img/data_visualize/fanimhhcolp.gif">
 </section>
 
 <section>
    <h3>Animations in 3D: examples </h3>
 <p> Jockey's ridge
+<p><img height="450" src="img/data_visualize/jr_74_17_anim3dlgfix.gif">
 </section>
 
 <section>
    <h3>Space-time cube: landforms </h3>
 <p> Jockey's ridge
+<p><img height="450" src="img/data_visualize/JR_STC_16m_anim.gif">
 </section>
 
 <section>
