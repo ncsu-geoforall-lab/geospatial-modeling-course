@@ -117,18 +117,20 @@ Learn more about color
    <h3>Colors for continuous raster data</h3>
 <p> <small>
 Distribution of color based on uniform raster data intervals</small>
-<p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_histeq1.jpg"> </p>
-<p><small>Uniform intervals work for elevations in Piedmont, but for entire NC this approach highlights that most NC is flat coastal 
+<p class="fragment"><img class="fragment" height="380" src="img/data_visualize/Color_raster_equalint.jpg"> </p>
+<img class="fragment" height="380" src="img/data_visualize/Color_raster_histeq1.jpg"> </p>
+<p><small>Uniform intervals work for elevations in Piedmont, 
+but for entire NC this approach highlights that most NC is flat coastal 
 plane but we don't see its subtle topography structure </small></p>
 </section>
 
 <section>
    <h3>Histogram equalized color</h3>
 <p>
-Distribution of color based on histogram of raster data values and a custom color ramp
+Distribution of color based on histogram of areas associated with raster data values 
+and a custom color ramp
 <p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_histeq2.jpg">
 <p> <small>highlights topography structure but distorts the elevation differences</small>
-<p>add equation or graph?
 </section>
 
 <section>
@@ -183,7 +185,7 @@ Distribution of color based on histogram of raster data values and a custom colo
   <li>hue: theme values (e.g., elevation, flow, land cover)
 </ul>
 </ul>
-<p> <img height="360" src="img/data_visualize/relief_shade_color.jpg">
+<p> <img height="350" src="img/data_visualize/relief_shade_color.jpg">
 <p><small>Add equations for illuminated relief and img composite</small>
 </section>
 
@@ -257,30 +259,27 @@ often follow established conventions or national standards
 
 <section>
    <h3>Visualization in 3D perspective</h3>
-<p> Viewing and analyzing 3D data
 <ul>
 <li> Projection of 3D object into a 2D space: perspective
-<li> Parameters:
-  <ul>
-  <li class="fragment">viewing position (height, distance and angle)
-  <li class="fragment">surface position, z-scale, resolution 
-  <li class="fragment">light and shading
-  <li class="fragment">surface color: raster map, vector data
-  </ul>
-</ul>
-<p><img height="180" src="img/data_visualize/vis3dcomposits.jpg">
-</section>
-
-<section>
-   <h3>Properties of 3D perspective</h3>
-<p>Different properties than 2D display 
 <ul>
 <li class="fragment"> paralel lines intersect in vanishing point(s)
 <li class="fragment"> scale depends on distance from the viewer
 <li class="fragment"> only visible part of surface is rendered:
 interactive exploration is important for viewing obstructed data
 </ul>
-<p>Figure with scales and different viewpoints here
+</ul>
+<p><img height="180" src="img/data_visualize/vis3dcomposits.jpg">
+</section>
+
+<section>
+   <h3>Parameters of 3D perspective</h3>
+  <ul>
+  <li class="fragment">viewing position (height, distance and angle)
+  <li class="fragment">surface position, z-scale, resolution
+  <li class="fragment">light and shading
+  <li class="fragment">surface color: raster map, vector data
+  </ul>
+<p>Figure with scales, z-exag and different viewpoints here
 </section>
 
 <section>
@@ -311,9 +310,9 @@ interactive exploration is important for viewing obstructed data
 
 <section>
    <h3>Multiple surface visualization</h3>
-<p>Stacked with crossections: Groundwater, Bare Earth and Vegetated Surfaces
+<p>Stacked surfaces with crossections
 <br><img height="250" src="img/data_visualize/nvizcutplanelwDEMDSMS.jpg">
-<br><img height="250" src="img/data_visualize/nvizcutplane_lwDSMDEMS2.jpg">
+<br><img height="235" src="img/data_visualize/nvizcutplane_lwDSMDEMS2.jpg">
 </section>
 
 <!--
@@ -331,31 +330,33 @@ interactive exploration is important for viewing obstructed data
 -->
 
 <section>
-   <h3>Multi-temporal data </h3>
-<p> When to use animations: 
+   <h3>Dynamic visualization: animations  </h3>
 <ul>
-  <li>dynamic simulations: ocean surge, flooding, wind, pollution, migration, urban growth
-  <li>time series of data : migrating landforms, temperature, precipitation, melting of ice cap, urban growth
-  <li>analysis or illustration of a method – changing a parameter
+<li> When to use animations: 
+<ul>
+  <li class="fragment">dynamic simulations: ocean surge, flooding, wind, pollution, migration, urban growth
+  <li class="fragment">time series of data : migrating landforms, temperature, precipitation, melting of ice cap, urban growth
+  <li class="fragment">analysis or illustration of a method – changing a parameter or crossections
 </ul>
-<br><img height="250" src="img/data_visualize/anim_storsurge.gif">
-<img height="250" src="img/data_visualize/NagsHead.gif">
+<p class="fragment"><img height="250" src="img/data_visualize/anim_storsurge.gif">
+<img class="fragment" height="250" src="img/data_visualize/NagsHead.gif">
+<img class="fragment" height="250" src="img/data_visualize/voxels_vegetation_anim.gif">
 </section>
 
+<!--
 <section>
    <h3>Animations 2D</h3>
 <p> 2D animations examples
 <p> Image composite - simulation: 2D urban growth, data: urban growth
 <p>planets, google earth engine and many others
 </section>
+-->
 
 <section>
    <h3>Animations in 3D </h3>
 <p> Dynamic animation in 3D space viewed in perspective
 <ul>
-Fly-by : single static surface explored by moving viewing position – Google Earth, Fly-by
-Dynamic surfaces: series of changing surfaces (color map, surface or both), static viewing position
-Cutting planes: slicing through stacked surfaces or volumes
+<li>Dynamic process: overland flow simulation using path sampling method
 </ul>
 <p><img height="350" src="img/data_visualize/Balsfanimwalk.gif">
 <img height="350" src="img/data_visualize/fanimhhcolp.gif">
@@ -363,19 +364,23 @@ Cutting planes: slicing through stacked surfaces or volumes
 
 <section>
    <h3>Animations in 3D: examples </h3>
-<p> Jockey's ridge
+<p> Jockey's ridge:
+Dynamic surfaces: series of changing surfaces, static viewing position
 <p><img height="450" src="img/data_visualize/jr_74_17_anim3dlgfix.gif">
 </section>
 
 <section>
    <h3>Space-time cube: landforms </h3>
-<p> Jockey's ridge
+<p> Jockey's ridge: evolution of elevation contour
 <p><img height="450" src="img/data_visualize/JR_STC_16m_anim.gif">
 </section>
 
 <section>
    <h3>Animations in 3D </h3>
 <p>Volume data: nitrogen, groundwater 
+Fly-by : single static surface explored by moving viewing position – Google Earth, Fly-by
+<p><img height="350" src="img/data_visualize/wellnew.gif">
+<img height="350" src="img/data_visualize/well456.gif">
 <p>See more examples here (create this as html animation galery:
 <p class=credit>http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/dynamicgis</p>
 </section>
