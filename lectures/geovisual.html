@@ -141,14 +141,15 @@ Highlights topography structure but distorts the elevation differences</small>
 <li>Uniform interval color ramp
 </ul> 
 <p> <img height="380" src="img/data_visualize/accum_50K_30mabs.png">
-<p class="credit">The flow accumulation values range between 1 and 73000</p>
+<p class="credit">The flow accumulation values range between 1 and 73000 with large number of cells with 
+small values and small number of cells with very large values - Poisson distribution $\lanmbda =1$</p>
 </section>
 
 <section>
    <h3>Color for non-linear distributions</h3>
 <ul>
 <li>Flow accumulation data range over several magnitudes
-<li>Histogram equalized color ramp
+<li>Histogram equalized color ramp: green-yellow-blue
 </ul> 
 <p> <img height="380" src="img/data_visualize/flowacc_histeq_lg.png">
 <p class="credit">The high flow accumulation which represents the main streams is lost. </p>
@@ -158,7 +159,7 @@ Highlights topography structure but distorts the elevation differences</small>
    <h3>Color for non-linear distributions</h3>
 <ul>
 <li>Flow accumulation data range over several magnitudes
-<li>Logarithmic color ramp
+<li>Logarithmic color ramp: green-yellow-blue
 </ul> 
 <p> <img height="380" src="img/data_visualize/flowacc_log_lg.jpg">
 <p class="credit">Highlights the main streams with good representation of smaller streams</p>
@@ -197,6 +198,7 @@ Highlights topography structure but distorts the elevation differences</small>
    <h3>Relief shading</h3>
 <p>Color composite for flow accumulation with elevation
 <p> <img height="420" src="img/data_visualize/accum_1m_log.jpg">
+<img height="200" src="img/data_visualize/flowlegend.png">
 </section>
 
 <!--
@@ -251,8 +253,9 @@ often follow established conventions or national standards
 <li>coordinates, citation, metadata
 </ul>
 </ul>
-<p> <img height="320" src="img/data_visualize/Pareviewshedarc.jpg">
-<p class=credit>Image from report by Pare, GIS582</p>
+<p> <img height="320" src="img/data_visualize/Map_RHahn_ArcGIS.jpg">
+<img height="320" src="img/data_visualize/mymap.png">
+<p class=credit>Image from report by Hahn, GIS582</p>
 </section>
 
 <section>
@@ -353,9 +356,9 @@ interactive exploration is important for viewing obstructed data
 
 <section>
    <h3>Animations in 3D </h3>
-<p> Dynamic animation in 3D space viewed in perspective
 <ul>
-<li>Dynamic process: overland flow simulation using path sampling method
+<li>Dynamic process: overland flow simulation using path sampling method, time series 
+of particles and water depth maps draped over static DEM
 </ul>
 <p><img height="350" src="img/data_visualize/Balsfanimwalk.gif">
 <img class="fragment" height="350" src="img/data_visualize/fanimhhcolp.gif">
@@ -370,16 +373,14 @@ Dynamic surfaces: series of changing surfaces, static viewing position
 
 <section>
    <h3>Space-time cube: landforms </h3>
-<p> Jockey's ridge: evolution of 16m elevation contour
+<p> Jockey's ridge: evolution of 16m elevation contouri, isosurface evolving over time
 <p><img height="450" src="img/data_visualize/JR_STC_16m_anim.gif">
 </section>
 
 <section>
    <h3>Animations in 3D </h3>
-<ul>
-  <li>Fly-by: static features explored by moving viewing position
-  <li>Dynamic insourfaces derived from multi-temporal voxel model
-</ul>
+  <p>Fly-by: static features explored by moving viewing position
+  <br>Dynamic isourfaces derived from multi-temporal voxel model
 <p><img height="350" src="img/data_visualize/wellnew.gif">
 <img class="fragment" height="350" src="img/data_visualize/well456.gif">
 <p><small>See more examples here</small> 
@@ -390,7 +391,8 @@ Dynamic surfaces: series of changing surfaces, static viewing position
   <h3>Web-based visualization</h3>
 Interactive 3D visualization supported by WebGL
 <p> <a href="http://plas.io"> Point cloud viewer</a>
-<p>links to supplemental material, kepler  
+<p> <a href="http://kepler.gl"> Kepler: vector data display and analysis</a>
+<img height="350" src="img/data_visualize/pfas_kepler_3D.gif">
 </section>
 
 <section>
