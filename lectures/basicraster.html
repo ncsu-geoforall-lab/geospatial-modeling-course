@@ -83,7 +83,7 @@
 <p> <img height="200" src="img/analysis_basicraster/dem_1m.jpg">
 <img height="200" src="img/analysis_basicraster/elev_dem1mhist.png">
 </p>
-<p class="fragment"> <img height="200" src="img/analysis_basicraster/elev_rural_30m.jpg">
+<p> <img height="200" src="img/analysis_basicraster/elev_rural_30m.jpg">
 <img height="200" src="img/analysis_basicraster/elevrur_ned30hist.png">
 </p>
 <p class="fragment"> <img height="70" src="img/analysis_basicraster/elevstats_table.png">
@@ -93,7 +93,7 @@
    <h3>Global statistics: compare DEMs</h3>
 <p> <img height="200" src="img/analysis_basicraster/dem_1m.jpg">
 <img height="200" src="img/analysis_basicraster/elev_dem1mhist.png">
-<p class="fragment"> <img height="200" src="img/analysis_basicraster/elev_rural_srtm30m.jpg">
+<p> <img height="200" src="img/analysis_basicraster/elev_rural_srtm30m.jpg">
 <img height="200" src="img/analysis_basicraster/elevrur_srtm30hist.png">
 </p>
 <p class="fragment"> <img height="60" src="img/analysis_basicraster/elevstats_table_30mnedsrtm.png">
@@ -217,12 +217,12 @@ for extensive set of supported operators and mathematical functions</small>
 <li>Example: extract map of elevations in all forested areas with elevation > 120m
 </ul>
 <p>GRASS GIS expression
-<p class="code">"forest_z = if(landclass96==5 && elevation > 120., elevation, null())”</p>
+<p><code>forest_z = if(landclass96==5 && elevation > 120., elevation, null())</code></p>
 </section>
 
 <section>
    <h3>Map algebra: logical expressions</h3>
-<p class="small">"highforest = if(landclass96==5 && elevation > 120., elevation, null())”</p>
+<p>forest_z = if(landclass96==5 && elevation > 120., elevation, null())</code></p>
 <p>
 <img height="240" src="img/analysis_basicraster/landclass96sh.png">
 <img height="240" src="img/analysis_basicraster/elevation_shade10m.jpg">
@@ -237,71 +237,67 @@ for extensive set of supported operators and mathematical functions</small>
 <li>F(map1_int, map2_int) -> map_int
 <li>F(map1_int, map2_fp) -> map_fp
 <p>
-<li>Example: compute NDVI from Landsat7 integer maps tm4, tm3
-<li>ndvi=(tm4-tm3)/(tm4+tm3)
-<li>ndvi=float(tm4-tm3)/float(tm4+tm3)
-<li>ndvi=1.*(tm4-tm3)/(tm4+tm3)
+<li>Example: compute NDVI from Landsat7 integer maps using tm4, tm3 bands
+<li><code>ndvi=(tm4-tm3)/(tm4+tm3)</code>
+<li><code>ndvi=float(tm4-tm3)/float(tm4+tm3)</code>
+<li><code>ndvi=1.*(tm4-tm3)/(tm4+tm3)</code>
 </ul>
 </section>
 
 <section>
    <h3>Raster map algebra: int and fp</h3>
-<p>ndvi=(tm4-tm3)/(tm4+tm3)
+<p><code>ndvi=(tm4-tm3)/(tm4+tm3)</code>
 <p>
 <img height="240" src="img/analysis_basicraster/lsat7_2002_30.png">
 <img height="240" src="img/analysis_basicraster/lsat7_2002_40.png">
 <img height="240" src="img/analysis_basicraster/ndvi_0.png">
 <p><small>This is to illustrate the arithmentic operators, 
 note that various vegetation indices are usually implemented
-as a separate module, e.g. i.vi in GRASS GIS</small>
+as a separate module, e.g. <code>i.vi</code> in GRASS GIS</small>
 </section>
 
 <section>
    <h3>Raster map algebra: int and fp</h3>
-<p>ndvi=float(tm4-tm3)/float(tm4+tm3)
+<p><code>ndvi=float(tm4-tm3)/float(tm4+tm3)</code>
 <p>
 <img height="240" src="img/analysis_basicraster/lsat7_2002_30.png">
 <img height="240" src="img/analysis_basicraster/lsat7_2002_40.png">
 <img height="240" src="img/analysis_basicraster/ndvi_fp.png">
 <p><small>This is to illustrate the arithmentic operators, 
 note that various vegetation indices are usually implemented
-as a separate module, e.g. i.vi in GRASS GIS</small>
+as a separate module, e.g. <code>i.vi</code> in GRASS GIS</small>
 </section>
 
 <section>
    <h3>Raster map algebra: math functions</h3>
 <p>
 Example: for all forested areas, compute sediment transport capacity $T$ using the following equation 
+<p>
 $$T = A^{1.5} \sin \beta$$
-<p class=small> where $A$ is contributing area per unit width and $\beta$ is slope
+<p class=small> where 
+<ul>
+   <li>$A$ is contributing area per unit width
+   <li>$\beta$ is slope
+</ul>
 <p class=small>GRASS GIS expression</p>
-<p class=code>
-"t_sed = if(landclass96==5, exp(area,1.5) * sin(slope), null())”</p>
+<p>
+<code>t_sed = if(landclass96==5, exp(area,1.5) * sin(slope), null())</code>
 </section>
 
 <section>
    <h3>Map algebra: math functions</h3>
-<p>Generate a new surface related to existing surface
-<p> $z =  x +  y$ is coded as <code>plane = row() + col()</code>
-<p>Tilt and elevation adjusted to intersect a DEM <code>elev_lid792_1m</code>
-<p class=code>
-tiltplane = 0.2*(0.1*row()+col())+50
-<br>
-tiltpl_elev = if(tiltplane < elev_lid792_1m + 2,tiltplane,null())
+<p>Generate a plane related to existing surface
+<ul>
+<li class="fragment"> equation for a plane $z =  ax + by$ 
+<li class="fragment">map algebra aexpression <code>plane = a*row() + b*col()</code>
+<li class="fragment">tilt and elevation adjusted to intersect a DEM <code>elev_lid792_1m</code>
+<li class="fragment"><code> tiltplane = 0.2*(0.1*row()+col())+50
+<li class="fragment">cut off the part of plane that is over 2m above elevation surface
+<li class="fragment"><code>tiltpl_elev = if(tiltplane < elev_lid792_1m + 2,tiltplane,null())</code>
+</ul>
 <p class="fragment">
 <img height="250" src="img/analysis_basicraster/tiltedplaneNW.jpg">
 <img height="250" src="img/analysis_basicraster/tiltedplane_mapalgebra.jpg">
-</section>
-
-<section>
-   <h3>Map algebra: math functions</h3>
-<p>Generate new surfaces:
-<p>
-$z = \sin (0.4x) + 0.3 \cos(y) + 80$
-<p class="fragment">
-<img height="380" src="img/analysis_basicraster/waves2_3delev.jpg">
-<img height="250" src="img/analysis_basicraster/waves_leg.jpg">
-<p class="fragment"><small>Smooth, simplified surface</small>
 </section>
 
 <section>
@@ -319,7 +315,7 @@ $z = \sin (0.4x) + 0.3 \cos(y) + 80$
    <h3>Example: null data handling</h3>
 <p>
 Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM 
-<p class=code> elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</p>
+<p> <code>elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</code></p>
 <p class="fragment">
 <img height="350" src="img/analysis_basicraster/mapcalc_nulls_in.jpg"></p>
 </section>
@@ -349,7 +345,7 @@ Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM
 Merging several neighboring raster maps (tiles) into a single raster (mosaic)
 <p class="fragment">
 <img height="350" src="img/analysis_basicraster/patch_tiles.jpg"></p>
-<p><small>If reprojection is needed, first mosaic, then reproject to avoid potential 
+<p><small>Check the seams with aspect. If reprojection is needed, first mosaic, then reproject to avoid potential 
 no-data slivers that need to be interpolated</small>
 </section>
 
@@ -357,9 +353,9 @@ no-data slivers that need to be interpolated</small>
    <h3>Patching</h3>
 Merging several features within a single raster, e.g., for draping over DEM in 3D view
 <p>
-<img height="200" src="img/analysis_basicraster/rpatch_lakes.jpg">
-<img height="200" src="img/analysis_basicraster/rpatchdem_result.png">
-<img height="200" src="img/analysis_basicraster/rpatchsingle300dpi.png">
+<img height="230" src="img/analysis_basicraster/rpatch_lakes.png">
+<img height="230" src="img/analysis_basicraster/rpatchdem_result.png">
+<img height="230" src="img/analysis_basicraster/rpatchsingle300dpi.png">
 <p><small>Start with the map with most nulls (lakes), fill them in with values from additional raster map (elevation)
 and assign relevant color ramp</small>
 </section>
@@ -367,9 +363,10 @@ and assign relevant color ramp</small>
 <section>
    <h3>Reclassification</h3>
 <ul>
-  <li>Reclassification / recoding: transformation rules used to convert between raster value types and classes:
+  <li>Reclassification / recoding: transformation rules used to convert between raster value types and classes
   <li>change interval or list of values $(w_i, w_j)$  to a new value $v_k$ or interval of values $(v_k,v_l)$
   <li>Types of intervals: 
+  <p>
   <ul>
      <li>Equal value
      <li>Natural breaks (based on histogram breaks)
@@ -402,7 +399,7 @@ leading to 6 classes with 7 degree interval</small>
 <section>
    <h3>Reclassification example</h3>
 <p>Slope: histogram equalized reclassification of continuous values to discrete classes
-<p class="fragment">
+<p>
 <img height="220" src="img/analysis_basicraster/slope_hist.png">
 <img height="220" src="img/analysis_basicraster/slope.png">
 <img height="220" src="img/analysis_basicraster/slope_ceq6_hist.png">
@@ -424,7 +421,7 @@ the same area: 1-6 deg has six 1 degree intervals, 6-38 is a single interval</sm
 <section>
  <h3>Summary</h3>
 <ul>
-  <li>global and zonal statistics for continuous and discrete data
+  <li>global and zonal summary statistics for continuous and discrete data
   <li>basic neighborhood operations
   <li>map algebra
   <li>reclassification of continuous values to discrete classes
