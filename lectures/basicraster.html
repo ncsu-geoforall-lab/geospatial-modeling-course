@@ -288,13 +288,18 @@ $$T = A^{1.5} \sin \beta$$
    <h3>Map algebra: math functions</h3>
 <p>Generate a plane related to existing surface
 <ul>
-<li class="fragment"> equation for a plane $z =  ax + by$ 
-<li class="fragment">map algebra aexpression <code>plane = a*row() + b*col()</code>
+<li class="fragment"> equation for a plane: $z =  ax + by$ 
+<li class="fragment">in map algebra: <code>plane = a*row() + b*col()</code>
 <li class="fragment">tilt and elevation adjusted to intersect a DEM <code>elev_lid792_1m</code>
-<li class="fragment"><code> tiltplane = 0.2*(0.1*row()+col())+50
+<li class="fragment"><code> tiltplane = 0.2*(0.1*row()+col())+50</code>
 <li class="fragment">cut off the part of plane that is over 2m above elevation surface
 <li class="fragment"><code>tiltpl_elev = if(tiltplane < elev_lid792_1m + 2,tiltplane,null())</code>
 </ul>
+</section>
+
+<section>
+   <h3>Map algebra: math functions</h3>
+<p>Generate a plane related to existing surface
 <p class="fragment">
 <img height="250" src="img/analysis_basicraster/tiltedplaneNW.jpg">
 <img height="250" src="img/analysis_basicraster/tiltedplane_mapalgebra.jpg">
@@ -324,7 +329,7 @@ Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM
    <h3>Example: null data handling</h3>
 <p>
 Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM
-<p class=code> elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</p>
+<p><code> elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</code></p>
 <img height="350" src="img/analysis_basicraster/mapcalc_nulls_out.jpg">
 <p class="fragment"><small>Use “if” statement to limit the computation to no-NULL areas</small></p>
 </section>
