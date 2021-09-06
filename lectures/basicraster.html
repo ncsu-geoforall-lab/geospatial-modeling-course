@@ -191,7 +191,7 @@ Each software has its own syntax, operators and functions
 <ul>
   <li class="fragment">less than, equal, 
   <li class="fragment">and, or, not, ...; 
-  <li class="fragment">if(x), if(x,a,b)
+  <li class="fragment"><code>if(x), if(x,a,b)</code>
 </ul>
 <p>
 <li class="fragment">Arithmetic Operators
@@ -201,8 +201,8 @@ Each software has its own syntax, operators and functions
 <p>
 <li class="fragment">Mathematical Functions: 
 <ul>
-<li class="fragment" ><code>exp(x,y), sin(x), log(x)</code>
-<li class="fragment">min(x1,x2,..), max(), median()
+<li class="fragment"><code>exp(x,y), sin(x), log(x)</code>
+<li class="fragment"><code>min(x1,x2,..), max(), median()</code>
 </ul>
 <p class="fragment"><small>See GRASS GIS <a href="https://grass.osgeo.org/grass78/manuals/r.mapcalc.html">map algebra manual page</a>
 for extensive set of supported operators and mathematical functions</small>
@@ -212,12 +212,12 @@ for extensive set of supported operators and mathematical functions</small>
    <h3>Map algebra: logical expressions</h3>
 <p>
 <ul>
-<li>continuous and discrete (category) data and their combination 
+<li>apply to continuous and discrete (category) data and their combination 
 <li>reclassification, sub-setting, masking, overlays
 <li>Example: extract map of elevations in all forested areas with elevation > 120m
 </ul>
 <p>GRASS GIS expression
-<p class="small">"highforest = if(landclass96==5 && elevation > 120., elevation, null())”</p>
+<p class="code">"forest_z = if(landclass96==5 && elevation > 120., elevation, null())”</p>
 </section>
 
 <section>
@@ -251,6 +251,9 @@ for extensive set of supported operators and mathematical functions</small>
 <img height="240" src="img/analysis_basicraster/lsat7_2002_30.png">
 <img height="240" src="img/analysis_basicraster/lsat7_2002_40.png">
 <img height="240" src="img/analysis_basicraster/ndvi_0.png">
+<p><small>This is to illustrate the arithmentic operators, 
+note that various vegetation indices are usually implemented
+as a separate module, e.g. i.vi in GRASS GIS</small>
 </section>
 
 <section>
@@ -270,27 +273,24 @@ as a separate module, e.g. i.vi in GRASS GIS</small>
 <p>
 Example: for all forested areas, compute sediment transport capacity $T$ using the following equation 
 $$T = A^{1.5} \sin \beta$$
+<p class=small> where $A$ is contributing area per unit width and $\beta$ is slope
 <p class=small>GRASS GIS expression</p>
-<p class=small>
+<p class=code>
 "t_sed = if(landclass96==5, exp(area,1.5) * sin(slope), null())”</p>
-<p class=small>
-where $A$ is contributing area per unit width represented by raster map <code>area</code>
-and $\beta$ is slope
 </section>
 
 <section>
    <h3>Map algebra: math functions</h3>
-<p>Generate new surfaces and combine them with existing surfaces:
-<p> $z =  x +  y$
-<p style="code">plane = row() + col()</p>
-<p class=small>
+<p>Generate a new surface related to existing surface
+<p> $z =  x +  y$ is coded as <code>plane = row() + col()</code>
+<p>Tilt and elevation adjusted to intersect a DEM <code>elev_lid792_1m</code>
+<p class=code>
 tiltplane = 0.2*(0.1*row()+col())+50
 <br>
 tiltpl_elev = if(tiltplane < elev_lid792_1m + 2,tiltplane,null())
 <p class="fragment">
 <img height="250" src="img/analysis_basicraster/tiltedplaneNW.jpg">
 <img height="250" src="img/analysis_basicraster/tiltedplane_mapalgebra.jpg">
-<p class="fragment"><small>Tilted plane</small>
 </section>
 
 <section>
@@ -318,8 +318,8 @@ $z = \sin (0.4x) + 0.3 \cos(y) + 80$
 <section>
    <h3>Example: null data handling</h3>
 <p>
-Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM, 
-<p class=small> elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</p>
+Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM 
+<p class=code> elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</p>
 <p class="fragment">
 <img height="350" src="img/analysis_basicraster/mapcalc_nulls_in.jpg"></p>
 </section>
@@ -327,15 +327,14 @@ Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM,
 <section>
    <h3>Example: null data handling</h3>
 <p>
-Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM,
-<p class=small> elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</p>
-<p class="fragment">
-<img height="350" src="img/analysis_basicraster/mapcalc_nulls_out.jpg"></p>
+Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM
+<p class=code> elev_avg=(elev_srtm_30m+elevlid_D782_6m)/2.</p>
+<img height="350" src="img/analysis_basicraster/mapcalc_nulls_out.jpg">
 <p class="fragment"><small>Use “if” statement to limit the computation to no-NULL areas</small></p>
 </section>
 
 <section>
-   <h3>Patching and Mosaicking</h3>
+   <h3>Mosaicking and Patching</h3>
 <ul>
 <li class="fragment">Mosaicking: Merging several neighboring raster maps into a single raster
 <li class="fragment">Issues: resolution, alignment, no-data slivers due to projection
@@ -357,24 +356,25 @@ no-data slivers that need to be interpolated</small>
 <section>
    <h3>Patching</h3>
 Merging several features within a single raster, e.g., for draping over DEM in 3D view
-<p class="fragment">
-<img height="280" src="img/analysis_basicraster/rpatch_lakes.jpg"></p>
-<img height="280" src="img/analysis_basicraster/rpatchdem_result.png"></p>
-<img height="280" src="img/analysis_basicraster/rpatchsingle300dpi.png"></p>
+<p>
+<img height="200" src="img/analysis_basicraster/rpatch_lakes.jpg">
+<img height="200" src="img/analysis_basicraster/rpatchdem_result.png">
+<img height="200" src="img/analysis_basicraster/rpatchsingle300dpi.png">
 <p><small>Start with the map with most nulls (lakes), fill them in with values from additional raster map (elevation)
 and assign relevant color ramp</small>
 </section>
 
 <section>
    <h3>Reclassification</h3>
-<p>
-Reclassification / recoding: transformation rules used to convert between raster value types and classes:
-<p>change interval or list of values $(w_i, w_j)$  to a new value $v_k$ or interval of values $(v_k,v_l)$
-<p>Interval: 
 <ul>
-<li>Equal value
-<li>Natural breaks (based on histogram breaks)
-<li>Equal area (histogram equalized)
+  <li>Reclassification / recoding: transformation rules used to convert between raster value types and classes:
+  <li>change interval or list of values $(w_i, w_j)$  to a new value $v_k$ or interval of values $(v_k,v_l)$
+  <li>Types of intervals: 
+  <ul>
+     <li>Equal value
+     <li>Natural breaks (based on histogram breaks)
+     <li>Equal area (histogram equalized)
+  </ul>
 </ul>
 </section>
 
@@ -389,14 +389,24 @@ Reclassification / recoding: transformation rules used to convert between raster
 
 <section>
    <h3>Reclassification example</h3>
-<p>Slope: histogram equalized reclassification of continuous values to discrete classes 
+<p>Slope: linear reclassification of continuous values to discrete classes 
 <p class="fragment">
-<img height="250" src="img/analysis_basicraster/slope_hist.png">
-<img height="250" src="img/analysis_basicraster/slope.png">
-<img height="250" src="img/analysis_basicraster/slope_c6b_hist.png">
-<img height="250" src="img/analysis_basicraster/slope_c6b.png">
-<img height="250" src="img/analysis_basicraster/slope_ceq6_hist.png">
-<img height="250" src="img/analysis_basicraster/slope_ceq6.png">
+<img height="220" src="img/analysis_basicraster/slope_hist.png">
+<img height="220" src="img/analysis_basicraster/slope.png">
+<img height="220" src="img/analysis_basicraster/slope_c6b_hist.png">
+<img height="220" src="img/analysis_basicraster/slope_c6b.png">
+<small>Slope intervals are same for each class, are computed as max_slope/number_of_classes 
+leading to 6 classes with 7 degree interval</small>
+</section>
+
+<section>
+   <h3>Reclassification example</h3>
+<p>Slope: histogram equalized reclassification of continuous values to discrete classes
+<p class="fragment">
+<img height="220" src="img/analysis_basicraster/slope_hist.png">
+<img height="220" src="img/analysis_basicraster/slope.png">
+<img height="220" src="img/analysis_basicraster/slope_ceq6_hist.png">
+<img height="220" src="img/analysis_basicraster/slope_ceq6.png">
 <small>Slope intervals for each class are computed based on cumulative histogram so that each class has approximately
 the same area: 1-6 deg has six 1 degree intervals, 6-38 is a single interval</small>
 </section>
@@ -407,7 +417,8 @@ the same area: 1-6 deg has six 1 degree intervals, 6-38 is a single interval</sm
 <p class="fragment">
 <img height="270" src="img/analysis_basicraster/cfacbare.jpg">
 <img height="270" src="img/analysis_basicraster/cfacgrow.jpg">
-<small>1 tilled field = 0.9, 2 grass = 0.01, 3 forest = 0.001</small>
+<small>Winter - 1 pond : 0.000, 2 forest : 0.0005, 3 developed : 0.000, 4 bare : 0.8, 5 paved road : 0.000, 6 dirt road : 0.500
+7 agriculture : 0.5, 8 grass = 0.005; Summer - 7 agriculture : 0.005</small>
 </section>
 
 <section>
