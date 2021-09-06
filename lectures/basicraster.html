@@ -39,10 +39,9 @@
     <li class="fragment">univariate statistics: min, max, mean, standard deviation, median, ... 
     <li class="fragment">histogram (requires discretization into bins) 
   </ul>
-<p class="fragment"> Can be applied as <b>global, zonal, or focal </b> operations
-<p class="fragment"> <small>See relevant equations and additional metrics in 
+<p class="fragment"> Can be applied as <b>global, zonal, or neighborhood </b> operations
+<p class="fragment"> See relevant equations and additional metrics in 
 <a href="http://www.spatialanalysisonline.com/HTML/index.html?statistical_measures_and_relat.htm"> Supplemental material</a>
-</small>
 </section>
 
 <section>
@@ -54,7 +53,7 @@
    <li class="fragment">univariate statistics can be applied only to quantitative attributes
    <li class="fragment">majority (mode or most frequent category), diversity (number of different categories)  apply to category data
 </ul>
-<p class="fragment"> Can be applied as <b>global, zonal, or focal </b> operations
+<p class="fragment"> Can be applied as <b>global, zonal, or neighborhood </b> operations
 <p class="fragment"> <small>See relevant equations and additional metrics in 
 <a href="http://www.spatialanalysisonline.com/HTML/index.html?statistical_measures_and_relat.htm"> Supplemental material</a>
 </small>
@@ -92,9 +91,8 @@
 
 <section>
    <h3>Global statistics: compare DEMs</h3>
-<p> <img height="200" src="img/analysis_basicraster/elev_rural_30m.jpg">
-<img height="200" src="img/analysis_basicraster/elevrur_ned30hist.png">
-</p>
+<p> <img height="200" src="img/analysis_basicraster/dem_1m.jpg">
+<img height="200" src="img/analysis_basicraster/elev_dem1mhist.png">
 <p class="fragment"> <img height="200" src="img/analysis_basicraster/elev_rural_srtm30m.jpg">
 <img height="200" src="img/analysis_basicraster/elevrur_srtm30hist.png">
 </p>
@@ -111,6 +109,7 @@
 <img height="200" src="img/analysis_basicraster/elevrur_srtm30hist.png">
 </section>
 
+<!--
 <section>
    <h3>Global statistics: discrete soil data</h3>
 <p> Soil properties: soil erodibility mean 0.248 
@@ -118,6 +117,7 @@
 <img height="330" src="img/data_visualize/soilsKfac_discrleg.png">
 <img height="330" src="img/data_visualize/soils_rural_1mID.png">
 </section>
+-->
 
 <section>
    <h3>Zonal statistics: continuous data</h3>
@@ -156,7 +156,7 @@
 
 <section>
    <h3>Neighborhood operations: smoothing</h3>
-<p>Smoothing noise in DEM: focal mean with 5x5 window
+<p>Smoothing noise in DEM: mean with 5x5 window
 <p class="fragment"> <img height="240" src="img/analysis_basicraster/rneighbor_avg_srtm_in.jpg">
 <br><img class="fragment" height="230" src="img/analysis_basicraster/rneighbor_avg_srtm_out.jpg">
 </section>
@@ -201,7 +201,7 @@ Each software has its own syntax, operators and functions
 <p>
 <li class="fragment">Mathematical Functions: 
 <ul>
-<li class="fragment">exp(x,y),sin(x),log(x)
+<li class="fragment" ><code>exp(x,y), sin(x), log(x)</code>
 <li class="fragment">min(x1,x2,..), max(), median()
 </ul>
 <p class="fragment"><small>See GRASS GIS <a href="https://grass.osgeo.org/grass78/manuals/r.mapcalc.html">map algebra manual page</a>
@@ -237,7 +237,7 @@ for extensive set of supported operators and mathematical functions</small>
 <li>F(map1_int, map2_int) -> map_int
 <li>F(map1_int, map2_fp) -> map_fp
 <p>
-<li>Example: compute ndvi index from Landsat integer maps
+<li>Example: compute NDVI from Landsat7 integer maps tm4, tm3
 <li>ndvi=(tm4-tm3)/(tm4+tm3)
 <li>ndvi=float(tm4-tm3)/float(tm4+tm3)
 <li>ndvi=1.*(tm4-tm3)/(tm4+tm3)
@@ -260,23 +260,33 @@ for extensive set of supported operators and mathematical functions</small>
 <img height="240" src="img/analysis_basicraster/lsat7_2002_30.png">
 <img height="240" src="img/analysis_basicraster/lsat7_2002_40.png">
 <img height="240" src="img/analysis_basicraster/ndvi_fp.png">
+<p><small>This is to illustrate the arithmentic operators, 
+note that various vegetation indices are usually implemented
+as a separate module, e.g. i.vi in GRASS GIS</small>
 </section>
 
 <section>
    <h3>Raster map algebra: math functions</h3>
 <p>
-Example: for all forested areas, compute sediment transport capacity using the following equation 
-<p>equations
-<p class=small>GRASS GIS expression
+Example: for all forested areas, compute sediment transport capacity $T$ using the following equation 
+$$T = A^{1.5} \sin \beta$$
+<p class=small>GRASS GIS expression</p>
 <p class=small>
-"sediment = if(landclass96==5, exp(contrib_area,1.5) * sin(slope), null())”</p>
+"t_sed = if(landclass96==5, exp(area,1.5) * sin(slope), null())”</p>
+<p class=small>
+where $A$ is contributing area per unit width represented by raster map <code>area</code>
+and $\beta$ is slope
 </section>
 
 <section>
    <h3>Map algebra: math functions</h3>
-<p>Generate new surfaces:
-<p> $z =  x +  y + 100$
-<p>plane = row() + col() + 98
+<p>Generate new surfaces and combine them with existing surfaces:
+<p> $z =  x +  y$
+<p style="code">plane = row() + col()</p>
+<p class=small>
+tiltplane = 0.2*(0.1*row()+col())+50
+<br>
+tiltpl_elev = if(tiltplane < elev_lid792_1m + 2,tiltplane,null())
 <p class="fragment">
 <img height="250" src="img/analysis_basicraster/tiltedplaneNW.jpg">
 <img height="250" src="img/analysis_basicraster/tiltedplane_mapalgebra.jpg">
@@ -327,19 +337,32 @@ Compute average elevation from 30m SRTM and one tile of 6m NCFlood DEM,
 <section>
    <h3>Patching and Mosaicking</h3>
 <ul>
-<li class="fragment">Merging several neighboring raster maps into a single raster
-<li class="fragment">“Filling-in” nulls in base raster map with values from additional raster maps 
-<li class="fragment">Order of maps matters for patching
-<li class="fragment">Issues: resolution, extension that is not aligned, no-data slivers due to projection
+<li class="fragment">Mosaicking: Merging several neighboring raster maps into a single raster
+<li class="fragment">Issues: resolution, alignment, no-data slivers due to projection
+<p>
+<li class="fragment">Patching: “Filling-in” nulls in base raster map with values from additional raster maps 
+<li class="fragment">Merging several features within a single raster layer, order of maps matters
 </ul>
 </section>
 
 <section>
    <h3>Mosaicking</h3>
-Merging several neighboring raster maps into a single raster (mosaic)
+Merging several neighboring raster maps (tiles) into a single raster (mosaic)
 <p class="fragment">
 <img height="350" src="img/analysis_basicraster/patch_tiles.jpg"></p>
-<p class="small">First mosaic, then reproject to avoid potential slivers that need to be interpolated</p>
+<p><small>If reprojection is needed, first mosaic, then reproject to avoid potential 
+no-data slivers that need to be interpolated</small>
+</section>
+
+<section>
+   <h3>Patching</h3>
+Merging several features within a single raster, e.g., for draping over DEM in 3D view
+<p class="fragment">
+<img height="280" src="img/analysis_basicraster/rpatch_lakes.jpg"></p>
+<img height="280" src="img/analysis_basicraster/rpatchdem_result.png"></p>
+<img height="280" src="img/analysis_basicraster/rpatchsingle300dpi.png"></p>
+<p><small>Start with the map with most nulls (lakes), fill them in with values from additional raster map (elevation)
+and assign relevant color ramp</small>
 </section>
 
 <section>
@@ -357,11 +380,34 @@ Reclassification / recoding: transformation rules used to convert between raster
 
 <section>
    <h3>Reclassification example</h3>
-<p>Aspect: continuous values in degrees to discrete classes in cardinal directions
+<p>Aspect: linear reclassification of continuous values in degrees to discrete classes in cardinal directions
 <p class="fragment">
 <img height="270" src="img/analysis_basicraster/aspect360.jpg">
 <img height="270" src="img/analysis_basicraster/aspect-reclass.png">
 <small>0- 45 = 4 East, 45-135 = 1 North, 135-225 = 2 West, 225-315 = 3 South, 315-360 = 4 East,</small>
+</section>
+
+<section>
+   <h3>Reclassification example</h3>
+<p>Slope: histogram equalized reclassification of continuous values to discrete classes 
+<p class="fragment">
+<img height="250" src="img/analysis_basicraster/slope_hist.png">
+<img height="250" src="img/analysis_basicraster/slope.png">
+<img height="250" src="img/analysis_basicraster/slope_c6b_hist.png">
+<img height="250" src="img/analysis_basicraster/slope_c6b.png">
+<img height="250" src="img/analysis_basicraster/slope_ceq6_hist.png">
+<img height="250" src="img/analysis_basicraster/slope_ceq6.png">
+<small>Slope intervals for each class are computed based on cumulative histogram so that each class has approximately
+the same area: 1-6 deg has six 1 degree intervals, 6-38 is a single interval</small>
+</section>
+
+<section>
+   <h3>Reclassification example</h3>
+<p>Rule-based Landcover to C-factor (soil erosion cover factor): categories to values in winter and summer
+<p class="fragment">
+<img height="270" src="img/analysis_basicraster/cfacbare.jpg">
+<img height="270" src="img/analysis_basicraster/cfacgrow.jpg">
+<small>1 tilled field = 0.9, 2 grass = 0.01, 3 forest = 0.001</small>
 </section>
 
 <section>
