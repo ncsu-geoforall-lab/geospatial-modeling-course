@@ -217,12 +217,12 @@ for extensive set of supported operators and mathematical functions</small>
 <li>Example: extract map of elevations in all forested areas with elevation > 120m
 </ul>
 <p>GRASS GIS expression
-<p><code>forest_z = if(landclass96==5 && elevation > 120., elevation, null())</code></p>
+<p><code>forest_z = if(landc==5 && elev > 120., elev, null())</code></p>
 </section>
 
 <section>
    <h3>Map algebra: logical expressions</h3>
-<p>forest_z = if(landclass96==5 && elevation > 120., elevation, null())</code></p>
+<p><code>forest_z = if(landc==5 && elev > 120., elev, null())</code></p>
 <p>
 <img height="240" src="img/analysis_basicraster/landclass96sh.png">
 <img height="240" src="img/analysis_basicraster/elevation_shade10m.jpg">
@@ -280,8 +280,8 @@ $$T = A^{1.5} \sin \beta$$
    <li>$\beta$ is slope
 </ul>
 <p class=small>GRASS GIS expression</p>
-<p>
-<code>t_sed = if(landclass96==5, exp(area,1.5) * sin(slope), null())</code>
+<p class=small>
+<code>t_sed = if(landc==5, exp(area,1.5) * sin(slope), null())</code>
 </section>
 
 <section>
@@ -290,9 +290,9 @@ $$T = A^{1.5} \sin \beta$$
 <ul>
 <li class="fragment"> equation for a plane: $z =  ax + by$ 
 <li class="fragment">in map algebra: <code>plane = a*row() + b*col()</code>
-<li class="fragment">tilt and elevation adjusted to intersect a DEM <code>elev_lid792_1m</code>
+<li class="fragment">tilt and elevation adjusted to intersect a DEM 
 <li class="fragment"><code> tiltplane = 0.2*(0.1*row()+col())+50</code>
-<li class="fragment">cut off the part of plane that is over 2m above elevation surface
+<li class="fragment">cut off plane over 2m above elevation surface
 <li class="fragment"><code>tiltpl_elev = if(tiltplane < elev_lid792_1m + 2,tiltplane,null())</code>
 </ul>
 </section>
