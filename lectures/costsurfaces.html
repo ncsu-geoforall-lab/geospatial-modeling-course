@@ -78,7 +78,7 @@ Manhattan metric, Linear Referencing Systems
 
 <section>
    <h3>Measuring feature length</h3>
-</ul>
+<ul>
 <li class="fragment">feature length is scale dependent 
 <li class="fragment">what is the length of NC coastline? Neuse river?
 <li class="fragment">vector model: length depends on level of detail (point density representing the feature)
@@ -126,14 +126,13 @@ Proximity analysis function
 
 <section>
    <h3>Raster map buffer: points</h3>
-<p>Objective: Identify schools that have very little forested around them 
+<p>Map forested areas around schools  
 <p>Create point buffers at selected distances 
 <p> <img height="380" src="img/analysis_costsurf/buff_schools.png">
 </section>
 
 <section>
    <h3>Raster map buffer: points</h3>
-<p>Objective: Identify schools that have very little forest around them
 <p>Use map algebra to combine with landcover  
 <p><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code>
 <p class="fragment"><small> why 0 and not null? </small>
@@ -144,7 +143,7 @@ keep in mind our 30m resolution</small>
 
 <section>
    <h3>Raster map buffer: areas</h3>
-<p>Objective: Identify developed areas within walking distance of lakes           
+<p>Map developed areas within walking distance of lakes           
 <p>Create buffers at selected distances, compare Euclidean and Manhattan distance metrics and continuous buffer
 <p> <img height="350" src="img/analysis_costsurf/buffrgrow_eucl.png">
 <img height="350" src="img/analysis_costsurf/buffrgrow_manh.png">
@@ -153,7 +152,6 @@ keep in mind our 30m resolution</small>
 
 <section>
    <h3>Raster map buffer: areas</h3>
-<p>Objective: Identify developed areas within walking distance of lakes                                            
 <p>Use map algebra to combine with landcover                                           
 <p><code>lake_buf_dev = if(landcl98 == 1 && lake_buff, lake_buff, 0)</code>
 <p> <img height="350" src="img/analysis_costsurf/buff_lakes_200m.png">
