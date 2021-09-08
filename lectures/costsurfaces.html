@@ -186,21 +186,72 @@ keep in mind our 30m resolution</small>
 <section>
    <h3>Cost surfaces</h3>
 Cumulative (accumulated) cost surface: 
-raster representation of cumulative cost of reaching the target point(s) from any location in the given region.
+<ul>
+<li class="fragment">raster representation of cumulative cost 
+of reaching the target point(s) from any location in the given region.
+</ul>
 
 Input cost map 
-value assigned to a cell represents cost of traversing that cell, e.g. time estimated from:
-inverse of speed limit for driving, 
-slope and/or vegetation density for walking
-<p> <img height="380" src="img/analysis_costsurf/noise_schools_anna.png">
+<ul>
+<li class="fragment">value assigned to a cell represents cost of traversing that cell, 
+<li class="fragment">cost can be based on time, energy, etc.
+</ul>
 </section>
 
 <section>
-   <h3>Cost surfacefor a point</h3>
-If cost for each cell is 1: proximity surface
-shortest path from each cell to the target point
+   <h3>Cumulative cost surface to a point</h3>
+Proximity surface representing
+shortest path (distance) from each cell to the target point if cost for each cell is 1:
 <p> <img height="380" src="img/analysis_costsurf/costsurf_dist.jpg">
 </section>
+
+<section>
+   <h3>Cumulative cost surface</h3>
+To measure the proximity (distance), traverse the region in:
+standard 8 directions, 
+Knight 16 directions
+<p> <img height="350" src="img/analysis_costsurf/cost1D8.jpg">
+<img height="350" src="img/analysis_costsurf/cost1D816.jpg">
+<p><small>cost for each cell is 1</small>
+</section>
+
+<section>
+   <h3>Cost map</h3>
+If cost is spatially variable, we need to define cost to traverse each grid cell,
+usually expressed as time $t[s]$ derived from:
+<ul>
+    <li class="fragment">inverse of speed limit (or average speed data) for driving,                          
+    <li class="fragment">slope and vegetation density for walking on trails 
+</ul>
+<p class="fragment"><small>
+Example: cost surface derived as minimum time $t[s]$ needed to traverse a grid cell with resolution d[m]
+$$ t = d / v $$
+where, v is speed (e..g speed limit stored in roads/streets data layer.
+Cost map is computed using map algebra.</small>
+</section>
+
+<section>
+   <h3>Cost map</h3>
+Deriving a cost map from speed limit, as time to traverse a 30m cell [seconds]
+
+off-road cells are assigned to 5 mi/hr, for realistic travel time per cell
+speed limit [mi/hr
+time to traverse a 30m cell [seconds]
+Cost can be defined par grid cell or per map unit, depending on implementation
+<p> <img height="350" src="img/analysis_costsurf/speed_rast.png">
+<img height="350" src="img/analysis_costsurf/cost_rast.png">
+</section>
+
+<section>
+   <h3>Cumulative cost surface</h3>
+Cumulative cost surface: time to reach the point A, 
+the higher the hill the more time it takes to reach A
+Application: locate the firestation that can reach the accident the fastest and identify the shortest path
+<p> <img height="350" src="img/analysis_costsurf/costsurface_3d.png">
+</section>
+
+
+
 
 <section>
  <h3>Summary</h3>
