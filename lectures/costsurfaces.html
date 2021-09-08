@@ -170,12 +170,14 @@ keep in mind our 30m resolution</small>
 
 <section>
    <h3>Cost surfaces</h3>
+<p>
 Cumulative (accumulated) cost surface: 
 <ul>
 <li class="fragment">raster representation of cumulative cost 
 of reaching the target point(s) from any location in the given region.
 </ul>
 
+<p>
 Input cost map 
 <ul>
 <li class="fragment">value assigned to a cell represents cost of traversing that cell, 
@@ -185,8 +187,8 @@ Input cost map
 
 <section>
    <h3>Cumulative cost surface to a point</h3>
-Proximity surface representing
-shortest path (distance) from each cell to the target point if cost for each cell is 1:
+Proximity surface represents
+shortest path (distance) from each cell to the target point if cost for each cell is 1
 <p> <img height="380" src="img/analysis_costsurf/costsurf_dist.jpg">
 </section>
 
@@ -196,46 +198,55 @@ To measure the proximity (distance), traverse the region in:
 standard 8 directions, 
 Knight 16 directions
 <p> <img height="350" src="img/analysis_costsurf/cost1D8.jpg">
-<img height="350" src="img/analysis_costsurf/cost1D816.jpg">
+<img height="350" src="img/analysis_costsurf/cost1D16.jpg">
 <p><small>cost for each cell is 1</small>
 </section>
 
 <section>
    <h3>Cost map</h3>
 If cost is spatially variable, we need to define cost to traverse each grid cell,
-usually expressed as time $t[s]$ derived from:
+usually expressed as time $t[s]$ derived, for example, from:
 <ul>
-    <li class="fragment">inverse of speed limit (or average speed data) for driving,                          
+    <li class="fragment"> speed data for driving,                          
     <li class="fragment">slope and vegetation density for walking on trails 
 </ul>
 <p class="fragment"><small>
-Example: cost surface derived as minimum time $t[s]$ needed to traverse a grid cell with resolution d[m]
+Example: cost surface derived as time $t[s]$ needed to traverse a $d[m]$ resolution grid cell
 $$ t = d / v $$
-where, v is speed (e..g speed limit stored in roads/streets data layer.
-Cost map is computed using map algebra.</small>
+where, $v$ is speed, approximated e.g., by speed limit stored in roads/streets data layer.
+Cost map is computed using arithmetic expression in map algebra.</small>
 </section>
 
 <section>
    <h3>Cost map</h3>
-Deriving a cost map from speed limit, as time to traverse a 30m cell [seconds]
-
-off-road cells are assigned to 5 mi/hr, for realistic travel time per cell
-speed limit [mi/hr
-time to traverse a 30m cell [seconds]
-Cost can be defined par grid cell or per map unit, depending on implementation
+Speed limit and cost raster maps.
+Cost is time [sec] to traverse a 30m cell, off-road cells are assigned 5 mi/hr.
+Cost can be defined per grid cell or per map unit, depending on implementation
 <p> <img height="350" src="img/analysis_costsurf/speed_rast.png">
 <img height="350" src="img/analysis_costsurf/cost_rast.png">
 </section>
 
 <section>
    <h3>Cumulative cost surface</h3>
-Cumulative cost surface: time to reach the point A, 
-the higher the hill the more time it takes to reach A
-Application: locate the firestation that can reach the accident the fastest and identify the shortest path
+Cumulative cost surface: time to reach the point A from anywhere in the region.
+Example application: locate the firestation that can reach the accident the fastest and identify the shortest path
 <p> <img height="350" src="img/analysis_costsurf/costsurface_3d.png">
+<small>The higher the hill the more time it takes to reach A, highways are valleys</small>
 </section>
 
+<section>
+   <h3>Least cost path</h3>
+<ul>
+<li class="fragment">using the cumulative cost surface, find the least cost (fastest) path to the target point
+<li class="fragment">least cost path (LCP) follows the steepest slope line, equivalent to flow routing with terrain replaced by cost surface
+<li class="fragment">depending on algorithm used for flow routing depressions or flats in cost surface may lead to wrong results
+<li class="fragment">save the directions used for creating the cumulative cost surface as back-link  and compute LCP as tracked path
+</section>
 
+<section>
+   <h3>Least cost path applications</h3>
+find foredune ridge, firefighters escape routes
+</section>
 
 
 <section>
