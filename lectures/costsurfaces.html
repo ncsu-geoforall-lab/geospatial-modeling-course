@@ -15,7 +15,7 @@
 <ul>
   <li>Understand different metrics for distance
 <p>
-  <li>Define buffer operation
+  <li>Define buffer operation, discrete and continous buffers
 <p>
   <li>Explain concept of cost surfaces
 <p>
@@ -27,13 +27,12 @@
    <h3>Measuring distance</h3>
 <p>
   <ul>
-   <li>Euclidean: shortest distance in plane
-   <li>Geodesic: shortest distance over curved surface, great circle on sphere: orthodrome
-   <li>equation: http://mathworld.wolfram.com/GreatCircle.html
-   <li>Lp metrics on meshes or grids
-   <li>Linear referencing systems
+   <li class="fragment">Euclidean: shortest distance in plane
+   <li class="fragment">Geodesic: shortest distance over curved surface, great circle on sphere: orthodrome
+   <li class="fragment">equation: http://mathworld.wolfram.com/GreatCircle.html
+   <li class="fragment">Lp metrics on meshes or grids
+   <li class="fragment">Linear referencing systems
   </ul>
-<p class="fragment"> Can be applied as <b>global, zonal, or focal </b> operations
 </section>
 
 <section>
@@ -45,76 +44,163 @@
 </section>
 
 <section>
-   <h3>Measuring distance: networks</h3>
+   <h3>Measuring distance</h3>
 <ul>
- <li>Generalized distance: Lp metrics for measuring distance on meshes or grids
- <li>distance between a(x1,y1) and b(x2,y2)
- <li>dp(a,b)=[(x1-x2)p + (y1-y2)p]1/p
- <li>p=2 : Euclidean distance
- <li>p=1 : Manhattan (Taxicab, City block) metric
+ <li class="fragment">Generalized distance: Lp metrics for measuring distance on meshes or grids
+ <li class="fragment">distance between $a(x_1,y_1)$ and $b(x_2,y_2)$
+ <li class="fragment">$dp(a,b)=[(x_1-x_2)^p + (y_1-y_2)^p]i^{1/p}$
+ <li class="fragment">p=2 : Euclidean distance
+ <li class="fragment">p=1 : Manhattan (Taxicab, City block) metric
 <p>
-  <li>Linear Referencing Systems: location is defined by its linear distance from a known point on a route (e.g. milepost on a highway), and distance is measured along segments of a network; used for roads, utilities, waterways
+  <li class="fragment">Linear Referencing Systems: location is defined by its linear distance 
+from a known point on a route (e.g. milepost on a highway), 
+and distance is measured along segments of a network; used for roads, utilities, waterways
 </ul>
 </section>
 
 <section>
    <h3>Measuring distance: networks</h3>
 Manhattan metric, Linear Referencing Systems
-<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
-<img class="fragment" height="190" src="img/analysis_basicraster/elev_rural_10m.jpg">
+<p> <img height="180" src="img/analysis_costsurf/manhattan.jpg">
+<img height="190" src="img/analysis_costsurf/lrs.jpg">
 </section>
 
 <section>
    <h3>Measuring feature length</h3>
 <ul>
-  <li>feature length is scale dependent 
-  <li>what is the length of NC coastline? Neuse river?
-  <li>vector model: length depends on level of detail (point density representing the feature)
-  <li>raster model: resolution and level of detail
-  <li>fractals
+  <li class="fragment">feature length is scale dependent 
+  <li class="fragment">what is the length of NC coastline? Neuse river?
+  <li class="fragment">vector model: length depends on level of detail (point density representing the feature)
+  <li class="fragment">raster model: resolution and level of detail
+  <li class="fragment">fractals
 </ul>
 </section>
 
 <section>
    <h3>Measuring feature length</h3>
-Length of NC coastline
-<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
-<img class="fragment" height="190" src="img/analysis_basicraster/elev_rural_10m.jpg">
-</section>
-
-
-<section>
-   <h3>Global statistics: continuous data</h3>
-<p> <img height="180" src="img/analysis_basicraster/dem_1m.jpg">
-<img height="180" src="img/analysis_basicraster/elev_dem1mhist.png">
-</p>
-<p class="fragment"> <img height="190" src="img/analysis_basicraster/elev_rural_10m.jpg">
-<img height="190" src="img/analysis_basicraster/elevrur_ned10hist.png">
-<p class="fragment"> <img height="90" src="img/analysis_basicraster/elevstats_table_1m10m.png">
-</section>
-
-
-<section>
-   <h3>Global statistics: discrete data</h3>
-<p>Map layer to number(s)
-<p> Soil properties: soil erodibility mean 0.248 
-<p> Soil type ID: mode (most common soil type)
-<img height="300" src="img/data_visualize/soilsKfac_discrleg.png">
-<img height="300" src="img/data_visualize/soils_rural_1mID.png">
-</section>
-
-<section>
-   <h3>Zonal statistics: continuous data</h3>
-<ul>
-<li>Agregates continous data to discrete areas 
-<li>Hydrology example: mean slope for watersheds to estimate how fast water moves through it 
 </ul>
-<p class="fragment"> <img height="240" src="img/analysis_basicraster/watersheds2d.png">
-<img class="fragment" height="240" src="img/analysis_basicraster/slope.png">
-<img class="fragment" height="240" src="img/analysis_basicraster/zonal_basinslope.png">
-<p class="fragment"><small>Watersheds (discrete), Slope (continuous), Mean slope for wach watershed (discrete)</small>
+<li class="fragment">feature length is scale dependent 
+<li class="fragment">what is the length of NC coastline? Neuse river?
+<li class="fragment">vector model: length depends on level of detail (point density representing the feature)
+<li class="fragment">raster model: resolution and level of detail
+</ul>
+<p> <img height="180" src="img/analysis_costsurf/dem_1m.jpg">
+<img class="fragment" height="190" src="img/analysis_costsurf/elev_rural_10m.jpg">
 </section>
 
+<section>
+   <h3>Measuring feature length</h3>
+Compare stream length from NHDS and stream derived from a local 1m lidar-based DEM
+<p> <img height="180" src="img/analysis_costsurf/dem_1m.jpg">
+<img class="fragment" height="190" src="img/analysis_costsurf/elev_rural_10m.jpg">
+NHDSstreams are generalized - they have simplified geometry, leading to shorter length
+Keep scale in mind when comparing length of features represented at different scales
+</section>
+
+<section>
+   <h3>Measuring feature length</h3>
+Compare length of NC Coastline from NC GIS and from a World map 1:10M
+<p> <img height="180" src="img/analysis_costsurf/dem_1m.jpg">
+<img class="fragment" height="190" src="img/analysis_costsurf/elev_rural_10m.jpg">
+<p class="fragment">World map scale 1km=0.1mm - narrow barrier islands are not represented</p>
+</section>
+
+<section>
+   <h3>Raster map buffer operations</h3>
+Proximity analysis function 
+</ul>
+<li class="fragment">discrete:
+   <ul>
+   <li class="fragment">creates buffer zones (equal distance zones) from a given feature (point, line or area)
+   <li class="fragment">applies to raster map layers representing discrete objects 
+   <li class="fragment">resolution should be sufficiently higher (cell size should be n-times smaller) than distances  (buffer widths)
+   </ul>
+<li class="fragment">continuous:
+   <ul>
+   <li class="fragment">derives proximity raster from a given feature
+   <li class="fragment">computes distances from a feature for every cell, "growing" in perpendicular direction 
+   <li class="fragment">resolution controls the distance precision - step 
+   </ul>
+</ul>
+</section>
+
+<section>
+   <h3>Raster map buffer: points</h3>
+<p>Objective: Identify schools that have very little forested around them 
+<p>Create point buffers at selected distances 
+<p> <img height="380" src="img/analysis_costsurf/buff_schools.png">
+</section>
+
+<section>
+   <h3>Raster map buffer: points</h3>
+<p>Objective: Identify schools that have very little forest around them
+<p>Use map algebra to combine with landcover  
+<p><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code>
+<p class="fragment"><small> why 0 and not null? </small>
+<p> <img height="380" src="img/analysis_costsurf/buff_schools_veg.png">
+<p><small>Use vector operations to add comlumn to school attribute table and add percent forested area within the buffer,
+keep in mind our 30m resolution</small>
+</section>
+
+<section>
+   <h3>Raster map buffer: areas</h3>
+<p>Objective: Identify developed areas within walking distance of lakes           
+<p>Create buffers at selected distances, compare Euclidean and Manhattan distance metrics and continuous buffer
+<p> <img height="350" src="img/analysis_costsurf/buffrgrow_eucl.png">
+<img height="350" src="img/analysis_costsurf/buffrgrow_manh.png">
+<img height="350" src="img/analysis_costsurf/buffrgrow_cont.png">
+</section>
+
+<section>
+   <h3>Raster map buffer: areas</h3>
+<p>Objective: Identify developed areas within walking distance of lakes                                            
+<p>Use map algebra to combine with landcover                                           
+<p><code>lake_buf_dev = if(landcl98 == 1 && lake_buff, lake_buff, 0)</code>
+<p> <img height="350" src="img/analysis_costsurf/buff_lakes_200m.png">
+<img height="350" src="img/analysis_costsurf/buff_lakes_200m_dev.png">
+</section>
+
+<section>
+   <h3>Raster map buffer: lines</h3>
+<p>Objective: Identify developed areas and schools that may be impacted by noise from a highway 
+<p>Create buffers at selected distances, or a continuous buffer
+<p>Use map algebra to combine with landcover                                           
+<p><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code>
+<p class="fragment"><small> why 0 and not null? </small>
+<p> <img height="380" src="img/analysis_costsurf/noise_shadestr.png">
+<p><small>Use vector operations to find schools within the buffer and compute number of children potentially impacted
+</small>
+</section>
+
+<section>
+   <h3>Raster map buffer: lines</h3>
+<p>Objective: Identify developed areas and schools that may be impacted by noise from a highway 
+<p>Create buffers at selected distances, or a continuous buffer
+<p>Use vector operations to identify the schools and compute number of children potentially impacted
+<p><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code>
+<p class="fragment"><small> why 0 and not null? </small>
+<p> <img height="380" src="img/analysis_costsurf/noise_schools_anna.png">
+</small>
+</section>
+
+<section>
+   <h3>Cost surfaces</h3>
+Cumulative (accumulated) cost surface: 
+raster representation of cumulative cost of reaching the target point(s) from any location in the given region.
+
+Input cost map 
+value assigned to a cell represents cost of traversing that cell, e.g. time estimated from:
+inverse of speed limit for driving, 
+slope and/or vegetation density for walking
+<p> <img height="380" src="img/analysis_costsurf/noise_schools_anna.png">
+</section>
+
+<section>
+   <h3>Cost surfacefor a point</h3>
+If cost for each cell is 1: proximity surface
+shortest path from each cell to the target point
+<p> <img height="380" src="img/analysis_costsurf/costsurf_dist.jpg">
+</section>
 
 <section>
  <h3>Summary</h3>
