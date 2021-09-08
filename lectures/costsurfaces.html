@@ -40,7 +40,7 @@
 <p>
    Geodesic: shortest distance over curved surface, great circle on sphere: orthodrome
 <p class="fragment"> 
-<img height="350" src="img/analysis_costsurf/oxodrome.png">
+<img height="350" src="img/analysis_costsurf/geodesic_rhumb_sm.png">
 </section>
 
 <section>
@@ -48,12 +48,14 @@
 <ul>
  <li class="fragment">Generalized distance: Lp metrics for measuring distance on meshes or grids
  <li class="fragment">distance between $a(x_1,y_1)$ and $b(x_2,y_2)$
+<p>
  <li class="fragment">$dp(a,b)=[(x_1-x_2)^p + (y_1-y_2)^p]i^{1/p}$
- <li class="fragment">p=2 : Euclidean distance
- <li class="fragment">p=1 : Manhattan (Taxicab, City block) metric
+<p>
+ <li class="fragment">$p=2$ : Euclidean distance
+ <li class="fragment">$p=1$ : Manhattan (Taxicab, City block) metric
 <p>
   <li class="fragment">Linear Referencing Systems: location is defined by its linear distance 
-from a known point on a route (e.g. milepost on a highway), 
+from a known point on a route  
 and distance is measured along segments of a network; used for roads, utilities, waterways
 </ul>
 </section>
@@ -72,20 +74,9 @@ Manhattan metric, Linear Referencing Systems
   <li class="fragment">what is the length of NC coastline? Neuse river?
   <li class="fragment">vector model: length depends on level of detail (point density representing the feature)
   <li class="fragment">raster model: resolution and level of detail
+<p>
   <li class="fragment">fractals
 </ul>
-</section>
-
-<section>
-   <h3>Measuring feature length</h3>
-<ul>
-<li class="fragment">feature length is scale dependent 
-<li class="fragment">what is the length of NC coastline? Neuse river?
-<li class="fragment">vector model: length depends on level of detail (point density representing the feature)
-<li class="fragment">raster model: resolution and level of detail
-</ul>
-<p> <img height="180" src="img/analysis_costsurf/dem_1m.jpg">
-<img class="fragment" height="190" src="img/analysis_costsurf/elev_rural_10m.jpg">
 </section>
 
 <section>
@@ -93,16 +84,17 @@ Manhattan metric, Linear Referencing Systems
 Compare stream length from NHDS and stream derived from a local 1m lidar-based DEM
 <p> <img height="180" src="img/analysis_costsurf/dem_1m.jpg">
 <img class="fragment" height="190" src="img/analysis_costsurf/elev_rural_10m.jpg">
-NHDSstreams are generalized - they have simplified geometry, leading to shorter length
-Keep scale in mind when comparing length of features represented at different scales
+<p><small>NHDSstreams are generalized - they have simplified geometry, leading to shorter length.
+Keep scale in mind when comparing length of features represented at different scales</small>
 </section>
 
 <section>
    <h3>Measuring feature length</h3>
 Compare length of NC Coastline from NC GIS and from a World map 1:10M
-<p> <img height="180" src="img/analysis_costsurf/dem_1m.jpg">
-<img class="fragment" height="190" src="img/analysis_costsurf/elev_rural_10m.jpg">
-<p class="fragment">World map scale 1km=0.1mm - narrow barrier islands are not represented</p>
+<p> <img height="280" src="img/analysis_costsurf/nc_shoreline_nc.png">
+<img class="fragment" height="280" src="img/analysis_costsurf/nc_shoreline_world.png">
+<img class="fragment" height="280" src="img/analysis_costsurf/nc_shoreline_worldnc.png">
+<p class="fragment"><small>World map scale 1km=0.1mm - narrow barrier islands are not represented</small></p>
 </section>
 
 <section>
@@ -128,15 +120,15 @@ Proximity analysis function
    <h3>Raster map buffer: points</h3>
 <p>Map forested areas around schools  
 <p>Create point buffers at selected distances 
-<p> <img height="380" src="img/analysis_costsurf/buff_schools.png">
+<p> <img height="360" src="img/analysis_costsurf/buff_schools.png">
 </section>
 
 <section>
    <h3>Raster map buffer: points</h3>
 <p>Use map algebra to combine with landcover  
 <p><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code>
+<p> <img height="360" src="img/analysis_costsurf/buff_schools_veg.png">
 <p class="fragment"><small> why 0 and not null? </small>
-<p> <img height="380" src="img/analysis_costsurf/buff_schools_veg.png">
 <p><small>Use vector operations to add comlumn to school attribute table and add percent forested area within the buffer,
 keep in mind our 30m resolution</small>
 </section>
@@ -144,7 +136,7 @@ keep in mind our 30m resolution</small>
 <section>
    <h3>Raster map buffer: areas</h3>
 <p>Map developed areas within walking distance of lakes           
-<p>Create buffers at selected distances, compare Euclidean and Manhattan distance metrics and continuous buffer
+<p>Create buffers at a given distance, compare Euclidean and Manhattan distance metrics and continuous buffer
 <p> <img height="350" src="img/analysis_costsurf/buffrgrow_eucl.png">
 <img height="350" src="img/analysis_costsurf/buffrgrow_manh.png">
 <img height="350" src="img/analysis_costsurf/buffrgrow_cont.png">
@@ -160,24 +152,19 @@ keep in mind our 30m resolution</small>
 
 <section>
    <h3>Raster map buffer: lines</h3>
-<p>Objective: Identify developed areas and schools that may be impacted by noise from a highway 
-<p>Create buffers at selected distances, or a continuous buffer
-<p>Use map algebra to combine with landcover                                           
+<p>Identify developed areas and schools that may be impacted by noise from a highway 
+<p>Create buffers and use map algebra to combine with landcover                                           
 <p><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code>
-<p class="fragment"><small> why 0 and not null? </small>
 <p> <img height="380" src="img/analysis_costsurf/noise_shadestr.png">
-<p><small>Use vector operations to find schools within the buffer and compute number of children potentially impacted
-</small>
+<p class="fragment"><small> why 0 and not null? </small>
 </section>
 
 <section>
    <h3>Raster map buffer: lines</h3>
-<p>Objective: Identify developed areas and schools that may be impacted by noise from a highway 
-<p>Create buffers at selected distances, or a continuous buffer
 <p>Use vector operations to identify the schools and compute number of children potentially impacted
 <p><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code>
-<p class="fragment"><small> why 0 and not null? </small>
 <p> <img height="380" src="img/analysis_costsurf/noise_schools_anna.png">
+<p><small>Use vector operations to find schools within the buffer and compute number of children potentially impacted
 </small>
 </section>
 
