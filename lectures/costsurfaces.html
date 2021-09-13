@@ -326,7 +326,7 @@ $$
 <section>
    <h3>Input data for estimating cost</h3>
 Walking cost combines inputs derived from elevation $\Delta h_u, \Delta h_{md}, \Delta h_{sd}$,
-land cover is used for the friction map $f$. 
+land cover is used for friction map $f$. 
 <p> <img height="350" src="img/analysis_basicraster/elevation_shade10m.jpg">
 <img height="350" src="img/analysis_costsurf/friction2d.png">
 <p><small>low friction: developed areas, streets and roads; moderate friction: forest;
@@ -338,7 +338,7 @@ extreme friction (barrier): lakes</small>
 Cumulative cost surface and isochrones to support search for lost person 
 last seen at point A.
 <p> 
-<img height="450" src="img/analysis_costsurf/lostperson.png">
+<img height="450" src="img/analysis_costsurf/walkcost_isochr.png">
 <p style="small"> Orange isochrone delineates search area for given time of 1.5 hr</p>
 </section>
 
@@ -347,8 +347,8 @@ last seen at point A.
 Cumulative cost distance from major roads based on travel time (cost) estimated
 from speed limit. Target is lines represented by set of points. 
 <p> 
-<img height="320" src="img/analysis_costsurf/costsurf_roads.png">
-<img height="320" src="img/analysis_costsurf/costroads_3.png">
+<img height="300" src="img/analysis_costsurf/costsurf_roads.png">
+<img height="300" src="img/analysis_costsurf/costroads_3.png">
 <p style="small"> areas within the cost distance less than a given threshold</p> 
 </section>
 
