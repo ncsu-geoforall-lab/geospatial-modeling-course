@@ -171,7 +171,7 @@ keep in mind our 30m resolution</small>
 <section>
    <h3>Cost surfaces</h3>
 <p>
-Cumulative (accumulated) cost surface: 
+Cumulative (accumulated) cost surface measures proximity based on cost: 
 <ul>
 <li class="fragment">raster representation of cumulative cost 
 of reaching the target point(s) from any location in the given region.
@@ -207,8 +207,8 @@ Knight 16 directions
 If cost is spatially variable, we need to define cost to traverse each grid cell,
 usually expressed as time $t[s]$ derived, for example, from:
 <ul>
-    <li class="fragment"> speed data for driving,                          
-    <li class="fragment">slope and vegetation density for walking on trails 
+    <li class="fragment">speed data for driving,                          
+    <li class="fragment">slope, vegetation density and obstacles for walking on trails 
 </ul>
 <p class="fragment"><small>
 Example: cost surface derived as time $t[s]$ needed to traverse a $d[m]$ resolution grid cell
@@ -219,33 +219,97 @@ Cost map is computed using arithmetic expression in map algebra.</small>
 
 <section>
    <h3>Cost map</h3>
-Speed limit and cost raster maps.
-Cost is time [sec] to traverse a 30m cell, off-road cells are assigned 5 mi/hr.
-Cost can be defined per grid cell or per map unit, depending on implementation
+<ul>
+ <li>Speed limit and cost raster maps.
+ <li>Cost is time [sec] to traverse a 30m cell, off-road cells are assigned 5 mi/hr.
+</ul>
 <p> <img height="350" src="img/analysis_costsurf/speed_rast.png">
 <img height="350" src="img/analysis_costsurf/cost_rast.png">
+<p style="small">Cost can be defined per grid cell or per map unit, depending on implementation</p>
 </section>
 
 <section>
    <h3>Cumulative cost surface</h3>
-Cumulative cost surface: time to reach the point A from anywhere in the region.
-Example application: locate the firestation that can reach the accident the fastest and identify the shortest path
+Cumulative cost surface represents the time to reach the target point A from anywhere in the region.
 <p> <img height="350" src="img/analysis_costsurf/costsurface_3d.png">
-<small>The higher the hill the more time it takes to reach A, highways are valleys</small>
+<p><small>The higher the hill the more time it takes to reach A, highways are valleys</small>
 </section>
 
 <section>
    <h3>Least cost path</h3>
 <ul>
 <li class="fragment">using the cumulative cost surface, find the least cost (fastest) path to the target point
-<li class="fragment">least cost path (LCP) follows the steepest slope line, equivalent to flow routing with terrain replaced by cost surface
-<li class="fragment">depending on algorithm used for flow routing depressions or flats in cost surface may lead to wrong results
-<li class="fragment">save the directions used for creating the cumulative cost surface as back-link  and compute LCP as tracked path
+<li class="fragment">least cost path follows the oposite directions used for creating the cumulative 
+cost surface: back-links 
+ <li class="fragment">similar to steepest slope line used for flow routing with terrain replaced by cost surface
+</ul>
+</section>
+
+<section>
+   <h3>Least cost path: back-link raster</h3>
+<p>
+<ul>
+<li class="fragment">direction of least cost path to the target from all grid cells = backlink map
+<li class="fragment">equivalent to surface gradient direction (aspect) map 
+</ul>
+<p> <img height="350" src="img/analysis_costsurf/cumcost_aspect_col.png.png">
+<img height="350" src="img/analysis_costsurf/backlinks_mea582.png">
+<p class="fragment" style="small">Aspect map derived from the cumulative cost cost surface
+using r.slope.aspect, colored consistently with Arc backlink output. Backling map from Amy Nau
+</p>
+</section>
+
+<section>
+   <h3>Least cost path between two points</h3>
+<p>Least cost path from a given point to the target follows gradient direction - backlinks
+<p> <img height="350" src="img/analysis_costsurf/streets_costarrows_lcp.png">
+<img height="350" src="img/analysis_costsurf/streets_costarrows_lcpzm.png">
+</p>
 </section>
 
 <section>
    <h3>Least cost path applications</h3>
-find foredune ridge, firefighters escape routes
+<ul>
+  <li class="fragment">find firefighters escape routes
+  <li class="fragment">design optimal trails
+  <li class="fragment">extract foredune ridge from coastal DEM 
+  <li class="fragment">find safe access routs during natural disaters (earthquakes, floods)
+</ul>
+</section>
+
+<section>
+   <h3>Least cost path applications</h3>
+Locate the firestation that can reach the accident site $A$ on the highway the fastest and identify the shortest path:
+<ul>
+   <li class="fragment">use query to extract cumulative cost (travel time) to A from all firestations, add the time
+to the attribute table
+   <li class="fragment">identify the firestation $F_1$ with the lowest cost
+   <li class="fragment">trace the least cost path from $F_1$ to $A$
+</ul> 
+<p> <img height="350" src="img/analysis_costsurf/leastcostpath_fire.png">
+<p class="fragment" style="small">Example from the assignment shows two LCP, note the issue with overpass</p>
+</section>
+
+<section>
+   <h3>Cost surface for walking</h3>
+Empirical equation to estimate time $t[s]$ to traverse a grid cell walking in complex terrain:
+<p>
+$$
+t = a\delta s + b \delta h_u + c \delta h_{md} + d \delta h_{sd} + w.f
+$$
+where
+<ul>
+  <li class="fragment">$a,b,c,d$ [s/m] - cell distance and elevation difference weights, functions of inverse speed $1/v$
+  <li class="fragment">$\delta s$ [m] - distance across the cell
+  <li class="fragment">$\delta h_u, \delta h_md, \delta h_sd$ [m] - elevation difference upslope, moderate downslope and steep downslope
+  <li class="fragment">$w.f$ [s] - added time needed to traverse a cell due to friction, with f a friction map and w a weight
+  <li class="fragment">walking upslope and steep downslope increase cost, moderate downslope decreases cost.
+  <li class="fragment">default values for $a,b,c,d$ are empirical coefficients, based on man walking effort at standard conditions.
+</ul>
+
+
+
+
 </section>
 
 
