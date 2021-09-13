@@ -274,6 +274,7 @@ using r.slope.aspect, colored consistently with Arc backlink output. Backling ma
   <li class="fragment">design optimal trails
   <li class="fragment">extract foredune ridge from coastal DEM 
   <li class="fragment">find safe access routs during natural disaters (earthquakes, floods)
+  <li class="fragment">estimate time for watewater to get to treatment plant from any point in sewershed
 </ul>
 </section>
 
@@ -295,21 +296,45 @@ to the attribute table
 Empirical equation to estimate time $t[s]$ to traverse a grid cell walking in complex terrain:
 <p>
 $$
-t = a\delta s + b \delta h_u + c \delta h_{md} + d \delta h_{sd} + w.f
+t = a\Delta s + b \Delta h_u + c \Delta h_{md} + d \Delta h_{sd} + w.f
 $$
-where
 <ul>
-  <li class="fragment">$a,b,c,d$ [s/m] - cell distance and elevation difference weights, functions of inverse speed $1/v$
-  <li class="fragment">$\delta s$ [m] - distance across the cell
-  <li class="fragment">$\delta h_u, \delta h_md, \delta h_sd$ [m] - elevation difference upslope, moderate downslope and steep downslope
-  <li class="fragment">$w.f$ [s] - added time needed to traverse a cell due to friction, with f a friction map and w a weight
+  <li class="fragment">$a,b,c,d$ [s/m]: weights, functions of inverse speed $1/v$
+  <li class="fragment">$\Delta s$ [m]: distance across a grid cell
+  <li class="fragment">$\Delta h_u, \Delta h_{md}, \Delta h_{sd}$ [m] - elevation difference upslope, moderate downslope and steep downslope
+  <li class="fragment">$w.f$ [s]: added time needed to traverse a cell due to friction, $f$ is a friction map, $w$ is weight
   <li class="fragment">walking upslope and steep downslope increase cost, moderate downslope decreases cost.
   <li class="fragment">default values for $a,b,c,d$ are empirical coefficients, based on man walking effort at standard conditions.
 </ul>
+</section>
 
+<section>
+   <h3>Input data for estimating cost</h3>
+Walking cost combines inputs derived from elevation $\Delta h_u, \Delta h_{md}, \Delta h_{sd}$
+ and land cover is used for the friction map $f$. 
+<p> <img height="350" src="img/analysis_basicraster/elevation_shade10m.jpg">
+<img height="350" src="img/analysis_costsurf/friction2d.png">
+<p style="small">low friction: developed areas, streets and roads; moderate friction: forest;
+extreme friction (barrier): lakes</p>
+</section>
 
+<section>
+   <h3>Cumulative cost surface</h3>
+Cumulative cost surface and isochrones to support search for lost person 
+last seen at point A.
+<p> 
+<img height="450" src="img/analysis_costsurf/lostperson.png">
+<p style="small"> Orange isochrone delineates search area for given time of 1.5 hr</p>
+</section>
 
-
+<section>
+   <h3>Cumulative cost surface from lines</h3>
+Cumulative cost distance from major roads based on travel time (cost) estimated
+from speed limit. Target is lines represented by set of points. 
+<p> 
+<img height="350" src="img/analysis_costsurf/costsurf_roads.png">
+<img height="350" src="img/analysis_costsurf/costroads_3.png">
+<p style="small"> areas within the cost distance less than a given threshold</p> 
 </section>
 
 
