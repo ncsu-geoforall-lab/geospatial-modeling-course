@@ -29,33 +29,34 @@
   <ul>
    <li class="fragment">Euclidean: shortest distance in plane
    <li class="fragment">Geodesic: shortest distance over curved surface, great circle on sphere: orthodrome
-   <li class="fragment">equation: http://mathworld.wolfram.com/GreatCircle.html
-   <li class="fragment">Lp metrics on meshes or grids
+   <li class="fragment">$L^p$ metrics on meshes or grids
    <li class="fragment">Linear referencing systems
   </ul>
 </section>
 
 <section>
    <h3>Measuring distance: spheroid</h3>
-<p>
-   Geodesic: shortest distance over curved surface, great circle on sphere: orthodrome
-<p class="fragment"> 
-<img height="350" src="img/analysis_costsurf/geodesic_rhumb_sm.png">
+<ul>
+  <li>Geodesic: shortest distance over curved surface
+  <li>Rhumbline: constant bearing path, line in Mercator projection, not the shortest path
+</ul>
+<p> 
+<img height="400" src="img/analysis_costsurf/geodesic_rhumb_sm.png">
 </section>
 
 <section>
    <h3>Measuring distance</h3>
 <ul>
- <li class="fragment">Generalized distance: Lp metrics for measuring distance on meshes or grids
+ <li class="fragment"><strong>Generalized distance</strong>: $L^p$ metrics for measuring distance on meshes or grids
  <li class="fragment">distance between $a(x_1,y_1)$ and $b(x_2,y_2)$
 <p>
- <li class="fragment">$dp(a,b)=[(x_1-x_2)^p + (y_1-y_2)^p]i^{1/p}$
+ <li class="fragment">$d_p(a,b)=[(x_1-x_2)^p + (y_1-y_2)^p]^{1/p}$
 <p>
  <li class="fragment">$p=2$ : Euclidean distance
  <li class="fragment">$p=1$ : Manhattan (Taxicab, City block) metric
 <p>
-  <li class="fragment">Linear Referencing Systems: location is defined by its linear distance 
-from a known point on a route  
+  <li class="fragment"><strong>Linear Referencing Systems</strong>: 
+location is defined by its linear distance from a known point on a route  
 and distance is measured along segments of a network; used for roads, utilities, waterways
 </ul>
 </section>
@@ -63,37 +64,37 @@ and distance is measured along segments of a network; used for roads, utilities,
 <section>
    <h3>Measuring distance: networks</h3>
 Manhattan metric, Linear Referencing Systems
-<p> <img height="180" src="img/analysis_costsurf/manhattan.jpg">
-<img height="190" src="img/analysis_costsurf/lrs.jpg">
+<p> <img height="180" src="img/analysis_costsurf/manhattam_metrics.png">
+<img height="190" src="img/analysis_costsurf/buslinesstops.png">
 </section>
 
 <section>
    <h3>Measuring feature length</h3>
 <ul>
-  <li class="fragment">feature length is scale dependent 
   <li class="fragment">what is the length of NC coastline? Neuse river?
+  <li class="fragment">feature length is scale dependent 
   <li class="fragment">vector model: length depends on level of detail (point density representing the feature)
-  <li class="fragment">raster model: resolution and level of detail
+  <li class="fragment">raster model: resolution and level of detail (grain)
 <p>
-  <li class="fragment">fractals
+  <li class="fragment">natural features are complex fractals
 </ul>
 </section>
 
 <section>
    <h3>Measuring feature length</h3>
 Compare stream length from NHDS and stream derived from a local 1m lidar-based DEM
-<p> <img height="180" src="img/analysis_costsurf/dem_1m.jpg">
-<img class="fragment" height="190" src="img/analysis_costsurf/elev_rural_10m.jpg">
-<p><small>NHDSstreams are generalized - they have simplified geometry, leading to shorter length.
+<p> <img height="350" src="img/analysis_costsurf/Streams_NHD_GRASSlidar.png">
+<img height="350" src="img/analysis_costsurf/stream_extraction_lidarc.png">
+<p><small>NHD streams are generalized - they have simplified geometry, leading to shorter length.
 Keep scale in mind when comparing length of features represented at different scales</small>
 </section>
 
 <section>
    <h3>Measuring feature length</h3>
 Compare length of NC Coastline from NC GIS and from a World map 1:10M
-<p> <img height="280" src="img/analysis_costsurf/nc_shoreline_nc.png">
-<img class="fragment" height="280" src="img/analysis_costsurf/nc_shoreline_world.png">
-<img class="fragment" height="280" src="img/analysis_costsurf/nc_shoreline_worldnc.png">
+<p> <img height="300" src="img/analysis_costsurf/nc_shoreline_nc.png">
+<img class="fragment" height="300" src="img/analysis_costsurf/nc_shoreline_world.png">
+<img class="fragment" height="300" src="img/analysis_costsurf/nc_shoreline_worldnc.png">
 <p class="fragment"><small>World map scale 1km=0.1mm - narrow barrier islands are not represented</small></p>
 </section>
 
@@ -118,16 +119,20 @@ Proximity analysis function
 
 <section>
    <h3>Raster map buffer: points</h3>
-<p>Map forested areas around schools  
-<p>Create point buffers at selected distances 
+<ul>
+<li>Map forested areas around schools  
+<li>Create point buffers at selected distances 
+</ul>
 <p> <img height="360" src="img/analysis_costsurf/buff_schools.png">
 </section>
 
 <section>
    <h3>Raster map buffer: points</h3>
-<p>Use map algebra to combine with landcover  
-<p><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code>
-<p> <img height="360" src="img/analysis_costsurf/buff_schools_veg.png">
+<ul>
+<li>Use map algebra to combine buffers with landcover  
+<li><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code>
+</ul>
+<p> <img height="350" src="img/analysis_costsurf/buff_schools_veg.png">
 <p class="fragment"><small> why 0 and not null? </small>
 <p><small>Use vector operations to add comlumn to school attribute table and add percent forested area within the buffer,
 keep in mind our 30m resolution</small>
@@ -135,7 +140,6 @@ keep in mind our 30m resolution</small>
 
 <section>
    <h3>Raster map buffer: areas</h3>
-<p>Map developed areas within walking distance of lakes           
 <p>Create buffers at a given distance, compare Euclidean and Manhattan distance metrics and continuous buffer
 <p> <img height="350" src="img/analysis_costsurf/buffrgrow_eucl.png">
 <img height="350" src="img/analysis_costsurf/buffrgrow_manh.png">
@@ -144,28 +148,35 @@ keep in mind our 30m resolution</small>
 
 <section>
    <h3>Raster map buffer: areas</h3>
-<p>Use map algebra to combine with landcover                                           
-<p><code>lake_buf_dev = if(landcl98 == 1 && lake_buff, lake_buff, 0)</code>
+<ul>
+<li>Map developed areas within walking distance of lakes           
+<li>Use map algebra to combine buffers with landcover                                           
+<li><code>lake_buf_dev = if(landcl98 == 1 && lake_buff, lake_buff, 0)</code>
+</ul>
 <p> <img height="350" src="img/analysis_costsurf/buff_lakes_200m.png">
 <img height="350" src="img/analysis_costsurf/buff_lakes_200m_dev.png">
 </section>
 
 <section>
    <h3>Raster map buffer: lines</h3>
-<p>Identify developed areas and schools that may be impacted by noise from a highway 
-<p>Create buffers and use map algebra to combine with landcover                                           
-<p><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code>
+<ul>
+<li>Identify developed areas and schools that may be impacted by noise from a highway 
+<li>Create buffers and use map algebra to combine with landcover                                           
+<li><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null())
+</code>
+</ul>
 <p> <img height="380" src="img/analysis_costsurf/noise_shadestr.png">
 <p class="fragment"><small> why 0 and not null? </small>
 </section>
 
 <section>
    <h3>Raster map buffer: lines</h3>
-<p>Use vector operations to identify the schools and compute number of children potentially impacted
-<p><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code>
+<ul>
+<li>Use vector operations to identify the schools and compute number of children potentially impacted
+<li>or convert schools to raster using the number of students attribute and use map algebra
+<li><code>schools_noise = if(int(schoolscap_10m) && roads_buffers == 2, int(schoolscap_10m), null())</code>
+</ul>
 <p> <img height="380" src="img/analysis_costsurf/noise_schools_anna.png">
-<p><small>Use vector operations to find schools within the buffer and compute number of children potentially impacted
-</small>
 </section>
 
 <section>
@@ -177,7 +188,7 @@ Cumulative (accumulated) cost surface measures proximity based on cost:
 of reaching the target point(s) from any location in the given region.
 </ul>
 
-<p>
+<p class="fragment">
 Input cost map 
 <ul>
 <li class="fragment">value assigned to a cell represents cost of traversing that cell, 
@@ -224,14 +235,14 @@ Cost map is computed using arithmetic expression in map algebra.</small>
  <li>Cost is time [sec] to traverse a 30m cell, off-road cells are assigned 5 mi/hr.
 </ul>
 <p> <img height="350" src="img/analysis_costsurf/speed_rast.png">
-<img height="350" src="img/analysis_costsurf/cost_rast.png">
-<p style="small">Cost can be defined per grid cell or per map unit, depending on implementation</p>
+<img height="350" src="img/analysis_costsurf/cost_traveltime.png">
+<p><small>Cost can be defined per grid cell or per map unit, depending on implementation</small>
 </section>
 
 <section>
    <h3>Cumulative cost surface</h3>
 Cumulative cost surface represents the time to reach the target point A from anywhere in the region.
-<p> <img height="350" src="img/analysis_costsurf/costsurface_3d.png">
+<p> <img height="350" src="img/analysis_costsurf/costsurface3dHR.png">
 <p><small>The higher the hill the more time it takes to reach A, highways are valleys</small>
 </section>
 
@@ -254,9 +265,9 @@ cost surface: back-links
 </ul>
 <p> <img height="350" src="img/analysis_costsurf/cumcost_aspect_col.png.png">
 <img height="350" src="img/analysis_costsurf/backlinks_mea582.png">
-<p class="fragment" style="small">Aspect map derived from the cumulative cost cost surface
+<p class="fragment"><small>Aspect map derived from the cumulative cost cost surface
 using r.slope.aspect, colored consistently with Arc backlink output. Backling map from Amy Nau
-</p>
+</small>
 </section>
 
 <section>
@@ -281,12 +292,14 @@ using r.slope.aspect, colored consistently with Arc backlink output. Backling ma
 <section>
    <h3>Least cost path applications</h3>
 Locate the firestation that can reach the accident site $A$ on the highway the fastest and identify the shortest path:
+<small>
 <ul>
    <li class="fragment">use query to extract cumulative cost (travel time) to A from all firestations, add the time
 to the attribute table
    <li class="fragment">identify the firestation $F_1$ with the lowest cost
    <li class="fragment">trace the least cost path from $F_1$ to $A$
 </ul> 
+</small>
 <p> <img height="350" src="img/analysis_costsurf/leastcostpath_fire.png">
 <p class="fragment" style="small">Example from the assignment shows two LCP, note the issue with overpass</p>
 </section>
@@ -298,6 +311,7 @@ Empirical equation to estimate time $t[s]$ to traverse a grid cell walking in co
 $$
 t = a\Delta s + b \Delta h_u + c \Delta h_{md} + d \Delta h_{sd} + w.f
 $$
+<small>
 <ul>
   <li class="fragment">$a,b,c,d$ [s/m]: weights, functions of inverse speed $1/v$
   <li class="fragment">$\Delta s$ [m]: distance across a grid cell
@@ -306,16 +320,17 @@ $$
   <li class="fragment">walking upslope and steep downslope increase cost, moderate downslope decreases cost.
   <li class="fragment">default values for $a,b,c,d$ are empirical coefficients, based on man walking effort at standard conditions.
 </ul>
+</small>
 </section>
 
 <section>
    <h3>Input data for estimating cost</h3>
-Walking cost combines inputs derived from elevation $\Delta h_u, \Delta h_{md}, \Delta h_{sd}$
- and land cover is used for the friction map $f$. 
+Walking cost combines inputs derived from elevation $\Delta h_u, \Delta h_{md}, \Delta h_{sd}$,
+land cover is used for the friction map $f$. 
 <p> <img height="350" src="img/analysis_basicraster/elevation_shade10m.jpg">
 <img height="350" src="img/analysis_costsurf/friction2d.png">
-<p style="small">low friction: developed areas, streets and roads; moderate friction: forest;
-extreme friction (barrier): lakes</p>
+<p><small>low friction: developed areas, streets and roads; moderate friction: forest;
+extreme friction (barrier): lakes</small>
 </section>
 
 <section>
@@ -332,8 +347,8 @@ last seen at point A.
 Cumulative cost distance from major roads based on travel time (cost) estimated
 from speed limit. Target is lines represented by set of points. 
 <p> 
-<img height="350" src="img/analysis_costsurf/costsurf_roads.png">
-<img height="350" src="img/analysis_costsurf/costroads_3.png">
+<img height="320" src="img/analysis_costsurf/costsurf_roads.png">
+<img height="320" src="img/analysis_costsurf/costroads_3.png">
 <p style="small"> areas within the cost distance less than a given threshold</p> 
 </section>
 
