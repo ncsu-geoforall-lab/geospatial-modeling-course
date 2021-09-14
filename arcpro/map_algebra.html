@@ -27,27 +27,27 @@ Add a field (column) to the attribute table:
 <pre>
 <i>LMC</i> Field, 'Add' along the top of the attribute window
 
-Set Field Name to 'Acreage' and Data Type to 'Double'
+Set Field Name to 'area_sq_meters' and Data Type to 'Double'
 Click the 'X' on the fields tab to close the window.
 Save changes
 </pre>
 
 <p>
-Calculate acres (populate the Acreages field):
+Calculate area (populate the area_sq_meters field):
 
 <pre>
 <i>RMC</i> the column heading and select 'Calculate Field'
 You will see the 'Calculate field' tool in the geoprocessing pane (this can also be searched like other geoprocessing tools)
 Input=landcl96
-Field=acreage
+Field=area_sq_meters
 Expression type= python 3
-Click on the empty acreage 'acreage=' field
+Click on the empty acreage 'area_sq_meters=' field
 <i>double left click</i> on Count to add it to the equation
 Click on Multiply * button
 Type in 812.25 (i.e. area of each cell in square meters) 
 The field should now look like- !COUNT! * 812.25
 Click 'Run'
-Note the new values in the Acreages field
+Note the new values in the area_sq_meters field
 Close the Table
 </pre>
 
