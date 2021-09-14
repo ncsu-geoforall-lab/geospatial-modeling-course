@@ -154,7 +154,7 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 </ul>
 <small><code>lake_buf_dev = if(landcl98 == 1 && lake_buff, lake_buff, 0)</code></small>
 <p> <img height="350" src="img/analysis_costsurf/buff_lakes_200m.png">
-<img height="350" src="img/analysis_costsurf/buff_lakes_dev_anna.png">
+<img height="350" src="img/analysis_costsurf/buff_lakes_dev_anna.jpg">
 </section>
 
 <section>
@@ -165,14 +165,14 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 <small><li><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null()) </code></small>
 </ul>
 <p> <img height="360" src="img/analysis_costsurf/buffer_rast_roads.png">
-<p> <img height="360" src="img/analysis_costsurf/noise_shadestr.png">
+<img height="360" src="img/analysis_costsurf/noise_shadestr.png">
 <p class="fragment"><small> why 0 and not null? </small>
 </section>
 
 <section>
    <h3>Raster map buffer: lines</h3>
 <ul>
-<li>Identify the schools and compute number of children potentially impacted
+<li>Compute number of children potentially impacted
 <li>Convert schools to raster using the number of students attribute and use map algebra
 </ul>
 <small><code>schools_noise = if(int(schoolscap_10m) && roads_buffers == 2, int(schoolscap_10m), null())</code></small>
@@ -352,7 +352,7 @@ from speed limit. Target is lines represented by set of points.
 <p> 
 <img height="300" src="img/analysis_costsurf/costsurf_roads.png">
 <img height="300" src="img/analysis_costsurf/costroads_3.png">
-<p> <small>Compare with buffers - areas within the cost distance less than a given threshold</p> 
+<p> <small>Compare with buffers - areas within the cost distance less than a given threshold</small></p> 
 </section>
 
 <section>
@@ -373,8 +373,6 @@ monitor trends in COVID-19
 <img height="300" src="img/analysis_costsurf/carysewermaskedtime_co2.png">
 </section>
 
-
-
 <section>
  <h3>Summary</h3>
 <ul>
@@ -383,11 +381,6 @@ monitor trends in COVID-19
   <li>cumulative cost surfaces measure proximity based on cost
   <li>least cost path finds optimized route based on cumulative cost surface
 </ul>
-</section>
-
-<section>
- <h3>Reading, resources</h3>
-links
 </section>
 
 <div class="parent-page">
