@@ -64,12 +64,13 @@ and distance is measured along segments of a network; used for roads, utilities,
 <section>
    <h3>Measuring distance: networks</h3>
 Manhattan metric, Linear Referencing Systems
-<p> <img height="180" src="img/analysis_costsurf/manhattam_metrics.png">
-<img height="190" src="img/analysis_costsurf/buslinesstops.png">
+<p> <img height="300" src="img/analysis_costsurf/manhattam_metrics.png">
+<img height="300" src="img/analysis_costsurf/buslinesstops.png">
 </section>
 
 <section>
    <h3>Measuring feature length</h3>
+<p>
 <ul>
   <li class="fragment">what is the length of NC coastline? Neuse river?
   <li class="fragment">feature length is scale dependent 
@@ -100,13 +101,12 @@ Compare length of NC Coastline from NC GIS and from a World map 1:10M
 
 <section>
    <h3>Raster map buffer operations</h3>
-Proximity analysis function 
-</ul>
+<ul>
 <li class="fragment">discrete:
    <ul>
-   <li class="fragment">creates buffer zones (equal distance zones) from a given feature (point, line or area)
+   <li class="fragment">creates discrete buffer zones from a given feature (point, line or area)
    <li class="fragment">applies to raster map layers representing discrete objects 
-   <li class="fragment">resolution should be sufficiently higher (cell size should be n-times smaller) than distances  (buffer widths)
+   <li class="fragment">resolution should be sufficiently higher than distances  (buffer widths)
    </ul>
 <li class="fragment">continuous:
    <ul>
@@ -121,7 +121,7 @@ Proximity analysis function
    <h3>Raster map buffer: points</h3>
 <ul>
 <li>Map forested areas around schools  
-<li>Create point buffers at selected distances 
+<li>Create discrete point buffers at selected distances 
 </ul>
 <p> <img height="360" src="img/analysis_costsurf/buff_schools.png">
 </section>
@@ -130,7 +130,7 @@ Proximity analysis function
    <h3>Raster map buffer: points</h3>
 <ul>
 <li>Use map algebra to combine buffers with landcover  
-<li><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code>
+<li><small><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code></small>
 </ul>
 <p> <img height="350" src="img/analysis_costsurf/buff_schools_veg.png">
 <p class="fragment"><small> why 0 and not null? </small>
