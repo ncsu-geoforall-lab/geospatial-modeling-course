@@ -130,12 +130,12 @@ Compare length of NC Coastline from NC GIS and from a World map 1:10M
    <h3>Raster map buffer: points</h3>
 <ul>
 <li>Use map algebra to combine buffers with landcover  
-<li><small><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code></small>
+<p>
+<small><li><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code></small>
 </ul>
 <p> <img height="350" src="img/analysis_costsurf/buff_schools_veg.png">
-<p class="fragment"><small> why 0 and not null? </small>
 <p><small>Use vector operations to add comlumn to school attribute table and add percent forested area within the buffer,
-keep in mind our 30m resolution</small>
+keep in mind our 30m resolution. Why do we use 0 and not null in the expression?</small>
 </section>
 
 <section>
@@ -151,19 +151,19 @@ keep in mind our 30m resolution</small>
 <ul>
 <li>Map developed areas within walking distance of lakes           
 <li>Use map algebra to combine buffers with landcover                                           
-<li><code>lake_buf_dev = if(landcl98 == 1 && lake_buff, lake_buff, 0)</code>
+<small><li><code>lake_buf_dev = if(landcl98 == 1 && lake_buff, lake_buff, 0)</code></small>
 </ul>
 <p> <img height="350" src="img/analysis_costsurf/buff_lakes_200m.png">
-<img height="350" src="img/analysis_costsurf/buff_lakes_200m_dev.png">
+<img height="350" src="img/analysis_costsurf/buff_lakes_dev_anna.png">
 </section>
 
 <section>
    <h3>Raster map buffer: lines</h3>
 <ul>
 <li>Identify developed areas and schools that may be impacted by noise from a highway 
-<li>Create buffers and use map algebra to combine with landcover                                           
-<li><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null())
-</code>
+<li>Create buffers, combine with landcover                                           
+<small><li><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null())
+</code></small>
 </ul>
 <p> <img height="380" src="img/analysis_costsurf/noise_shadestr.png">
 <p class="fragment"><small> why 0 and not null? </small>
@@ -172,8 +172,8 @@ keep in mind our 30m resolution</small>
 <section>
    <h3>Raster map buffer: lines</h3>
 <ul>
-<li>Use vector operations to identify the schools and compute number of children potentially impacted
-<li>or convert schools to raster using the number of students attribute and use map algebra
+<li>Identify the schools and compute number of children potentially impacted
+<li>Convert schools to raster using the number of students attribute and use map algebra
 <li><code>schools_noise = if(int(schoolscap_10m) && roads_buffers == 2, int(schoolscap_10m), null())</code>
 </ul>
 <p> <img height="380" src="img/analysis_costsurf/noise_schools_anna.png">
