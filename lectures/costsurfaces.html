@@ -64,8 +64,8 @@ and distance is measured along segments of a network; used for roads, utilities,
 <section>
    <h3>Measuring distance: networks</h3>
 Manhattan metric, Linear Referencing Systems
-<p> <img height="300" src="img/analysis_costsurf/manhattam_metrics.png">
-<img height="300" src="img/analysis_costsurf/buslinesstops.png">
+<p> <img height="320" src="img/analysis_costsurf/manhattam_metrics.png">
+<img height="320" src="img/analysis_costsurf/buslinesstops.png">
 </section>
 
 <section>
@@ -108,6 +108,7 @@ Compare length of NC Coastline from NC GIS and from a World map 1:10M
    <li class="fragment">applies to raster map layers representing discrete objects 
    <li class="fragment">resolution should be sufficiently higher than distances  (buffer widths)
    </ul>
+<p>
 <li class="fragment">continuous:
    <ul>
    <li class="fragment">derives proximity raster from a given feature
@@ -150,8 +151,8 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 <ul>
 <li>Map developed areas within walking distance of lakes           
 <li>Use map algebra to combine buffers with landcover                                           
-<small><li><code>lake_buf_dev = if(landcl98 == 1 && lake_buff, lake_buff, 0)</code></small>
 </ul>
+<small><code>lake_buf_dev = if(landcl98 == 1 && lake_buff, lake_buff, 0)</code></small>
 <p> <img height="350" src="img/analysis_costsurf/buff_lakes_200m.png">
 <img height="350" src="img/analysis_costsurf/buff_lakes_dev_anna.png">
 </section>
@@ -161,10 +162,10 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 <ul>
 <li>Identify developed areas and schools that may be impacted by noise from a highway 
 <li>Create buffers, combine with landcover                                           
-<small><li><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null())
-</code></small>
+<small><li><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null()) </code></small>
 </ul>
-<p> <img height="380" src="img/analysis_costsurf/noise_shadestr.png">
+<p> <img height="360" src="img/analysis_costsurf/buffer_rast_roads.png">
+<p> <img height="360" src="img/analysis_costsurf/noise_shadestr.png">
 <p class="fragment"><small> why 0 and not null? </small>
 </section>
 
@@ -173,8 +174,8 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 <ul>
 <li>Identify the schools and compute number of children potentially impacted
 <li>Convert schools to raster using the number of students attribute and use map algebra
-<li><code>schools_noise = if(int(schoolscap_10m) && roads_buffers == 2, int(schoolscap_10m), null())</code>
 </ul>
+<small><code>schools_noise = if(int(schoolscap_10m) && roads_buffers == 2, int(schoolscap_10m), null())</code></small>
 <p> <img height="380" src="img/analysis_costsurf/noise_schools_anna.png">
 </section>
 
@@ -216,6 +217,7 @@ Knight 16 directions
    <h3>Cost map</h3>
 If cost is spatially variable, we need to define cost to traverse each grid cell,
 usually expressed as time $t[s]$ derived, for example, from:
+<p>
 <ul>
     <li class="fragment">speed data for driving,                       
     <li class="fragment">velocity estimates for flows,                       
@@ -350,20 +352,28 @@ from speed limit. Target is lines represented by set of points.
 <p> 
 <img height="300" src="img/analysis_costsurf/costsurf_roads.png">
 <img height="300" src="img/analysis_costsurf/costroads_3.png">
-<p style="small"> areas within the cost distance less than a given threshold</p> 
+<p> <small>Compare with buffers - areas within the cost distance less than a given threshold</p> 
 </section>
 
 <section>
    <h3>Cumulative cost surface for monitoring</h3>
 <ul>
   <li>Estimate time wastewater travels from source to wastewater plant
-  <li>Time is computed using flow velocity estimated by Mannings equation as function of roughness, flow depth and slope
-  <li>Important for monitoring trends in SARS-CoV2 in communities
+  <li>Time ito traverse a grid cell is computed using flow velocity estimated by Mannings equation as function of roughness, flow depth and slope
+  <li>Important for interpeting measured concentrations of SARS-CoV2 in wastewater to
+monitor trends in COVID-19
 </ul>
+</section>
+
+<section>
+   <h3>Cumulative cost surface for monitoring</h3>
+<p>Time to wastewater plant from any location connected to sewer network and sewersheds
 <p>
 <img height="300" src="img/analysis_costsurf/cary_sewer_subsewersheds.png">
 <img height="300" src="img/analysis_costsurf/carysewermaskedtime_co2.png">
 </section>
+
+
 
 <section>
  <h3>Summary</h3>
