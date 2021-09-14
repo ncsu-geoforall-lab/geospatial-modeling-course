@@ -130,9 +130,8 @@ Compare length of NC Coastline from NC GIS and from a World map 1:10M
    <h3>Raster map buffer: points</h3>
 <ul>
 <li>Use map algebra to combine buffers with landcover  
-<p>
-<small><li><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code></small>
 </ul>
+<small><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code></small>
 <p> <img height="350" src="img/analysis_costsurf/buff_schools_veg.png">
 <p><small>Use vector operations to add comlumn to school attribute table and add percent forested area within the buffer,
 keep in mind our 30m resolution. Why do we use 0 and not null in the expression?</small>
@@ -192,7 +191,7 @@ of reaching the target point(s) from any location in the given region.
 Input cost map 
 <ul>
 <li class="fragment">value assigned to a cell represents cost of traversing that cell, 
-<li class="fragment">cost can be based on time, energy, etc.
+<li class="fragment">cost can be based on time, energy, price, etc.
 </ul>
 </section>
 
@@ -218,21 +217,22 @@ Knight 16 directions
 If cost is spatially variable, we need to define cost to traverse each grid cell,
 usually expressed as time $t[s]$ derived, for example, from:
 <ul>
-    <li class="fragment">speed data for driving,                          
+    <li class="fragment">speed data for driving,                       
+    <li class="fragment">velocity estimates for flows,                       
     <li class="fragment">slope, vegetation density and obstacles for walking on trails 
 </ul>
 <p class="fragment"><small>
-Example: cost surface derived as time $t[s]$ needed to traverse a $d[m]$ resolution grid cell
+Example: cost map derived as time $t[s]$ needed to traverse a $d[m]$ resolution grid cell
 $$ t = d / v $$
-where, $v$ is speed, approximated e.g., by speed limit stored in roads/streets data layer.
+where, $v$ [m/s] is speed, approximated e.g., by speed limit stored in roads/streets data layer.
 Cost map is computed using arithmetic expression in map algebra.</small>
 </section>
 
 <section>
    <h3>Cost map</h3>
 <ul>
- <li>Speed limit and cost raster maps.
- <li>Cost is time [sec] to traverse a 30m cell, off-road cells are assigned 5 mi/hr.
+ <li>Speed limit and cost raster maps
+ <li>Cost is time $t$ [s] to traverse a 30m cell, off-road cells are assigned 5 mi/hr.
 </ul>
 <p> <img height="350" src="img/analysis_costsurf/speed_rast.png">
 <img height="350" src="img/analysis_costsurf/cost_traveltime.png">
@@ -243,7 +243,8 @@ Cost map is computed using arithmetic expression in map algebra.</small>
    <h3>Cumulative cost surface</h3>
 Cumulative cost surface represents the time to reach the target point A from anywhere in the region.
 <p> <img height="350" src="img/analysis_costsurf/costsurface3dHR.png">
-<p><small>The higher the hill the more time it takes to reach A, highways are valleys</small>
+<p><small>The higher the hill the more time it takes to reach A (red point), highways are valleys, 
+blue points are firestations</small>
 </section>
 
 <section>
@@ -263,8 +264,8 @@ cost surface: back-links
 <li class="fragment">direction of least cost path to the target from all grid cells = backlink map
 <li class="fragment">equivalent to surface gradient direction (aspect) map 
 </ul>
-<p> <img height="350" src="img/analysis_costsurf/cumcost_aspect_col.png.png">
-<img height="350" src="img/analysis_costsurf/backlinks_mea582.png">
+<p> <img height="340" src="img/analysis_costsurf/cumcost_aspect_col.png.png">
+<img height="340" src="img/analysis_costsurf/backlinks_mea582.png">
 <p class="fragment"><small>Aspect map derived from the cumulative cost cost surface
 using r.slope.aspect, colored consistently with Arc backlink output. Backling map from Amy Nau
 </small>
@@ -284,7 +285,7 @@ using r.slope.aspect, colored consistently with Arc backlink output. Backling ma
   <li class="fragment">find firefighters escape routes
   <li class="fragment">design optimal trails
   <li class="fragment">extract foredune ridge from coastal DEM 
-  <li class="fragment">find safe access routs during natural disaters (earthquakes, floods)
+  <li class="fragment">find safe access routes during natural disaters (earthquakes, floods)
   <li class="fragment">estimate time for watewater to get to treatment plant from any point in sewershed
 </ul>
 </section>
@@ -352,13 +353,25 @@ from speed limit. Target is lines represented by set of points.
 <p style="small"> areas within the cost distance less than a given threshold</p> 
 </section>
 
+<section>
+   <h3>Cumulative cost surface for monitoring</h3>
+<ul>
+  <li>Estimate time wastewater travels from source to wastewater plant
+  <li>Time is computed using flow velocity estimated by Mannings equation as function of roughness, flow depth and slope
+  <li>Important for monitoring trends in SARS-CoV2 in communities
+</ul>
+<p>
+<img height="300" src="img/analysis_costsurf/cary_sewer_subsewersheds.png">
+<img height="300" src="img/analysis_costsurf/carysewermaskedtime_co2.png">
+</section>
 
 <section>
  <h3>Summary</h3>
 <ul>
-  <li>measuring distance
-  <li>buffers
-  <li>cost surfaces
+  <li>measuring distance is scale dependendent, different metrics can be defined
+  <li>buffers are used to analyze variables or features in proximity of points, lines and areas
+  <li>cumulative cost surfaces measure proximity based on cost
+  <li>least cost path finds optimized route based on cumulative cost surface
 </ul>
 </section>
 
