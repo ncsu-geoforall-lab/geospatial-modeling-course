@@ -162,10 +162,10 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 <ul>
 <li>Identify developed areas and schools that may be impacted by noise from a highway 
 <li>Create buffers, combine with landcover                                           
-<small><li><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null()) </code></small>
 </ul>
-<p> <img height="360" src="img/analysis_costsurf/buffer_rast_roads.png">
-<img height="360" src="img/analysis_costsurf/noise_shadestr.png">
+<small><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null()) </code></small>
+<p> <img height="340" src="img/analysis_costsurf/buffer_rast_roads.png">
+<img height="340" src="img/analysis_costsurf/noise_shadestr.png">
 <p class="fragment"><small> why 0 and not null? </small>
 </section>
 
@@ -176,7 +176,7 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 <li>Convert schools to raster using the number of students attribute and use map algebra
 </ul>
 <small><code>schools_noise = if(int(schoolscap_10m) && roads_buffers == 2, int(schoolscap_10m), null())</code></small>
-<p> <img height="380" src="img/analysis_costsurf/noise_schools_anna.png">
+<p> <img height="350" src="img/analysis_costsurf/noise_schools_anna.png">
 </section>
 
 <section>
@@ -266,7 +266,7 @@ cost surface: back-links
 <li class="fragment">direction of least cost path to the target from all grid cells = backlink map
 <li class="fragment">equivalent to surface gradient direction (aspect) map 
 </ul>
-<p> <img height="340" src="img/analysis_costsurf/cumcost_aspect_col.png.png">
+<p class="fragment"> <img height="340" src="img/analysis_costsurf/cumcost_aspect_col.png.png">
 <img height="340" src="img/analysis_costsurf/backlinks_mea582.png">
 <p class="fragment"><small>Aspect map derived from the cumulative cost cost surface
 using r.slope.aspect, colored consistently with Arc backlink output. Backling map from Amy Nau
@@ -369,8 +369,8 @@ monitor trends in COVID-19
    <h3>Cumulative cost surface for monitoring</h3>
 <p>Time to wastewater plant from any location connected to sewer network and sewersheds
 <p>
-<img height="300" src="img/analysis_costsurf/cary_sewer_subsewersheds.png">
-<img height="300" src="img/analysis_costsurf/carysewermaskedtime_co2.png">
+<img height="340" src="img/analysis_costsurf/cary_sewer_subsewersheds.png">
+<img height="340" src="img/analysis_costsurf/carysewermaskedtime_co2.png">
 </section>
 
 <section>
