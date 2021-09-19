@@ -9,53 +9,49 @@
 </section>
 
 <section>
-    <h3>Outline (learning objectives)</h3>
+    <h3>Learning objectives</h3>
 <p>
 <ul>
- <li>spatial interpolation: definition, applications
- <li>methods and their properties
- <li>voronoi polygons and linear interpolation on TIN
- <li>inverse distance weighted method 
- <li>geostatistical approach
- <li>radial basis functions and splines 
+ <li>define spatial interpolation and its applications
+ <li>classify methods and their properties
+ <li>explain voronoi polygons and linear interpolation on TIN
+ <li>explain and apply inverse distance weighted method 
+ <li>define geostatistical approach
+ <li>define radial basis functions and splines 
 </ul>
 </section>
 
 <section>
-  <h3>When to use bi-variate interpolation</h3>
-Find surface representation based on values measured at 2D points
+  <h3>Spatial interpolation</h3>
+Estimate values at unsampled points using values measured at given points to:
 <p>
 <ul>
-<li class="fragment">convert scattered points, profiles, isolines to raster: gridding
-<li class="fragment">resample raster data to higher resolution 
-<li class="fragment">compute denser or smoother mesh representation 
-</ul>
-</section>
-
-<section>
-   <h3>When to use bi-variate interpolation</h3>
-<p>
-From given scattered points to points to surfaces as rasters
-<p>
- <img height="240" src="img/lidarmrpts3dcolored.jpg">
- <img height="240" src="img/nvizcutplanelwDEMDSMS.jpg">
-</p>
-</section>
-
-<section>
-  <h3>When to use tri-variate interpolation</h3>
-Find volume representation based on values measured at 3D points
-<p>
-<ul>
-<li class="fragment">resample 3D raster data to higher resolution
-<li class="fragment">convert scattered 3D points, profiles, to 3D grid
+<li class="fragment">convert 2D, 3D scattered points, profiles, isolines to raster: gridding
+<li class="fragment">resample 2D, 3D raster data to higher resolution
 <li class="fragment">compute denser or smoother mesh representation
 </ul>
 </section>
 
 <section>
-  <h3>When to use tri-variate interpolation</h3>
-Tri-variate: Find volume representation based on values measured at 3D points
+  <h3>Scattered points to raster</h3>
+Most common application 
+<p><img height="240" src="img/scattered_pts.jpg">
+<img height="240" src="img/pointstogrid.jpg">
+</section>
+
+<section>
+   <h3>Bi-variate interpolation</h3>
+<p>
+From given $(x,y,z)$ scattered points to 2D grid: surface
+<p>
+ <img height="350" src="img/lidarmrpts3dcolored.jpg">
+ <img height="350" src="img/nvizcutplanelwDEMDSMS.jpg">
+</p>
+</section>
+
+<section>
+  <h3>Tri-variate interpolation</h3>
+From given $(x,y,z,w)$ scattered points to 3D grid: volume
 <p>
 <img height="360" src="img/spatial_interpolation/soilpts.gif">
 <img height="370" src="img/spatial_interpolation/clayfenc.gif">
@@ -64,11 +60,7 @@ Tri-variate: Find volume representation based on values measured at 3D points
 
 <section>
   <h3>Quad-variate interpolation</h3>
-Find continuous space-time representation based on values measured at 3D points over time
-<ul>
-<li class="fragment">resample series of 3D raster data to higher spatio-temporal resolution
-<li class="fragment">convert scattered 4D points to 4D grid (3D grid series)
-</ul>
+From given ${x,y,z,t,w)$ scattered points in space and time to 4D grid: time series of volumes
 <p class="fragment"> <img height="320" src="img/data_visualize/wellnew.gif">
 <p class="fragment"><small>Sampling points of groundwater pollution in space and time</small>
 </section>
@@ -86,6 +78,7 @@ Groundwater pollution over 10 years - 3D space + time
 Problem definition 
 <ul>
 <li class="fragment">find a function which passes through (or close to) the given set of discrete points and then
+<p>
 <li class="fragment">use this function to estimate the values at unsampled points – usually a regular grid
 </ul>
 </section>
@@ -93,7 +86,7 @@ Problem definition
 <section>
    <h3>Scattered points to raster</h3>
 <p>
-From given scattered points to points at regular grid
+Find mathematical function to estimate values at regular grid using values at the given scattered points
 <p> <img height="350" src="img/spatial_interpolation/scattered_pts.jpg">
  <img height="350" src="img/spatial_interpolation/pointstogrid.jpg">
 </p>
@@ -103,15 +96,32 @@ From given scattered points to points at regular grid
    <h3>Mathematical formulation</h3>
 Bi-variate interpolation and approximation can be formulated as follows:
 <p>
-Given $m$-points $(x_i, y_i, z_i), i=1,m$ find such $F(x,y)$ that for each $i=1,m$
+Given $m$-points $(x_i, y_i, z_i), i=1,m$ 
+<br>find such $F(x,y)$ that for each $i=1,m$
 <p class="fragment">
            $$z_i=F(x_i,y_i)$$   
-           $$z_i=F(x_i,y_i) + e(x_i,y_i)$$ 
 <p  class="fragment">
 and compute $z_k=F(x_k,y_k)$ where $(x_k,y_k)$ are grid points
 <p class="fragment">
 <b>Why is this a difficult problem?</b>
 </section>
+
+<!-- introduce approximation later
+<section>
+   <h3>Mathematical formulation</h3>
+Bi-variate interpolation and approximation can be formulated as follows:
+<p>
+Given $m$-points $(x_i, y_i, z_i), i=1,m$ 
+<br>find such $F(x,y)$ that for each $i=1,m$
+<p class="fragment">
+           $$z_i=F(x_i,y_i)$$  
+           $$z_i=F(x_i,y_i) + e(x_i,y_i)$$
+<p  class="fragment">
+and compute $z_k=F(x_k,y_k)$ where $(x_k,y_k)$ are grid points
+<p class="fragment">
+<b>Why is this a difficult problem?</b>
+</section>
+-->
 
 <section>
    <h3>Interpolation problem solution</h3>
@@ -147,7 +157,9 @@ Additional conditions are needed
 <ul>
   <li class="fragment"><b>Locality </b>: each point influences the surface only up to certain distance
    or value at a given point will be similar to values at nearby points
+<p>
    <li class="fragment"><b>Geostatistical</b>: surface is one realization of a random function with spatial covariance 
+<p>
    <li class="fragment"><b>Smoothness</b> surface should be as smooth as possible while passing through or close to the data points
 </ul>
 <!--<p class="credit">(note: default color ramp for FP maps is often greyscale with uniform interval)</p>-->
@@ -161,16 +173,17 @@ $$
 F(r) = T(r) + ∑ λ_j R(r,r_j)  \;    j=1,m
 $$
 <ul>
-<li> $r = (x,y)$ is location of a grid point, 
-<li>$r_j=(x_j,y_j$) is location of a measured point
-<li>$T(r)$ is trend (low order polynomial), 
-<li>$λ_j$ are coefficients 
-<li>$R(r,r_j)$ is a function of distance between unsampled and measured point (radial basis function, model variogram)
+<li class="fragment"> $r = (x,y)$ is location of a grid point, 
+<li class="fragment">$r_j=(x_j,y_j$) is location of a measured point
+<li class="fragment">$T(r)$ is trend (low order polynomial), 
+<li class="fragment">$λ_j$ are coefficients 
+<li class="fragment">$R(r,r_j)$ is a function of distance between unsampled and measured point (radial basis function, model variogram)
 </ul>
 </section>
 
 <section>
    <h3>Local interpolation methods</h3>
+<p>
 Only a small subset of $n$ neighboring points is used
 <p>
 <ul>
@@ -185,7 +198,7 @@ Only a small subset of $n$ neighboring points is used
 Voronoi polygon edges are equidistant to 2 given points, 
 define <b>unique nearest neighborhood</b> around each point
 <p>
-<img height="320" src="img/spatial_interpolation/voronoi_tin_zm.png"> </p>
+<img height="330" src="img/spatial_interpolation/voronoi_tin_zm.png"> </p>
 <p><a href="http://alexbeutel.com/webgl/voronoi.html"> Voronoi diagram generator</a>
 </section>
 
@@ -203,7 +216,7 @@ $$z(x,y) = λ z(x_j,y_j)$$
 <ul>
 <li class="fragment">$\lambda = 1$, if $(x,y)$ is within $V_j$  
 <li class="fragment">$\lambda = 0$, if $(x,y)$ is outside $V_j$
-<li class="fragment">and $j = 1,m$, where $m$ is the number of points
+<li class="fragment">$j = 1,m$, where $m$ is the number of given points
 </ul>
 </section>
 
