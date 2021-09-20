@@ -55,7 +55,7 @@ From given $(x,y,z,w)$ scattered points to 3D grid: volume
 <p>
 <img height="360" src="img/spatial_interpolation/soilpts.gif">
 <img height="370" src="img/spatial_interpolation/clayfenc.gif">
-<p class="fragment"><small>Soil properties: clay content</small>
+<p><small>Soil properties: clay content</small>
 </section>
 
 <section>
@@ -254,7 +254,7 @@ defined by the measured points
 Delaunay triangulation for a set of points P in a plane fulfills 
 the condition that no point in P is inside the circumcircle of any triangle in DT(P).
 <p>
-<img height="380" src="img/spatial_interpolation/DelaunayTIN1.png"> </p>
+<img height="350" src="img/spatial_interpolation/DelaunayTIN1.png"> </p>
 </section>
 
 <section>
@@ -263,7 +263,7 @@ the condition that no point in P is inside the circumcircle of any triangle in D
 Delaunay triangulation for a set of points P in a plane fulfills 
 the condition that no point in P is inside the circumcircle of any triangle in DT(P).
 <p>
-<img height="380" src="img/spatial_interpolation/DelaunayTIN2.png"> </p>
+<img height="350" src="img/spatial_interpolation/DelaunayTIN2.png"> </p>
 <p><small>Learn more about  
 <a href="https://en.wikipedia.org/wiki/Delaunay_triangulation">properties and algorithms</a>
 </small>
@@ -275,7 +275,7 @@ the condition that no point in P is inside the circumcircle of any triangle in D
 Voronoi (Thiessen) polygons and Delaunay triangulation create dual graphs. 
 <p>
 <img height="380" src="img/spatial_interpolation/DelaunayTIN_Voronoi.png"> </p>
-<p><small>Each face of VP is associated with a TIN vertex and each TIN face has a VP vertex associated with it</small>
+<p><small>Each face of VP is associated with TIN vertex and each TIN face has VP vertex associated with it</small>
 </section>
 
 <section>
@@ -328,7 +328,7 @@ Value at a unsampled grid point is a weighted average of values measured at $n$ 
 
 $$ T(x,y) = 0 $$
 <p>
-$$z(x,y) = ∑ \lambda_j z(x_j,y_j) / ∑ \lambda_j \quad  j=1,..., n$$
+$$z(x,y) = ∑ \lambda_j z(x_j,y_j) \; / ∑ \lambda_j \quad  j=1,..., n$$
 
 <ul>
  <li class="fragment"> $\lambda_j = 1/d_j^p$ is weight proportional to power of distance between 
@@ -344,9 +344,9 @@ $$z(x,y) = ∑ \lambda_j z(x_j,y_j) / ∑ \lambda_j \quad  j=1,..., n$$
    <h3>Inverse distance weighted method</h3>
 <p>
 Value at a unsampled grid point (blue) is a weighted average of values measured at $n$ nearby points (black):
-$$z(x,y) = ∑ \lambda_j z(x_j,y_j) / ∑ \lambda_j \quad  j=1,..., n$$
+$$z(x,y) = ∑ \lambda_j z(x_j,y_j) \; / ∑ \lambda_j \quad  j=1,..., n$$
 <p>
-<img height="380" src="img/spatial_interpolation/idw_pointselect.png"> </p>
+<img height="360" src="img/spatial_interpolation/idw_pointselect.png"> </p>
 </section>
 
 <section>
@@ -359,6 +359,7 @@ leads to local peaks and pits around given points
 the measured points is much larger than the distance between grid points</small>
 </section>
 
+<!--
 <section>
    <h3>Inverse distance weighted method</h3>
 Impact of power parameter (p=0.5, 2, 5) on the resulting surface: precipitation in NC
@@ -372,9 +373,9 @@ Surfaces with power exponent p=0.5 and p=5
 <p>
 <img height="220" src="img/spatial_interpolation/idw_precip_p05_3dpts.png"> </p>
 <img height="220" src="img/spatial_interpolation/idw_precip_p5_3d_pts.jpg"> </p>
-<p><small>Method works well when density of given points is close to the resulting resolution,
-otherwise it can lead to surface artifacts</small>
+<p><small>Method works well when density of given points is close to the resulting resolution, otherwise it can lead to surface artifacts</small>
 </section>
+-->
 
 <section>
    <h3>Geostatistical approach to interpolation</h3>
@@ -429,8 +430,9 @@ Many model functions can be used: spherical, exponential, Gaussian, …
 
 <section>
    <h3>Kriging</h3>
-One of possible results from kriging, roughness in the surface is due to local implementation, 
-discussed in the next section, not the function itself
+One of many possible results from kriging 
+<p><small>roughness in the surface is due to local implementation, 
+discussed in the next section, not the function itself</small>
 <p>
 <img height="380" src="img/spatial_interpolation/IntkrigF1d.gif"> </p>
 </section>
@@ -444,19 +446,19 @@ discussed in the next section, not the function itself
 
 <section>
    <h3>Summary</h3>
-Can you guess the interpolation method?
-<p>
-<img height="450" src="img/interpolationBW.jpg"> </p>
-</section>
-
-<section>
-   <h3>Summary</h3>
 <ul>
 <li class="fragment">Instead of a single universal solution that would automatically optimize its parameters to the given data set and application we now have a large number of different interpolation and approximation methods and their implementations and no robust automated approach for choosing the right one
 <li class="fragment">Sound knowledge of interpolated phenomenon and the methods is needed to do it correctly
 <li class="fragment">But – if there is sufficient amount of uniformly distributed data, most methods will provide good results 
 <li class="fragment">Keep interpolation in mind when collecting data (e.g. parallel far apart but densely sampled profiles are difficult to interpolate)
 </ul>
+
+<section>
+   <h3>Summary</h3>
+Can you guess the interpolation method?
+<p>
+<img height="450" src="img/interpolationBW.jpg"> </p>
+</section>
 
 </section>
 
