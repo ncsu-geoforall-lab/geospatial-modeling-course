@@ -35,8 +35,8 @@ Estimate values at unsampled points using values measured at given points to:
 <section>
   <h3>Scattered points to raster</h3>
 Most common application 
-<p><img height="240" src="img/spatial_interpolation/scattered_pts.jpg">
-<img height="240" src="img/spatial_interpolation/pointstogrid.jpg">
+<p><img height="340" src="img/spatial_interpolation/scattered_pts.jpg">
+<img height="340" src="img/spatial_interpolation/pointstogrid.jpg">
 </section>
 
 <section>
@@ -44,8 +44,8 @@ Most common application
 <p>
 From given $(x,y,z)$ scattered points to 2D grid: surface
 <p>
- <img height="250" src="img/lidarmrpts3dcolored.jpg">
- <img height="250" src="img/nvizcutplanelwDEMDSMS.jpg">
+ <img height="240" src="img/lidarmrpts3dcolored.jpg">
+ <img height="240" src="img/nvizcutplanelwDEMDSMS.jpg">
 </p>
 </section>
 
@@ -199,9 +199,9 @@ Voronoi polygon edges are equidistant to 2 given points,
 define <b>unique nearest neighborhood</b> around each point
 <p>
 <img height="330" src="img/spatial_interpolation/voronoi_tin_zm.png"> </p>
-<p>Voronoi polygons (red) are derived from the measured data - the measured point (blue)
+<p><small>Voronoi polygons (red) are derived from the measured data - the measured point (blue)
  is at the center of a Voronoi polygon 
-<p><small><a href="http://alexbeutel.com/webgl/voronoi.html"> Voronoi diagram generator</a>
+<p><a href="http://alexbeutel.com/webgl/voronoi.html"> Voronoi diagram generator</a>
 or <a href="https://websvg.github.io/voronoi/">Parametric Voronoi generator</a></small>
 </section>
 
@@ -225,7 +225,8 @@ $$z(x,y) = λ z(x_j,y_j)$$
    <h3>Voronoi polygons</h3>
 <ul>
  <li>2m resolution DEM computed using Voronoi polygons:
-  <li>includes only measured values and the surface is not continuous 
+ <li>includes only measured values 
+ <li>the surface is not continuous
 </ul>
 <p>
 <img height="380" src="img/spatial_interpolation/IntF1a.gif"> </p>
@@ -238,7 +239,7 @@ Value $z(x,y)$ at an unsampled point is a linear combination of values
 at 3 nearby given points $z(x_j,y_j)$ that form vertices of a triangle
 <p class="fragment">
 $$ T(r) = 0 $$
-$$z(x,y) = {∑ \lambda_j z(x_j,y_j)} \over {\lambda_T} \quad  j=1,2,3$$
+$$z(x,y) = ∑ \lambda_j z(x_j,y_j) \; / \; \lambda_T \quad  j=1,2,3$$
 <ul>
 <li class="fragment">$\lambda_j$ is weight proportional to the area of a triangle 
 defined by the unsampled point and two given points
@@ -265,6 +266,7 @@ the condition that no point in P is inside the circumcircle of any triangle in D
 <img height="380" src="img/spatial_interpolation/DelaunayTIN2.png"> </p>
 <p><small>Learn more about  
 <a href="https://en.wikipedia.org/wiki/Delaunay_triangulation">properties and algorithms</a>
+</small>
 </section>
 
 <section>
