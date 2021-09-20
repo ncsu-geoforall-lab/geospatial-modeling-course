@@ -14,7 +14,7 @@
 <ul>
  <li>define spatial interpolation and its applications
  <li>classify methods and their properties
- <li>explain voronoi polygons and linear interpolation on TIN
+ <li>explain Voronoi polygons and linear interpolation on triangular irregular network
  <li>explain and apply inverse distance weighted method 
  <li>define geostatistical approach
  <li>define radial basis functions and splines 
@@ -35,8 +35,8 @@ Estimate values at unsampled points using values measured at given points to:
 <section>
   <h3>Scattered points to raster</h3>
 Most common application 
-<p><img height="240" src="img/scattered_pts.jpg">
-<img height="240" src="img/pointstogrid.jpg">
+<p><img height="240" src="img/spatial_interpolation/scattered_pts.jpg">
+<img height="240" src="img/spatial_interpolation/pointstogrid.jpg">
 </section>
 
 <section>
@@ -44,8 +44,8 @@ Most common application
 <p>
 From given $(x,y,z)$ scattered points to 2D grid: surface
 <p>
- <img height="350" src="img/lidarmrpts3dcolored.jpg">
- <img height="350" src="img/nvizcutplanelwDEMDSMS.jpg">
+ <img height="250" src="img/lidarmrpts3dcolored.jpg">
+ <img height="250" src="img/nvizcutplanelwDEMDSMS.jpg">
 </p>
 </section>
 
@@ -60,14 +60,14 @@ From given $(x,y,z,w)$ scattered points to 3D grid: volume
 
 <section>
   <h3>Quad-variate interpolation</h3>
-From given ${x,y,z,t,w)$ scattered points in space and time to 4D grid: time series of volumes
-<p class="fragment"> <img height="320" src="img/data_visualize/wellnew.gif">
-<p class="fragment"><small>Sampling points of groundwater pollution in space and time</small>
+From given $(x,y,z,t,w)$ scattered points in space and time to 4D grid: time series of volumes
+<p class="fragment"> <img height="350" src="img/data_visualize/wellnew.gif">
+<p class="fragment"><small>Sampling points of groundwater pollution in space and time (10 years)</small>
 </section>
 
 <section>
   <h3>Quad-variate interpolation</h3>
-Groundwater pollution over 10 years - 3D space + time
+Groundwater pollution over 10 years: 3D space + time
 <p class="fragment"> <img height="400" src="img/data_visualize/well456.gif">
 </p>
 </section>
@@ -173,11 +173,11 @@ $$
 F(r) = T(r) + ∑ λ_j R(r,r_j)  \;    j=1,m
 $$
 <ul>
-<li class="fragment"> $r = (x,y)$ is location of a grid point, 
+<li class="fragment"> $r = (x,y)$ is location of an unsampled point (e.g. grid point), 
 <li class="fragment">$r_j=(x_j,y_j$) is location of a measured point
 <li class="fragment">$T(r)$ is trend (low order polynomial), 
 <li class="fragment">$λ_j$ are coefficients 
-<li class="fragment">$R(r,r_j)$ is a function of distance between unsampled and measured point (radial basis function, model variogram)
+<li class="fragment">$R(r,r_j)$ is a function of distance between the points (radial basis function, model variogram)
 </ul>
 </section>
 
@@ -188,7 +188,7 @@ Only a small subset of $n$ neighboring points is used
 <p>
 <ul>
  <li class="fragment">Voronoi polygons 
- <li class="fragment">Triangular Irregular Network (TIN) - based
+ <li class="fragment">Triangular Irregular Network (TIN) - based linear interpolation
  <li class="fragment">Inverse distance weighted method
 </ul>
 </section>
@@ -199,14 +199,15 @@ Voronoi polygon edges are equidistant to 2 given points,
 define <b>unique nearest neighborhood</b> around each point
 <p>
 <img height="330" src="img/spatial_interpolation/voronoi_tin_zm.png"> </p>
-<p><a href="http://alexbeutel.com/webgl/voronoi.html"> Voronoi diagram generator</a>
+<p>Voronoi polygons (red) are derived from the measured data - the measured point (blue)
+ is at the center of a Voronoi polygon 
+<p><small><a href="http://alexbeutel.com/webgl/voronoi.html"> Voronoi diagram generator</a>
+or <a href="https://websvg.github.io/voronoi/">Parametric Voronoi generator</a></small>
 </section>
 
 <section>
    <h3>Voronoi (Thiessen)  polygons</h3>
 <p>
-Voronoi polygons are derived from the measured data - the measured point is at the center of a Voronoi polygon 
-<p class="fragment">
 Value at an unsampled point $z(x,y)$ is <b>the same</b> as the measured value $z(x_j,y_j)$
 at the center of the Voronoi polygon $V_j$ within which the unsampled point is located:
 <p class="fragment">
@@ -234,10 +235,10 @@ $$z(x,y) = λ z(x_j,y_j)$$
    <h3>Linear TIN-based method</h3>
 <p>
 Value $z(x,y)$ at an unsampled point is a linear combination of values 
-at 3 nearby points $z(x_j,y_j)$ that form vertices of a triangle
+at 3 nearby given points $z(x_j,y_j)$ that form vertices of a triangle
 <p class="fragment">
 $$ T(r) = 0 $$
-$$z(x,y) = ∑ \lambda_j z(x_j,y_j) / \lambda_T \;  j=1,2,3$$
+$$z(x,y) = {∑ \lambda_j z(x_j,y_j)} \over {\lambda_T} \quad  j=1,2,3$$
 <ul>
 <li class="fragment">$\lambda_j$ is weight proportional to the area of a triangle 
 defined by the unsampled point and two given points
@@ -262,6 +263,8 @@ Delaunay triangulation for a set of points P in a plane fulfills
 the condition that no point in P is inside the circumcircle of any triangle in DT(P).
 <p>
 <img height="380" src="img/spatial_interpolation/DelaunayTIN2.png"> </p>
+<p><small>Learn more about  
+<a href="https://en.wikipedia.org/wiki/Delaunay_triangulation">properties and algorithms</a>
 </section>
 
 <section>
@@ -270,6 +273,15 @@ the condition that no point in P is inside the circumcircle of any triangle in D
 Voronoi (Thiessen) polygons and Delaunay triangulation create dual graphs. 
 <p>
 <img height="380" src="img/spatial_interpolation/DelaunayTIN_Voronoi.png"> </p>
+<p><small>Each face of VP is associated with a TIN vertex and each TIN face has a VP vertex associated with it</small>
+</section>
+
+<section>
+   <h3>Delaunay TIN</h3>
+<p>
+Delaunay triangulation of sample elevation data 
+<p>
+<img height="400" src="img/spatial_interpolation/tin2dstream.png"> </p>
 </section>
 
 <section>
@@ -290,6 +302,7 @@ Voronoi (Thiessen) polygons and Delaunay triangulation create dual graphs.
  <li>linear interpolation along steepest slope lines between two neighboring isolines
 </ul>
 <p>
+<img height="300" src="img/spatial_interpolation/contour_interp.jpg"> </p>
 <img height="380" src="img/spatial_interpolation/interp_lin_isolines.jpg"> </p>
 </section>
 
@@ -312,7 +325,8 @@ Inverse Distance Weighted Interpolation (IDW):
 Value at a unsampled grid point is a weighted average of values measured at $n$ nearby points:
 
 $$ T(x,y) = 0 $$
-$$z(x,y) = ∑ \lambda_j z(x_j,y_j) / ∑ \lambda_j \;  j=1,..., n$$
+<p>
+$$z(x,y) = ∑ \lambda_j z(x_j,y_j) / ∑ \lambda_j \quad  j=1,..., n$$
 
 <ul>
  <li class="fragment"> $\lambda_j = 1/d_j^p$ is weight proportional to power of distance between 
@@ -327,15 +341,15 @@ $$z(x,y) = ∑ \lambda_j z(x_j,y_j) / ∑ \lambda_j \;  j=1,..., n$$
 <section>
    <h3>Inverse distance weighted method</h3>
 <p>
-Value at a unsampled grid point is a weighted average of values measured at $n$ nearby points:
-$$z(x,y) = ∑ \lambda_j z(x_j,y_j) / ∑ \lambda_j \;  j=1,..., n$$
+Value at a unsampled grid point (blue) is a weighted average of values measured at $n$ nearby points (black):
+$$z(x,y) = ∑ \lambda_j z(x_j,y_j) / ∑ \lambda_j \quad  j=1,..., n$$
 <p>
 <img height="380" src="img/spatial_interpolation/idw_pointselect.png"> </p>
 </section>
 
 <section>
    <h3>Inverse distance weighted method</h3>
-2m resolution DEM computed from points that are approximately 50m appart:
+2m resolution DEM computed from points that are ~50m appart:
 leads to local peaks and pits around given points
 <p>
 <img height="380" src="img/spatial_interpolation/IntIDWF1c.gif"> </p>
@@ -345,7 +359,7 @@ the measured points is much larger than the distance between grid points</small>
 
 <section>
    <h3>Inverse distance weighted method</h3>
-Impact of power parameter on the resulting surface
+Impact of power parameter (p=0.5, 2, 5) on the resulting surface: precipitation in NC
 <p>
 <img height="480" src="img/spatial_interpolation/idw_precip_contours2d.png"> </p>
 </section>
@@ -354,8 +368,10 @@ Impact of power parameter on the resulting surface
    <h3>Inverse distance weighted method</h3>
 Surfaces with power exponent p=0.5 and p=5
 <p>
-<img height="250" src="img/spatial_interpolation/idw_precip_p05_3dpts.png"> </p>
-<img height="250" src="img/spatial_interpolation/idw_precip_p5_3d_pts.jpg"> </p>
+<img height="220" src="img/spatial_interpolation/idw_precip_p05_3dpts.png"> </p>
+<img height="220" src="img/spatial_interpolation/idw_precip_p5_3d_pts.jpg"> </p>
+<p><small>Method works well when density of given points is close to the resulting resolution,
+otherwise it can lead to surface artifacts</small>
 </section>
 
 <section>
