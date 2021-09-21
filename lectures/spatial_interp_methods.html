@@ -33,7 +33,7 @@ Estimate values at unsampled points using values measured at given points to:
 </section>
 
 <section>
-  <h3>Scattered points to raster</h3>
+  <h3>Scattered points to grid</h3>
 Most common application 
 <p><img height="340" src="img/spatial_interpolation/scattered_pts.jpg">
 <img height="340" src="img/spatial_interpolation/pointstogrid.jpg">
@@ -173,9 +173,9 @@ $$
 F(r) = T(r) + ∑ λ_j R(r,r_j)  \;    j=1,m
 $$
 <ul>
-<li class="fragment"> $r = (x,y)$ is location of an unsampled point (e.g. grid point), 
+<li class="fragment"> $r = (x,y)$ is location of an unsampled point  
 <li class="fragment">$r_j=(x_j,y_j$) is location of a measured point
-<li class="fragment">$T(r)$ is trend (low order polynomial), 
+<li class="fragment">$T(r)$ is trend (low order polynomial)
 <li class="fragment">$λ_j$ are coefficients 
 <li class="fragment">$R(r,r_j)$ is a function of distance between the points (radial basis function, model variogram)
 </ul>
@@ -213,7 +213,7 @@ at the center of the Voronoi polygon $V_j$ within which the unsampled point is l
 <p class="fragment">
 $$ T(x,y) = 0 $$
 $$z(x,y) = λ z(x_j,y_j)$$ 
-<p class="fragment">
+<p>
 <ul>
 <li class="fragment">$\lambda = 1$, if $(x,y)$ is within $V_j$  
 <li class="fragment">$\lambda = 0$, if $(x,y)$ is outside $V_j$
@@ -274,7 +274,7 @@ the condition that no point in P is inside the circumcircle of any triangle in D
 <section>
    <h3>Delaunay TIN and Voronoi polygons</h3>
 <p>
-Voronoi (Thiessen) polygons and Delaunay triangulation create dual graphs. 
+Voronoi polygons (red) and Delaunay triangles (black) create dual graphs. 
 <p>
 <img height="380" src="img/spatial_interpolation/DelaunayTIN_Voronoi.png"> </p>
 <p><small>Each face of VP is associated with TIN vertex and each TIN face has VP vertex associated with it</small>
@@ -297,6 +297,9 @@ Delaunay triangulation of sample elevation data
 </ul>
 <p>
 <img height="380" src="img/spatial_interpolation/IntTinF1b.gif"> </p>
+<p><small>
+<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
+</small></p>
 </section>
 
 <section>
@@ -306,8 +309,8 @@ Delaunay triangulation of sample elevation data
  <li>linear interpolation along steepest slope lines between two neighboring isolines
 </ul>
 <p>
-<img height="350" src="img/spatial_interpolation/contour_interp.jpg"> 
-<img height="300" src="img/spatial_interpolation/interp_lin_isolines.jpg"> </p>
+<img height="360" src="img/spatial_interpolation/contour_interp.jpg"> 
+<img height="320" src="img/spatial_interpolation/interp_lin_isolines.jpg"> </p>
 </section>
 
 <section>
@@ -357,8 +360,11 @@ $$z(x,y) = ∑ \lambda_j z(x_j,y_j) \; / ∑ \lambda_j \quad  j=1,..., n$$
 leads to local peaks and pits around given points
 <p>
 <img height="380" src="img/spatial_interpolation/IntIDWF1c.gif"> </p>
-<p><small>bull's eye effect – circular contours when distance between 
-the measured points is much larger than the distance between grid points</small>
+<p><small>Bull's eye effect – circular contours when distance between 
+the measured points is much larger than the distance between grid points. 
+<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">
+Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
+</small>
 </section>
 
 <!--
@@ -403,7 +409,7 @@ $$
 <li class="fragment">$λ_j$ are coefficients
 <li class="fragment">$R(r,r_j)$ is a model variogram (function of distance between unsampled and measured point)
 </ul>
-The coefficients $λ_j$ are found by solving system of $m$ linear equations
+<p class="fragment">The coefficients $λ_j$ are found by solving a system of $m$ linear equations</p>
 </section>
 
 <section>
@@ -414,10 +420,12 @@ than the points that are farther appart
 <ul>
 <li class="fragment">Model variogram $R(r,r_j)$ is derived by fitting a suitable function to empirical variogram 
 <li class="fragment">empirical variogram is derived from data as
+<p>
 $$
 \gamma (h) = (1/m_h) ∑[z(r_i) - z(r_j)]^2 \;  i=1,…, m_h
 $$
-<small>which is mean difference in measured values $z$ for points that are separated 
+<p>
+<small>which is mean square of differences in measured values $z$ for points that are separated 
 by a distance $h$ (with some tolerance defining the size of histogram bin)
 </small>
 <p>
@@ -426,34 +434,35 @@ Many model functions can be used: spherical, exponential, Gaussian, …
 
 <section>
    <h3>Experimental variogram</h3>
-Given set of elevation points and derived experimental variogram over the 2000m distance with 150m histogram bin 
+Given set of elevation points and derived experimental variogram
 <p>
-<img height="350" src="img/spatial_interpolation/bar_pts_all.png"> 
-<img height="350" src="img/spatial_interpolation/expvariogram_barania2.png"> </p>
+<img height="300" src="img/spatial_interpolation/bar_pts_all.png"> 
+<img height="300" src="img/spatial_interpolation/expvariogram_barania2.png"> </p>
+<p><small>Maximum distance is 2000 m, histogram bin is ~150m
 </section>
 
 <section>
    <h3>Model variogram</h3>
 Optimized fit of a suitable function to empirical variogram: linear
 <p>
-<img height="350" src="img/spatial_interpolation/expvariogram_barania2.png"> </p>
-<img height="350" src="img/spatial_interpolation/exp_model_variogram_lin_bar.png"> 
+<img height="300" src="img/spatial_interpolation/expvariogram_barania2.png"> </p>
+<img height="300" src="img/spatial_interpolation/exp_model_variogram_lin_bar.png"> 
 </section>
 
 <section>
    <h3>Model variogram</h3>
 Optimized fit of a suitable function to empirical variogram: gaussian, spherical
 <p>
-<img height="350" src="img/spatial_interpolation/exp_model_variogram_gaus_bar.png"> </p>
-<img height="350" src="img/spatial_interpolation/exp_model_variogram_spher_bar.png">
+<img height="300" src="img/spatial_interpolation/exp_model_variogram_gaus_bar.png"> </p>
+<img height="300" src="img/spatial_interpolation/exp_model_variogram_spher_bar.png">
 </section>
 
 <section>
    <h3>Model variogram</h3>
 Optimized fit of a suitable function to empirical variogram: exponential, Matern
 <p>
-<img height="350" src="img/spatial_interpolation/exp_model_variogram_exp_bar.png"> </p>
-<img height="350" src="img/spatial_interpolation/exp_model_variogram_Mat_bar.png">
+<img height="300" src="img/spatial_interpolation/exp_model_variogram_exp_bar.png"> </p>
+<img height="300" src="img/spatial_interpolation/exp_model_variogram_Mat_bar.png">
 </section>
 
 <section>
@@ -468,11 +477,12 @@ DEM interpolated with kriging using Matern model variogram
 
 <section>
    <h3>Kriging: Interpolated surface</h3>
-One of many possible results from kriging for the DEM used in previous illustrations
-<p><small>roughness in the surface is due to local implementation, 
-discussed in the next section, not the function itself</small>
+DEM interpolated using kriging with spherical variogram 
 <p>
 <img height="380" src="img/spatial_interpolation/IntkrigF1d.gif"> </p>
+<p><small>roughness in the surface is due to local implementation, discussed in the next section, not the function itself
+<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
+</small>
 </section>
 
 <section>
@@ -486,10 +496,10 @@ We will cover splines in our next lecture
 <section>
    <h3>Summary</h3>
 <ul>
-<li class="fragment">Instead of a single universal solution that would automatically optimize its parameters 
+<li class="fragment">Instead of a universal solution that would automatically optimize its parameters 
  we now have a large number of different interpolation and approximation methods and their implementations and no robust automated approach for choosing the right one
 <li class="fragment">Sound knowledge of interpolated phenomenon and the methods is needed to do it correctly
-<li class="fragment">But – if there is sufficient amount of homogeneously distributed data, most methods will provide good results 
+<li class="fragment">Given adequate amount of homogeneously distributed data, most methods will provide good results 
 <li class="fragment">Keep interpolation in mind when collecting data (e.g. parallel far apart but densely sampled profiles are difficult to interpolate)
 </ul>
 </section>
