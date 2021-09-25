@@ -86,6 +86,7 @@ Similar effect to shortening range in kriging or decreasing exponent in IDW
 
 <section>
   <h3>Interpolation: range of influence</h3>
+REMOVE this slide?
 Influence of tension for the same input data set
 <p class="fragment"> <img height="320" src="img/spatial_interpolation/spline_tension.png">
 High tension, 
@@ -102,21 +103,56 @@ possible overshoots.
 </section>
 
 <section>
-   <h3>Spline tension</h3>
-Tension controls the stiffness of the plate - 
-soft rubber sheet (high tension) -> stiff steel plate (low tension)
-equivalent to range of influence for each point
-short range (high tension) -> long range (low tension)
-
+   <h3>Spline: tension</h3>
+Tension controls the stiffness of the plate:
+<ul> 
+ <li>soft rubber sheet, short range (high tension) 
+ <li> stiff steel plate, long range (low tension)
+</ul>
 <p>
 <img height="400" src="img/spatial_interpolation/tension.gif"> </p>
 </section>
 
 <section>
-   <h3>Splines</h3>
+   <h3>Spline: tension</h3>
 <p>
-<img height="300" src="img/spatial_interpolation/InttopogrF1e.gif"> </p>
+<img height="300" src="img/spatial_interpolation/InttopogrF1e.gif"> 
 <img height="300" src="img/spatial_interpolation/IntRSTF1f.gif"> </p>
+</section>
+
+<section>
+   <h3>Spline: tension</h3>
+<p>
+<img height="280" src="img/spatial_interpolation/spline_ten160_1mn.jpg"> 
+<img height="280" src="img/spatial_interpolation/spline_ten40_1mn.jpg"> 
+<img height="280" src="img/spatial_interpolation/spline_ten10_1mn.jpg"> 
+<p><small>
+High tension, short  range of influence, soft rubber sheet, rough surface, peak or pit in each data point
+<br>
+Low tension, long range of influence, stiffer steel plate, smoother surface, possible overshoots.
+</small>
+</section>
+
+<section>
+   <h3>Spline: smoothing</h3>
+<p> Allows the surface to deviate from measured points
+$$F(x_i,y_i) = z(x_i, y_i) + \varepsilon(x_i,y_i)$$ 
+<p class="fragment">
+<img height="300" src="img/spatial_interpolation/spline_smooth_springs.png"> 
+<p class="fragment">Reduces overshoots, noise, improves numerical stability
+<p class="fragment">Can be applied to individual points,for example if we have data from two surveys with different accuracies.
+<p><small>Example: lidar bare earth data: low smoothing for open areas, high smoothing for forest</small>
+</section>
+
+<section>
+   <h3>Spline: smoothing</h3>
+Tension controls the stiffness of the plate: 
+<ul>  
+ <li>soft rubber sheet, short range (high tension)
+ <li> stiff steel plate, long range (low tension)
+</ul>
+<p>
+<img height="400" src="img/spatial_interpolation/tension.gif"> </p>
 </section>
 
 <section>
