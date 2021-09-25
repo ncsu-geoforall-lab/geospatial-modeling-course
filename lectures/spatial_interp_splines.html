@@ -59,16 +59,16 @@ smoothness seminorm or roughness penalty
   <li class="fragment">thin plate spline
   <li class="fragment">spline with tension 
   <li class="fragment">regularized spline
-  <li class="fragment">regularized spline with tension (completely regularized spline): generalized function
-  <li class="fragment">see the seminorms in Table 1 here:
-http://courses.ncsu.edu/mea582/common/GIS_anal_lecture/mitas_mitasova_1999_2005.pdf
-  <li class="fragment">and the equations for selected R(.) in the section 6.6.4 here:
-http://www.spatialanalysisonline.com/output/
+  <li class="fragment">regularized spline with tension (completely regularized spline)
+  <li class="fragment">see the smoothness seminorms in 
+  <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/resources/mitas_mitasova_1999_2005.pdf"> Table 1</a> 
+  <li class="fragment">see the equations for selected $R(.)$ in the section 6.6.4 
+  <a href="http://www.spatialanalysisonline.com/output/">here</a>
 </ul>
 </section>
 
 <section>
-   <h3>Regularized splines with tension </h3>
+   <h3>Regularized splines with tension (RST) </h3>
 <p>
 $$
 F(r) = T(r) + ∑ λ_j R(\rho_j)  \;    j=1,m
@@ -78,36 +78,19 @@ $$
 <li>$\varphi$ is the tension parameter and 
 <li>$|r-r_j|$ is the distance between the unsampled and measured points. 
 </ul>
-Spline tension rescales distances: 
-high tension stretches the distances making the sheet thinner and more flexible 
-this shortens the range of influence of each point 
-Similar effect to shortening range in kriging or decreasing exponent in IDW
-</section>
-
-<section>
-  <h3>Interpolation: range of influence</h3>
-REMOVE this slide?
-Influence of tension for the same input data set
-<p class="fragment"> <img height="320" src="img/spatial_interpolation/spline_tension.png">
-High tension, 
-short  range of influence,
-soft rubber sheet,
-rough surface, peak or pit in each data point
-<p>
-Low tension, 
-long range of influence,
-stiffer steel plate, 
-smoother surface,
-possible overshoots.
-<p class="fragment"><small>Sampling points of groundwater pollution in space and time</small>
+<p class="fragment">
+Spline tension rescales distances, it has similar effect to shortening range in kriging 
+or decreasing the distance weight exponent in IDW
+<p class="fragment"><small>High tension stretches the distances making the sheet thinner and more flexible 
+this shortens the range of influence of each point, so the range effect is inverse of tension</small> 
 </section>
 
 <section>
    <h3>Spline: tension</h3>
 Tension controls the stiffness of the plate:
 <ul> 
- <li>soft rubber sheet, short range (high tension) 
- <li> stiff steel plate, long range (low tension)
+ <li> high tension: soft rubber sheet, short range 
+ <li> low tension: stiff steel plate, long range 
 </ul>
 <p>
 <img height="400" src="img/spatial_interpolation/tension.gif"> </p>
@@ -116,43 +99,96 @@ Tension controls the stiffness of the plate:
 <section>
    <h3>Spline: tension</h3>
 <p>
-<img height="300" src="img/spatial_interpolation/InttopogrF1e.gif"> 
-<img height="300" src="img/spatial_interpolation/IntRSTF1f.gif"> </p>
-</section>
-
-<section>
-   <h3>Spline: tension</h3>
-<p>
-<img height="280" src="img/spatial_interpolation/spline_ten160_1mn.jpg"> 
-<img height="280" src="img/spatial_interpolation/spline_ten40_1mn.jpg"> 
-<img height="280" src="img/spatial_interpolation/spline_ten10_1mn.jpg"> 
+<img height="230" src="img/spatial_interpolation/spline_ten160_1mn.jpg"> 
+<img height="230" src="img/spatial_interpolation/spline_ten40_1mn.jpg"> 
+<img height="230" src="img/spatial_interpolation/spline_ten10_1mn.jpg"> 
 <p><small>
 High tension, short  range of influence, soft rubber sheet, rough surface, peak or pit in each data point
 <br>
 Low tension, long range of influence, stiffer steel plate, smoother surface, possible overshoots.
+<br>Note that tension is inverse of stiffness
 </small>
 </section>
 
 <section>
    <h3>Spline: smoothing</h3>
 <p> Allows the surface to deviate from measured points
+<p>
 $$F(x_i,y_i) = z(x_i, y_i) + \varepsilon(x_i,y_i)$$ 
-<p class="fragment">
-<img height="300" src="img/spatial_interpolation/spline_smooth_springs.png"> 
-<p class="fragment">Reduces overshoots, noise, improves numerical stability
-<p class="fragment">Can be applied to individual points,for example if we have data from two surveys with different accuracies.
+<p>
+<img height="280" src="img/spatial_interpolation/spline_smooth_springs.png"> 
+<p>Reduces overshoots, noise, improves numerical stability
+<br>Can be applied to individual points for data with different accuracies.
 <p><small>Example: lidar bare earth data: low smoothing for open areas, high smoothing for forest</small>
 </section>
 
 <section>
    <h3>Spline: smoothing</h3>
-Tension controls the stiffness of the plate: 
-<ul>  
- <li>soft rubber sheet, short range (high tension)
- <li> stiff steel plate, long range (low tension)
+<p>
+Smoothing controls the deviation from the data points, large smoothing results in trend surface $T(x,y)$
+<p>
+<img height="400" src="img/spatial_interpolation/smooth.gif"> </p>
+</section>
+
+<section>
+   <h3>Spline: smoothing</h3>
+Smoothing can be spatially variable 
+<p>
+<img height="400" src="img/spatial_interpolation/spline_ten40_1mn.jpg"> </p>
+<img height="400" src="img/spatial_interpolation/spline_smoothvar.jpg"> </p>
+</section>
+
+<section>
+   <h3>Spline interpolation from points</h3>
+<ul>
+  <li>Spline with tension: numerical solution supports carved streams, but here the 
+tension is too high
+  <li>RST method lower tension combined with smoothing reduce bias towards given points
 </ul>
 <p>
-<img height="400" src="img/spatial_interpolation/tension.gif"> </p>
+<img height="300" src="img/spatial_interpolation/InttopogrF1e.gif">
+<img height="300" src="img/spatial_interpolation/IntRSTF1f.gif"> </p>
+<p>Note that tension is inverse of stiffness
+<p class="credit">Figure from
+<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation. In: P.Longley, M.F. Goodchild, D.J. Maguire, D.W.Rhind (Eds.), GIS: Principles, Techniques, Management and Applications, GeoInformation International, Wiley, 481-492.</a></p>
+</section>
+
+<section>
+   <h3>Spline interpolation from contours</h3>
+If the density of points along contours is high, spline with high tension leads 
+to sUrface with steps along contours, point reduction and lower tension improves the result
+<p>
+<img height="400" src="img/spatial_interpolation/spline_from_contours.jpg"> </p>
+</section>
+
+<section>
+   <h3>Interpolation with anisotropy</h3>
+Anisotropic tension is equivalent to rescaling of distances in a given direction: range of influence is different in the given direction, creating an anisotropic pattern in the resulting surface
+<p>
+<img height="400" src="img/spatial_interpolation/spline_streambed.jpg"> </p>
+</section>
+
+<section>
+   <h3>Interpolation from profiles</h3>
+RTK GPS or single beam sonar use automated dense sampling along a line 
+– anisotropy can be used to rescale distances between profiles and minimize artifacts
+<p>
+<img height="400" src="img/spatial_interpolation/spline_beach_rtkgps.jpg"> </p>
+<p class="fragment" >Better alternative is to map it with a drone using structure from motion
+</section>
+
+<section>
+   <h3>Trivariate Interpolation</h3>
+Given $m$ points measured in 3D space, find such $F(x,y,z$) that for each $i=1,m$
+$$
+    w_i=F(x_i,y_i,z_i)              
+$$
+and compute $w_k=F(x_k,y_k,z_k)$ in 3D grid points
+<p>
+Similarly for 4D space – 3D + time: $w_i=F(x_i,y_i,z_i,t_i)$
+<p class="fragment" >
+Supported by specialized software for geostatistics: radial basis functions and splines. 
+3D spline is available in GRASS GIS   
 </section>
 
 <section>
