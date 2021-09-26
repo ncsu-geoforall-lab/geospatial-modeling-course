@@ -178,6 +178,19 @@ RTK GPS or single beam sonar use automated dense sampling along a line
 </section>
 
 <section>
+   <h3>Interpolation accuracy</h3>
+Effect of smoothing is measured by deviations 
+$$
+dz (x,y) = z' (x,y) – z (x,y)
+$$
+z' is the interpolated and z is the given value 
+
+Predictive accuracy is measured by the  crossvalidation error
+
+Artifacts, bias can be found using histograms, aspect maps, curvatures
+</section>
+
+<section>
    <h3>Trivariate Interpolation</h3>
 Given $m$ points measured in 3D space, find such $F(x,y,z$) that for each $i=1,m$
 $$
@@ -189,6 +202,78 @@ Similarly for 4D space – 3D + time: $w_i=F(x_i,y_i,z_i,t_i)$
 <p class="fragment" >
 Supported by specialized software for geostatistics: radial basis functions and splines. 
 3D spline is available in GRASS GIS   
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: volume</h3>
+Nitrogen concentrations $w_i$ in the Chesapeake Bay sampled at points $(x_i,y_i,z_i)$ 
+with different depths
+<p>
+<img height="380" src="img/spatial_interpolation/chesapsites.jpg">
+<img height="380" src="img/spatial_interpolation/chesap_midtens.jpg"> 
+<img height="280" src="img/spatial_interpolation/chesap_lg.gif"> </p>
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: tension</h3>
+Impact of tension on the volume model: from high to low tension
+<p>
+<img height="350" src="img/spatial_interpolation/chesap_hightens.jpg"> 
+<img height="350" src="img/spatial_interpolation/chesap_midtens.jpg"> 
+<img height="350" src="img/spatial_interpolation/chesap_lowtens.jpg"> </p>
+<p class="fragment"><small>High tension: local max or min at given points, low tension: smooth pattern 
+with potential "overshoots" </small>
+</section>
+
+<section>
+   <h3>Trivariate Interpolation</h3>
+<ul>
+ <li>Interpolation of a 2D grid with influence of a third variable
+ <li>Given $m$ points $(x_i,y_i,z_i,w_i)$  where $z_i = F_1 (x_i,y_i) 
+find such $F_2(x,y,z)$ that for each $i=1,m$
+$$
+    w_i=F_2(x_i,y_i,z_i)
+$$
+and then compute $w_k=F_3(x_k,y_k)$ at $F_1 intersect F_2$
+<p class="fragment" ><small>
+Example: $w_i$ is precipitation measured at locations $x_i,y_i$ at near-ground elevation $z_i$.
+F_1 is represented by a DEM, F_2 is an interpolated precipitation volume (voxel model) 
+that passes through the points $(x_i,y_i,z_i,w_i)$. $F_3$ is a bivariate function represented
+as a 2D precipitation grid which is an intersection of a DEM and the interpolated precipitation volume F_2
+</small>
+<p class="fragment" ><small>Statistical approach of the method is given by Hutchinson
+and has been used to interpolate global climate maps (add ref and verify)</small>
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: precipitation</h3>
+NC mean annual precipitation: 
+compare bivariate interpolation and trivariate interpolation which includes influence of elevation
+<p> 
+<img height="350" src="img/spatial_interpolation/chesap_hightens.jpg">
+<img height="350" src="img/spatial_interpolation/chesap_midtens.jpg">
+<p class="fragment">zoom into Western NC
+<img height="350" src="img/spatial_interpolation/chesap_midtens.jpg">
+<p class="fragment"><small>If sufficient data are available, the method captures increase of precipitation
+with elevation around Asheville and decrease of precipitation with elevation on the border with SC
+</small>
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: precipitation</h3>
+Tropical South America mean annual precipitation using bivariate and trivariate interpolation
+<p> 
+<img height="350" src="img/spatial_interpolation/xmsap2d.gif">
+<img height="350" src="img/spatial_interpolation/xmsapel.gif">
+<img height="250" src="img/spatial_interpolation/preciplg.jpg"> </p>
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: precipitation</h3>
+Tropical South America mean annual precipitation using bivariate and trivariate interpolation
+<p> 
+Tuning the influence of elevation on precipitation pattern through anisotropic tension in z-direction
+<img height="350" src="img/spatial_interpolation/sapel.gif">
 </section>
 
 <section>
