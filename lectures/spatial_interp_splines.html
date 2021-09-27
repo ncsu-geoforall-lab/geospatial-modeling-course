@@ -165,7 +165,7 @@ to sUrface with steps along contours, point reduction and lower tension improves
    <h3>Interpolation with anisotropy</h3>
 Anisotropic tension is equivalent to rescaling of distances in a given direction: range of influence is different in the given direction, creating an anisotropic pattern in the resulting surface
 <p>
-<img height="400" src="img/spatial_interpolation/spline_streambed.jpg"> </p>
+<img height="400" src="img/spatial_interpolation/spline_anisotr_streamHK.png"> </p>
 </section>
 
 <section>
@@ -173,21 +173,45 @@ Anisotropic tension is equivalent to rescaling of distances in a given direction
 RTK GPS or single beam sonar use automated dense sampling along a line 
 – anisotropy can be used to rescale distances between profiles and minimize artifacts
 <p>
-<img height="400" src="img/spatial_interpolation/spline_beach_rtkgps.jpg"> </p>
+<img height="400" src="img/spatial_interpolation/spline_anisotr_beachprofiles.jpg"> </p>
 <p class="fragment" >Better alternative is to map it with a drone using structure from motion
 </section>
 
 <section>
    <h3>Interpolation accuracy</h3>
-Effect of smoothing is measured by deviations 
+<p>
+Effect of smoothing is measured by deviations from given points
 $$
 dz (x,y) = z' (x,y) – z (x,y)
 $$
-z' is the interpolated and z is the given value 
-
+where $z'$ is the interpolated value and $z$ is the given value 
+<p>
 Predictive accuracy is measured by the  crossvalidation error
-
+$$e_z (x,y) = z' (x,y) – z_o (x,y)$$
+where $z'$ is the interpolated and $z_o$ is the given value in a point that was omitted 
+from the set of points used for the interpolation. 
+n-interpolations are performed, each time omitting one point in which $e_z$ is computed: 
+also called 
+<a href="http://en.wikipedia.org/wiki/Cross-validation_(statistics)">
+leave-one-out cross-validation (LOOCV)</a>
+<p>
 Artifacts, bias can be found using histograms, aspect maps, curvatures
+</section>
+
+<section>
+   <h3>Interpolated surface deviations </h3>
+Deviations map for smoothing 0.1 and 10
+<p>
+<img height="400" src="img/spatial_interpolation/devism01_3d.jpg"> 
+<img height="400" src="img/spatial_interpolation/devism10x1_3d.jpg"> </p>
+</section>
+
+<section>
+   <h3>Interpolated surface predictive errors </h3>
+Map showing spatial pattern of predictive errors 
+<p>
+<img height="400" src="img/spatial_interpolation/crossval2d.png"> 
+<img height="400" src="img/spatial_interpolation/crossval3d.png"> </p>
 </section>
 
 <section>
