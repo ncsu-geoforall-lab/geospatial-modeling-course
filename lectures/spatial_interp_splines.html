@@ -240,11 +240,11 @@ with different depths
 
 <section>
    <h3>Trivariate Interpolation: tension</h3>
-Impact of tension on the volume model: from high to low tension
+Impact of tension on the volume model: high to low tension
 <p>
-<img height="350" src="img/spatial_interpolation/chesap_hightens.jpg"> 
-<img height="350" src="img/spatial_interpolation/chesap_midtens.jpg"> 
-<img height="350" src="img/spatial_interpolation/chesap_lowtens.jpg"> </p>
+<img height="320" src="img/spatial_interpolation/chesap_hightens.jpg"> 
+<img height="320" src="img/spatial_interpolation/chesap_midtens.jpg"> 
+<img height="320" src="img/spatial_interpolation/chesap_lowtens.jpg"> </p>
 <p class="fragment"><small>High tension: local max or min at given points, low tension: smooth pattern 
 with potential "overshoots" </small>
 </section>
@@ -253,12 +253,13 @@ with potential "overshoots" </small>
    <h3>Trivariate Interpolation</h3>
 <ul>
  <li>Interpolation of a 2D grid with influence of a third variable
- <li>Given $m$ points $(x_i,y_i,z_i,w_i)$  where $z_i = F_1 (x_i,y_i) 
+ <li>Given $m$ points $(x_i,y_i,z_i,w_i)$  where $z_i = F_1 (x_i,y_i)$ 
 find such $F_2(x,y,z)$ that for each $i=1,m$
 $$
     w_i=F_2(x_i,y_i,z_i)
 $$
-and then compute $w_k=F_3(x_k,y_k)$ at $F_1 intersect F_2$
+ <li> then compute $w_k=F_3(x_k,y_k)$ at $F_1 intersect F_2$
+</ul>
 <p class="fragment" ><small>
 Example: $w_i$ is precipitation measured at locations $x_i,y_i$ at near-ground elevation $z_i$.
 F_1 is represented by a DEM, F_2 is an interpolated precipitation volume (voxel model) 
@@ -271,13 +272,10 @@ and has been used to interpolate global climate maps (add ref and verify)</small
 
 <section>
    <h3>Trivariate Interpolation: precipitation</h3>
-NC mean annual precipitation: 
+NC mean annual precipitation with zoom into Western NC:: 
 compare bivariate interpolation and trivariate interpolation which includes influence of elevation
 <p> 
-<img height="350" src="img/spatial_interpolation/chesap_hightens.jpg">
-<img height="350" src="img/spatial_interpolation/chesap_midtens.jpg">
-<p class="fragment">zoom into Western NC
-<img height="350" src="img/spatial_interpolation/chesap_midtens.jpg">
+<img height="350" src="img/spatial_interpolation/spline_trivar_NCprecip.jpg">
 <p class="fragment"><small>If sufficient data are available, the method captures increase of precipitation
 with elevation around Asheville and decrease of precipitation with elevation on the border with SC
 </small>
@@ -294,10 +292,9 @@ Tropical South America mean annual precipitation using bivariate and trivariate 
 
 <section>
    <h3>Trivariate Interpolation: precipitation</h3>
-Tropical South America mean annual precipitation using bivariate and trivariate interpolation
 <p> 
 Tuning the influence of elevation on precipitation pattern through anisotropic tension in z-direction
-<img height="350" src="img/spatial_interpolation/sapel.gif">
+<img height="380" src="img/spatial_interpolation/sapel.gif">
 </section>
 
 <section>
@@ -305,6 +302,18 @@ Tuning the influence of elevation on precipitation pattern through anisotropic t
 Can you guess the interpolation method?
 <p>
 <img height="450" src="img/interpolationBW.jpg"> </p>
+</section>
+
+<section>
+   <h3>Local function implementation</h3>
+<ul>
+ <li>Only points within the range of influence are needed for interpolation:
+ <li>Local search (IDW, geostatistics, some implementations of splines and RBF)– no continuity condition, overlap
+ <li>nearest $n$-points
+ <li>all points within $d$-distance
+ <li>modifications: n-points from each quadrant or increase $d$ until at least $n$-points are found
+ <li>TIN, natural neighbor use vertices of triangles or voronoi polygons
+</ul>
 </section>
 
 <section>
