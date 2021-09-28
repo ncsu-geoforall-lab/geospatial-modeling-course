@@ -153,14 +153,6 @@ tension is too high
 </section>
 
 <section>
-   <h3>Spline interpolation from contours</h3>
-If the density of points along contours is high, spline with high tension leads 
-to surface with steps along contours, point reduction and lower tension improves the result
-<p>
-<img height="380" src="img/spatial_interpolation/spline_from_contours.png"> </p>
-</section>
-
-<section>
    <h3>Interpolation with anisotropy</h3>
 Anisotropic tension: rescaling distances in a given direction
  changes the range of influence in this direction, leading to anisotropic pattern in the resulting surface
@@ -249,9 +241,9 @@ with different depths
    <h3>Trivariate Interpolation: tension</h3>
 Impact of tension on the volume model: high to low
 <p>
-<img height="300" src="img/spatial_interpolation/chesap_hightens.jpg"> 
-<img height="300" src="img/spatial_interpolation/chesap_midtens.jpg"> 
-<img height="300" src="img/spatial_interpolation/chesap_lowtens.jpg"> </p>
+<img height="280" src="img/spatial_interpolation/chesap_hightens.jpg"> 
+<img height="280" src="img/spatial_interpolation/chesap_midtens.jpg"> 
+<img height="280" src="img/spatial_interpolation/chesap_lowtens.jpg"> </p>
 <p class="fragment"><small>High tension: local max or min at given points, low tension: smooth pattern 
 with potential "overshoots" </small>
 </section>
@@ -358,17 +350,44 @@ into 4 smaller rectangles.
 </section>
 
 <section>
+   <h3>High density points along contours</h3>
+If the density of points along contours is high, spline with high tension leads
+to surface with steps along contours, point reduction and lower tension improves the result
+<p>
+<p><img height="200" src="img/spatial_interpolation/quadtreecont.png">
+<img height="380" src="img/spatial_interpolation/spline_from_contours.png"> </p>
+</section>
+
+<section>
    <h3>Point density reduction </h3>
-<p> Problems when the data are too dense along a line can still be there
-<img height="350" src="img/spatial_interpolation/quadtreecont.png">
+<ul>
+<li class="fragment">Can we have two points with identical x,y and different z?
+<li class="fragment">How do we define identical?
+<li class="fragment">minimum distance at which two points 
+are considered two independent measurements 
+(usually horizontal accuracy of the measured data)
+</ul>
+We can eliminate points where $d_{i,j} < d_{min}$, usually $d_{min}$ is a function
+or data accuracy and grid resolution, often leading to much faster computation
+while preserving the level of detail.
 </section>
 
 <section>
    <h3>Optimized subsampling </h3>
-<p> Problems when the data are too dense along a line can still be there
-<img height="350" src="img/spatial_interpolation/quadtreeseg.png">
-<img height="350" src="img/spatial_interpolation/quadtreecont.png">
-<p>Dynamic search window is used to find overlapping points to ensure smooth connection of segments
+<ul>
+<li>Reduce points on contours based on distance and shape.
+<li>Example: reduction from 40,000 to 3000 points lead to no visible change in isoline geometry
+</ul>
+<p><img height="350" src="img/spatial_interpolation/quadtreeseg.png">
+</section>
+
+<section>
+   <h3>High density points along contours</h3>
+If the density of points along contours is high, spline with high tension leads
+to surface with steps along contours, point reduction and lower tension improves the result
+<p>
+<p><img height="200" src="img/spatial_interpolation/quadtreecont.png">
+<img height="380" src="img/spatial_interpolation/spline_from_contours.png"> </p>
 </section>
 
 <section>
