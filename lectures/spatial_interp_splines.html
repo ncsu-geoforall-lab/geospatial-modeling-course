@@ -354,19 +354,22 @@ into 4 smaller rectangles.
 If the density of points along contours is high, spline with high tension leads
 to surface with steps along contours, point reduction and lower tension improves the result
 <p>
-<p><img height="200" src="img/spatial_interpolation/quadtreecont.png">
+<!--<img height="200" src="img/spatial_interpolation/quadtreecont.png">-->
 <img height="380" src="img/spatial_interpolation/spline_from_contours.png"> </p>
+<p><small>Note that the results for IDW or TIN would be even worse</small>
 </section>
 
 <section>
    <h3>Point density reduction </h3>
 <ul>
-<li class="fragment">Can we have two points with identical x,y and different z?
+<li class="fragment">Can we interpolate a 2D grid if we have points with identical $x,y$ but different $z$?
 <li class="fragment">How do we define identical?
 <li class="fragment">minimum distance at which two points 
 are considered two independent measurements 
 (usually horizontal accuracy of the measured data)
 </ul>
+<br>
+<p class="fragment"
 We can eliminate points where $d_{i,j} < d_{min}$, usually $d_{min}$ is a function
 or data accuracy and grid resolution, often leading to much faster computation
 while preserving the level of detail.
@@ -378,24 +381,21 @@ while preserving the level of detail.
 <li>Reduce points on contours based on distance and shape.
 <li>Example: reduction from 40,000 to 3000 points lead to no visible change in isoline geometry
 </ul>
-<p><img height="350" src="img/spatial_interpolation/quadtreeseg.png">
+<p><img height="350" src="img/spatial_interpolation/spline_from_contours_segm.jpg">
 </section>
 
 <section>
-   <h3>High density points along contours</h3>
-If the density of points along contours is high, spline with high tension leads
-to surface with steps along contours, point reduction and lower tension improves the result
+   <h3>Interpolation with optimized subsampling</h3>
+Computation is almost 10-times faster and there are no artifacts
 <p>
-<p><img height="200" src="img/spatial_interpolation/quadtreecont.png">
-<img height="380" src="img/spatial_interpolation/spline_from_contours.png"> </p>
+<img height="400" src="img/spatial_interpolation/spline_from_contours.png"> </p>
 </section>
 
 <section>
    <h3>Masking no-data areas </h3>
-<p> Problems when the data are too dense along a line can still be there
-<img height="350" src="img/spatial_interpolation/quadtreeseg.png">
-<img height="350" src="img/spatial_interpolation/quadtreecont.png">
-<p>Dynamic search window is used to find overlapping points to ensure smooth connection of segments
+Restrict interpolation to surveyed areas to avoid false patterns
+<p><img height="380" src="img/spatial_interpolation/interp_masking.jpg">
+<p>Most implementations provide warning
 </section>
 
 <section>
