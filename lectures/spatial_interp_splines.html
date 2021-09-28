@@ -102,9 +102,9 @@ Tension controls the stiffness of the plate:
 <img height="230" src="img/spatial_interpolation/spline_ten40_1mn.jpg"> 
 <img height="230" src="img/spatial_interpolation/spline_ten10_1mn.jpg"> 
 <p><small>
-High tension, short  range of influence, soft rubber sheet, rough surface, peak or pit in each data point
+High tension, short  range of influence, soft rubber sheet, results in a rough surface with a peak or pit in each data point
 <br>
-Low tension, long range of influence, stiffer steel plate, smoother surface, possible overshoots.
+Low tension, long range of influence, stiffer steel plate, results in a smoother surface with possible overshoots.
 <br>Note that tension is inverse of stiffness
 </small>
 </section>
@@ -183,7 +183,7 @@ $$
 <p class="fragment">
 Predictive accuracy: crossvalidation error
 $$e_z (x,y) = z' (x,y) – z_o (x,y)$$
-<p>
+<p class="fragment">
 <small>where $z'$ is the interpolated and $z_o$ is the given value in a point that was omitted 
 from the set of points used for the interpolation. 
 n-interpolations are performed, each time omitting one point in which $e_z$ is computed: 
@@ -240,9 +240,9 @@ with different depths
    <h3>Trivariate Interpolation: tension</h3>
 Impact of tension on the volume model: high to low
 <p>
-<img height="250" src="img/spatial_interpolation/chesap_hightens.jpg"> 
-<img height="250" src="img/spatial_interpolation/chesap_midtens.jpg"> 
-<img height="250" src="img/spatial_interpolation/chesap_lowtens.jpg"> </p>
+<img height="240" src="img/spatial_interpolation/chesap_hightens.jpg"> 
+<img height="240" src="img/spatial_interpolation/chesap_midtens.jpg"> 
+<img height="240" src="img/spatial_interpolation/chesap_lowtens.jpg"> </p>
 <p class="fragment"><small>High tension: local max or min at given points, low tension: smooth pattern 
 with potential "overshoots" </small>
 </section>
@@ -298,7 +298,7 @@ Tuning the influence of elevation on precipitation pattern through rescaling in 
 <section>
    <h3>Local function implementation</h3>
 <ul>
- <li class="fragment">only points within the range of influence are needed for interpolation
+ <li>only points within the range of influence are needed for interpolation
  <li class="fragment">each grid point is interpolated by an independent function
  <li class="fragment">local search (IDW, geostatistics, some implementations of splines and RBF)– no continuity condition
  <li class="fragment">points overlap ensures continuity and grid resolution should be close to the distances of input points
@@ -314,7 +314,7 @@ triangles or polygons for non-linear interpolation
  <li class="fragment">all points within $d$-distance
  <li class="fragment">modifications: $n$-points from each quadrant or increase $d$ until at least $n$-points are found
 </ul>
-<p class="fragment">
+<p>
 <img height="350" src="img/spatial_interpolation/idw_pointselect.png">
 <img height="350" src="img/spatial_interpolation/interp_localpointsearch.png">
 </section>
@@ -364,7 +364,7 @@ If the density of points along contours is high, spline with high tension leads
 to surface with steps along contours, point reduction and lower tension improves the result
 <p>
 <!--<img height="200" src="img/spatial_interpolation/quadtreecont.png">-->
-<img height="360" src="img/spatial_interpolation/spline_from_contours.png"> </p>
+<img height="350" src="img/spatial_interpolation/spline_from_contours.png"> </p>
 <p><small>Note that the results for IDW or TIN would be even worse</small>
 </section>
 
@@ -380,7 +380,7 @@ are considered two independent measurements
 <br>
 <p class="fragment">
 We can eliminate points where $d_{i,j} > d_{min}$, usually $d_{min}$ is a function
-or data accuracy and grid resolution, often leading to much faster computation
+of data accuracy and grid resolution, often leading to much faster computation
 while preserving the level of detail.
 </section>
 
@@ -397,13 +397,13 @@ while preserving the level of detail.
    <h3>Interpolation with optimized subsampling</h3>
 Computation is almost 10-times faster and there are no artifacts
 <p>
-<img height="400" src="img/spatial_interpolation/spline_from_contours.png"> </p>
+<img height="380" src="img/spatial_interpolation/spline_from_contours.png"> </p>
 </section>
 
 <section>
    <h3>Masking no-data areas </h3>
 Restrict interpolation to surveyed areas to avoid false patterns
-<p><img height="380" src="img/spatial_interpolation/interp_masking.jpg">
+<p><img height="360" src="img/spatial_interpolation/interp_masking.jpg">
 <p>Most implementations provide warning
 </section>
 
