@@ -77,12 +77,11 @@ $$
 <li>where $\rho =\varphi |r-r_j|$ 
 <li>$\varphi$ is the tension parameter and 
 <li>$|r-r_j|$ is the distance between the unsampled and measured points. 
+<li>minimizes seminorm with all derivatives with decreasing weight
 </ul>
 <p class="fragment">
 Spline tension rescales distances, it has similar effect to shortening range in kriging 
 or decreasing the distance weight exponent in IDW
-<p class="fragment"><small>High tension stretches the distances making the sheet thinner and more flexible 
-this shortens the range of influence of each point, so the range effect is inverse of tension</small> 
 </section>
 
 <section>
@@ -118,8 +117,7 @@ $$F(x_i,y_i) = z(x_i, y_i) + \varepsilon(x_i,y_i)$$
 <p>
 <img height="280" src="img/spatial_interpolation/spline_smooth_springs.png"> 
 <p>Reduces overshoots, noise, improves numerical stability
-<br>Can be applied to individual points for data with different accuracies.
-<p><small>Example: lidar bare earth data: low smoothing for open areas, high smoothing for forest</small>
+<br>Can be applied to individual points 
 </section>
 
 <section>
@@ -134,7 +132,7 @@ Smoothing controls the deviation from the data points, large smoothing results i
    <h3>Spline: smoothing</h3>
 Smoothing can be spatially variable 
 <p>
-<img height="300" src="img/spatial_interpolation/spline_ten40_1mn.jpg"> </p>
+<img height="300" src="img/spatial_interpolation/spline_ten40_1mn.jpg">
 <img height="300" src="img/spatial_interpolation/spline_smoothvar_1mn.jpg"> </p>
 </section>
 
@@ -170,7 +168,7 @@ GPS-based sensors use automated dense sampling along a line
 – anisotropy can be used to rescale distances between profiles and minimize artifacts
 <p>
 <img height="380" src="img/spatial_interpolation/spline_anisotr_beachprofiles.jpg"> </p>
-<p class="fragment" >Better alternative is to map it with a drone using structure from motion
+<p class="credit" >Better alternative is to map it with a drone using structure from motion
 </section>
 
 <section>
@@ -185,6 +183,7 @@ $$
 <p class="fragment">
 Predictive accuracy: crossvalidation error
 $$e_z (x,y) = z' (x,y) – z_o (x,y)$$
+<p>
 <small>where $z'$ is the interpolated and $z_o$ is the given value in a point that was omitted 
 from the set of points used for the interpolation. 
 n-interpolations are performed, each time omitting one point in which $e_z$ is computed: 
@@ -241,9 +240,9 @@ with different depths
    <h3>Trivariate Interpolation: tension</h3>
 Impact of tension on the volume model: high to low
 <p>
-<img height="280" src="img/spatial_interpolation/chesap_hightens.jpg"> 
-<img height="280" src="img/spatial_interpolation/chesap_midtens.jpg"> 
-<img height="280" src="img/spatial_interpolation/chesap_lowtens.jpg"> </p>
+<img height="250" src="img/spatial_interpolation/chesap_hightens.jpg"> 
+<img height="250" src="img/spatial_interpolation/chesap_midtens.jpg"> 
+<img height="250" src="img/spatial_interpolation/chesap_lowtens.jpg"> </p>
 <p class="fragment"><small>High tension: local max or min at given points, low tension: smooth pattern 
 with potential "overshoots" </small>
 </section>
@@ -260,13 +259,13 @@ $$
  <li> then compute $w_k=F_3(x_k,y_k)$ at $F_1 \cap F_2$
 </ul>
 <p class="fragment" ><small>
-Example: $w_i$ is precipitation measured at locations $x_i,y_i$ at near-ground elevation $z_i$.
-F_1 is represented by a DEM, F_2 is an interpolated precipitation volume (voxel model) 
+Example: $w_i$ is precipitation measured at locations $x_i,y_i$ at ground elevation $z_i$.
+$F_1$ is represented by a DEM, $F_2$ is an interpolated precipitation volume (voxel model) 
 that passes through the points $(x_i,y_i,z_i,w_i)$. $F_3$ is a bivariate function represented
-as a 2D precipitation grid which is an intersection of a DEM and the interpolated precipitation volume F_2
+as a 2D precipitation grid which is an intersection of a DEM and the interpolated precipitation volume $F_2$
 </small>
 <p class="fragment" ><small>Statistical approach of the method is given by Hutchinson
-and has been used to interpolate global climate maps (add ref and verify)</small>
+and has been used to interpolate global climate maps </small>
 </section>
 
 <section>
@@ -313,7 +312,7 @@ triangles or polygons for non-linear interpolation
 <ul>
  <li class="fragment">nearest $n$-points
  <li class="fragment">all points within $d$-distance
- <li class="fragment">modifications: n-points from each quadrant or increase $d$ until at least $n$-points are found
+ <li class="fragment">modifications: $n$-points from each quadrant or increase $d$ until at least $n$-points are found
 </ul>
 <p class="fragment">
 <img height="350" src="img/spatial_interpolation/idw_pointselect.png">
@@ -324,7 +323,7 @@ triangles or polygons for non-linear interpolation
    <h3>Interpolation points selection </h3>
 <p>Problems arise when points are clustered, for example all points are from the same contour - bias, waves
 <p class="fragment">
-<img height="350" src="img/spatial_interpolation/interp_localpointsearch_contour.png">
+<img height="380" src="img/spatial_interpolation/interp_localpointsearch_contour.png">
 </p>
 </section>
 
@@ -334,7 +333,7 @@ Interpolating set of grid points within a rectangular segment rather than indivi
 <ul>
 <li class="fragment">each rectangular segment has approximately same number of measured points 
 <li class="fragment">interpolation is performed using the points in the segment 
-and its neighbourhood defined by a dynamic window (npmin)
+and its neighbourhood defined by a dynamic window 
 </ul>
 </section>
 
@@ -342,6 +341,16 @@ and its neighbourhood defined by a dynamic window (npmin)
    <h3>Quadtree segmentation </h3>
 <ul>
 <li>if the number of points within a rectangle is larger than given maximum, it is split 
+into 4 smaller rectangles.
+<li>dynamic search window is used to find overlapping points to ensure smooth connection of segments
+</ul>
+<p><img height="350" src="img/spatial_interpolation/segm_overlapwindow.png">
+</section>
+
+<section>
+   <h3>Quadtree segmentation </h3>
+<ul>
+<li>if the number of points within a rectangle is larger than given maximum, it is split
 into 4 smaller rectangles.
 <li>dynamic search window is used to find overlapping points to ensure smooth connection of segments
 </ul>
@@ -355,7 +364,7 @@ If the density of points along contours is high, spline with high tension leads
 to surface with steps along contours, point reduction and lower tension improves the result
 <p>
 <!--<img height="200" src="img/spatial_interpolation/quadtreecont.png">-->
-<img height="380" src="img/spatial_interpolation/spline_from_contours.png"> </p>
+<img height="360" src="img/spatial_interpolation/spline_from_contours.png"> </p>
 <p><small>Note that the results for IDW or TIN would be even worse</small>
 </section>
 
@@ -369,8 +378,8 @@ are considered two independent measurements
 (usually horizontal accuracy of the measured data)
 </ul>
 <br>
-<p class="fragment"
-We can eliminate points where $d_{i,j} < d_{min}$, usually $d_{min}$ is a function
+<p class="fragment">
+We can eliminate points where $d_{i,j} > d_{min}$, usually $d_{min}$ is a function
 or data accuracy and grid resolution, often leading to much faster computation
 while preserving the level of detail.
 </section>
