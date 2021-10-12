@@ -59,15 +59,17 @@ Point cloud acquired by terrestrial lidar
 
 <section>
    <h3>Ground-based mobile 3D mapping</h3>
+RTK GPS mapping of Jockey's Ridge dune
 <p>
- <img height="450" src="img/geomorph_terrain/GeodynRTKGPSJR.jpg">
+ <img height="480" src="img/geomorph_terrain/GeodynRTKGPSJR.jpg">
 <p>
 </section>
 
 <section>
-   <h3>Aerial and sattelite 3D mapping</h3>
+   <h3>Aerial and satellite 3D mapping</h3>
 <p>
-Shuttle, satellites, airplanes, UAS with lidar and/or cameras 
+Shuttle, satellite, airplane, UAS platforms
+<br> lidar, radar and/or camera sensors 
 <p>
  <img height="240" src="img/data_acquisition/srtmanim_small.gif">
  <img height="300" src="img/data_acquisition/airborne_lidar_mapping_schematic.jpg">
@@ -107,7 +109,8 @@ more about coastal surveying technologies
    <li class="fragment">interface between solid Earth surface and hydrosphere (bottom surface of lakes, rivers and ocean)
    <li class="fragment">Seamless topobathy: continuous solid earth surface, TBDEM
    </ul>
-<li class="fragment">Digital Crop or Canopy Surface Model (DCM), Digital Urban Model (DUM), ....
+<li class="fragment">Digital Crop or Canopy Surface Model (DCM),
+                    <br> Digital Urban Model (DUM), ....
 </ul>
 </section>
 
@@ -121,20 +124,21 @@ more about coastal surveying technologies
 
 <section>
    <h3>DBM sonar and lidar</h3>
-<p>Raw multibeam sonar data for near Cape Fear, NC, bathymetric lidar for a nearshore area in Florida
+<p>Multibeam sonar data for area near Cape Fear, NC, bathymetric lidar for a nearshore area in Florida
 <p>
- <img height="300" src="img/geomorph_terrain/bathy_multibeam.jpg">
- <img height="300" src="img/geomorph_terrain/bathylidar_florida.jpg">
+ <img height="320" src="img/geomorph_terrain/bathy_multibeam.jpg">
+ <img height="320" src="img/geomorph_terrain/bathylidar_florida.jpg">
 </p>
 </section>
 
 <section>
    <h3>DCM from lidar and UAS</h3>
-<p>Digital Canopy Model with canopy height at Mamoth Cave National Park (0.6m res)
-and didgital crop surface model from UAS point cloud
+<p>Digital Canopy Model with canopy height at Mamoth Cave National Park (0.6m res) and 
+<br>Digital Crop Surface model from UAS point cloud (0.05m res)
 <p>
  <img height="300" src="img/geomorph_terrain/Mamoth_canopy06m.jpg">
- <img height="300" src="img/geomorph_terrain/bathycropcanopymodel_uas.jpg">
+ <img height="300" src="img/geomorph_terrain/cropcanopymodel_uas.jpg">
+<br><img height="15" src="img/geomorph_terrain/scalebar100m.png">
 </p>
 <p><small><a href="https://doi.org/10.3390/drones4030036">
 Montgomery K., et al. 2020. Measures of Canopy Structure from Low-Cost UAS for Monitoring Crop Nutrient Status. In: Drones 4(3).</a></small>
@@ -144,8 +148,8 @@ Montgomery K., et al. 2020. Measures of Canopy Structure from Low-Cost UAS for M
    <h3>DUM from lidar</h3>
 <p>Digital Urban Model: raster and vector representation
 <p>
- <img height="300" src="img/geomorph_terrain/lid2013HL_13_16_3ft_3daysolarwinter.jpg">
- <img height="300" src="img/geomorph_terrain/Raleigh_3Dcity_bldg.jpg">
+ <img height="320" src="img/geomorph_terrain/lid2013HL_13_16_3ft_3daysolarwinter.jpg">
+ <img height="320" src="img/geomorph_terrain/Raleigh_3Dcity_bldg.jpg">
 </p>
 </section>
 
@@ -209,7 +213,7 @@ From given scattered points to points at regular grid
    <h3>Scattered points to raster</h3>
 <p>
 From given scattered points to points at regular grid
-<p> <img height="450" src="img/spatial_interpolation/dem_1m.jpg">
+<p> <img height="450" src="img/geomorph_terrain/dem_1m.jpg">
 </p>
 </section>
 
@@ -249,7 +253,8 @@ From given scattered points to Delaunay TIN
 <section>
    <h3>Scattered points to TIN</h3>
 <p>
-<p>No interpolation to raster DEM - 3D TIN is the vector-based elevation model
+<p>No interpolation to raster DEM:
+<br> 3D TIN is the vector-based elevation model
 <p> <img height="450" src="img/spatial_interpolation/TINgrassnvizrand2.jpg">
 </p>
 </section>
@@ -304,15 +309,17 @@ If input are points on contours: flats on the top of hills or ridges if no peaks
 
 <section>
    <h3>Contours from lidar</h3>
-<p>
-<p> <img height="355" src="img/geomorph_terrain/contours_lidrough.png">
- <img height="355" src="img/geomorph_terrain/contours_smooth.png">
+<p>Contours from binned DEM and from a DEM inetrpolated with smoothing splines
+<p> <img height="380" src="img/geomorph_terrain/contours_lidrough.png">
+ <img height="380" src="img/geomorph_terrain/contours_smooth.png">
 </p>
 </section>
 
 <section>
    <h3>3D parametric meshes</h3>
-<p> <img height="355" src="img/geomorph_terrain/textileschool_mesh_payam.png">
+<p> When features cannot be represented by bivariate function, parameteric meshes are used  
+<img height="355" src="img/geomorph_terrain/chimneyrock.jpg">
+<img height="355" src="img/geomorph_terrain/textileschool_mesh_payam.png">
 </p>
 </section>
 
@@ -322,9 +329,9 @@ If input are points on contours: flats on the top of hills or ridges if no peaks
 <ul>
 <li class="fragment">Set of $(x, y, z, r, i, ...)$ measured points reflected from Earth surface or objects on or above it, 
 <ul>
-<li class="fragment">$x,y,z$ are georeferenced coordinates, 
-<li class="fragment">r is the return number and 
-<li class="fragment">i is intensity, 
+<li class="fragment">$x,y,z$ are georeferenced coordinates 
+<li class="fragment">$r$ is the return number and 
+<li class="fragment">$i$ is intensity, 
 <li class="fragment">r:g:b may be also measured 
 </ul>
 <li class="fragment">Formats 
@@ -332,7 +339,7 @@ If input are points on contours: flats on the top of hills or ridges if no peaks
 <li class="fragment"><a href="https://www.asprs.org/divisions-committees/lidar-division/laser-las-file-format-exchange-activities">
 binary LAS and LAZ format: industry lidar data exchange format</a>
 <li class="fragment">header, record info, $x,y,z,i$, scan direction, edge of flight line, time, classification, etc.
-<li class="fragment">ASCII (x,y,z, ...) format 
+<li class="fragment">ASCII $(x,y,z, ...)$ text format 
 </ul>
 </ul>
 </section>
@@ -340,7 +347,7 @@ binary LAS and LAZ format: industry lidar data exchange format</a>
 <section>
    <h3>Multiple return point clouds</h3>
 <p> 
-<img height="355" src="img/geomorph_terrain/points3d.png">
+<img height="400" src="img/geomorph_terrain/points3d.png">
 </p>
 </section>
 
@@ -418,9 +425,9 @@ Binning: fast method for analyzing point clouds and generating DEMs using per-ce
 -->
 
 <section>
-   <h3>Point elevation maximum</h3>
-<p>Jockey's Ridge 1999, 
-<br>unfiltered single return lidar point cloud: 1m grid cell binning using maximum elevation
+   <h3>Point elevation binning</h3>
+<p>Jockey's Ridge 1999: 
+unfiltered single return lidar: 1m grid cell binning using nearest neighbor elevation
 <p> <img height="355" src="img/geomorph_terrain/lidstorast1m.jpg">
 <p>Result has many NULL cells – what to do?
 </section>
@@ -437,47 +444,53 @@ Binning: fast method for analyzing point clouds and generating DEMs using per-ce
    <h3>Interpolated DEM</h3>
 <p>Jockey's Ridge 1999, 
 <br>1m DEM interpolated by RST spline method
-<p> <img height="355" src="img/geomorph_terrain/liddfdm1e.jpg">
+<p> <img height="365" src="img/geomorph_terrain/liddfdm1e.jpg">
+<p><small>Nore visible edges from overlapping swaths</small>
 </section>
 
 <section>
    <h3>Point density: 2013 Wake county lidar</h3>
-<p>Number of points per 1m grid cell: all returns and first return, high density in overlap 
-<p> <img height="300" src="img/geomorph_terrain/lid2013_all_n_3ftb.png">
-<img height="300" src="img/geomorph_terrain/lid2013_1r_n_3ftb.png">
+<p>Number of points per 1m grid cell: 
+<br>all returns and first return, high density in overlap 
+<p> <img height="340" src="img/geomorph_terrain/lid2013_all_n_3ftb.png">
+<img height="340" src="img/geomorph_terrain/lid2013_1r_n_3ftb.png">
 </p>
 </section>
 
 <section>
    <h3>Point density: 2013 Wake county lidar</h3>
 <p>Number of points per 1m grid cell: all returns and bare ground returns
-<p> <img height="300" src="img/geomorph_terrain/lid2013_all_n_3ftb.png">
-<img height="300" src="img/geomorph_terrain/lid2013_be_n_3ftb.png">
+<p> <img height="340" src="img/geomorph_terrain/lid2013_all_n_3ftb.png">
+<img height="340" src="img/geomorph_terrain/lid2013_be_n_3ftb.png">
 </p>
-<p>Compute DSM and DTM using mean or max cell elevation in the assignment.
+<p><small>Compute DSM and DTM using nn, mean or max cell elevation in the assignment.
+</small>
 </section>
 
 <section>
    <h3>DSM with orthophoto</h3>
-DSM computed from all returns using max elevation binning, with draped orthophoto
+DSM (1m res) computed from all returns using nn elevation binning, with draped orthophoto
 <p><img height="410" src="img/geomorph_terrain/CC_lid2013_3D.jpg">
 </section>
 
 <section>
    <h3>Interpolated DTM</h3>
-1m resolution DTM interpolated with RST method using filtered bare ground points
+DTM (1m res) interpolated with RST method using filtered bare ground points
 <p> <img height="400" src="img/geomorph_terrain/lid2013_be_3ft_3d.jpg">
 </section>
 
 <section>
    <h3>Interpolated DSM</h3>
-1m resolution DsM interpolated with RST method using first return points
+DSM (1m res) interpolated with RST method using first return points
 <p><img height="410" src="img/geomorph_terrain/lid2013_1r_3ft_3d.jpg">
+<p><small>Think about how to compute canopy and building height from DSM and DTM
+</small>
 </section>
 
 <section>
    <h3>Vegetation structure from lidar</h3>
 Multiple return lidar point cloud: mapping 3D vegetation structure using 3D fragmentation index
+derived from voxel model
 <p><img height="400" src="img/geomorph_terrain/voxels_vegetation_anim.gif">
 <p class="credit"> <a href="https://opengeospatialdata.springeropen.com/articles/10.1186/s40965-017-0021-8">
 Petras V., Newcomb D.J., Mitasova, H., 2017, Generalized 3D fragmentation index derived from lidar point clouds, Open Geospatial Data, Software and Standards 2(9), DOI: 10.1186/s40965-017-0021-8</a>
