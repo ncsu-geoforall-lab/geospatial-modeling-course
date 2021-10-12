@@ -10,7 +10,7 @@
 </section>
 
 <section>
-    <h3>Outline (learning objectives)</h3>
+    <h3>Outline</h3>
 <p>
 <ul>
   <li>3D mapping technologies
@@ -50,63 +50,41 @@
 <section>
    <h3>Ground-based 3D mapping</h3>
 <p>
-RTK GPS, terrestrial lidar
+Point cloud acquired by terrestrial lidar
 <p>
  <img height="380" src="img/geomorph_terrain/terrestrialscanpoints.jpg">
+ <img height="380" src="img/geomorph_terrain/lidar_keren.jpg">
 </p>
 </section>
 
 <section>
    <h3>Ground-based mobile 3D mapping</h3>
 <p>
- <img height="400" src="img/data_acquisition/GeodynRTKGPS1sm.jpg">
+ <img height="450" src="img/geomorph_terrain/GeodynRTKGPSJR.jpg">
 <p>
 </section>
 
 <section>
-   <h3>Ground-based mobile 3D mapping</h3>
+   <h3>Aerial and sattelite 3D mapping</h3>
 <p>
- <img height="400" src="img/geomorph_terrain/GeodynRTKGPSJR.jpg">
-<p>
-</section>
-
-<!--
-<section>
-   <h3>Underground 3D mapping</h3>
-<p>
-terrestrial lidar
-<p>
- <img height="240" src="img/data_acquisition/reiglminingsm.jpg">
- <img height="240" src="img/nvizcutplanelwDEMDSMS.jpg">
-</p>
-</section>
--->
-
-<section>
-   <h3>Aerial 3D mapping</h3>
-<p>
-UAS and airplanes with lidar or camera for nadir and oblique imagery
-<p>
- <img height="340" src="img/data_acquisition/airborne_lidar_mapping_schematic.jpg">
- <img height="340" src="img/data_acquisition/takeoff.jpg">
-</p>
-</section>
-
-<section>
-   <h3>Satellite 3D mapping</h3>
-<p>
-Shuttle Radar Topography, TanDEMX, Imagery
+Shuttle, satellites, airplanes, UAS with lidar and/or cameras 
 <p>
  <img height="240" src="img/data_acquisition/srtmanim_small.gif">
+ <img height="300" src="img/data_acquisition/airborne_lidar_mapping_schematic.jpg">
+ <img height="300" src="img/data_acquisition/takeoff.jpg">
 </p>
 </section>
 
 <section>
    <h3>Bathymetry 3D mapping</h3>
 <p>
-Single and multibeam sonar
+Single and multibeam sonar, topobathy lidar
 <p>
  <img height="340" src="img/geomorph_terrain/GDsonarem3000.jpg">
+ <img height="340" src="img/geomorph_terrain/GDsonarsb4.jpg">
+<p><small>Images from <a href="https://www.geodynamicsgroup.com/">Geodynamics</a>, see the website to learn
+more about coastal surveying technologies
+<br><a href="https://www.ngs.noaa.gov/RSD/topobathy.shtml">Topobathy lidar,</a> National Geodetic Survey </small>
 </p>
 </section>
 
@@ -120,14 +98,14 @@ Single and multibeam sonar
    </ul>
 <li class="fragment">Digital Surface Model (DSM):
    <ul>
-   <li class="fragment">elevation surface including above ground features (vegetation, structures, ...)
+   <li class="fragment">elevation surface including above ground features
    <li class="fragment">interface between Earth surface with water, vegetation, structures and atmosphere
    </ul>
 <li class="fragment">Digital Bathymetry Model (DBM)
    <ul>
    <li class="fragment">elevation surface at the bottom of water bodies
    <li class="fragment">interface between solid Earth surface and hydrosphere (bottom surface of lakes, rivers and ocean)
-   <li class="fragment">Seamless topobathy: continuous solid earth surface, DTM+DBM
+   <li class="fragment">Seamless topobathy: continuous solid earth surface, TBDEM
    </ul>
 <li class="fragment">Digital Crop or Canopy Surface Model (DCM), Digital Urban Model (DUM), ....
 </ul>
@@ -143,10 +121,31 @@ Single and multibeam sonar
 
 <section>
    <h3>DBM sonar and lidar</h3>
-<p>North Carolina coast
+<p>Raw multibeam sonar data for near Cape Fear, NC, bathymetric lidar for a nearshore area in Florida
 <p>
- <img height="300" src="img/geomorph_terrain/bathylidar_florida.jpg">
  <img height="300" src="img/geomorph_terrain/bathy_multibeam.jpg">
+ <img height="300" src="img/geomorph_terrain/bathylidar_florida.jpg">
+</p>
+</section>
+
+<section>
+   <h3>DCM from lidar and UAS</h3>
+<p>Digital Canopy Model with canopy height at Mamoth Cave National Park (0.6m res)
+and didgital crop surface model from UAS point cloud
+<p>
+ <img height="300" src="img/geomorph_terrain/Mamoth_canopy06m.jpg">
+ <img height="300" src="img/geomorph_terrain/bathycropcanopymodel_uas.jpg">
+</p>
+<p><small><a href="https://doi.org/10.3390/drones4030036">
+Montgomery K., et al. 2020. Measures of Canopy Structure from Low-Cost UAS for Monitoring Crop Nutrient Status. In: Drones 4(3).</a></small>
+</section>
+
+<section>
+   <h3>DUM from lidar</h3>
+<p>Digital Urban Model: raster and vector representation
+<p>
+ <img height="300" src="img/geomorph_terrain/lid2013HL_13_16_3ft_3daysolarwinter.jpg">
+ <img height="300" src="img/geomorph_terrain/Raleigh_3Dcity_bldg.jpg">
 </p>
 </section>
 
@@ -169,7 +168,7 @@ Single and multibeam sonar
 <section>
    <h3>Point cloud patterns</h3>
 <!--Scattered points in horizontal and vertical dimensions-->
-<p class="fragment"> <img height="260" src="img/geomorph_terrain/points_lidar_gps.jpg">
+<p class="fragment"> <img height="280" src="img/geomorph_terrain/points_lidar_gps.jpg">
 <!--<p>Jockey's lidar, Vasek Wake lidar-->
 </section>
 
@@ -207,16 +206,24 @@ From given scattered points to points at regular grid
 </section>
 
 <section>
+   <h3>Scattered points to raster</h3>
+<p>
+From given scattered points to points at regular grid
+<p> <img height="450" src="img/spatial_interpolation/dem_1m.jpg">
+</p>
+</section>
+
+<section>
   <h3>Raster DEM properties</h3>
 <ul>
 <li class="fragment">simple data structure and algorithms
 <li class="fragment">easy to combine with imagery
 <li class="fragment">uniform resolution - potential for undersampling and oversampling
 <li class="fragment">representation of faults and sharp breaklines requires very high resolution
-</ul>
-<p class="fragment"><small>Most public elevation data are distributed as raster DEM through 
+<li class="fragment">most public elevation data are distributed as raster DEM through 
 <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/data_providers.html">
-On-line repositories</a></small>
+On-line repositories</a>
+</ul>
 </section>
 
 <section>
@@ -236,6 +243,14 @@ On-line repositories</a></small>
 From given scattered points to Delaunay TIN
 <p> <img height="355" src="img/spatial_interpolation/scattered_pts.jpg">
  <img height="355" src="img/geomorph_terrain/tin2dstream.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Scattered points to TIN</h3>
+<p>
+<p>No interpolation to raster DEM - 3D TIN is the vector-based elevation model
+<p> <img height="450" src="img/spatial_interpolation/TINgrassnvizrand2.jpg">
 </p>
 </section>
 
