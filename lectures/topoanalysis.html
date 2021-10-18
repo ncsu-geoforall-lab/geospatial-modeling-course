@@ -407,7 +407,7 @@ Tangential curvature computed using RST with high and lower tension
 
 <section>
 <h3>Basic Landforms map</h3>
-Impact of moving window on landform mapping
+Impact of moving window size on landform mapping (1m resolution DEM, 9x9, 45x45) 
 <p>
 <img height="350" src="img/topoanalysis/landforms_9c1m.jpg">
 <img height="350" src="img/topoanalysis/landforms_45c1m.jpg">
@@ -419,28 +419,32 @@ Line of sight based method for mapping basic landforms
 <p class="fragment">
 <img height="350" src="img/topoanalysis/geomorphon.png">
 <img height="350" src="img/topoanalysis/geomorph_legend.png">
+<p class="fragment">
 Multiscale properties controlled by the range of view
+</p>
 </section>
 
 <section>
 <h3>Geomorphons</h3>
-Landforms derived from the entire 10m US national DEM, example: 
+Landforms derived for the entire US using  30m resolution NED: 
 <p class="fragment">
 <img height="350" src="img/topoanalysis/us_geom_26642.jpg">
-<p><small>REF</small>
+<p><small>Jasiewicz, J., Stepinski, T., 2013, Geomorphons - a pattern recognition approach 
+to classification and mapping of landforms, Geomorphology, vol. 182, 147-156 
+(DOI: 10.1016/j.geomorph.2012.11.005)</small>
 </section>
 
 <section>
 <h3>Geomorphons</h3>
-Mapping of tree crowns, buildings from lidar / UAS based DSM 
+Mapping of tree crowns, buildings from lidar/UAS DSM 
 <p class="fragment">
 <img height="350" src="img/topoanalysis/geomorphon_trees_PT_IJGI.jpg">
-<p><small>REF</small>
+<p><small><a href="https://www.mdpi.com/2220-9964/9/7/445">Tabrizian P., et al. 2020. High Resolution Viewscape Modeling Evaluated Through Immersive Virtual Environments. In: ISPRS Int. J. Geo-Inf, 9(7).</a></small>
 </section>
 
 <section>
 <h3>Multitemporal DEMs</h3>
-Repeated lidar or UAS mapping: multitemporal elevations data
+Repeated lidar or UAS mapping, often with irregular time intervals
 <p class="fragment">
 <img height="350" src="img/topoanalysis/NagsHead.jpg">
 <p><small>
@@ -450,7 +454,7 @@ Hardin, E., et al, 2014, GIS-based Analysis of Coastal Lidar Time-Series, Spring
 
 <section>
 <h3>Multitemporal DEMs: analysis</h3>
-<small>We use per-cell operation to derive raster maps defining:
+<small>Per-cell operation are used to derive raster maps defining:
  core surface as the minimum elevation and
 envelope surface as the maximum elevation measured at
 each cell over given time period $(t_1,t_n)$:
@@ -458,8 +462,9 @@ each cell over given time period $(t_1,t_n)$:
 <ul>
  <li class="fragment">Core surface: $z_{core}(i,j)=\min_k z(i,j,t_k)  \quad k=1, ..., n$  
  <li class="fragment">Envelope surface: $z_{env}(i,j)=\max_k z(i,j,t_k)  \quad k=1, ..., n$  
- <li class="fragment">Time of max: t_{max} (i,j) = t_l, \quad   {\rm where} \quad z(i,j,t_l) = z_{env}(i,j)  
- <li class="fragment">Time of min: t_{min} (i,j) = t_p, \quad   {\rm where} \quad z(i,j,t_p) = z_{core}(i,j) 
+<p>
+ <li class="fragment">Time of max: $t_{max} (i,j) = t_l, \quad   {\rm where} \quad z(i,j,t_l) = z_{env}(i,j) $ 
+ <li class="fragment">Time of min: $t_{min} (i,j) = t_p, \quad   {\rm where} \quad z(i,j,t_p) = z_{core}(i,j)$ 
 </ul>
 <p><small>
 <a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/MitasovaFinalGeoinf09.pdf">
