@@ -450,13 +450,21 @@ Hardin, E., et al, 2014, GIS-based Analysis of Coastal Lidar Time-Series, Spring
 
 <section>
 <h3>Multitemporal DEMs: analysis</h3>
-Per-cell statistics:
+<small>We use per-cell operation to derive raster maps defining:
+ core surface as the minimum elevation and
+envelope surface as the maximum elevation measured at
+each cell over given time period $(t_1,t_n)$:
+</small>
 <ul>
- <li class="fragment">eq. minimum: core surface 
+ <li class="fragment">Core surface: $z_{core}(i,j)=\min_k z(i,j,t_k)  \quad k=1, ..., n$  
+ <li class="fragment">Envelope surface: $z_{env}(i,j)=\max_k z(i,j,t_k)  \quad k=1, ..., n$  
+ <li class="fragment">Time of max: t_{max} (i,j) = t_l, \quad   {\rm where} \quad z(i,j,t_l) = z_{env}(i,j)  
+ <li class="fragment">Time of min: t_{min} (i,j) = t_p, \quad   {\rm where} \quad z(i,j,t_p) = z_{core}(i,j) 
 </ul>
 <p><small>
 <a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/MitasovaFinalGeoinf09.pdf">
 Mitasova, H., et al. 2009, New spatial measures of terrain dynamics derived from time series of lidar data, Proc. 17th Int. Conf. Geoinformatics, Fairfax, VA.</a>
+</small>
 </section>
 
 <section>
@@ -464,7 +472,27 @@ Mitasova, H., et al. 2009, New spatial measures of terrain dynamics derived from
 Nags Head: core, envelope, time of maximum
 <p class="fragment">
 <img height="350" src="img/topoanalysis/NagsHead.jpg">
-<p><small>REF</small>
+<p><small>Geomorphology visualization paper</small>
+</section>
+
+<section>
+<h3>Multitemporal DEMs: analysis</h3>
+<small>
+Discrete changes and a continuous rate of change 
+</small>
+<ul>
+ <li class="fragment">Building loss or contruction:  $z_{env}(i_c,j_c) - z_{core}(i_c,j_c) > h_ba$  
+ <ul>
+  <li class="fragment">Lost structure: $t_{max} (i_l,j_l)  <  t_{min} (i_l,j_l)$
+  <li class="fragment">New structure: $t_{max} (i_l,j_l)  >  t_{min} (i_l,j_l)$
+ </ul>
+<p>
+ <li class="fragment">Per-cell linear regression slope measures rate of continuous change
+ <ul>
+   <li class="fragment">$ r_s(i_e,j_e) < \varepsilon_e  \cap r_c(i_e,j_e) > r_{cmin}$ 
+   <li class="fragment">$ r_s(i_d,j_d) > \varepsilon_d  \cap r_c(i_d,j_d) > r_{cmin}$ 
+ </ul>
+</ul>
 </section>
 
 <section>
@@ -481,12 +509,12 @@ Nags Head: buildings, rate of change from regression, shoreline band
    <h3>Summary</h3>
 <p>
 <ul>
-  <li>summary parameters: volumes, surface areas
-  <li>first and second order point parameters
-  <li>methods for slope, aspect and curvatures using polynomial and spline approximation
-  <li>computing parameters from noisy data, level of detail
-  <li>combining parameters to map landforms and terrain features
-  <li>DEM time series
+  <li>summary parameters: volumes as sum of $\Delta z$, surface areas can be much larger that horizontal area
+  <li>first and second order point parameters: slope, aspect and curvatures
+      can be estimated using polynomial or spline approximation
+  <li>noisy data, level of detail influence the spatial pattern of topographic parameters
+  <li>basic parameters can be combined to map landform shapes
+  <li>per-cell operations can be used to extract basic metrics of topographic change
 </ul>
 </section>
 <!--
