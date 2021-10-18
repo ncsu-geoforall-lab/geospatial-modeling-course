@@ -18,6 +18,7 @@
   <li>methods for slope, aspect and curvatures using polynomial and spline approximation
   <li>computing parameters from noisy data, level of detail 
   <li>combining parameters to map landforms and terrain features
+  <li>DEM time series
 </ul>
 </section>
 
@@ -413,10 +414,81 @@ Impact of moving window on landform mapping
 </section>
 
 <section>
-   <h3>Learn more</h3>
-See the supplemental material for 
-<a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/topics/geomorphometry_basics.html">
-5.B Spatial and temporal terrain analysis topic</a>
+<h3>Geomorphons</h3>
+Line of sight based method for mapping basic landforms
+<p class="fragment">
+<img height="350" src="img/topoanalysis/geomorphon.png">
+<img height="350" src="img/topoanalysis/geomorph_legend.png">
+Multiscale properties controlled by the range of view
+</section>
+
+<section>
+<h3>Geomorphons</h3>
+Landforms derived from the entire 10m US national DEM, example: 
+<p class="fragment">
+<img height="350" src="img/topoanalysis/us_geom_26642.jpg">
+<p><small>REF</small>
+</section>
+
+<section>
+<h3>Geomorphons</h3>
+Mapping of tree crowns, buildings from lidar / UAS based DSM 
+<p class="fragment">
+<img height="350" src="img/topoanalysis/geomorphon_trees_PT_IJGI.jpg">
+<p><small>REF</small>
+</section>
+
+<section>
+<h3>Multitemporal DEMs</h3>
+Repeated lidar or UAS mapping: multitemporal elevations data
+<p class="fragment">
+<img height="350" src="img/topoanalysis/NagsHead.jpg">
+<p><small>
+<a href="http://link.springer.com/book/10.1007/978-1-4939-1835-5">
+Hardin, E., et al, 2014, GIS-based Analysis of Coastal Lidar Time-Series, Springer Briefs in Computer Science </a> </small>
+</section>
+
+<section>
+<h3>Multitemporal DEMs: analysis</h3>
+Per-cell statistics:
+<ul>
+ <li class="fragment">eq. minimum: core surface 
+</ul>
+<p><small>
+<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/MitasovaFinalGeoinf09.pdf">
+Mitasova, H., et al. 2009, New spatial measures of terrain dynamics derived from time series of lidar data, Proc. 17th Int. Conf. Geoinformatics, Fairfax, VA.</a>
+</section>
+
+<section>
+<h3>Multitemporal DEMs: analysis</h3>
+Nags Head: core, envelope, time of maximum
+<p class="fragment">
+<img height="350" src="img/topoanalysis/NagsHead.jpg">
+<p><small>REF</small>
+</section>
+
+<section>
+<h3>Multitemporal DEMs: analysis</h3>
+Nags Head: buildings, rate of change from regression, shoreline band
+<p class="fragment">
+<img height="350" src="img/topoanalysis/NH_homes_picBot.png">
+<img height="350" src="img/topoanalysis/NH9908f_coreenvslope.jpg">
+<img height="350" src="img/topoanalysis/NH_shoreband9608.png">
+<p><small>REF</small>
+</section>
+
+<section>
+   <h3>Summary</h3>
+<p>
+<ul>
+  <li>summary parameters: volumes, surface areas
+  <li>first and second order point parameters
+  <li>methods for slope, aspect and curvatures using polynomial and spline approximation
+  <li>computing parameters from noisy data, level of detail
+  <li>combining parameters to map landforms and terrain features
+  <li>DEM time series
+</ul>
+</section>
 <!--
 Find more examples in the 2014 lecture, MEA592-004/GIS595-002:
 Multidimensional Geospatial Modeling material and GIS595 UAS course
