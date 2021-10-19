@@ -17,7 +17,7 @@
   <li>first and second order point parameters 
   <li>methods for slope, aspect and curvatures using polynomial and spline approximation
   <li>computing parameters from noisy data, level of detail 
-  <li>combining parameters to map landforms and terrain features
+  <li>combining parameters to map landforms 
   <li>DEM time series
 </ul>
 </section>
@@ -46,7 +46,7 @@ $$
 <li class="fragment">can be applied as global or zonal metrics
 </ul>
 <p>
- <img height="300" src="img/topoanalysis/volume_dz.png">
+ <img height="280" src="img/topoanalysis/volume_dz.png">
 </p>
 </section>
 
@@ -178,15 +178,16 @@ $$ \tan \gamma_t =  \tan \gamma \cos(\alpha - \alpha_t) $$
 
 <section>
    <h3>Slope along a bus line </h3>
+Elevation contours, steepest slope map and a Wolfline route 
 <p> <img height="450" src="img/topoanalysis/bus_toposlope_cont.jpg">
 </section>
 
 <section>
-   <h3>Slope angle in the road direction</h3>
-Steepest slope angle and slope in the direction of bus line
+   <h3>Slope angle in the route direction</h3>
+Steepest slope angle and slope angle in the direction of bus route
 <p> 
-<img height="350" src="img/topoanalysis/bus_route_toposlope.png">
-<img height="350" src="img/topoanalysis/bus_routeslope.png">
+<img height="370" src="img/topoanalysis/bus_route_toposlope.png">
+<img height="370" src="img/topoanalysis/bus_routeslope.png">
 </section>
 
 <section>
@@ -210,7 +211,7 @@ $$ z = f(x,y)=a_0+a_1 x + a_2 y + a_3 xy + a_4 x^2 + a_5 y^2 $$
    <li class="fragment">we can write 9 equations to solve for $a_i$ parameters 
    <li class="fragment">more equations than needed - we use weighted least squares to fit the polynomial to the 9 grid points
 </ul>
-<p><img height="320" src="img/topoanalysis/movingwindow3x3a.png">
+<p><img height="310" src="img/topoanalysis/movingwindow3x3a.png">
 </section>
 
 <section>
@@ -329,7 +330,7 @@ $$ z = f(x,y)=a_0+a_1 x + a_2 y + a_3 xy + a_4 x^2 + a_5 y^2 $$
 and differences of differences
    <li class="fragment">we copmute the curvatures using equations for $\kappa_p, \kappa_t$
 </ul>
-<p class="fragment"><img height="320" src="img/topoanalysis/movingwindow3x3c.png">
+<br><img height="320" src="img/topoanalysis/movingwindow3x3c.png">
 <!--Now we can compute $f_x$ and $f_y$ in x=y=0: $$f_x = a_1, f_y = a_2, f_{xx}=2a_4, f_{yy}=2a_5 f_{xy}=a_3$$-->
 </section>
 
@@ -337,7 +338,7 @@ and differences of differences
    <h3>Curvature maps</h3>
 Profile and tangential curvatures computed from 10m resolution DEM
 <p class="fragment">
-<p><img height="350" src="img/topoanalysis/curvatures10m.jpg">
+<p><img height="450" src="img/topoanalysis/curvatures10m.jpg">
 </section>
 
 <section>
@@ -347,9 +348,9 @@ Given a set of scattered points $(x_i,y_i,z_i)$, $i=1,...,n$ estimate slope, asp
 <ul>
   <li class="fragment">Partial derivatives of a suitable spline function, usually simultaneously with interpolation
   <li class="fragment">More than 100 points may be used to compute the function - larger forms can be analyzed
-<p>
-  <li class="fragment">Partial derivatives of a local polynomial approximation function
 </ul>
+<p><small><a href="https://ieeexplore.ieee.org/abstract/document/1522204">
+H.Mitasova, H., Mitas, L. and Harmon, R.S., 2005, Simultaneous spline interpolation and topographic analysis for lidar elevation data: methods for Open source GIS, IEEE GRSL 2(4), pp. 375- 379.</a>
 </section>
 
 <section>
@@ -359,6 +360,7 @@ Slope and aspect derived from lidar 1st return point cloud using RST method
 <p class="fragment"> <img height="350" src="img/topoanalysis/rstanal_slopelg.jpg">
  <img height="350" src="img/topoanalysis/rstanal_aspt15.jpg">
  <img height="150" src="img/topoanalysis/aspect_lgcolor.png">
+<p><small>Topographic parameters are computed simultaneously with DEM interpolation</small>
 </section>
 
 <section>
@@ -389,18 +391,17 @@ Tangential curvature computed using RST with high and lower tension
 </section>
 
 <section>
-<h3>Landforms</h3>
-Combining the geometry at a point
+<h3>Basic Landforms</h3>
 <p>
 <ul>
-<li>Peak: gradient = 0, convex-convex
-<li>Pit: gradient = 0, concave-concave
-<li>Saddle: gradient = 0: concave-convex 
-<li>Ridge: Tang. curvature convex and profile curvature convex/concave
-<li>Valley: Tang. curvature concave - profile convex/concave
+<li>Peak: $\nabla z = 0$ and $\kappa_p, \kappa_t$ is convex-convex
+<li>Pit: $\nabla z = 0$ and $\kappa_p, \kappa_t$ is concave-concave
+<li>Saddle: $\nabla z = 0$ and $\kappa_p is convex, \kappa_t$ is concave 
+<li>Ridge: $\nabla z \neq 0$ \kappa_t$ is convex 
+<li>Valley: $\nabla z \neq 0$ \kappa_t$ is concave 
 </ul>
 <p>
-<img height="200" src="img/topoanalysis/geomorph_legend.png">
+<img height="220" src="img/topoanalysis/geomorph_legend.png">
 </section>
 
 <section>
@@ -415,12 +416,12 @@ Impact of moving window size on landform mapping
 <section>
 <h3>Geomorphons</h3>
 Line of sight based method for mapping basic landforms
-<p class="fragment">
-<img height="300" src="img/topoanalysis/geomorphon.png">
-<img height="300" src="img/topoanalysis/geomorph_legend.png">
-<p class="fragment">
-Multiscale properties controlled by the range of view
-</p>
+<p>
+<img height="260" src="img/topoanalysis/geomorphon.png">
+<img height="260" src="img/topoanalysis/geomorph_legend.png">
+<p><small>
+Multiscale properties controlled by the range of view rather than moving window
+</small>
 </section>
 
 <section>
@@ -437,15 +438,15 @@ to classification and mapping of landforms, Geomorphology, vol. 182, 147-156
 <h3>Geomorphons</h3>
 Mapping of tree crowns, buildings from lidar/UAS DSM 
 <p class="fragment">
-<img height="400" src="img/topoanalysis/geomorphon_trees_PT_IJGI.jpg">
+<img height="420" src="img/topoanalysis/geomorphon_trees_PT_IJGI.jpg">
 <p><small><a href="https://www.mdpi.com/2220-9964/9/7/445">Tabrizian P., et al. 2020. High Resolution Viewscape Modeling Evaluated Through Immersive Virtual Environments. In: ISPRS Int. J. Geo-Inf, 9(7).</a></small>
 </section>
 
 <section>
 <h3>Multitemporal DEMs</h3>
-Repeated lidar or UAS mapping, often with irregular time intervals
+Repeated lidar or UAS mapping
 <p>
-<img height="350" src="img/topoanalysis/NagsHead.gif">
+<img height="300" src="img/topoanalysis/NagsHead.gif">
 <img height="200" src="img/topoanalysis/timeseries_graph.jpg">
 <p><small>
 <a href="http://link.springer.com/book/10.1007/978-1-4939-1835-5">
@@ -454,11 +455,8 @@ Hardin, E., et al, 2014, GIS-based Analysis of Coastal Lidar Time-Series, Spring
 
 <section>
 <h3>Multitemporal DEMs: analysis</h3>
-<small>Per-cell operation are used to derive raster maps defining:
- core surface as the minimum elevation and
-envelope surface as the maximum elevation measured at
-each cell over given time period $(t_1,t_n)$:
-</small>
+Given $n$ DEM snaphots $z(i,j,t_k)  \quad k=1, ..., n$, per-cell operation can be used to derive: 
+<p>
 <ul>
  <li class="fragment">Core surface: $z_{core}(i,j)=\min_k z(i,j,t_k)  \quad k=1, ..., n$  
  <li class="fragment">Envelope surface: $z_{env}(i,j)=\max_k z(i,j,t_k)  \quad k=1, ..., n$  
@@ -467,6 +465,8 @@ each cell over given time period $(t_1,t_n)$:
  <li class="fragment">Time of min: $t_{min} (i,j) = t_p, \quad   {\rm where} \quad z(i,j,t_p) = z_{core}(i,j)$ 
 </ul>
 <p><small>
+Core surface is the minimum elevation and envelope surface as the maximum elevation measured at each cell over the given time period,
+core defines the volume of sand that has not moved.
 <a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/MitasovaFinalGeoinf09.pdf">
 Mitasova, H., et al. 2009, New spatial measures of terrain dynamics derived from time series of lidar data, Proc. 17th Int. Conf. Geoinformatics, Fairfax, VA.</a>
 </small>
@@ -476,12 +476,13 @@ Mitasova, H., et al. 2009, New spatial measures of terrain dynamics derived from
 <h3>Multitemporal DEMs: analysis</h3>
 Nags Head: core, envelope, time of maximum
 <p>
-<img height="400" src="img/topoanalysis/MitGeom11_TEC2011_figs1.jpg">
+<img height="350" src="img/topoanalysis/MitGeom11_TEC2011_figs1.jpg">
 </section>
 
 <section>
 <h3>Multitemporal DEMs: analysis</h3>
 Discrete changes and a continuous rate of change 
+<p>
 <ul>
  <li class="fragment">Building lost or new:  $z_{env}(i_c,j_c) - z_{core}(i_c,j_c) > h_b$  
  <p>
@@ -491,11 +492,14 @@ Discrete changes and a continuous rate of change
  </ul>
 <p>
  <li class="fragment">Per-cell linear regression slope measures rate of continuous change
+<!--
  <p>
  <ul>
    <li class="fragment">$ r_s(i_e,j_e) < \varepsilon_e  \cap r_c(i_e,j_e) > r_{cmin}$ 
    <li class="fragment">$ r_s(i_d,j_d) > \varepsilon_d  \cap r_c(i_d,j_d) > r_{cmin}$ 
+   <li class="fragment">where 
  </ul>
+-->
 </ul>
 </section>
 
