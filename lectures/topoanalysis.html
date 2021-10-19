@@ -390,24 +390,23 @@ Tangential curvature computed using RST with high and lower tension
 
 <section>
 <h3>Landforms</h3>
-<ul>
-<li>Combining the geometry at a point
+Combining the geometry at a point
 <p>
 <ul>
-<li>Ridge: Tang. curvature convex and profile curvature convex/concave
-<li>Valley: Tang. curvature concave - profile convex/concave
 <li>Peak: gradient = 0, convex-convex
 <li>Pit: gradient = 0, concave-concave
 <li>Saddle: gradient = 0: concave-convex 
+<li>Ridge: Tang. curvature convex and profile curvature convex/concave
+<li>Valley: Tang. curvature concave - profile convex/concave
 </ul>
 <p>
-<li>Geomorphons
-</ul>
+<img height="200" src="img/topoanalysis/geomorph_legend.png">
 </section>
 
 <section>
 <h3>Basic Landforms map</h3>
-Impact of moving window size on landform mapping (1m resolution DEM, 9x9, 45x45) 
+Impact of moving window size on landform mapping 
+<br>(1m resolution DEM, 9x9, 45x45 window) 
 <p>
 <img height="350" src="img/topoanalysis/landforms_9c1m.jpg">
 <img height="350" src="img/topoanalysis/landforms_45c1m.jpg">
@@ -417,8 +416,8 @@ Impact of moving window size on landform mapping (1m resolution DEM, 9x9, 45x45)
 <h3>Geomorphons</h3>
 Line of sight based method for mapping basic landforms
 <p class="fragment">
-<img height="350" src="img/topoanalysis/geomorphon.png">
-<img height="350" src="img/topoanalysis/geomorph_legend.png">
+<img height="300" src="img/topoanalysis/geomorphon.png">
+<img height="300" src="img/topoanalysis/geomorph_legend.png">
 <p class="fragment">
 Multiscale properties controlled by the range of view
 </p>
@@ -426,8 +425,8 @@ Multiscale properties controlled by the range of view
 
 <section>
 <h3>Geomorphons</h3>
-Landforms derived for the entire US using  30m resolution NED: 
-<p class="fragment">
+Landforms for the entire US using a 30m resolution NED: 
+<p>
 <img height="350" src="img/topoanalysis/us_geom_26642.jpg">
 <p><small>Jasiewicz, J., Stepinski, T., 2013, Geomorphons - a pattern recognition approach 
 to classification and mapping of landforms, Geomorphology, vol. 182, 147-156 
@@ -438,15 +437,16 @@ to classification and mapping of landforms, Geomorphology, vol. 182, 147-156
 <h3>Geomorphons</h3>
 Mapping of tree crowns, buildings from lidar/UAS DSM 
 <p class="fragment">
-<img height="350" src="img/topoanalysis/geomorphon_trees_PT_IJGI.jpg">
+<img height="400" src="img/topoanalysis/geomorphon_trees_PT_IJGI.jpg">
 <p><small><a href="https://www.mdpi.com/2220-9964/9/7/445">Tabrizian P., et al. 2020. High Resolution Viewscape Modeling Evaluated Through Immersive Virtual Environments. In: ISPRS Int. J. Geo-Inf, 9(7).</a></small>
 </section>
 
 <section>
 <h3>Multitemporal DEMs</h3>
 Repeated lidar or UAS mapping, often with irregular time intervals
-<p class="fragment">
-<img height="350" src="img/topoanalysis/NagsHead.jpg">
+<p>
+<img height="350" src="img/topoanalysis/NagsHead.gif">
+<img height="200" src="img/topoanalysis/timeseries_graph.jpg">
 <p><small>
 <a href="http://link.springer.com/book/10.1007/978-1-4939-1835-5">
 Hardin, E., et al, 2014, GIS-based Analysis of Coastal Lidar Time-Series, Springer Briefs in Computer Science </a> </small>
@@ -475,24 +475,23 @@ Mitasova, H., et al. 2009, New spatial measures of terrain dynamics derived from
 <section>
 <h3>Multitemporal DEMs: analysis</h3>
 Nags Head: core, envelope, time of maximum
-<p class="fragment">
-<img height="350" src="img/topoanalysis/NagsHead.jpg">
-<p><small>Geomorphology visualization paper</small>
+<p>
+<img height="400" src="img/topoanalysis/MitGeom11_TEC2011_figs1.jpg">
 </section>
 
 <section>
 <h3>Multitemporal DEMs: analysis</h3>
-<small>
 Discrete changes and a continuous rate of change 
-</small>
 <ul>
- <li class="fragment">Building loss or contruction:  $z_{env}(i_c,j_c) - z_{core}(i_c,j_c) > h_ba$  
+ <li class="fragment">Building lost or new:  $z_{env}(i_c,j_c) - z_{core}(i_c,j_c) > h_b$  
+ <p>
  <ul>
   <li class="fragment">Lost structure: $t_{max} (i_l,j_l)  <  t_{min} (i_l,j_l)$
   <li class="fragment">New structure: $t_{max} (i_l,j_l)  >  t_{min} (i_l,j_l)$
  </ul>
 <p>
  <li class="fragment">Per-cell linear regression slope measures rate of continuous change
+ <p>
  <ul>
    <li class="fragment">$ r_s(i_e,j_e) < \varepsilon_e  \cap r_c(i_e,j_e) > r_{cmin}$ 
    <li class="fragment">$ r_s(i_d,j_d) > \varepsilon_d  \cap r_c(i_d,j_d) > r_{cmin}$ 
@@ -502,12 +501,20 @@ Discrete changes and a continuous rate of change
 
 <section>
 <h3>Multitemporal DEMs: analysis</h3>
-Nags Head: buildings, rate of change from regression, shoreline band
-<p class="fragment">
-<img height="350" src="img/topoanalysis/NH_homes_picBot.png">
-<img height="350" src="img/topoanalysis/NH9908f_coreenvslope.jpg">
-<img height="350" src="img/topoanalysis/NH_shoreband9608.png">
-<p><small>REF</small>
+Nags Head: buildings, shoreline band, 
+<br>rate of elevation change (regression slope)
+<p>
+<img class="fragment" height="350" src="img/topoanalysis/NH_homes_picBot.png">
+<img class="fragment" height="350" src="img/topoanalysis/NH_shoreband9608.png">
+<img class="fragment" height="350" src="img/topoanalysis/NH9908f_coreenvslope.jpg">
+</section>
+
+<section>
+<h3>Multitemporal DEMs: visualization</h3>
+Jockey's Ridge 1974 - 2018
+<p>
+<img class="fragment" height="350" src="img/data_visualize/jr_74_17_anim3dlgfix.gif">
+<img class="fragment" height="350" src="img/data_visualize/JR_STC_16m_anim.gif">
 </section>
 
 <section>
@@ -518,8 +525,8 @@ Nags Head: buildings, rate of change from regression, shoreline band
   <li>first and second order point parameters: slope, aspect and curvatures
       can be estimated using polynomial or spline approximation
   <li>noisy data, level of detail influence the spatial pattern of topographic parameters
-  <li>basic parameters can be combined to map landform shapes
-  <li>per-cell operations can be used to extract basic metrics of topographic change
+  <li>topographic parameters can be combined to map basic landform shapes
+  <li>per-cell operations can be used to extract metrics of topographic change
 </ul>
 </section>
 <!--
