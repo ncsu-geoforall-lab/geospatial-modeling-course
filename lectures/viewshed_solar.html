@@ -12,7 +12,7 @@
     <h2>Learning objectives</h2>
 <p>
 <ul>
- <li>understand line of sight, 
+ <li>understand line of sight 
  <li>define viewshed, cumulative viewshed and viewscape
  <li>explain components of solar radiation in complex terrain
  <li>understand cast shadow and solar inclination angle
@@ -23,11 +23,14 @@
 <section>
    <h3>Line of sight</h3>
 <ul>
-  <li>Line of sight analysis is used to identify points on the terrain surface 
-      along a given line that are visible from a given point on this line.
-  <li>LoS or ray tracing is used for:
+  <li>Line of sight (LoS) analysis is used to identify points on the terrain surface 
+      along a given line that are visible from an observer point on this line
+<p>
+  <li>LoS analysis or ray-tracing is used for:
+<p>
   <ul>
-   <li class="fragment">visibility analysis 
+   <li class="fragment">3D visualization
+   <li class="fragment">visibility and viewshed analysis 
    <li class="fragment">emitor-receptor systems design 
 taking into account decay of signal with distance, for example, to optimize locations of cell towers 
   </ul>
@@ -37,32 +40,33 @@ taking into account decay of signal with distance, for example, to optimize loca
 <section>
    <h3>Computing Line of sight</h3>
 <p>
-Given a viewing point A and a target B, 
-<!--$$ \tan \alpha = (z_B-z_A )/ d_{BA} $$
- <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is greater than  $\alpha$
+Given a viewing point $A$ and a target $B$,
+<!--we define $$ tan \alpha = (z_B-z_A )/ d_{BA} $$ 
+ <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is smaller than  $\alpha$
 -->
-<br>B is not visible from A if, 
+<br>$B$ is visible from $A$ if,
 <ul>
- <li class="fragment">any point C is above the line that connects AB
- <li class="fragment">where the points C are a projection of AB on the surface 
+ <li class="fragment">all lines $AC_i$ are below the line $AB$
+ <li class="fragment">where the points $C_i$ are a projection of $AB$ on the surface 
 </ul>
-<p> 
-<img height="350" src="img/viewshed_solar/lineofsight_nonvisible.jpg">
+<p class="fragment">
+<img height="350" src="img/viewshed_solar/lineofsight_visible.jpg">
 </section>
 
 <section>
    <h3>Computing Line of sight</h3>
 <p>
-Given a viewing point A and a target B, 
-<!--we define $$ tan \alpha = (z_B-z_A )/ d_{BA} $$ 
- <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is smaller than  $\alpha$
+Given a viewing point $A$ and a target point $B$, 
+<!--$$ \tan \alpha = (z_B-z_A )/ d_{BA} $$
+ <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is greater than  $\alpha$
 -->
-<br>B is visible from A if, 
+<br>$B$ is not visible from $A$ if, 
 <ul>
- <li class="fragment">all points C are below the line that connects AB
+ <li class="fragment">any line $AC_i$ is above the line $AB$
+ <li class="fragment">where the points $C_i$ are a projection of $AB$ on the surface 
 </ul>
-<p class="fragment"> 
-<img height="350" src="img/viewshed_solar/lineofsight_visible.jpg">
+<p> 
+<img height="350" src="img/viewshed_solar/lineofsight_nonvisible.jpg">
 </section>
 
 <section>
@@ -84,40 +88,43 @@ Given a viewing point A and a target B,
 <section>
    <h3>Viewshed example 1</h3>
 <ul>
- <li>Visibility analysis for finding a location for a webcam to support real-time monitoring of a watershed
- <li>Height of webcam above the surface 1.75 and 6m, computed from 1m resolution DTM
-</ul>
-<p> <img height="380" src="img/viewshed_solar/viewshed_lw_webcam.jpg">
-</section>
-
-<section>
-   <h3>Viewshed example 2</h3>
-<ul>
  <li>Visibility analysis from buildings, 30m resolution DTM 
- <li>Elevation and relative height above the surface: 4 and 32 story building 
+ <li>Relative height above the surface: 4 and 32 story building 
 </ul>
 <p> <img height="320" src="img/viewshed_solar/nc_RHlos.jpg">
  <img height="320" src="img/viewshed_solar/nc_towerlos3D.jpg">
 </section>
 
 <section>
-   <h3>Viewshed example 3</h3>
+   <h3>Viewshed example 2</h3>
 <ul>
  <li>Visibility analysis from buildings, 1m resolution DSM
+ <li>Observer point at a balcony of the Hunt library and on upper floor of Jordan hall
 </ul>
-<p> <img height="350" src="img/viewshed_solar/view_Hunt_dem_1m.png">
- <img height="350" src="img/viewshed_solar/view_JH2_dem15_1m.png">
+<p> <img height="360" src="img/viewshed_solar/view_Hunt_dem_1m.png">
+ <img height="360" src="img/viewshed_solar/view_JH2_dem15_1m.png">
+</section>
+
+<section>
+   <h3>Viewshed example 3</h3>
+<ul>
+ <li>Visibility analysis for finding a location for a webcam to support real-time monitoring of a watershed
+ <li>Height of webcam above the surface 1.75 and 6m, computed from 1m resolution DTM
+</ul>
+<p> <img height="360" src="img/viewshed_solar/viewshed_lw_webcam.jpg">
+<p><small><a href="https://doi.org/10.1080/01431161.2020.1752952">Starek, M.J., et al., 2020, Viewshed simulation and optimization for digital terrain modelling with terrestrial laser scanning, International Journal of Re-mote Sensing, 41:16, 6409-6426</a></small>
 </section>
 
 <section>
    <h3>Viewshed example 4</h3>
-<p>Viewshed and viewscape analysis of landscape with vegetation using lidar data 
-developed by 
-<a href="https://drive.google.com/open?id=0B8j08KoSleFQOFdWZ0pNaXJUdUE">Payam Tabrizian</a>
- <p><b>Viewscape:</b> Landscape composition and features within viewshed
-<p><small>Tabrizian P., Mitasova H. FOSS4G Boston presentation illustrationUsing open-source 
-tools and high-resolution geospatial data to estimate landscapes’ visual attributes. FOSS4G 2017 - Boston, August 2017.
-Related paper is under review.
+<ul>
+<li>Viewshed and viewscape analysis of landscape with vegetation using lidar data 
+<!--<a href="https://drive.google.com/open?id=0B8j08KoSleFQOFdWZ0pNaXJUdUE">Payam Tabrizian</a>-->
+ <li><b>Viewscape:</b> Landscape composition and features within viewshed
+</ul>
+ADD 1-2 figures
+<p> <img height="360" src="img/viewshed_solar/viewshed_lw_webcam.jpg">
+<p><small><a href="https://doi.org/10.3390/ijgi9070445">Tabrizian et al. 2020, High Resolution Viewscape Modeling Evaluated Through Immersive Virtual Environments. ISPRS Int. J. Geo-Inf. 9, 445.</a>
 </small>
 </section>
 
@@ -135,16 +142,18 @@ Related paper is under review.
 <section>
    <h3>Solar radiation</h3>
 <p>
-Solar radiation controls the surface energy and water balance 
-and thus affects the atmospheric, biophysical and hydrologic processes. 
-<p>It also provides a source of renewable energy.
+<ul>
+ <li class="fragment"> controls surface energy and water balance 
+ <li class="fragment"> affects atmospheric, biophysical and hydrologic processes
+ <li class="fragment"> provides a source of renewable energy
+</ul>
 </section>
 
 <section>
    <h3>Surface net radiation</h3>
 <p>Spatially and temporally variable and depends on
 <ul>
- <li class="fragment"> orientation of Earth relative to Sun (or position of sun relative to given point on earth)
+ <li class="fragment"> orientation of Earth relative to Sun (or position of Sun relative to a given point on Earth)
  <li class="fragment">topography: slope, aspect and shadowing
  <li class="fragment">clouds and other atmospheric properties
  <li class="fragment">surrounding surface properties (land cover)
@@ -154,7 +163,7 @@ and thus affects the atmospheric, biophysical and hydrologic processes.
 <section>
    <h3>Solar radiation components</h3>
 <p>
-<img height="420" src="img/viewshed_solar/solar_rad_comp.png">
+<img height="450" src="img/viewshed_solar/solar_rad_comp.png">
 </section>
 
 <section>
@@ -177,7 +186,7 @@ Given a date, time, and a location, for example:
 <section>
    <h3>Sun position parameters</h3>
 <ul>
-  <li>2001.12.22, day number 356, time: 14:25:00, long: -78.678856, lat: 35.736160, timezone: -5.000
+  <li>2001-12-22, day number 356, time: 14:25:00, long: -78.678856, lat: 35.736160, timezone: -5.000
 </ul>
 <p>
 <ul>
