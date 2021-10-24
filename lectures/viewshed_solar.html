@@ -40,12 +40,12 @@ taking into account decay of signal with distance, for example, to optimize loca
 <section>
    <h3>Computing Line of sight</h3>
 <ul>
-  <li>Given a viewing point $A$ and a target $B$, $B$ is visible from $A$ if,
+  <li>Given a viewing point $A$ and a target point $B$, $B$ is visible from $A$ if:
 <!--we define $$ tan \alpha = (z_B-z_A )/ d_{BA} $$ 
  <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is smaller than  $\alpha$
 -->
   <li class="fragment">all lines $AC_i$ are below the line $AB$
-  <li class="fragment">where the points $C_i$ are a projection of the line $AB$ on the surface 
+  <li class="fragment">where the set of points $C_i$ represents projection of the line $AB$ on the surface 
 </ul>
 <p class="fragment">
 <img height="340" src="img/viewshed_solar/lineofsight_visible.jpg">
@@ -54,12 +54,12 @@ taking into account decay of signal with distance, for example, to optimize loca
 <section>
    <h3>Computing Line of sight</h3>
 <ul>
-Given a viewing point $A$ and a target point $B$, $B$ is not visible from $A$ if, 
+Given a viewing point $A$ and a target point $B$, $B$ is not visible from $A$ if: 
 <!--$$ \tan \alpha = (z_B-z_A )/ d_{BA} $$
  <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is greater than  $\alpha$
 -->
  <li class="fragment">any line $AC_i$ is above the line $AB$
- <li class="fragment">where the points $C_i$ are a projection of $AB$ on the surface 
+ <li class="fragment">where the set of points $C_i$ represents projection of $AB$ on the surface 
 </ul>
 <p class="fragment"> 
 <img height="340" src="img/viewshed_solar/lineofsight_nonvisible.jpg">
@@ -125,19 +125,20 @@ Given a viewing point $A$ and a target point $B$, $B$ is not visible from $A$ if
 <section>
    <h3>Viewshed example 4</h3>
 <ul>
-<li>High resolution of viewshed analysis with impact of individual trees 
+<li>High resolution viewshed analysis input  
 <!--<a href="https://drive.google.com/open?id=0B8j08KoSleFQOFdWZ0pNaXJUdUE">Payam Tabrizian</a>-->
 </ul>
-<p> <img height="360" src="img/viewshed_solar/DSM_lidar_treestems1.jpg">
-    <img height="360" src="img/viewshed_solar/DSM_lidar_treestems2.jpg">
-<p><small><a href="https://doi.org/10.3390/ijgi9070445">Tabrizian et al. 2020, High Resolution Viewscape Modeling Evaluated Through Immersive Virtual Environments. ISPRS Int. J. Geo-Inf. 9, 445.</a>
+<p> <img height="320" src="img/viewshed_solar/DSM_lidar_treestems1.jpg">
+    <img height="320" src="img/viewshed_solar/DSM_lidar_treestems2.jpg">
+<p><small>Replacing "tree mounds" in DSM with tree trunks. 
+<a href="https://doi.org/10.3390/ijgi9070445">Tabrizian et al. 2020, High Resolution Viewscape Modeling Evaluated Through Immersive Virtual Environments. ISPRS Int. J. Geo-Inf. 9, 445.</a>
 </small>
 </section>
 
 <section>
    <h3>Viewshed example 4</h3>
 <ul>
-<li>High resolution of viewshed analysis with impact of individual trees                                             
+<li>High resolution viewshed analysis with improved representation of trees: Dix park application                                             
 <!--<a href="https://drive.google.com/open?id=0B8j08KoSleFQOFdWZ0pNaXJUdUE">Payam Tabrizian</a>-->
 </ul>
 <p> <img height="380" src="img/viewshed_solar/DSM_lidar_treestems_view.jpg">
@@ -154,6 +155,7 @@ Given a viewing point $A$ and a target point $B$, $B$ is not visible from $A$ if
    <li class="fragment">limit development to areas that are not visible - e.g. from the Blue Ridge Parkway
    minimize visibility of wind turbines
 </ul>
+<p><small><a href="https://doi.org/10.1080/01431161.2020.1752952">Starek, M.J., et al., 2020, Viewshed simulation and optimization for digital terrain modelling with terrestrial laser scanning, International Journal of Re-mote Sensing, 41:16, 6409-6426</a></small>
 </section>
 
 <section>
@@ -227,7 +229,7 @@ Angle between the terrain normal and solar beam
    <li class="fragment">solar beam: defined by solar inclination and azimuth
    <li class="fragment"> terrain normal: 3D vector orthogonal to the plane tangent to terrain surface,
    <li class="fragment">terrain normal: function of slope and aspect, 
-   horizontal projection of terrain normal is gradient $\nabla z = (f_x,f_y$  
+   horizontal projection of terrain normal is gradient $\nabla z = (f_x,f_y)$  
 </ul>
 <p class="fragment"><img height="300" src="img/viewshed_solar/solarincidangle.gif">
 <p class="fragment"><small>Modified from Batson et al., 1975, see also 8.1.8 in Hengl et al., 2008, Geomorphometry 
