@@ -39,34 +39,30 @@ taking into account decay of signal with distance, for example, to optimize loca
 
 <section>
    <h3>Computing Line of sight</h3>
-<p>
-Given a viewing point $A$ and a target $B$,
+<ul>
+  <li>Given a viewing point $A$ and a target $B$, $B$ is visible from $A$ if,
 <!--we define $$ tan \alpha = (z_B-z_A )/ d_{BA} $$ 
  <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is smaller than  $\alpha$
 -->
-<br>$B$ is visible from $A$ if,
-<ul>
- <li class="fragment">all lines $AC_i$ are below the line $AB$
- <li class="fragment">where the points $C_i$ are a projection of $AB$ on the surface 
+  <li class="fragment">all lines $AC_i$ are below the line $AB$
+  <li class="fragment">where the points $C_i$ are a projection of the line $AB$ on the surface 
 </ul>
 <p class="fragment">
-<img height="350" src="img/viewshed_solar/lineofsight_visible.jpg">
+<img height="340" src="img/viewshed_solar/lineofsight_visible.jpg">
 </section>
 
 <section>
    <h3>Computing Line of sight</h3>
-<p>
-Given a viewing point $A$ and a target point $B$, 
+<ul>
+Given a viewing point $A$ and a target point $B$, $B$ is not visible from $A$ if, 
 <!--$$ \tan \alpha = (z_B-z_A )/ d_{BA} $$
  <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is greater than  $\alpha$
 -->
-<br>$B$ is not visible from $A$ if, 
-<ul>
  <li class="fragment">any line $AC_i$ is above the line $AB$
  <li class="fragment">where the points $C_i$ are a projection of $AB$ on the surface 
 </ul>
-<p> 
-<img height="350" src="img/viewshed_solar/lineofsight_nonvisible.jpg">
+<p class="fragment"> 
+<img height="340" src="img/viewshed_solar/lineofsight_nonvisible.jpg">
 </section>
 
 <section>
@@ -93,6 +89,17 @@ Given a viewing point $A$ and a target point $B$,
 </ul>
 <p> <img height="320" src="img/viewshed_solar/nc_RHlos.jpg">
  <img height="320" src="img/viewshed_solar/nc_towerlos3D.jpg">
+<p><small>Compute and compare land cover composition for each viewshed in the assignment</small>
+</section>
+
+<section>
+   <h3>Viewshed example 2</h3>
+<ul>
+ <li>Visibility analysis from balcony of the Hunt library
+ <li>10m resolution DTM and 1m resolution DSM
+</ul>
+<p> <img height="360" src="img/viewshed_solar/view_Hunt_ned10m.jpg">
+<img height="360" src="img/viewshed_solar/view_Hunt_dem_1m.png">
 </section>
 
 <section>
@@ -109,21 +116,31 @@ Given a viewing point $A$ and a target point $B$,
    <h3>Viewshed example 3</h3>
 <ul>
  <li>Visibility analysis for finding a location for a webcam to support real-time monitoring of a watershed
- <li>Height of webcam above the surface 1.75 and 6m, computed from 1m resolution DTM
+ <li>Above-ground height 1.75 and 6m, 1m resolution DTM
 </ul>
-<p> <img height="360" src="img/viewshed_solar/viewshed_lw_webcam.jpg">
+<p> <img height="340" src="img/viewshed_solar/viewshed_lw_webcam.jpg">
 <p><small><a href="https://doi.org/10.1080/01431161.2020.1752952">Starek, M.J., et al., 2020, Viewshed simulation and optimization for digital terrain modelling with terrestrial laser scanning, International Journal of Re-mote Sensing, 41:16, 6409-6426</a></small>
 </section>
 
 <section>
    <h3>Viewshed example 4</h3>
 <ul>
-<li>Viewshed and viewscape analysis of landscape with vegetation using lidar data 
+<li>High resolution of viewshed analysis with impact of individual trees 
 <!--<a href="https://drive.google.com/open?id=0B8j08KoSleFQOFdWZ0pNaXJUdUE">Payam Tabrizian</a>-->
- <li><b>Viewscape:</b> Landscape composition and features within viewshed
 </ul>
-ADD 1-2 figures
-<p> <img height="360" src="img/viewshed_solar/viewshed_lw_webcam.jpg">
+<p> <img height="360" src="img/viewshed_solar/DSM_lidar_treestems1.jpg">
+    <img height="360" src="img/viewshed_solar/DSM_lidar_treestems2.jpg">
+<p><small><a href="https://doi.org/10.3390/ijgi9070445">Tabrizian et al. 2020, High Resolution Viewscape Modeling Evaluated Through Immersive Virtual Environments. ISPRS Int. J. Geo-Inf. 9, 445.</a>
+</small>
+</section>
+
+<section>
+   <h3>Viewshed example 4</h3>
+<ul>
+<li>High resolution of viewshed analysis with impact of individual trees                                             
+<!--<a href="https://drive.google.com/open?id=0B8j08KoSleFQOFdWZ0pNaXJUdUE">Payam Tabrizian</a>-->
+</ul>
+<p> <img height="380" src="img/viewshed_solar/DSM_lidar_treestems_view.jpg">
 <p><small><a href="https://doi.org/10.3390/ijgi9070445">Tabrizian et al. 2020, High Resolution Viewscape Modeling Evaluated Through Immersive Virtual Environments. ISPRS Int. J. Geo-Inf. 9, 445.</a>
 </small>
 </section>
@@ -170,17 +187,19 @@ ADD 1-2 figures
    <h3>Sun position</h3>
 <p>
 Given a date, time, and a location, for example:
+<small>
 <ul>
   <li>2001.12.22, day number 356, time: 14:25:00
   <li>long: -78.678856, lat: 35.736160, timezone: -5.000
 </ul>
+</small>
 <p>sun position is given by
 <p>
 <ul>
    <li class="fragment">solar azimuth (measured in horizontal plane ): 212.7934...
    <li class="fragment">solar altitude (sun angle above horizon): 23.1924
 </ul>
-<p class="fragment"><img height="220" src="img/viewshed_solar/sun_position2.gif">
+<p class="fragment"><img height="320" src="img/viewshed_solar/sun_position2.gif">
 </section>
 
 <section>
@@ -192,7 +211,8 @@ Given a date, time, and a location, for example:
 <ul>
    <li class="fragment">solar azimuth: 212.7934...
    <li class="fragment">solar altitude or inclination: 23.1924
-   <li class="fragment">sun declination (angle between solar beam and earth equator) winter solstice: -23.4405 (sun above the Tropic of Capricorn)
+   <li class="fragment">sun declination - angle between solar beam and earth equator: -23.4405 
+   (winter solstice, sun above the Tropic of Capricorn)
    <li class="fragment">sunrise time (without refraction cor.): 07:26:30
    <li class="fragment">sunset time (without refraction cor.): 17:00:28
    <li class="fragment">atm. refraction correction: inclination > 0 before sunrise
@@ -205,12 +225,13 @@ Given a date, time, and a location, for example:
 Angle between the terrain normal and solar beam
 <ul>
    <li class="fragment">solar beam: defined by solar inclination and azimuth
-   <li class="fragment">terrain normal: function of slope and aspect (or $f_x,f_y$)
    <li class="fragment"> terrain normal: 3D vector orthogonal to the plane tangent to terrain surface,
-   <li class="fragment"> horizontal projection of terrain normal is gradient  
+   <li class="fragment">terrain normal: function of slope and aspect, 
+   horizontal projection of terrain normal is gradient $\nabla z = (f_x,f_y$  
 </ul>
-<p class="fragment"><img height="250" src="img/viewshed_solar/solarincidangle.gif">
-<p class="fragment"><small>See e.g. 8.1.8 in Hengl et al., 2008, Geomorphometry or A.62 in Neteler et al., 2008 Appendix
+<p class="fragment"><img height="300" src="img/viewshed_solar/solarincidangle.gif">
+<p class="fragment"><small>Modified from Batson et al., 1975, see also 8.1.8 in Hengl et al., 2008, Geomorphometry 
+or A.62 in Neteler et al., 2008 Appendix
 </small>
 </section>
 
@@ -238,13 +259,14 @@ Angle between the terrain normal and solar beam
 <p>Solar beam (direct) irradiance for inclined plane in $W/m^2$ is function of: 
 <ul>
   <li class="fragment">solar incidence angle 
-  <li class="fragment">solar constant $[W/m^2$ 
+  <li class="fragment">solar constant $[W/m^2]$ 
   <li class="fragment">atmospheric factors (clear sky):
 <ul>
   <li class="fragment">Linke turbidity factor (atm. turbidity due to aerosols - reduces direct radiation)
 <!--  <li class="fragment">relative optical air mass --> 
   <li class="fragment">Rayleigh optical thickness (thickness of clear atm., function of surface pressure)
 </ul>
+  <li class="fragment">cloud cover
   <li class="fragment">computed as cumulative solar irradiance: daily $Wh/(m^2.day)$, monthly, seasonal, annual
 </ul>
 </section>
@@ -286,11 +308,6 @@ for day 356 (winter solstice) computed with 0.5hr time step
 </section>
 
 <section>
- <h3>Reading, resources</h3>
-<p>See <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/topics/viewsheds_solar.html">Supplemental material links</a>
-</section>
-
-<section>
  <h3>Summary</h3>
 <ul>
   <li>geometry of line of sight and viewsheds
@@ -299,6 +316,7 @@ for day 356 (winter solstice) computed with 0.5hr time step
   <li>dynamics and spatial variability of solar radiation
   <li>solar radiation examples
 </ul>
+<p>See also <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/topics/viewsheds_solar.html">Supplemental material links</a>
 </section>
 
 <div class="parent-page">
