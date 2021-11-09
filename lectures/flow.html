@@ -17,6 +17,7 @@
   <li>identify methods for flow routing through depressions and flat areas 
   <li>perform stream extraction from a DEM 
   <li>perform watershed delineation
+  <li>identify methods to map inundation flooding 
 </ul>
 </section>
 
@@ -303,11 +304,11 @@ do not match the DEM
 <p>
 Modified DEM with connected stream network where each grid cell drains into the outlet
 <ul>
-  <li>hydrologically enforced DEM does not have depressions or flat areas
-  <li>it should not be referred to as hydrologically correct, because all wetlands are removed
-  <li>least cost path methods do not require depression filling 
+  <li class="fragment">hydrologically enforced DEM does not have depressions or flat areas
+  <li class="fragment">it should not be referred to as hydrologically correct, because all wetlands are removed
+  <li class="fragment">least cost path methods do not require depression filling 
 </ul>
-<p>Depending on application carefully evaluate whether depression filling is appropriate
+<p class="fragment">Depending on application carefully evaluate whether depression filling is appropriate
 </section>
 
 <section>
@@ -315,7 +316,7 @@ Modified DEM with connected stream network where each grid cell drains into the 
 <p>
 Measured as horizontal accuracy of stream centerline
 <ul>
- <li class="fragment">topographic maps (blue linesa): often the lowest accuracy, low order streams are missing
+ <li class="fragment">topographic maps (blue lines): often the lowest accuracy, low order streams are missing
  <li class="fragment">National Hydrographic Data - updated, structured representation of stream and river networks
  <li class="fragment">extracted from lidar-based DEMs - better, but accuracy low in coastal plane, improved new lidar mapping
  <li class="fragment">digitized from high resolution orthophotos and on ground surveys - most accurate except forested areas
@@ -403,7 +404,7 @@ $$w = \ln (A / \tan \gamma)$$
 </section>
 
 <section>
-   <h3>Potential for inundation flooding</h3>
+   <h3>Mapping inundation flooding</h3>
 <ul>
 <li>elevation threshold - bathtub model
 <li>spread of water from source - friction gradient rather than elevation gradient
@@ -441,10 +442,10 @@ $$w = \ln (A / \tan \gamma)$$
 <section>
    <h3>Flooding - inundation model </h3>
 <ul>
-<li>Over larger areas river channel has variable elevation: Height Above Nearest Drainage (HAND) methodology
-<li>Using flow direction, computes raster where each cell is $\Delta z$ between the given cell
+<li>over larger areas river channel has variable elevation: Height Above Nearest Drainage (HAND) methodology
+<li>using flow direction, computes raster where each cell is $\Delta z$ between the given cell
 and the the cell on the stream into which the cell drains.
-<li>predicted water level (stage) is then spread from the stream 
+<li>water level is then spread from the stream 
 </ul>
 <p><img height="320" src="img/flow_erosion/heightabovestream.jpg">
 <img height="320" src="img/flow_erosion/inundation_5m.jpg">
@@ -452,7 +453,7 @@ and the the cell on the stream into which the cell drains.
 
 <section>
    <h3>Flooding - inundation dynamic</h3>
-<a href="https://github.com/ncsu-geoforall-lab/grass-mapbox-tutorial">Implemented in mapbox</a>by Corey White
+<a href="https://github.com/ncsu-geoforall-lab/grass-mapbox-tutorial">Implemented in mapbox</a> by Corey White
 </section>
 
 <!--
@@ -467,11 +468,11 @@ and the the cell on the stream into which the cell drains.
 <section>
  <h3>Summary</h3>
 <ul>
-<li>we have defined cumulative terrain parameters based on flow routing: flow length, flow accumulation
-<li>we have learned about methods for computing flow direction (D8, Dinf) and flow routing SFD, MFD
-<li>we discussed flow through flat areas and depressions
-<li>we have applied flow routing to extract streams and watersheds and to compute wetness index
-<li>we have applie learned about methods to map inundation flooding 
+<li class="fragment">we have defined cumulative terrain parameters based on flow routing: flow length, flow accumulation
+<li class="fragment">we have learned about methods for computing flow direction (D8, Dinf) and flow routing SFD, MFD
+<li class="fragment">we discussed flow through flat areas and depressions
+<li class="fragment">we have applied flow routing to extract streams and watersheds and to compute wetness index
+<li class="fragment">we have learned about methods to map inundation flooding 
 </ul>
 </section>
 
