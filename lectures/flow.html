@@ -67,6 +67,7 @@ D8 algorithm
 D-infinity algorithm: gradient direction is derived from a continuous function (polynomial or spline)
 $$\alpha^\circ = {\arccos} \left( -f_y / \sqrt{f_x^2+f_y^2} \right) = \arctan (f_y / f_x)  $$
 <p> <img height="330" src="img/flow_erosion/aspectarrows.png">
+<p><small>recalss that $f_x = {\partial z \over \partial x}$  and $f_y = {\partial z \over \partial y}$ </small>
 </section>
 
 <section>
@@ -89,8 +90,8 @@ Tracing flow in the gradient direction to compute
   <li class="fragment">Dinf: linear interpolation of aspect along the grid cell edges leads to smooth flowlines
 </ul>
 <p class="fragment"`>
-<img height="280" src="img/flow_erosion/rflowfigure.jpg">
-<img height="280" src="img/flow_erosion/flowlines_and_contours.png">
+<img height="300" src="img/flow_erosion/rflowfigure.jpg">
+<img height="300" src="img/flow_erosion/flowlines_and_contours.png">
 <p class="fragment"><small>Note: D8 flowlines are traced along grid lines and diagonals</small>
 </section>
 
@@ -134,7 +135,7 @@ it is the number of flowlines (drops) passing through the given grid cell
 Evolution of steady state flow as water moves through the landscape 
 with steady rainfall and uniform flow velocity
 <p> <img height="430" src="img/flow_erosion/water.gif">
-<p><small>flow line density captured after each 10 flow routing steps</small>
+<br><small>flow line density captured after each 10 flow routing steps</small>
 </section>
 
 <section>
@@ -265,7 +266,7 @@ Filling, carving, hybrid, least cost path
 
 <section>
    <h3>Depressions filling: lidar DEM</h3>
-Depressions in lidar-based DEM and flow accumulation using DEM filling
+Depressions in lidar-based DEM and MFD flow accumulation using DEM with filled depressions
 <p><img height="400" src="img/flow_erosion/depressions_lidardem.jpg">
 <p><small>Many depressions are artificial lakes where bridges or roads create dams</small>
 </section>
@@ -273,11 +274,12 @@ Depressions in lidar-based DEM and flow accumulation using DEM filling
 <section>
    <h3>Depressions filling: radar DSM</h3>
 <p>Radar (SRTM, IFSARE) DSM include vegetation surface leading to complex, nested depressions
-<p><img height="360" src="img/flow_erosion/depressions_ifsare.jpg">
-<img height="360" src="img/flow_erosion/filled_dem.jpg">
-<p><small>Filling alters elevation in large areas</small>
+<p><img height="380" src="img/flow_erosion/depressions_ifsare.jpg">
+<img height="380" src="img/flow_erosion/filled_dem.jpg">
+<br><small>Filling alters elevation in large areas</small>
 </section>
 
+<!--
 <section>
    <h3>Depressions: algorithm comparison </h3>
 <p>
@@ -287,6 +289,7 @@ Depressions in lidar-based DEM and flow accumulation using DEM filling
 </ul>
 <p><img height="350" src="img/flow_erosion/lcp_fill1_fill2_compare.jpg">
 </section>
+-->
 
 <section>
    <h3>Depressions: carving</h3>
@@ -302,6 +305,7 @@ Modified DEM with connected stream network where each grid cell drains into the 
 <ul>
   <li>hydrologically enforced DEM does not have depressions or flat areas
   <li>it should not be referred to as hydrologically correct, because all wetlands are removed
+  <li>least cost path methods do not require depression filling 
 </ul>
 </section>
 
@@ -351,16 +355,18 @@ the newest delineation is <b>The Watershed Boundary Dataset (WBD)</b>
 <section>
    <h3>Watershed analysis</h3>
 <p>
- Watershed boundaries for a given outlet
+ Watershed boundaries for a given outlet using SFD-D8 method
 <p>
 <p><img height="400" src="img/flow_erosion/watershed_from_outlet.jpg">
+<p><small>Outlet must be located exactly on the extracted stream grid cell - local flowaccumulation maximum</small>
 </section>
 
 <section>
    <h3>Watershed analysis</h3>
 <p>
  Partition of a region  into watersheds
-<p><img height="400" src="img/flow_erosion/watersheds2d.png">
+<p><img height="400" src="img/flow_erosion/watersheds.png">
+<p>Southern Wake county
 </section>
 
 <section>
@@ -381,10 +387,10 @@ $$w = \ln (A / \tan \gamma)$$
 <li class="fragment">$w$ increases with larger $A$ (more water) and lower slope (slower water flow).
 </ul>
 <p class="fragment">
-<small>Estimating w in GIS:
+<small>Estimating wetness index in GIS:
 <ul>
-<li class="fragment">$A$ - flow accumulation MFD, weighted to account for soil and cover variability
-<li class="fragment">$\gamma$  - slope module (3x3 neighborhood polynomial or spline)
+<li class="fragment">$A$ - flow accumulation MFD, optionally weighted to account for soil and cover variability
+<li class="fragment">$\gamma$  - steepest slope (3x3 neighborhood polynomial or spline)
 <li class="fragment">Compute the expression using map algebra or a dedicated module/tool
 </ul>
 </small>
@@ -395,6 +401,58 @@ $$w = \ln (A / \tan \gamma)$$
 <p><img height="420" src="img/flow_erosion/wettnessindex.jpg">
 </section>
 
+<section>
+   <h3>Potential for inundation flooding</h3>
+<ul>
+<li>elevation threshold - bathtub model
+<li>spread of water from source - friction gradient rather than elevation gradient
+<li>hydrologically connected surface water level
+<li>HAND: height above the nearest drainage technique
+</ul>
+</section>
+
+<section>
+   <h3>Flooding - bathtub model</h3>
+<p><img height="450" src="img/geodynamics/lakef1994.gif">
+</section>
+
+<section>
+   <h3>Flooding - lake model</h3>
+<ul>
+<li> Creates hydrologically connected area (lake) from a given point at a given elevation
+<li> Valid for small flat areas with point source, approximates steady state, uniform flooding
+</ul>
+<p>
+<img height="280" src="img/water_geometry/floodedarea.jpg">
+<img height="280" src="img/water_geometry/lakeflood_swwake_streets.jpg">
+<p><small>water level at 90m asl</small>
+</section>
+
+<section>
+   <h3>Flooding - lake model</h3>
+<ul>
+<li>Simplified storm surge - series of lake models
+<li>Neglects time and water mass: worst case scenario
+</ul>
+<p><img height="430" src="img/intro/hatteras_surge_rlake.gif">
+</section>
+
+<section>
+   <h3>Flooding - inundation model </h3>
+<ul>
+<li>Over larger areas river channel has variable elevation: Height Above Nearest Drainage (HAND) methodology
+<li>Using flow direction, computes raster where each cell is $\Delta z$ between the given cell
+and the the cell on the stream into which the cell drains.
+<li>predicted water level (stage) is then spread from the stream 
+</ul>
+<p><img height="320" src="img/water_geometry/heightabovestream.jpg">
+<img height="320" src="img/water_geometry/inundation_5m.jpg">
+</section>
+
+<section>
+   <h3>Flooding - inundation dynamic</h3>
+<a href="https://github.com/ncsu-geoforall-lab/grass-mapbox-tutorial">Implemented in mapbox</a>
+</section>
 <section>
    <h3>Flooding and hydrologic modeling</h3>
 <p><a href="https://ncsu-geoforall-lab.github.io/geospatial-simulations-course/lectures/water_geometry_sim.html#/15">Flooding and inundation</a>
