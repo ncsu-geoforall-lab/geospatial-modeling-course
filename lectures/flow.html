@@ -67,7 +67,7 @@ D8 algorithm
 D-infinity algorithm: gradient direction is derived from a continuous function (polynomial or spline)
 $$\alpha^\circ = {\arccos} \left( -f_y / \sqrt{f_x^2+f_y^2} \right) = \arctan (f_y / f_x)  $$
 <p> <img height="330" src="img/flow_erosion/aspectarrows.png">
-<p><small>recalss that $f_x = {\partial z \over \partial x}$  and $f_y = {\partial z \over \partial y}$ </small>
+<p><small>recall that $f_x = {\partial z \over \partial x}$  and $f_y = {\partial z \over \partial y}$ </small>
 </section>
 
 <section>
@@ -176,7 +176,7 @@ Flow accumulation as a result of SFD routing
 Flow accumulation as a result of SFD and MFD routing  with D8 flow direction
 <p>
 <img class="fragment" height="380" src="img/flow_erosion/accum5K_gr65_sep09b.jpg">
-<img class="fragment" height="380" src="img/flow_erosion/accum5K_gr65_mfd.jpg">
+<img class="fragment" height="375" src="img/flow_erosion/accum5K_gr65_mfd.jpg">
 </section>
 
 <section>
@@ -307,6 +307,7 @@ Modified DEM with connected stream network where each grid cell drains into the 
   <li>it should not be referred to as hydrologically correct, because all wetlands are removed
   <li>least cost path methods do not require depression filling 
 </ul>
+<p>Depending on application carefully evaluate whether depression filling is appropriate
 </section>
 
 <section>
@@ -325,8 +326,8 @@ Measured as horizontal accuracy of stream centerline
 <section>
    <h3>Stream mapping accuracy</h3>
 <p>USGS NHD stream, stream extracted from 1ft resolution DEM, on ground GPS points
-<p><img height="380" src="img/flow_erosion/Streams_NHD_GRASSlidar.png">
-<img height="380" src="img/flow_erosion/stream_extraction_lidarc.png">
+<p><img height="400" src="img/flow_erosion/Streams_NHD_GRASSlidar.png">
+<img height="400" src="img/flow_erosion/stream_extraction_lidarc.png">
 </section>
 
 <section>
@@ -355,17 +356,17 @@ the newest delineation is <b>The Watershed Boundary Dataset (WBD)</b>
 <section>
    <h3>Watershed analysis</h3>
 <p>
- Watershed boundaries for a given outlet using SFD-D8 method
+ Watershed boundaries for a given outlet using SFD-D8 
 <p>
 <p><img height="400" src="img/flow_erosion/watershed_from_outlet.jpg">
-<p><small>Outlet must be located exactly on the extracted stream grid cell - local flowaccumulation maximum</small>
+<p><small>Outlet must be located exactly on a stream grid cell - local flowaccumulation maximum</small>
 </section>
 
 <section>
    <h3>Watershed analysis</h3>
 <p>
  Partition of a region  into watersheds
-<p><img height="400" src="img/flow_erosion/watersheds.png">
+<p><img height="400" src="img/flow_erosion/watersheds.jpg">
 <p>Southern Wake county
 </section>
 
@@ -413,7 +414,7 @@ $$w = \ln (A / \tan \gamma)$$
 
 <section>
    <h3>Flooding - bathtub model</h3>
-<p><img height="450" src="img/geodynamics/lakef1994.gif">
+<p><img height="450" src="img/flow_erosion/lakef1994.gif">
 </section>
 
 <section>
@@ -423,8 +424,8 @@ $$w = \ln (A / \tan \gamma)$$
 <li> Valid for small flat areas with point source, approximates steady state, uniform flooding
 </ul>
 <p>
-<img height="280" src="img/water_geometry/floodedarea.jpg">
-<img height="280" src="img/water_geometry/lakeflood_swwake_streets.jpg">
+<img height="280" src="img/flow_erosion/floodedarea.jpg">
+<img height="280" src="img/flow_erosion/lakeflood_swwake_streets.jpg">
 <p><small>water level at 90m asl</small>
 </section>
 
@@ -434,7 +435,7 @@ $$w = \ln (A / \tan \gamma)$$
 <li>Simplified storm surge - series of lake models
 <li>Neglects time and water mass: worst case scenario
 </ul>
-<p><img height="430" src="img/intro/hatteras_surge_rlake.gif">
+<p><img height="430" src="img/flow_erosion/hatteras_surge_rlake.gif">
 </section>
 
 <section>
@@ -445,20 +446,23 @@ $$w = \ln (A / \tan \gamma)$$
 and the the cell on the stream into which the cell drains.
 <li>predicted water level (stage) is then spread from the stream 
 </ul>
-<p><img height="320" src="img/water_geometry/heightabovestream.jpg">
-<img height="320" src="img/water_geometry/inundation_5m.jpg">
+<p><img height="320" src="img/flow_erosion/heightabovestream.jpg">
+<img height="320" src="img/flow_erosion/inundation_5m.jpg">
 </section>
 
 <section>
    <h3>Flooding - inundation dynamic</h3>
-<a href="https://github.com/ncsu-geoforall-lab/grass-mapbox-tutorial">Implemented in mapbox</a>
+<a href="https://github.com/ncsu-geoforall-lab/grass-mapbox-tutorial">Implemented in mapbox</a>by Corey White
 </section>
+
+<!--
 <section>
    <h3>Flooding and hydrologic modeling</h3>
 <p><a href="https://ncsu-geoforall-lab.github.io/geospatial-simulations-course/lectures/water_geometry_sim.html#/15">Flooding and inundation</a>
 <p><a href="https://ncsu-geoforall-lab.github.io/dynamic-surfaces-talk/kosice2019.html#/27">Simulation of water flow (1)</a>
 <p><a href="https://ncsu-geoforall-lab.github.io/geospatial-simulations-course/lectures/flow_process_sim.html#/21">Simulation of water flow (2)</a>
 </section>
+-->
 
 <section>
  <h3>Summary</h3>
@@ -467,6 +471,7 @@ and the the cell on the stream into which the cell drains.
 <li>we have learned about methods for computing flow direction (D8, Dinf) and flow routing SFD, MFD
 <li>we discussed flow through flat areas and depressions
 <li>we have applied flow routing to extract streams and watersheds and to compute wetness index
+<li>we have applie learned about methods to map inundation flooding 
 </ul>
 </section>
 
