@@ -12,11 +12,12 @@
     <h3>Learning objectives</h3>
 <p>
 <ul>
- <li>empirical and physics based components of models
- <li>spatially averaged and distributed models
- <li>steady state, continuous time and dynamic models 
- <li>spatial hydrologic modeling: processes and methods
- <li>modeling of erosion, sediment transport and deposition
+<!-- <li>empirical and physics based components of models-->
+ <li>identify geospatial modeling of landscape processes
+ <li>distinguish spatially averaged and distributed models
+<!-- <li>steady state, continuous time and dynamic models -->
+ <li>compare methods for spatial hydrologic modeling
+ <li>apply modeling soil erosion, sediment transport and deposition
 </ul>
 </section>
 
@@ -25,6 +26,7 @@
 <ul>
 <li>Numerical simulations: tools for gaining new knowledge - <b>virtual experiments</b>
 <li>Geospatial simulations: the modeled quantities are function of a location on Earth
+<p>
 <li>Geospatial models have evolved:
 <ul>
 <p>
@@ -34,9 +36,10 @@
      the aim to predict modeled quantity at any point in space and time
 </ul>
 </ul>
- <p class="fragment">Most models combine several approaches
+ <p class="fragment">Most models combine both approaches
 </section>
 
+<!--
 <section>
    <h3>Empirical models</h3>
 <ul>
@@ -62,10 +65,11 @@ such as continuity and mass conservation equations
 <p class="fragment"><small>Example: surface water flow model is based on St. Venant equation,
 but uses empirical Mannings coefficient for computing flow velocity</small>
 </section>
+-->
 
 <section>
    <h3>Modeling components</h3>
-When performing simulations we need to consider:
+When modeling landscape processes we need to consider:
 <p>
 <ul>
   <li class="fragment"> <b>Modeled quantity [units]:</b> water, pollutant, vegetation, population density, individual organism, ...
@@ -105,6 +109,7 @@ the variable at any point in space and the result is continuous field
 <p><img height="350" src="https://ncsu-geoforall-lab.github.io/geospatial-simulations-course/lectures/img/intro/spat_distr.png">
 </section>
 
+<!--
 <section>
    <h3>Coupled models for simulations of complex systems</h3>
 <ul>
@@ -114,6 +119,7 @@ the variable at any point in space and the result is continuous field
 <li class="fragment">coupled agent based and continuous field models for complex human - nature systems simulations (MEDLANDS)
 </ul>
 </section>
+-->
 
 <section>
    <h3>Geospatial modeling and GIS</h3>
@@ -132,7 +138,6 @@ results analysis and visualization, but the model is independent from GIS.
 <section>
    <h3>Hydrologic modeling</h3>
 <p>surface water flow (overland flow, channels), 
-<p>subsurface flow, groundwater
 </section>
 
 <!--
@@ -153,16 +158,15 @@ Geometry driven routing, requires DEM hydroconditioning for connected streams
 <p><img height="180" src="img/flow_erosion/Dinf_sink.jpg">
 </ul>
 </section>
+-->
 
 <section>
    <h3>Spatially Distributed Hydrologic Models</h3>
-Process-based continuity equation, requires DEM hydroconditioning for connected streams
-<ul>
-<li>kinematic wave - water accumulates in the sink  to infinity
-<p><img height="180" src="img/flow_erosion/kinemwave.jpg">
-</ul>
+From geometry-based routing to process-based continuity equation
+<p><img height="450" src="img/flow_erosion/gisemflow1hh.gif">
 </section>
 
+<!--
 <section>
    <h3>Spatially Distributed Hydrologic Models</h3>
 Bivariate continuity equation with diffusion term, captures ponding in depressions
@@ -180,11 +184,12 @@ Bivariate continuity equation with diffusion term and channel input
 <p><img height="180" src="img/flow_erosion/water_simwe_channel.jpg">
 </ul>
 </section>
+-->
 
 <section>
    <h3>Dynamic Hydrologic Models</h3>
-Flow routing across landscape: process-based
-<img height="380" src="img/flow_erosion/water_diffusion.gif">
+Flow modeling with diffusion term: process-bsed simulation of flow through depression
+<img height="380" src="img/flow_erosion/gisemhhdifu.gif">
 </section>
 
 <section>
@@ -196,13 +201,22 @@ Flow routing across landscape: process-based
       water bivariate continuity equation - drift and diffusion
   <li>Green's function
 </ul>
-<p class="fragment"> <img height="380" src="img/flow_erosion/flowD8dem.jpg">
+<p class="fragment"> <img height="380" src="img/flow_erosion/fanimwalk.gif">
+<img class="fragment" height="380" src="img/flow_erosion/fanimhhcolp.gif">
 <p><small>Variable rainfall excess and flow velocity</small>
 </section>
 
 <section>
-   <h3>Hydrologic modeling case studies</h3>
-<p> see the ppt slides, include Cary
+   <h3>Hydrologic modeling: small agricultural watershed</h3>
+<p>Overland water flow
+<p> <img height="380" src="img/flow_erosion/elev_dischtest.gif">
+</section>
+
+<section>
+   <h3>Hydrologic modeling: suburban application</h3>
+<p>High resolution (sub-meter) modeling of runoff
+<p> <img height="380" src="img/flow_erosion/water_ortho_lg.png">
+ <img height="380" src="img/flow_erosion/water_stormdrains_zoom.jpg">
 </section>
 
 <section>
@@ -215,9 +229,24 @@ Motivation: sustainable land use management
 </section>
 
 <section>
-   <h3>Spatially distributed erosion models</h3>
+   <h3>Erosion modeling: equations</h3>
 <p>
-<p> <img height="380" src="img/flow_erosion/flowD8dem.jpg">
+General equation with stream power, sediment transport and erosion and deposition
+as change (divergence) in sediment flow
+<p>RUSLE, empirical equation, process-based interpretation and GIS implementation
+</section>
+
+<section>
+   <h3>Erosion modeling: parameters</h3>
+<p> Figures and equations from erosion chapter, impact of exponent
+<p> <img height="380" src="img/flow_erosion/smokies_uspedexp.jpg">
+</section>
+
+<section>
+   <h3>Spatially distributed erosion models</h3>
+Application to small rural watershed
+<p> <img height="380" src="img/flow_erosion/uspedsedflowdem.jpg">
+<img height="380" src="img/flow_erosion/uspederdepdem.jpg">
 </section>
 
 <section>
@@ -226,6 +255,13 @@ Motivation: sustainable land use management
 <p> <img height="380" src="img/flow_erosion/flowD8dem.jpg">
 </section>
 
+<section>
+   <h3>Erosion modeling: landchange application</h3>
+<p>Impact of construction on overald flow and erosion 
+<p> <img height="380" src="img/flow_erosion/water_ortho_lg.png">
+ <img height="380" src="img/flow_erosion/water_stormdrains_zoom.jpg">
+<p><small>Note the highest erosion rates along the stream banks</small>
+</section>
 
 <section>
  <h3>Summary</h3>
@@ -233,7 +269,6 @@ Motivation: sustainable land use management
 <li>we have defined types of models
 </ul>
 </section>
--->
 
 <div class="parent-page">
     <!-- &#x1f3e0; -->
