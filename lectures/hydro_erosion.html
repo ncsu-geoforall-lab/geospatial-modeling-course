@@ -23,20 +23,21 @@
 
 <section>
    <h3>Geospatial modeling of processes</h3>
+<p>
 <ul>
 <li>Numerical simulations: tools for gaining new knowledge - <b>virtual experiments</b>
-<li>Geospatial simulations: the modeled quantities are function of a location on Earth
+<li class="fragment">Geospatial numerical simulations: the modeled quantities are function of a location on Earth
 <p>
 <li>Geospatial models have evolved:
 <ul>
 <p>
  <li class="fragment">from: empirical, spatially averaged, static 
 <p>
- <li class="fragment">to: process-based, distributed, dynamic with 
+ <li class="fragment">to: process-based, distributed (spatially explicit) and dynamic with 
      the aim to predict modeled quantity at any point in space and time
 </ul>
+ <li class="fragment">Most geospatial models combine both approaches
 </ul>
- <p class="fragment">Most models combine both approaches
 </section>
 
 <!--
@@ -72,23 +73,40 @@ but uses empirical Mannings coefficient for computing flow velocity</small>
 When modeling landscape processes we need to consider:
 <p>
 <ul>
-  <li class="fragment"> <b>Modeled quantity [units]:</b> water, pollutant, vegetation, population density, individual organism, ...
-  <li class="fragment"> <b>Spatial and temporal scale</b>
-  <li class="fragment"> <b>Configuration space and interactions:</b> modeled quantity as function of environmental variables, e.g., topography, land cover, infrastructure...
+  <li class="fragment"> <b>Modeled quantity [units]:</b> water depth[m], discharge[m$^3$/s],
+pollutant concentration[mg/l], vegetationi density[%cover], population density [p/area], ...
+  <li class="fragment"> <b>Spatial and temporal scale:</b> e.g., first order strem [1m resolution, single storm, minutes]
+  <li class="fragment"> <b>Configuration space and interactions:</b> modeled quantity as function of environmental variables, 
+e.g., water depth depends on precipitation, infiltration, topography, land cover, ..
   <li class="fragment"> <b>Governing equations or rules:</b> continuity, mass preservation, diffusion, ...
+</ul>
+</section>
+
+<section>
+   <h3>Modeling components</h3>
+<ul>
+  <li>Modeled quantity:
+     <b class="fragment">water depth [m], discharge [m$^3$/s], pollutant concentration[mg/l]</b>
+  <li>Spatial and temporal scale:
+     <b class="fragment">e.g. first order stream [1m resolution], single storm [minutes]</b>
+  <li>Configuration space and interactions:
+     <b class="fragment">water depth depends on precipitation, topography, soil properties, land cover...</b>
+  <li>Governing equations:
+     <b class="fragment"> bivariate continuity equations, diffusion, ... </b>
 </ul>
 </section>
 
 <section>
    <h3>Geospatial representation</h3>
 <p>
- Modeled quantities and environmental variables can be represented by continuous georeferenced fields
-<p>To support numerical simulations these fields need to be discretized:
+<ul>
+ <li>Modeled quantities and environmental variables can be represented by continuous georeferenced fields
+ <li>To support numerical simulations these fields need to be discretized:
 <ul>
   <li class="fragment"><b>spatially averaged units:</b> discrete polygons (hydrologic units, hillslope elements, landscape patches)
   <li class="fragment"><b>spatially distributed representation:</b> structured and unstructured meshes, or random particles
 </ul>
-<p class="fragment">Modeled quantities can also evolve along networks or represent discrete objects (particles, agents)</p>
+<p class="fragment">Modeled quantities can also evolve along networks (streams, sewer networks) or represent discrete objects (particles, agents)</p>
 </section>
 
 <section>
@@ -137,59 +155,60 @@ results analysis and visualization, but the model is independent from GIS.
 
 <section>
    <h3>Hydrologic modeling</h3>
-<p>surface water flow (overland flow, channels), 
+<p>surface water flow 
 </section>
 
-<!--
 <section>
-   <h3>Spatially Distributed Hydrologic Models</h3>
-Geometry driven routing:
+   <h3>Empirical model: Rational equation</h3>
 <ul>
-<li>flow accumulation by D8, passes through depression as least cost path, no ponding
-<p><img height="280" src="img/flow_erosion/D8_lcp.jpg">
+  <li>Simplest approximation of discharge from small watersheds
+  <li>Assumes steady state, uniform rainfall excess and constant velocity
+  <li>Discharge is then sum of rainfall excess produced by each grid cell routed to the outlet
 </ul>
 </section>
 
 <section>
-   <h3>Spatially Distributed Hydrologic Models</h3>
-Geometry driven routing, requires DEM hydroconditioning for connected streams
+   <h3>Rational equation</h3>
+<p>
+$$ Q = C \, i \, A $$
+<p>
 <ul>
-<li>flow acumulation by D-inf, depression is a sink
-<p><img height="180" src="img/flow_erosion/Dinf_sink.jpg">
+ <li class="fragment">$Q$ [$\rm m^3/s$] is maximum rate of runoff (discharge)
+<p>
+ <li class="fragment">$C$ is runoff coefficient
+ (ratio of rainfall that becomes runoff : forest 0.05-0.25, pavement 0.75-0.95)
+<p>
+ <li class="fragment">$i$ [$\rm m/s$] average rainfall intensity
+<p>
+ <li class="fragment">$A$ [$\rm m^2$] is upslope contributing area
 </ul>
+<p class="fragment">Time to concentration (time water needs to flow along the longest flowpath to reach the outlet)
+is used to identify duration of rainfall needed to reach the steady state
+<!-- show in mapcalc disch = 0.7 * 50 * 0.001/3600 * A * 1, general
+disch = coef * rain * A * res*res * units -->
 </section>
--->
 
 <section>
-   <h3>Spatially Distributed Hydrologic Models</h3>
-From geometry-based routing to process-based continuity equation
+   <h3>Rational equation</h3>
+<p>
+$$ Q = C \, i \, A $$
+<p>
+<img height="360" src="img/water_geometry/accum_5Kmfd.jpg">
+<img height="360" src="img/water_geometry/accum_runoffvar_30m3d.jpg">
+<!--show in mapcalc disch = 0.7 * 50 * 0.001/3600 * A * 1, general disch = coef * rain * A * res*res * units -->
+</section>
+
+<section>
+   <h3>Spatially Distributed  Models</h3>
+From geometry-based routing to continuity equation
 <p><img height="450" src="img/flow_erosion/gisemflow1hh.gif">
 </section>
-
-<!--
-<section>
-   <h3>Spatially Distributed Hydrologic Models</h3>
-Bivariate continuity equation with diffusion term, captures ponding in depressions
-<ul>
-<li>diffusion term allows water to pass through depression
-<p><img height="180" src="img/flow_erosion/water_simwe_diff.jpg">
-</ul>
-</section>
-
-<section>
-   <h3>Spatially Distributed Hydrologic Models</h3>
-Bivariate continuity equation with diffusion term and channel input
-<ul>
-<li>channel defined through depression as preferential flow
-<p><img height="180" src="img/flow_erosion/water_simwe_channel.jpg">
-</ul>
-</section>
--->
 
 <section>
    <h3>Dynamic Hydrologic Models</h3>
 Flow modeling with diffusion term: process-bsed simulation of flow through depression
-<img height="380" src="img/flow_erosion/gisemhhdifu.gif">
+<p><img height="360" src="img/flow_erosion/gisemhhdifu.gif">
+<p><small>Instead of filling the DEM, it fills the depression with water</small>
 </section>
 
 <section>
@@ -199,17 +218,16 @@ Flow modeling with diffusion term: process-bsed simulation of flow through depre
   <li>based on duality between particle and field representation
   <li>path samples represent water evolving according to the shallow 
       water bivariate continuity equation - drift and diffusion
-  <li>Green's function
 </ul>
 <p class="fragment"> <img height="380" src="img/flow_erosion/fanimwalk.gif">
 <img class="fragment" height="380" src="img/flow_erosion/fanimhhcolp.gif">
-<p><small>Variable rainfall excess and flow velocity</small>
 </section>
 
 <section>
-   <h3>Hydrologic modeling: small agricultural watershed</h3>
-<p>Overland water flow
-<p> <img height="380" src="img/flow_erosion/elev_dischtest.gif">
+   <h3>Overland water flow </h3>
+<p>Small agricultural watershed: path sampling based simulation
+<p> <img height="350" src="img/flow_erosion/lw_storm2006Alberto.jpg">
+<img height="380" src="img/flow_erosion/elev_dischtest.gif">
 </section>
 
 <section>
@@ -222,10 +240,13 @@ Flow modeling with diffusion term: process-bsed simulation of flow through depre
 <section>
    <h3>Erosion modeling</h3>
 <p>
-Motivation: sustainable land use management
-- analysis of spatial pattern of sediment flow, 
-- identification sediment sources and sinks, 
-- design of conservation measures
+Motivation: 
+<ul>
+<li class="fragment"> analysis of spatial pattern of sediment flow, 
+<li class="fragment"> identification sediment sources and sinks, 
+<li class="fragment"> design of conservation measures
+<li class="fragment">sustainable land use management
+</ul>
 </section>
 
 <section>
@@ -237,29 +258,35 @@ as change (divergence) in sediment flow
 </section>
 
 <section>
-   <h3>Erosion modeling: parameters</h3>
-<p> Figures and equations from erosion chapter, impact of exponent
-<p> <img height="380" src="img/flow_erosion/smokies_uspedexp.jpg">
+   <h3>Sediment transport capacity</h3>
+<p> Figures and equations from erosion chapter, exponent
+<p> <img height="350" src="img/flow_erosion/smokies_uspedexp.jpg">
 </section>
 
 <section>
-   <h3>Spatially distributed erosion models</h3>
-Application to small rural watershed
-<p> <img height="380" src="img/flow_erosion/uspedsedflowdem.jpg">
+   <h3>Net erosion and deposition</h3>
+<p> Figures and equations from erosion chapter, exponent
+<p> <img height="350" src="img/flow_erosion/smokies_uspedexp.jpg">
+</section>
+
+<section>
+   <h3>Sediment transport capacity</h3>
+Application to small rural watershed with spatially variable land cover
+<p><img height="380" src="img/flow_erosion/8-8-03Ditch.jpg">
+<img height="380" src="img/flow_erosion/uspedsedflowdem.jpg">
+</section>
+
+<section>
+   <h3>Net erosion and deposition</h3>
+Application to small rural watershed with spatially variable land cover
+<p><img height="380" src="img/flow_erosion/cfacbare.jpg">
 <img height="380" src="img/flow_erosion/uspederdepdem.jpg">
-</section>
-
-<section>
-   <h3>Sediment transport modeling</h3>
-<p>
-<p> <img height="380" src="img/flow_erosion/flowD8dem.jpg">
 </section>
 
 <section>
    <h3>Erosion modeling: landchange application</h3>
 <p>Impact of construction on overald flow and erosion 
-<p> <img height="380" src="img/flow_erosion/water_ortho_lg.png">
- <img height="380" src="img/flow_erosion/water_stormdrains_zoom.jpg">
+<p> <img height="380" src="img/flow_erosion/middleschool_scen.jpg">
 <p><small>Note the highest erosion rates along the stream banks</small>
 </section>
 
