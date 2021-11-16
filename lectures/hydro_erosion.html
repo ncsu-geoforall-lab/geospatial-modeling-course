@@ -36,6 +36,7 @@
  <li class="fragment">to: process-based, spatially explicit and dynamic with 
      the aim to predict modeled quantity at any point in space and time
 </ul>
+<p>
  <li class="fragment">Most geospatial models combine empirical and process-based approaches
 </ul>
 </section>
@@ -92,8 +93,8 @@ but uses empirical Mannings coefficient for computing flow velocity</small>
 <p>
 <ul>
   <li class="fragment"><b>spatially averaged units:</b> discrete polygons (hydrologic units, hillslope elements, landscape patches)
-  <li class="fragment"><b>spatially distributed representation:</b> structured and unstructured meshes, or random particles
-  <li class="fragment">Modeled quantities can also evolve along networks (streams, sewer networks) or represent discrete objects (particles, agents)</p>
+  <li class="fragment"><b>spatially distributed representation:</b> structured and unstructured meshesi (grids), or random particles
+  <li class="fragment">modeled quantities can also evolve along networks (streams, sewer networks) or represent discrete objects (particles, agents)</p>
 </ul>
 </section>
 
@@ -183,8 +184,8 @@ disch = coef * rain * A * res*res * units -->
 <p>
 $$ Q = C \, i \, A $$
 <p>
-<img height="360" src="img/water_geometry/accum5K_gr65_mfd.jpg">
-<img height="360" src="img/water_geometry/accum_runoffvar_30m3d.jpg">
+<img height="360" src="img/flow_erosion/accum5K_gr65_mfd.jpg">
+<img height="360" src="img/flow_erosion/accum_runoffvar_30m3d.jpg">
 <!--show in mapcalc disch = 0.7 * 50 * 0.001/3600 * A * 1, general disch = coef * rain * A * res*res * units -->
 </section>
 
@@ -237,57 +238,46 @@ Motivation:
 <li class="fragment"> design of conservation measures
 <li class="fragment">sustainable land use management
 </ul>
+</section>
+
+<section>
+ <h3>Soil erosion modeling</h3>
 <ul>
   <li>Modeled quantity: sediment transport rate [kg/(m s], net erosion/deposition rate [kg/(m$^2$ s)]
-  <li>Spatial and temporal scale: from hillslopes to watersheds
+  <li>Spatial and temporal scale: from hillslopes to watersheds, minutes (storms), annual rates
   <li>Configuration space and interactions: sediment transport depends on water flow, topography, soil properties, land use
   <li>Governing equations: continuity equation, diffusion, proliferation and decay
 </ul>
 </section>
 
-</section>
-
 <section>
    <h3>Sediment transport equations</h3>
 <p>
-Assuming steady state flow, sediment transport $q_s$ can be approximated by
+Assuming steady state flow, sediment transport $q_s$ [kg/(ms)] can be approximated by
 sediment transport capacity $T_c$:
 <p>
 $$ q_s \approx T_c = K_T A^m (\sin \gamma)^n$$
 <p>
-<small>
 <ul>
 <li> where $A$ is contributing area as measure of water flow
 <li>$K_T$ is transport capacity coefficient
 <li>$\gamma$ is slope angle
 <li>$m,n$ are empirical coefficients
 </ul>
-</small>
 </section>
 
 <section>
    <h3>Net erosion and deposition</h3>
-<small>
 Net erosion and deposition (source and sinks term) are computed as a change
 in sediment transport capacity $T_c$ in the direction of flow (divergence of the sediment
 transport vector field).
-It is a dot product of a unit vector ${\bf s_0}$ in the direction of flow $\alpha$
-<p>
-$${\bf s_0} =(\cos \alpha, \sin \alpha)$$
-
-<p>and sediment transport surface gradient
-<p>
-
-$$ {\bf q_s} = \left ( \frac{\partial T_c }{ \partial x}, \frac{\partial T_c }{ \partial y } \right ) $$
-
 <p>leading to an equation that is easy to compute using map algebra
 <p>
 $$d_s =\nabla\cdot {\bf q}_s  \approx = {\partial (T_c  \cos \alpha ) \over {\partial x}} + {\partial (T_c  \sin \alpha ) \over {\partial y}}$$
-</small>
 </section>
 
 <section>
-   <h3>Erosion modeling: equations</h3>
+   <h3>Empirical equations</h3>
 <small>
 <ul>
 <li>USLE,
