@@ -270,36 +270,39 @@ $$ q_s \approx T_c = K_T A^m (\sin \gamma)^n$$
 </section>
 
 <section>
-   <h3>Evolution of sediment transport capacity</h3>
-Water flow accumulates during steady rainfall, while lower slope at the foot of hillslopes locally reduces 
+   <h3>Evolution of sediment transport</h3>
+Water flow accumulates during rainfall, while lower slope at the foot of hillslopes reduces 
 sediment transport capacity
 <p>
-<img height="400" src="img/flow_erosion/water1994.gif">
-<img class="fragment" height="400" src="img/masstransport/lsfac1994.gif">
+<img height="400" src="img/flow_erosion/water.gif">
+<img class="fragment" height="400" src="img/flow_erosion/lsfac1994.gif">
 </section>
 
 <section>
    <h3>Sediment transport capacity regimes</h3>
 Spatial pattern of sediment transport from sheet flow (m=0.6) to concentrated flow (m=1.5)
 <p>
-<img height="400" src="img/flow_erosion/smokies_transporteq_rev.png">
+<img height="360" src="img/flow_erosion/smokies_transporteq_rev.png">
 </section>
 
 <section>
    <h3>Net erosion and deposition</h3>
-Net erosion and deposition (source and sinks term) are computed as a change
+<ul>
+ <li>Net erosion and deposition rate is computed as a change
 in sediment transport capacity $T_c$ in the direction of flow (divergence of the sediment
-transport vector field), leading to an equation that is easy to compute using map algebra
+transport vector field), 
+</ul>
 <p>
-$$d_s =\nabla\cdot {\bf q}_s  \approx = {\partial (T_c  \cos \alpha ) \over {\partial x}} + {\partial (T_c  \sin \alpha ) \over {\partial y}}$$
+$$d_s =\nabla\cdot {\bf q}_s  \approx {\partial (T_c  \cos \alpha ) \over {\partial x}} + {\partial (T_c  \sin \alpha ) \over {\partial y}}$$
+<p>Equation is easy to compute using functions for partial derivatives and map algebra
 </section>
 
 <section>
    <h3>Net erosion and deposition</h3>
 Spatial pattern of net erosion and deposition estimated as change in sediment transport capacity
 <p>
-<img height="300" src="img/masstransport/erdep_cerl_3d.gif">
-<img height="300" src="img/masstransport/erdep_cerl_dem.gif">
+<img height="300" src="img/flow_erosion/erdep_cerl_3d.gif">
+<img height="300" src="img/flow_erosion/erdep_cerl_dem.gif">
 </section>
 
 <section>
@@ -322,11 +325,12 @@ where empirical factors/coefficients
  <li>C - cover
  <li>P - protection measures
 </ul>
-<p>
+<p><small>
 $L$ represents water flow for tilted plane, for complex topography 
 we can replace it by $A$ upslope contributing area and modify RUSLE
 to estimate sediment transport capacity and net erosion-deposition
 as a change in sediment transport in the direction of flow.
+</small>
 </section>
 
 <section>
@@ -344,18 +348,20 @@ Application to small rural watershed with spatially variable land cover
 </section>
 
 <section>
-   <h3>Erosion modeling: landchange application</h3>
+   <h3>Land use change application</h3>
 <p>Impact of construction on overald flow and erosion 
 <p> <img height="380" src="img/flow_erosion/middleschool_scen.jpg">
 <p><small>Note the highest erosion rates along the stream banks</small>
 </section>
 
+<!--
 <section>
  <h3>Summary</h3>
 <ul>
 <li>we have defined types of models
 </ul>
 </section>
+-->
 
 <div class="parent-page">
     <!-- &#x1f3e0; -->
