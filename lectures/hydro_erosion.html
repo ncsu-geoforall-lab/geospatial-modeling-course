@@ -150,9 +150,9 @@ results analysis and visualization, but the model is independent from GIS.
 <section>
    <h3>Empirical model: Rational equation</h3>
 <ul>
-  <li>Simplest approximation of discharge from small watersheds
-  <li>Assumes steady state, uniform rainfall excess and constant velocity
-  <li>Discharge is then sum of rainfall excess produced by each grid cell routed to the outlet
+  <li class="fragment">Simplest approximation of discharge from small watersheds
+  <li class="fragment">Assumes steady state, uniform rainfall excess and constant velocity
+  <li class="fragment">Discharge is then sum of rainfall excess produced by each grid cell routed to the outlet
 </ul>
 </section>
 
@@ -192,7 +192,18 @@ $$ Q = C \, i \, A $$
 <section>
    <h3>Spatially Distributed  Models</h3>
 From geometry-based routing to continuity equation
-<p><img height="450" src="img/flow_erosion/gisemflow1hh.gif">
+<div class="left" style="max-width: 60% !important">
+<ul>
+<li class="fragment">a) DEM with depression</li>
+<li class="fragment">b) least cost path</li>
+<li class="fragment">c) depression as sink</li>
+<li class="fragment">d) water accumulates is depression: kinematic wave</li>
+<li class="fragment">e) water fills depression and flows out: diffusive wave</li>
+<li class="fragment">f) predefined channel through depression</li>
+</ul>
+</div>
+
+<img class="right" style="max-width: 38% !important" height="450" src="img/flow_erosion/gisemflow1hh.gif">
 </section>
 
 <section>
@@ -265,22 +276,23 @@ $$ q_s \approx T_c = K_T A^m (\sin \gamma)^n$$
 <li> where $A$ is contributing area as measure of water flow
 <li>$K_T$ is transport capacity coefficient
 <li>$\gamma$ is slope angle
-<li>$m,n$ are empirical coefficients
+<li>$m,n$ are empirical coefficients, control the relative influence of flow accumulation and slope
 </ul>
 </section>
 
 <section>
    <h3>Evolution of sediment transport</h3>
-Water flow accumulates during rainfall, while lower slope at the foot of hillslopes reduces 
+Water flow accumulates during rainfall, lower slope at foot of hillslopes reduces 
 sediment transport capacity
 <p>
-<img height="400" src="img/flow_erosion/water.gif">
-<img class="fragment" height="400" src="img/flow_erosion/lsfac1994.gif">
+<img height="360" src="img/flow_erosion/water.gif">
+<img class="fragment" height="360" src="img/flow_erosion/lsfac1994.gif">
 </section>
 
 <section>
    <h3>Sediment transport capacity regimes</h3>
-Spatial pattern of sediment transport from sheet flow (m=0.6) to concentrated flow (m=1.5)
+Spatial pattern of sediment transport: prevailing sheet flow (a, m=0.6), 
+concentrated flow (b, m=1.5), spatially variable (c): 
 <p>
 <img height="360" src="img/flow_erosion/smokies_transporteq_rev.png">
 </section>
@@ -289,12 +301,15 @@ Spatial pattern of sediment transport from sheet flow (m=0.6) to concentrated fl
    <h3>Net erosion and deposition</h3>
 <ul>
  <li>Net erosion and deposition rate is computed as a change
-in sediment transport capacity $T_c$ in the direction of flow (divergence of the sediment
-transport vector field), 
+in sediment transport capacity $T_c$ in the direction of flow $\alpha$ 
+ <li>divergence of the sediment transport vector field: 
 </ul>
 <p>
 $$d_s =\nabla\cdot {\bf q}_s  \approx {\partial (T_c  \cos \alpha ) \over {\partial x}} + {\partial (T_c  \sin \alpha ) \over {\partial y}}$$
-<p>Equation is easy to compute using functions for partial derivatives and map algebra
+<p><small>Equation is easy to compute using functions for partial derivatives and map algebra. Note that partial derivatives
+ of a surface can be computed using its slope and aspect and keep in mind that instead of elevation our surface is the sediment
+transport capacity field.
+</small>
 </section>
 
 <section>
@@ -307,16 +322,17 @@ Spatial pattern of net erosion and deposition estimated as change in sediment tr
 
 <section>
    <h3>Net erosion-deposition regimes</h3>
-Spatial pattern of erosion-deposition sheet flow (m=0.6) to concentrated flow (m=1.5)
+Spatial pattern of erosion-deposition for sheet flow (a, m=0.6),
+concentrated flow (b, m=1.5) and spatially variable (c).
 <p>
-<img height="400" src="img/flow_erosion/smokies_uspedexp.jpg">
+<img height="360" src="img/flow_erosion/smokies_uspedexp.jpg">
 </section>
 
 <section>
    <h3>Empirical equations</h3>
 Universal Soil Loss Equation (USLE, RUSLE)
 $$E=R.K.L.S.C.P$$
-where empirical factors/coefficients
+where empirical factors/coefficients are:
 <ul>
  <li>R - rainfall intensity
  <li>K - soil erodibility
@@ -326,8 +342,8 @@ where empirical factors/coefficients
  <li>P - protection measures
 </ul>
 <p><small>
-$L$ represents water flow for tilted plane, for complex topography 
-we can replace it by $A$ upslope contributing area and modify RUSLE
+$L$ cwis a function of water flow over tilted plane, for complex topography 
+we can replace it by $A$, upslope contributing area and modify RUSLE
 to estimate sediment transport capacity and net erosion-deposition
 as a change in sediment transport in the direction of flow.
 </small>
@@ -345,6 +361,9 @@ Application to small rural watershed with spatially variable land cover
 Application to small rural watershed with spatially variable land cover
 <p><img height="380" src="img/flow_erosion/cfacbare.jpg">
 <img height="380" src="img/flow_erosion/uspederdepdem.jpg">
+<p>Read <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/erosion_notes.pdf">
+Brief theoretical background document</a> for detailed description of the equations and units
+used in the assignment
 </section>
 
 <section>
@@ -354,14 +373,15 @@ Application to small rural watershed with spatially variable land cover
 <p><small>Note the highest erosion rates along the stream banks</small>
 </section>
 
-<!--
 <section>
  <h3>Summary</h3>
 <ul>
-<li>we have defined types of models
+<li> we defined spatially averaged and distributed models and explained linking GIS and landscape process modeling
+<li> we compared methods for spatial hydrologic modeling from simple empirical equation to process-based models
+<li> we explained modeling soil erosion, sediment transport and deposition using empirical and processed based models
+<li> we learned about applications of flow modeling using high resolution, lidar-based DEMs
 </ul>
 </section>
--->
 
 <div class="parent-page">
     <!-- &#x1f3e0; -->
