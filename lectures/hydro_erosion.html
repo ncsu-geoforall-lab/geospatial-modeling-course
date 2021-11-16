@@ -218,17 +218,19 @@ Flow modeling with diffusion term: process-bsed simulation of flow through depre
 <p>Path sampling based simulation of water flow within a small agricultural watershed
 <p> <img height="350" src="img/flow_erosion/lw_storm2006Alberto.jpg">
 <img height="380" src="img/flow_erosion/elev_dischtest.gif">
+<p><small>Note simulation of ponding and dispersed flow over the road</small>
 </section>
 
 <section>
-   <h3>Water flow in a suburban neighborhood</h3>
+   <h3>Water flow in a suburb</h3>
 <p>High resolution (sub-meter) modeling of runoff
 <p> <img height="380" src="img/flow_erosion/water_ortho_lg.png">
  <img height="380" src="img/flow_erosion/water_stormdrains_zoom.jpg">
 <p><small>Note (a) the role of stream buffer in storing water and slowing down the flow,
-(b) accurate routing of water on roads along curbs</small>
+(b) accurate routing of water on roads along curbs indicating high accuracy of the lidar-based DEM</small>
 </section>
 
+<!--
 <section>
    <h3>Soil erosion modeling</h3>
 <p>
@@ -239,22 +241,23 @@ Motivation:
 <li class="fragment">sustainable land use management
 </ul>
 </section>
+-->
 
 <section>
  <h3>Soil erosion modeling</h3>
 <ul>
-  <li>Modeled quantity: sediment transport rate [kg/(m s], net erosion/deposition rate [kg/(m$^2$ s)]
-  <li>Spatial and temporal scale: from hillslopes to watersheds, minutes (storms), annual rates
-  <li>Configuration space and interactions: sediment transport depends on water flow, topography, soil properties, land use
-  <li>Governing equations: continuity equation, diffusion, proliferation and decay
+  <li class="fragment">Modeled quantity: sediment transport rate [kg/(m s], net erosion/deposition rate [kg/(m$^2$ s)]
+  <li class="fragment">Spatial and temporal scale: from hillslopes to watersheds, minutes (storms), annual rates
+  <li class="fragment">Configuration space and interactions: sediment transport depends on water flow, topography, soil properties, land use
+  <li class="fragment">Governing equations: continuity equation, diffusion, proliferation and decay
 </ul>
 </section>
 
 <section>
    <h3>Sediment transport equations</h3>
 <p>
-Assuming steady state flow, sediment transport $q_s$ [kg/(ms)] can be approximated by
-sediment transport capacity $T_c$:
+Assuming steady state flow, sediment transport by shallow water flow 
+$q_s$ [kg/(ms)] can be approximated by sediment transport capacity $T_c$:
 <p>
 $$ q_s \approx T_c = K_T A^m (\sin \gamma)^n$$
 <p>
@@ -267,52 +270,69 @@ $$ q_s \approx T_c = K_T A^m (\sin \gamma)^n$$
 </section>
 
 <section>
+   <h3>Evolution of sediment transport capacity</h3>
+Water flow accumulates during steady rainfall, while lower slope at the foot of hillslopes locally reduces 
+sediment transport capacity
+<p>
+<img height="400" src="img/flow_erosion/water1994.gif">
+<img class="fragment" height="400" src="img/masstransport/lsfac1994.gif">
+</section>
+
+<section>
+   <h3>Sediment transport capacity regimes</h3>
+Spatial pattern of sediment transport from sheet flow (m=0.6) to concentrated flow (m=1.5)
+<p>
+<img height="400" src="img/flow_erosion/smokies_transporteq_rev.png">
+</section>
+
+<section>
    <h3>Net erosion and deposition</h3>
 Net erosion and deposition (source and sinks term) are computed as a change
 in sediment transport capacity $T_c$ in the direction of flow (divergence of the sediment
-transport vector field).
-<p>leading to an equation that is easy to compute using map algebra
+transport vector field), leading to an equation that is easy to compute using map algebra
 <p>
 $$d_s =\nabla\cdot {\bf q}_s  \approx = {\partial (T_c  \cos \alpha ) \over {\partial x}} + {\partial (T_c  \sin \alpha ) \over {\partial y}}$$
 </section>
 
 <section>
-   <h3>Empirical equations</h3>
-<small>
-<ul>
-<li>USLE,
-$$E=R.K.L.S.C.P$$
-<li>
-empirical factors/coefficients
-R - rainfall intensity
-K - soil erodibility
-L - hillslope length or contributing area
-S - slope steepness
-C - cover
-P - protection measures
-
-<li>USPED
-<li>SIMWE/WEPP
-</ul>
-</small>
-</section>
-
-<section>
-   <h3>Sediment transport capacity</h3>
-<p> Figures and equations from erosion chapter, exponent
-<p> <img height="350" src="img/flow_erosion/smokies_uspedexp.jpg">
-</section>
-
-<section>
    <h3>Net erosion and deposition</h3>
-<p> Figures and equations from erosion chapter, exponent
-<p> <img height="350" src="img/flow_erosion/smokies_uspedexp.jpg">
+Spatial pattern of net erosion and deposition estimated as change in sediment transport capacity
+<p>
+<img height="300" src="img/masstransport/erdep_cerl_3d.gif">
+<img height="300" src="img/masstransport/erdep_cerl_dem.gif">
+</section>
+
+<section>
+   <h3>Net erosion-deposition regimes</h3>
+Spatial pattern of erosion-deposition sheet flow (m=0.6) to concentrated flow (m=1.5)
+<p>
+<img height="400" src="img/flow_erosion/smokies_uspedexp.jpg">
+</section>
+
+<section>
+   <h3>Empirical equations</h3>
+Universal Soil Loss Equation (USLE, RUSLE)
+$$E=R.K.L.S.C.P$$
+where empirical factors/coefficients
+<ul>
+ <li>R - rainfall intensity
+ <li>K - soil erodibility
+ <li>L - hillslope length or contributing area
+ <li>S - slope steepness
+ <li>C - cover
+ <li>P - protection measures
+</ul>
+<p>
+$L$ represents water flow for tilted plane, for complex topography 
+we can replace it by $A$ upslope contributing area and modify RUSLE
+to estimate sediment transport capacity and net erosion-deposition
+as a change in sediment transport in the direction of flow.
 </section>
 
 <section>
    <h3>Sediment transport capacity</h3>
 Application to small rural watershed with spatially variable land cover
-<p><img height="380" src="img/flow_erosion/8-8-03Ditch.jpg">
+<p><img height="320" src="img/flow_erosion/8-8-03Ditch.jpg">
 <img height="380" src="img/flow_erosion/uspedsedflowdem.jpg">
 </section>
 
