@@ -28,15 +28,15 @@
 <li>Numerical simulations: tools for gaining new knowledge - <b>virtual experiments</b>
 <li class="fragment">Geospatial numerical simulations: the modeled quantities are function of a location on Earth
 <p>
-<li>Geospatial models have evolved:
+<li class="fragment">Geospatial models have evolved:
 <ul>
 <p>
  <li class="fragment">from: empirical, spatially averaged, static 
 <p>
- <li class="fragment">to: process-based, distributed (spatially explicit) and dynamic with 
+ <li class="fragment">to: process-based, spatially explicit and dynamic with 
      the aim to predict modeled quantity at any point in space and time
 </ul>
- <li class="fragment">Most geospatial models combine both approaches
+ <li class="fragment">Most geospatial models combine empirical and process-based approaches
 </ul>
 </section>
 
@@ -70,29 +70,16 @@ but uses empirical Mannings coefficient for computing flow velocity</small>
 
 <section>
    <h3>Modeling components</h3>
-When modeling landscape processes we need to consider:
 <p>
-<ul>
-  <li class="fragment"> <b>Modeled quantity [units]:</b> water depth[m], discharge[m$^3$/s],
-pollutant concentration[mg/l], vegetationi density[%cover], population density [p/area], ...
-  <li class="fragment"> <b>Spatial and temporal scale:</b> e.g., first order strem [1m resolution, single storm, minutes]
-  <li class="fragment"> <b>Configuration space and interactions:</b> modeled quantity as function of environmental variables, 
-e.g., water depth depends on precipitation, infiltration, topography, land cover, ..
-  <li class="fragment"> <b>Governing equations or rules:</b> continuity, mass preservation, diffusion, ...
-</ul>
-</section>
-
-<section>
-   <h3>Modeling components</h3>
 <ul>
   <li>Modeled quantity:
      <b class="fragment">water depth [m], discharge [m$^3$/s], pollutant concentration[mg/l]</b>
   <li>Spatial and temporal scale:
-     <b class="fragment">e.g. first order stream [1m resolution], single storm [minutes]</b>
+     <b class="fragment">e.g. modeling a first order stream may require 1m spatial and 1 min temporal resolution</b>
   <li>Configuration space and interactions:
-     <b class="fragment">water depth depends on precipitation, topography, soil properties, land cover...</b>
+     <b class="fragment">water depth depends on precipitation, topography, soils, land use</b>
   <li>Governing equations:
-     <b class="fragment"> bivariate continuity equations, diffusion, ... </b>
+     <b class="fragment"> continuity equations, diffusion, ... </b>
 </ul>
 </section>
 
@@ -102,11 +89,12 @@ e.g., water depth depends on precipitation, infiltration, topography, land cover
 <ul>
  <li>Modeled quantities and environmental variables can be represented by continuous georeferenced fields
  <li>To support numerical simulations these fields need to be discretized:
+<p>
 <ul>
   <li class="fragment"><b>spatially averaged units:</b> discrete polygons (hydrologic units, hillslope elements, landscape patches)
   <li class="fragment"><b>spatially distributed representation:</b> structured and unstructured meshes, or random particles
+  <li class="fragment">Modeled quantities can also evolve along networks (streams, sewer networks) or represent discrete objects (particles, agents)</p>
 </ul>
-<p class="fragment">Modeled quantities can also evolve along networks (streams, sewer networks) or represent discrete objects (particles, agents)</p>
 </section>
 
 <section>
@@ -181,9 +169,11 @@ $$ Q = C \, i \, A $$
  <li class="fragment">$i$ [$\rm m/s$] average rainfall intensity
 <p>
  <li class="fragment">$A$ [$\rm m^2$] is upslope contributing area
+<p>
+ <li class="fragment">to determine $i$ we need time to concentration 
+(time water needs to flow along the longest flowpath to reach the outlet),
+duration of rainfall needed to reach the steady state
 </ul>
-<p class="fragment">Time to concentration (time water needs to flow along the longest flowpath to reach the outlet)
-is used to identify duration of rainfall needed to reach the steady state
 <!-- show in mapcalc disch = 0.7 * 50 * 0.001/3600 * A * 1, general
 disch = coef * rain * A * res*res * units -->
 </section>
@@ -193,7 +183,7 @@ disch = coef * rain * A * res*res * units -->
 <p>
 $$ Q = C \, i \, A $$
 <p>
-<img height="360" src="img/water_geometry/accum_5Kmfd.jpg">
+<img height="360" src="img/water_geometry/accum5K_gr65_mfd.jpg">
 <img height="360" src="img/water_geometry/accum_runoffvar_30m3d.jpg">
 <!--show in mapcalc disch = 0.7 * 50 * 0.001/3600 * A * 1, general disch = coef * rain * A * res*res * units -->
 </section>
@@ -208,15 +198,14 @@ From geometry-based routing to continuity equation
    <h3>Dynamic Hydrologic Models</h3>
 Flow modeling with diffusion term: process-bsed simulation of flow through depression
 <p><img height="360" src="img/flow_erosion/gisemhhdifu.gif">
-<p><small>Instead of filling the DEM, it fills the depression with water</small>
+<p><small>Instead of filling the DEM, we fill the depression with water</small>
 </section>
 
 <section>
    <h3>Path sampling method</h3>
-<p>
 <ul>
-  <li>based on duality between particle and field representation
-  <li>path samples represent water evolving according to the shallow 
+  <li>duality between particle and field representation
+  <li>path sampling: water evolving according to the shallow 
       water bivariate continuity equation - drift and diffusion
 </ul>
 <p class="fragment"> <img height="380" src="img/flow_erosion/fanimwalk.gif">
@@ -225,36 +214,97 @@ Flow modeling with diffusion term: process-bsed simulation of flow through depre
 
 <section>
    <h3>Overland water flow </h3>
-<p>Small agricultural watershed: path sampling based simulation
+<p>Path sampling based simulation of water flow within a small agricultural watershed
 <p> <img height="350" src="img/flow_erosion/lw_storm2006Alberto.jpg">
 <img height="380" src="img/flow_erosion/elev_dischtest.gif">
 </section>
 
 <section>
-   <h3>Hydrologic modeling: suburban application</h3>
+   <h3>Water flow in a suburban neighborhood</h3>
 <p>High resolution (sub-meter) modeling of runoff
 <p> <img height="380" src="img/flow_erosion/water_ortho_lg.png">
  <img height="380" src="img/flow_erosion/water_stormdrains_zoom.jpg">
+<p><small>Note (a) the role of stream buffer in storing water and slowing down the flow,
+(b) accurate routing of water on roads along curbs</small>
 </section>
 
 <section>
-   <h3>Erosion modeling</h3>
+   <h3>Soil erosion modeling</h3>
 <p>
 Motivation: 
 <ul>
-<li class="fragment"> analysis of spatial pattern of sediment flow, 
-<li class="fragment"> identification sediment sources and sinks, 
+<li class="fragment"> identification sediment sources and sinks 
 <li class="fragment"> design of conservation measures
 <li class="fragment">sustainable land use management
 </ul>
+<ul>
+  <li>Modeled quantity: sediment transport rate [kg/(m s], net erosion/deposition rate [kg/(m$^2$ s)]
+  <li>Spatial and temporal scale: from hillslopes to watersheds
+  <li>Configuration space and interactions: sediment transport depends on water flow, topography, soil properties, land use
+  <li>Governing equations: continuity equation, diffusion, proliferation and decay
+</ul>
+</section>
+
+</section>
+
+<section>
+   <h3>Sediment transport equations</h3>
+<p>
+Assuming steady state flow, sediment transport $q_s$ can be approximated by
+sediment transport capacity $T_c$:
+<p>
+$$ q_s \approx T_c = K_T A^m (\sin \gamma)^n$$
+<p>
+<small>
+<ul>
+<li> where $A$ is contributing area as measure of water flow
+<li>$K_T$ is transport capacity coefficient
+<li>$\gamma$ is slope angle
+<li>$m,n$ are empirical coefficients
+</ul>
+</small>
+</section>
+
+<section>
+   <h3>Net erosion and deposition</h3>
+<small>
+Net erosion and deposition (source and sinks term) are computed as a change
+in sediment transport capacity $T_c$ in the direction of flow (divergence of the sediment
+transport vector field).
+It is a dot product of a unit vector ${\bf s_0}$ in the direction of flow $\alpha$
+<p>
+$${\bf s_0} =(\cos \alpha, \sin \alpha)$$
+
+<p>and sediment transport surface gradient
+<p>
+
+$$ {\bf q_s} = \left ( \frac{\partial T_c }{ \partial x}, \frac{\partial T_c }{ \partial y } \right ) $$
+
+<p>leading to an equation that is easy to compute using map algebra
+<p>
+$$d_s =\nabla\cdot {\bf q}_s  \approx = {\partial (T_c  \cos \alpha ) \over {\partial x}} + {\partial (T_c  \sin \alpha ) \over {\partial y}}$$
+</small>
 </section>
 
 <section>
    <h3>Erosion modeling: equations</h3>
-<p>
-General equation with stream power, sediment transport and erosion and deposition
-as change (divergence) in sediment flow
-<p>RUSLE, empirical equation, process-based interpretation and GIS implementation
+<small>
+<ul>
+<li>USLE,
+$$E=R.K.L.S.C.P$$
+<li>
+empirical factors/coefficients
+R - rainfall intensity
+K - soil erodibility
+L - hillslope length or contributing area
+S - slope steepness
+C - cover
+P - protection measures
+
+<li>USPED
+<li>SIMWE/WEPP
+</ul>
+</small>
 </section>
 
 <section>
