@@ -192,7 +192,8 @@ $$ Q = C \, i \, A $$
 <section>
    <h3>Spatially Distributed  Models</h3>
 From geometry-based routing to continuity equation
-<div class="left" style="max-width: 60% !important">
+<p>
+<div class="left" style="max-width: 55%% !important">
 <ul>
 <li class="fragment">a) DEM with depression</li>
 <li class="fragment">b) least cost path</li>
@@ -203,7 +204,7 @@ From geometry-based routing to continuity equation
 </ul>
 </div>
 
-<img class="right" style="max-width: 38% !important" height="450" src="img/flow_erosion/gisemflow1hh.gif">
+<img class="right" style="max-width: 43% !important" height="450" src="img/flow_erosion/gisemflow1hh.gif">
 </section>
 
 <section>
@@ -227,8 +228,8 @@ Flow modeling with diffusion term: process-bsed simulation of flow through depre
 <section>
    <h3>Overland water flow </h3>
 <p>Path sampling based simulation of water flow within a small agricultural watershed
-<p> <img height="350" src="img/flow_erosion/lw_storm2006Alberto.jpg">
-<img height="380" src="img/flow_erosion/elev_dischtest.gif">
+<p> <img height="340" src="img/flow_erosion/lw_storm2006Alberto.jpg">
+<img height="390" src="img/flow_erosion/elev_dischtest.gif">
 <p><small>Note simulation of ponding and dispersed flow over the road</small>
 </section>
 
@@ -257,7 +258,7 @@ Motivation:
 <section>
  <h3>Soil erosion modeling</h3>
 <ul>
-  <li class="fragment">Modeled quantity: sediment transport rate [kg/(m s], net erosion/deposition rate [kg/(m$^2$ s)]
+  <li class="fragment">Modeled quantity: sediment transport rate [kg/(ms)], net erosion/deposition rate [kg/(m$^2$s)]
   <li class="fragment">Spatial and temporal scale: from hillslopes to watersheds, minutes (storms), annual rates
   <li class="fragment">Configuration space and interactions: sediment transport depends on water flow, topography, soil properties, land use
   <li class="fragment">Governing equations: continuity equation, diffusion, proliferation and decay
@@ -292,7 +293,7 @@ sediment transport capacity
 <section>
    <h3>Sediment transport capacity regimes</h3>
 Spatial pattern of sediment transport: prevailing sheet flow (a, m=0.6), 
-concentrated flow (b, m=1.5), spatially variable (c): 
+concentrated flow (b, m=1.5), spatially variable flow regime (c) 
 <p>
 <img height="360" src="img/flow_erosion/smokies_transporteq_rev.png">
 </section>
@@ -323,7 +324,7 @@ Spatial pattern of net erosion and deposition estimated as change in sediment tr
 <section>
    <h3>Net erosion-deposition regimes</h3>
 Spatial pattern of erosion-deposition for sheet flow (a, m=0.6),
-concentrated flow (b, m=1.5) and spatially variable (c).
+concentrated flow (b, m=1.5) and spatially variable flow regime (c)
 <p>
 <img height="360" src="img/flow_erosion/smokies_uspedexp.jpg">
 </section>
@@ -342,7 +343,7 @@ where empirical factors/coefficients are:
  <li>P - protection measures
 </ul>
 <p><small>
-$L$ cwis a function of water flow over tilted plane, for complex topography 
+$L$ is a function of water flow over tilted plane, for complex topography 
 we can replace it by $A$, upslope contributing area and modify RUSLE
 to estimate sediment transport capacity and net erosion-deposition
 as a change in sediment transport in the direction of flow.
@@ -361,15 +362,16 @@ Application to small rural watershed with spatially variable land cover
 Application to small rural watershed with spatially variable land cover
 <p><img height="380" src="img/flow_erosion/cfacbare.jpg">
 <img height="380" src="img/flow_erosion/uspederdepdem.jpg">
-<p>Read <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/erosion_notes.pdf">
+<p><small>Read <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/erosion_notes.pdf">
 Brief theoretical background document</a> for detailed description of the equations and units
 used in the assignment
+</small>
 </section>
 
 <section>
    <h3>Land use change application</h3>
 <p>Impact of construction on overald flow and erosion 
-<p> <img height="380" src="img/flow_erosion/middleschool_scen.jpg">
+<p> <img height="400" src="img/flow_erosion/middleschool_scen.jpg">
 <p><small>Note the highest erosion rates along the stream banks</small>
 </section>
 
