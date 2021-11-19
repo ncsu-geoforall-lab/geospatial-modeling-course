@@ -219,7 +219,7 @@ d.out.file flowlines
 <span class="question">Compare the result of accum_5K and accum_mfd_5K1m. Why are they different,
 which is more accurate and why?</span>
 <pre><code>
-r.watershed -a elevation=elev_lid792_1m threshold=50000 accumulation=accum_mfd_5K1m
+r.watershed -a elevation=elev_lid792_1m threshold=5000 accumulation=accum_mfd_5K1m
 d.rast accum_mfd_5K1m
 d.vect streams
 d.out.file stream_mfd
