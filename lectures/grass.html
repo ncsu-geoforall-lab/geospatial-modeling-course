@@ -160,6 +160,17 @@ processing server and spatial data publishing server
 
 <section>
 <h3>GRASS GIS</h3>
+<p>
+GRASS GIS (Geographic Resources Analysis Support System) is a Free and Open Source Software suite 
+for geospatial data management and analysis, image processing, spatial modeling, and visualization.
+<p>
+<a href="https://grass.osgeo.org/">grass.osgeo.org</a>
+<p>
+<a href="https://github.com/OSGeo/grass/">Source code in github</a>
+</section>
+
+<section>
+<h3>GRASS GIS</h3>
 <ul>
     <li>
         Timeline:
@@ -250,7 +261,7 @@ processing server and spatial data publishing server
         <li>available since 1993
         <li>major changes in 1996, 1999, 2002, 2003, 2006, 2008, 2017
         <li>parallelized version in 7.4
-        <li><a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.19.9831&rep=rep1&type=pdf">Hofierka, J., Suri, M. (2002): The solar radiation model for Open source GIS: implementation and applications. International GRASS users conference in Trento, Italy, September 2002.</a>
+        <li><small><a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.19.9831&rep=rep1&type=pdf">Hofierka, J., Suri, M. (2002): The solar radiation model for Open source GIS: implementation and applications. International GRASS users conference in Trento, Italy, September 2002.</a></small>
     </ul>
 </ul>
 <br>
@@ -273,7 +284,7 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
                 High-Performance Computing clusters, ...
         </ul>
     <li>single integrated software
-    <li>functionality divided into 500+ modules
+    <li>functionality implemented as 500+ modules
     <li>written in C and Python
 </ul>
 <img src="img/grass_hexagons_3d_white_outlier.png" class="stretch">
@@ -281,7 +292,7 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
 
 
 <section>
-<h3>Naming of Modules</h3>
+<h3>Naming Convention for Modules</h3>
 <table style="font-size: smaller;"><tbody>
     <tr>
         <th>Prefix</th>
@@ -308,7 +319,6 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
         <td>display and rendering</td>
         <td>d.rast: display raster map</td>
     </tr>
-    <!-- not relevant to 582 course and not enough space
     <tr>
         <td>i.</td>
         <td>imagery processing</td>
@@ -324,18 +334,16 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
         <td>temporal data processing</td>
         <td>t.rast.aggregate: temporal aggregation</td>
     </tr>
-    -->
 </tbody></table>
-<small>There is more: i., t., r3., m., ps.</small>
-<br>
-<img src="img/grass_cli.png" class="stretch">
+<!--
+<br> <img src="img/grass_cli.png" class="stretch">
+-->
 </section>
 
 
 <section>
 <h3>User Interfaces</h3>
 <ul>
-<li>Functionality divided into modules <span class="small">(over 500)</span>
 <li>Modules can be accessed using:
     <ul>
         <li>Graphical User Interface (GUI)
@@ -349,12 +357,13 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
 
 
 <section>
-<h3>GUI</h3>
+<h3>Graphical User Interface</h3>
 <ul>
 <li>The interface for desktop
 </ul>
 <br>
 <img src="img/grass_gui.png" class="stretch">
+<small>GUI for GRASS GIS 7, redesign coming with GRASS GIS 8.2</small>
 </section>
 
 
@@ -424,7 +433,7 @@ code, or run them directly.
 <h3>3rd Party Interfaces</h3>
 <ul>
 <li>QGIS <small class="small">(Processing Plugin and GRASS Plugin)</small>
-<li>R <small class="small">(rgrass7 package)</small>
+<li>R <small class="small">(rgrass package)</small>
 <li>...
 </ul>
 <br>
@@ -441,10 +450,13 @@ code, or run them directly.
         <li>by NC State University, Center for Geospatial Analytics
     </ul>
 </ul>
-<p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Cd3cCQTGer4" frameborder="0"  allowfullscreen></iframe>
+<!--
 <iframe data-autoplay width="700" height="350" src="https://www.youtube.com/embed/Uje8ORyhBaQ?rel=0&amp;showinfo=0&amp;loop=1&amp;playlist=Uje8ORyhBaQ" frameborder="0" allowfullscreen></iframe>
+-->
 <p><small>
 Modules running: v.surf.rst, r.contour, r.fill.dir, r.sim.water
+<br>see also <a href="https://link.springer.com/book/10.1007%2F978-3-319-89303-7">Petrasova et al., 2018, Tangible Modeling with Open Source GIS, 2nd edition, Springea</a>r
 </small></p>
 </section>
 
@@ -457,12 +469,14 @@ Modules running: v.surf.rst, r.contour, r.fill.dir, r.sim.water
 
 
 <section>
-<h3>Selecting Mapset</h3>
+<h3>Starting GRASS GIS 7</h3>
 <ul>
 <li>Selecting database, location, and mapset
 </ul>
 <br>
 <img src="img/grass_startup.png" class="stretch">
+<p>CLI start: <code>grass -c EPSG:3358 -e ~/grassdata/nc_spm/
+<p><small>GRASS GIS start-up is redesigned for GRASS GIS 8 with more intuitive start</small>
 </section>
 
 
@@ -512,7 +526,7 @@ Modules running: v.surf.rst, r.contour, r.fill.dir, r.sim.water
 <img src="img/grass_addons.png" class="stretch">
 </section>
 
-
+<!--
 <section>
 <h3>Peer-reviewed Implementation</h3>
 <ul>
@@ -523,6 +537,18 @@ Modules running: v.surf.rst, r.contour, r.fill.dir, r.sim.water
         </ul>
 </ul>
 <img src="img/grass_bug_in_equation.png" class="stretch">
+</section>
+-->
+
+<section>
+<h3>Try GRASS GIS with Jupyter Notebooks</h3>
+GRASS GIS workshops and tutorials implemented as Jupyter Notebooks in Binder
+<ul>
+    <li><a href="https://mybinder.org/v2/gh/ncsu-geoforall-lab/grass-gis-workshop-foss4g-2021/main?urlpath=lab%2Ftree%2Fworkshop_part_1.ipynb">
+GRASS GIS: From Beginner to Power User</a>
+    <li><a href="https://mybinder.org/v2/gh/OSGeo/grass/c173461?urlpath=lab%2Ftree%2Fdoc%2Fnotebooks%2Fgrass_jupyter.ipynb">
+GSoC project: Improved intergration of GRASS GIS and Jupyter</a>
+</ul>
 </section>
 
 
