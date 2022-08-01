@@ -10,36 +10,23 @@ Outline:
     <li>influence of interpolation parameters</li>
 </ul>
 <h4>Lecture</h4>
-<p>Slides and recorded video:
-<ul>
-    <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Linterp.ppt">Lecture slides</a> (methods)
-    <li><a href="../resources/interpolation_notes.pdf">Equations</a>
-    <li><a href="https://youtu.be/VO2e0MhtYKI">Lecture Interpolation Definitions</a>
-    <li><a href="https://youtu.be/pigHe9nKaR8">Lecture Interpolation Methods</a>
 <p>
-    <li><a href="../lectures/spatial_interp_methods.html">Lecture slides updated: Spatial Interpolation: methods</a>
-</ul>
+    <a href="../lectures/spatial_interp_methods.html">Lecture slides: Spatial Interpolation methods</a>
+<p>
 Supplemental materials:
 <ul>
     <li>Interactive <a href="http://alexbeutel.com/webgl/voronoi.html">Voronoi diagram generator</a> with WebGL by Alex Beutel</li>
     <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/resources/mitas_mitasova_1999_2005.pdf">Overview of interpolation methods</a> by
     Mitas, L., Mitasova, H., 1999, Spatial Interpolation. In: P.Longley, M.F. Goodchild, D.J. Maguire, D.W.Rhind (Eds.), Geographical Information Systems: Principles, Techniques, Management and Applications, GeoInformation International, Wiley, 481-492.
-    <li><a href="http://www.spatialanalysisonline.com/HTML/index.html">Equations for additional functions</a> i
+    <li><a href="http://www.spatialanalysisonline.com/HTML/index.html">Equations for additional functions</a> 
 in Geospatial Analysis - 5th Edition, 2015, by de Smith, Goodchild, and Longley (see sections 6.6.1, 6.6.5, 6.6.6, 6.6.7)
+    <li>Original lecture:<a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Linterp.ppt">Slides (methods)</a>,
+    <a href="../resources/interpolation_notes.pdf">Equations</a>, videos:
+    <a href="https://youtu.be/VO2e0MhtYKI">Interpolation Definitions</a>,
+    <a href="https://youtu.be/pigHe9nKaR8">Interpolation Methods</a>.
 <!--<li><a href="https://doi.org/10.1016/j.envsoft.2013.12.008">Review of interpolation methods in environmental sciences</a>-->
 </ul>
 <h4>Assignment part A</h4>
-<!--
-<ul>
-<li>interpolate 2m resolution DEM from random subsample of lidar data using:
-    (a) voronoi (thiessen) polygons, (b) inverse distance weighted (IDW) average with different parameters,
-     (c) linear interpolation between contours and on TIN,
-     (d) natural neighbor interpolation
-</li>
-<li>design an experiment that will explore impact of IDW interpolation function
-    parameters on the resulting surface</li>
-</ul>
--->
 <ul>
     <li>Approach:
         <a href="../grass/interpolation_1.html">GRASS solution</a>,
@@ -58,13 +45,8 @@ Outline:
     <li>implementation - point selection techniques</li>
 </ul>
 <h4>Lecture</h4>
-<p>Slides and recorded video:
-<ul>
-    <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_LinterpS2f.ppt">Lecture slides</a> (splines, point selection)
-    <li><a href="https://youtu.be/eLYsx-ADOGI">Lecture Interpolation Splines</a>
-    <li><a href="https://youtu.be/73c_1BD-ztI">Lecture Interpolation Point selection</a>
 <p>
-    <li><a href="../lectures/spatial_interp_splines.html">Lecture slides updated: Spatial Interpolation: splines</a>
+<a href="../lectures/spatial_interp_splines.html">Lecture slides: Spatial Interpolation with splines</a>
 </ul>
 Supplemental materials:
 <ul>
@@ -78,23 +60,14 @@ Mitasova, H., Mitas, L. and Harmon, R.S., 2005, Simultaneous spline interpolatio
 Hofierka J., Parajka J., Mitasova H., Mitas L., 2002, Multivariate Interpolation of Precipitation Using Regularized Spline with Tension. 
 TGIS 6(2), 135-150.</a>
     <li>Hutchinson, MF, 1995, Interpolating mean rainfall using thin plate smoothing splines, Int. Journal of Geographical Information Systems 9(4), 385-403. 
-    <li><a href="http://www.alatown.com/spline/">History of splines for design</a>, note that these are mesh-based splines, different from
-the thin plate splines with smoothing and tension used for gridding in GIS
+    <li>Original lecture: <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_LinterpS2f.ppt">Slides</a>, videos:
+    <a href="https://youtu.be/eLYsx-ADOGI">Interpolation with Splines</a>,
+    <a href="https://youtu.be/73c_1BD-ztI">Interpolation Point selection</a>.
+<!--    <li><a href="http://www.alatown.com/spline/">History of splines for design</a>, note that these are mesh-based splines, different from
+the thin plate splines with smoothing and tension used for gridding in GIS-->
 </ul>
 
 <h4>Assignment part B</h4>
-<!--
-<ul>
-<li>interpolate 2m resolution DEM using splines and
-    demonstrate impact of spline interpolation parameters on the resulting
-    surface: control level of detail, remove noise, estimate deviations </li>
-<li> use crossvaliadtion the compute the predictive error of interpolation
-     and its spatial distribution</li>
-<li>interpolate NC precipitation map without and with influence of topography</li>
-<li>explore geostatistics approach to interpolation</li>
-<li>interpolate from contours and profiles, use generalization to thin the data
-</ul>
--->
 <ul>
     <li>Approach:
         <a href="../grass/interpolation_2.html">GRASS solution</a>,
