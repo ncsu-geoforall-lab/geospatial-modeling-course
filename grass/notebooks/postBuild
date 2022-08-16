@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# exit on error
+set -e
+
+# compile
+./configure \
+    --enable-largefile=yes \
+    --with-nls \
+    --with-cxx \
+    --with-readline \
+    --with-bzlib \
+    --with-pthread \
+    --with-pdal \
+    --with-proj-share=/usr/share/proj \
+    --with-geos=/usr/bin/geos-config \
+    --with-cairo \
+    --with-opengl-libs=/usr/include/GL \
+    --with-freetype=yes --with-freetype-includes="/usr/include/freetype2/" \
+    --with-sqlite=yes
+make
+
+# put command on path
+# ensure the user specific bin dir exists (already on path)
+mkdir -p $HOME/.local/bin/
+# create link to build
+ln -s $HOME/bin.*/grass* $HOME/.local/bin/grass
+
+# download a sample dataset
+mkdir -p data/grassdata \
+  && curl -SL https://grass.osgeo.org/sampledata/north_carolina/nc_basic_spm_grass7.zip > nc_basic_spm_grass7.zip \
+  && unzip -qq nc_basic_spm_grass7.zip \
+  && mv nc_basic_spm_grass7 data/grassdata \
+  && rm nc_basic_spm_grass7.zip
+  
+# Assignment 5 - Terrain Modeling Exteral Data
+curl -SL http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/tile_0793_016_spm.las > notebooks/5AB - Geomorphology/tile_0793_016_spm.las
+
+curl -SL http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/ortho_0793_016_ncspm.zip > 'notebooks/5AB - Geomorphology/ortho_0793_016_ncspm.zip' \
+    && unzip -qq 'notebooks/5AB - Geomorphology/ortho_0793_016_ncspm.zip' \
+    && rm ortho_0793_016_ncspm.zip
+
+curl http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/NagsHead_series.zip > NagsHead_series.zip \
+    && unzip -qq NagsHead_series.zip \ 
+    && mv NagsHead_series data/grassdata/nc_basic_spm_grass7/ \
+    && rm NagsHead_series.zip
