@@ -74,6 +74,7 @@ brew install grass7 --with-liblas</pre>
                 OSGeo Live and ArcGIS Desktop/Pro environments (both contain also QGIS).
                 The recommended image for the class is ArcGIS Pro 2.2,
                 although it contains a slightly outdated version of GRASS GIS.
+<!--
             <li>
                 GRASS GIS is also available online in
                 <a href="https://www.rollapp.com/app/grassgis">rollApp</a>
@@ -84,6 +85,7 @@ brew install grass7 --with-liblas</pre>
                     <li>Currently, only older 7.8.6 release is available.
                 </ul>
             </li>
+-->
         </ul>
     <li>
         use available resources to learn about GRASS GIS
@@ -96,7 +98,7 @@ brew install grass7 --with-liblas</pre>
             <li>
                 use
                 <a href="https://grass.osgeo.org/grass82/manuals/full_index.html">modules' manual pages</a>
-                to understand modules and their options
+                to understand modules (tools) and their options
             </li>
             <li>
                 see also 
@@ -111,10 +113,9 @@ brew install grass7 --with-liblas</pre>
                 <a href="https://grasswiki.osgeo.org/wiki/GRASS_GIS_for_ArcGIS_users">GRASS GIS for ArcGIS users</a> wiki pages (feel free to edit them)
             </li>
             <li>
-                feel free to explore various freely available video tutorials
+                explore various freely available video tutorials
                 <a href="https://www.youtube.com/playlist?list=PLSCH2IXZ2pHrUXXuOK7EBKWmMD7i6CTA-">GRASS 8.0 Tutorials</a>
-                or
-                <a href="https://www.youtube.com/channel/UCGc2WhP6M-rbgWItGriMexg">GRASS GIS Tutorials (Uses Older Version of GRASS)</a>
+                <!--<a href="https://www.youtube.com/channel/UCGc2WhP6M-rbgWItGriMexg">GRASS GIS Tutorials (Uses Older Version of GRASS)</a>-->
                 or
                 <a href="https://grasswiki.osgeo.org/wiki/Category:Videos">on GRASS GIS User wiki</a>
             </li>
@@ -144,6 +145,7 @@ brew install grass7 --with-liblas</pre>
 
 <h3 id="data">Data</h3>
 
+<!--
 Data are provided at three hierarchical levels:
 <ul>
    <li>entire NC state with raster data at 500m resolution: region nc_500m</li>
@@ -151,20 +153,22 @@ Data are provided at three hierarchical levels:
    <li>small watershed in rural area with data resolutions of 1m-3m: rural_1m</li>
    <li>See more at <a href="https://grassbook.org/datasets/datasets-3rd-edition/">GRASSbook datasets description</a></li>
 </ul>
+-->
 <p>
 Download:
 <ul>
 <li>Sample GRASS GIS location, you have 3 options how to get it:
     <ul>
         <li>
-            See the instructions below to make sure you have grassdata
-            directory. Start GRASS GIS. In the <em>Startup</em> window,
+            Create a grassdata directory (folder), e.g. C:\Users\myname\Documents\grassdata, then
+            start GRASS GIS. In the <em>Startup</em> window,
             under the <em>Location</em> section, press <em>Download</em>,
             select <em>Complete NC location</em>, press <em>Download</em>,
             close when finished.
         <li>
             <strong>(If using GRASS GIS version &lt 8 )</strong> Download and unzip <a href="https://grass.osgeo.org/sampledata/north_carolina/nc_spm_08_grass7.zip">
-            <em>nc_spm_08_grass7</em></a>. See the instructions below.
+            <em>nc_spm_08_grass7</em></a> into the grassdata directory. <strong>Important:</strong>make sure that your unziping software does
+    not create additional directory with the same name, e.g. on MS Windows make sure that you do not get nc_spm_08_grass7\nc_spm_08_grass7.
         <li>
             The same dataset is provided during installation of GRASS GIS
             on MS Windows under the name North_Carolina.
@@ -172,8 +176,11 @@ Download:
 	<p>
 </li>
 	  <li>Sample ArcGIS Pro geodatabase <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/gdbs.zip"> <em>gdbs.zip</em></a></li>
+          <li>Cretae arcdata directory e.g. C:\Users\myname\Documents\arcdata 
+          <li>After downloading, unpack ArcGIS geodatabase into arcdata directory
           
 </ul>
+<!--
 <p>
 Instructions:
 <ul>
@@ -183,13 +190,13 @@ Instructions:
             <li>Mac OS or Linux: ideally in your home directory, e.g. /home/myname/Documents/grassdata</li>
         </ul>
     </li>
-    <li>After downloading, unpack the datasets and copy GRASS GIS location into grassdata and ArcGIS geodatabase into arcdata</li>
-    <li><strong>Important:</strong> make sure that your unpacking software does
-    not create additional directory with the same name, e.g. on MS Windows you typically get nc_spm_08_grass7\nc_spm_08_grass7,
-    the instructions assume that you deal with this after unpacking)</li>
+    <li>After downloading, unpack ArcGIS geodatabase into arcdata folder and, if using GRASS GIS version &lt 8, 
+    copy GRASS GIS location into grassdata folder</li>
+    <li><strong>Important:</strong> make sure that your unziping software does
+    not create additional directory with the same name, e.g. on MS Windows make sure that you do not get nc_spm_08_grass7\nc_spm_08_grass7.
+    </li>
 </ul>
 
-<!--
 <b>North Carolina data needed for assignments: </b><br>
 <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/nc_spm_08_grass7.zip">
 GRASS LOCATION in State Plane, meters: nc_spm_08 (150MB),</a> <br>
@@ -200,17 +207,17 @@ ArcGIS geodatabase, shape elevation for MR lidar stored as attribute (64MB) </a>
 GRASS MAPSET needed later for Temporal Terrain Analysis:<br>
 <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/NagsHead_series.zip">
  NagsHead time series</a>, requires LOCATION in NC State Plane, meters<br>
--->
 Optional data sets for optional tasks in the assignments or for a project:
 <ul>
     <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/nc_ll.zip">GRASS LOCATION in Geographic coordinates WGS84. (55MB),</a>
     <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/nc_spf.zip">GRASS LOCATION in State Plane coordinates, in feet (8MB),</a>
-<!-- <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/nc_utm18.zip">GRASS LOCATION in UTM18, meters - to be added</a> <br> -->
+<a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/nc_utm18.zip">GRASS LOCATION in UTM18, meters - to be added</a> <br>
     <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/0793_016.las.zip">2013 Raleigh lidar survey, tile 073_016, point cloud in las format (22MB)</a>,
     <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/0793_016_xyzirnc_ncspf.zip">in asci xyzirnc format (22MB)</a>
 </ul>
+-->
 
-You can find additional data for your project in this list of <a href="resources/data_providers.html">data providers</a>.
+You can find additional data for your project in this list of <a href="resources/data_providers.html">data repositories</a>.
 
 <h3 id="assignments">Assignments</h3>
 
