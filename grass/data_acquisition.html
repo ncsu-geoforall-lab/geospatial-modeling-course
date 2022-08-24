@@ -38,8 +38,7 @@ Tutorials:
 <ul><li>Video tutorial (no sound, switch on annotations):
 <a href="https://www.youtube.com/watch?v=9fcBvYetIsM">
     <strong>Getting started with GRASS GIS GUI</strong></a>.
-Note: recorded with GRASS GIS 7.2,
-some details can differ.</li>
+Note: recorded with GRASS GIS 7.2, some details can differ (e.g. the start up window).</li>
 <li>Updated Video tutorial (GRASS 8.2.0):
     <a href="https://www.youtube.com/watch?v=OCcM1XfxHW8&list=PLSCH2IXZ2pHrUXXuOK7EBKWmMD7i6CTA-&index=1">
         <strong>Introduction to GRASS GIS version 8 - Basics and getting started.</strong></a>.
@@ -114,7 +113,7 @@ and do all computations there.
 
 <p>
 Computational region is set by <em class="module">g.region</em> module (command)
-and specifies the extent and resolution at which raster operation are performed.
+and specifies the spatial extent and resolution at which raster operation are performed.
 
 
 <h3>Start GRASS GIS</h3>
@@ -124,6 +123,21 @@ Start GRASS GIS as any other program on your computer or in command line type:
 grass82
 </code></pre>
 
+You should see a location <em>nc_spm_08_grass7</em> in your database.
+If you have not downloaded it yet,
+click the icon <em>Download sample location to current database</em> and
+select <em>Complete NC location</em>, click <em>Download</em>, close when finished. 
+See also
+<a href="./grass/img/GRASS8.2_download_nc_sample_dataset.webm">Screen capture for MS Windows</a>
+
+Right click on <em>nc_spm_08_grass7</em> and select <em>Create mapset</em>, type in name for the new mapset,
+for example, <em>assignment1</em>, press OK. You will get a message that the Current mapset in <em>assignment1</em>
+and any new map layer that you will create will be saved here. 
+The provided data are in the mapset PERMANENT - double click to see the list of available raster and vector
+map layers. You can preview the map layers by double-clicking on them but we will manage the display
+in the Layers tab and/or using display commands. 
+
+<!--
 <p>
 In startup pannel set <b>GRASS GIS Database Directory</b> to path to datasets,
 for example on MS Windows, <code>C:\Users\myname\grassdata</code>.
@@ -139,6 +153,7 @@ or type <code>cd</code> (stands for change directory) into the GUI
 <pre><code>
 cd
 </code></pre>
+-->
 
 <h3>Display data in 2D</h3>
 First set working region
