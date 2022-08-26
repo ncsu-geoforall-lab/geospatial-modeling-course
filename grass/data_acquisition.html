@@ -104,8 +104,7 @@ data from other Mapsets. See also
 <a href="https://grass.osgeo.org/grass82/manuals/grass_database.html">structure of GRASS database</a>.
 
 <p>
-<b>DO NOT MOVE</b> the files under
-Location directory using non-GRASS tools.
+<b>DO NOT MOVE</b> the files under Location directory using non-GRASS tools.
 
 <p>
 Suggested workflow is to create a new mapset for each assignment
@@ -145,20 +144,34 @@ for example on MS Windows, <code>C:\Users\myname\grassdata</code>.
 For <b>GRASS Location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
 for <b>GRASS Mapset</b> create a new mapset (called e.g. <code>assignment_1</code>) and
 click <b>Start GRASS session</b>.
+-->
 
 <p>
-Change working directory:<br>
-<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+To save your outputs and to store external data create a directory where you can write, e.g.
+on MS Windows, C:\Users\myname\Documents\GIS582_HW\assignment1.
+Then set this directory in GRASS GIS as your working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select this directory<br>
 or type <code>cd</code> (stands for change directory) into the GUI
 <em>Console</em> and hit Enter:
 <pre><code>
 cd
 </code></pre>
--->
+
+<p>
+Find the working coordinate reference system, spatial extent and resolution:<br>
+In GUI: <em>Settings</em> > <em>Map projections</em> > <em>Display map projection</em><br>
+In GUI: <em>Settings</em> > <em>Region</em> > <em>Display Region</em><br>
+<p>
+Or paste the following command into the <em>Console</em> tab:
+
+<pre><code>
+g.proj -p
+g.region -pl
+</code></pre>
 
 <h3>Display data in 2D</h3>
-First set working region
-in GUI: <br>
+First set working region to a predefined region in the SW Wake county
+using GUI: <br>
 <em>Settings > Region > Set Region >
 Set current region from named region > select swwake_30m > Run > Close</em>
 or alternatively, paste in the command console in the <em>Console</em> tab:
@@ -232,6 +245,8 @@ d.vect schools_wake icon=basic/circle size=10 fill_color=blue
 <p>
 Save the displayed map:<br>
 In Map Display click <em>Save display to graphic file</em>.
+Or run the equivalent command from the console, the graphic file 
+will be saved into your working directory.
 
 <pre><code>
 d.out.file mymap
@@ -408,8 +423,9 @@ v.info -c streets_wake
 </code></pre>
 
 <p>
-All data (maps) are stored in your GRASS database directory.
-You can save your project into a GRASS workspace file *.gxw under <em>File</em> > <em>Workspace</em> > <em>Save as</em>.
+Note that all data (map layers) that you create are stored in your GRASS database/location/current_mapset.
+If you want to go back to what you have worked on, you can save the Map Display and Layer manager, including the symbology and layout
+in a GRASS workspace file *.gxw under <em>File</em> > <em>Workspace</em> > <em>Save as</em>.
 
 
 <h3>Import and export for raster and vector data</h3>
@@ -423,11 +439,10 @@ Cases where the projection differs are covered in a <a href="import.html">separa
 
 <h4>Import and export Shapefiles</h4>
 
-Download Shapefile with geodetic points:
+Download a shapefile with geodetic points:
 <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/geod_pts_spm.zip">geod_pts_spm.zip</a>.
-Save and extract (unzip) it on Desktop or a directory where you have read/write permissions.
-Note where are the extracted files as you will use the extracted Shapefile
-in the next step.
+Save and extract (unzip) it to your working directory.
+<!--Note where are the extracted files as you will use the extracted Shapefile in the next step.-->
 
 <p>
 To import file in GUI use:
@@ -443,8 +458,9 @@ Zoom to computational region to keep the spatial extent at working region<br>
 In case the imported point data was not displayed automatically,
 use <em>File > Add vector</em> to display the data
 and zoom to the vector layer.<br>
-Compare the imported vector with "streets_wake" vector
-to see how they are distributed.
+<span class="question">How are the 
+ imported geodetic data points spatially related to the "streets_wake" vector data?
+</span>
 
 <p>
 Export the roadsmajor map as a shape file:
@@ -452,38 +468,25 @@ Export the roadsmajor map as a shape file:
 <li><em>File > Export vector map > Common export formats</em></li>
 <li>Select "roadsmajor" as <em>Name of input vector map</em></li>
 <li>Use <em>Browse</em> to find a directory to export the data to,
-e.g. your Desktop.
+e.g. your "working directory".
 This will fill out the <em>Name of OGR output datasource</em> field
-with something like "C:\mydirectory\roadsmajor.shp".
-Do not forget to specify the full path to your output files otherwise you might
+with the path to this directory (e.g. "C:\mydirectory\roadsmajor.shp") 
+Make sure to specify the full path to your output files otherwise you might
 have hard time finding them especially on MS Windows.
 (Also note that you need to have write permissions for that directory.)
 </li>
 <li>Select <em>ESRI_Shapefile</em> in <em>Data format to write</em></li>
 <li>click <em>Run</em></li>
 </ul>
-You can then display the exported roadsmajor data in ArcGIS.
+You can then display the exported "roadsmajor" data in ArcGIS.
 
-Note the names of the GRASS GIS modules which were used in the
+Note that the names of the GRASS GIS modules which were used in the
 background during the import and export we just did:
 <em class="module">v.import</em> and <em class="module">v.out.ogr</em>.
 
-<h4>Coordinate system, spatial extent, and resolution</h4>
-<p>
-Find the working coordinate system and spatial extent:<br>
-In GUI: <em>Settings</em> > <em>Map projections</em> > <em>Display map projection</em><br>
-In GUI: <em>Settings</em> > <em>Region</em> > <em>Display Region</em><br>
-<p>
-Or paste the following command into the <em>Console</em> tab:
-
-<pre><code>
-g.proj -p
-g.region -pl
-</code></pre>
-
-<!-- 
 <h4>Import and export of vectors when scripting</h4>
 
+<!--
 <p>
 For scripting workflows a command line import/export can be used.<br>
 It requires properly set path to external files.
@@ -501,15 +504,15 @@ On MS Windows it is often easier to do the import through GUI
 to get the correct path to your data.<br>
 On Mac, Linux and other systems you can use current working directory
 and/or auto-complete in the system command line to avoid typing the full path;
-you can of course use GUI if you prefer. -->
+you can of course use GUI if you prefer. 
+-->
 
-
-<h4>Import raster file provided in GeoTIFF format</h4>
+<h4>Import a raster file provided in GeoTIFF format</h4>
 
 <p>
 Download a landuse raster in GeoTIFF format (referenced TIFF image):
-<a href="data/lc96ras_cut.tif">lc96ras_cut.tif</a>.
-Save it on Desktop or in a directory of your choice.
+<a href="data/lc96ras_cut.tif">lc96ras_cut.tif</a> and 
+save it your working directory.
 <p>
 To import file in GUI use:
 <em>File > Import raster data > Simplified raster import with reprojection</em>.
@@ -518,18 +521,18 @@ Make sure the file is checked on in the <em>List of GDAL layers</em>.
 Click <em>Import</em>.
 
 <p>
-On MS Windows, the import is often easier to do through GUI because of getting
-the correct path to your data.
-However, in general, you can use the command line alternative below.<br>
-Note that it requires you to provide a full path to your input data,
-so you would have to replace "lc96ras_cut.tif" by something
-like "C:\path_to\my_file\lc96ras_cut.tif" or
-"/path_to/my_file/lc96ras_cut.tif" depending on the location of data
-and platform you are using.
+Alternatively, if the data that you want to import is stored in your working directory 
+set at the beginning of this assignment you can use the following command:
 
 <pre><code>
 r.import input=lc96ras_cut.tif output=landuse96_subset
 </code></pre>
+
+Note, that if the data is not in the working directory you need to provide a full path to your input data,
+so you would have to replace "lc96ras_cut.tif" by something
+like "C:\path_to\my_file\lc96ras_cut.tif" 
+so in that case the import is easier to do through GUI 
+where you can use Browse to get the correct path to your data.
 
 <h4>Exporting raster files as ASCII grid and GeoTIFF</h4>
 
@@ -588,9 +591,6 @@ Review again the projection information:
 <pre><code>
 g.proj -p
 </code></pre>
-
-
-
 
 <h3>Optional: Add WMS layer</h3>
 View and download orthophoto through web mapping service.
