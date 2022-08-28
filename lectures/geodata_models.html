@@ -130,7 +130,7 @@ Land use classes at 30m resolution, qualitative data
 <section>
    <h3>Raster data model: discrete features</h3>
 <p>
-Roads: Speed limits for roads and walking speed for off-road areas, 30m resolutioa, quantitative datan
+Roads: Speed limits for roads and walking speed for off-road areas, 30m resolution, quantitative data
 <p>
 <img height="340" src="img/data_models/rasterdiscr_roads.jpg">
 </section>
@@ -245,7 +245,10 @@ Full 3D meshes: representation of structures
 <li class="fragment">continuous fields: re-interpolation
   <ul>
     <li>the higher resolution raster values are <b>interpolated</b> using the values of the neighboring lower resolution cells
-    <li>methods: bi-linear, bi-cubic, spline
+    <li>methods: 
+    <a href="https://en.wikipedia.org/wiki/Bilinear_interpolation">bi-linear</a>, 
+    <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">bi-cubic</a>, 
+    <a href="https://en.wikipedia.org/wiki/Spline_interpolation">spline</a>.
   </ul>
 <p>
   <li class="fragment">discrete raster data: nearest neighbor resampling
@@ -255,9 +258,6 @@ Full 3D meshes: representation of structures
   </ul>
 </p>
 </ul>
-<p>
-See <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">Wikipedia for more detailed explanation and equations</a> 
-</section>
 
 <section>
    <h3>Increasing resolution: continuous</h3>
@@ -285,16 +285,18 @@ See <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">Wikipedia for 
 
 <section>
    <h3>Increasing resolution: compare</h3>
-<p>From 30m resolution to 20m resolution
+<p>From 30m resolution to 20m resolution: nearest neighbor example
 <p>
-<br>
 <div class="left" style="max-width:30%">
 <ul>
-  <li>grid cells do not align,
-  <li>elevation: no "flats"
+  <li>grid cells do not align
+  <li>elevation: no 0 slope
   <li>geology: area for each class may change 
 </ul>
-<p>More complex downscaling techniques may be needed if the difference in resolution is large
+<p><small>
+More complex downscaling techniques using additional variables 
+may be needed if the difference in resolution is large
+</small>
 </div>
 <div class="right" style="max-width:60%">
 <img width="90%" src="img/data_models/rast_resampl_geol_elev_30_20.jpg">
