@@ -224,8 +224,8 @@ Polygons: vertices+nodes=boundaries, centroids
    <h3>Vector data model examples</h3>
 <p>Geometry and attributes for point, line and polygon data:
 <p>
-<img height="380" src="img/data_models/vectormodel_geom.png">
-<img height="380" src="img/data_models/vectmodel_attrib.png">
+<img height="390" src="img/data_models/vectormodel_geom.png">
+<img height="390" src="img/data_models/vectmodel_attrib.png">
 </section>
 
 <section>
@@ -240,9 +240,9 @@ Full 3D meshes: representation of structures
    <h3>Modifications of data representation</h3>
 <p>
 <ul>
-  <li>Changing raster resolution 
+  <li>Changing raster resolution, e.g., when model inputs are rasters at different resolutions 
 <p>
-  <li>Changing vector geometry type
+  <li>Changing vector geometry type, e.g., when model input requires different geometry than given data (points instead of lines)
 </ul>
 </section>
 
@@ -250,7 +250,7 @@ Full 3D meshes: representation of structures
    <h3>Raster data  - changing resolution</h3>
 <p>Resolution: size of the grid cell (pixel) in map units (m)
 <ul>
-<li class="fragment">continuous fields: re-interpolation
+<li class="fragment">continuous fields: interpolation
   <ul>
     <li>the higher resolution raster values are <b>interpolated</b> using the values of the neighboring lower resolution cells
     <li>methods: 
@@ -272,15 +272,16 @@ Full 3D meshes: representation of structures
    <h3>Increasing resolution: continuous</h3>
 <p>Elevation at 30m resolution resampled to 10m resolution 
 <p>
-<img width="95%" src="img/data_models/rast_resampl_elev.jpg">
-<p>Input raster values are observed elevations, no additional detail is generated
+<img width="95%" src="img/data_models/resampling_methods_elev.jpg">
+<p>Nearest neighbor creates "flats" in the resampled DEM, interpolation preserves smooth surface.
+<p> <small>See equations for <a href="https://en.wikipedia.org/wiki/Bilinear_interpolation">bi-linear</a> interpolation </small>
 </section>
 
 <section>
    <h3>Increasing resolution: discrete</h3>
 <p>Geology at 30m resolution resampled to 10m resolution
 <p>
-<img width="95%" src="img/data_models/rast_resampl_geol.jpg">
+<img width="95%" src="img/data_models/resampling_methods_geol.png">
 <p>Raster values are classes of observed geology
 <!--change geology example to more realistic landcover-->
 </section>
@@ -290,8 +291,11 @@ Full 3D meshes: representation of structures
 <p>Effect of resampling / reinterpolation on the results
 <img height="480" src="img/data_models/rast_resampl_geol_elev.jpg">
 <!--change geology example to more realistic landcover-->
+<p><small>More complex downscaling techniques using additional variables and machine learning
+may be needed if the difference in resolution is large</small>
 </section>
 
+<!--
 <section>
    <h3>Increasing resolution: compare</h3>
 <p>From 30m resolution to 20m resolution: nearest neighbor example
@@ -303,31 +307,26 @@ Full 3D meshes: representation of structures
   <li>geology: area for each class may change 
 </ul>
 <p><small>
-More complex downscaling techniques using additional variables 
-may be needed if the difference in resolution is large
 </small>
 </div>
 <div class="right" style="max-width:60%">
 <img width="90%" src="img/data_models/rast_resampl_geol_elev_30_20.jpg">
 </div>
-<!--change geology example to more realistic landcover-->
 </section>
+-->
 
 
 <section>
    <h3>Decreasing resolution</h3>
-<ul>
-  <li>continuous: nearest neighbor, average, min, max, or re-interpolation
-</ul>
+Continuous data: nearest neighbor, average, min, max, or re-interpolationais used
 <p> 
 <img height="300" src="img/data_models/rast_resampl_elev_down.jpg">
+<p>Nearest neighbor resampling of 10m DEM to 30m and 20m DEMs
 </section>
 
 <section>
    <h3>Decreasing resolution</h3>
-<ul>
-  <li>discrete: nearest neighbor resampling, mode (most common or majority class)
-</ul>
+Discrete data: nearest neighbor resampling, mode (most common or majority class)
 <p> 
 <img height="300" src="img/data_models/rast_resampl_geol_down.png">
 </section>
