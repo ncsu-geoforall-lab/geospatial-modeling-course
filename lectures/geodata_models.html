@@ -272,7 +272,7 @@ Full 3D meshes: representation of structures
    <h3>Increasing resolution: continuous</h3>
 <p>Elevation at 30m resolution resampled to 10m resolution 
 <p>
-<img width="95%" src="img/data_models/resampling_methods_elev.jpg">
+<img width="95%" src="img/data_models/resampling_methods_elev.png">
 <p>Nearest neighbor creates "flats" in the resampled DEM, interpolation preserves smooth surface.
 <p> <small>See equations for <a href="https://en.wikipedia.org/wiki/Bilinear_interpolation">bi-linear</a> interpolation </small>
 </section>
@@ -289,9 +289,9 @@ Full 3D meshes: representation of structures
 <section>
    <h3>Increasing resolution: compare</h3>
 <p>Effect of resampling / reinterpolation on the results
-<img height="480" src="img/data_models/rast_resampl_geol_elev.jpg">
+<img height="460" src="img/data_models/rast_resampl_geol_elev.jpg">
 <!--change geology example to more realistic landcover-->
-<p><small>More complex downscaling techniques using additional variables and machine learning
+<br><small>More complex downscaling techniques using additional variables and machine learning
 may be needed if the difference in resolution is large</small>
 </section>
 
@@ -318,10 +318,10 @@ may be needed if the difference in resolution is large</small>
 
 <section>
    <h3>Decreasing resolution</h3>
-Continuous data: nearest neighbor, average, min, max, or re-interpolationais used
+Continuous data: nearest neighbor, average, min, max, or re-interpolation is used
 <p> 
 <img height="300" src="img/data_models/rast_resampl_elev_down.jpg">
-<p>Nearest neighbor resampling of 10m DEM to 30m and 20m DEMs
+<p><small>Nearest neighbor resampling of 10m DEM to 30m and 20m DEMs</small>
 </section>
 
 <section>
@@ -329,6 +329,7 @@ Continuous data: nearest neighbor, average, min, max, or re-interpolationais use
 Discrete data: nearest neighbor resampling, mode (most common or majority class)
 <p> 
 <img height="300" src="img/data_models/rast_resampl_geol_down.png">
+<p><small>Nearest neighbor resampling of 10m soil typemap to 30m and 20m maps</small>
 </section>
 
 <section>
