@@ -253,22 +253,15 @@ d.vect elev_ned_contpts co=brown icon=basic/point size=3
 
 <h3>Convert from vector to raster</h3>
 
-Remove all previous map layers from <em>Layer Manager</em>.
 <p>
 Convert vector data to raster for use in raster-based analysis.
-First, adjust the computational region to resolution 200m:
+First, remove all previous map layers from <em>Layer Manager</em> and
+adjust the computational region to resolution 200m:
 
-<pre><code>
-g.region swwake_30m res=200 -p
-</code></pre>
-
-Then remove all layers from the <em>Layer Manager</em>.
-<!--
-or use d.erase in command line:
 <pre><code>
 d.erase
+g.region swwake_30m res=200 -p
 </code></pre>
--->
 
 <p>
 Convert vector points "schools" to raster.
@@ -305,7 +298,6 @@ and type in speed limits 25,35,45,55,65; move legend with mouse as needed.
 Alternatively, use the following commands:
 
 <pre><code>
-d.erase
 d.rast streets_speed_30m 
 d.legend streets_speed_30m at=5,30,2,5 use=25,35,45,55,65 
 </code></pre>
