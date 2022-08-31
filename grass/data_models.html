@@ -253,6 +253,7 @@ d.vect elev_ned_contpts co=brown icon=basic/point size=3
 
 <h3>Convert from vector to raster</h3>
 
+Remove all previous map layers from <em>Layer Manager</em>.
 <p>
 Convert vector data to raster for use in raster-based analysis.
 First, adjust the computational region to resolution 200m:
@@ -295,10 +296,10 @@ v.to.rast streets_wake out=streets_speed_30m use=attr attrcol=SPEED type=line
 </code></pre>
 
 <p>
-If you haven't done this already, add remove all other map layers
-from <em>Layer Manager</em> and add "streets_speed_30m" raster layer.<br>
+Raster "streets_speed_30m" will be added to the Layer manager and displayed in the <em>Map Display</em>.
+<br>
 Add legend for "streets_speed_30m" raster using GUI in <em>Map Display</em>:<br>
-<em>Add legend</em> > <em>Set Options</em> > <em>Advanced</em> > <em>List of discrete cat numbers</em>
+<em>Add legend</em> > <em>Set Options</em> > <em>Subset</em> > <em>List of discrete cat numbers</em>
 and type in speed limits 25,35,45,55,65; move legend with mouse as needed.
 <p>
 Alternatively, use the following commands:
