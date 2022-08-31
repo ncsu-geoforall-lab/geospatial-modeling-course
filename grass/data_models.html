@@ -66,7 +66,8 @@ g.region region=swwake_30m -p
 
 <p>
 The <code>-p</code> flag for <em class="module">g.region</em> is used to print the region
-we just set.
+we just set. i<em>Zoom to computational region</em> to make sure your display shows the region
+that you are working with.
 
 <p>
 Then we display the 30m resolution NED elevation raster.
@@ -94,7 +95,8 @@ Zoom to computational region in Map Display to set it to 10m resolution (equival
 display the resampled map (Add Raster, if you don't have it it in the Layer Manager already)<br>
 -->
 
-Display the resampled map by adding "elev_ned10m_nn" to <em>Layer Manager</em>
+The resulting elevation map should display automatically, if not, 
+display the resampled map by adding "elev_ned10m_nn" to <em>Layer Manager</em>
 in case you don't have it in the Layer Manager already.<br>
 Alternatively, use in command line the following:
 
@@ -111,7 +113,8 @@ r.slope.aspect elevation=elev_ned10m_nn aspect=aspect_ned10m_nn
 </code></pre>
 
 <p>
-Display the resampled map by adding "aspect_ned10m_nn" to <em>Layer Manager</em>
+You should see the aspect map derived from the resampled elevation map in your display,
+or you can add "aspect_ned10m_nn" to <em>Layer Manager</em>
 or in command line using:
 
 <pre><code>
@@ -119,9 +122,9 @@ d.rast aspect_ned10m_nn
 </code></pre>
 
 <p>
-To save the map, click in <em>Map Display</em> to on the button
+To save the map, click in <em>Map Display</em> on the button
 <em>Save display to graphic file"</em> or alternatively,
-use the following command:
+use the following command to save your map in the current working directory:
 
 <pre><code>
 d.out.file aspect_nn
@@ -129,7 +132,7 @@ d.out.file aspect_nn
 
 <p>
 Now, reinterpolate DEMs using bilinear and bicubic interpolation.
-Check the interpolated elevation surfaces using aspect maps.
+Check the structure of interpolated elevation surfaces using aspect maps.
 
 <pre><code>
 r.resamp.interp elev_ned_30m out=elev_ned10m_bil meth=bilinear
@@ -147,9 +150,10 @@ In <em>Map Display</em> click button <em>Save display to graphic file</em>,
 or use the following in the command line:
 
 <pre><code>
-d.out.file aspect_bic
+d.out.file aspect_bil
 </code></pre>
-<span class="question">Why is the aspect of elevation raster map computed by the nearest neighbor method different from the one computed by bilinear interpolation?</span><br>
+<span class="question">Why is the aspect map of elevation raster map computed by the nearest neighbor method i
+different from the one computed by bilinear interpolation?</span><br>
 
 <h3>Resampling to lower resolution</h3>
 
