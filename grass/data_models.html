@@ -343,7 +343,6 @@ r.to.vect streams_derived_t output=streams_derived_t type=line
 Visually compare the result with streams digitized from airphotos.
 To make space for the vector legend you may need to stretch your Map Display window a little wider.
 
-
 <pre><code>
 d.vect streams_derived_t color=blue
 d.vect streams color=red
@@ -361,23 +360,23 @@ d.out.file streams_compare
 Convert raster areas representing basins to vector polygons.
 <p>
 First, remove map layers from <em>Layer Manager</em> and set the region.
-To convert, use raster value as category number (flag -v) and 
-display vector polygons filled with random colors.<br>
-In GUI: Add vector > Colors > Switch on Random colors.
-Verify the basin boundaries by displaying together with streams.
+To convert, use raster values as category numbers (flag -v) and 
+display boundaries of vector polygons.<br>
+Verify the basin boundaries by displaying them together with streams - the stream 
+networks should "fit" within the basin boundaries.
 
 <pre><code>
 d.erase
 g.region raster=basin_50K -p
 d.rast basin_50K
 r.to.vect -sv basin_50K output=basin_50Kval type=area
-d.vect -c basin_50Kval type=boundary,area
+d.vect basin_50Kval type=boundary width=2
 d.vect streams color=blue
 </code></pre>
 
 <p>
 Save the displayed map either using GUI or using the following in case
-you are working in the command line.
+you are working in the command liner:.
 
 <pre><code>
 d.out.file basins
