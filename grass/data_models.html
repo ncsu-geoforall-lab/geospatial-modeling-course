@@ -46,7 +46,7 @@ into the command console in the <em>Console</em> tab and then hit Enter to open 
 <em>Read</em> the manual page for each command you are using for the first time to learn
 what it is doing and what the parameters mean.
 
-<h3>Resampling to higher resolution</h3>
+<h3>Resampling to a different resolution</h3>
 
 <p>
 Resample the given raster map to higher and lower resolution
@@ -54,20 +54,17 @@ Resample the given raster map to higher and lower resolution
 with bilinear and bicubic method.
 <p>First, set the computation region extent to our study area
 and set resolution to 30 meters.
-The computational region (region for short) is set using
-<em class="module">g.region</em> module.
-Here for convenience we use named region which defines both the extent and the resolution.
-This named region is included in the data (location) we are using
-but it is possible to create new named regions and use them to bookmark different study areas.
+The computational region (region for short) is set using <em class="module">g.region</em> module, 
+the <code>-p</code> flag is used to print the region coordinates and resolution. 
+Here we use a predefined region which is included in our data set.
 
 <pre><code>
 g.region region=swwake_30m -p
 </code></pre>
 
 <p>
-The <code>-p</code> flag for <em class="module">g.region</em> is used to print the region
-we just set. i<em>Zoom to computational region</em> to make sure your display shows the region
-that you are working with.
+<em>Zoom to computational region</em> by clicking on the relevant icon on top
+of the <em>Map Displaa</em>y to make sure your display shows the region that we are working with.
 
 <p>
 Then we display the 30m resolution NED elevation raster.
@@ -152,17 +149,17 @@ or use the following in the command line:
 <pre><code>
 d.out.file aspect_bil
 </code></pre>
-<span class="question">Why is the aspect map of elevation raster map computed by the nearest neighbor method i
+<span class="question">Why is the aspect map of elevation raster map computed by the nearest neighbor method 
 different from the one computed by bilinear interpolation?</span><br>
-
-<h3>Resampling to lower resolution</h3>
 
 <p>
 Resample to lower resolution (30m -> 100m).
 <p>
-First, display the original elevation and land use maps:
+First, remove all map layers from the <em>Layer Manager</em> because we don't need to see them anymore
+ and then display the original elevation and land use maps:.
 
 <pre><code>
+d.erase
 d.rast elev_ned_30m
 d.rast landuse96_28m
 </code></pre>
@@ -187,26 +184,16 @@ is zoomed to computational region or to newly created maps (this should be the s
 g.region res=100 -p
 r.resamp.stats elev_ned_30m out=elev_new100m_avg method=average
 d.rast elev_new100m_avg
+d.out.file elev_100m
 </code></pre>
 
-Before the next computation, remove all map layers from the <em>Layer Manager</em>
-because we don't need to see them anymore.
 
 <pre><code>
 d.erase
 r.resamp.stats landuse96_28m out=landuse96_100m method=mode
 d.rast landuse96_100m
+d.out.file lenduse_100m
 </code></pre>
-
-<p>
-Remove or switch off the land use, elevation and aspect maps.
-<!--
-or use d.erase in command line:
-<pre><code>
-d.erase
-</code></pre>
--->
-
 
 <h3>Converting between vector data types</h3>
 
@@ -231,12 +218,14 @@ to the file you are saving the image in, or you must know the current working
 directory.
 
 <pre><code>
+d.erase
 d.vect census_centr icon=basic/circle fill_color=green size=10
 d.vect census_wake2000 color=red fill_color=none
 d.legend.vect
 d.out.file vect_to_points
 </code></pre>
 
+<!--
 Convert contour lines to points (useful for computing DEM from contours):
 
 <pre><code>
@@ -249,7 +238,7 @@ to see the actual points.
 <pre><code>
 d.vect elev_ned_contpts co=brown icon=basic/point size=3
 </code></pre>
-
+-->
 
 <h3>Convert from vector to raster</h3>
 
@@ -311,21 +300,12 @@ or use the following.
 d.out.file vect_to_rast
 </code></pre>
 
-<p>
-<!--
-# areas: geology ID with labels
-g.region swwake_30m -p
-v.to.rast geology out=mygeology_30m use=attr col=GEOL250_ID labelcolu=GEO_NAME
-d.rast mygeology_30m
-d.rast -o roadsmajor
-d.legend mygeology_30m use=948,921,910,862,766,720,583,405,270,217 at=70,20,2,6
--->
-
 <h3>Convert from raster to vector data</h3>
 
 Convert raster lines to vector lines.
 <p>
 First, remove map layers from <em>Layer Manager</em> and set the region.
+Hint: right click on the raster legends to select Remove legend.
 Then do the conversion.
 <p>
 
@@ -368,8 +348,9 @@ networks should "fit" within the basin boundaries.
 <pre><code>
 d.erase
 g.region raster=basin_50K -p
-d.rast basin_50K
 r.to.vect -sv basin_50K output=basin_50Kval type=area
+d.erase
+d.rast basin_50K
 d.vect basin_50Kval type=boundary width=2
 d.vect streams color=blue
 </code></pre>
