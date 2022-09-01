@@ -321,16 +321,13 @@ d.rast -o roadsmajor
 d.legend mygeology_30m use=948,921,910,862,766,720,583,405,270,217 at=70,20,2,6
 -->
 
-<h3>Convert from raster to vector</h3>
+<h3>Convert from raster to vector data</h3>
 
 Convert raster lines to vector lines.
 <p>
-First, set the region and remove map layers from <em>Layer Manager</em>.
+First, remove map layers from <em>Layer Manager</em> and set the region.
 Then do the conversion.
 <p>
-<span class="question">Explain why we are using <em class="module">r.thin</em> module</span>.
-You may want to remove all previously used layers from the <em>Layer Manager</em>
-before you start these new computations.
 
 <pre><code>
 d.erase
@@ -339,13 +336,18 @@ d.rast streams_derived
 r.thin streams_derived output=streams_derived_t
 r.to.vect streams_derived_t output=streams_derived_t type=line
 </code></pre>
+<p>
+<span class="question">Explain why we are using <em class="module">r.thin</em> module</span>.
 
 <p>
 Visually compare the result with streams digitized from airphotos.
+To make space for the vector legend you may need to stretch your Map Display window a little wider.
+
 
 <pre><code>
 d.vect streams_derived_t color=blue
 d.vect streams color=red
+d.legend.vect
 </code></pre>
 
 <p>
@@ -358,18 +360,18 @@ d.out.file streams_compare
 <p>
 Convert raster areas representing basins to vector polygons.
 <p>
-Use raster value as category number (flag -v) and 
+First, remove map layers from <em>Layer Manager</em> and set the region.
+To convert, use raster value as category number (flag -v) and 
 display vector polygons filled with random colors.<br>
 In GUI: Add vector > Colors > Switch on Random colors.
-You may want to remove all previously used layers from the <em>Layer Manager</em>
-before you start these new computations.
+Verify the basin boundaries by displaying together with streams.
 
 <pre><code>
-g.region raster=basin_50K -p
 d.erase
+g.region raster=basin_50K -p
 d.rast basin_50K
 r.to.vect -sv basin_50K output=basin_50Kval type=area
-d.vect -c basin_50Kval
+d.vect -c basin_50Kval type=boundary,area
 d.vect streams color=blue
 </code></pre>
 
