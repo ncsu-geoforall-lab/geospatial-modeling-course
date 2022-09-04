@@ -45,7 +45,7 @@
  <li class="fragment">all data displayed on computer screen are rasters, 
 what you see is controlled by the resolution of your map display 
  <li class="fragment">raster data: as we zoom in, raster grid cells become visible,
-reinterpolate to higher resolution to smoothout the effect
+reinterpolate to higher resolution to smooth out the effect
  <li class="fragment">vector data: vertices are connected by rasterized line, it is scalable, limited
 only by the dispaly resolution 
 </ul>
@@ -57,14 +57,14 @@ only by the dispaly resolution
 <section>
    <h3>Display of large rasters</h3>
 <small>  If the number of rows or columns in a raster is greater than those of map display,
-<br>not all pixels are visible: convert to vector representation</small>
-<p class="fragment"> <img height="220" src="img/data_visualize/raster_large_streams.jpg">
-<img height="220" src="img/data_visualize/raster_large_streamszoom.jpg">
-<p class="fragment"> <img height="200" src="img/data_visualize/vector_large_streams.jpg">
+<br>not all pixels are visible (red): convert to vector representation (blue)</small>
+<br> <img height="220" src="img/data_visualize/raster_large_streams.jpg">
+<img height="220" src="img/data_visualize/raster_large_streamszoom.jpg"><br>
+<class="fragment"> <img height="200" src="img/data_visualize/vector_large_streams.jpg">
 <img height="200" src="img/data_visualize/vector_large_streamszoom.jpg">
-<br class="credit">Example:3000x3000 raster in 1000x1000 window only every third pixel shown,
-zoom to 500x500 subset shows all pixels. When lines representation is broken: convert to vector representation 
-</p>
+<br><small> Example:3000x3000 raster in 1000x1000 window only every third pixel shown,
+zoom to 500x500 subset shows all pixels.  
+</small>
 </section>
 
 <section>
@@ -105,8 +105,8 @@ Learn more about color (see supplemental material)
 <section>
    <h3>Colors for continuous raster data</h3>
 <ul>
-<li>discrete color: convert the continuous data to discrete classes; some information is lost
 <li>continuous color highlights continuous property
+<li>discrete color: convert the continuous data to discrete classes; some information is lost
 </ul>
 <p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_elev.jpg">
 <br><small>note: default color ramp for FP maps is often greyscale with uniform interval</small></p>
@@ -125,10 +125,10 @@ plane but we don't see its subtle topography structure </small></p>
 
 <section>
    <h3>Histogram equalized color</h3>
-<p>
-Distribution of color based on histogram of raster data values. Custom color ramp
+<p> <small>
+Distribution of color based on histogram of raster data values and a custom color ramp
 <p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_histeq2.jpg">
-<p> <small>Assign color based on intervals which cover approximately the same area.
+<br> <small>Assigns color based on intervals which cover approximately the same area.
 Highlights topography structure but distorts the elevation differences</small>
 </section>
 
@@ -341,9 +341,9 @@ interactive exploration is important for viewing obstructed data
   <li class="fragment">time series of data : migrating landforms, temperature, precipitation, melting of ice cap, urban growth
   <li class="fragment">method analysis – changing a parameter or crossections
 </ul>
-<p class="fragment"><img height="220" src="img/data_visualize/anim_storsurge.gif">
-<img class="fragment" height="220" src="img/data_visualize/NagsHead.gif">
-<img class="fragment" height="220" src="img/data_visualize/voxels_vegetation_anim.gif">
+<p class="fragment"><img height="200" src="img/data_visualize/anim_storsurge.gif">
+<img class="fragment" height="200" src="img/data_visualize/NagsHead.gif">
+<img class="fragment" height="200" src="img/data_visualize/voxels_vegetation_anim.gif">
 </section>
 
 <!--
@@ -432,6 +432,8 @@ Petrasova, A. et al. (2018). Tangible Modeling with Open Source GIS. Second edit
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jX6FurEeW28?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 <img height="260" src="img/data_visualize/collaboration2.JPG">
 <p><a href="https://consbio.org/products/webinars/tangible-landscape-tool-modeling-and-science-communication">TL Webinar</a>
+<p><a href="https://ncsu-geoforall-lab.github.io/geospatial-simulations-course/topics/data_simulation.html#tangible_landscape">
+TL as a geosimulation environment</a> in GIS714
 </section>
 
 <section>
