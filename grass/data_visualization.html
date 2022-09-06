@@ -147,7 +147,7 @@ d.rast myelev
 Set the color table to a predefined one (feel free to select a different one than the suggestion below, e.g. sepia).
 <p>
 GUI options: Right Click on the raster layer "myelev" in Layer Manager > <em>Set color table</em> > <em>Define</em> > <em>Name of color table</em> > "elevation" > <em>Run</em>.<br>
-If you don't see the new colors - click the second button in Map Display to redraw.
+If you don't see the new colors - click the first button in Map Display to redraw.
 
 <pre><code>
 r.colors myelev color=elevation
@@ -166,9 +166,9 @@ If it looks good - click OK.
 -->
 
 <p>
-To create color table for future multiple uses, especially for scripting
+To create color table for future multiple uses, especially for scripting,
 type the rules into a plain text mycolor.txt file using a text editor (TextEdit, Notepad)
-and save it in your working directory, for example:
+and save it in your working directory, for example (feel free to use your own colors):
 
 <pre data-filename="mycolor.txt">
 50 blue
@@ -219,7 +219,7 @@ d.out.file myslopecolorequalized
 
 <p>
 To explain the difference between the two maps, you can generate a histogram.
-On map Display click on <em>Analyze map</em> > <em>Create histogram</em> to open the histogram tool and
+On Map Display click on <em>Analyze map</em> > <em>Create histogram</em> to open the histogram tool and
 save results to graphics file. Or use this command which will
 add a histogram as a layer to Layer Manager and then save the image:
 <pre><code>
@@ -236,13 +236,14 @@ Alternatively you can resize by selecting <em>Pointer</em> mode in Map Display, 
 and set options > <em>Optional</em> > <em>Placement</em> > 50,90,4,7.<br>
 Numbers are bottom,top,left,right as percentage of screen coordinates.<br>
 Add units to the legend: <em>Add map elements</em> > <em>Add text layer</em> > type deg > OK.<br>
-Add barscale on Map Display: <em>Add map elements</em> > <em>Show/hide north arrow</em> (double click on it to change it).<br>
+Add barscale on Map Display: <em>Add map elements</em> > <em>Add scale bar</em> (double click on it to change iti,
+for example you can change its length and units under Optional tab).<br>
 <p>
 Note: you can use horizontal legends by using Placement at=6,10,2,30
 or just stretch it horizontally with mouse.
 
 <pre><code>
-d.barscale
+d.barscale length=1000
 d.legend myslope at=50,90,4,7
 </code></pre>
 
@@ -296,12 +297,15 @@ file in the Google Earth window.
 v.out.ogr precip_30ynormals output=precipitation.kml format=KML type=point
 </code></pre>
 
+If you use the command above, the kml file will be saved in your working directory.
+<!--
 You need to set the file path to the desired directory or work using the
 current working directory. On MS Windows, you may do something like this:
 
 <pre data-run="no"><code>
 v.out.ogr precip_30ynormals output=C:\temp\precipitation.kml format=KML type=point
 </code></pre>
+-->
 
 <h3>Optional part</h3>
 
