@@ -4,9 +4,9 @@
 <li><a href="https://grass.osgeo.org/grass82/manuals/index.html">
 GRASS GIS overview and manual</a></li>
 <li> <a href="data_acquisition.html#commands">Recommendations</a>
-and <a href="./grass_intro.html">tutorial</a>
+<!--and <a href="./grass_intro.html">tutorial</a>-->
 how to use GUI from the first assignment</li>
-<li>Screen captures for 3D visualization with 3D view (wxNVIZ) in GRASS GIS 6.4.3RC2 (similar to GRASS GIS 7)
+<li>Screen captures for 3D visualization with 3D view (wxNVIZ) in GRASS GIS 6.4.3RC2 (similar to GRASS GIS 7 and 8)
 <ul>
 <li><a href="https://youtu.be/TRNUJy_ctc0">Visualization in GRASS I: surface</a></li>
 <li><a href="https://youtu.be/yaf4Bzv7F-c">Visualization in GRASS II: draping points and lines</a></li>
@@ -16,52 +16,56 @@ how to use GUI from the first assignment</li>
 
 
 <h3>Start GRASS GIS</h3>
-In startup pannel set <b>GRASS GIS Database Directory</b> to path to datasets,
-for example on MS Windows, <code>C:\Users\myname\grassdata</code>.
-For <b>GRASS Location</b> select nc_spm_08_grass7 (North Carolina, State Plane, meters) and
-for <b>GRASS Mapset</b> create a new mapset (called e.g. HW_data_visualization) and
-click <b>Start GRASS session</b>.
+Click on GRASS icon or type<br>
 
 <pre><code>
 grass82
 </code></pre>
+<p>
+Your <strong>current mapset</strong> should be a previously created <em>assignment2</em> 
+in the <em>nc_spm_08_grass7</em> location, you can continue working in it or create a new mapset
+(e.g., assignment2b) following the instructions from the previous assignments..
 
 <p>
-Change working directory:<br>
-<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
-or type <code>cd</code> (stands for change directory) into the GUI
-<em>Console</em> and hit Enter:
+To save your outputs and to store external data change your working directory 
+to the one that you created in previous assignment e.g., 
+<em>C:\Users\myname\Documents\GIS582_HW\report2</em>,
+type <code>cd</code> into <em>Console</em> and hit Enter:
 <pre><code>
 cd
 </code></pre>
+then browse to and select your <em>report2 directory</em><br>
 
 <h3>Changing the default font</h3>
 
-Change the default font used for map rendering, use:
-<em>Settings</em> > <em>Preferences</em> > <em>Map Display</em>.
+Change the default font used for map rendering in GUI Settings:
+<em>File</em> > <em>Preferences</em> > <em>Map Display</em>.
 Pick a new default font and <em>Save</em> the settings.
-
+<br>Note, that you can also change the default color table, default vector display properties
+and other display behavior in GUI settings.
 
 <h3>Visualization in 3D perspective</h3>
+<p>
+Interactively view "elevation" raster and vector data ("streams", "usgsgages") in 3D view,
+adjust viewing position, surface properties and lighting to highlight features and display
+landuse data over topography.  Note, that legend is not currently supported in 3D view.
 
-<!-- p. 273-280 in GRASSbook<br> -->
-Set the region to the raster "elevation".
+Remove or switch off any map layers in the Layer Manager (if you have any)
+and set region to the raster "elevation".
 
 <pre><code>
+d.erase
 g.region raster=elevation -p <!--nviz elevation vector=roadsmajor point=schools_wake-->
 </code></pre>
 
 <p>
-Interactively view "elevation" raster and vector data ("streams", "usgsgages") in 3D view,
-adjust viewing position, surface properties and lighting to highlight features.
-Note, that legend is not currently supported in 3D view.
-<p>
-Remove or switch off any map layers in the Layer Manager.
-Then add raster "elevation", Add vector "streams", Add vector "usgsgages".<br>
+Then add raster "elevation", and vector "streams", and "usgsgages".<br>
 Zoom to computational region and Switch to 3D view.<br>
 <p>
-Follow the video Visualization I and II for similar tasks (link is above) and
-save 2-3 images for your report
+Follow the video 
+<a href="https://youtu.be/TRNUJy_ctc0">Visualization in GRASS I: surface</a>
+and <a href="https://youtu.be/yaf4Bzv7F-c">Visualization in GRASS II: draping points and lines</a>
+and save 2-3 images for your report
 (save as tiff or take screenshot, if you don't have tiff support).
 
 <h4>Visualizing multiple surfaces</h4>
@@ -77,6 +81,7 @@ from multiple return lidar points using the module <em class="module">v.surf.rst
 (we will explain interpolation later on).
 
 <pre><code>
+d.erase
 g.region rural_1m -p
 v.surf.rst input=elev_lidrural_mrpts elevation=elev_lidruralmr_1m npmin=120 segmax=25 tension=40 smooth=1.0
 </code></pre>
@@ -86,7 +91,8 @@ In Layer Manager Add rasters "elev_lidruralmr_1m" and "elev_lid792_1m" (bare ear
 In Map Display <em>Zoom to computational region</em>.
 <p>
 Make sure that you have only the two elevation maps switched on in the Layer Manager.
-Switch to 3D view and follow the video Visualization III (link is above).
+Switch to 3D view and follow the video
+<a href="https://youtu.be/xo_jJHgtbR4">Visualization in GRASS III: cutting planes</a>.
 Save 2-3 interesting images for your report, include at least one crossection.
 <!--nviz elev_lidruralmr_1m,elev_lid792_1m-->
 
