@@ -225,7 +225,7 @@ after performing atmospheric corrections.
 
 <h4>Difference between DEM and DSM</h4>
 Explore the difference between the SRTM DSM and lidar-based NED DEM.
-Compute the map of elevation differences.
+First, compute the map of elevation differences:
 
 <pre><code>
 g.region raster=elev_ned_30m -p
@@ -233,14 +233,14 @@ r.mapcalc "srtm_ned30_dif = elev_srtm_30m - elev_ned_30m"
 </code></pre>
 
 <p>
-Create a custom color table to distinguish the negative and positive values:
+Find the range of differences and create a divergent color table to distinguish the negative and positive values:
 
 <pre><code>
 r.info -r srtm_ned30_dif
 </code></pre>
 
 <p>
-fp: Data range is -142.24... to 86.19...<br>
+<!--fp: Data range is -142.24... to 86.19...<br>-->
 Assign custom color table <a href="data/srtmneddiff_color.txt">srtmneddiff_color.txt</a>.<br>
 GUI: Right click on layer > <em>Properties</em> > <em>Set color table</em> > <em>Colors</em> > <em>Path to rules file</em>.
 
@@ -261,9 +261,10 @@ r.univar elev_ned_30m
 </code></pre>
 
 <p>
-<span class="question">Is the srtm mostly higher or lower than elev_ned?
+<span class="question">Are the elevations in "elev_srtm_30m" mostly higher or mostly lower than in "elev_ned_30m"?
 Which result will you use to answer the above question -
-the srtm_ned30_dif map or numbers provided by <em class="module">r.univar</em>?</span>
+the "srtm_ned30_dif" map or the numbers provided by <em class="module">r.univar</em>?
+Are there any values in the maps used or generated in this section that are not realistic?</span>
 <!--
 <font color="#000066">
 # check the imapct of NULL on map algebra operation
