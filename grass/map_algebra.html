@@ -95,8 +95,7 @@ d.out.file slope_avgbasin
 
 <p>
 Compute zonal statistics maps representing most common land use for each basin.<br>
-To get the best result, make sure you use all the flags from the example
-below.
+To get the best result, make sure you use all the flags from the example below.
 
 <pre><code>
 g.region raster=landuse96_28m -p
@@ -109,21 +108,33 @@ d.out.file landuse96_modezip
 
 <h3>Apply neighborhood operators</h3>
 <!-- p.127<br> -->
-Use neighborhood operator to compute land use diversity map.<br>
-<span class="question">How diverse is land use in NCSU area based on the following calculation?</span><br>
-<span class="question">Explore how different sizes of the neighborhood used alter the results and why?</span><br>
-Before you start to display the new results,
-remove all previously added map layers from the <em>Layer Manager</em>.
+Use neighborhood operator to compute land use diversity map and create a map of locations
+with the most homogeneous (single category) landuse.<br>
+<span class="question">Which land use covers the largest area with a single landuse category(most homogeneous areas)?</span><br>
+<!--<span class="question">Explore how different sizes of the neighborhood used alter the results and why?</span><br>-->
+<p>
+First, remove all previously added map layers from the <em>Layer Manager</em>, then compute
+and display the land use diversity map. Use map algebra to extract the single category areas
+and find out the area totals for each category using the report tool.
+Adjust the legend size and placement as needed using right click and mouse.
 
 <pre><code>
-g.region raster=landuse96_28m -p
-r.info -g landuse96_28m
-r.neighbors landuse96_28m output=lu_divers method=diversity size=7
 d.erase
+r.info -g landuse96_28m
+g.region raster=landuse96_28m -p
+r.neighbors landuse96_28m output=lu_divers method=diversity size=7
 d.rast lu_divers
 d.legend lu_divers at=70,15,5,10 -v
-d.vect streets_wake
+d.vect streets_wake co=white
 r.report lu_divers unit=p
+d.out.file lu_diversity_map
+r.mapcalc "landuse_1cat = if(lu_divers == 1, landuse96_28m, null())"
+r.colors landuse_1cat raster=landuse96_28m
+r.category landuse_1cat raster=landuse96_28m
+r.report landuse_1cat unit=h,p -n
+d.rast landuse_1cat
+d.legend -c landuse_1cat
+d.out.file lu_signle_map
 </code></pre>
 
 <p>
