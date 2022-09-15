@@ -163,14 +163,14 @@ r.univar elev_srtm30m_sm5
 <h3>Patch multiple raster layers into a single raster</h3>
 <!-- p.124-125<br> -->
 Patch raster tiles for lidar based, 6m res. DEM for Centennial Campus.
+<!--Before displaying new data, remove older map layers from <em>Layer Manager</em>.-->
 <!-- on MS VISTA you need to have UAC (User Account Control) disabled to run r.patch<br> -->
-Before displaying new data, remove older map layers from <em>Layer Manager</em>.
 
 <pre><code>
+d.erase
 g.region raster=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m -p
 r.patch input=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m output=elevlidD_6m
 r.colors elevlidD_6m raster=elevation
-d.erase
 d.rast elevlidD_6m
 </code></pre>
 
@@ -224,8 +224,10 @@ toolbar.
 Compute Normalized Difference Vegetation Index (NDVI).<br>
 <span class="question">Explain the difference between floating point and integer
 handling in ndvi1, ndvi2 and ndvi3 result</span>.
+Make sure to zoom into computational area after changing the region.
 
 <pre><code>
+d.erase
 g.region raster=lsat7_2002_40 -p
 r.mapcalc "ndvi1 = (lsat7_2002_40 - lsat7_2002_30) / (lsat7_2002_40 + lsat7_2002_30)"
 r.mapcalc "ndvi2 = 1.0 * (lsat7_2002_40 - lsat7_2002_30) / (lsat7_2002_40 + lsat7_2002_30)"
@@ -235,15 +237,16 @@ r.info -r ndvi2
 r.info -r ndvi3
 r.colors ndvi3 color=ndvi
 d.rast ndvi3
+d.legend ndvi3
 d.out.file ndvi3
 </code></pre>
 
-Note that this is an example, for computing various vegetation indices
+Note that this is a simplified, map algebra example, for computing various vegetation indices
 in GRASS GIS, we would use the <em class="module">i.vi</em> module
 after performing atmospheric corrections.
 
 <h4>Difference between DEM and DSM</h4>
-Explore the difference between the SRTM DSM and lidar-based NED DEM.
+Explore the difference between the SRTM DSM "elev_srtm_30m" and lidar-based NED DEM "elev_ned_30m".
 First, compute the map of elevation differences:
 
 <pre><code>
@@ -271,18 +274,19 @@ r.colors srtm_ned30_dif rules=srtmneddiff_color.txt
 Zoom to computational region and switch off previous map layers. Display the difference map layer:
 
 <pre><code>
+d.erase
 d.rast srtm_ned30_dif
 d.legend srtm_ned30_dif at=70,15,5,10
-d.vect streets_wake
 d.out.file srtm_ned30_dif
 r.univar elev_srtm_30m
 r.univar elev_ned_30m
+d.histogram srtm_ned30_dif
 </code></pre>
 
 <p>
 <span class="question">Are the elevations in "elev_srtm_30m" mostly higher or mostly lower than in "elev_ned_30m"?
 Which result will you use to answer the above question -
-the "srtm_ned30_dif" map or the numbers provided by <em class="module">r.univar</em>?
+the "srtm_ned30_dif" map or the numbers provided by <em class="module">r.univar</em> or the histogram?
 Are there any values in the maps used or generated in this section that are not realistic?</span>
 <!--
 <font color="#000066">
