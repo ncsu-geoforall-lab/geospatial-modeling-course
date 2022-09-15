@@ -138,16 +138,24 @@ d.out.file lu_signle_map
 </code></pre>
 
 <p>
+Visualy compare the SRTM elevation map "elev_srtm_30m" with lidar-based elevation map "elevation".
 Use neighborhood operator to smooth the SRTM elevation map and 
-compare the global statistical measures for the original and smoothed DEM.
+compare the summary statistical measures for the original and smoothed SRTM DEM.
 <span class="question">How does the size of the neighborhood influence the result?</span>
 (You can test different sizes yourself.)
 
 <pre><code>
+d.erase
 g.region raster=elev_srtm_30m -p
-r.neighbors elev_srtm_30m output=elev_srtm30m_sm5 method=average size=5
+d.rast elevation
+d.legend elevation
+r.colors elev_srtm_30m raster=elevation
 d.rast elev_srtm_30m
+d.legend elev_srtm_30m
+d.out.file srtm_dem_original
+r.neighbors elev_srtm_30m output=elev_srtm30m_sm5 method=average size=5
 d.rast elev_srtm30m_sm5
+d.out.file srtm_dem_smoothed
 r.univar elev_srtm_30m
 r.univar elev_srtm30m_sm5
 </code></pre>
