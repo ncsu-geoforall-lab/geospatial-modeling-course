@@ -40,15 +40,15 @@
   <li>Geodesic: shortest distance over curved surface
   <li>Rhumbline: constant bearing path, line in Mercator projection, not the shortest path
 </ul>
-<p> 
-<img height="400" src="img/analysis_costsurf/geodesic_rhumb_sm.png">
+<br> 
+<img height="420" src="img/analysis_costsurf/geodesic_rhumb_sm.png">
 </section>
 
 <section>
-   <h3>Measuring distance</h3>
+   <h3>Measuring distance: plane</h3>
 <ul>
  <li class="fragment"><strong>Generalized distance</strong>: $L^p$ metrics for measuring distance on meshes or grids
- <li class="fragment">distance between $a(x_1,y_1)$ and $b(x_2,y_2)$
+ <li class="fragment">distance between two points $a(x_1,y_1)$ and $b(x_2,y_2)$
 <p>
  <li class="fragment">$d_p(a,b)=[(x_1-x_2)^p + (y_1-y_2)^p]^{1/p}$
 <p>
@@ -64,8 +64,8 @@ and distance is measured along segments of a network; used for roads, utilities,
 <section>
    <h3>Measuring distance: networks</h3>
 Manhattan metric, Linear Referencing Systems
-<p> <img height="320" src="img/analysis_costsurf/manhattam_metrics.png">
-<img height="320" src="img/analysis_costsurf/buslinesstops.png">
+<p> <img height="340" src="img/analysis_costsurf/manhattam_metrics.png">
+<img class="fragment" height="340" src="img/analysis_costsurf/buslinesstops.png">
 </section>
 
 <section>
@@ -74,39 +74,42 @@ Manhattan metric, Linear Referencing Systems
 <ul>
   <li class="fragment">what is the length of NC coastline? Neuse river?
   <li class="fragment">feature length is scale dependent 
-  <li class="fragment">vector model: length depends on level of detail (point density representing the feature)
+  <li class="fragment">vector model: length depends on level of detail captured by the vertices 
   <li class="fragment">raster model: resolution and level of detail (grain)
 <p>
-  <li class="fragment">natural features are complex fractals
+  <li class="fragment">natural features are often complex fractals
 </ul>
 </section>
 
 <section>
    <h3>Measuring feature length</h3>
-Compare stream length from NHDS and stream derived from a local 1m lidar-based DEM
+Compare stream length from 
+<a href="https://www.usgs.gov/national-hydrography/national-hydrography-dataset">
+USGS NHD</a> and a stream derived from a local 1m lidar-based DEM
 <p> <img height="350" src="img/analysis_costsurf/Streams_NHD_GRASSlidar.png">
 <img height="350" src="img/analysis_costsurf/stream_extraction_lidarc.png">
-<p><small>NHD streams are generalized - they have simplified geometry, leading to shorter length.
-Keep scale in mind when comparing length of features represented at different scales</small>
+<p><small>NHD streams are mapped at 1:24000 scale, they have simplified geometry, leading to shorter length.
+</small>
 </section>
 
 <section>
    <h3>Measuring feature length</h3>
 Compare length of NC Coastline from NC GIS and from a World map 1:10M
-<p> <img height="300" src="img/analysis_costsurf/nc_shoreline_nc.png">
-<img class="fragment" height="300" src="img/analysis_costsurf/nc_shoreline_world.png">
-<img class="fragment" height="300" src="img/analysis_costsurf/nc_shoreline_worldnc.png">
-<p class="fragment"><small>World map scale 1km=0.1mm - narrow barrier islands are not represented</small></p>
+<p> <img height="320" src="img/analysis_costsurf/nc_shoreline_nc.png">
+<img class="fragment" height="320" src="img/analysis_costsurf/nc_shoreline_world.png">
+<img class="fragment" height="320" src="img/analysis_costsurf/nc_shoreline_worldnc.png">
+<p class="fragment"><small>World map scale 1km=0.1mm - narrow barrier islands are not represented
+<br>Keep scale in mind when comparing length of features represented at different scales!</small>
 </section>
 
 <section>
-   <h3>Raster map buffer operations</h3>
+   <h3>Raster-based proximity to features</h3>
 <ul>
 <li class="fragment">discrete:
    <ul>
-   <li class="fragment">creates discrete buffer zones from a given feature (point, line or area)
-   <li class="fragment">applies to raster map layers representing discrete objects 
-   <li class="fragment">resolution should be sufficiently higher than the buffer widths
+   <li class="fragment">applies to raster representation of discrete features (points, lines, areas) 
+   <li class="fragment">creates discrete buffer zones from a given feature 
+   <li class="fragment">requires resolution sufficiently higher than the buffer widths
    </ul>
 <p>
 <li class="fragment">continuous:
@@ -122,7 +125,7 @@ Compare length of NC Coastline from NC GIS and from a World map 1:10M
 <section>
    <h3>Raster map buffer: points</h3>
 <ul>
-<li>Map forested areas around schools  
+<li>Task: map forested areas around schools  
 <li>Create discrete point buffers at selected distances 
 </ul>
 <p> <img height="360" src="img/analysis_costsurf/buff_schools.png">
