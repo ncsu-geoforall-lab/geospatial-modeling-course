@@ -69,15 +69,16 @@ and distance is measured along segments of a network; used for roads, utilities,
 Comparison of buffer pattern measured with Euclidean and Manhattan metric
 <p> 
 <img height="320" src="img/analysis_costsurf/manhattam_metrics.png">
-<img height="320" src="img/analysis_costsurf/buffrgrow_eucl.png">
-<img height="320" src="img/analysis_costsurf/buffrgrow_manh.png">
+<img height="300" src="img/analysis_costsurf/buffrgrow_eucl.png">
+<img height="300" src="img/analysis_costsurf/buffrgrow_manh.png">
+<p><small>$d_1(a,b)=(x_1-x_2) + (y_1-y_2)$</small>
 </section>
 
 <section>
     <h3>Measuring distance in networks</h3>
-Linear Referencing Systems
+Linear Referencing Systems: distance along bus routes
 <p> 
-<img class="fragment" height="400" src="img/analysis_costsurf/buslinesstops.png">
+<img class="fragment" height="420" src="img/analysis_costsurf/buslinesstops.png">
 </section>
 
 <section>
@@ -89,7 +90,8 @@ Linear Referencing Systems
   <li class="fragment">vector model: length depends on level of detail captured by the vertices 
   <li class="fragment">raster model: resolution and level of detail (grain)
 <p>
-  <li class="fragment">natural features are often complex fractals
+  <li class="fragment">natural features are often complex 
+  <a href="https://en.wikipedia.org/wiki/List_of_fractals_by_Hausdorff_dimension">fractals</a>
 </ul>
 </section>
 
@@ -100,7 +102,7 @@ Compare stream length from
 USGS NHD</a> and a stream derived from a local 1m lidar-based DEM
 <p> <img height="350" src="img/analysis_costsurf/Streams_NHD_GRASSlidar.png">
 <img height="350" src="img/analysis_costsurf/stream_extraction_lidarc.png">
-<p><small>NHD streams are mapped at 1:24000 scale, they have simplified geometry, leading to shorter length.
+<p><small>NHD streams mapped at 1:24000 scale, simplified geometry, leading to shorter length.
 </small>
 </section>
 
@@ -170,13 +172,13 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 
 <section>
    <h3>Raster map buffer: lines</h3>
-<ul>
-<li>Identify developed areas that may be impacted by noise from a highway 
-<li>Create buffers, combine with landcover                                           
-</ul>
+Identify developed areas that may be impacted by noise from a highway: 
+<br>
+<small>Create buffers along the highway, combine with landcover using map algebra </small>
+<br>
 <small><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null()) </code></small>
 <p> 
-<!--<img height="340" src="img/analysis_costsurf/buffer_rast_roads.png">-->
+<img height="340" src="img/analysis_costsurf/buffer_rast_roads.png">
 <img height="340" src="img/analysis_costsurf/noise_shadestr.png">
 <p class="fragment"><small> why 0 and not null? </small>
 </section>
@@ -184,11 +186,35 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 <section>
    <h3>Raster map buffer: lines</h3>
 <ul>
-<li>Compute number of children potentially impacted
-<li>Convert schools to raster using the number of students attribute and use map algebra
+<li>Identify schools and compute number of children potentially impacted by noise
+<li>Convert schools to raster using the school capacity attribute and use map algebra
 </ul>
 <small><code>schools_noise = if(int(schoolscap_10m) && roads_buffers == 2, int(schoolscap_10m), null())</code></small>
 <p> <img height="350" src="img/analysis_costsurf/noise_schools_anna.png">
+<p><small>Map of developed areas and schools impacted by highway noise</small>
+</section>
+
+<section>
+   <h3>Continuous proximity raster</h3>
+Proximity surface represents
+shortest path (distance) from each cell to the target point
+<p> <img height="380" src="img/analysis_costsurf/costsurf_dist.jpg">
+<p><small>Derive continuous buffer as a subset with distance less than given threshold</small>
+</section>
+
+<section>
+   <h3>Continuous proximity raster</h3>
+To measure the proximity (distance), traverse the region in:
+standard 8 directions, Knight 16 directions
+<p> <img height="350" src="img/analysis_costsurf/cost1D8.jpg">
+<img height="350" src="img/analysis_costsurf/cost1D16.jpg">
+</section>
+
+<section>
+   <h3>Continuous proximity raster</h3>
+Proximity surface represents
+shortest path (distance) from each cell to the target line feature
+<p> <img height="380" src="img/analysis_costsurf/costsurf_distrd.jpg">
 </section>
 
 <section>
@@ -203,28 +229,11 @@ of reaching the target point(s) from any location in the given region.
 <p class="fragment">
 Input cost map 
 <ul>
-<li class="fragment">value assigned to a cell represents cost of traversing that cell, 
+<li class="fragment">value assigned to a cell represents cost of traversing that cell,
 <li class="fragment">cost can be based on time, energy, price, etc.
 </ul>
 </section>
 
-<section>
-   <h3>Cumulative cost surface to a point</h3>
-Proximity surface represents
-shortest path (distance) from each cell to the target point if cost for each cell is 1
-<p> <img height="380" src="img/analysis_costsurf/costsurf_dist.jpg">
-<p><small>Derive continuous buffer as a subset with distance less than given threshold</small>
-</section>
-
-<section>
-   <h3>Cumulative cost surface</h3>
-To measure the proximity (distance), traverse the region in:
-standard 8 directions, 
-Knight 16 directions
-<p> <img height="350" src="img/analysis_costsurf/cost1D8.jpg">
-<img height="350" src="img/analysis_costsurf/cost1D16.jpg">
-<p><small>cost for each cell is 1</small>
-</section>
 
 <section>
    <h3>Cost map</h3>
