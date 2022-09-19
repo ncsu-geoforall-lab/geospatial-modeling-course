@@ -28,7 +28,8 @@
 <p>
   <ul>
    <li class="fragment">Euclidean: shortest distance in plane
-   <li class="fragment">Geodesic: shortest distance over curved surface, great circle on sphere: orthodrome
+   <li class="fragment">Geodesic: shortest distance over curved surface, great circle on sphere: 
+   <a href="http://mathworld.wolfram.com/GreatCircle.html">orthodrome</a>
    <li class="fragment">$L^p$ metrics on meshes or grids
    <li class="fragment">Linear referencing systems
   </ul>
@@ -38,7 +39,8 @@
    <h3>Measuring distance: spheroid</h3>
 <ul>
   <li>Geodesic: shortest distance over curved surface
-  <li>Rhumbline: constant bearing path, line in Mercator projection, not the shortest path
+  <li><a href=" http://en.wikipedia.org/wiki/Rhumb_line">Rhumbline</a>: 
+  constant bearing path, line in Mercator projection, not the shortest path
 </ul>
 <br> 
 <img height="420" src="img/analysis_costsurf/geodesic_rhumb_sm.png">
@@ -51,9 +53,10 @@
  <li class="fragment">distance between two points $a(x_1,y_1)$ and $b(x_2,y_2)$
 <p>
  <li class="fragment">$d_p(a,b)=[(x_1-x_2)^p + (y_1-y_2)^p]^{1/p}$
-<p>
- <li class="fragment">$p=2$ : Euclidean distance
- <li class="fragment">$p=1$ : Manhattan (Taxicab, City block) metric
+ <ul>
+    <li class="fragment">$p=2$ : Euclidean distance
+    <li class="fragment">$p=1$ : Manhattan (Taxicab, City block) metric
+ </ul>
 <p>
   <li class="fragment"><strong>Linear Referencing Systems</strong>: 
 location is defined by its linear distance from a known point on a route  
@@ -62,10 +65,19 @@ and distance is measured along segments of a network; used for roads, utilities,
 </section>
 
 <section>
-   <h3>Measuring distance: networks</h3>
-Manhattan metric, Linear Referencing Systems
-<p> <img height="340" src="img/analysis_costsurf/manhattam_metrics.png">
-<img class="fragment" height="340" src="img/analysis_costsurf/buslinesstops.png">
+   <h3>Manhattan metrics</h3>
+Comparison of buffer pattern measured with Euclidean and Manhattan metric
+<p> 
+<img height="320" src="img/analysis_costsurf/manhattam_metrics.png">
+<img height="320" src="img/analysis_costsurf/buffrgrow_eucl.png">
+<img height="320" src="img/analysis_costsurf/buffrgrow_manh.png">
+</section>
+
+<section>
+    <h3>Measuring distance in networks</h3>
+Linear Referencing Systems
+<p> 
+<img class="fragment" height="400" src="img/analysis_costsurf/buslinesstops.png">
 </section>
 
 <section>
@@ -128,7 +140,9 @@ Compare length of NC Coastline from NC GIS and from a World map 1:10M
 <li>Task: map forested areas around schools  
 <li>Create discrete point buffers at selected distances 
 </ul>
-<p> <img height="360" src="img/analysis_costsurf/buff_schools.png">
+<p> 
+<img height="360" src="img/analysis_costsurf/buff_schools.png">
+<img height="120" src="img/analysis_costsurf/schoolsbuffer_lg.png">
 </section>
 
 <section>
@@ -138,15 +152,9 @@ Compare length of NC Coastline from NC GIS and from a World map 1:10M
 </ul>
 <small><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code></small>
 <p> <img height="350" src="img/analysis_costsurf/buff_schools_veg.png">
-<p><small>Use vector operations to add comlumn to school attribute table and add percent forested area within the buffer,
+<!--<p><small>Use vector operations to add comlumn to school attribute table and add percent forested area within the buffer,
 keep in mind our 30m resolution. Why do we use 0 and not null in the expression?</small>
-</section>
-
-<section>
-   <h3>Raster map buffer: areas</h3>
-<p>Create buffers at a given distance, compare Euclidean and Manhattan distance metrics 
-<p> <img height="350" src="img/analysis_costsurf/buffrgrow_eucl.png">
-<img height="350" src="img/analysis_costsurf/buffrgrow_manh.png">
+-->
 </section>
 
 <section>
@@ -163,7 +171,7 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 <section>
    <h3>Raster map buffer: lines</h3>
 <ul>
-<li>Identify developed areas and schools that may be impacted by noise from a highway 
+<li>Identify developed areas that may be impacted by noise from a highway 
 <li>Create buffers, combine with landcover                                           
 </ul>
 <small><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null()) </code></small>
