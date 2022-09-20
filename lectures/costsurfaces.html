@@ -185,10 +185,9 @@ Identify developed areas that may be impacted by noise from a highway:
 
 <section>
    <h3>Raster map buffer: lines</h3>
-<ul>
-<li>Identify schools and compute number of children potentially impacted by noise
-<li>Convert schools to raster using the school capacity attribute and use map algebra
-</ul>
+Identify schools and compute number of children potentially impacted by noise
+<small>Convert schools to raster using the school capacity attribute and use map algebra
+to extract schools close to the highway</small>
 <small><code>schools_noise = if(int(schoolscap_10m) && roads_buffers == 2, int(schoolscap_10m), null())</code></small>
 <p> <img height="350" src="img/analysis_costsurf/noise_schools_anna.png">
 <p><small>Map of developed areas and schools impacted by highway noise</small>
@@ -214,7 +213,7 @@ standard 8 directions, Knight 16 directions
    <h3>Continuous proximity raster</h3>
 Proximity surface represents
 shortest path (distance) from each cell to the target line feature
-<p> <img height="380" src="img/analysis_costsurf/costsurf_distrd.jpg">
+<p> <img height="400" src="img/analysis_costsurf/costsurf_distrd.jpg">
 </section>
 
 <section>
@@ -245,11 +244,20 @@ usually expressed as time $t[s]$ derived, for example, from:
     <li class="fragment">velocity estimates for flows,                       
     <li class="fragment">slope, vegetation and obstacles for walking on trails 
 </ul>
-<p class="fragment"><small>
+</section>
+
+<section>
+   <h3>Cost map example</h3>
+<p>
 Example: cost map derived as time $t[s]$ needed to traverse a $d[m]$ resolution grid cell
+<p>
 $$ t = d / v $$
+<p>
 where, $v$ [m/s] is speed, approximated e.g., by speed limit stored in roads/streets data layer.
-Cost map is computed using arithmetic expression in map algebra.</small>
+<p>
+Cost map is computed using arithmetic expression in map algebra.
+<p>
+<code>r.mapcalc "streets_travtime = 0.018641/streets_speed"</code>
 </section>
 
 <section>
@@ -267,6 +275,7 @@ Cost map is computed using arithmetic expression in map algebra.</small>
    <h3>Cumulative cost surface</h3>
 Cumulative cost surface represents the time to reach the target point A from anywhere in the region.
 <p> <img height="350" src="img/analysis_costsurf/costsurface3dHR.png">
+<img height="100" src="img/analysis_costsurf/costsurf_dist">
 <p><small>The higher the hill the more time it takes to reach A (red point), highways are valleys, 
 blue points are firestations</small>
 </section>
