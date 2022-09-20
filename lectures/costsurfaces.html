@@ -172,10 +172,11 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 
 <section>
    <h3>Raster map buffer: lines</h3>
-Identify developed areas that may be impacted by noise from a highway: 
-<br>
+<ul>
+<li>Identify developed areas that may be impacted by noise from a highway: 
+<li>
 <small>Create buffers along the highway, combine with landcover using map algebra </small>
-<br>
+</ul>
 <small><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null()) </code></small>
 <p> 
 <img height="340" src="img/analysis_costsurf/buffer_rast_roads.png">
@@ -254,10 +255,11 @@ Example: cost map derived as time $t[s]$ needed to traverse a $d[m]$ resolution 
 $$ t = d / v $$
 <p>
 where, $v$ [m/s] is speed, approximated e.g., by speed limit stored in roads/streets data layer.
-<p>
+<p><small>
 Cost map is computed using arithmetic expression in map algebra.
 <p>
 <code>r.mapcalc "streets_travtime = 0.018641/streets_speed"</code>
+</small>
 </section>
 
 <section>
