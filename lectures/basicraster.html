@@ -172,6 +172,14 @@
 </section>
 
 <section>
+   <h3>Neighborhood operations: diversity</h3>
+<p>Map areas with homogeneous (single category) land use and find what that land use is for each area
+<p><code>r.mapcalc "landuse_singlecat = if(lu_diversity == 1, landuse96_28m, null())"</code>
+<p class="fragment"> <img height="380" src="img/analysis_basicraster/LU_1cat_streetslg.png">
+</p>
+</section>
+
+<section>
    <h3>Raster map algebra</h3>
 <p>
 Computes a new raster map using an expression built by applying logical and/or arithmetic operators, 
