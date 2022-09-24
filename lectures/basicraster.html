@@ -163,7 +163,7 @@
 
 <section>
    <h3>Neighborhood operations: diversity</h3>
-<p>Number of different LU classes in 7x7 window
+<p>Number of different landuse classes in 7x7 window
 <p class="fragment"> <img height="230" src="img/analysis_basicraster/rneighbor_mode_lu_in.png">
 <img height="230" src="img/analysis_basicraster/lu96_legbig.png">
 <br><img class="fragment" height="230" src="img/analysis_basicraster/rneighbor_mode_lu_out.png">
@@ -173,9 +173,9 @@
 
 <section>
    <h3>Neighborhood operations: diversity</h3>
-<p>Map areas with homogeneous (single category) land use and find what that land use is for each area
-<p><code>r.mapcalc "landuse_singlecat = if(lu_diversity == 1, landuse96_28m, null())"</code>
-<p class="fragment"> <img height="380" src="img/analysis_basicraster/LU_1cat_streetslg.png">
+<p>Map areas with homogeneous (single category) land use and its land use category
+<p><small><code>r.mapcalc "lu_singlecat = if(lu_diversity == 1, landuse, null())"</code></small>
+<p class="fragment"> <img height="400" src="img/analysis_basicraster/LU_1cat_streetslg.png">
 </p>
 </section>
 
