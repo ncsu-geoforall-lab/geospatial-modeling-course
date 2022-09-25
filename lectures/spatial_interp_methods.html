@@ -84,9 +84,10 @@ Problem definition
 </section>
 
 <section>
-   <h3>Scattered points to raster</h3>
+   <h3>Scattered points to grid</h3>
 <p>
-Find mathematical function to estimate values at regular grid using values at the given scattered points
+Find mathematical function $z = F(x,y)$ to estimate values $z$ at regular grid 
+using values $z_i$ at $m$ given scattered points $(x_i,y_i), i=m$
 <p> <img height="350" src="img/spatial_interpolation/scattered_pts.jpg">
  <img height="350" src="img/spatial_interpolation/pointstogrid.jpg">
 </p>
@@ -160,7 +161,7 @@ Additional conditions are needed
 <p>
    <li class="fragment"><b>Geostatistical</b>: surface is one realization of a random function with spatial covariance 
 <p>
-   <li class="fragment"><b>Smoothness</b> surface should be as smooth as possible while passing through or close to the data points
+   <li class="fragment"><b>Smoothness</b>: surface should be as smooth as possible while passing through or close to the data points
 </ul>
 <!--<p class="credit">(note: default color ramp for FP maps is often greyscale with uniform interval)</p>-->
 </section>
@@ -170,7 +171,7 @@ Additional conditions are needed
 Spatial interpolation function $F(r)$ can be expressed as:
 <p>
 $$
-F(r) = T(r) + ∑ λ_j R(r,r_j)  \;    j=1,m
+F(r) = T(r) + ∑ λ_j R(r,r_j)  \; \;    j=1,m
 $$
 <ul>
 <li class="fragment"> $r = (x,y)$ is location of an unsampled point  
@@ -229,9 +230,12 @@ $$z(x,y) = λ z(x_j,y_j)$$
  <li>the surface is not continuous
 </ul>
 <p>
-<img height="380" src="img/spatial_interpolation/IntF1a.gif"> </p>
-<p class="credit">Figure from 
-<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation. In: P.Longley, M.F. Goodchild, D.J. Maguire, D.W.Rhind (Eds.), GIS: Principles, Techniques, Management and Applications, GeoInformation International, Wiley, 481-492.</a></p>
+<img height="360" src="img/spatial_interpolation/IntF1a.gif"> </p>
+<br> <small>Figure from 
+<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
+</small>
+<!--<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation. In: P.Longley, M.F. Goodchild, D.J. Maguire, D.W.Rhind (Eds.), GIS: Principles, Techniques, Management and Applications, GeoInformation International, Wiley, 481-492.</a></p>
+-->
 </section>
 
 <section>
@@ -295,9 +299,10 @@ Delaunay triangulation of sample elevation data
   <li>includes measured and interpolated values
   <li>surface is continuous, but the derivatives are not
 </ul>
-<p>
-<img height="380" src="img/spatial_interpolation/IntTinF1b.gif"> </p>
-<p><small>
+<br>
+<img height="360" src="img/spatial_interpolation/IntF1a.gif"> 
+<img height="360" src="img/spatial_interpolation/IntTinF1b.gif"> </p>
+<br><small>
 <a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
 </small></p>
 </section>
