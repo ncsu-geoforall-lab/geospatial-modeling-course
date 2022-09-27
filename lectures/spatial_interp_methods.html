@@ -199,9 +199,21 @@ Only a small subset of $n$ neighboring points is used
 Voronoi polygon edges are equidistant to 2 given points, 
 define <b>unique nearest neighborhood</b> around each point
 <p>
-<img height="330" src="img/spatial_interpolation/voronoi_tin_zm.png"> </p>
+<img height="330" src="img/spatial_interpolation/voronoi_zoom.png"> </p>
 <p><small>Voronoi polygons (red) are derived from the measured data - the measured point (blue)
  is at the center of a Voronoi polygon 
+<p><a href="http://alexbeutel.com/webgl/voronoi.html"> Voronoi diagram generator</a>
+or <a href="https://websvg.github.io/voronoi/">Parametric Voronoi generator</a></small>
+</section>
+
+<section>
+   <h3>Voronoi (Thiessen)  polygons</h3>
+Voronoi polygon edges are equidistant to 2 given points,
+define <b>unique nearest neighborhood</b> around each point
+<p>
+<img height="330" src="img/spatial_interpolation/voronoi_zoomi_tin1.png"> </p>
+<p><small>Voronoi polygons (red) are derived from the measured data - the measured point (blue)
+ is at the center of a Voronoi polygon
 <p><a href="http://alexbeutel.com/webgl/voronoi.html"> Voronoi diagram generator</a>
 or <a href="https://websvg.github.io/voronoi/">Parametric Voronoi generator</a></small>
 </section>
@@ -220,6 +232,14 @@ $$z(x,y) = λ z(x_j,y_j)$$
 <li class="fragment">$\lambda = 0$, if $(x,y)$ is outside $V_j$
 <li class="fragment">$j = 1,m$, where $m$ is the number of given points
 </ul>
+</section>
+
+<section>
+   <h3>Voronoi (Thiessen)  polygons</h3>
+Values at grid points are the same as the measured values at the center of the Voronoi polygon -
+nearest neighbor approach
+<p>
+<img height="330" src="img/spatial_interpolation/voronoi_zoom_grid1.png"> </p>
 </section>
 
 <section>
