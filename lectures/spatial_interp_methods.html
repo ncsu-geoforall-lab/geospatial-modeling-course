@@ -308,8 +308,8 @@ Voronoi polygons (light blue) and Delaunay triangles (black) create dual graphs.
 <p>
 TIN-based DEM generated from points on contours and from a random sub-sample of lidar points
 <p>
-<img height="360" src="img/spatial_interpolation/TINgrassnviz2.jpg">
-<img height="360" src="img/spatial_interpolation/TINgrassnvizrand2.jpg">
+<img height="320" src="img/spatial_interpolation/TINgrassnviz2.jpg">
+<img height="320" src="img/spatial_interpolation/TINgrassnvizrand2.jpg">
 <p><small>Vector data model (irregular triangular mesh) representation of elevation surface</small>
 </section>
 
@@ -318,9 +318,7 @@ TIN-based DEM generated from points on contours and from a random sub-sample of 
 <p>
 Value at a grid point is computed from 3 given points that form vertices of a Delaunay triangle
 <p>
-<img height="360" src="img/spatial_interpolation/tin_zoom_grid1.png"> 
-<!--<img class=fragment height="360" src="img/spatial_interpolation/tin2dstream.jpg"> -->
-<p><small>Delaunay triangulation of sample elevation data </small>
+<img height="380" src="img/spatial_interpolation/tin_zoom_grid1.png"> 
 </section>
 
 <section>
@@ -372,7 +370,7 @@ $$ T(x,y) = 0 $$
 $$z(x,y) = ∑ \lambda_j z(x_j,y_j) \; / ∑ \lambda_j \quad  j=1,..., n$$
 
 <ul>
- <li class="fragment"> $\lambda_j = 1/d_j^p$ is weight proportional to power of distance between 
+ <li class="fragment"> $\lambda_j = 1/d_j^p$ is weight proportional to power of inverse distance between 
       the measured point $(x_j,y_j)$ and unsampled point $(x,y)$, 
  <li class="fragment"> $p$ is exponent, usually $p=2$
  <li class="fragment">function passes through the data points
@@ -385,9 +383,8 @@ $$z(x,y) = ∑ \lambda_j z(x_j,y_j) \; / ∑ \lambda_j \quad  j=1,..., n$$
    <h3>Inverse distance weighted method</h3>
 <p>
 Value at a unsampled grid point (blue) is a weighted average of values measured at $n$ nearby points (black):
-$$z(x,y) = ∑ \lambda_j z(x_j,y_j) \; / ∑ \lambda_j \quad  j=1,..., n$$
 <p>
-<img height="360" src="img/spatial_interpolation/idw_pointselect.png"> </p>
+<img height="380" src="img/spatial_interpolation/idw_pointselect.png"> </p>
 </section>
 
 <section>
@@ -396,7 +393,7 @@ $$z(x,y) = ∑ \lambda_j z(x_j,y_j) \; / ∑ \lambda_j \quad  j=1,..., n$$
 leads to local peaks and pits around given points
 <p>
 <img height="380" src="img/spatial_interpolation/IntIDWF1c.gif"> </p>
-<p><small>Bull's eye effect – circular contours when distance between 
+<br><small>Bull's eye effect – circular contours when distance between 
 the measured points is much larger than the distance between grid points. 
 <a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">
 Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
@@ -455,21 +452,31 @@ than the points that are farther appart
 <p>
 <ul>
 <li class="fragment">Model variogram $R(r,r_j)$ is derived by fitting a suitable function to empirical variogram 
-<li class="fragment">empirical variogram is derived from data as
-<p>
-$$
-\gamma (h) = (1/m_h) ∑[z(r_i) - z(r_j)]^2 \;  i=1,…, m_h
-$$
-<p>
-<small>which is mean square of differences in measured values $z$ for points that are separated 
-by a distance $h$ (with some tolerance defining the size of histogram bin)
-</small>
-<p>
-Many model functions can be used: spherical, exponential, Gaussian, … 
+<li class="fragment">Many model variogram functions can be used: spherical, exponential, Gaussian, … 
+</ul>
 </section>
 
 <section>
-   <h3>Experimental variogram</h3>
+   <h3>Empirical Variogram</h3>
+<p>
+<ul>
+<li class="fragment">Model variogram $R(r,r_j)$ is derived by fitting a suitable function to empirical variogram
+<li class="fragment">empirical variogram is derived from data as
+<p>
+$$
+\gamma (h) = (1/2 m_h) ∑[z(r_i) - z(r_j)]^2 \;  i=1,…, m_h
+$$
+<p class="fragment">
+<small>which is a mean of square of differences in measured values $z$ for points that are separated
+by a distance $h$ (with some tolerance defining the size of histogram bin), $m_h$ is the number of
+point pairs within the bin with distance $h$
+</small>
+<li class="fragment">nugget, range and sill
+</ul>
+</section>
+
+<section>
+   <h3>Empirical variogram</h3>
 Given set of elevation points and derived experimental variogram
 <p>
 <img height="300" src="img/spatial_interpolation/bar_pts_all.png"> 
@@ -528,8 +535,8 @@ DEMs interpolated using IDW method and kriging with spherical variogram
 <ul>
  <li>only points within the range of influence are needed for interpolation
  <li class="fragment">each grid point is interpolated by an independent function
- <li class="fragment">local search (IDW, geostatistics, some implementations of splines and RBF)– no continuity condition
- <li class="fragment">points overlap ensures continuity and grid resolution should be close to the distances of input points
+ <li class="fragment">local search (IDW, geostatistics, some implementations of splines and RBF) – no continuity condition
+ <li class="fragment">points overlap ensures continuity so grid resolution should be close to the distances of input points
  <li class="fragment">TIN, natural neighbor use vertices of triangles or voronoi polygons, additional neighboring
 triangles or polygons for non-linear interpolation
 </ul>
@@ -538,9 +545,10 @@ triangles or polygons for non-linear interpolation
 <section>
    <h3>Interpolation points selection </h3>
 <ul>
- <li class="fragment">nearest $n$-points
- <li class="fragment">all points within $d$-distance
- <li class="fragment">modifications: $n$-points from each quadrant or increase $d$ until at least $n$-points are found
+ <li class="fragment">nearest $n$-points, distances are variable
+ <li class="fragment">all points within $d$-distance, $n$ is variable
+ <li class="fragment">$n$-points from each quadrant 
+ <li class="fragment">increase $d$ until at least $n$-points are found
 </ul>
 <p>
 <img height="350" src="img/spatial_interpolation/idw_pointselect.png">
@@ -556,28 +564,13 @@ triangles or polygons for non-linear interpolation
 </section>
 
 <section>
-   <h3>Point density reduction </h3>
-<ul>
-<li class="fragment">Can we interpolate a 2D grid if we have points with identical $x,y$ but different $z$?
-<li class="fragment">How do we define identical?
-<li class="fragment">minimum distance at which two points
-are considered two independent measurements
-(usually horizontal accuracy of the measured data)
-</ul>
-<br>
-<p class="fragment">
-We can eliminate points where $d_{i,j} > d_{min}$, usually $d_{min}$ is a function
-of data accuracy and grid resolution, often leading to much faster computation
-while preserving the level of detail.
-</section>
-
-<section>
-   <h3>Optimized subsampling </h3>
-<ul>
-<li>Reduce points on contours based on distance and shape.
-<li>Example: reduction from 40,000 to 3000 points lead to no visible change in isoline geometry
-</ul>
-<p><img height="350" src="img/spatial_interpolation/spline_from_contours_segm.jpg">
+   <h3>Local interpolation discontinuities</h3>
+<p>Problems with insufficient overlap, usually when the grid size is much smaller than average
+distance between given points, IDW Surfaces with power exponent p=0.5 and p=5 (precipitation data)
+<p>
+<img height="220" src="img/spatial_interpolation/idw_precip_p05_3dpts.png"> </p>
+<img height="220" src="img/spatial_interpolation/idw_precip_p5_3d_pts.jpg"> </p>
+<p><small>Method works well when density of given points is close to the resulting resolution, otherwise it can lead to surface artifacts</small>
 </section>
 
 <section>
