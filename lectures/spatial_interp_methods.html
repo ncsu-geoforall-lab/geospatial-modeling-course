@@ -306,10 +306,18 @@ Voronoi polygons (light blue) and Delaunay triangles (black) create dual graphs.
 <section>
    <h3>Delaunay TIN surface model</h3>
 <p>
-TIN-based DEM generated from points on contours and from a random sub-sample of lidar points
+TIN-based DEM generated from points on contours 
 <p>
-<img height="320" src="img/spatial_interpolation/TINgrassnviz2.jpg">
-<img height="320" src="img/spatial_interpolation/TINgrassnvizrand2.jpg">
+<img height="400" src="img/spatial_interpolation/TINgrassnviz2.jpg">
+<p><small>Vector data model (irregular triangular mesh) representation of elevation surface</small>
+</section>
+
+<section>
+   <h3>Delaunay TIN surface model</h3>
+<p>
+TIN-based DEM generated from a random sub-sample of lidar points
+<p>
+<img height="400" src="img/spatial_interpolation/TINgrassnvizrand2.jpg">
 <p><small>Vector data model (irregular triangular mesh) representation of elevation surface</small>
 </section>
 
@@ -384,7 +392,7 @@ $$z(x,y) = ∑ \lambda_j z(x_j,y_j) \; / ∑ \lambda_j \quad  j=1,..., n$$
 <p>
 Value at a unsampled grid point (blue) is a weighted average of values measured at $n$ nearby points (black):
 <p>
-<img height="380" src="img/spatial_interpolation/idw_pointselect.png"> </p>
+<img height="400" src="img/spatial_interpolation/idw_pointselect.png"> </p>
 </section>
 
 <section>
@@ -392,7 +400,7 @@ Value at a unsampled grid point (blue) is a weighted average of values measured 
 2m resolution DEM computed from points that are ~50m appart:
 leads to local peaks and pits around given points
 <p>
-<img height="380" src="img/spatial_interpolation/IntIDWF1c.gif"> </p>
+<img height="360" src="img/spatial_interpolation/IntIDWF1c.gif"> </p>
 <br><small>Bull's eye effect – circular contours when distance between 
 the measured points is much larger than the distance between grid points. 
 <a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">
@@ -406,15 +414,6 @@ Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
 Impact of power parameter (p=0.5, 2, 5) on the resulting surface: precipitation in NC
 <p>
 <img height="480" src="img/spatial_interpolation/idw_precip_contours2d.png"> </p>
-</section>
-
-<section>
-   <h3>Inverse distance weighted method</h3>
-Surfaces with power exponent p=0.5 and p=5
-<p>
-<img height="220" src="img/spatial_interpolation/idw_precip_p05_3dpts.png"> </p>
-<img height="220" src="img/spatial_interpolation/idw_precip_p5_3d_pts.jpg"> </p>
-<p><small>Method works well when density of given points is close to the resulting resolution, otherwise it can lead to surface artifacts</small>
 </section>
 -->
 
@@ -565,10 +564,10 @@ triangles or polygons for non-linear interpolation
 
 <section>
    <h3>Local interpolation discontinuities</h3>
-<p>Problems with insufficient overlap, usually when the grid size is much smaller than average
-distance between given points, IDW Surfaces with power exponent p=0.5 and p=5 (precipitation data)
+<p>Problems with insufficient overlap: when grid size is much smaller than average
+distance between given points, IDW surfaces with power exponent p=0.5 and p=5 (precipitation data)
 <p>
-<img height="220" src="img/spatial_interpolation/idw_precip_p05_3dpts.png"> </p>
+<img height="220" src="img/spatial_interpolation/idw_precip_p05_3dpts.png"> 
 <img height="220" src="img/spatial_interpolation/idw_precip_p5_3d_pts.jpg"> </p>
 <p><small>Method works well when density of given points is close to the resulting resolution, otherwise it can lead to surface artifacts</small>
 </section>
