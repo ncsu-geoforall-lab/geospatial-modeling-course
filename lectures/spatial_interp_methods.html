@@ -524,6 +524,71 @@ DEMs interpolated using IDW method and kriging with spherical variogram
 </section>
 
 <section>
+   <h3>Local function implementation</h3>
+<ul>
+ <li>only points within the range of influence are needed for interpolation
+ <li class="fragment">each grid point is interpolated by an independent function
+ <li class="fragment">local search (IDW, geostatistics, some implementations of splines and RBF)– no continuity condition
+ <li class="fragment">points overlap ensures continuity and grid resolution should be close to the distances of input points
+ <li class="fragment">TIN, natural neighbor use vertices of triangles or voronoi polygons, additional neighboring
+triangles or polygons for non-linear interpolation
+</ul>
+</section>
+
+<section>
+   <h3>Interpolation points selection </h3>
+<ul>
+ <li class="fragment">nearest $n$-points
+ <li class="fragment">all points within $d$-distance
+ <li class="fragment">modifications: $n$-points from each quadrant or increase $d$ until at least $n$-points are found
+</ul>
+<p>
+<img height="350" src="img/spatial_interpolation/idw_pointselect.png">
+<img height="350" src="img/spatial_interpolation/interp_localpointsearch.png">
+</section>
+
+<section>
+   <h3>Interpolation points selection </h3>
+<p>Problems arise when points are clustered, for example all points are from the same contour - bias, waves
+<p class="fragment">
+<img height="380" src="img/spatial_interpolation/interp_localpointsearch_contour.png">
+</p>
+</section>
+
+<section>
+   <h3>Point density reduction </h3>
+<ul>
+<li class="fragment">Can we interpolate a 2D grid if we have points with identical $x,y$ but different $z$?
+<li class="fragment">How do we define identical?
+<li class="fragment">minimum distance at which two points
+are considered two independent measurements
+(usually horizontal accuracy of the measured data)
+</ul>
+<br>
+<p class="fragment">
+We can eliminate points where $d_{i,j} > d_{min}$, usually $d_{min}$ is a function
+of data accuracy and grid resolution, often leading to much faster computation
+while preserving the level of detail.
+</section>
+
+<section>
+   <h3>Optimized subsampling </h3>
+<ul>
+<li>Reduce points on contours based on distance and shape.
+<li>Example: reduction from 40,000 to 3000 points lead to no visible change in isoline geometry
+</ul>
+<p><img height="350" src="img/spatial_interpolation/spline_from_contours_segm.jpg">
+</section>
+
+<section>
+   <h3>Masking no-data areas </h3>
+Restrict interpolation to surveyed areas to avoid false patterns
+<p><img height="360" src="img/spatial_interpolation/interp_masking.jpg">
+<p>Most implementations provide warning
+</section>
+
+
+<section>
    <h3>Splines</h3>
 We will cover splines in our next lecture
 <p>
