@@ -297,24 +297,34 @@ the condition that no point in P is inside the circumcircle of any triangle in D
 <section>
    <h3>Delaunay TIN and Voronoi polygons</h3>
 <p>
-Voronoi polygons (red) and Delaunay triangles (black) create dual graphs. 
+Voronoi polygons (light blue) and Delaunay triangles (black) create dual graphs. 
 <p>
 <img height="380" src="img/spatial_interpolation/voronoi_zoom_tin2.png"> </p>
 <p><small>Each face of VP is associated with TIN vertex and each TIN face has VP vertex associated with it</small>
 </section>
 
 <section>
-   <h3>Delaunay TIN</h3>
+   <h3>Delaunay TIN surface model</h3>
+<p>
+TIN-based DEM generated from points on contours and from a random sub-sample of lidar points
+<p>
+<img height="360" src="img/spatial_interpolation/TINgrassnviz2.jpg">
+<img height="360" src="img/spatial_interpolation/TINgrassnvizrand2.jpg">
+<p><small>Vector data model (irregular triangular mesh) representation of elevation surface</small>
+</section>
+
+<section>
+   <h3>TIN-based interpolation</h3>
 <p>
 Value at a grid point is computed from 3 given points that form vertices of a Delaunay triangle
 <p>
 <img height="360" src="img/spatial_interpolation/tin_zoom_grid1.png"> 
-<img class=fragment height="360" src="img/spatial_interpolation/tin2dstream.jpg"> 
+<!--<img class=fragment height="360" src="img/spatial_interpolation/tin2dstream.jpg"> -->
 <p><small>Delaunay triangulation of sample elevation data </small>
 </section>
 
 <section>
-   <h3>Linear TIN-based method</h3>
+   <h3>TIN-based interpolation</h3>
 <ul>
  <li>2m res. DEM computed using linear interpolation on TIN
   <li>includes measured and interpolated values
