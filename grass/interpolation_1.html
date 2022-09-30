@@ -225,12 +225,12 @@ import grass.script as gs
 
 for npoints in [1, 20]:
     name = 'elev_idw_1m_npoints_{}'.format(npoints)
-    print "\n\n"
-    print name
-    print len(name) * "="
+    print("\n\n")
+    print(name)
+    print(len(name) * "=")
     stats = gs.parse_command('r.univar', map=name, flags='eg')
 
-    print stats['min'], stats['max']
+    print(stats['min'], stats['max'])
 </code></pre>
 
 Setting the color table and computing shaded relief for changing power
