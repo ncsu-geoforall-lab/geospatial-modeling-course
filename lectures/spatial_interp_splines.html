@@ -22,18 +22,18 @@
 </section>
 
 <section>
-  <h3>Interpolation with radial basis functions</h3>
-<p>Variational approach is based on minimizing:
+  <h3>Interpolation with radial basis functions (RBF)</h3>
 <ul>
-  <li class="fragment">deviations from the given points
-  <li class="fragment">smoothness seminorm or roughness penalty
+  <li>Variational approach is based on minimizing:
+  <ul>
+    <li class="fragment">deviations from the given points
+    <li class="fragment">smoothness seminorm or roughness penalty
+  </ul>
+  <li class="fragment">
+  Physics-based interpretation:  spline interpolation function is a thin flexible plate with tunable bending energy
+  <li class="fragment"> Formally equivalent to universal kriging
+  <li class="fragment"> Radial basis functions: multiquadrics, splines
 </ul>
-<p class="fragment">
-Physics-based interpretation:  spline interpolation function is a thin flexible plate with tunable bending energy
-<p class="fragment">
-Formally equivalent to universal kriging
-<p class="fragment">
-Radial basis functions: multiquadrics, splines
 </section>
 
 <section>
@@ -45,7 +45,7 @@ $$
 <ul>
 <li> $r = (x,y)$ is location of a grid point,
 <li>$r_j=(x_j,y_j$) is location of a measured point
-<li>$T(r)$ is trend (low order polynomial),
+<li>$T(r)$ is trend (low order polynomial: $a_0$, $a_0+a_1x+a_2y$),
 <li>$λ_j$ are coefficients
 <li>$R(r,r_j)$ is a radial basis function
 </ul>
@@ -56,14 +56,14 @@ $$
   <p>Spline properties depend on the formulation of
 smoothness seminorm or roughness penalty
 <ul>
-  <li class="fragment">thin plate spline
-  <li class="fragment">spline with tension 
-  <li class="fragment">regularized spline
-  <li class="fragment">regularized spline with tension 
+  <li class="fragment">thin plate spline ($2^{nd}$ order derivatives)
+  <li class="fragment">spline with tension ($1^st$ and $2^{nd}$ order) 
+  <li class="fragment">regularized spline ($2^{nd}$ and higher order)
+  <li class="fragment">regularized spline with tension (all orders with decreasing weight)
   <li class="fragment">see the smoothness seminorms in 
   <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/resources/mitas_mitasova_1999_2005.pdf"> Table 1</a> 
-  <li class="fragment">see the equations for selected $R(.)$ in the section 6.6.4 
-  <a href="http://www.spatialanalysisonline.com/output/">here</a>
+  <li class="fragment">see the equations for selected $R(.)$ in the Radial basis and spline finctions 
+  <a href="https://spatialanalysisonline.com/HTML/index.html">here</a>
 </ul>
 </section>
 
