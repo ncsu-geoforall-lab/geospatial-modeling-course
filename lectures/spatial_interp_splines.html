@@ -62,7 +62,7 @@ smoothness seminorm or roughness penalty
   <li class="fragment">regularized spline with tension (all orders with decreasing weight)
   <li class="fragment">see the smoothness seminorms in 
   <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/resources/mitas_mitasova_1999_2005.pdf"> Table 1</a> 
-  <li class="fragment">see the equations for selected $R(.)$ in the Radial basis and spline finctions 
+  <li class="fragment">see example equations for $R(.)$  
   <a href="https://spatialanalysisonline.com/HTML/index.html">here</a>
 </ul>
 </section>
@@ -71,10 +71,10 @@ smoothness seminorm or roughness penalty
    <h3>Regularized splines with tension (RST) </h3>
 <p>
 $$
-F(r) = T(r) + ∑ λ_j R(\rho_j)  \;    j=1,m
+F(r) = T(r) + ∑ λ_j R(\varphi |r-r_j|)  \;    j=1,m
 $$
 <ul>
-<li>where $\rho =\varphi |r-r_j|$ 
+<!--<li>where $\rho =\varphi |r-r_j|$ -->
 <li>$\varphi$ is the tension parameter and 
 <li>$|r-r_j|$ is the distance between the unsampled and measured points. 
 <li>minimizes seminorm with all derivatives with decreasing weight
