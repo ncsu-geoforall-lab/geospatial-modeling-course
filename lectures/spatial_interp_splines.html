@@ -45,13 +45,13 @@ $$
 <ul>
 <li>$r = (x,y)$ is location of a grid point,
 <li>$r_j=(x_j,y_j$) is location of a measured point
-<li>$T(r)$ is a trend:<br>
-    low order polynomial: $a_0$, $a_0+a_1x+a_2y$, ...,
 <li>$λ_j$ are coefficients
-<li>$R(r,r_j)$ is a radial basis function
+<li class="fragment">$R(r,r_j)$ is a radial basis function
+<li class="fragment">$T(r)$ is a trend:<br>
+    low order polynomial: $a_0$, $a_0+a_1x+a_2y$, ...,
 </ul>
 <br>
-<img height="150" src="img/spatial_interpolation/smooth.gif"> </p>
+<img class="fragment" height="150" src="img/spatial_interpolation/smooth.gif"> </p>
 </section>
 
 <section>
@@ -106,7 +106,7 @@ Tension controls the stiffness of the plate:
 <img height="230" src="img/spatial_interpolation/spline_ten160_1mn.jpg"> 
 <img height="230" src="img/spatial_interpolation/spline_ten40_1mn.jpg"> 
 <img height="230" src="img/spatial_interpolation/spline_ten10_1mn.jpg"> 
-<p><small>
+<small>
 <ul>
   <li> High tension, short  range of influence, soft rubber sheet, 
        results in a rough surface with a peak or pit in each data point
@@ -145,7 +145,7 @@ Smoothing can be spatially variable
 </section>
 
 <section>
-   <h3>Spline solutions</h3>
+   <h3>Spline implementations</h3>
 <ul>
   <li>Spline with tension: numerical solution supports carved streams, but here the 
 tension is too high
@@ -160,12 +160,10 @@ tension is too high
 
 <section>
    <h3>Interpolation with anisotropy</h3>
-<ul>
- <li>Anisotropic tension: rescaling distances in a given direction
+ Anisotropic tension: rescaling distances in a given direction
  changes the range of influence in this direction, leading to anisotropic pattern in the resulting surface
-</ul>
 <p>
-<img height="380" src="img/spatial_interpolation/spline_anisotr_streamHK.png"> </p>
+<img height="360" src="img/spatial_interpolation/spline_anisotr_streamHK.png"> </p>
 <p class="credit">Data from
 Genereux, D.P., S. Leahy, H. Mitasova, C.D. Kennedy, and D.R. Corbett, 2008, 
 Spatial and temporal variability of streambed hydraulic conductivity in West Bear Creek, NC,
@@ -178,7 +176,7 @@ J. Hydrology, 358, p. 332-352</p>
  <li>GPS-based sensors: dense sampling along a line 
  <li>use anisotropy to rescale distances between profiles, minimize artifacts
 </ul>
-<img height="360" src="img/spatial_interpolation/spline_anisotr_beachprofiles.jpg"> </p>
+<img height="360" src="img/spatial_interpolation/spline_anisotr_beachprofiles.jpg"> 
 <br><small>Better alternative is to map the beach with a drone using structure from motion</small>
 </section>
 
@@ -234,10 +232,12 @@ $$
 $$
  <li>and compute $w_k=F(x_k,y_k,z_k)$ in 3D grid points
 <p>
- <li>Similarly for 4D space (3D + time): $w_i=F(x_i,y_i,z_i,t_i)$
- <li class="fragment" >
+ <li class="fragment">Similarly for 4D space (3D + time): $w_i=F(x_i,y_i,z_i,t_i)$
+<!--
+ <li class="fragment">
 Supported by specialized software for geostatistics: radial basis functions and splines. 
 3D spline is available in GRASS GIS   
+-->
 </ul>
 </section>
 
@@ -255,11 +255,18 @@ with different depths
    <h3>Trivariate Interpolation: tension</h3>
 Impact of tension on the volume model: high to low
 <p>
-<img height="240" src="img/spatial_interpolation/chesap_hightens.jpg"> 
-<img height="240" src="img/spatial_interpolation/chesap_midtens.jpg"> 
-<img height="240" src="img/spatial_interpolation/chesap_lowtens.jpg"> </p>
-<img height="280" src="img/spatial_interpolation/chesaplg.gif"> </p>
-<p class="fragment"><small>High tension: local max or min at given points, low tension: smooth pattern 
+<img height="220" src="img/spatial_interpolation/chesap_hightens.jpg"> 
+<img height="220" src="img/spatial_interpolation/chesap_midtens.jpg"> 
+<img height="220" src="img/spatial_interpolation/chesap_lowtens.jpg"> 
+<img height="200" src="img/spatial_interpolation/chesaplg.gif"> 
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: tension</h3>
+Impact of tension on the volume model: high to low
+<p>
+<img height="320" src="img/spatial_interpolation/tension3d.gif">
+<p><small>High tension: local max or min at given points, low tension: smooth pattern
 with potential "overshoots" </small>
 </section>
 
@@ -299,8 +306,8 @@ with elevation around Asheville and decrease of precipitation with elevation on 
    <h3>Trivariate Interpolation: precipitation</h3>
 Tropical South America mean annual precipitation using bivariate and trivariate interpolation
 <p> 
-<img height="350" src="img/spatial_interpolation/xmsap2d.gif">
-<img height="350" src="img/spatial_interpolation/xmsapel.gif">
+<img height="340" src="img/spatial_interpolation/xmsap2d.gif">
+<img class="fragment" height="340" src="img/spatial_interpolation/xmsapel.gif">
 <img height="250" src="img/spatial_interpolation/preciplg.jpg"> </p>
 </section>
 
@@ -347,7 +354,10 @@ triangles or polygons for non-linear interpolation
 
 <section>
    <h3>Quadtree segmentation </h3>
-Interpolating set of grid points within a rectangular segment rather than individual grid points
+To compute the coefficients of interpolation function we need to solve a system
+of $n$ linear equations, where $n$ is number of given points. 
+To keep $n$ small we compute interpolation locally or apply segmented processing:
+interpolating set of grid points within a rectangular segment:
 <ul>
 <li class="fragment">each rectangular segment has approximately same number of measured points 
 <li class="fragment">interpolation is performed using the points in the segment 
@@ -413,19 +423,19 @@ while preserving the level of detail.
 
 <section>
    <h3>Interpolation with optimized subsampling</h3>
-Computation is almost 10-times faster and there are no artifacts
+Computation 10-times faster with no artifacts
 <p>
-<img height="380" src="img/spatial_interpolation/spline_from_contours.png"> </p>
+<img height="350" src="img/spatial_interpolation/spline_from_contours.png"> </p>
+<p><small>Subsampling lidar point clouds: 50-90% points can be often removed leading
+to much faster interpolation and fewer artifacts</small>
 </section>
 
-<!--
 <section>
-   <h3>Masking no-data areas </h3>
-Restrict interpolation to surveyed areas to avoid false patterns
-<p><img height="360" src="img/spatial_interpolation/interp_masking.jpg">
-<p>Most implementations provide warning
+   <h3>Quad-variate spline interpolation </h3>
+Dynamics of nitrogen concentrations during a year, based on monthly measurements
+<p><img height="360" src="img/spatial_interpolation/chal4d.gif">
+<img height="260" src="img/spatial_interpolation/chesaplg.gif">
 </section>
--->
 
 <section>
    <h3>Summary</h3>
