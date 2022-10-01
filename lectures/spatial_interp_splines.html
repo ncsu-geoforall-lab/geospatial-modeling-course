@@ -160,8 +160,10 @@ tension is too high
 
 <section>
    <h3>Interpolation with anisotropy</h3>
-Anisotropic tension: rescaling distances in a given direction
+<ul>
+ <li>Anisotropic tension: rescaling distances in a given direction
  changes the range of influence in this direction, leading to anisotropic pattern in the resulting surface
+</ul>
 <p>
 <img height="380" src="img/spatial_interpolation/spline_anisotr_streamHK.png"> </p>
 <p class="credit">Data from
@@ -176,33 +178,30 @@ J. Hydrology, 358, p. 332-352</p>
  <li>GPS-based sensors: dense sampling along a line 
  <li>use anisotropy to rescale distances between profiles, minimize artifacts
 </ul>
-<img height="380" src="img/spatial_interpolation/spline_anisotr_beachprofiles.jpg"> </p>
+<img height="360" src="img/spatial_interpolation/spline_anisotr_beachprofiles.jpg"> </p>
 <br><small>Better alternative is to map the beach with a drone using structure from motion</small>
 </section>
 
 <section>
    <h3>Interpolation accuracy</h3>
+<ul>
+ <li>Effect of smoothing: deviations from given points
+     $$ dz (x,y) = z' (x,y) – z (x,y) $$
+ <p> <small>where $z'$ is the interpolated value and $z$ is the given value </small>
 <p>
-Effect of smoothing: deviations from given points
-$$
-dz (x,y) = z' (x,y) – z (x,y)
-$$
-<p>
-<small>where $z'$ is the interpolated value and $z$ is the given value </small>
-<p class="fragment">
-Predictive accuracy: crossvalidation error
-$$e_z (x,y) = z' (x,y) – z_o (x,y)$$
-<p class="fragment">
-<small>where $z'$ is the interpolated and $z_o$ is the given value in a point that was omitted 
+<li class="fragment"> Predictive accuracy: crossvalidation error
+     $$e_z (x,y) = z' (x,y) – z_o (x,y)$$
+  <p class="fragment">
+  <small>where $z'$ is the interpolated and $z_o$ is the given value in a point that was omitted 
 from the set of points used for the interpolation. 
 n-interpolations are performed, each time omitting one point in which $e_z$ is computed: 
 also called 
 <a href="http://en.wikipedia.org/wiki/Cross-validation_(statistics)">
 leave-one-out cross-validation (LOOCV)</a>
-</small>
-</p>
-<p class="fragment">
-Artifacts, bias can be found using histograms, aspect maps, curvatures
+  </small>
+  </p>
+  <li class="fragment"> Artifacts, bias can be found using histograms, aspect maps, curvatures
+</ul>
 </section>
 
 <section>
@@ -211,6 +210,8 @@ Deviations map for smoothing 0.1 and 10
 <p>
 <img height="350" src="img/spatial_interpolation/devism01_3d.jpg"> 
 <img height="350" src="img/spatial_interpolation/devism10_3d.jpg"> </p>
+<p><small>Color maps of differences between the given and interpolated values draped 
+over the DEMs</small>
 </section>
 
 <section>
@@ -219,20 +220,25 @@ Map showing spatial pattern of predictive errors
 <p>
 <img height="350" src="img/spatial_interpolation/crossval2d.png"> 
 <img height="350" src="img/spatial_interpolation/crossval3d.jpg"> </p>
+<p><small>Map of differences between the interpolated and given values in a point that was omitted
+from the set of points used for the interpolation (leave one out cross-validation), shown with
+given set of points and draped over DEM.</small> 
 </section>
 
 <section>
    <h3>Trivariate Interpolation</h3>
-Given $m$ points measured in 3D space, find such $F(x,y,z$) that for each $i=1,m$
+<ul>
+ <li>Given $m$ points measured in 3D space, find such $F(x,y,z$) that for each $i=1,m$
 $$
     w_i=F(x_i,y_i,z_i)              
 $$
-and compute $w_k=F(x_k,y_k,z_k)$ in 3D grid points
+ <li>and compute $w_k=F(x_k,y_k,z_k)$ in 3D grid points
 <p>
-Similarly for 4D space (3D + time): $w_i=F(x_i,y_i,z_i,t_i)$
-<p class="fragment" >
+ <li>Similarly for 4D space (3D + time): $w_i=F(x_i,y_i,z_i,t_i)$
+ <li class="fragment" >
 Supported by specialized software for geostatistics: radial basis functions and splines. 
 3D spline is available in GRASS GIS   
+</ul>
 </section>
 
 <section>
@@ -252,6 +258,7 @@ Impact of tension on the volume model: high to low
 <img height="240" src="img/spatial_interpolation/chesap_hightens.jpg"> 
 <img height="240" src="img/spatial_interpolation/chesap_midtens.jpg"> 
 <img height="240" src="img/spatial_interpolation/chesap_lowtens.jpg"> </p>
+<img height="280" src="img/spatial_interpolation/chesaplg.gif"> </p>
 <p class="fragment"><small>High tension: local max or min at given points, low tension: smooth pattern 
 with potential "overshoots" </small>
 </section>
@@ -304,6 +311,7 @@ Tuning the influence of elevation on precipitation pattern through rescaling in 
 <img height="380" src="img/spatial_interpolation/sapel.gif">
 </section>
 
+<!--
 <section>
    <h3>Local function implementation</h3>
 <ul>
@@ -335,6 +343,7 @@ triangles or polygons for non-linear interpolation
 <img height="380" src="img/spatial_interpolation/interp_localpointsearch_contour.png">
 </p>
 </section>
+-->
 
 <section>
    <h3>Quadtree segmentation </h3>
@@ -397,7 +406,7 @@ while preserving the level of detail.
    <h3>Optimized subsampling </h3>
 <ul>
 <li>Reduce points on contours based on distance and shape.
-<li>Example: reduction from 40,000 to 3000 points lead to no visible change in isoline geometry
+<li>Example: reduction from 40,000 to 3000 points - no visible change in isoline geometry
 </ul>
 <p><img height="350" src="img/spatial_interpolation/spline_from_contours_segm.jpg">
 </section>
@@ -409,12 +418,14 @@ Computation is almost 10-times faster and there are no artifacts
 <img height="380" src="img/spatial_interpolation/spline_from_contours.png"> </p>
 </section>
 
+<!--
 <section>
    <h3>Masking no-data areas </h3>
 Restrict interpolation to surveyed areas to avoid false patterns
 <p><img height="360" src="img/spatial_interpolation/interp_masking.jpg">
 <p>Most implementations provide warning
 </section>
+-->
 
 <section>
    <h3>Summary</h3>
