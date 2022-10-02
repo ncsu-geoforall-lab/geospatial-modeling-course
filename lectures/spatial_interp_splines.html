@@ -134,6 +134,8 @@ It can be applied to individual points.
 Smoothing controls the deviation from the data points, large smoothing results in trend surface $T(x,y)$
 <p>
 <img height="400" src="img/spatial_interpolation/smooth.gif"> </p>
+<p><small><a href="https://covid19.ncdhhs.gov/dashboard/wastewater-monitoring">Smoothing spline applied to concentrations
+of COVID-19 virus in wastewater</a></small>
 </section>
 
 <section>
@@ -268,7 +270,7 @@ Impact of tension on the volume model: high to low
 <p>
 <img height="320" src="img/spatial_interpolation/tension3d.gif">
 <img height="200" src="img/spatial_interpolation/chesaplg.gif"> 
-<p><small>High tension: local maxima or minima at given pointsr;, low tension: smooth pattern
+<p><small>High tension: local maxima or minima at given points; low tension: smooth pattern
 with potential "overshoots" </small>
 <p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
 </section>
@@ -276,7 +278,7 @@ with potential "overshoots" </small>
 <section>
    <h3>Trivariate Interpolation to 2D grid</h3>
 <ul>
- <li>Interpolation of a variable to 2D grid with influence of a third variable
+ <li>Interpolation of 2D grid with influence of third variable
  <li>Given $m$ points $(x_i,y_i,z_i,w_i)$  where $z_i = F_1 (x_i,y_i)$ 
 find such $F_2(x,y,z)$ that for each $i=1,m$
 $$
@@ -284,15 +286,19 @@ $$
 $$
  <li> then compute $w_k=F_3(x_k,y_k)$ at $F_1 \cap F_2$
 </ul>
-<p class="fragment" ><small>
+<ul>
+<li class="fragment" ><small>
 Example: $w_i$ is precipitation measured at locations $x_i,y_i$ at ground elevation $z_i$.
 $F_1$ is represented by a DEM, $F_2$ is an interpolated precipitation volume (voxel model) 
 that passes through the points $(x_i,y_i,z_i,w_i)$. $F_3$ is a bivariate function represented
 as a 2D precipitation grid which is an intersection of a DEM and the interpolated precipitation volume $F_2$
 </small>
-<p class="fragment" ><small>Statistical approach of the method is described in 
+<li class="fragment" ><small>Statistical approach of the method is described in 
 Hutchinson, MF, 1995, Interpolating mean rainfall using thin plate smoothing splines, Int. Journal of Geographical Information Systems 9(4), 385-403.
 and has been used to interpolate global climate maps </small>
+<li class="fragment" ><small>See also 
+<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/TGIS2002_Hofierka_et_al.pdf">Hofierka J., et al. 2002, Multivariate Interpolation of Precipitation Using Regularized Spline with Tension. TGIS 6(2), 135-150.</a>
+</ul>
 </section>
 
 <section>
@@ -312,7 +318,6 @@ Tropical South America mean annual precipitation using bivariate and trivariate 
 <p> 
 <img height="340" src="img/spatial_interpolation/xmsap2d.gif">
 <img class="fragment" height="340" src="img/spatial_interpolation/xmsapel.gif">
-<img height="250" src="img/spatial_interpolation/lgsaprecip.png"> </p>
 <p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
 </section>
 
@@ -321,6 +326,7 @@ Tropical South America mean annual precipitation using bivariate and trivariate 
 <p> 
 Tuning the influence of elevation on precipitation pattern through rescaling in the $z$-direction
 <img height="380" src="img/spatial_interpolation/sapel.gif">
+<img height="150" src="img/spatial_interpolation/lgsaprecip.png"> </p>
 <p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
 </section>
 
@@ -360,14 +366,15 @@ triangles or polygons for non-linear interpolation
 
 <section>
    <h3>Quadtree segmentation </h3>
-To compute the coefficients of interpolation function we need to solve a system
-of $n$ linear equations, where $n$ is number of given points. 
-To keep $n$ small we compute interpolation locally or apply segmented processing:
-interpolating set of grid points within a rectangular segment:
 <ul>
+<li>To compute the coefficients of interpolation function we need to solve a system
+of $n$ linear equations, where $n$ is number of given points. 
+<li>To keep $n$ small we compute interpolation locally or apply segmented processing
+by interpolating set of grid points within a rectangular segment:
 <li class="fragment">each rectangular segment has approximately same number of measured points 
 <li class="fragment">interpolation is performed using the points in the segment 
 and its neighbourhood defined by a dynamic window 
+</ul>
 </ul>
 </section>
 
@@ -439,8 +446,14 @@ to much faster interpolation and fewer artifacts</small>
 <section>
    <h3>Quad-variate spline interpolation </h3>
 Dynamics of nitrogen concentrations during a year, based on monthly measurements
-<p><img height="360" src="img/spatial_interpolation/chal4d.gif">
+<p><img height="360" src="img/spatial_interpolation/chall4d.gif">
 <img height="260" src="img/spatial_interpolation/chesaplg.gif">
+</section>
+
+<section>
+  <h3>Quad-variate spline interpolation</h3>
+Dynamics of groundwater contamination over 10 years 
+<p> <img height="350" src="img/data_visualize/well456.gif">
 </section>
 
 <section>
