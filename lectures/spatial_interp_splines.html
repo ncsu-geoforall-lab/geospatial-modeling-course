@@ -80,7 +80,7 @@ $$
 <ul>
 <!--<li>where $\rho =\varphi |r-r_j|$ -->
 <li>$\varphi$ is the tension parameter and 
-<li>$|r-r_j|$ is the distance between the unsampled and measured points. 
+<li>$|r-r_j|$ is the squared distance between the unsampled and measured points. 
 <li>minimizes seminorm with all derivatives with decreasing weight
 </ul>
 <p class="fragment"> <small>
@@ -286,6 +286,7 @@ $$
 $$
  <li> then compute $w_k=F_3(x_k,y_k)$ at $F_1 \cap F_2$
 </ul>
+<p>
 <ul>
 <li class="fragment" ><small>
 Example: $w_i$ is precipitation measured at locations $x_i,y_i$ at ground elevation $z_i$.
@@ -305,7 +306,7 @@ and has been used to interpolate global climate maps </small>
 <section>
    <h3>Trivariate Interpolation: precipitation</h3>
 NC mean annual precipitation with zoom into Western NC: 
-compare bivariate interpolation and trivariate interpolation which includes influence of elevation
+bivariate interpolation and trivariate interpolation which includes influence of elevation
 <p> 
 <img height="350" src="img/spatial_interpolation/spline_trivar_NCprecip.jpg">
 <br><small>If sufficient data are available, the method captures increase of precipitation
@@ -327,7 +328,7 @@ Tropical South America mean annual precipitation using bivariate and trivariate 
 <p> 
 Tuning the influence of elevation on precipitation pattern through rescaling in the $z$-direction
 <img height="380" src="img/spatial_interpolation/sapel.gif">
-<img height="150" src="img/spatial_interpolation/lgsaprecip.png"> </p>
+<img height="1r250" src="img/spatial_interpolation/lgsaprecip.png"> </p>
 <p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
 </section>
 
