@@ -261,6 +261,7 @@ into 4 smaller rectangles.
 <section>
    <h3>Quadtree segmentation </h3>
 Interpolation of a river bathymetry using quadtree segmentation
+<p>
 <img height="400" src="img/spatial_interpolation/comput.gif">
 </section>
 
@@ -273,7 +274,7 @@ Examples:
   <li class="fragment">point data along profile collected automatically by GPS
   <li class="fragment">scanned contours converted to points
 </ul>
-<img height="200" src="img/geomorph_terrain/points_lidar_gps.jpg">
+<img height="250" src="img/geomorph_terrain/points_lidar_gps.jpg">
 </section>
 
 <section>
@@ -293,17 +294,9 @@ while preserving the level of detail.
 </section>
 
 <section>
-   <h3>High density points along contours</h3>
-If the density of points along contours is high, spline with high tension leads
-to surface with steps along contours, point reduction and lower tension improves the result
-<p>
-<!--<img height="200" src="img/spatial_interpolation/quadtreecont.png">-->
-<img height="350" src="img/spatial_interpolation/spline_from_contours.png"> </p>
-<p><small>Note that the results for IDW or TIN would be even worse</small>
-</section>
-
-<section>
    <h3>Optimized subsampling </h3>
+If the density of points along contours is high, spline with high tension leads
+steps along contours. Solution:
 <ul>
 <li>Reduce points on contours based on distance and shape.
 <li>Example: reduction from 40,000 to 3000 points - no visible change in isoline geometry
@@ -313,7 +306,8 @@ to surface with steps along contours, point reduction and lower tension improves
 
 <section>
    <h3>Interpolation with optimized subsampling</h3>
-Computation 10-times faster with no artifacts
+Point reduction and lower tension improves the result,
+while computation is 10-times faster with no artifacts
 <p>
 <img height="350" src="img/spatial_interpolation/spline_from_contours.png"> </p>
 <p><small>Subsampling lidar point clouds: 50-90% points can be often removed leading
