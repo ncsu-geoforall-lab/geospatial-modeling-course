@@ -16,8 +16,8 @@
   <li>Spline parameters: tension and smoothing
   <li>Evaluating interpolation accuracy: deviations, crossvalidation
   <li>Special cases: contours, anisotropy 
-  <li>Trivariate interpolation of volumes and topo-climatology
-  <li>Selection of points and segmentation 
+  <li>Processing large point data sets: segmentation, subsampling
+  <li>Multivariate interpolation: volumes, topo-climatology, dynamic volumes
 </ul>
 </section>
 
@@ -226,20 +226,113 @@ given set of points and draped over DEM.</small>
 </section>
 
 <section>
-   <h3>Trivariate Interpolation</h3>
+   <h3>Solutions for large data sets </h3>
 <ul>
- <li>Given $m$ points measured in 3D space, find such $F(x,y,z$) that for each $i=1,m$
+<li>Measured point data often include thousands to millions of points (point clouds)
+<li>To compute the coefficients of interpolation function we need to solve a system
+of $n$ linear equations, where $n$ is number of given points.
+<li class="fragment">To keep $n$ small we compute interpolation locally with optimized search
+ or apply segmented processing
+</ul>
+</section>
+
+<section>
+   <h3>Segmented processing </h3>
+<ul>
+<li>Segmented processing splits the region into rectagular segments
+<li class="fragment">each rectangular segment has approximately same number of measured points
+<li class="fragment">interpolation is performed for all grid points within the segment
+<li class="fragment">interpolation function is computed 
+using measured points within the segment and its neighborhood 
+</ul>
+</section>
+
+<section>
+   <h3>Quadtree segmentation </h3>
+<ul>
+<li>if the number of points within a rectangle is larger than given maximum, it is split
+into 4 smaller rectangles.
+<li class="fragment">dynamic search window is used to find overlapping points to ensure smooth connection of segments
+</ul>
+<p><img height="350" src="img/spatial_interpolation/quadtreeseg.png">
+<img class="fragment" height="350" src="img/spatial_interpolation/segm_overlapwindow.png">
+</section>
+
+<section>
+   <h3>Quadtree segmentation </h3>
+Interpolation of a river bathymetry using quadtree segmentation
+<img height="400" src="img/spatial_interpolation/comput.gif">
+</section>
+
+<section>
+   <h3>Oversampling in point measurements</h3>
+Automated point data acquisition often leads to large data sets with redundant points.
+Examples:
+<ul>
+  <li class="fragment">point clouds acquired by lidar
+  <li class="fragment">point data along profile collected automatically by GPS
+  <li class="fragment">scanned contours converted to points
+</ul>
+<img height="200" src="img/geomorph_terrain/points_lidar_gps.jpg">
+</section>
+
+<section>
+   <h3>Point density reduction </h3>
+<ul>
+<li class="fragment">Can we interpolate a 2D grid if we have points with identical $x,y$ but different $z$?
+<li class="fragment">How do we define identical?
+<li class="fragment">minimum distance at which two points
+are considered two independent measurements
+(usually horizontal accuracy of the measured data)
+</ul>
+<br>
+<p class="fragment">
+We can eliminate points where $d_{i,j} > d_{min}$, usually $d_{min}$ is a function
+of data accuracy and grid resolution, often leading to much faster computation
+while preserving the level of detail.
+</section>
+
+<section>
+   <h3>High density points along contours</h3>
+If the density of points along contours is high, spline with high tension leads
+to surface with steps along contours, point reduction and lower tension improves the result
+<p>
+<!--<img height="200" src="img/spatial_interpolation/quadtreecont.png">-->
+<img height="350" src="img/spatial_interpolation/spline_from_contours.png"> </p>
+<p><small>Note that the results for IDW or TIN would be even worse</small>
+</section>
+
+<section>
+   <h3>Optimized subsampling </h3>
+<ul>
+<li>Reduce points on contours based on distance and shape.
+<li>Example: reduction from 40,000 to 3000 points - no visible change in isoline geometry
+</ul>
+<p><img height="350" src="img/spatial_interpolation/spline_from_contours_segm.jpg">
+</section>
+
+<section>
+   <h3>Interpolation with optimized subsampling</h3>
+Computation 10-times faster with no artifacts
+<p>
+<img height="350" src="img/spatial_interpolation/spline_from_contours.png"> </p>
+<p><small>Subsampling lidar point clouds: 50-90% points can be often removed leading
+to much faster interpolation and fewer artifacts</small>
+</section>
+
+
+<section>
+   <h3>Multivariate spline interpolation</h3>
+<ul>
+ <li>Given $m$ points measured in 3D space, find such trivariate spline function 
+$F(x,y,z$) that for each $i=1,m$
 $$
     w_i=F(x_i,y_i,z_i)              
 $$
  <li>and compute $w_k=F(x_k,y_k,z_k)$ in 3D grid points
 <p>
- <li class="fragment">Similarly for 4D space (3D + time): $w_i=F(x_i,y_i,z_i,t_i)$
-<!--
- <li class="fragment">
-Supported by specialized software for geostatistics: radial basis functions and splines. 
-3D spline is available in GRASS GIS   
--->
+ <li class="fragment">Similarly for points measured in 4D space (3D + time): $w_i=F(x_i,y_i,z_i,t_i)$
+ <li class="fragment">we use the quadvariate spline to compute a 4D grid (or a series of 3D grids)
 </ul>
 </section>
 
@@ -332,118 +425,6 @@ Tuning the influence of elevation on precipitation pattern through rescaling in 
 <p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
 </section>
 
-<!--
-<section>
-   <h3>Local function implementation</h3>
-<ul>
- <li>only points within the range of influence are needed for interpolation
- <li class="fragment">each grid point is interpolated by an independent function
- <li class="fragment">local search (IDW, geostatistics, some implementations of splines and RBF)– no continuity condition
- <li class="fragment">points overlap ensures continuity and grid resolution should be close to the distances of input points
- <li class="fragment">TIN, natural neighbor use vertices of triangles or voronoi polygons, additional neighboring 
-triangles or polygons for non-linear interpolation
-</ul>
-</section>
-
-<section>
-   <h3>Interpolation points selection </h3>
-<ul>
- <li class="fragment">nearest $n$-points
- <li class="fragment">all points within $d$-distance
- <li class="fragment">modifications: $n$-points from each quadrant or increase $d$ until at least $n$-points are found
-</ul>
-<p>
-<img height="350" src="img/spatial_interpolation/idw_pointselect.png">
-<img height="350" src="img/spatial_interpolation/interp_localpointsearch.png">
-</section>
-
-<section>
-   <h3>Interpolation points selection </h3>
-<p>Problems arise when points are clustered, for example all points are from the same contour - bias, waves
-<p class="fragment">
-<img height="380" src="img/spatial_interpolation/interp_localpointsearch_contour.png">
-</p>
-</section>
--->
-
-<section>
-   <h3>Quadtree segmentation </h3>
-<ul>
-<li>To compute the coefficients of interpolation function we need to solve a system
-of $n$ linear equations, where $n$ is number of given points. 
-<li>To keep $n$ small we compute interpolation locally or apply segmented processing
-by interpolating set of grid points within a rectangular segment:
-<li class="fragment">each rectangular segment has approximately same number of measured points 
-<li class="fragment">interpolation is performed using the points in the segment 
-and its neighbourhood defined by a dynamic window 
-</ul>
-</ul>
-</section>
-
-<section>
-   <h3>Quadtree segmentation </h3>
-<ul>
-<li>if the number of points within a rectangle is larger than given maximum, it is split 
-into 4 smaller rectangles.
-<li>dynamic search window is used to find overlapping points to ensure smooth connection of segments
-</ul>
-<p><img height="350" src="img/spatial_interpolation/segm_overlapwindow.png">
-</section>
-
-<section>
-   <h3>Quadtree segmentation </h3>
-<ul>
-<li>if the number of points within a rectangle is larger than given maximum, it is split
-into 4 smaller rectangles.
-<li>dynamic search window is used to find overlapping points to ensure smooth connection of segments
-</ul>
-<p><img height="350" src="img/spatial_interpolation/quadtreeseg.png">
-<img height="350" src="img/spatial_interpolation/comput.gif">
-</section>
-
-<section>
-   <h3>High density points along contours</h3>
-If the density of points along contours is high, spline with high tension leads
-to surface with steps along contours, point reduction and lower tension improves the result
-<p>
-<!--<img height="200" src="img/spatial_interpolation/quadtreecont.png">-->
-<img height="350" src="img/spatial_interpolation/spline_from_contours.png"> </p>
-<p><small>Note that the results for IDW or TIN would be even worse</small>
-</section>
-
-<section>
-   <h3>Point density reduction </h3>
-<ul>
-<li class="fragment">Can we interpolate a 2D grid if we have points with identical $x,y$ but different $z$?
-<li class="fragment">How do we define identical?
-<li class="fragment">minimum distance at which two points 
-are considered two independent measurements 
-(usually horizontal accuracy of the measured data)
-</ul>
-<br>
-<p class="fragment">
-We can eliminate points where $d_{i,j} > d_{min}$, usually $d_{min}$ is a function
-of data accuracy and grid resolution, often leading to much faster computation
-while preserving the level of detail.
-</section>
-
-<section>
-   <h3>Optimized subsampling </h3>
-<ul>
-<li>Reduce points on contours based on distance and shape.
-<li>Example: reduction from 40,000 to 3000 points - no visible change in isoline geometry
-</ul>
-<p><img height="350" src="img/spatial_interpolation/spline_from_contours_segm.jpg">
-</section>
-
-<section>
-   <h3>Interpolation with optimized subsampling</h3>
-Computation 10-times faster with no artifacts
-<p>
-<img height="350" src="img/spatial_interpolation/spline_from_contours.png"> </p>
-<p><small>Subsampling lidar point clouds: 50-90% points can be often removed leading
-to much faster interpolation and fewer artifacts</small>
-</section>
 
 <section>
    <h3>Quad-variate spline interpolation </h3>
@@ -455,7 +436,9 @@ Dynamics of nitrogen concentrations during a year, based on monthly measurements
 <section>
   <h3>Quad-variate spline interpolation</h3>
 Dynamics of groundwater contamination over 10 years 
-<p> <img height="350" src="img/data_visualize/well456.gif">
+<p> 
+<img height="350" src="img/data_visualize/wellnew.gif">
+<img height="350" src="img/data_visualize/well456.gif">
 </section>
 
 <section>
@@ -464,8 +447,9 @@ Dynamics of groundwater contamination over 10 years
 <ul>
   <li>Spline interpolation and its parameters: tension and smoothing
   <li>Evaluating interpolation accuracy: deviations, crossvalidation
-  <li>Special cases: contours, anisotropy, trivariate interpolation (volumes, topo-climatology)
-  <li>Selection of points, segmentation, subsampling
+  <li>Special cases: contours, anisotropy
+  <li>Processing large point data sets: segmentation, subsampling
+  <li>Multivariate interpolation: volumes, topo-climatology, dynamic volumes
 </ul>
 </section>
 
