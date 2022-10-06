@@ -201,19 +201,24 @@ r.colors precip_annual_500m rules=precip_color.txt
 d.erase
 d.rast precip_annual_500m
 d.legend precip_annual_500m at=2,30,2,5 range=970,2400
+d.out.file precip_annual
 </code></pre>
 
 <p>
 Compute precipitation raster map with elevation.
 <p>
-<!-- Note that we need to rescale elevation by 90 to get good results.<br> -->
-There is both 3D voxel output and 2D raster output - we want the 2D raster output (cross_output).<br>
+We use trivariate spline interpolation and compute the result as a crossection
+between the trivariate precipitation function and bivariate elevation function.
+We rescale elevation by 90 to incorporate strong influence of topography and use
+the 2D cross_output raster for the resulting precipitation map.<br>
+<br>
 
 <pre><code>
 v.info -c precip_30ynormals_3d
 v.vol.rst input=precip_30ynormals_3d cross_input=elev_state_500m cross_output=precip_anntopo_500m maskmap=elev_state_500m wcolumn=annual zscale=90 segmax=700
 r.colors precip_anntopo_500m raster=precip_annual_500m
 d.rast precip_anntopo_500m
+d.out.file precip_anntopo
 </code></pre>
 <p>
 Optionally, to view the results in 3D,
