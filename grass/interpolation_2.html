@@ -78,28 +78,25 @@ d.vect elev_lid792_randpts size=1 color=red
 Or use 3D views of elev_rstdef_1m, elev_rstt10_1m, elev_rstt160_1m, 
 make sure you switch off the aspect rasters and save the 3 images for your report.
 
-<h3>Compute elevation raster and deviations vector point map</h3>
-For different values of smoothing
-compare deviation stats for smoothing 0.1 and 10.<br>
-Find root mean square deviation rmse.
+<h3>Compute elevation raster and deviations vector point map with different values of smoothing</h3>
+Compare summary statistics for deviations for smoothing 0.1 and 10, including RMSE provided by r.info<br>
 
 <pre><code>
 v.surf.rst input=elev_lid792_randpts elevation=elev_rstdef_1mb zcolumn=value smooth=0.1 deviations=elev_rstdef_devi segmax=30 npmin=140
-v.build elev_rstdef_devi
+<!--v.build elev_rstdef_devi-->
 v.surf.rst input=elev_lid792_randpts elevation=elev_rstsm10_1mb zcolumn=value smooth=10 deviations=elev_rstsm10_devi segmax=30 npmin=140
-v.build elev_rstsm10_devi
+<!--v.build elev_rstsm10_devi-->
+r.info elev_rstdef_1mb
 v.info -c elev_rstdef_devi
 v.univar elev_rstdef_devi column=flt1 type=point
-r.info elev_rstdef_1mb
+r.info elev_rstsm10_1mb
 v.info -c elev_rstsm10_devi
 v.univar elev_rstsm10_devi column=flt1 type=point
-r.info elev_rstsm10_1mb
 </code></pre>
 
 <p>
-Compute and display deviations maps using same color table.
-You need to use custom color table to see the results well.<br>
-Note that we are interpolating here the deviations, not the given elevations.
+Compute and display deviations maps using the same divergent custom color table.
+Note that we are interpolating the deviations, not the given elevations.
 
 <pre><code>
 v.surf.rst input=elev_rstdef_devi elevation=elev_rstdef_devi zcolumn=flt1 segmax=30 npmin=140
@@ -107,16 +104,18 @@ v.surf.rst input=elev_rstsm10_devi elevation=elev_rstsm10_devi zcolumn=flt1 segm
 </code></pre>
 
 <p>
-Apply the downloaded color table <a href="data/deviations_color.txt">deviations_color.txt</a>
+Apply the downloaded custom color table <a href="data/deviations_color.txt">deviations_color.txt</a>
 to the deviation raster.<br>
 Optionally, to view the results in 3D use "elev_rstdef_1mb" for elevation (switch off everything else)
 and drape the deviations maps as color.
 
 <pre><code>
 r.colors elev_rstsm10_devi rules=deviations_color.txt
-r.colors elev_rstdef_devi raster=elev_rstsm10_devi
+r.colors elev_rstdef_devi rules=deviations_color.txt
 d.erase
 d.rast elev_rstdef_devi
+d.legend elev_rstdef_devi at=2,50,2,6
+d.out.file elev_rstdef_devi
 d.rast elev_rstsm10_devi
 d.legend elev_rstsm10_devi at=2,50,2,6
 d.out.file elev_rstsm10_devi
@@ -124,23 +123,23 @@ d.out.file elev_rstsm10_devi
 
 <h3>Compute predictive error of interpolation</h3>
 Compute predictive error of interpolation for each point
-using cross-validation (no raster output, only points with pred. errors).
+using cross-validation (no raster output, only points with predictive errors).
 
 <pre><code>
 v.surf.rst -c input=elev_lid792_randpts zcolumn=value cvdev=elev_rstdef_cv npmin=120 segmax=35
-v.build elev_rstdef_cv
+<!--v.build elev_rstdef_cv-->
 v.univar elev_rstdef_cv column=flt1 type=point
 </code></pre>
 
 <p>
 Compute raster map of predictive errors and <span class="question">identify locations
-where the sampling is inadequate.</span><br>
+where the sampling is inadequate leading to large predictive errors.</span><br>
 Optionally, to view the result in 3D use "elev_rstdef_1mb" for elevation (switch off everything else)
 and drape the crossvalidation map "elev_rstdef_cv" as color.
 
 <pre><code>
 v.surf.rst input=elev_rstdef_cv elevation=elev_rstdef_cv zcolumn=flt1
-r.colors elev_rstdef_cv raster=elev_rstsm10_devi
+r.colors elev_rstdef_cv rules=deviations_color.txt
 d.erase
 d.rast elev_rstdef_cv
 d.vect elev_rstdef_cv size=2
@@ -210,11 +209,6 @@ Compute precipitation raster map with elevation.
 <p>
 <!-- Note that we need to rescale elevation by 90 to get good results.<br> -->
 There is both 3D voxel output and 2D raster output - we want the 2D raster output (cross_output).<br>
-Optionally to view the results in 3D,
-switch off everything except for elev_state_500m and precip_30ynormals_3d,<br>
-switch to 3D, set(type in) viewer height at 300000, z-exag at 6, fine res=1,<br>
-use precip_anntopo_500m for color, set icon size for points - sphere, 5000.<br>
-Display the result and save the image for the report.
 
 <pre><code>
 v.info -c precip_30ynormals_3d
@@ -222,6 +216,12 @@ v.vol.rst input=precip_30ynormals_3d cross_input=elev_state_500m cross_output=pr
 r.colors precip_anntopo_500m raster=precip_annual_500m
 d.rast precip_anntopo_500m
 </code></pre>
+<p>
+Optionally, to view the results in 3D,
+switch off everything except for elev_state_500m and precip_30ynormals_3d,<br>
+switch to 3D, set(type in) viewer height at 300000, z-exag at 6, fine res=1,<br>
+use precip_anntopo_500m for color, set icon size for points - sphere, 5000.<br>
+Display the result and save the image for the report.
 
 <p>
 <span class="question">Try to explain how was elevation used for the precipitation raster interpolation.</span>
