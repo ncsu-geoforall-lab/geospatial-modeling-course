@@ -83,9 +83,7 @@ Compare summary statistics for deviations for smoothing 0.1 and 10, including RM
 
 <pre><code>
 v.surf.rst input=elev_lid792_randpts elevation=elev_rstdef_1mb zcolumn=value smooth=0.1 deviations=elev_rstdef_devi segmax=30 npmin=140
-<!--v.build elev_rstdef_devi-->
 v.surf.rst input=elev_lid792_randpts elevation=elev_rstsm10_1mb zcolumn=value smooth=10 deviations=elev_rstsm10_devi segmax=30 npmin=140
-<!--v.build elev_rstsm10_devi-->
 r.info elev_rstdef_1mb
 v.info -c elev_rstdef_devi
 v.univar elev_rstdef_devi column=flt1 type=point
@@ -105,7 +103,7 @@ v.surf.rst input=elev_rstsm10_devi elevation=elev_rstsm10_devi zcolumn=flt1 segm
 
 <p>
 Apply the downloaded custom color table <a href="data/deviations_color.txt">deviations_color.txt</a>
-to the deviation raster.<br>
+to the deviation raster. Right click to remove legend from previous map if needed.<br>
 Optionally, to view the results in 3D use "elev_rstdef_1mb" for elevation (switch off everything else)
 and drape the deviations maps as color.
 
@@ -121,13 +119,13 @@ d.legend elev_rstsm10_devi at=2,50,2,6
 d.out.file elev_rstsm10_devi
 </code></pre>
 
+<!-- something is broken here the CV output is nonsense 
 <h3>Compute predictive error of interpolation</h3>
 Compute predictive error of interpolation for each point
 using cross-validation (no raster output, only points with predictive errors).
 
 <pre><code>
 v.surf.rst -c input=elev_lid792_randpts zcolumn=value cvdev=elev_rstdef_cv npmin=120 segmax=35
-<!--v.build elev_rstdef_cv-->
 v.univar elev_rstdef_cv column=flt1 type=point
 </code></pre>
 
@@ -146,6 +144,7 @@ d.vect elev_rstdef_cv size=2
 d.legend elev_rstdef_cv at=2,50,2,6
 d.out.file elev_rstdef_cv
 </code></pre>
+-->
 
 
 <!-- <font color="#000066">
