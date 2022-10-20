@@ -87,10 +87,12 @@ d.rast lid_be_binn1m
 d.legend lid_be_binn1m at=2,50,2,9
 r.report lid_be_binn1m unit=p,c
 r.univar lid_be_binn1m
+d.out.file be_pointdensity
 d.rast lid_1r_binn1m
 d.legend -d -s lid_1r_binn1m at=2,50,8,12
 r.report lid_1r_binn1m unit=p
 r.univar lid_1r_binn1m
+d.out.file first_pointdensity
 </code></pre>
 
 <p>
@@ -103,11 +105,14 @@ r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binmean1m return_filter=fir
 r.colors lid_be_binmean1m color=elevation
 r.colors lid_1r_binmean1m color=elevation
 r.info map=lid_1r_binmean1m
+d.erase
 d.rast lid_be_binmean1m
 d.legend lid_be_binmean1m at=2,40,2,5
+d.out.file lidbemean1m
+d.erase
 d.rast lid_1r_binmean1m
 d.legend lid_1r_binmean1m at=2,40,2,5
-d.out.file mylidmrmean1m
+d.out.file lid1rmean1m
 </code></pre>
 
 <p>
@@ -120,11 +125,14 @@ r.in.lidar input=tile_0793_016_spm.las output=lid_be_binmean2m class_filter=2 me
 r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binmean2m return_filter=first method=mean
 r.colors lid_be_binmean2m color=elevation
 r.colors lid_1r_binmean2m color=elevation
+d.erase
 d.rast lid_be_binmean2m
 d.legend lid_be_binmean2m at=2,40,2,5
+d.out.file lidbemean2m
+d.erase
 d.rast lid_1r_binmean2m
 d.legend lid_1r_binmean2m at=2,40,2,5
-d.out.file mylidmrmean2m
+d.out.file lid1rmean2m
 </code></pre>
 
 <p>
@@ -135,21 +143,15 @@ r.in.lidar input=tile_0793_016_spm.las output=lid_be_binrange2m class_filter=2 m
 r.colors lid_be_binrange2m color=bcyr -e
 r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binrange2m return_filter=first method=range
 r.colors lid_1r_binrange2m color=bcyr -e
+d.erase
 d.rast lid_be_binrange2m
 d.legend lid_be_binrange2m at=2,40,2,5
+d.out.file lid_be_binrange2m
+d.erase
 d.rast lid_1r_binrange2m
 d.legend lid_1r_binrange2m at=2,40,2,5
+d.out.file lid_1r_binrange2m
 </code></pre>
-
-<!-- why is this commented out? the default result does not show anything
-<p>
-In the first return we have huge range at one or more cells, so we adjust
-the color table to histogram equalized and redraw:
-
-<pre><code>
-r.colors lid_1r_binrange2m color=bcyr -e
-</code></pre>
--->
 
 <p>
 Import and display orthophoto, 
@@ -177,7 +179,6 @@ If we need a 1m resolution DEM or DSM for our application
 this analysis tells us that we need to interpolate it from the point cloud.
 <span class="question">What steps would you begin with when processing
 point cloud data you are not familiar with?</span>
-
 
 <h3>Interpolate DEM and DSM</h3>
 
