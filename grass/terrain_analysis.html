@@ -283,13 +283,19 @@ r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=N
 r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_stddev method=stddev
 <!--r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_slope method=slope-->
 r.colors NH_9908_stddev rules=stddev_color.txt
+r.colors -n NH_9908_range color=inferno
 <!--r.colors NH_9908_slope rules=regrslope_color.txt-->
+d.erase
 d.rast NH_9908_stddev
+d.legend NH_9908_stddev
+d.out.file series_stddev
 d.rast NH_9908_range
+d.legend NH_9908_range
+d.out.file series_range
 </code></pre>
 
 <p>
-Use cutting plane in 3D view to show the core and envelope.<br>
+Oprional: Use cutting plane in 3D view to show the core and envelope.<br>
 Add constant elevation plane at -1m for reference,
 set zexag somewhere 3-5 (the default is too high).<br>
 Assign surfaces constant color, use top or bottom surface for crossection color.<br>
