@@ -220,11 +220,13 @@ Display with legend, save images for the report.<br>
 Optionally display the feature maps draped over elev_lid792_1m as color.
 
 <pre><code>
+d.erase
 d.rast feature9c_1m
-d.legend feature9c_1m at=2,20,2,6
+d.legend -c feature9c_1m at=2,20,2,6 font=Arial
+d.out.file landfroms9
 d.rast feature45c_1m
-d.legend feature45c_1m at=2,20,2,6
-d.vect elev_lid792_cont1m color=brown
+d.vect elev_lid792_cont1m color=grey
+d.out.file landfroms45
 <!--nviz elev_lid792_1m color=feature9c_1m nviz elev_lid792_1m color=feature45c_1m-->
 </code></pre>
 
