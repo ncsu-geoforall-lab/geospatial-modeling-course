@@ -127,7 +127,7 @@ and the route direction angles.
 
 <pre><code>
 r.mapcalc "route_slope_dir = abs(atan(tan(myslope) * cos(myaspect - busroute11_dir)))"
-r.colors map=route_slope,route_slope_dir color=slope
+r.colors map=route_slope,route_slope_dir color=bcyr -e
 </code></pre>
 
 Display the results along with the elevation contours and compute univariate statistics.
@@ -135,7 +135,8 @@ Comment on the difference of the two results.
 
 <pre><code>
 r.contour input=elevation output=contours step=2
-d.vect contours
+d.erase
+d.vect contours color=220:200:200
 d.rast route_slope
 d.legend route_slope
 d.out.file route_slope
