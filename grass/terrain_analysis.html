@@ -230,6 +230,28 @@ d.out.file landfroms45
 <!--nviz elev_lid792_1m color=feature9c_1m nviz elev_lid792_1m color=feature45c_1m-->
 </code></pre>
 
+<p>
+Map basic landforms using geomorphons DSM, read the manual page and the associated paper to learn how it works
+<span class="question">Explain the role of the search and distance parameters.</span>
+
+<pre><code>
+r.geomorphon elevation=elev_lid792_1m forms=geomorphon_s50d0 search=50 dist=0
+r.geomorphon elevation=elev_lid792_1m forms=geomorphon_s50d10 search=50 dist=10 
+d.erase
+d.rast geomorphon_s50d0
+d.vect elev_lid792_cont1m color=grey
+d.legend -c geomorphon_dsm at=2,30,2,8
+d.out.file geomorphon_s50d0
+d.rast geomorphon_s50d10
+d.out.file geomorphon_s50d10
+</code></pre>
+
+<!--
+r.geomorphon elevation=elev_lidmr_1m forms=geomorphon_dsm search=50
+d.legend -c geomorphon_dsm at=2,30,2,8
+d.out.file geomorphon_dsm
+-->
+
 <h3>Raster time series analysis</h3>
 
 For this exercise we will use NagsHead_series Mapset you downloaded.<br>
