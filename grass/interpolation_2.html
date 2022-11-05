@@ -79,7 +79,8 @@ Or use 3D views of elev_rstdef_1m, elev_rstt10_1m, elev_rstt160_1m,
 make sure you switch off the aspect rasters and save the 3 images for your report.
 
 <h3>Compute elevation raster and deviations vector point map with different values of smoothing</h3>
-Compare summary statistics for deviations for smoothing 0.1 and 10, including RMSE provided by r.info<br>
+Compare summary statistics for deviations for smoothing 0.1 and 10, including root mean square deviation (rmsdevi)
+ provided by r.info of the resulting elevations maps<br>
 
 <pre><code>
 v.surf.rst input=elev_lid792_randpts elevation=elev_rstdef_1mb zcolumn=value smooth=0.1 deviations=elev_rstdef_devi segmax=30 npmin=140
