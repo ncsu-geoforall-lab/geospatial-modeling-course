@@ -233,8 +233,10 @@ for npoints in [1, 20]:
     print(stats['min'], stats['max'])
 </code></pre>
 
-Setting the color table and computing shaded relief for changing power
-(you need to create the maps before that):
+Now write your own code to compute IDW interpolation for different values 
+of power parameter (e.g., 0.5, 1, 2, 5) by modifying the previous code. 
+Once you have the elev_idw_1m_power_05, .... computed you can 
+set the color table and compute shaded relief for your outputs:
 
 <pre><code>
 import grass.script as gs
