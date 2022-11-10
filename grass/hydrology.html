@@ -169,9 +169,10 @@ d.rast ortho_2001_t792_1m
 d.rast accum_5K values=1500-1000000
 d.vect streets_wake color=red
 d.vect streams color=green
+d.out.file streamcompare
 </code></pre>
 
-<h3>Carve a pre-defined channel given by the stream data into DEM</h3>
+<p>Carve a pre-defined channel given by the stream data into DEM</p>
 
 <pre><code>
 r.carve raster=elev_lid792_1m vector=streams width=2 depth=0.8 output=elev_lidcarved_1m
@@ -193,11 +194,8 @@ d.out.file streamcarved
 <h3>Compute refined flow pattern using D-inf</h3>
 Compare upslope and downslope flow lines:
 <span class="question">On what type of landform (ridge, valley) they converge?</span>
-<p>
-Remove or switch off all previous layers.
 
 <pre><code>
-d.erase
 g.region raster=elev_lid792_1m -p
 r.flow elevation=elev_lid792_1m flowline=flowlines flowlength=flowlg_1m flowaccumulation=flowacc_1m
 r.flow -u elevation=elev_lid792_1m flowlength=flowlgup_1m flowaccumulation=flowaccup_1m
@@ -207,24 +205,30 @@ r.flow -u elevation=elev_lid792_1m flowlength=flowlgup_1m flowaccumulation=flowa
 Display maps along with contours to see relation to terrain:
 
 <pre><code>
+d.erase
 d.rast flowacc_1m
 d.vect elev_lid792_cont_1m color=red
+d.vect flowlines
+d.out.file flowdown
+d.erase
 d.rast flowaccup_1m
 d.vect elev_lid792_cont_1m color=red
-d.vect flowlines
 d.out.file flowlines
 </code></pre>
 
 <h3>Compare the multiple flow direction result with D8 and Dinf</h3>
-<span class="question">Compare the result of accum_5K and accum_mfd_5K1m. Why are they different,
+<span class="question">Compare the results of r.watershed:  accum_5K and accum_mfd_5K1m. Why are they different,
 which is more accurate and why?</span>
 <pre><code>
 r.watershed -a elevation=elev_lid792_1m threshold=5000 accumulation=accum_mfd_5K1m
 d.rast accum_mfd_5K1m
 d.vect streams
 d.out.file stream_mfd
+d.erase
+d.rast accum_5K
+d.vect streams
+d.out.file stream_sfd
 </code></pre>
-
 
 <h3>Compute wetness index</h3>
 
@@ -233,7 +237,12 @@ g.region rural_1m -p
 r.topidx elev_lid792_1m output=wetness_1m
 r.colors map=wetness_1m color=water
 d.rast wetness_1m
+d.out.file wetness
 </code></pre>
+
+Compute the wettness index using the formula in the lecture (hint: you will need
+to compute slope using elev_lid792_1m and use accum_mfd_5K1m as contributing area.
+Check the values by comparing your output with wetness_1m computed with r.topidx.
 
 <p>Display elev_lid792_1m in 3D and drape over wetness_1m as color.<br>
 Note: switch off all layers except for elev_lid792_1m.
@@ -249,8 +258,9 @@ d.out.file floodedarea
 </code></pre>
 
 <p>
-Increase water level to 113.7m and 114.0m and create flooded
-area maps at these two levels.
+Increase water level to 113.7m and 115.0m and create flooded
+area maps at these two levels. Include the maps of flooded areas 
+at these water levels in your report.
 
 <!--
 r.lake elevation=elev_lid792_1m wl=113.7 lake=flood2 coordinates=638728,220278
