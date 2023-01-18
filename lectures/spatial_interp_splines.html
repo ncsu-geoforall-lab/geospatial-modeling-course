@@ -16,24 +16,24 @@
   <li>Spline parameters: tension and smoothing
   <li>Evaluating interpolation accuracy: deviations, crossvalidation
   <li>Special cases: contours, anisotropy 
-  <li>Trivariate interpolation of volumes and topo-climatology
-  <li>Selection of points and segmentation 
+  <li>Processing large point data sets: segmentation, subsampling
+  <li>Multivariate interpolation: volumes, topo-climatology, dynamic volumes
 </ul>
 </section>
 
 <section>
-  <h3>Interpolation with radial basis functions</h3>
-<p>Variational approach is based on minimizing:
+  <h3>Interpolation with radial basis functions (RBF)</h3>
 <ul>
-  <li class="fragment">deviations from the given points
-  <li class="fragment">smoothness seminorm or roughness penalty
+  <li>Variational approach is based on minimizing:
+  <ul>
+    <li class="fragment">deviations from the given points
+    <li class="fragment">smoothness seminorm or roughness penalty
+  </ul>
+  <li class="fragment"> Radial basis functions: multiquadrics, splines
+  <li class="fragment">
+  Physics-based interpretation:  spline function is a thin flexible plate with tunable bending energy
+  <li class="fragment"> Formally equivalent to universal kriging
 </ul>
-<p class="fragment">
-Physics-based interpretation:  spline interpolation function is a thin flexible plate with tunable bending energy
-<p class="fragment">
-Formally equivalent to universal kriging
-<p class="fragment">
-Radial basis functions: multiquadrics, splines
 </section>
 
 <section>
@@ -43,12 +43,15 @@ $$
 F(r) = T(r) + ∑ λ_j R(r,r_j)  \;    j=1,m
 $$
 <ul>
-<li> $r = (x,y)$ is location of a grid point,
+<li>$r = (x,y)$ is location of a grid point,
 <li>$r_j=(x_j,y_j$) is location of a measured point
-<li>$T(r)$ is trend (low order polynomial),
 <li>$λ_j$ are coefficients
-<li>$R(r,r_j)$ is a radial basis function
+<li class="fragment">$R(r,r_j)$ is a radial basis function
+<li class="fragment">$T(r)$ is a trend:<br>
+    low order polynomial: $a_0$, $a_0+a_1x+a_2y$, ...,
 </ul>
+<br>
+<img class="fragment" height="150" src="img/spatial_interpolation/smooth.gif"> </p>
 </section>
 
 <section>
@@ -56,36 +59,38 @@ $$
   <p>Spline properties depend on the formulation of
 smoothness seminorm or roughness penalty
 <ul>
-  <li class="fragment">thin plate spline
-  <li class="fragment">spline with tension 
-  <li class="fragment">regularized spline
-  <li class="fragment">regularized spline with tension 
+  <li class="fragment">thin plate spline ($2^{nd}$ order derivatives)
+  <li class="fragment">spline with tension ($1^{st}$ and $2^{nd}$ order derivatives) 
+  <li class="fragment">regularized spline ($2^{nd}$ and higher order)
+  <li class="fragment">regularized spline with tension (derivatives of all orders with decreasing weight)
   <li class="fragment">see the smoothness seminorms in 
   <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/resources/mitas_mitasova_1999_2005.pdf"> Table 1</a> 
-  <li class="fragment">see the equations for selected $R(.)$ in the section 6.6.4 
-  <a href="http://www.spatialanalysisonline.com/output/">here</a>
+  <li class="fragment">see example equations for $R(.)$  
+  <a href="https://spatialanalysisonline.com/HTML/index.html">here</a>
 </ul>
+<p><small>Note: Functions with $2^{nd}$ order derivatives minimize curvatures</small>
 </section>
 
 <section>
-   <h3>Regularized splines with tension (RST) </h3>
+   <h3>Regularized spline with tension (RST) </h3>
 <p>
 $$
-F(r) = T(r) + ∑ λ_j R(\rho_j)  \;    j=1,m
+F(r) = T(r) + ∑ λ_j R(\varphi |r-r_j|)  \;    j=1,m
 $$
 <ul>
-<li>where $\rho =\varphi |r-r_j|$ 
+<!--<li>where $\rho =\varphi |r-r_j|$ -->
 <li>$\varphi$ is the tension parameter and 
-<li>$|r-r_j|$ is the distance between the unsampled and measured points. 
+<li>$|r-r_j|$ is the squared distance between the unsampled and measured points. 
 <li>minimizes seminorm with all derivatives with decreasing weight
 </ul>
-<p class="fragment">
-Spline tension rescales distances, it has similar effect to shortening range in kriging 
-or decreasing the distance weight exponent in IDW
+<p class="fragment"> <small>
+Spline tension rescales distances, it has similar effect to adjusting the range in kriging 
+or the distance weight exponent in IDW
+</small>
 </section>
 
 <section>
-   <h3>Spline: tension</h3>
+   <h3>Spline: tension parameter</h3>
 Tension controls the stiffness of the plate:
 <ul> 
  <li> high tension: soft rubber sheet, short range 
@@ -96,28 +101,31 @@ Tension controls the stiffness of the plate:
 </section>
 
 <section>
-   <h3>Spline: tension</h3>
+   <h3>Spline: tension parameter</h3>
 <p>
 <img height="230" src="img/spatial_interpolation/spline_ten160_1mn.jpg"> 
 <img height="230" src="img/spatial_interpolation/spline_ten40_1mn.jpg"> 
 <img height="230" src="img/spatial_interpolation/spline_ten10_1mn.jpg"> 
-<p><small>
-High tension, short  range of influence, soft rubber sheet, results in a rough surface with a peak or pit in each data point
-<br>
-Low tension, long range of influence, stiffer steel plate, results in a smoother surface with possible overshoots.
-<br>Note that tension is inverse of stiffness
+<small>
+<ul>
+  <li> High tension, short  range of influence, soft rubber sheet, 
+       results in a rough surface with a peak or pit in each data point
+  <li> Low tension, long range of influence, stiffer steel plate, 
+       results in a smoother surface with possible overshoots.
+  <li>Note that tension is inverse of stiffness
+</ul>
 </small>
 </section>
 
 <section>
-   <h3>Spline: smoothing</h3>
+   <h3>Spline: smoothing parameter</h3>
 <p> Allows the surface to deviate from measured points
 <p>
 $$F(x_i,y_i) = z(x_i, y_i) + \varepsilon(x_i,y_i)$$ 
 <p>
 <img height="280" src="img/spatial_interpolation/spline_smooth_springs.png"> 
-<p>Reduces overshoots, noise, improves numerical stability
-<br>Can be applied to individual points 
+<p>Reduces overshoots, smoothes out noise, improves numerical stability.
+It can be applied to individual points. 
 </section>
 
 <section>
@@ -126,22 +134,24 @@ $$F(x_i,y_i) = z(x_i, y_i) + \varepsilon(x_i,y_i)$$
 Smoothing controls the deviation from the data points, large smoothing results in trend surface $T(x,y)$
 <p>
 <img height="400" src="img/spatial_interpolation/smooth.gif"> </p>
+<p><small><a href="https://covid19.ncdhhs.gov/dashboard/wastewater-monitoring">Smoothing spline applied to concentrations
+of COVID-19 virus in wastewater</a></small>
 </section>
 
 <section>
    <h3>Spline: smoothing</h3>
 Smoothing can be spatially variable 
 <p>
-<img height="300" src="img/spatial_interpolation/spline_ten40_1mn.jpg">
-<img height="300" src="img/spatial_interpolation/spline_smoothvar_1mn.jpg"> </p>
+<img height="340" src="img/spatial_interpolation/spline_ten40_1mn.jpg">
+<img height="340" src="img/spatial_interpolation/spline_smoothvar_1mn.jpg"> </p>
 </section>
 
 <section>
-   <h3>Spline interpolation from points</h3>
+   <h3>Spline implementations</h3>
 <ul>
   <li>Spline with tension: numerical solution supports carved streams, but here the 
 tension is too high
-  <li>RST method: lower tension combined with smoothing reduce bias towards given points
+  <li>Explicit RST method: lower tension combined with smoothing reduce bias towards given points
 </ul>
 <p>
 <img height="300" src="img/spatial_interpolation/InttopogrF1e.gif">
@@ -152,10 +162,10 @@ tension is too high
 
 <section>
    <h3>Interpolation with anisotropy</h3>
-Anisotropic tension: rescaling distances in a given direction
+ Anisotropic tension: rescaling distances in a given direction
  changes the range of influence in this direction, leading to anisotropic pattern in the resulting surface
 <p>
-<img height="380" src="img/spatial_interpolation/spline_anisotr_streamHK.png"> </p>
+<img height="360" src="img/spatial_interpolation/spline_anisotr_streamHK.png"> </p>
 <p class="credit">Data from
 Genereux, D.P., S. Leahy, H. Mitasova, C.D. Kennedy, and D.R. Corbett, 2008, 
 Spatial and temporal variability of streambed hydraulic conductivity in West Bear Creek, NC,
@@ -164,36 +174,34 @@ J. Hydrology, 358, p. 332-352</p>
 
 <section>
    <h3>Interpolation from profiles</h3>
-GPS-based sensors use automated dense sampling along a line 
-– anisotropy can be used to rescale distances between profiles and minimize artifacts
-<p>
-<img height="380" src="img/spatial_interpolation/spline_anisotr_beachprofiles.jpg"> </p>
-<p class="credit" >Better alternative is to map it with a drone using structure from motion
+<ul>
+ <li>GPS-based sensors: dense sampling along a line 
+ <li>use anisotropy to rescale distances between profiles, minimize artifacts
+</ul>
+<img height="360" src="img/spatial_interpolation/spline_anisotr_beachprofiles.jpg"> 
+<br><small>Better alternative is to map the beach with a drone using structure from motion</small>
 </section>
 
 <section>
    <h3>Interpolation accuracy</h3>
+<ul>
+ <li>Effect of smoothing: deviations from given points
+     $$ dz (x,y) = z' (x,y) – z (x,y) $$
+ <p> <small>where $z'$ is the interpolated value and $z$ is the given value </small>
 <p>
-Effect of smoothing: deviations from given points
-$$
-dz (x,y) = z' (x,y) – z (x,y)
-$$
-<p>
-<small>where $z'$ is the interpolated value and $z$ is the given value </small>
-<p class="fragment">
-Predictive accuracy: crossvalidation error
-$$e_z (x,y) = z' (x,y) – z_o (x,y)$$
-<p class="fragment">
-<small>where $z'$ is the interpolated and $z_o$ is the given value in a point that was omitted 
+<li class="fragment"> Predictive accuracy: crossvalidation error
+     $$e_z (x,y) = z' (x,y) – z_o (x,y)$$
+  <p class="fragment">
+  <small>where $z'$ is the interpolated and $z_o$ is the given value in a point that was omitted 
 from the set of points used for the interpolation. 
 n-interpolations are performed, each time omitting one point in which $e_z$ is computed: 
 also called 
 <a href="http://en.wikipedia.org/wiki/Cross-validation_(statistics)">
 leave-one-out cross-validation (LOOCV)</a>
-</small>
-</p>
-<p class="fragment">
-Artifacts, bias can be found using histograms, aspect maps, curvatures
+  </small>
+  </p>
+  <li class="fragment"> Artifacts, bias can be found using histograms, aspect maps, curvatures
+</ul>
 </section>
 
 <section>
@@ -202,6 +210,8 @@ Deviations map for smoothing 0.1 and 10
 <p>
 <img height="350" src="img/spatial_interpolation/devism01_3d.jpg"> 
 <img height="350" src="img/spatial_interpolation/devism10_3d.jpg"> </p>
+<p><small>Color maps of differences between the given and interpolated values draped 
+over the DEMs</small>
 </section>
 
 <section>
@@ -210,20 +220,114 @@ Map showing spatial pattern of predictive errors
 <p>
 <img height="350" src="img/spatial_interpolation/crossval2d.png"> 
 <img height="350" src="img/spatial_interpolation/crossval3d.jpg"> </p>
+<p><small>Map of differences between the interpolated and given values in a point that was omitted
+from the set of points used for the interpolation (leave one out cross-validation), shown with
+given set of points and draped over DEM.</small> 
 </section>
 
 <section>
-   <h3>Trivariate Interpolation</h3>
-Given $m$ points measured in 3D space, find such $F(x,y,z$) that for each $i=1,m$
+   <h3>Solutions for large data sets </h3>
+<ul>
+<li>Measured point data often include thousands to millions of points (point clouds)
+<li>To compute the coefficients of interpolation function we need to solve a system
+of $n$ linear equations, where $n$ is number of given points.
+<li class="fragment">To keep $n$ small we compute interpolation locally with optimized search
+ or apply segmented processing
+</ul>
+</section>
+
+<section>
+   <h3>Segmented processing </h3>
+<ul>
+<li>Segmented processing splits the region into rectagular segments
+<li class="fragment">each rectangular segment has approximately same number of measured points
+<li class="fragment">interpolation is performed for all grid points within the segment
+<li class="fragment">interpolation function is computed 
+using measured points within the segment and its neighborhood 
+</ul>
+</section>
+
+<section>
+   <h3>Quadtree segmentation </h3>
+<ul>
+<li>if the number of points within a rectangle is larger than given maximum, it is split
+into 4 smaller rectangles.
+<li class="fragment">dynamic search window is used to find overlapping points to ensure smooth connection of segments
+</ul>
+<p><img height="350" src="img/spatial_interpolation/quadtreeseg.png">
+<img class="fragment" height="350" src="img/spatial_interpolation/segm_overlapwindow.png">
+</section>
+
+<section>
+   <h3>Quadtree segmentation </h3>
+Interpolation of a river bathymetry using quadtree segmentation
+<p>
+<img height="400" src="img/spatial_interpolation/comput.gif">
+</section>
+
+<section>
+   <h3>Oversampling in point measurements</h3>
+Automated point data acquisition often leads to large data sets with redundant points.
+Examples:
+<ul>
+  <li class="fragment">point clouds acquired by lidar
+  <li class="fragment">point data along profile collected automatically by GPS
+  <li class="fragment">scanned contours converted to points
+</ul>
+<img height="250" src="img/geomorph_terrain/points_lidar_gps.jpg">
+</section>
+
+<section>
+   <h3>Point density reduction </h3>
+<ul>
+<li class="fragment">Can we interpolate a 2D grid if we have points with identical $x,y$ but different $z$?
+<li class="fragment">How do we define identical?
+<li class="fragment">minimum distance at which two points
+are considered two independent measurements
+(usually horizontal accuracy of the measured data)
+</ul>
+<br>
+<p class="fragment">
+We can eliminate points where $d_{i,j} > d_{min}$, usually $d_{min}$ is a function
+of data accuracy and grid resolution, often leading to much faster computation
+while preserving the level of detail.
+</section>
+
+<section>
+   <h3>Optimized subsampling </h3>
+If the density of points along contours is high, spline with high tension leads
+to steps along contours. Solution:
+<ul>
+<li>Subsample points based on distance and shape.
+<li>Example: reduction from 40,000 to 3000 points - no visible change in isoline geometry
+</ul>
+<p><img height="340" src="img/spatial_interpolation/spline_from_contours_segm.jpg">
+</section>
+
+<section>
+   <h3>Interpolation with optimized subsampling</h3>
+Point reduction and lower tension improves the result,
+while computation is 10-times faster with no artifacts
+<p>
+<img height="350" src="img/spatial_interpolation/spline_from_contours.png"> </p>
+<p><small>Subsampling lidar point clouds: 50-90% points can be often removed leading
+to much faster interpolation and fewer artifacts</small>
+</section>
+
+
+<section>
+   <h3>Multivariate spline interpolation</h3>
+<ul>
+ <li>Given $m$ points measured in 3D space, find such trivariate spline function 
+$F(x,y,z$) that for each $i=1,m$
 $$
     w_i=F(x_i,y_i,z_i)              
 $$
-and compute $w_k=F(x_k,y_k,z_k)$ in 3D grid points
+ <li>and compute $w_k=F(x_k,y_k,z_k)$ in 3D grid points
 <p>
-Similarly for 4D space (3D + time): $w_i=F(x_i,y_i,z_i,t_i)$
-<p class="fragment" >
-Supported by specialized software for geostatistics: radial basis functions and splines. 
-3D spline is available in GRASS GIS   
+ <li class="fragment">Similarly for points measured in 4D space (3D + time): $w_i=F(x_i,y_i,z_i,t_i)$
+ <li class="fragment">we use the quadvariate spline to compute a 4D grid (or a series of 3D grids)
+</ul>
 </section>
 
 <section>
@@ -240,17 +344,28 @@ with different depths
    <h3>Trivariate Interpolation: tension</h3>
 Impact of tension on the volume model: high to low
 <p>
-<img height="240" src="img/spatial_interpolation/chesap_hightens.jpg"> 
-<img height="240" src="img/spatial_interpolation/chesap_midtens.jpg"> 
-<img height="240" src="img/spatial_interpolation/chesap_lowtens.jpg"> </p>
-<p class="fragment"><small>High tension: local max or min at given points, low tension: smooth pattern 
+<img height="220" src="img/spatial_interpolation/chesap_hightens.jpg"> 
+<img height="220" src="img/spatial_interpolation/chesap_midtens.jpg"> 
+<img height="220" src="img/spatial_interpolation/chesap_lowtens.jpg"> 
+<p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
+
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: tension</h3>
+Impact of tension on the volume model
+<p>
+<img height="320" src="img/spatial_interpolation/tension3d.gif">
+<img height="200" src="img/spatial_interpolation/chesaplg.gif"> 
+<p><small>High tension: local maxima or minima at given points; low tension: smooth pattern
 with potential "overshoots" </small>
+<p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
 </section>
 
 <section>
    <h3>Trivariate Interpolation to 2D grid</h3>
 <ul>
- <li>Interpolation of a variable to 2D grid with influence of a third variable
+ <li>Interpolation of 2D grid with influence of third variable
  <li>Given $m$ points $(x_i,y_i,z_i,w_i)$  where $z_i = F_1 (x_i,y_i)$ 
 find such $F_2(x,y,z)$ that for each $i=1,m$
 $$
@@ -258,20 +373,27 @@ $$
 $$
  <li> then compute $w_k=F_3(x_k,y_k)$ at $F_1 \cap F_2$
 </ul>
-<p class="fragment" ><small>
+<p>
+<ul>
+<li class="fragment" ><small>
 Example: $w_i$ is precipitation measured at locations $x_i,y_i$ at ground elevation $z_i$.
 $F_1$ is represented by a DEM, $F_2$ is an interpolated precipitation volume (voxel model) 
 that passes through the points $(x_i,y_i,z_i,w_i)$. $F_3$ is a bivariate function represented
 as a 2D precipitation grid which is an intersection of a DEM and the interpolated precipitation volume $F_2$
 </small>
-<p class="fragment" ><small>Statistical approach of the method is given by Hutchinson
+<li class="fragment" ><small>Statistical approach of the method is described in 
+Hutchinson, MF, 1995, Interpolating mean rainfall using thin plate smoothing splines, Int. Journal of Geographical Information Systems 9(4), 385-403.
 and has been used to interpolate global climate maps </small>
+<li class="fragment" ><small>See also 
+<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/TGIS2002_Hofierka_et_al.pdf">Hofierka J., et al. 2002, Multivariate Interpolation of Precipitation Using Regularized Spline with Tension. TGIS 6(2), 135-150.</a>
+</small>
+</ul>
 </section>
 
 <section>
    <h3>Trivariate Interpolation: precipitation</h3>
 NC mean annual precipitation with zoom into Western NC: 
-compare bivariate interpolation and trivariate interpolation which includes influence of elevation
+bivariate interpolation and trivariate interpolation which includes influence of elevation
 <p> 
 <img height="350" src="img/spatial_interpolation/spline_trivar_NCprecip.jpg">
 <br><small>If sufficient data are available, the method captures increase of precipitation
@@ -283,9 +405,9 @@ with elevation around Asheville and decrease of precipitation with elevation on 
    <h3>Trivariate Interpolation: precipitation</h3>
 Tropical South America mean annual precipitation using bivariate and trivariate interpolation
 <p> 
-<img height="350" src="img/spatial_interpolation/xmsap2d.gif">
-<img height="350" src="img/spatial_interpolation/xmsapel.gif">
-<img height="250" src="img/spatial_interpolation/preciplg.jpg"> </p>
+<img height="340" src="img/spatial_interpolation/xmsap2d.gif">
+<img class="fragment" height="340" src="img/spatial_interpolation/xmsapel.gif">
+<p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
 </section>
 
 <section>
@@ -293,118 +415,24 @@ Tropical South America mean annual precipitation using bivariate and trivariate 
 <p> 
 Tuning the influence of elevation on precipitation pattern through rescaling in the $z$-direction
 <img height="380" src="img/spatial_interpolation/sapel.gif">
+<img height="150" src="img/spatial_interpolation/lgsaprecip.png"> </p>
+<p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
+</section>
+
+
+<section>
+   <h3>Quad-variate spline interpolation </h3>
+Dynamics of nitrogen concentrations during a year, based on monthly measurements
+<p><img height="360" src="img/spatial_interpolation/chall4d.gif">
+<img height="260" src="img/spatial_interpolation/chesaplg.gif">
 </section>
 
 <section>
-   <h3>Local function implementation</h3>
-<ul>
- <li>only points within the range of influence are needed for interpolation
- <li class="fragment">each grid point is interpolated by an independent function
- <li class="fragment">local search (IDW, geostatistics, some implementations of splines and RBF)– no continuity condition
- <li class="fragment">points overlap ensures continuity and grid resolution should be close to the distances of input points
- <li class="fragment">TIN, natural neighbor use vertices of triangles or voronoi polygons, additional neighboring 
-triangles or polygons for non-linear interpolation
-</ul>
-</section>
-
-<section>
-   <h3>Interpolation points selection </h3>
-<ul>
- <li class="fragment">nearest $n$-points
- <li class="fragment">all points within $d$-distance
- <li class="fragment">modifications: $n$-points from each quadrant or increase $d$ until at least $n$-points are found
-</ul>
-<p>
-<img height="350" src="img/spatial_interpolation/idw_pointselect.png">
-<img height="350" src="img/spatial_interpolation/interp_localpointsearch.png">
-</section>
-
-<section>
-   <h3>Interpolation points selection </h3>
-<p>Problems arise when points are clustered, for example all points are from the same contour - bias, waves
-<p class="fragment">
-<img height="380" src="img/spatial_interpolation/interp_localpointsearch_contour.png">
-</p>
-</section>
-
-<section>
-   <h3>Quadtree segmentation </h3>
-Interpolating set of grid points within a rectangular segment rather than individual grid points
-<ul>
-<li class="fragment">each rectangular segment has approximately same number of measured points 
-<li class="fragment">interpolation is performed using the points in the segment 
-and its neighbourhood defined by a dynamic window 
-</ul>
-</section>
-
-<section>
-   <h3>Quadtree segmentation </h3>
-<ul>
-<li>if the number of points within a rectangle is larger than given maximum, it is split 
-into 4 smaller rectangles.
-<li>dynamic search window is used to find overlapping points to ensure smooth connection of segments
-</ul>
-<p><img height="350" src="img/spatial_interpolation/segm_overlapwindow.png">
-</section>
-
-<section>
-   <h3>Quadtree segmentation </h3>
-<ul>
-<li>if the number of points within a rectangle is larger than given maximum, it is split
-into 4 smaller rectangles.
-<li>dynamic search window is used to find overlapping points to ensure smooth connection of segments
-</ul>
-<p><img height="350" src="img/spatial_interpolation/quadtreeseg.png">
-<img height="350" src="img/spatial_interpolation/comput.gif">
-</section>
-
-<section>
-   <h3>High density points along contours</h3>
-If the density of points along contours is high, spline with high tension leads
-to surface with steps along contours, point reduction and lower tension improves the result
-<p>
-<!--<img height="200" src="img/spatial_interpolation/quadtreecont.png">-->
-<img height="350" src="img/spatial_interpolation/spline_from_contours.png"> </p>
-<p><small>Note that the results for IDW or TIN would be even worse</small>
-</section>
-
-<section>
-   <h3>Point density reduction </h3>
-<ul>
-<li class="fragment">Can we interpolate a 2D grid if we have points with identical $x,y$ but different $z$?
-<li class="fragment">How do we define identical?
-<li class="fragment">minimum distance at which two points 
-are considered two independent measurements 
-(usually horizontal accuracy of the measured data)
-</ul>
-<br>
-<p class="fragment">
-We can eliminate points where $d_{i,j} > d_{min}$, usually $d_{min}$ is a function
-of data accuracy and grid resolution, often leading to much faster computation
-while preserving the level of detail.
-</section>
-
-<section>
-   <h3>Optimized subsampling </h3>
-<ul>
-<li>Reduce points on contours based on distance and shape.
-<li>Example: reduction from 40,000 to 3000 points lead to no visible change in isoline geometry
-</ul>
-<p><img height="350" src="img/spatial_interpolation/spline_from_contours_segm.jpg">
-</section>
-
-<section>
-   <h3>Interpolation with optimized subsampling</h3>
-Computation is almost 10-times faster and there are no artifacts
-<p>
-<img height="380" src="img/spatial_interpolation/spline_from_contours.png"> </p>
-</section>
-
-<section>
-   <h3>Masking no-data areas </h3>
-Restrict interpolation to surveyed areas to avoid false patterns
-<p><img height="360" src="img/spatial_interpolation/interp_masking.jpg">
-<p>Most implementations provide warning
+  <h3>Quad-variate spline interpolation</h3>
+Dynamics of groundwater contamination over 10 years 
+<p> 
+<img height="350" src="img/data_visualize/wellnew.gif">
+<img height="350" src="img/data_visualize/well456.gif">
 </section>
 
 <section>
@@ -413,8 +441,9 @@ Restrict interpolation to surveyed areas to avoid false patterns
 <ul>
   <li>Spline interpolation and its parameters: tension and smoothing
   <li>Evaluating interpolation accuracy: deviations, crossvalidation
-  <li>Special cases: contours, anisotropy, trivariate interpolation (volumes, topo-climatology)
-  <li>Selection of points, segmentation, subsampling
+  <li>Special cases: contours, anisotropy
+  <li>Processing large point data sets: segmentation, subsampling
+  <li>Multivariate interpolation: volumes, topo-climatology, dynamic volumes
 </ul>
 </section>
 

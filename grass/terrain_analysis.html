@@ -127,7 +127,7 @@ and the route direction angles.
 
 <pre><code>
 r.mapcalc "route_slope_dir = abs(atan(tan(myslope) * cos(myaspect - busroute11_dir)))"
-r.colors map=route_slope,route_slope_dir color=slope
+r.colors map=route_slope,route_slope_dir color=bcyr -e
 </code></pre>
 
 Display the results along with the elevation contours and compute univariate statistics.
@@ -135,7 +135,8 @@ Comment on the difference of the two results.
 
 <pre><code>
 r.contour input=elevation output=contours step=2
-d.vect contours
+d.erase
+d.vect contours color=220:200:200
 d.rast route_slope
 d.legend route_slope
 d.out.file route_slope
@@ -174,11 +175,12 @@ Drape topographic parameters raster maps over DEMs as color.
 
 <pre><code>
 d.erase
-d.rast elev_lid_1m
 d.rast pc_lid_1m
-d.out.file profcurvature1
-d.rast elev_lidmr_1m
+d.legend pc_lid_1m 
+d.out.file profcurvature_dtm
 d.rast pc_lidmr_1m
+d.legend pc_lidmr_1m 
+d.out.file profcurvature_dsm
 </code></pre>
 
 <p>
@@ -191,12 +193,12 @@ g.region rural_1m  -p
 v.surf.rst input=elev_lid792_bepts elevation=elev_lidt15_1m aspect=asp_lidt15_1m pcurvature=pc_lidt15_1m tcurvature=tc_lidt15_1m npmin=120 segmax=25 tension=15 smooth=1.
 v.surf.rst input=elev_lidrural_mrpts elevation=elev_lidmrt15_1m aspect=asp_lidmrt15_1m pcurvature=pc_lidmrt15_1m tcurvature=tc_lidmrt15_1m npmin=120 segmax=25 tension=15 smooth=1.
 d.erase
-d.rast elev_lidt15_1m
 d.rast pc_lidt15_1m
-d.out.file profcurvature2
-d.rast tc_lidt15_1m
-d.rast elev_lidmrt15_1m
+d.legend pc_lidt15_1m
+d.out.file profcurvature_dtm2
 d.rast pc_lidmrt15_1m
+d.legend pc_lidmrt15_1m
+d.out.file profcurvature_dsm2
 </code></pre>
 
 <h3>Landforms</h3>
@@ -218,13 +220,37 @@ Display with legend, save images for the report.<br>
 Optionally display the feature maps draped over elev_lid792_1m as color.
 
 <pre><code>
+d.erase
 d.rast feature9c_1m
-d.legend feature9c_1m at=2,20,2,6
+d.legend -c feature9c_1m at=2,20,2,6 font=Arial
+d.out.file landfroms9
 d.rast feature45c_1m
-d.legend feature45c_1m at=2,20,2,6
-d.vect elev_lid792_cont1m color=brown
+d.vect elev_lid792_cont1m color=grey
+d.out.file landfroms45
 <!--nviz elev_lid792_1m color=feature9c_1m nviz elev_lid792_1m color=feature45c_1m-->
 </code></pre>
+
+<p>
+Map basic landforms using geomorphons DSM, read the manual page and the associated paper to learn how it works
+<span class="question">Explain the role of the search and distance parameters.</span>
+
+<pre><code>
+r.geomorphon elevation=elev_lid792_1m forms=geomorphon_s50d0 search=50 dist=0
+r.geomorphon elevation=elev_lid792_1m forms=geomorphon_s50d10 search=50 dist=10 
+d.erase
+d.rast geomorphon_s50d0
+d.vect elev_lid792_cont1m color=grey
+d.legend -c geomorphon_dsm at=2,30,2,8
+d.out.file geomorphon_s50d0
+d.rast geomorphon_s50d10
+d.out.file geomorphon_s50d10
+</code></pre>
+
+<!--
+r.geomorphon elevation=elev_lidmr_1m forms=geomorphon_dsm search=50
+d.legend -c geomorphon_dsm at=2,30,2,8
+d.out.file geomorphon_dsm
+-->
 
 <h3>Raster time series analysis</h3>
 
@@ -257,13 +283,19 @@ r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=N
 r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_stddev method=stddev
 <!--r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_slope method=slope-->
 r.colors NH_9908_stddev rules=stddev_color.txt
+r.colors -n NH_9908_range color=inferno
 <!--r.colors NH_9908_slope rules=regrslope_color.txt-->
+d.erase
 d.rast NH_9908_stddev
+d.legend NH_9908_stddev
+d.out.file series_stddev
 d.rast NH_9908_range
+d.legend NH_9908_range
+d.out.file series_range
 </code></pre>
 
 <p>
-Use cutting plane in 3D view to show the core and envelope.<br>
+Oprional: Use cutting plane in 3D view to show the core and envelope.<br>
 Add constant elevation plane at -1m for reference,
 set zexag somewhere 3-5 (the default is too high).<br>
 Assign surfaces constant color, use top or bottom surface for crossection color.<br>

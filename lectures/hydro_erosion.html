@@ -300,17 +300,20 @@ concentrated flow (b, m=1.5), spatially variable flow regime (c)
 
 <section>
    <h3>Net erosion and deposition</h3>
-<ul>
- <li>Net erosion and deposition rate is computed as a change
-in sediment transport capacity $T_c$ in the direction of flow $\alpha$ 
- <li>divergence of the sediment transport vector field: 
-</ul>
+<p> <small>
+Net erosion and deposition rate = 
+change in sediment transport capacity $T_c$ in the direction of flow $\alpha$ =
+divergence of the sediment transport vector field: 
+</small>
 <p>
 $$d_s =\nabla\cdot {\bf q}_s  \approx {\partial (T_c  \cos \alpha ) \over {\partial x}} + {\partial (T_c  \sin \alpha ) \over {\partial y}}$$
 <p><small>Equation is easy to compute using functions for partial derivatives and map algebra. Note that partial derivatives
- of a surface can be computed using its slope and aspect and keep in mind that instead of elevation our surface is the sediment
-transport capacity field.
+ of a surface can also be computed using its slope $\beta$ and aspect $\alpha$ and keep in mind that instead of elevation our surface is the sediment
+transport capacity field:
 </small>
+<p>
+$$ {{\partial z} \over {\partial x}} = \tan \beta \cos \alpha $$
+$$ {{\partial z} \over {\partial y}} = \tan \beta \sin \alpha $$
 </section>
 
 <section>
@@ -319,12 +322,14 @@ Spatial pattern of net erosion and deposition estimated as change in sediment tr
 <p>
 <img height="300" src="img/flow_erosion/erdep_cerl_3d.gif">
 <img height="300" src="img/flow_erosion/erdep_cerl_dem.gif">
+<p><small>Net erosion and deposition draped over sediment transport capacity surface (left) and draped over
+elevation surface (right)</small>
 </section>
 
 <section>
    <h3>Net erosion-deposition regimes</h3>
-Spatial pattern of erosion-deposition for sheet flow (a, m=0.6),
-concentrated flow (b, m=1.5) and spatially variable flow regime (c)
+Spatial pattern of erosion-deposition for:
+<br> sheet flow (a, m=0.6), concentrated flow (b, m=1.5) and spatially variable flow regime (c)
 <p>
 <img height="360" src="img/flow_erosion/smokies_uspedexp.jpg">
 </section>
@@ -335,12 +340,12 @@ Universal Soil Loss Equation (USLE, RUSLE)
 $$E=R.K.L.S.C.P$$
 where empirical factors/coefficients are:
 <ul>
- <li>R - rainfall intensity
- <li>K - soil erodibility
+ <li>R - rainfall erosivity factor
+ <li>K - soil erodibility factor
  <li>L - hillslope length or contributing area
- <li>S - slope steepness
- <li>C - cover
- <li>P - protection measures
+ <li>S - slope steepness factor
+ <li>C - cover-management factor
+ <li>P - protection measures factor
 </ul>
 <p><small>
 $L$ is a function of water flow over tilted plane, for complex topography 
