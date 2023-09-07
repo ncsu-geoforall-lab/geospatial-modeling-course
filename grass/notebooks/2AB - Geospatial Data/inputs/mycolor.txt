@@ -1,0 +1,6 @@
+50 blue
+70 aqua
+90 green
+110 yellow
+130 orange
+160 brown
