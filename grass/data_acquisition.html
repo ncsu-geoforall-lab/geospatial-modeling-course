@@ -170,22 +170,23 @@ g.region -pl
 </code></pre>
 
 <h3>Display data in 2D</h3>
-First set working region to a predefined region in the SW Wake county
-using GUI: <br>
+First set working region to a given elevation raster using GUI: <br>
 <em>Settings > Region > Set Region >
-Set current region from named region > select swwake_30m > Run > Close</em>
+Set region to match raster map(s) > select elevation > Run > Close</em>
 or alternatively, paste in the command console in the <em>Console</em> tab:
 
 <pre><code>
-g.region swwake_30m -p
+g.region raster=elevation -p
 </code></pre>
 
+<!--
 If you plan on using the command, in the above command, you can notice
 that the name of the parameter is not specified (here it should be
 <em>region</em>), only the value (here "swwake_30m"). That's because
 name of a saved region is the first parameter of the
 <em class="module">g.region</em> module and in that case we can leave it
 out for brevity.
+-->
 
 <p>
 Display elevation map:
