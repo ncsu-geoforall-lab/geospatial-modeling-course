@@ -1,7 +1,7 @@
 NCSU GIS/MEA582: Geospatial Modeling and Analysis
 =================================================
 
-[![Publish the website](https://github.com/ncsu-geoforall-lab/geospatial-modeling-course/workflows/Publish%20the%20website/badge.svg?branch=master)](https://github.com/ncsu-geoforall-lab/geospatial-modeling-course/actions?query=workflow%3A%22Publish+the+website%22)
+[![Publish the website](https://github.com/ncsu-geoforall-lab/geospatial-modeling-course/workflows/Publish%20the%20website/badge.svg?branch=main)](https://github.com/ncsu-geoforall-lab/geospatial-modeling-course/actions?query=workflow%3A%22Publish+the+website%22)
 
 Authors
 -------
@@ -115,7 +115,7 @@ script is for each part.
 
 ### Publishing the pages
 
-Once the changed and committed and pushed to the master branch, the
+Once the changed and committed and pushed to the main branch, the
 website will be deployed automatically using GitHub Actions.
 
 
