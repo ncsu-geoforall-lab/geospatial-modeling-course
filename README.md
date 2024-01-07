@@ -1,7 +1,7 @@
 NCSU GIS/MEA582: Geospatial Modeling and Analysis
 =================================================
 
-[![Publish the website](https://github.com/ncsu-geoforall-lab/geospatial-modeling-course/workflows/Publish%20the%20website/badge.svg?branch=main)](https://github.com/ncsu-geoforall-lab/geospatial-modeling-course/actions?query=workflow%3A%22Publish+the+website%22)
+[![Publish the website](https://github.com/ncsu-geoforall-lab/geospatial-modeling-course/workflows/Publish%20the%20website/badge.svg)](https://github.com/ncsu-geoforall-lab/geospatial-modeling-course/actions?query=workflow%3A%22Publish+the+website%22)
 
 Authors
 -------
@@ -26,7 +26,7 @@ Online version of the materials
 
 The (static) website for this course is using GitHub pages and the URL is:
 
-* http://ncsu-geoforall-lab.github.io/geospatial-modeling-course
+* https://ncsu-geoforall-lab.github.io/geospatial-modeling-course
 
 Old URLs (for archival purposes):
 
