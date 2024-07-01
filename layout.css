@@ -1,0 +1,35 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+#container
+{
+    position: relative;
+    margin: 0 auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 80%;
+    background-color: white;
+    height:auto !important;
+    min-height:100%;
+    border-style:solid;
+    border-bottom-width:1px;
+    border-top-width:1px;
+    border-left-width:10px;
+    border-right-width:10px;
+    border-color: #DDDDDD;
+}
+
+
+#header-image {
+    width: auto;
+    background-position: center top;
+    background-size: cover;
+    vertical-align: bottom;
+}
