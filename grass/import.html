@@ -1,12 +1,12 @@
 <h2>Import and export of data from different sources in GRASS GIS</h2>
 
-GRASS GIS Location can contain data only in one coordinate reference system (CRS)
+GRASS GIS project can contain data only in one coordinate reference system (CRS)
 in order to have full control over reprojection
 and avoid issues coming from on-the-fly reprojection.
 
 <p>
 When starting a project, decide which CRS you will use. Create
-a new Location using Location Wizard (accessible from GRASS GIS start-up page).
+a new project using Project Wizard (accessible from GRASS GIS start-up page).
 Specify desired CRS either by providing
 EPSG code (can be found e.g. at <a href="https://epsg.io/">epsg.io</a>)
 or by providing a georeferenced file (such as Shapefile) which has
@@ -18,31 +18,31 @@ the CRS you want.
 For basic import of raster and vector files, use <em class="module">r.import</em>
 and <em class="module">v.import</em>, respectively.
 These modules will reproject the input data if necessary.
-If the input data's CRS matches the Location's CRS, we can use
+If the input data's CRS matches the project's CRS, we can use
 <em class="module">r.in.gdal</em> or <em class="module">v.in.ogr</em>
 for importing raster and vector.
 
 <p>
 Alternatively, you can use a two-step approach
-for the cases when the data's CRS doesn't match the Location's CRS.
-First create a new temporary Location
-based on the CRS of the data you want to import, switch to this Location
+for the cases when the data's CRS doesn't match the project's CRS.
+First create a new temporary project
+based on the CRS of the data you want to import, switch to this project
 and then use <em class="module">r.in.gdal</em> or <em class="module">v.in.ogr</em>
-to import raster and vector data, respectively. Then switch to the Location
+to import raster and vector data, respectively. Then switch to the project
 of your project and use
 <em class="module">r.proj</em> and <em class="module">v.proj</em>
-to reproject data from the temporary Location to your project Location.
+to reproject data from the temporary project to your project.
 This approach is necessary for formats which are not supported by
 <em class="module">r.import</em> and <em class="module">v.import</em> modules.
 Modules  <em class="module">r.proj</em> and <em class="module">v.proj</em>
-can be also used for bringing raster and vector maps from one Location to another.
+can be also used for bringing raster and vector maps from one project to another.
 
 <p>
 Modules <em class="module">r.in.gdal</em> and <em class="module">v.in.ogr</em>
-check whether the CRS of the imported data matches the Location's CRS.
+check whether the CRS of the imported data matches the project's CRS.
 Sometimes the CRS of imported data is not specified correctly
 or is missing and therefore import fails.
-If you know that the actual CRS matches the Location's CRS,
+If you know that the actual CRS matches the project's CRS,
 it is appropriate to use <em class="module">r.in.gdal</em>'s
 or <em class="module">v.in.ogr</em>'s -o flag to overwrite the projection
 check and import the data as they are.
@@ -62,7 +62,7 @@ talk about ASCII formats and CSV files. CSV files usually hold only
 coordinates and sometimes attributes of points.
 These files usually don't have CRS information attached to them,
 so we must be very careful and import the data only if the coordinates
-are in the CRS of the Location we are using.
+are in the CRS of the project we are using.
 
 <p>
 Let's create a CSV file called <code>points.txt</code>
@@ -75,7 +75,7 @@ using a text editor (Notepad++, TextEdit, MS Notepad), for example:
 </pre>
 
 The coordinates we entered are in EPSG:3358 and we assume that the
-GRASS Location is using this CRS as well.
+GRASS project is using this CRS as well.
 This file can be imported to GRASS GIS using:
 
 <pre><code>
@@ -86,7 +86,7 @@ Notice, we have to specify the column number where the X and Y (optionally Z)
 coordinates are stored. In this example, X coordinates are in the first column
 Y in the second one. Don't forget to specify correct column delimiter.
 <p>
-If the data are not in the CRS we are using, create a new Location
+If the data are not in the CRS we are using, create a new project
 with matching CRS,
 import the data and use <em class="module">v.proj</em> as described above.
 
@@ -166,7 +166,7 @@ v.surf.rst input=tile_0793_016 elevation=tile_0793_016_elevation slope=tile_0793
 <h4>Importing data in different CRS</h4>
 
 In case the CRS of the file doesn't match the CRS
-used in the GRASS Location, reprojection can be done before importing
+used in the GRASS project, reprojection can be done before importing
 using <em>las2las</em> tool from libLAS.
 
 <p>
@@ -191,10 +191,10 @@ pdal translate --input=input_v14.las --writers.las.minor_version=2 --output=outp
 <h4>Importing data with broken projection information</h4>
 
 Modules <em class="module">r.in.lidar</em> and <em class="module">v.in.lidar</em>
-check whether the CRS of the imported data matches the Location's CRS.
+check whether the CRS of the imported data matches the project's CRS.
 Sometimes the CRS of imported data is not specified correctly
 or is missing and therefore import fails.
-If you know that the actual CRS matches the Location's CRS,
+If you know that the actual CRS matches the project's CRS,
 it is appropriate to use <em class="module">r.in.lidar</em>'s
 or <em class="module">v.in.lidar</em>'s -o flag to overwrite the projection
 check and import the data as they are.
@@ -208,21 +208,21 @@ r.in.lidar input=tile_0793_016_spm.las -s -o
 
 If two GRASS GIS users want to exchange data, they can use GRASS GIS native
 exchange format &ndash; <em>packed map</em>. A vector or raster map can be
-exported from a GRASS Location in this format using
+exported from a GRASS project in this format using
 <em class="module">v.pack</em> or <em class="module">r.pack</em> respectively.
 This format preserves everything for a map in a way as it is stored in
-a GRASS Database. <em>Projection of the source and target GRASS Locations
+a GRASS Database. <em>Projection of the source and target GRASS projects
 must be the same.</em>
 
 <p>
 If GRASS GIS users wish to exchange GRASS Mapsets, they can do so as long as
-the source and target GRASS Locations have the same projection.
+the source and target GRASS projects have the same projection.
 The PERMANENT Mapset should not be usually exchanged as it is a crucial part
-of the given Location.
-Locations can be easily transferred in between GRASS Database directories
+of the given project.
+Projects can be easily transferred in between GRASS Database directories
 on different computers as they carry all data and projection information
 within them and the storage format used in the background is platform independent.
-Locations as well as whole GRASS Databases can be copied and moved
+Projects as well as whole GRASS Databases can be copied and moved
 in the same way as any other directories on the computer.
 
 

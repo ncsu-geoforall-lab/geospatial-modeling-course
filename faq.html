@@ -76,29 +76,29 @@ select aspect layer as color.</dd>
     resolution, use fine mode resolution 1.</dd>
 
 
-<dt>I cannot change or create data in my other Mapsets, only in the current one.</dt>
+<dt>I cannot change or create data in my other mapsets, only in the current one.</dt>
 <dd>
 That's how it should be. GRASS GIS is always connected to
-one GRASS Location inside a GRASS Database. GRASS Location contains
-multiple GRASS Mapsets and you can access data in any of these Mapsets.
+one GRASS project inside a GRASS Database. GRASS project contains
+multiple GRASS mapsets and you can access data in any of these mapsets.
 However, you can change (create, modify, delete) the data only in a
-current Mapset. Data can be copied into current Mapset using
+current mapset. Data can be copied into current mapset using
 <em>g.copy</em> if you need to modify them (e.g. attributes of a vector map).
-By default, you see data only in the current Mapset and in the
-PERMANENT Mapset (that's the special thing about PERMANENT Mapset).
+By default, you see data only in the current mapset and in the
+PERMANENT mapset (that's the special thing about PERMANENT mapset).
 Use <em>Data</em> tab in Layer Manager to manage your data, you can "unlock"
 the functionality to be able to change data outside of your current mapset.</dd>
 
 
-<dt>When using GRASS GIS, can I access data in different Mapset or Location?</dt>
+<dt>When using GRASS GIS, can I access data in a different mapset or project?</dt>
 <dd>
-If desired, you can show data from other Mapsets (in the current
-Location) using Settings > GRASS working environment > Mapset access.
+If desired, you can show data from other mapsets (in the current
+project) using Settings > GRASS working environment > Mapset access.
 This helps to maintain safety of data and gives a system to organize
-the data. Data in other Locations are accessible only if you start
-GRASS session in the Location. Accessing data from multiple Location
-wouldn't be safe because data in different Locations are (can be) in
-different coordinate systems (while all Mapsets in one Location
+the data. Data in other projects are accessible only if you start
+GRASS session in the project. Accessing data from multiple projects
+wouldn't be safe because data in different projects are (can be) in
+different coordinate systems (while all mapsets in one project
 contains data in one particular coordinate system).</dd>
 
 
@@ -120,7 +120,7 @@ contains data in one particular coordinate system).</dd>
 
 <dl class="qa">
 <dt>Should we list and provide information about all the files
-in each Location and geodatabase, or a subset?</dt>
+in each project and geodatabase, or a subset?</dt>
 <dd>
 Rather than listing
 properties for each file you should provide a general description
