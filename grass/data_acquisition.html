@@ -1,7 +1,7 @@
 <h2>Geospatial Data Introduction</h2>
 
 <p>Resources:
-<a href="https://grass.osgeo.org/grass83/manuals/index.html">
+<a href="https://grass.osgeo.org/grass-stable/manuals/index.html">
 GRASS GIS overview and manual</a>
 
 
@@ -52,7 +52,7 @@ Note: recorded with GRASS GIS 7.2, some details can differ (e.g. the start up wi
 <!--<br><i>Older, but may be still useful:</i><a href="https://youtu.be/xqsnwtlP-2Y"> Getting started, video</a>, the screen capture is done on Mac with GRASS6.4.1RC1.-->
 <p>
 Instructions for both
-<b><a href="https://grass.osgeo.org/grass83/manuals/wxGUI.html">GUI</a></b>
+<b><a href="https://grass.osgeo.org/grass-stable/manuals/wxGUI.html">GUI</a></b>
 and command line approach are provided in the introductory assignments,
 but the instructions will be mostly command line later on.
 Feel free to use the approach that suits you the best.
@@ -87,24 +87,24 @@ You might already have the right map layers in your Layer Manager, so you don't 
 The CLI instructions can also be used for running the assignments on Linux and Mac as scripts.
 </i>
 
-<h3>GRASS GIS Location and Mapset</h3>
+<h3>GRASS project and mapset</h3>
 If you don't already have GRASS GIS spatial database nc_spm_08_grass7
 downloaded, you can find it on
 <a href="../logistics.html#data">Course logistics page</a>.
 <p>
 Before starting with GRASS GIS it is important to understand that
-GRASS GIS uses the concept of <em>Location</em>, <em>Mapset</em> 
+GRASS GIS uses the concept of <em>projects</em>, <em>mapsets</em>
 and <em>computational region</em> to support
 efficient analysis and modeling without the need to subset and resample
-data. Location is a project space that has common coordinate system.
-Each Location can have several Mapsets, one is called PERMANENT
+data. Data in a GRASS project has common coordinate system.
+Each project can have several mapsets, one is called PERMANENT
 to store baseline data, others are set by users. You can modify
-the data only in your current Mapset, but you can view or copy
-data from other Mapsets. See also
-<a href="https://grass.osgeo.org/grass83/manuals/grass_database.html">structure of GRASS database</a>.
+the data only in your current mapset, but you can view or copy
+data from other mapsets. See also
+<a href="https://grass.osgeo.org/grass-stable/manuals/grass_database.html">structure of GRASS database</a>.
 
 <p>
-<b>DO NOT MOVE</b> the files under Location directory using non-GRASS tools.
+<b>DO NOT MOVE</b> the files under project directory using non-GRASS tools.
 
 <p>
 Suggested workflow is to create a new mapset for each assignment
@@ -117,15 +117,12 @@ and specifies the spatial extent and resolution at which raster operation are pe
 
 <h3>Start GRASS GIS</h3>
 <p>
-Start GRASS GIS as any other program on your computer or in command line type:
-<pre><code>
-grass83
-</code></pre>
+Start GRASS GIS as any other program on your computer.
 
-You should see a location <em>nc_spm_08_grass7</em> in your database.
+You should see a project <em>nc_spm_08_grass7</em> in your database.
 If you have not downloaded it yet,
-click the icon <em>Download sample location to current database</em> and
-select <em>Complete NC location</em>, click <em>Download</em>, close when finished. 
+click the icon <em>Download sample project to current database</em> and
+select <em>Complete North Carolina dataset</em>, click <em>Download</em>, close when finished.
 See also
 <a href="./grass/img/GRASS8.3_download_nc_sample_dataset.webm">Screen capture for MS Windows</a>
 
@@ -260,8 +257,11 @@ In Layer Manager check off the elevation_shade layer, but keep the elevation ras
 In Map Display switch 2D view to 3D view.
 After the 3D mode is loaded, increase viewing height with slider, rotate puck to the south.
 Click Data tab and set <em>Fine mode resolution</em> to 1, to get the full resolution surface.
-Save the image by clicking on <em>Save display to graphic file</em> (tiff support is required)
-or take screenshot.
+Save the image by clicking on <em>Save display to graphic file</em> (tiff support is required).
+You may need to install
+<a href="https://www.irfanview.com/">IrfanView</a>
+to view TIFF images saved from the 3D view.
+Alternatively, you can just take screenshots of the 3D visualization.
 
 <h3>Data view and query</h3>
 To get familiar with query and zoom tools, set the view back to 2D.
@@ -316,7 +316,7 @@ We will learn how to find more information about the data, copy and rename maps.
 
 Browse raster and vector data in the provided database using
 the <em>Data</em> tab in the <em>Layer Manager</em>.
-The tree shows locations and mapsets in your GRASS GIS database.
+The tree shows projects and mapsets in your GRASS GIS database.
 <p>
 You can also paste the following command into the <em>Console</em>
 to list the raster and vector maps:
@@ -424,7 +424,7 @@ v.info -c streets_wake
 </code></pre>
 
 <p>
-Note that all data (map layers) that you create are stored in your GRASS database/location/current_mapset.
+Note that all data (map layers) that you create are stored in your GRASS database/project/current_mapset.
 If you want to go back to what you have worked on, you can save the Map Display and Layer manager, including the symbology and layout
 in a GRASS workspace file *.gxw under <em>File</em> > <em>Workspace</em> > <em>Save as</em>.
 
@@ -433,7 +433,7 @@ in a GRASS workspace file *.gxw under <em>File</em> > <em>Workspace</em> > <em>S
 
 <p>
 In this section we will cover importing and exporting of raster and vector
-data which are in the same projection as the GRASS Location we work in.
+data which are in the same projection as the GRASS project we work in.
 
 Cases where the projection differs are covered in a <a href="import.html">separate guide</a>.
 
@@ -556,33 +556,31 @@ r.out.gdal input=basin_50K output=basin_50K.tif
 r.out.gdal input=elev_ned_30m output=elev_ned_30m.ascii format=AAIGrid
 </code></pre>
 
-<h3>Creating new GRASS Location</h3>
-We will create new Locations based on EPSG code and based on
+<h3>Creating new GRASS project</h3>
+We will create new projects based on EPSG code and based on
 georeferenced file.
-<p> First we create a new Location with Spatial Reference System (SRS) given by
+<p> First we create a new project with Coordinate Reference System (CRS) given by
     EPSG code 3404.
-    <span class="question">Which SRS has EPSG 3404 and what are its characteristics?</span>
+    <span class="question">Which CRS has EPSG 3404 and what are its characteristics?</span>
     
 <p>
-Launch <em>Location Wizard</em>
+Launch <em>Project Wizard</em>
 from Layer Manager menu > <em>Settings</em> > <em>GRASS working environment</em> >
- <em>Create new location</em><br>
-or from GRASS Startup window > <em>Select GRASS Location</em> > <em>New</em>.<br>
-In <em>Project Location</em> field type "nc_spf" > <em>Next</em><br>
-Select method <em>Select EPSG code of spatial reference system</em> > <em>Next</em><br>
+ <em>Create new project</em><br>
+In <em>Name</em> field type "nc_spf" > <em>Next</em><br>
+Select method <em>Select CRS from a list by EPSG or description</em> > <em>Next</em><br>
 Type EPSG code 3404 > <em>Next</em> > OK > Finish<br>
-Set default region extents? > No<br>
 
-In this new location review the projection information:
+In this new project review the CRS information:
 <pre><code>
 g.proj -p
 </code></pre>
 
-<p>Another way to set up a GRASS Location uses SRS information from a georeferenced file.
-Again launch the <em>Location Wizard</em>:
+<p>Another way to set up a GRASS project uses CRS information from a georeferenced file.
+Again launch the <em>Project Wizard</em>:
 <p>
-In <em>Project Location</em> field type "nc_spm" > <em>Next</em><br>
-Select method <em>Read projection and datum terms from a georeferenced data file</em> > <em>Next</em><br>
+In <em>Name</em> field type "nc_spm" > <em>Next</em><br>
+Select method <em>Read CRS from a georeferenced data file</em> > <em>Next</em><br>
 Browse to downloaded file <a href="data/lc96ras_cut.tif">lc96ras_cut.tif</a> >
 <em>Next</em> > Finish<br>
 <em>Import data?</em> > Yes > OK<br>
