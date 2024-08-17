@@ -283,7 +283,7 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
                 High-Performance Computing clusters, ...
         </ul>
     <li>single integrated software
-    <li>functionality implemented as 500+ modules
+    <li>functionality implemented as 500+ tools (modules)
     <li>written in C and Python
 </ul>
 <img src="img/grass_hexagons_3d_white_outlier.png" height=200>
@@ -292,7 +292,7 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
 
 
 <section>
-<h3>Naming Convention for Modules</h3>
+<h3>Naming Convention for Tools (Modules)</h3>
 <table style="font-size: smaller;"><tbody>
     <tr>
         <th>Prefix</th>
@@ -307,7 +307,7 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
     <tr>
         <td>v.</td>
         <td>vector processing</td>
-        <td>v.surf.rst: interpolation from pointsi to raster</td>
+        <td>v.surf.rst: interpolation from points to raster</td>
     </tr>
     <tr>
         <td>g.</td>
@@ -316,7 +316,7 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
     </tr>
     <tr>
         <td>d.</td>
-        <td>display and rendering</td>
+        <td>display, rendering</td>
         <td>d.rast: display raster map</td>
     </tr>
     <tr>
@@ -344,7 +344,7 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
 <section>
 <h3>User Interfaces</h3>
 <ul>
-<li>Modules can be accessed using:
+<li>Tools (modules) can be accessed using:
     <ul>
         <li>Graphical User Interface (GUI)
         <li>Command Line Interface (CLI)
@@ -368,9 +368,9 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
 
 
 <section>
-<h3>GUI for modules</h3>
+<h3>GUI for tools (modules)</h3>
 <ul>
-    <li>All modules have standardized, unified interface layout.
+    <li>All tools have standardized, unified interface layout.
 </ul>
 <br>
 <img src="img/r_neighbors_dialog.png" class="stretch">
@@ -385,9 +385,10 @@ Standard dialog (form) for the r.neighbors module
 <ul>
 <li>The baseline interface for efficiency and reproducibility
 <li>Available in GUI as Console with autocomplete functions
-</ul>
 <pre>r.fill.dir input=elev output=fill direction=dir
 </pre>
+<li>and in terminal in Linux or Mac
+</ul>
 <img src="img/grass_cli.png" class="stretch">
 </section>
 
@@ -396,7 +397,7 @@ Standard dialog (form) for the r.neighbors module
 <h3>Python</h3>
 <ul>
     <li>grass package part of GRASS GIS
-    <li>access to modules, but also to internal C functions
+    <li>access to tools (modules), but also to internal C functions
     <li>integrated Python editor
     <li>integrates with Jupyter Notebooks
 </ul>
@@ -421,11 +422,11 @@ gs.run_command('r.fill.dir', input='elev',
     <br>
     <img src="img/r_in_lidar_command_in_python.png" style="width: 100%;">
 </div>
-<p><small>
-Examples in the documentation and class instructions are usually
-provided as commands which can be used to fill in the GUI, write Python
-code, or run them directly.
-</small></p>
+<p>
+Examples in documentation and class instructions are 
+provided as commands which can be used to fill-in GUI, write Python
+code, or run directly.
+</p>
 </section>
 
 
@@ -455,7 +456,7 @@ code, or run them directly.
 <iframe data-autoplay width="700" height="350" src="https://www.youtube.com/embed/Uje8ORyhBaQ?rel=0&amp;showinfo=0&amp;loop=1&amp;playlist=Uje8ORyhBaQ" frameborder="0" allowfullscreen></iframe>
 -->
 <p><small>
-Modules running: v.surf.rst, r.contour, r.fill.dir, r.sim.water
+Tools running: v.surf.rst, r.contour, r.fill.dir, r.sim.water
 <br>see also <a href="https://link.springer.com/book/10.1007%2F978-3-319-89303-7">Petrasova et al., 2018, Tangible Modeling with Open Source GIS, 2nd edition, Springer</a>
 </small></p>
 </section>
@@ -493,7 +494,7 @@ Each module has a standardized manual page
 <section>
 <h3>Addons Repository</h3>
 <ul>
-    <li class="fragment"> 300+ user contributed modules and tools
+    <li class="fragment"> 300+ user contributed tools
     <li class="fragment">integrated with g.extension 
     <li class="fragment">including compiled C and C++ for MS Windows
     <li class="fragment">automatically generated GUI
@@ -516,17 +517,17 @@ Each module has a standardized manual page
 </section>
 
 <section>
-<h3>Spatial Database and Locations</h3>
+<h3>Spatial Database and Projects</h3>
 <img src="img/grass_datacatalog1.jpg" class="stretch">
 </section>
 
 <section>
-<h3>Database, Locations, and Mapsets</h3>
+<h3>Database, Projects, and Mapsets</h3>
 <img src="img/grass_datacatalog2.jpg" class="stretch">
 </section>
 
 <section>
-<h3>Database, Locations, Mapsets, Maps</h3>
+<h3>Database, Projects, Mapsets, Maps</h3>
 <img src="img/grass_datacatalog3.jpg" class="stretch">
 </section>
 
@@ -534,7 +535,7 @@ Each module has a standardized manual page
 <section>
 <h3>Starting GRASS GIS 7</h3>
 <ul>
-<li>Selecting database, location, and mapset
+<li>Selecting database, Projects, and Mapset
 </ul>
 <br>
 <img src="img/grass_startup.png" class="stretch">
@@ -594,7 +595,7 @@ GSoC project: Improved integration of GRASS GIS and Jupyter</a>
             <li>Class instructions are using GUI and command line
             <li>Python and Jupyter are recommended for the projects
         </ul>
-    <li>Data in database, locations and mapsets
+    <li>Data in Database, Projects and Mapsets
     <li>Raster operations in a specified computational region
 </ul>
 <br>
