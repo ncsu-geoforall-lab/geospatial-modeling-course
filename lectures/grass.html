@@ -270,26 +270,6 @@ for geospatial data management and analysis, image processing, spatial modeling,
 
 
 <section>
-<h3>Research Use</h3>
-<ul>
-<li>Used as a research platform and code repository
-<li>Example: Solar radiation model <strong>r.sun</strong>
-    <ul>
-        <li>available since 1993
-        <li>major changes in 1996, 1999, 2002, 2003, 2006, 2008, 2017
-        <li>parallelized version in 7.4
-        <li><small><a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.19.9831&rep=rep1&type=pdf">Hofierka, J., Suri, M. (2002): The solar radiation model for Open source GIS: implementation and applications. International GRASS users conference in Trento, Italy, September 2002.</a></small>
-    </ul>
-</ul>
-<br>
-<img src="img/summer_solstice_centennial.gif" class="stretch">
-<p><small>
-Example application: summer solstice solar radiation dynamics on lidar DEM (Centennial Campus)
-</small></p>
-</section>
-
-
-<section>
 <h3>Naming Convention for Tools (Modules)</h3>
 <table style="font-size: smaller;"><tbody>
     <tr>
@@ -357,11 +337,11 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
 <section>
 <h3>Graphical User Interface</h3>
 <ul>
-<li>The interface for desktop
+<li>The interface for a desktop
 </ul>
 <br>
-<img src="img/grass_gui.png" class="stretch">
-<small>GUI for GRASS GIS 7, redesign coming with GRASS GIS 8.3</small>
+<img src="img/GRASS8_4GUI.jpg" class="stretch">
+<!--<img src="img/grass_gui.png" class="stretch">-->
 </section>
 
 
@@ -373,7 +353,7 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
 <br>
 <img src="img/r_neighbors_dialog.png" class="stretch">
 <p><small>
-Standard dialog (form) for the r.neighbors module
+Standard dialog (form) for the r.neighbors tool (module) generates also the command line version
 </small></p>
 </section>
 
@@ -461,19 +441,44 @@ Tools running: v.surf.rst, r.contour, r.fill.dir, r.sim.water
 
 <section>
 <h3>Documentation: Users manual</h3>
-Each module has a standardized manual page
+Each tool (module) has a standardized manual page
 <img src="img/grass_manpage.jpg" class="stretch">
 </section>
 
 <section>
 <h3>Public Author &amp; Accessible Code</h3>
+Manual page includes the author's name(s) and a link to source code
+<p>
 <img src="img/grass_module_author_source.png" class="stretch">
 </section>
 
 
 <section>
 <h3>Link to Research Papers</h3>
+If available, the manual page also includes references to papers describing 
+the methods and algorithms in the tool
+<p>
 <img src="img/grass_module_references.png" class="stretch">
+</section>
+
+<section>
+<h3>Research Use</h3>
+<ul>
+<li>Used as a research platform and code repository
+<li>Example: Solar radiation model 
+    <a href="https://grass.osgeo.org/grass84/manuals/r.sun.html">r.sun</a>
+    <ul>
+        <li>available since 1993
+        <li>major changes in 1996, 1999, 2002, 2003, 2006, 2008, 2017
+        <li>parallelized version in 7.4
+        <li><small><a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.19.9831&rep=rep1&type=pdf">Hofierka, J., Suri, M. (2002): The solar radiation model for Open source GIS: implementation and applications. International GRASS users conference in Trento, Italy, September 2002.</a></small>
+    </ul>
+</ul>
+<br>
+<img src="img/summer_solstice_centennial.gif" class="stretch">
+<p><small>
+Example application: summer solstice solar radiation dynamics on lidar DEM (Centennial Campus)
+</small></p>
 </section>
 
 <!--
@@ -498,35 +503,40 @@ Each module has a standardized manual page
     <li class="fragment">automatically generated GUI
         <span class="small">for Python and C/C++</span>
 </ul>
-<img  class="fragment" src="img/grass_addons.png" class="stretch">
+<!--<img  class="fragment" src="img/grass_addons.png" class="stretch">-->
 </section>
 
-
-
+<!--
 <section>
 <h3>Spatial Database</h3>
 <img src="img/grass_data_tab.svg" class="stretch"
      alt="Example of GRASS GIS database structure into locations (based on SRS) and further to mapsets (for organization)">
 </section>
+-->
 
 <section>
-<h3>Spatial Database</h3>
+<h3>Data Managed in a Spatial Database</h3>
 <img src="img/grass_datacatalog0.jpg" class="stretch">
 </section>
 
 <section>
 <h3>Spatial Database and Projects</h3>
 <img src="img/grass_datacatalog1.jpg" class="stretch">
+<p>
+<small>Each Project is set up with a single coordinate reference system with a unique EPSG code</small>
 </section>
 
 <section>
 <h3>Database, Projects, and Mapsets</h3>
 <img src="img/grass_datacatalog2.jpg" class="stretch">
+<small>Each Project has a special Mapset called PERMANENT where the CRS information is stored. 
+The PERMANENT mapset is often used to store baseline map layers for the given project</small>
 </section>
 
 <section>
 <h3>Database, Projects, Mapsets, Maps</h3>
 <img src="img/grass_datacatalog3.jpg" class="stretch">
+<small>Map layers (maps) can be stored as raster or vector data
 </section>
 
 
