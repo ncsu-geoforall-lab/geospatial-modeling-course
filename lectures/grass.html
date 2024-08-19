@@ -312,7 +312,9 @@ for geospatial data management and analysis, image processing, spatial modeling,
 
 <section>
 <h3>User Interfaces</h3>
+<p>
 Tools (modules) can be accessed using:
+<p>
     <ul>
         <li>Graphical User Interface (GUI)
         <li>Command Line Interface (CLI)
@@ -325,8 +327,10 @@ Tools (modules) can be accessed using:
 
 <section>
 <h3>Graphical User Interface</h3>
-The interface for a desktop
-<p>
+<ul>
+   <li>The interface for a desktop
+</ul>
+<br>
 <img src="img/GRASS8_4GUI.jpg" class="stretch">
 <!--<img src="img/grass_gui.png" class="stretch">-->
 </section>
@@ -449,7 +453,7 @@ the methods and algorithms in the tool
 </section>
 
 <section>
-<h3>Research Use</h3>
+<h3>Continuing development</h3>
 <ul>
 <li>Used as a research platform and code repository
 <li>Example: Solar radiation model 
@@ -490,6 +494,8 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
     <li class="fragment">automatically generated GUI
         <span class="small">for Python and C/C++</span>
 </ul>
+<img  class="fragment" src="img/addon_example_dvect.them2.jpg" class="stretch">
+<small>example from d.vect.thematic addon manual page</small>
 <!--<img  class="fragment" src="img/grass_addons.png" class="stretch">-->
 </section>
 
@@ -508,52 +514,54 @@ Example application: summer solstice solar radiation dynamics on lidar DEM (Cent
 
 <section>
 <h3>Spatial Database and Projects</h3>
-<img src="img/grass_datacatalog1.jpg" class="stretch">
-<p>
 <small>Each Project is set up with a single coordinate reference system with a unique EPSG code</small>
+<br>
+<img src="img/grass_datacatalog1.jpg" class="stretch">
 </section>
 
 <section>
 <h3>Database, Projects, and Mapsets</h3>
-<img src="img/grass_datacatalog2.jpg" class="stretch">
 <small>Each Project has a special Mapset called PERMANENT where the CRS information is stored. 
 The PERMANENT mapset is often used to store baseline map layers for the given project</small>
+<br>
+<img src="img/grass_datacatalog2.jpg" class="stretch">
 </section>
 
 <section>
 <h3>Database, Projects, Mapsets, Maps</h3>
+<small>Map layers (maps) can be stored in Mapsets as raster or vector data</small>
+<br>
 <img src="img/grass_datacatalog3.jpg" class="stretch">
-<small>Map layers (maps) can be stored as raster or vector data</small>
 </section>
 
 
 <section>
 <h3>Starting GRASS GIS</h3>
-After GRASS opens with a default Database, Project and Mapset,
-you can, for example:
 <ul>
-   <li>work in this Mapset 
-   <li>if it already exists, switch to a Project and Mapset 
+   <li>After GRASS opens with a default Database, Project and Mapset,
+       you can, for example:
+   <ul>
+       <li>work in this Mapset 
+       <li>if it already exists, switch to a Project and Mapset 
    that you would like to work with
-   <li>create a new Project and Mapset
-</ul>
-<br>
+       <li>create a new Project and Mapset
+   </ul>
 <!--<img src="img/grass_startup.png" class="stretch">-->
-You can also start GRASS and create a new project using command line:
+   <li>You can also start GRASS and create a new project using command line:
 <p><code>grass -c EPSG:3358 -e ~/grassdata/nc_spm/</code>
+</ul>
 </section>
 
 
 <section>
 <h3>Computational Region</h3>
 <ul>
-    <li>extent and resolution for raster computations
+    <li>raster computations are performed for spatial extent 
+        and at resolution defined by computational region
 </ul>
 <br>
 <img src="img/grass_computational_region.png" class="stretch">
 </section>
-
-
 
 <!--
 <section>
