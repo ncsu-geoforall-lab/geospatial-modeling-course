@@ -34,9 +34,11 @@ and command line interface (CLI):
 
 <p>
 <!-- 
-Tutorials:
+Video tutorials 
 <ul>
-<li>Video tutorial (no sound, switch on annotations):
+  <li><a href="https://www.youtube.com/watch?v=QldQuhxS4X8&list=PLOZRfOojyTZooO3HMd8dTp8Wk37cdbY6C&index=2">
+Introduction to GRASS video tutorial by Brendan Harmon</a>
+  <li>Video tutorial (no sound, switch on annotations):
 <a href="https://www.youtube.com/watch?v=9fcBvYetIsM">
     <strong>Getting started with GRASS GIS GUI</strong></a>.
 Note: recorded with GRASS GIS 7.2, some details can differ (e.g. the start up window).</li>
@@ -52,6 +54,7 @@ Note: recorded with GRASS GIS 7.2, some details can differ (e.g. the start up wi
 -->
 
 <!--<br><i>Older, but may be still useful:</i><a href="https://youtu.be/xqsnwtlP-2Y"> Getting started, video</a>, the screen capture is done on Mac with GRASS6.4.1RC1.-->
+
 <p>
 Instructions for both
 <b><a href="https://grass.osgeo.org/grass-stable/manuals/wxGUI.html">GUI</a></b>
@@ -591,11 +594,13 @@ View and download orthophoto through web mapping service.
 Requires good internet connection. If it doesn't work, report the problem
 including any error message in the report.<br>
 First change region to the small rural area specified by the saved
-region named "rural_1m" and display the provided orthophoto.
+region named "rural_1m", display the provided orthophoto and save its image
+for your report.
 
 <pre><code>
 g.region region=rural_1m -p
 d.rast ortho_2001_t792_1m
+d.out.file ortho2001
 </code></pre>
 
 <p>
@@ -615,3 +620,8 @@ The dialog can be closed afterwards.<br>
 To save the layer:<br>
 Right click on the web service layer in Layer Manager - choose <em>Save web service layer</em>.
 In dialog, set the name of the layer ortho_new and press <em>Save layer</em>.<br>
+Save the image of the new orthophoto for your report:
+
+<pre><code>
+d.out.file orthonew
+</code></pre>
