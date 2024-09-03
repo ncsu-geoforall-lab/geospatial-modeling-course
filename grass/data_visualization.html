@@ -112,9 +112,25 @@ g.region raster=landuse96_28m -p
 d.rast elevation_shade
 d.rast landuse96_28m values=1,2
 #make sure to change opacity of the landuse layer to combine it with shaded topography
+d.vect streets_wake
 d.out.file landuse_elev
 </code></pre>
 
+<h3>Display color composite</h3>
+Visualy explore the development in the 1996 land use map layer and the 2002 landsat imagery
+using the similar approach as with the shaded elevation, but here we use a landsat 2002 
+image composite<br>
+In Layer Manager: <em>Add various raster map layers</em> > <em>Add RGBmap layer</em>.<br>
+
+<pre><code>
+d.rgb red=lsat7_2002_30 green=lsat7_2002_20 blue=lsat7_2002_10
+d.rast landuse96_28m values=1,2
+#make sure to change opacity of the landuse layer to see the developed areas in 2002 and 1996
+d.vect roadsmajor color=yellow
+d.out.file mylandsat
+</code></pre>
+
+<span class="question">How did the developed area change between 1996 and 2002?</span>
 <!--
 <font color="#000066">
 # Following the example above
@@ -270,6 +286,7 @@ d.vect roadsmajor color=yellow
 d.out.file mylandsat
 </code></pre>
 
+<!--
 <h3>Export NC precipitation stations data to KML and post in Google Earth</h3>
 
 To see what you are exporting, add the <em>precip_30ynormals</em> raster
@@ -292,6 +309,7 @@ v.out.ogr precip_30ynormals output=precipitation.kml format=KML type=point
 </code></pre>
 
 If you use the command above, the kml file will be saved in your working directory.
+-->
 
 <h3>Optional part</h3>
 
@@ -328,6 +346,11 @@ In dialog, set the name of the layer ortho_new and press <em>Save layer</em>.<br
 
 <h4>Map Swipe</h4>
 Use mapswipe to compare the new orthophoto with the ortho provided in the data set:<br>
+
+<pre><code>
+g.mapsets mapset=assignment1 operation=add
+</code></pre>
+
 <em>File</em> > <em>Map Swipe</em>.<br>
 Add raster > select "ortho_2001_t792_1m" and "ortho_new".<br>
 <p>
