@@ -227,120 +227,13 @@ Things to consider:
 </ul>
 
 <h4>Development, testing and documentation</h4>
-
+The project can include contributing to GRASS GIS or other open source GIS
+through improved documentation, testing, development of a tutorial or a new tool.
+See the <a href="https://grasswiki.osgeo.org/wiki/Student_Grants#Topics">topics</a>
+suggested by the GRASS GIS community and examples of past projects:
 <ul>
-<li><b>Open source GIS scripting and development</b>
-    <ul>
-        <li>development or co-development of a new GRASS GIS module
-            (see, for example a
-            <a href="resources/LloydJ_Project_MEA582f11.pdf">report on testing and enhancing v.transect addon</a>), suggestions:
-            <ul>
-                <li><em class="module">v.kernel</em>
-                    wrapper with detection hotspots which are 10% of areas/values, e.g. using histogram,
-                    and with other convenient features
-                <li><em>r3.patch</em> (similar to
-                    <em class="module">r.patch</em>)
-                    can be implemented using Python and
-                    <em class="module">r.mapcalc</em>
-                    or, by an advanced programmer, in C
-                <li>find an interesting scientific article
-                    and implement GRASS GIS module based on that article (see e.g.
-                    <a href="https://grass.osgeo.org/grass83/manuals/addons/r.local.relief.html">r.local.relief</a> and its references)
-                <li>read <a href="https://github.com/wenzeslaus/python-grass-addon">How to write a Python GRASS GIS 7 addon</a>
-                <li>update
-                    <a href="https://grass.osgeo.org/grass64/manuals/addons/r.wind.sun.py.html">r.wind.sun</a>
-                    addon (calculates visual impact of aerogenerators and photovoltaic panels;
-                    see also the <a href="https://trac.osgeo.org/grass/browser/grass-addons/grass6/raster/r.wind.sun/r.wind.sun.py?rev=67404">source code</a>)
-                    for GRASS GIS 7 and split it into two if needed
-            </ul>
-        <li>
-            using open source software (e.g. GRASS GIS or QGIS)
-            re-implement an existing script, tool or toolbox which is
-            currently tied to proprietary software
-            <ul>
-                <li>
-                    series of scripts for Geomorphometry &amp; Gradient
-                    Metrics toolbox (Evans et al. 2014), available at:
-                    <a href="https://evansmurphy.wixsite.com/evansspatial/arcgis-gradient-metrics-toolbox">https://evansmurphy.wix.com/evansspatial</a>
-                </li>
-            </ul>
-        </li>
-        <li>improvements in existing GRASS GIS functionality
-            <ul>
-                <li>unify color tables for slope, aspect and curvatures
-                    used in <em class="module">r.slope.aspect</em>,
-                    <em class="module">v.surf.rst</em>, <em class="module">r.param.scale</em>
-                    and other related modules
-            </ul>
-        <li>development of a web or mobile application, for example with GRASS GIS as a backend
-        <li>possible continuation in
-            <a href="https://https://wiki.osgeo.org/wiki/Google_Summer_of_Code">Google Summer of Code</a>
-        <li>Feel free to explore other open source GIS, for example <a href="https://www.qgis.org">QGIS</a>
-    </ul>
-<li><b>Class development</b>
-    <ul>
-        <li>create equivalent of one or more assignments for this class in
-            <a href="https://qgis.org/">QGIS</a> using
-            <a href="https://docs.qgis.org/2.8/en/docs/user_manual/processing/">QGIS Processing</a>
-            with SAGA or GRASS GIS algorithms
-        <li>rewrite the assignments for this class using
-            <a href="https://grass.osgeo.org/grass83/manuals/libpython/script_intro.html">GRASS GIS Python API</a>,
-            <a href="https://docs.qgis.org/2.8/en/docs/user_manual/processing/scripts.html">QGIS Processing Python API</a>
-            or <a href="https://www.r-project.org/">R</a>
-            with <a href="https://cran.r-project.org/web/packages/rgrass7/rgrass7.pdf">rgrass7</a> package
-    </ul>
-<li><b>Open source GIS testing</b>
-    <ul>
-        <li>testing a selected GRASS GIS module under development or a release candidate
-            or test different versions (Linux versus MS Windows, 64bit versus 32bit, ...)
-        <li>testing of an existing GRASS GIS module
-            (see, for example a
-            <a href="resources/WendelS_Project_GIS582601s15.pdf">report on creating a test suite for r.watershed</a>)
-        <li>testing of
-            <a href="https://grass.osgeo.org/grass83/manuals/addons/r.futures.html">r.futures</a>,
-            a module implementing urban growth model which is being
-            developed at NCSU
-    </ul>
-<li><b>Enhancing open source GIS documentation</b>
-    <ul>
-        <li>tutorials for GRASS GIS and extended descriptions and examples for GRASS GIS modules
-            to be included in the official documentation
-            <ul>
-                <li>extend documentation for
-                    <em class="module">v.kernel</em>,
-                    add explanations of different kernels and constants
-                <li>add examples and descriptions to
-                    <em class="module">r.topmodel</em>
-                    documentation
-                <li>add examples and applications to
-                    <em class="module">r.topidx</em>
-                    documentation
-                <li>add examples and images to
-                    <em class="module">r.sun</em>
-                    and <em class="module">r.sunmask</em>
-                    documentation and extend
-                    <a href="https://grass.osgeo.org/grass83/manuals/addons/r.sun.hourly.html">r.sun.hourly</a>
-                    and
-                    <a href="https://grass.osgeo.org/grass83/manuals/addons/r.sun.daily.html">r.sun.daily</a>
-                    documentation
-                <li>create a tutorial or an overview of
-                <a href="https://grass.osgeo.org/grass83/manuals/keywords.html#statistics">GRASS GIS statistical modules</a>
-                for raster
-                <!--
-                <li>update and rewrite the
-                    <a href="https://grass.osgeo.org/uploads/grass/history_docs/mapcalc-algebra.pdf">original r.mapcalc tutorial</a>
-                    to GRASS GIS 7 and HTML,
-                    <a href="https://daringfireball.net/projects/markdown/">Markdown</a>, or
-                    <a href="https://docutils.sourceforge.net/docs/user/rst/quickref.html">reStructredText</a>
-                -->
-                <li>browse
-                    <a href="https://grass.osgeo.org/grass83/manuals/full_index.html">GRASS GIS manual</a>
-                    and
-                    <a href="https://grass.osgeo.org/grass83/manuals/addons/">GRASS GIS Addons manuals</a>
-                    and find a module related to this class with insufficient
-                    documentation according to your judgment and update it
-            </ul>
-    </ul>
+    <li><a href="resources/LloydJ_Project_MEA582f11.pdf">Report on testing and enhancing v.transect addon.</a></li>
+    <li><a href="resources/WendelS_Project_GIS582601s15.pdf">Report on creating a test suite for r.watershed.</a></li>
 </ul>
 
 
