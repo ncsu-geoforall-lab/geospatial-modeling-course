@@ -105,8 +105,6 @@ d.out.file landuse96_modebasin
 Use neighborhood operator to compute land use diversity map and create a map of locations
 with the most homogeneous (single category) landuse where a land use diversification could be beneficial
 (e.g. by planting trees).<br>
-<span class="question">Which land use covers the largest area with a single landuse category within 7x7 
-moving windows (most homogeneous areas)?</span><br>
 <!--<span class="question">Explore how different sizes of the neighborhood used alter the results and why?</span><br>-->
 <p>
 First, remove all previously added map layers from the <em>Layer Manager</em>, then compute
@@ -115,11 +113,10 @@ Adjust the legend size and placement as needed using right click and mouse.
 
 <pre><code>
 d.erase
-r.info -g landuse96_28m
 g.region raster=landuse96_28m -p
 r.neighbors landuse96_28m output=lu_divers method=diversity size=7
 d.rast lu_divers
-d.legend lu_divers at=70,15,5,10 -v
+d.legend lu_divers at=90,70,5,8 -v
 d.vect streets_wake co=white
 r.report lu_divers unit=p
 d.out.file lu_diversity_map
@@ -138,6 +135,9 @@ d.rast landuse_1cat
 d.legend -c landuse_1cat
 d.out.file lu_signle_map
 </code></pre>
+
+<span class="question">Which land use covers the largest area with a single landuse category within 7x7
+moving windows (most homogeneous areas)?</span><br>
 
 <h4>Smoothing elevation raster and analyzing differences between DEMs</h4>
 <p>
