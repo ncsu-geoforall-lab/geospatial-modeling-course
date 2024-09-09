@@ -99,7 +99,7 @@ d.out.file landuse96_modezip
 
 <span class="question">What is the most common land use in the two basins with the steepest average slope?</span>
 
-<h3>Apply neighborhood operators</h3>
+<h3>Apply neighborhood operators and map algebra</h3>
 <!-- p.127<br> -->
 Use neighborhood operator to compute land use diversity map and create a map of locations
 with the most homogeneous (single category) landuse where a land use diversification could be beneficial
@@ -131,18 +131,22 @@ d.legend -c landuse_1cat
 d.out.file lu_signle_map
 </code></pre>
 
+<h4>Differences between DEM and DSM</h4>
 <p>
-Visualy compare the SRTM elevation map "elev_srtm_30m" with lidar-based elevation map "elevation".
-Use neighborhood operator to smooth the SRTM elevation map and 
-compare the summary statistical measures for the original and smoothed SRTM DEM.
-<span class="question">How does the size of the neighborhood influence the result?</span>
+Use neighborhood operator to smooth the SRTM elevation map "elev_srtm_30m" and 
+compare the summary statistics for the original and smoothed SRTM DEM.
+First, display the elev_ned_30m map, assign the same colors to the "elev_srtm_30m"
+and compare their values using legends. Then use neighborhood operator
+applied to 5x5 window to smooth the "elev_srtm_30m" and compare the results
+using the r.univar tool. 
+<span class="question">How does the size of the neighborhood influence the resulting DEM?</span>
 (You can test different sizes yourself.)
 
 <pre><code>
 d.erase
 g.region raster=elev_srtm_30m -p
-d.rast elevation
-d.legend elevation
+d.rast elev_ned_30m
+d.legend elev_ned_30m
 r.colors elev_srtm_30m raster=elevation
 d.rast elev_srtm_30m
 d.legend elev_srtm_30m
@@ -150,9 +154,50 @@ d.out.file srtm_dem_original
 r.neighbors elev_srtm_30m output=elev_srtm30m_sm5 method=average size=5
 d.rast elev_srtm30m_sm5
 d.out.file srtm_dem_smoothed
+r.univar elev_ned_30m
 r.univar elev_srtm_30m
 r.univar elev_srtm30m_sm5
 </code></pre>
+
+Further explore the difference between the SRTM DEM "elev_srtm_30m" and lidar-based NED DEM "elev_ned_30m".
+First, compute the map of elevation differences using map algebra:
+
+<pre><code>
+g.region raster=elev_ned_30m -p
+r.mapcalc "srtm_ned30_dif = elev_srtm_30m - elev_ned_30m"
+</code></pre>
+
+<p>
+Find the range of differences and create a divergent color table to distinguish the negative and positive values:
+
+<pre><code>
+r.info -r srtm_ned30_dif
+</code></pre>
+
+<p>
+<!--fp: Data range is -142.24... to 86.19...<br>-->
+Assign custom color table <a href="data/srtmneddiff_color.txt">srtmneddiff_color.txt</a>.<br>
+GUI: Right click on layer > <em>Properties</em> > <em>Set color table</em> > <em>Colors</em> > <em>Path to rules file</em>.
+
+<pre><code>
+r.colors srtm_ned30_dif rules=srtmneddiff_color.txt
+</code></pre>
+
+<p>
+Zoom to computational region and switch off previous map layers. Display the difference map layer:
+
+<pre><code>
+d.erase
+d.rast srtm_ned30_dif
+d.legend -d srtm_ned30_dif at=70,15,5,10
+d.out.file srtm_ned30_dif
+</code></pre>
+
+<p>
+<span class="question">Are the elevations in "elev_srtm_30m" higher in most areas or lower than in "elev_ned_30m"?
+Which result will you use to answer the above question -
+the "srtm_ned30_dif" map or the numbers provided by <em class="module">r.univar</em>?
+Are there any values in the elev_srtm_30m map that are not realistic? Where are they located?</span>
 
 <h3>Patch multiple raster layers into a single raster</h3>
 <!-- p.124-125<br> -->
@@ -166,6 +211,7 @@ g.region raster=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m -p
 r.patch input=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m output=elevlidD_6m
 r.colors elevlidD_6m raster=elevation
 d.rast elevlidD_6m
+d.out.file patched_dem
 </code></pre>
 
 <!--
@@ -205,14 +251,14 @@ d.out.file composite
 </code></pre>
 -->
 
-<h3>Map Algebra</h3>
+<h3>More Map Algebra</h3>
 See <em class="module">r.mapcalc</em> manual page for syntax and functions.
-<!-- # p. 107-108  -->
-<!--# <a href="mapcalcformats.html">See here for several ways on <b>how to run r.mapcalc</b></a>-->
-If you are getting en error when running
+You can run r.mapcalc from console using command line or GUI (Raster map calculator).
+<!-- # <a href="mapcalcformats.html">See here for several ways on <b>how to run r.mapcalc</b></a>-->
+<!--If you are getting en error when running
 <em class="module">r.mapcalc</em> in GUI <em>Console</em> or the system
 command line, launch the GUI version from <em>Layer Manager</em>
-toolbar.
+toolbar.-->
 
 <h4>NDVI</h4>
 Compute Normalized Difference Vegetation Index (NDVI).<br>
@@ -236,51 +282,9 @@ d.out.file ndvi3
 </code></pre>
 
 Note that this is a simplified, map algebra example, for computing various vegetation indices
-in GRASS GIS, we would use the <em class="module">i.vi</em> module
+in GRASS GIS, we would use the <em class="module">i.vi</em> tool
 after performing atmospheric corrections.
 
-<h4>Difference between DEM and DSM</h4>
-Explore the difference between the SRTM DSM "elev_srtm_30m" and lidar-based NED DEM "elev_ned_30m".
-First, compute the map of elevation differences:
-
-<pre><code>
-g.region raster=elev_ned_30m -p
-r.mapcalc "srtm_ned30_dif = elev_srtm_30m - elev_ned_30m"
-</code></pre>
-
-<p>
-Find the range of differences and create a divergent color table to distinguish the negative and positive values:
-
-<pre><code>
-r.info -r srtm_ned30_dif
-</code></pre>
-
-<p>
-<!--fp: Data range is -142.24... to 86.19...<br>-->
-Assign custom color table <a href="data/srtmneddiff_color.txt">srtmneddiff_color.txt</a>.<br>
-GUI: Right click on layer > <em>Properties</em> > <em>Set color table</em> > <em>Colors</em> > <em>Path to rules file</em>.
-
-<pre><code>
-r.colors srtm_ned30_dif rules=srtmneddiff_color.txt
-</code></pre>
-
-<p>
-Zoom to computational region and switch off previous map layers. Display the difference map layer:
-
-<pre><code>
-d.erase
-d.rast srtm_ned30_dif
-d.legend -d srtm_ned30_dif at=70,15,5,10
-d.out.file srtm_ned30_dif
-r.univar elev_srtm_30m
-r.univar elev_ned_30m
-</code></pre>
-
-<p>
-<span class="question">Are the elevations in "elev_srtm_30m" higher in most areas or lower than in "elev_ned_30m"?
-Which result will you use to answer the above question -
-the "srtm_ned30_dif" map or the numbers provided by <em class="module">r.univar</em>?
-Are there any values in the elev_srtm_30m map that are not realistic?</span>
 <!--
 <font color="#000066">
 # check the imapct of NULL on map algebra operation
