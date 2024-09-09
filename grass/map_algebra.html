@@ -171,7 +171,6 @@ Further explore the difference between the SRTM DEM "elev_srtm_30m" and lidar-ba
 First, compute the map of elevation differences using map algebra and find the range of differences:
 
 <pre><code>
-g.region raster=elev_ned_30m -p
 r.mapcalc "srtm_ned30_dif = elev_srtm_30m - elev_ned_30m"
 r.info -r srtm_ned30_dif
 </code></pre>
@@ -192,7 +191,7 @@ Zoom to computational region and switch off previous map layers. Display the dif
 <pre><code>
 d.erase
 d.rast srtm_ned30_dif
-d.legend -d srtm_ned30_dif at=70,15,5,10
+d.legend -d srtm_ned30_dif at=90,40,5,7
 d.out.file srtm_ned30_dif
 </code></pre>
 
