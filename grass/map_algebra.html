@@ -101,15 +101,16 @@ d.out.file landuse96_modezip
 
 <h3>Apply neighborhood operators and map algebra</h3>
 <!-- p.127<br> -->
+<h4>Map land use diversity</h4>
 Use neighborhood operator to compute land use diversity map and create a map of locations
 with the most homogeneous (single category) landuse where a land use diversification could be beneficial
 (e.g. by planting trees).<br>
-<span class="question">Which land use covers the largest area with a single landuse category(most homogeneous areas)?</span><br>
+<span class="question">Which land use covers the largest area with a single landuse category within 7x7 
+moving windows (most homogeneous areas)?</span><br>
 <!--<span class="question">Explore how different sizes of the neighborhood used alter the results and why?</span><br>-->
 <p>
 First, remove all previously added map layers from the <em>Layer Manager</em>, then compute
-and display the land use diversity map. Use map algebra to extract the single category areas
-and find out the area totals for each category using the report tool.
+and display the land use diversity map. 
 Adjust the legend size and placement as needed using right click and mouse.
 
 <pre><code>
@@ -122,6 +123,13 @@ d.legend lu_divers at=70,15,5,10 -v
 d.vect streets_wake co=white
 r.report lu_divers unit=p
 d.out.file lu_diversity_map
+</code></pre>
+
+<p>
+Use map algebra to extract the single category areas
+and find out the area totals for each category using the report tool.
+
+<pre><code>
 r.mapcalc "landuse_1cat = if(lu_divers == 1, landuse96_28m, null())"
 r.colors landuse_1cat raster=landuse96_28m
 r.category landuse_1cat raster=landuse96_28m
@@ -131,11 +139,11 @@ d.legend -c landuse_1cat
 d.out.file lu_signle_map
 </code></pre>
 
-<h4>Differences between DEM and DSM</h4>
+<h4>Smoothing elevation raster and analyzing differences between DEMs</h4>
 <p>
 Use neighborhood operator to smooth the SRTM elevation map "elev_srtm_30m" and 
 compare the summary statistics for the original and smoothed SRTM DEM.
-First, display the elev_ned_30m map, assign the same colors to the "elev_srtm_30m"
+First, display the lidar-based "elev_ned_30m" map, assign the same colors to the "elev_srtm_30m"
 and compare their values using legends. Then use neighborhood operator
 applied to 5x5 window to smooth the "elev_srtm_30m" and compare the results
 using the r.univar tool. 
@@ -160,23 +168,18 @@ r.univar elev_srtm30m_sm5
 </code></pre>
 
 Further explore the difference between the SRTM DEM "elev_srtm_30m" and lidar-based NED DEM "elev_ned_30m".
-First, compute the map of elevation differences using map algebra:
+First, compute the map of elevation differences using map algebra and find the range of differences:
 
 <pre><code>
 g.region raster=elev_ned_30m -p
 r.mapcalc "srtm_ned30_dif = elev_srtm_30m - elev_ned_30m"
-</code></pre>
-
-<p>
-Find the range of differences and create a divergent color table to distinguish the negative and positive values:
-
-<pre><code>
 r.info -r srtm_ned30_dif
 </code></pre>
 
 <p>
-<!--fp: Data range is -142.24... to 86.19...<br>-->
-Assign custom color table <a href="data/srtmneddiff_color.txt">srtmneddiff_color.txt</a>.<br>
+Assign a divergent color table
+ to distinguish the negative and positive values,
+<a href="data/srtmneddiff_color.txt">srtmneddiff_color.txt</a>.<br>
 GUI: Right click on layer > <em>Properties</em> > <em>Set color table</em> > <em>Colors</em> > <em>Path to rules file</em>.
 
 <pre><code>
@@ -312,6 +315,7 @@ g.region raster=landuse96_28m -p
 r.mapcalc "urban1_30m = if(landuse96_28m == 1,1,0) + if(landuse96_28m == 2,2,0)"
 d.rast urban1_30m
 d.legend urban1_30m at=10,30,5,8
+d.out.file urban12_nonurbanzero
 </code></pre>
 
 <p>
@@ -320,7 +324,11 @@ Alternatively with logical 'or' operator and null elsewhere:
 <pre><code>
 r.mapcalc "urban2_30m = if(landuse96_28m == 1 || landuse96_28m == 2,landuse96_28m,null())"
 d.rast urban2_30m
+d.legend urban2_30m at=10,30,5,8
+d.out.file urban12_nonurbannull
 </code></pre>
+
+<span class="question">What is the difference between the two urban raster maps?  </span>
 
 
 <h3>Optional -  various additional useful tasks</h3>
