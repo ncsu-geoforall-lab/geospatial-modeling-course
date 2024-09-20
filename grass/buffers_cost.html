@@ -34,51 +34,8 @@ Download all text files with recode rules, color rules and site locations (see a
 to the selected directory. Now you can use the commands from the assignment requiring the text file
 without the need to specify the full path to the file.
 
-
-
 <!-- p. 133<br> -->
 <h3>Buffers</h3>
-<h4>Find developed areas close to lakes</h4>
-Set region, create buffers:
-
-<pre><code>
-g.region swwake_30m -p
-r.buffer lakes output=lakes_buff distances=60,120,240,500
-d.rast lakes_buff
-</code></pre>
-
-<p>
-List categories in land use map to identify category numbers for developed areas.
-Then run <em class="module">r.mapcalc</em> to extract the developed areas within the buffers
-and use <em class="module">r.support</em> to assign the labels from the original buffer raster 
-to the new developed buffer raster map (needed for legend): 
-
-<pre><code>
-r.category landuse96_28m
-r.mapcalc "developed_lake = if(landuse96_28m==1 || landuse96_28m==2, lakes_buff, null())"
-r.support developed_lake raster=lakes_buff
-r.category developed_lake
-</code></pre>
-
-<p>
-Display results:<br>
-In GUI: switch off previous map, use Add raster, Add vector icons.
-
-<pre><code>
-d.rast developed_lake
-d.vect streets_wake color=grey
-d.rast lakes
-d.legend -c developed_lake use=2,3,4,5 at=5,25,2,5
-d.out.file mylakesbuffmap
-</code></pre>
-
-<p>
-Find the total area within buffers and the developed area in ha:
-
-<pre><code>
-r.report -n lakes_buff units=h
-r.report -n developed_lake units=h
-</code></pre>
 
 <h4>Find developed areas impacted by noise from highways</h4>
 Set region and create buffers along major roads.<br>
@@ -106,6 +63,8 @@ d.vect streets_wake
 d.legend -c noise at=5,25,2,5
 </code></pre>
 
+<span class="question">What is the total developed area within the 500 m from the major roads?</span>
+
 <h4>Find schools affected by high levels of noise</h4>
 Convert schools to raster using CORECAPACI attribute (school capacity).<br>
 Use map algebra to overlay with noise impact buffers and
@@ -120,6 +79,8 @@ d.vect schools_wake icon=basic/circle size=10 fill_color=blue
 d.vect schools_noise size=14 fill_color=cyan icon=basic/circle color=black
 d.out.file mynoisemap
 </code></pre>
+
+<span class="question">How many students are potentially affected by noise based on the school capacities?</span>
 
 <h3>Cost surfaces</h3>
 <!-- p. 136-139<br> -->
@@ -341,8 +302,51 @@ g.region swwake_30m -p
 v.to.rast roadsmajor output=roadsmajor use=val type=line
 </code></pre>
 
+<h3>Optional</h3>
+
+<h4>Find developed areas close to lakes</h4>
+Set region, create buffers:
+
+<pre><code>
+g.region swwake_30m -p
+r.buffer lakes output=lakes_buff distances=60,120,240,500
+d.rast lakes_buff
+</code></pre>
+
 <p>
-Compute the distance map and cost surface to highways:
+List categories in land use map to identify category numbers for developed areas.
+Then run <em class="module">r.mapcalc</em> to extract the developed areas within the buffers
+and use <em class="module">r.support</em> to assign the labels from the original buffer raster 
+to the new developed buffer raster map (needed for legend): 
+
+<pre><code>
+r.category landuse96_28m
+r.mapcalc "developed_lake = if(landuse96_28m==1 || landuse96_28m==2, lakes_buff, null())"
+r.support developed_lake raster=lakes_buff
+r.category developed_lake
+</code></pre>
+
+<p>
+Display results:<br>
+In GUI: switch off previous map, use Add raster, Add vector icons.
+
+<pre><code>
+d.rast developed_lake
+d.vect streets_wake color=grey
+d.rast lakes
+d.legend -c developed_lake use=2,3,4,5 at=5,25,2,5
+d.out.file mylakesbuffmap
+</code></pre>
+
+<p>
+Find the total area within buffers and the developed area in ha:
+
+<pre><code>
+r.report -n lakes_buff units=h
+r.report -n developed_lake units=h
+</code></pre>
+
+<h4> Compute the distance map and cost surface to highways</h4>:
 
 <pre><code>
 r.mapcalc "area_one = 1"
