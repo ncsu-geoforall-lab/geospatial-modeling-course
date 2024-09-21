@@ -37,7 +37,7 @@ without the need to specify the full path to the file.
 <!-- p. 133<br> -->
 <h3>Buffers</h3>
 
-<h4>Find developed areas impacted by noise from highways</h4>
+<h4>Find developed areas potentially impacted by noise from highways</h4>
 Set region and create buffers along major roads.<br>
 Intersect developed areas from landuse map with road buffers.<br>
 Transfer the category labels and compute the affected area.<br>
@@ -63,9 +63,10 @@ d.vect streets_wake
 d.legend -c noise at=5,25,2,5
 </code></pre>
 
-<span class="question">What is the total developed area within the 500 m from the major roads?</span>
+<span class="question">What is the total developed area iin [ha] 
+within the 150m from the major roads?</span>
 
-<h4>Find schools affected by high levels of noise</h4>
+<h4>Find schools potentially affected by high levels of noise</h4>
 Convert schools to raster using CORECAPACI attribute (school capacity).<br>
 Use map algebra to overlay with noise impact buffers and
 compute the number of students exposed to noise (see result of <em class="module">r.univar</em>).
@@ -75,12 +76,14 @@ v.to.rast schools_wake output=schoolscap_10m use=attr attrcolumn=CORECAPACI type
 r.mapcalc "schools_noise = if(int(schoolscap_10m) &amp;&amp; roads_buffers == 2, int(schoolscap_10m), null())"
 r.univar schools_noise
 r.to.vect schools_noise output=schools_noise type=point
-d.vect schools_wake icon=basic/circle size=10 fill_color=blue
-d.vect schools_noise size=14 fill_color=cyan icon=basic/circle color=black
+d.vect schools_wake icon=basic/circle size=10 fill_color=blue legend_label="schools"
+d.vect schools_noise size=14 fill_color=cyan icon=basic/circle color=black legend_label="noise risk schools"
+d.legend.vect
+d.barscale
 d.out.file mynoisemap
 </code></pre>
 
-<span class="question">How many students are potentially affected by noise based on the school capacities?</span>
+<span class="question">How many students are potentially affected by noise based on the school capacities and less than 250m distance to major roads?</span>
 
 <h3>Cost surfaces</h3>
 <!-- p. 136-139<br> -->
