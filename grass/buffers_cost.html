@@ -64,7 +64,7 @@ d.legend -c noise at=5,25,2,5
 </code></pre>
 
 <span class="question">What is the total developed area iin [ha] 
-within the 150m from the major roads?</span>
+within the 250m from the major roads?</span>
 
 <h4>Find schools potentially affected by high levels of noise</h4>
 Convert schools to raster using CORECAPACI attribute (school capacity).<br>
@@ -99,7 +99,7 @@ v.info -c streets_wake
 v.to.rast streets_wake output=streets_speedtmp use=attr attrcolumn=SPEED type=line
 r.mapcalc "streets_speed = if(isnull(streets_speedtmp),5,streets_speedtmp)"
 r.info streets_speed
-r.colors streets_speed color=gyr
+r.colors streets_speed color=inferno
 d.rast streets_speed
 d.legend streets_speed at=5,40,2,5 use=5,25,35,45,65
 d.out.file myspeedmap
@@ -128,7 +128,6 @@ r.mapcalc "streets_travtime = 0.018641/streets_speed"
 r.cost -k streets_travtime output=streets_cost start_points=fire_pt
 </code></pre>
 
-
 <p>
 <!-- <font color="#000066">
 # or use echo in linux shell
@@ -137,7 +136,7 @@ echo "634886 224328 1" | v.in.ascii out=fire_pt separator=space -->
 Compute isochrones and display the cumulative cost surface map.
 
 <pre><code>
-r.contour streets_cost output=streets_cost_04 step=0.04
+r.contour streets_cost output=streets_cost_04 step=0.04 cut=100
 r.colors streets_cost color=elevation
 d.rast streets_cost
 d.vect fire_pt color=red icon=basic/marker size=20
@@ -156,6 +155,7 @@ The travel time in hours will be stored in the attribute column CVLAG.
 g.copy vector=firestations,myfirestations
 v.info -c myfirestations
 v.what.rast myfirestations raster=streets_cost column=CVLAG
+d.vect myfirestations icon=basic/circle size=15 fill_color=red
 </code></pre>
 
 <p>
@@ -206,6 +206,7 @@ so just switch them on and off and re-order as needed:
 d.erase
 d.rast streets_cost
 d.vect fire_pt color=red icon=basic/marker size=20
+d.vect myfirestations icon=basic/circle size=15 fill_color=red
 d.rast route_20Westernb
 d.rast route_52Hollyb
 d.out.file mylcpmap
@@ -258,6 +259,7 @@ r.colors friction2 rules=friction_color.txt
 d.erase
 d.rast friction2
 d.legend friction2 at=5,50,2,5
+d.out.file myfrictionmap
 </code></pre>
 
 <p>
@@ -265,7 +267,7 @@ Compute the cost map and generate isochrones:
 
 <pre><code>
 r.walk -k elevation=elev_ned_30m friction=friction2 output=walkcost start_coordinates=635576,216485 lambda=0.5 max_cost=10000
-r.contour walkcost output=walkcost step=1000
+r.contour walkcost output=walkcost step=1000 cut=100
 </code></pre>
 
 <p>
@@ -294,15 +296,6 @@ d.vect walkcost color=red where=level=6000 width=3
 d.vect lostperson color=yellow fill_color=yellow icon=basic/marker size=30
 d.legend walkcost at=5,50,2,5
 d.out.file mywalkcostmap
-</code></pre>
-
-<h4>Cost surfaces to line features</h4>
-Compute the shortest distance to a major road.<br>
-Set region, convert vector road map to raster:
-
-<pre><code>
-g.region swwake_30m -p
-v.to.rast roadsmajor output=roadsmajor use=val type=line
 </code></pre>
 
 <h3>Optional</h3>
@@ -349,7 +342,14 @@ r.report -n lakes_buff units=h
 r.report -n developed_lake units=h
 </code></pre>
 
-<h4> Compute the distance map and cost surface to highways</h4>:
+<h4> Compute the shortest distance map and cost surface to highways</h4>:
+
+Set region, convert vector road map to raster:
+
+<pre><code>
+g.region swwake_30m -p
+v.to.rast roadsmajor output=roadsmajor use=val type=line
+</code></pre>
 
 <pre><code>
 r.mapcalc "area_one = 1"
@@ -368,7 +368,6 @@ d.vect roadsmajor color=red
 d.legend cdist_toroadk at=5,50,2,5
 d.out.file cost_roadsmaj
 </code></pre>
-
 
 <!---
 # compute linear regression and correlation  coefficient between different elevation data
