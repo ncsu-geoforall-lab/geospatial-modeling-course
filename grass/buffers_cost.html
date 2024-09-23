@@ -243,7 +243,7 @@ First, create friction map based on land cover.<br>
 Note: We remove previously used map layers in the <em>Layer Manager</em>
 or using the <em class="module">d.erase</em> tool, 
 so the layers are not rendered when we don't need them anymore.<br>
-First set the computational region and display land cover classes:
+Set the computational region and display land cover classes:
 
 <pre><code>
 d.erase
@@ -260,7 +260,7 @@ r.recode landclass96 out=friction rules=friction_rules.txt
 </code></pre>
 
 <p>
-Add the streets to friction map - they are missed by the landuse map.
+Add the impact of streets to friction map - they are missed by the landuse map.
 
 <pre><code>
 r.mapcalc "friction2 = if(streets_speed > 6, 0.1, friction)"
@@ -272,7 +272,7 @@ d.out.file myfrictionmap
 </code></pre>
 
 <p>
-Compute the cost map and generate isochrones:
+Compute the cumulative cost map from the given point and generate isochrones:
 
 <pre><code>
 r.walk -k elevation=elev_ned_30m friction=friction2 output=walkcost start_coordinates=635576,216485 lambda=0.5 max_cost=10000
