@@ -47,7 +47,7 @@ is in your working directory).
 
 <pre><code>
 g.region raster=landuse96_28m -p
-v.to.rast roadsmajor out=roadsmajor_28m
+v.to.rast roadsmajor out=roadsmajor_28m use=value
 r.buffer roadsmajor_28m output=roads_buffers distances=250,500,2500
 r.mapcalc "noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null())"
 r.colors noise color=ryg
