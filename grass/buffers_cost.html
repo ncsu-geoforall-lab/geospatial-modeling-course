@@ -232,13 +232,21 @@ Then switch off all layers except for the streets_cost_1000
 and change display to 3D.
 
 <h4>Compute accessibility map for help in search for lost person</h4>
-Create friction map based on land cover.<br>
-Reminder: Time to time, you should remove or at least uncheck previously
-used map layers in the <em>Layer Manager</em>, so the layers are not rendered
-when you don't need them anymore.<br>
-First display land cover classes:
+
+Given a point where a lost person was last located we compute a map that represents how far 
+the person could have walked within the surrounding environment.
+The environmental variables for accessibility are derived from elevation, land use
+and streets using the equation in the <em class="module">r.walk</em> manual page and 
+the <a href="data/friction_rules.txt">friction_rules.txt</a> file.
+<p>
+First, create friction map based on land cover.<br>
+Note: We remove previously used map layers in the <em>Layer Manager</em>
+or using the <em class="module">d.erase</em> tool, 
+so the layers are not rendered when we don't need them anymore.<br>
+First set the computational region and display land cover classes:
 
 <pre><code>
+d.erase
 g.region swwake_30m -p
 r.category landclass96
 </code></pre>
@@ -298,6 +306,9 @@ d.vect lostperson color=yellow fill_color=yellow icon=basic/marker size=30
 d.legend walkcost at=5,50,2,5
 d.out.file mywalkcostmap
 </code></pre>
+
+<span class="question">How did we ensure that the person does not walk over the lakes?
+</span>
 
 <h3>Optional</h3>
 
