@@ -135,7 +135,7 @@ Compute TIN:<br>
 <pre><code>
 v.to.3d elev_lid792_randpts output=elev_lid792_randpts3d column=value
 v.delaunay elev_lid792_randpts3d output=elev_rand_tin
-v.color elev_rand_tin use=z color=elevation
+v.colors elev_rand_tin use=z color=elevation
 r.mapcalc "level90 = 90"
 </code></pre>
 
