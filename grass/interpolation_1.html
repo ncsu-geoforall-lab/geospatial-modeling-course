@@ -42,7 +42,7 @@ d.erase
 d.rast elev_vor_1m
 d.rast asp_vor_1m
 d.vect elev_lid792_randpts size=1 color=red
-d.out.file elev_voronoi
+d.out.file aspect_voronoi
 </code></pre>
 <p>
 Optionally, you can view it in 3D perspective
@@ -61,8 +61,7 @@ r.slope.aspect elevation=elev_idw_1m aspect=asp_idw_1m
 d.erase
 d.rast elev_idw_1m
 d.rast asp_idw_1m
-d.vect elev_lid792_randpts size=2 color=red
-d.out.file elev_idw
+d.out.file aspect_idw
 </code></pre>
 
 <p>
@@ -136,6 +135,7 @@ Compute TIN:<br>
 <pre><code>
 v.to.3d elev_lid792_randpts output=elev_lid792_randpts3d column=value
 v.delaunay elev_lid792_randpts3d output=elev_rand_tin
+v.color elev_rand_tin use=z color=elevation
 r.mapcalc "level90 = 90"
 </code></pre>
 
