@@ -274,6 +274,14 @@ defined by the measured points
 </section>
 
 <section>
+   <h3>TIN-based interpolation</h3>
+<p>
+Value at a grid point is computed from 3 given points that form vertices of a Delaunay triangle
+<p>
+<img height="380" src="img/spatial_interpolation/tin_zoom_grid1.png">
+</section>
+
+<section>
    <h3>Delaunay triangulation</h3>
 <p>
 Delaunay triangulation for a set of points P in a plane fulfills 
@@ -319,14 +327,6 @@ TIN-based DEM generated from a random sub-sample of lidar points
 <p>
 <img height="400" src="img/spatial_interpolation/TINgrassnvizrand2.jpg">
 <p><small>Vector data model (irregular triangular mesh) representation of elevation surface</small>
-</section>
-
-<section>
-   <h3>TIN-based interpolation</h3>
-<p>
-Value at a grid point is computed from 3 given points that form vertices of a Delaunay triangle
-<p>
-<img height="380" src="img/spatial_interpolation/tin_zoom_grid1.png"> 
 </section>
 
 <section>
@@ -396,17 +396,37 @@ Value at a unsampled grid point (blue) is a weighted average of values measured 
 </section>
 
 <section>
-   <h3>Inverse distance weighted method</h3>
-2m resolution DEM computed from points that are ~50m appart:
-leads to local peaks and pits around given points
+   <h3>Interpolation points selection </h3>
+<ul>
+ <li class="fragment">nearest $n$-points, distances are variable
+ <li class="fragment">all points within $d$-distance, $n$ is variable
+ <li class="fragment">$n$-points from each quadrant
+ <li class="fragment">increase $d$ until at least $n$-points are found
+</ul>
 <p>
-<img height="360" src="img/spatial_interpolation/IntIDWF1c.gif"> </p>
-<br><small>Bull's eye effect – circular contours when distance between 
-the measured points is much larger than the distance between grid points. 
-<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">
-Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
-</small>
+<img height="350" src="img/spatial_interpolation/idw_pointselect.png">
+<img height="350" src="img/spatial_interpolation/interp_localpointsearch.png">
 </section>
+
+<section>
+   <h3>Interpolation points selection </h3>
+<p>Problems arise when points are clustered, for example all points are from the same contour - bias, waves
+<p class="fragment">
+<img height="380" src="img/spatial_interpolation/interp_localpointsearch_contour.png">
+</p>
+</section>
+
+<!--
+<section>
+   <h3>Local interpolation discontinuities</h3>
+<p>Problems when grid size is much smaller than 
+distance between given points: IDW surfaces with power exponent p=0.5 and p=5 (precipitation data)
+<p>
+<img height="220" src="img/spatial_interpolation/idw_precip_p05_3dpts.png">
+<img height="220" src="img/spatial_interpolation/idw_precip_p5_3d_pts.jpg"> </p>
+<p><small>Method works well when density of given points is close to the resulting resolution, otherwise it can lead to surface artifacts</small>
+</section>
+-->
 
 <!--
 <section>
@@ -416,6 +436,19 @@ Impact of power parameter (p=0.5, 2, 5) on the resulting surface: precipitation 
 <img height="480" src="img/spatial_interpolation/idw_precip_contours2d.png"> </p>
 </section>
 -->
+
+<section>
+   <h3>Inverse distance weighted method</h3>
+2m resolution DEM computed from points that are ~50m appart:
+leads to local peaks and pits around given points
+<br>
+<img height="350" src="img/spatial_interpolation/IntIDWF1c.gif"> 
+<br><small>Bull's eye effect – circular contours when distance between 
+the measured points is much larger than the distance between grid points. 
+<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">
+Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
+</small>
+</section>
 
 <section>
    <h3>Geostatistical approach to interpolation</h3>
@@ -456,8 +489,6 @@ than the points that are farther appart
 <img height="200" src="img/spatial_interpolation/GeostITC_variogramspher.jpg"> 
 <p class="credit">Geostat_ITCCov3.pdf, D.G. Rossiter)</p>
 </section>
-
-
 
 <section>
    <h3>Empirical Variogram</h3>
@@ -542,37 +573,6 @@ DEMs interpolated using IDW method and kriging with spherical variogram
  <li class="fragment">TIN, natural neighbor use vertices of triangles or voronoi polygons, additional neighboring
 triangles or polygons for non-linear interpolation
 </ul>
-</section>
-
-<section>
-   <h3>Interpolation points selection </h3>
-<ul>
- <li class="fragment">nearest $n$-points, distances are variable
- <li class="fragment">all points within $d$-distance, $n$ is variable
- <li class="fragment">$n$-points from each quadrant 
- <li class="fragment">increase $d$ until at least $n$-points are found
-</ul>
-<p>
-<img height="350" src="img/spatial_interpolation/idw_pointselect.png">
-<img height="350" src="img/spatial_interpolation/interp_localpointsearch.png">
-</section>
-
-<section>
-   <h3>Interpolation points selection </h3>
-<p>Problems arise when points are clustered, for example all points are from the same contour - bias, waves
-<p class="fragment">
-<img height="380" src="img/spatial_interpolation/interp_localpointsearch_contour.png">
-</p>
-</section>
-
-<section>
-   <h3>Local interpolation discontinuities</h3>
-<p>Problems with insufficient overlap: when grid size is much smaller than average
-distance between given points, IDW surfaces with power exponent p=0.5 and p=5 (precipitation data)
-<p>
-<img height="220" src="img/spatial_interpolation/idw_precip_p05_3dpts.png"> 
-<img height="220" src="img/spatial_interpolation/idw_precip_p5_3d_pts.jpg"> </p>
-<p><small>Method works well when density of given points is close to the resulting resolution, otherwise it can lead to surface artifacts</small>
 </section>
 
 <section>
