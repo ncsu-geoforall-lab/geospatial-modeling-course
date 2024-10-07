@@ -38,8 +38,8 @@ Compute aspect simultaneously with interpolation and
 
 <pre><code>
 g.region rural_1m res=1 -p
-d.vect elev_lid792_randpts
 v.colors map=elev_lid792_randpts use=attr column=value color=elevation
+d.vect elev_lid792_randpts
 v.surf.rst input=elev_lid792_randpts elevation=elev_rstdef_1m zcolumn=value aspect=asp_rstdef_1m npmin=140
 v.surf.rst input=elev_lid792_randpts elevation=elev_rstt10_1m aspect=asp_rstt10_1m zcolumn=value tension=10 npmin=140
 v.surf.rst input=elev_lid792_randpts elevation=elev_rstt160_1m aspect=asp_rstt160_1m zcolumn=value tension=160 npmin=140
