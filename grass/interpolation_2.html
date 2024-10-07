@@ -68,7 +68,8 @@ Or use 3D views of elev_rstdef_1m, elev_rstt10_1m, elev_rstt160_1m,
 make sure you switch off the aspect rasters and save the 3 images for your report.
 
 <h3>Explore impact of spline smoothing parameter on deviations of the interpolated surface </h3>
-Compute elevation rasteri,aspect, and deviations vector point map with different values of smoothing.
+Compute elevation raster,aspect, and deviations vector point map with different values of smoothing
+(switch off aspect maps to see the elevations output).
 Compare summary statistics for deviations for smoothing 0.1 and 10, including root mean square deviation (rmsdevi)
  provided by r.info of the resulting elevations maps<br>
 
@@ -81,6 +82,10 @@ v.univar elev_rstdef_devi column=flt1 type=point
 r.info elev_rstsm10_1mb
 v.info -c elev_rstsm10_devi
 v.univar elev_rstsm10_devi column=flt1 type=point
+r.colors asp_rstdef color=aspect
+d.out.file aspect_smoothdefault
+r.colors asp_rstsm10 color=aspect
+d.out.file aspect_smooth10
 </code></pre>
 
 <p>
@@ -115,11 +120,11 @@ and spatial pattern for the interpolation with the two different smoothing param
 
 <h3>Compute predictive error of interpolation</h3>
 Compute predictive error of interpolation for each point
-using cross-validation (no raster output, only points with predictive errors).
+using cross-validation (no raster output, result is points with predictive errors).
 
 <pre><code>
+d.erase
 v.surf.rst -c input=elev_lid792_randpts zcolumn=value cvdev=elev_rstdef_cv npmin=120 segmax=35
-d.vect elev_rstdef_cv size=2
 v.colors elev_rstdef_cv use=attr column=flt1 rules=deviations_color.txt
 v.univar elev_rstdef_cv column=flt1 type=point
 </code></pre>
@@ -127,8 +132,6 @@ v.univar elev_rstdef_cv column=flt1 type=point
 <p>
 Compute raster map of predictive errors and <span class="question">identify locations
 where the sampling is inadequate leading to large predictive errors.</span><br>
-Optionally, to view the result in 3D use "elev_rstdef_1mb" for elevation (switch off everything else)
-and drape the crossvalidation map "elev_rstdef_cv" as color.
 
 <pre><code>
 v.surf.rst input=elev_rstdef_cv elevation=elev_rstdef_cv zcolumn=flt1
@@ -138,6 +141,8 @@ d.rast elev_rstdef_cv
 d.legend elev_rstdef_cv at=2,50,2,6
 d.out.file elev_rstdef_cv
 </code></pre>
+
+Optionally, to view the result in 3D use "elev_rstdef_1mb" for elevation (switch off everything else) and drape the crossvalidation map "elev_rstdef_cv" as color.
 
 <!-- <font color="#000066">
 nviz elev_rstdef_1m col=elev_rstdef_cv
