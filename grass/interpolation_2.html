@@ -36,9 +36,9 @@ Compute aspect simultaneously with interpolation and
 
 <pre><code>
 g.region rural_1m res=1 -p
-v.surf.rst input=elev_lid792_randpts elevation=elev_rstdef_1m zcolumn=value aspect=asp_rstdef_1m segmax=30 npmin=140
-v.surf.rst input=elev_lid792_randpts elevation=elev_rstt10_1m aspect=asp_rstt10_1m zcolumn=value tension=10 segmax=30 npmin=140
-v.surf.rst input=elev_lid792_randpts elevation=elev_rstt160_1m aspect=asp_rstt160_1m zcolumn=value tension=160 segmax=30 npmin=140
+v.surf.rst input=elev_lid792_randpts elevation=elev_rstdef_1m zcolumn=value aspect=asp_rstdef_1m npmin=140
+v.surf.rst input=elev_lid792_randpts elevation=elev_rstt10_1m aspect=asp_rstt10_1m zcolumn=value tension=10 npmin=140
+v.surf.rst input=elev_lid792_randpts elevation=elev_rstt160_1m aspect=asp_rstt160_1m zcolumn=value tension=160 npmin=140
 </code></pre>
 
 <p>
@@ -70,8 +70,8 @@ Compare summary statistics for deviations for smoothing 0.1 and 10, including ro
  provided by r.info of the resulting elevations maps<br>
 
 <pre><code>
-v.surf.rst input=elev_lid792_randpts elevation=elev_rstdef_1mb zcolumn=value smooth=0.1 deviations=elev_rstdef_devi segmax=30 npmin=140
-v.surf.rst input=elev_lid792_randpts elevation=elev_rstsm10_1mb zcolumn=value smooth=10 deviations=elev_rstsm10_devi segmax=30 npmin=140
+v.surf.rst input=elev_lid792_randpts elevation=elev_rstdef_1mb aspect=asp_rstdef zcolumn=value smooth=0.1 deviations=elev_rstdef_devi npmin=140
+v.surf.rst input=elev_lid792_randpts elevation=elev_rstsm10_1mb aspect=asp_rstsm10 zcolumn=value smooth=10 deviations=elev_rstsm10_devi npmin=140
 r.info elev_rstdef_1mb
 v.info -c elev_rstdef_devi
 v.univar elev_rstdef_devi column=flt1 type=point
@@ -85,8 +85,8 @@ Compute and display deviations maps using the same divergent custom color table.
 Note that we are interpolating the deviations, not the given elevations.
 
 <pre><code>
-v.surf.rst input=elev_rstdef_devi elevation=elev_rstdef_devi zcolumn=flt1 segmax=30 npmin=140
-v.surf.rst input=elev_rstsm10_devi elevation=elev_rstsm10_devi zcolumn=flt1 segmax=30 npmin=140
+v.surf.rst input=elev_rstdef_devi elevation=elev_rstdef_devi zcolumn=flt1 npmin=140
+v.surf.rst input=elev_rstsm10_devi elevation=elev_rstsm10_devi zcolumn=flt1 npmin=140
 </code></pre>
 
 <p>
@@ -107,7 +107,6 @@ d.legend elev_rstsm10_devi at=2,50,2,6
 d.out.file elev_rstsm10_devi
 </code></pre>
 
-<!-- something is broken here the CV output is nonsense 
 <h3>Compute predictive error of interpolation</h3>
 Compute predictive error of interpolation for each point
 using cross-validation (no raster output, only points with predictive errors).
@@ -132,7 +131,6 @@ d.vect elev_rstdef_cv size=2
 d.legend elev_rstdef_cv at=2,50,2,6
 d.out.file elev_rstdef_cv
 </code></pre>
--->
 
 
 <!-- <font color="#000066">
