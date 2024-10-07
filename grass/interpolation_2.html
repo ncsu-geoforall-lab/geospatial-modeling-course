@@ -167,7 +167,7 @@ d.vect elev_lid792_cont1m col=yellow
 
 <h3>Interpolate precipitation with influence of topography</h3>
 
-Set the 3D region (read the man page for <em class="module">g.region</em>).<br>
+Set 3D region for entire North Carolina (read the man page for <em class="module">g.region</em>).<br>
 We set <em>tbres</em> to high value - we have just a single level
 because we are not computing the 3D raster (see lecture for more details).
 
@@ -181,6 +181,7 @@ Compute precipitation raster map without influence of elevation
 (with segmax=700 segmentation is not performed so
 interpolation function is computed using all points at once).<br>
 We will use mask during the interpolation to limit the computation to North Carolina.
+Zoom to computational region when to see the input maps and the result.
 
 <pre><code>
 d.rast ncmask_500m
@@ -192,7 +193,6 @@ v.surf.rst input=precip_30ynormals elevation=precip_annual_500m zcolumn=annual s
 
 <p>
 Use the downloaded the color table <a href="data/precip_color.txt">precip_color.txt</a>.<br>
-Zoom to computational region when displaying the result.
 
 <pre><code>
 r.colors precip_annual_500m rules=precip_color.txt
