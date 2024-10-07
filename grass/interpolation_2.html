@@ -30,12 +30,16 @@ to the selected directory. Now you can use the commands from the assignment requ
 without the need to specify the full path to the file.
 
 <!-- p. 235<br> -->
-<h3>Interpolate elevation raster from points using splines with different tension</h3>
+<h3>Explore impact of spline tension parameter on the interpolated surface</h3>
+Display the input scattered points with elevation stored as attribute named value. Then
+interpolate elevation rasters from these points using splines with different tension.
 Compute aspect simultaneously with interpolation and 
-<span class="question">evaluate impact of tension by using tension=40 (default), tension=10 and tension=160.</span>
+<span class="question">explain impact of tension by using tension=40 (default), tension=10 and tension=160.</span>
 
 <pre><code>
 g.region rural_1m res=1 -p
+d.vect elev_lid792_randpts
+v.colors map=elev_lid792_randpts use=attr column=value color=elevation
 v.surf.rst input=elev_lid792_randpts elevation=elev_rstdef_1m zcolumn=value aspect=asp_rstdef_1m npmin=140
 v.surf.rst input=elev_lid792_randpts elevation=elev_rstt10_1m aspect=asp_rstt10_1m zcolumn=value tension=10 npmin=140
 v.surf.rst input=elev_lid792_randpts elevation=elev_rstt160_1m aspect=asp_rstt160_1m zcolumn=value tension=160 npmin=140
@@ -43,29 +47,28 @@ v.surf.rst input=elev_lid792_randpts elevation=elev_rstt160_1m aspect=asp_rstt16
 
 <p>
 Compare the interpolated elevation surfaces using aspect maps.<br>
-Change the aspect color table to grey aspect.<br>
-Save images for your report.
+Change the aspect color table to grey aspect for consistency with assignment 4A.<br>
+Save aspect images for your report.
 
 <pre><code>
 r.colors asp_rstdef_1m color=aspect
 r.colors asp_rstt10_1m color=aspect
 r.colors asp_rstt160_1m color=aspect
 d.erase
-d.rast elev_rstdef_1m
 d.rast asp_rstdef_1m
 d.out.file asp_rst_t40
 d.rast asp_rstt10_1m
 d.out.file asp_rst_t10
 d.rast asp_rstt160_1m
 d.out.file asp_rst_t160
-d.vect elev_lid792_randpts size=1 color=red
 </code></pre>
 
 <p>
 Or use 3D views of elev_rstdef_1m, elev_rstt10_1m, elev_rstt160_1m, 
 make sure you switch off the aspect rasters and save the 3 images for your report.
 
-<h3>Compute elevation raster and deviations vector point map with different values of smoothing</h3>
+<h3>Explore impact of spline smoothing parameter on deviations of the interpolated surface </h3>
+Compute elevation rasteri,aspect, and deviations vector point map with different values of smoothing.
 Compare summary statistics for deviations for smoothing 0.1 and 10, including root mean square deviation (rmsdevi)
  provided by r.info of the resulting elevations maps<br>
 
@@ -107,12 +110,17 @@ d.legend elev_rstsm10_devi at=2,50,2,6
 d.out.file elev_rstsm10_devi
 </code></pre>
 
+<span class="question">What is the difference in deviations in terms of summary statististics 
+and spatial pattern for the interpolation with the two different smoothing parameters?  </span>
+
 <h3>Compute predictive error of interpolation</h3>
 Compute predictive error of interpolation for each point
 using cross-validation (no raster output, only points with predictive errors).
 
 <pre><code>
 v.surf.rst -c input=elev_lid792_randpts zcolumn=value cvdev=elev_rstdef_cv npmin=120 segmax=35
+d.vect elev_rstdef_cv size=2
+v.colors elev_rstdef_cv use=attr column=flt1 rules=deviations_color.txt
 v.univar elev_rstdef_cv column=flt1 type=point
 </code></pre>
 
@@ -127,11 +135,9 @@ v.surf.rst input=elev_rstdef_cv elevation=elev_rstdef_cv zcolumn=flt1
 r.colors elev_rstdef_cv rules=deviations_color.txt
 d.erase
 d.rast elev_rstdef_cv
-d.vect elev_rstdef_cv size=2
 d.legend elev_rstdef_cv at=2,50,2,6
 d.out.file elev_rstdef_cv
 </code></pre>
-
 
 <!-- <font color="#000066">
 nviz elev_rstdef_1m col=elev_rstdef_cv
@@ -154,7 +160,6 @@ d.vect elev_lid792_cont1m col=yellow
 # to improve the interpolation run v.generalize on elev_lid792_cont1m
 -->
 
-
 <h3>Interpolate precipitation with influence of topography</h3>
 
 Set the 3D region (read the man page for <em class="module">g.region</em>).<br>
@@ -170,11 +175,13 @@ g.region t=2000 b=0 tbres=2000 res3=500 -p3
 Compute precipitation raster map without influence of elevation
 (with segmax=700 segmentation is not performed so
 interpolation function is computed using all points at once).<br>
-We will use mask during the interpolation.
+We will use mask during the interpolation to limit the computation to North Carolina.
 
 <pre><code>
+d.rast ncmask_500m
 r.mask raster=ncmask_500m
 v.info -c precip_30ynormals
+d.vect precip_30ynormals size=2
 v.surf.rst input=precip_30ynormals elevation=precip_annual_500m zcolumn=annual segmax=700
 </code></pre>
 
@@ -191,7 +198,7 @@ d.out.file precip_annual
 </code></pre>
 
 <p>
-Compute precipitation raster map with elevation.
+Compute precipitation raster map with influence of elevation.
 <p>
 We use trivariate spline interpolation and compute the result as a crossection
 between the trivariate precipitation function and bivariate elevation function.
@@ -207,11 +214,13 @@ d.rast precip_anntopo_500m
 d.out.file precip_anntopo
 </code></pre>
 <p>
-Optionally, to view the results in 3D,
-switch off everything except for elev_state_500m and precip_30ynormals_3d,<br>
+
+<!--
+Optionally, to view the results in 3D, switch off everything except for elev_state_500m and precip_30ynormals_3d,
 switch to 3D, set(type in) viewer height at 300000, z-exag at 6, fine res=1,<br>
 use precip_anntopo_500m for color, set icon size for points - sphere, 5000.<br>
 Display the result and save the image for the report.
+-->
 
 <p>
 <span class="question">Try to explain how was elevation used for the precipitation raster interpolation.</span>
