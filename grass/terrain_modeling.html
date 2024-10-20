@@ -76,11 +76,13 @@ g.region vect=elev_lid793016_1r res=1 -p
 r.in.lidar input=tile_0793_016_spm.las output=lid_be_binn1m class_filter=2 method=n
 r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binn1m return_filter=first method=n
 r.colors lid_be_binn1m,lid_1r_binn1m color=bcyr -e
+d.erase
 d.rast lid_be_binn1m
 d.legend lid_be_binn1m at=2,50,2,9
 r.report lid_be_binn1m unit=p,c
 r.univar lid_be_binn1m
 d.out.file be_pointdensity
+d.erase
 d.rast lid_1r_binn1m
 d.legend -d -s lid_1r_binn1m at=2,50,8,12
 r.report lid_1r_binn1m unit=p
@@ -160,7 +162,6 @@ Identify the features that are associated with large range values.<br>
 Display only the high values of range.<br>
 <span class="question">What landcover is associated with large range in multiple return data?</span>
 
-
 <pre><code>
 d.rast lid_1r_binrange2m values=10.-200.
 d.out.file mylid_1rrange2m
@@ -187,8 +188,14 @@ v.surf.rst input=elev_lid793016_be elevation=elev_lid793016_be_1m npmin=120 segm
 v.surf.rst input=elev_lid793016_1r elevation=elev_lid793016_1r_1m npmin=120 segmax=25 tension=100 smooth=0.5 dmin=1
 r.colors elev_lid793016_be_1m color=elevation
 r.colors elev_lid793016_1r_1m color=elevation
+d.erase
 d.rast elev_lid793016_be_1m
+d.legend elev_lid793016_be_1m
+d.out.file elevation_be_1m
+d.erase
 d.rast elev_lid793016_1r_1m
+d.legend elev_lid793016_1r_1m
+d.out.file elevation_1r_1m
 </code></pre>
 
 <!-- not working on windows
@@ -206,7 +213,7 @@ d.rast elev_lid793016_1r_1m_bsp
 </code></pre>
 -->
 
-Hide legend and switch off all map layers except for the last 2 interpolated ones.<br>
+Remove legend and switch off all map layers except for the last 2 interpolated ones.<br>
 Use 3D view with cutting planes to compare the bare earth and terrain surface.<br>
 Make sure fine resolution is set to 1 for all surfaces.<br>
 Assign each surface constant color, add constant plane at 75m elevation for reference.<br>
