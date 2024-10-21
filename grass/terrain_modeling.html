@@ -52,7 +52,7 @@ without the need to specify the full path to the file.
 Import the points using <em class="module">v.in.lidar</em>.
 We can specify which class and which return (first, middle, last) we want to import.<br>
 We can see the classification either in metadata distributed with the lidar data
-or it can be displayed with <a href="https://liblas.org/">lasinfo</a> tool (in case lasinfo command is not available, skip it.):
+or it can be displayed with <a href="https://liblas.org/">lasinfo</a> tool (in case lasinfo command is not available, skip this step.):
 <pre><code>
 lasinfo tile_0793_016_spm.las
 </code></pre>
@@ -70,6 +70,8 @@ use v.in.lidar GUI dialog to browse to get the path to the files.
 Set the region from the imported point file with resolution of 1 meter.
 Compute raster maps (with <em class="module">r.in.lidar</em>) representing number of points per 1 m grid cell.<br>
 Compare point densities for bare earth, first return.
+<span class="question">How do the point densities for bare earth and first return compare?
+</span>
 
 <pre><code>
 g.region vect=elev_lid793016_1r res=1 -p
@@ -130,6 +132,10 @@ d.legend lid_1r_binmean2m at=2,40,2,5
 d.out.file lid1rmean2m
 </code></pre>
 
+<span class="question">Why are there holes in the binned DEMs?
+Why is the first return map mostly green (where is the orange-brown elevation?)
+</span>
+
 <p>
 Compute range of elevation values in each grid cell:
 
@@ -149,8 +155,7 @@ d.out.file lid_1r_binrange2m
 </code></pre>
 
 <p>
-Import and display orthophoto, 
-switch off all layers except for orthophoto.
+Import and display orthophoto, switch off all layers except for orthophoto.
 
 <pre><code>
 r.in.gdal ortho_0793_016_ncspm.tif output=ortho_2013_0793
@@ -159,7 +164,7 @@ d.rast ortho_2013_0793
 
 <p>
 Identify the features that are associated with large range values.<br>
-Display only the high values of range.<br>
+Display only the high values of range (objects taller than 10m).<br>
 <span class="question">What landcover is associated with large range in multiple return data?</span>
 
 <pre><code>
@@ -168,26 +173,26 @@ d.out.file mylid_1rrange2m
 </code></pre>
 
 <p>
-We now know how dense the data are and what is the range within cell.<br>
+We now know how dense the data are iat 1m and 2m resolution
+and what is the range of elevation values within a grid cell.<br>
 If we need a 1m resolution DEM or DSM for our application
 this analysis tells us that we need to interpolate it from the point cloud.
+<!--
 <span class="question">What steps would you begin with when processing
 point cloud data you are not familiar with?</span>
+-->
 
-<h3>Interpolate DEM and DSM</h3>
+<h3>Interpolate DTM and DSM</h3>
 
-To interpolate DEM and DSM
+To interpolate DTM and DSM using the RST spline function
 we use default parameters except for number of points used for
-segmentation and interpolation<br> (segmax and npmin and higher tension for multiple return data).<br>
-You can set dmin=1 to make the interpolation run faster (see the manual).<br>
+segmentation and interpolation (segmax and npmin and higher tension for multiple return data).<br>
 Be patient, it can take a few minutes to run depending on the computer power.<br>
 
 <pre><code>
 g.region res=1 -ap
 v.surf.rst input=elev_lid793016_be elevation=elev_lid793016_be_1m npmin=120 segmax=25 dmin=1
 v.surf.rst input=elev_lid793016_1r elevation=elev_lid793016_1r_1m npmin=120 segmax=25 tension=100 smooth=0.5 dmin=1
-r.colors elev_lid793016_be_1m color=elevation
-r.colors elev_lid793016_1r_1m color=elevation
 d.erase
 d.rast elev_lid793016_be_1m
 d.legend elev_lid793016_be_1m
@@ -197,6 +202,9 @@ d.rast elev_lid793016_1r_1m
 d.legend elev_lid793016_1r_1m
 d.out.file elevation_1r_1m
 </code></pre>
+
+<span class="question">How does the binned first return DSM compare to interpolated first return DSM (e.g. check the range) and what is the reason for the differences in range and coverage?
+</span>
 
 <!-- not working on windows
 <p>
