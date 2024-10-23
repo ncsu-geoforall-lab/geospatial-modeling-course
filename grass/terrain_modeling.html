@@ -5,7 +5,7 @@ GRASS GIS overview and manual</a>,
 <a href="https://liblas.org/"> libLAS tools for lidar data conversions</a>
 
 <p>
-Download the Raleigh 2013 lidar data as LAS file and orthophoto:
+Download the Raleigh 2013 lidar data as LAS file and orthophoto (as individual files to avoid issues with unzipping):
 <ul>
 <li><a href="https://drive.google.com/drive/folders/1C_vov2M85dOmHp7dzLLyW8JP--IrqonY?usp=drive_link">Folder with LAS file and orthophoto</a>
 <!--
@@ -206,6 +206,9 @@ d.out.file elevation_1r_1m
 <span class="question">How does the binned first return DSM compare to interpolated first return DSM (e.g. check the range) and what is the reason for the differences in range and coverage?
 </span>
 
+<span class="question">Compute map of above ground height of vegetation and buildings from your interpolated 
+bare ground and first return DEMs using map algebra. What is the mean height computed from this map?
+</span>
 <!-- not working on windows
 <p>
 Faster interpolation, specially designed for lidar.<br>
@@ -220,6 +223,8 @@ d.rast elev_lid793016_be_1m_bsp
 d.rast elev_lid793016_1r_1m_bsp
 </code></pre>
 -->
+
+<h3>Optional: Visualize the interpolated DEMs in 3D with cutting planes </h3>
 
 Remove legend and switch off all map layers except for the last 2 interpolated ones.<br>
 Use 3D view with cutting planes to compare the bare earth and terrain surface.<br>
