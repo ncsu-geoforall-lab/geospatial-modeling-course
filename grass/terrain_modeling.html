@@ -5,7 +5,7 @@ GRASS GIS overview and manual</a>,
 <a href="https://liblas.org/"> libLAS tools for lidar data conversions</a>
 
 <p>
-Download the Raleigh 2013 lidar data as LAS file and orthophoto (as individual files to avoid issues with unzipping):
+Download the Raleigh 2013 lidar data as LAS file and orthophoto (download individual files to avoid issues with unzipping):
 <ul>
 <li><a href="https://drive.google.com/drive/folders/1C_vov2M85dOmHp7dzLLyW8JP--IrqonY?usp=drive_link">Folder with LAS file and orthophoto</a>
 <!--
@@ -175,10 +175,11 @@ d.out.file mylid_1rrange2m
 </code></pre>
 
 <p>
-We now know how dense the data are iat 1m and 2m resolution
+We now know how dense the data are at 1m and 2m resolution
 and what is the range of elevation values within a grid cell.<br>
-If we need a 1m resolution DEM or DSM for our application
-this analysis tells us that we need to interpolate it from the point cloud.
+If we need a 1m resolution DTM or DSM for our application
+this analysis tells us that the fast binning is not enough 
+and we need to interpolate it from the point cloud.
 <!--
 <span class="question">What steps would you begin with when processing
 point cloud data you are not familiar with?</span>
@@ -190,25 +191,29 @@ To interpolate DTM and DSM using the RST spline function
 we use default parameters except for number of points used for
 segmentation and interpolation (segmax and npmin and higher tension for multiple return data).<br>
 Be patient, it can take a few minutes to run depending on the computer power.<br>
+We derive shaded relief for the interpolated DTM and DSM and display
+the result as colored shaded topography to highlight the terrain features.
 
 <pre><code>
 g.region res=1 -ap
 v.surf.rst input=elev_lid793016_be elevation=elev_lid793016_be_1m npmin=120 segmax=25 dmin=1
 v.surf.rst input=elev_lid793016_1r elevation=elev_lid793016_1r_1m npmin=120 segmax=25 tension=100 smooth=0.5 dmin=1
+r.relief input=elev_lid793016_be_1m output=elev_lid793016_be_1msh
+r.relief input=elev_lid793016_1r_1m output=elev_lid793016_1r_1msh
 d.erase
-d.rast elev_lid793016_be_1m
+d.shade shade=elev_lid793016_be_1msh color=elev_lid793016_be_1m
 d.legend elev_lid793016_be_1m
 d.out.file elevation_be_1m
 d.erase
-d.rast elev_lid793016_1r_1m
+d.shade shade=elev_lid793016_1r_1msh color=elev_lid793016_1r_1m
 d.legend elev_lid793016_1r_1m
 d.out.file elevation_1r_1m
 </code></pre>
 
-<span class="question">How does the binned first return DSM compare to interpolated first return DSM (e.g. check the range) and what is the reason for the differences in range and coverage?
+<span class="question">How does the binned first return DSM compare to interpolated first return DSM and what is the reason for the differences in range and coverage?
 </span>
-
-<span class="question">Compute map of above ground height of vegetation and buildings from your interpolated 
+<p>
+<span class="question">Compute a map of above ground height of vegetation and buildings from your interpolated 
 bare ground and first return DEMs using map algebra. What is the mean height computed from this map?
 </span>
 <!-- not working on windows
