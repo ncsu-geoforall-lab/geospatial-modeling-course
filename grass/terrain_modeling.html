@@ -189,15 +189,16 @@ point cloud data you are not familiar with?</span>
 
 To interpolate DTM and DSM using the RST spline function
 we use default parameters except for number of points used for
-segmentation and interpolation (segmax and npmin and higher tension for multiple return data).<br>
-Be patient, it can take a few minutes to run depending on the computer power.<br>
+interpolation (npmin), minimum distance between points
+ and higher tension and smoothing for multiple return data.<br>
+Be patient, it can take a few minutes to run depending on your computer power.<br>
 We derive shaded relief for the interpolated DTM and DSM and display
 the result as colored shaded topography to highlight the terrain features.
 
 <pre><code>
 g.region res=1 -ap
-v.surf.rst input=elev_lid793016_be elevation=elev_lid793016_be_1m npmin=120 segmax=25 dmin=1
-v.surf.rst input=elev_lid793016_1r elevation=elev_lid793016_1r_1m npmin=120 segmax=25 tension=100 smooth=0.5 dmin=1
+v.surf.rst input=elev_lid793016_be elevation=elev_lid793016_be_1m npmin=120 dmin=1
+v.surf.rst input=elev_lid793016_1r elevation=elev_lid793016_1r_1m npmin=120 tension=100 smooth=0.5 dmin=1
 r.relief input=elev_lid793016_be_1m output=elev_lid793016_be_1msh
 r.relief input=elev_lid793016_1r_1m output=elev_lid793016_1r_1msh
 d.erase
