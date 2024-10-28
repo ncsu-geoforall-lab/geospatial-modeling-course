@@ -140,48 +140,62 @@ d.rast elevation
 d.zoom
 d.rast.arrow aspect arrow_col=blue magnitude=slope scale=2 -->
 <!-- p.248-249<br> -->
-Compute slope, aspect and curvatures simultaneously with interpolation.<br>
-You can do the examples below for the bare earth data only (first example),<br>
-multiple return example is optional (if you are curious how it differs from BE).
+Compute curvatures simultaneously with interpolation of DEM from lidar data
+ using regularized spline with tension.
+Evaluate the influence of the spline parameters on the spatial pattern of the curvature maps.<br>
 
 <pre><code>
 g.region rural_1m  -p
-v.surf.rst input=elev_lid792_bepts elevation=elev_lid_1m aspect=asp_lid_1m pcurvature=pc_lid_1m tcurvature=tc_lid_1m npmin=120 segmax=25
-v.surf.rst input=elev_lidrural_mrpts elevation=elev_lidmr_1m aspect=asp_lidmr_1m pcurvature=pc_lidmr_1m tcurvature=tc_lidmr_1m npmin=120 segmax=25 tension=300 smooth=1.
+v.surf.rst input=elev_lid792_bepts elevation=elev_lid_1m pcurvature=pc_lid_1m tcurvature=tc_lid_1m npmin=120
 </code></pre>
 
 <p>
-Display the results as 2D images or in 3D view.<br>
-For 3D view, switch off everything except for elevation surface that you want to view.<br>
-Drape topographic parameters raster maps over DEMs as color.
+Display the profile and tangential curvatures as 2D images.<br>
 
 <pre><code>
 d.erase
 d.rast pc_lid_1m
 d.legend pc_lid_1m 
 d.out.file profcurvature_dtm
-d.rast pc_lidmr_1m
-d.legend pc_lidmr_1m 
-d.out.file profcurvature_dsm
+d.erase
+d.rast tc_lid_1m
+d.legend tc_lid_1m
+d.out.file tangcurvature_dtm
 </code></pre>
 
 <p>
-The curvature maps reflect survey pattern rather than topographic features.<br>
-So we lower the tension and increase the smoothing.<br>
-You can use multiple displays to compare the results side-by-side.
+The curvature maps reflect the lidar survey pattern rather than topographic features.<br>
+We can lower the tension and increase the smoothing to reduce the noise
+and map the curvatures of topography.<br>
 
 <pre><code>
-g.region rural_1m  -p
-v.surf.rst input=elev_lid792_bepts elevation=elev_lidt15_1m aspect=asp_lidt15_1m pcurvature=pc_lidt15_1m tcurvature=tc_lidt15_1m npmin=120 segmax=25 tension=15 smooth=1.
-v.surf.rst input=elev_lidrural_mrpts elevation=elev_lidmrt15_1m aspect=asp_lidmrt15_1m pcurvature=pc_lidmrt15_1m tcurvature=tc_lidmrt15_1m npmin=120 segmax=25 tension=15 smooth=1.
+v.surf.rst input=elev_lid792_bepts elevation=elev_lidt15_1m aspect=asp_lidt15_1m pcurvature=pc_lidt15_1m tcurvature=tc_lidt15_1m npmin=120 tension=15 smooth=1.
 d.erase
 d.rast pc_lidt15_1m
 d.legend pc_lidt15_1m
 d.out.file profcurvature_dtm2
+</code></pre>
+
+<p>
+Optionally, you can display the results in 3D view:
+switch off all layers except for elevation surface that you want to view
+and then drape the curvature maps over DEMs as color.
+
+<span class="question">
+How does changing the spline parameters influence the spatial pattern of curvatures?
+</span>
+
+<!--
+same for all return data
+v.surf.rst input=elev_lidrural_mrpts elevation=elev_lidmr_1m aspect=asp_lidmr_1m pcurvature=pc_lidmr_1m tcurvature=tc_lidmr_1m npmin=120 segmax=25 tension=300 smooth=1.
+d.rast pc_lidmr_1m
+d.legend pc_lidmr_1m
+d.out.file profcurvature_dsm
+v.surf.rst input=elev_lidrural_mrpts elevation=elev_lidmrt15_1m aspect=asp_lidmrt15_1m pcurvature=pc_lidmrt15_1m tcurvature=tc_lidmrt15_1m npmin=120 segmax=25 tension=15 smooth=1.
 d.rast pc_lidmrt15_1m
 d.legend pc_lidmrt15_1m
 d.out.file profcurvature_dsm2
-</code></pre>
+-->
 
 <h3>Landforms</h3>
 
