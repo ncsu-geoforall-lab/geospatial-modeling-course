@@ -26,68 +26,64 @@ or type <code>cd</code> (stands for change directory) into the GUI
 <pre><code>
 cd
 </code></pre>
-Download all text files (see above)
-to the selected directory. Now you can use the commands from the assignment requiring the text file
+Now you can use the commands from the assignment requiring the text file
 without the need to specify the full path to the file.
-
 
 <h3>Compute basic topographic parameters: slope and aspect</h3>
 <!-- p. 142-142<br> -->
 
+To explore computation of basic topographic parameters we set our computational region
+to NW section of our elevation DEM and compute steepest slope and aspect maps
+(make sure to zoom to computational region)
 <pre><code>
 g.region raster=elevation -p
+g.region s=s+7000 e=e-7000 -p
 r.slope.aspect elevation=elevation slope=myslope aspect=myaspect
+r.colors myaspect co=aspectcolr
 </code></pre>
 
 <p>
-Display resulting maps with legend using GUI.
-
-<pre><code>
-d.rast myslope
-d.legend myslope at=2,40,2,6
-d.out.file myslope
-d.rast myaspect
-d.legend myaspect at=2,40,2,6
-d.out.file myaspect
-</code></pre>
-
-<p>
-<!-- d.rast profcurv
-d.legend profcurv at=2,40,2,6
-d.out.file profcurv
-d.rast tancurv
-d.legend tancurv at=2,40,2,6
-d.out.file tancurv
-<font color="#000066">
-# use nviz to explore relation between terrain shape and curvatures
-# zoom in to show features with concave and convex shape
-</font>
-nviz elevation color=profcurv -->
-Show impact of integer values in meters on slope and aspect pattern.<br>
-Compute integer DEM and derive its slope and aspect.<br>
-Use GUI to display the histogram: in <em>Map Display</em> > <em>Analyze</em> > <em>Create histogram</em>:
+DEMs are sometimes distributed with elevations stored as integer values,
+changing the pattern of topographic parameters. To show impact of integer 
+elevation values in meters on slope and aspect pattern we first compute
+an integer DEM, its slope and aspect and then compare the resulting maps
+with the original floating point DEM results
 
 <pre><code>
 r.mapcalc "elev_int = int(elevation)"
 r.slope.aspect elevation=elev_int aspect=aspect_int_10m slope=slope_int_10m
 d.erase
-d.histogram slope_int_10m
-d.histogram myslope
-d.histogram aspect_int_10m
-d.histogram myaspect
-d.erase
 d.rast myslope
+d.legend myslope at=2,40,2,6
+d.out.file myslopemap
+d.rast slope_int_10m
+d.out.file slope_intmap
+d.rast myaspect
+d.legend myaspect at=2,40,2,6
+d.out.file myaspect
+d.rast aspect_int_10m
+d.out.file slope_intmap
 </code></pre>
 
 <p>
-Zoom into NW area of the current region (relatively flat area near large interchange).<br>
-<span class="question">Can you explain the difference in slope maps derived from integer (m vertical resolution)
-and floating point (mm vertical resolution) DEMs?</span>
+It is also helpful to compare the histograms
 
 <pre><code>
-d.rast slope_int_10m
-d.out.file slope_int
+d.erase
+d.histogram myslope
+d.out.file histmyslope
+d.histogram slope_int_10m
+d.out.file histslope_int_10m
+d.histogram myaspect
+d.out.file myaspectmap
+d.histogram aspect_int_10m
+d.out.file aspect_intmap
 </code></pre>
+
+<p>
+<span class="question">Can you explain the difference in slope and aspect maps and 
+their histograms derived from integer (m vertical resolution)
+and floating point DEMs?</span>
 
 <h3>Compute slope along road</h3>
 First set the region to the extent of the bus route #11 and to 10m resolution.
@@ -96,43 +92,42 @@ Then convert the vector line of the route to raster using the direction of the r
 <pre><code>
 g.region vect=busroute11 align=elevation res=10 -p
 v.to.rast input=busroute11 type=line output=busroute11_dir use=dir
-r.colors map=busroute11_dir color=aspect
 d.rast busroute11_dir
 d.legend busroute11_dir
+d.out.file bus11direction
 </code></pre>
 
-Compute the steepest slope of the topography along the route by assigning
-the values of slope derived from a DEM in the first part of this assignment
-to the grid cells along the route.
+Compute the steepest slope of the topography around the route by assigning
+the values of slope derived from a DEM 
 
 <pre><code>
-r.mapcalc "route_slope = if(busroute11_dir, myslope)"
+r.slope.aspect elevation=elevation slope=slope_dem aspect=aspect_dem 
+r.mapcalc "route_slope_dem = if(busroute11_dir, slope_dem)"
+d.rast route_slope_dem
 </code></pre>
 
 Then compute the slope in the direction of the route using the difference between aspect of the topography
 and the route direction angles.
-
-<pre><code>
-r.mapcalc "route_slope_dir = abs(atan(tan(myslope) * cos(myaspect - busroute11_dir)))"
-r.colors map=route_slope,route_slope_dir color=bcyr -e
-</code></pre>
-
 Display the results along with the elevation contours and compute univariate statistics.
-Comment on the difference of the two results.
 
 <pre><code>
-r.contour input=elevation output=contours step=2
+r.mapcalc "route_slope_dir = abs(atan(tan(slope_dem) * cos(aspect_dem - busroute11_dir)))"
+r.colors map=route_slope_dem,route_slope_dir color=bcyr -e
+r.contour input=elevation output=contours step=3
 d.erase
 d.vect contours color=220:200:200
-d.rast route_slope
-d.legend route_slope
-d.out.file route_slope
+d.rast route_slope_dem
+d.legend route_slope_dem
+d.out.file route_slope_dem
 d.rast route_slope_dir
 d.out.file route_slope_dir
-
 r.univar route_slope
 r.univar route_slope_dir
 </code></pre>
+
+<span class="question">
+What is the difference between the two slope maps? Which slope is steeper on average and why?
+</span>
 
 <h3>Curvatures</h3>
 <p>
