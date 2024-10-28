@@ -4,19 +4,6 @@ Resources: <a href="https://grass.osgeo.org/grass83/manuals/index.html">
 GRASS GIS overview and manual</a>,
 <a href="https://www.grassbook.org/">GRASSbook</a>.
 
-<p>
-Download Mapset and color tables:
-<ul>
-<li> Download <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/NagsHead_series.zip">
-NagsHead time series</a> and copy it into your nc_spm_08_grass7 project
-(it should be the same level directory as PERMANENT).
-Do not let your unzipping program create additional level directory with the same name!
-If you are not sure about GRASS GIS Database structure read about it in
-<a href="https://grass.osgeo.org/grass83/manuals/grass_database.html">the manual</a>.
-<li>Custom color table for time series standard deviations map <a href="data/stddev_color.txt">stddev_color.txt</a></li>
-<!--<li><a href="data/regrslope_color.txt">regrslope_color.txt</a></li>-->
-</ul>
-
 <h3>Start GRASS GIS</h3>
 Create a new mapset (called e.g. HW_terrain_analysis) in nc_spm_08_grass7 project and
 change working directory:<br>
@@ -174,6 +161,9 @@ d.erase
 d.rast pc_lidt15_1m
 d.legend pc_lidt15_1m
 d.out.file profcurvature_dtm2
+d.rast tc_lidt15_1m
+d.legend tc_lidt15_1m
+d.out.file tangcurvature_dtm2
 </code></pre>
 
 <p>
@@ -236,7 +226,7 @@ r.geomorphon elevation=elev_lid792_1m forms=geomorphon_s50d10 search=50 dist=10
 d.erase
 d.rast geomorphon_s50d0
 d.vect elev_lid792_cont1m color=grey
-d.legend -c geomorphon_dsm at=2,30,2,8
+d.legend -c geomorphon_s50d0 at=2,30,2,8
 d.out.file geomorphon_s50d0
 d.rast geomorphon_s50d10
 d.out.file geomorphon_s50d10
@@ -248,9 +238,23 @@ d.legend -c geomorphon_dsm at=2,30,2,8
 d.out.file geomorphon_dsm
 -->
 
-<h3>Raster time series analysis</h3>
+<h3>Optional: Raster time series analysis</h3>
 
-For this exercise we will use NagsHead_series Mapset you downloaded.<br>
+We will explore elevation time series analysis using a series of coastal DEMs
+provided in NagsHead_series Mapset<br>
+<p>
+Download Mapset and color tables:
+<ul>
+<li> Download <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/NagsHead_series.zip">
+NagsHead time series</a> and copy it into your nc_spm_08_grass7 project
+(it should be the same level directory as PERMANENT).
+Do not let your unzipping program create additional level directory with the same name!
+If you are not sure about GRASS GIS Database structure read about it in
+<a href="https://grass.osgeo.org/grass83/manuals/grass_database.html">the manual</a>.
+<li>Custom color table for time series standard deviations map <a href="data/stddev_color.txt">stddev_color.txt</a></li>
+<!--<li><a href="data/regrslope_color.txt">regrslope_color.txt</a></li>-->
+</ul>
+
 You have to first make the mapset accessible.<br>
 In GUI: menu <em> Settings</em> -> <em>GRASS working environment</em> -> <em>Mapset access</em>
 or by using a command:
@@ -291,15 +295,14 @@ d.out.file series_range
 </code></pre>
 
 <p>
-Oprional: Use cutting plane in 3D view to show the core and envelope.<br>
+You can use cutting plane in 3D view to show the core and envelope.<br>
 Add constant elevation plane at -1m for reference,
-set zexag somewhere 3-5 (the default is too high).<br>
+set zexag to  3-5 (the default is too high).<br>
 Assign surfaces constant color, use top or bottom surface for crossection color.<br>
 When using top for color, lower the light source to make
 top surface dark and highlight the crossection.
 Include the output maps and the 3D view with a cutting plane in your report to illustrate
 the answers to the two questions.
-
 
 <!-- # optional example: topo parameters from contours
 nviz NH_9908_min,NH_9908_max
