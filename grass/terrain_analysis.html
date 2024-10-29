@@ -49,7 +49,7 @@ d.rast myaspect
 d.legend myaspect at=2,40,2,6
 d.out.file myaspect
 d.rast aspect_int_10m
-d.out.file slope_intmap
+d.out.file aspect_intmap
 </code></pre>
 
 <p>
@@ -108,7 +108,7 @@ d.legend route_slope_dem
 d.out.file route_slope_dem
 d.rast route_slope_dir
 d.out.file route_slope_dir
-r.univar route_slope
+r.univar route_slope_dem
 r.univar route_slope_dir
 </code></pre>
 
