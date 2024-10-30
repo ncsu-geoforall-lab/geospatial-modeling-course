@@ -39,6 +39,7 @@ with the original floating point DEM results
 <pre><code>
 r.mapcalc "elev_int = int(elevation)"
 r.slope.aspect elevation=elev_int aspect=aspect_int_10m slope=slope_int_10m
+r.colors aspect_int_10m co=aspectcolr
 d.erase
 d.rast myslope
 d.legend myslope at=2,40,2,6
@@ -220,21 +221,23 @@ d.out.file landfroms45
 
 <p>
 Map basic landforms using geomorphons DSM, read the manual page and the associated paper to learn how it works
-<span class="question">Explain the role of the search and distance parameters.</span>
 
 <pre><code>
-r.geomorphon elevation=elev_lid792_1m forms=geomorphon_s50d0 search=50 dist=0
 r.geomorphon elevation=elev_lid792_1m forms=geomorphon_s50d10 search=50 dist=10 
 d.erase
-d.rast geomorphon_s50d0
-d.vect elev_lid792_cont1m color=grey
-d.legend -c geomorphon_s50d0 at=2,30,2,8
-d.out.file geomorphon_s50d0
 d.rast geomorphon_s50d10
+d.vect elev_lid792_cont1m color=grey
+d.legend -c geomorphon_s50d10 at=2,30,2,8
 d.out.file geomorphon_s50d10
 </code></pre>
 
+<span class="question">Apply geomorphon to the 10m resolution DEM "elevation" (set region to raster elevation) and explain what is shown in the resulting map</span>
+
 <!--
+r.geomorphon elevation=elev_lid792_1m forms=geomorphon_s50d0 search=50 dist=0
+d.rast geomorphon_s50d0
+d.legend -c geomorphon_s50d0 at=2,30,2,8
+d.out.file geomorphon_s50d0
 r.geomorphon elevation=elev_lidmr_1m forms=geomorphon_dsm search=50
 d.legend -c geomorphon_dsm at=2,30,2,8
 d.out.file geomorphon_dsm
