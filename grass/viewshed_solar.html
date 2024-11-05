@@ -89,7 +89,7 @@ using <em class="module">r.colors</em> and <em class="module">r.category</em> (s
 and use <em class="module">r.report</em> -n to <span class="question">compare the size and land use composition within
 viewshed from the downtown tower and the building on Cenetennial Campus that served as RedHat headquarters</span>.
 
-<h3>Solar radiation analysis</h3>
+<h3>Solar irradiation analysis</h3>
 
 Set the region and add the planned building to the DEM, we will use this new DEM for the analyses.<br>
 Remove all layers and zoom to the region.
@@ -135,7 +135,7 @@ d.out.file incid_angle
 
 <p>
 Extract the cast shadow area for 14.4 hr and
-then compute an incidence angle and extract shadow area for the morning at 7.5 hr same day:
+then compute an incidence angle map and extract shadow area for the morning at 7.5 hr same day:
 
 <pre><code>
 r.mapcalc "shadow_1m = if(isnull(incid_elevfac_1m), 1, null())"
@@ -153,31 +153,45 @@ d.rast shadow7_1m
 d.out.file shadows7hr
 </code></pre>
 
-<span class="question">How does the cast shadow area change between the mroning and early afternoon
-on the day of winter solstice? (hint, use r.report)
-</span>
+<span class="question">How does the cast shadow area change between the morning and early afternoon
+on the day of winter solstice? (hint, use r.report) Is there any overlap?</span>
 
-<h4>Solar radiation</h4>
-Compute global (beam+diffuse+refl) radiation for entire day during summer and winter solstice.<br>
-Display the radiation maps and also insolation time maps insol_time using same commands.<br>
-Optionally display the radiation maps draped over elevation elevfacility_1m in 3D view
-to see relation between terrain geometry and solar radiation.
+<h4>Solar irradiation</h4>
+Compute global (beam+diffuse+refl) irradiation for entire day during summer and winter solstice.<br>
+Display the irradiation maps and insolation time maps with legends to compare the range of values<br>
 
 <pre><code>
 r.sun elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=356 glob_rad=g356 insol_time=its356
 r.colors g356 co=gyr -e
 r.sun elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m day=172 glob_rad=g172 insol_time=its172
 r.colors g172 co=gyr -e
+d.erase
 d.rast g356
 d.legend g356 at=25,50,1,3
 d.out.file solar_winter
 d.rast g172
-d.legend g172 at=25,50,1,3 range=8800,8867
+d.legend g172 at=25,50,1,3 range=8800,9000
 d.out.file solar_summer
+d.erase
+d.rast its356
+d.legend its356 at=25,50,1,3
+d.out.file solartime_winter
+d.rast its172
+d.legend its172 at=25,50,1,3 
+d.out.file solartime_summer
 </code></pre>
 
+<span class="question">Discuss the difference between the daily solar irradiation values and insolation time
+during the days of summer and winter solstice. What are the units for solar irradiation?
+What are the implications for using solar irradiation
+for generating sufficient energy throughout the year?
+ </span>
+
+Optionally display the irradiation maps draped over elevation elevfacility_1m in 3D view 
+to see relation between terrain geometry and solar irradiation.
+
 <p>
-Calculate direct solar radiation and insolation time for a larger region.<br>
+Optional: Calculate direct solar irradiation and insolation time for a larger region.<br>
 
 Try to find good color tables (custom, hist. equalized, to see the pattern).
 
