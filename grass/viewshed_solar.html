@@ -26,7 +26,7 @@ to the selected directory. Now you can use the commands from the assignment requ
 without the need to specify the full path to the file.
 
 <h3>Viewshed analysis</h3>
-Compute viewshed from a new 32 story tower located in downtown.<br>
+Compute viewshed from a 32 story tower located in downtown.<br>
 
 <pre><code>
 g.region raster=elev_ned_30m -ap
@@ -61,12 +61,12 @@ Display only the following layers and save result:
 d.erase
 d.rast tower_los_lu30m
 d.vect streets_wake
-d.legend tower_los_lu30m at=25,50,1,3
+d.legend -c -b tower_los_lu30m at=25,50,1,3
 d.out.file towerviewlu
 </code></pre>
 
 <p>
-We can also do visibility from former RedHat headquarters:
+We can also map visibility from former RedHat headquarters on Centennial Campus:
 
 <pre><code>
 r.viewshed elev_ned_30m output=redhat_25_los coordinates=638898,224528 observer_elevation=25 max_distance=10000
@@ -83,11 +83,11 @@ d.out.file RHview
 </code></pre>
 
 <p>
-Use mapalgebra to compute landuse in the view,
+Use map algebra to compute landuse in within the viewshed,
 assign the visible land use map land use colors and category labels
 using <em class="module">r.colors</em> and <em class="module">r.category</em> (see previous example)
 and use <em class="module">r.report</em> -n to <span class="question">compare the size and land use composition within
-viewshed from the RBC tower and RH headquarters</span>.
+viewshed from the downtown tower and the building on Cenetennial Campus that served as RedHat headquarters</span>.
 
 <h3>Solar radiation analysis</h3>
 
