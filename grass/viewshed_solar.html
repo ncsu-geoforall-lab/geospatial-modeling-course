@@ -140,16 +140,21 @@ then compute an incidence angle and extract shadow area for the morning at 7.5 h
 <pre><code>
 r.mapcalc "shadow_1m = if(isnull(incid_elevfac_1m), 1, null())"
 r.colors shadow_1m color=grey
+d.erase
 d.rast elevfacility_1m
 d.rast shadow_1m
+d.out.file shadows14hr
 r.sun elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m incidout=incid_elevfac7_1m day=356 time=7.50
 r.mapcalc "shadow7_1m = if(isnull(incid_elevfac7_1m), 1, null())"
+r.colors shadow_1m color=grey
+d.erase
+d.rast elevfacility_1m
 d.rast shadow7_1m
-d.out.file shadows
+d.out.file shadows7hr
 </code></pre>
 
 <span class="question">How does the cast shadow area change between the mroning and early afternoon
-on the day of winter solstice? 
+on the day of winter solstice? (hint, use r.report)
 </span>
 
 <h4>Solar radiation</h4>
