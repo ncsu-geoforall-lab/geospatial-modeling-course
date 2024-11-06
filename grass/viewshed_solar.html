@@ -146,7 +146,7 @@ d.rast shadow_1m
 d.out.file shadows14hr
 r.sun elevation=elevfacility_1m aspect=aspect_elevfac_1m slope=slope_elevfac_1m incidout=incid_elevfac7_1m day=356 time=7.50
 r.mapcalc "shadow7_1m = if(isnull(incid_elevfac7_1m), 1, null())"
-r.colors shadow_1m color=grey
+r.colors shadow7_1m color=grey
 d.erase
 d.rast elevfacility_1m
 d.rast shadow7_1m
@@ -201,6 +201,7 @@ Try to find good color tables (custom, hist. equalized, to see the pattern).
 g.region raster=elev_ned_30m -p
 r.slope.aspect elevation=elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m
 r.sun elevation=elev_ned_30m aspect=asp_ned_30m slope=slp_ned_30m linke_value=2.5 albedo_value=0.2 beam_rad=b356 diff_rad=d356 refl_rad=r356 insol_time=it356 day=356
+r.colors b356,d356,r356 co=bcyr -e
 </code></pre>
 
 Zoom to the new computational region and display the following layers:<br>
