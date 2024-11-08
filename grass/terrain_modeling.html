@@ -214,23 +214,8 @@ d.out.file elevation_1r_1m
 <span class="question">How does the binned first return DSM compare to interpolated first return DSM and what is the reason for the differences in range and coverage?
 </span>
 <p>
-<span class="question">Compute a map of above ground height of vegetation and buildings from your interpolated 
-bare ground and first return DEMs using map algebra. What is the mean height computed from this map?
+<span class="question">Compute a map of above ground height of vegetation and buildings from your interpolated bare ground and first return DEMs using map algebra. Include the output map with appropriate color ramp in your report. What is the mean height computed from this map?
 </span>
-<!-- not working on windows
-<p>
-Faster interpolation, specially designed for lidar.<br>
-In case of problems with v.surf.bspline, post the error message in the report.
-
-<pre><code>
-v.surf.bspline elev_lid793016_be rast=elev_lid793016_be_1m_bsp
-v.surf.bspline elev_lid793016_1r rast=elev_lid793016_1r_1m_bsp
-r.colors elev_lid793016_1r_1m_bsp color=elevation
-r.colors elev_lid793016_be_1m_bsp color=elevation
-d.rast elev_lid793016_be_1m_bsp
-d.rast elev_lid793016_1r_1m_bsp
-</code></pre>
--->
 
 <h3>Optional: Visualize the interpolated DEMs in 3D with cutting planes </h3>
 
