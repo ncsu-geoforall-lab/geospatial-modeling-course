@@ -108,6 +108,7 @@ Optional: How would you compute the total volume of mapped depressions?
 
 
 <h3>Derive contributing area for a given outlet</h3>
+
 Set region to the high resolution study area and zoom to it,
 compute flow accumulation, flow direction and basins with 15000 cells threshold:
 
@@ -122,15 +123,16 @@ Remove previous layers. Display extracted streams over aerial image:
 <pre><code>
 d.erase
 d.rast ortho_2001_t792_1m
-d.rast accum_5K values=1000-1000000
+d.rast accum_15K values=1000-1000000
 </code></pre>
 
 <p>
 Delineate contributing area (watershed) associated with an outlet located 
-on the extracted stream and convert it to vector format:
+on the extracted stream and convert it to vector format.
+Import coordinates of the outlet to include it in the map in the next step.
 
 <pre><code>
-r.water.outlet input=draindir_5K output=basin_A30 coordinates=638845.52,220085.26
+r.water.outlet input=draindir_15K output=basin_A30 coordinates=638845.52,220085.26
 r.to.vect -s basin_A30 output=basin_A30 type=area
 v.in.ascii input=outlet_point.txt output=outletA30 separator=space
 </code></pre>
@@ -152,10 +154,90 @@ r.report basin_A30 unit=h,a
 <span class="question">What is the delineated watershed area [ha] ?  </span><br>
 Optional: How would you compute average slope of this contributing area?
 
-<h3>Assess and mitigate impact of the road on flowrouting</h3>
+<h3>Compute refined flow pattern using D-inf</h3>
+Compare upslope and downslope flow lines:
+<span class="question">On what type of landform (ridge, valley) do the upslope
+and dowslope flowlines converge?</span>
+
+<pre><code>
+g.region raster=elev_lid792_1m -p
+r.flow elevation=elev_lid792_1m flowline=flowlines flowlength=flowlg_1m flowaccumulation=flowacc_1m
+r.flow -u elevation=elev_lid792_1m flowlength=flowlgup_1m flowaccumulation=flowaccup_1m
+</code></pre>
+
+<p>
+Display maps along with contours to see the relation of flow pattern to terrain:
+
+<pre><code>
+d.erase
+d.rast flowacc_1m
+d.vect elev_lid792_cont_1m color=red
+d.vect flowlines
+d.out.file flowdown
+d.erase
+d.rast flowaccup_1m
+d.vect elev_lid792_cont_1m color=red
+d.out.file flowlines
+</code></pre>
+
+<h3>Compare the multiple flow direction flow accumulation with the D8 and Dinf</h3>
+
+Compute flowaccumulation using the default MFD method and display the 
+flowaccumulation maps from MFD and SFD (the Dinf maps flowacc_1m was displayed above):
+
+<pre><code>
+r.watershed -a elevation=elev_lid792_1m threshold=15000 accumulation=accum_mfd_15K
+d.rast accum_mfd_15K
+d.vect streams
+d.out.file stream_mfd
+d.erase
+d.rast accum_15K
+d.vect streams
+d.out.file stream_sfd
+</code></pre>
+
+<span class="question">Compare the MFD and SFD results of r.watershed. 
+Why are they different, which is more accurate and why?</span>
+
+<h3>Compute wetness index</h3>
+
+<pre><code>
+g.region rural_1m -p
+r.topidx elev_lid792_1m output=wetness_1m
+r.colors map=wetness_1m color=water
+d.rast wetness_1m
+d.out.file wetness
+</code></pre>
+
+Optional: Compute the wettness index using the formula in the lecture (hint: you will need
+to compute slope using elev_lid792_1m and use accum_mfd_15K as contributing area.
+Check the values by comparing your output with wetness_1m computed with r.topidx.
+
+<p>Display elev_lid792_1m in 3D and drape over wetness_1m as color.<br>
+Note: switch off all layers except for elev_lid792_1m.
+
+<h3>Create a map of flooded area</h3>
+Create a map of flooded area for a given water level and seed point:
+
+<pre><code>
+r.lake elevation=elev_lid792_1m water_level=113.5 lake=flood1 coordinates=638728,220278
+d.rast elev_lid792_1m
+d.rast flood1
+d.out.file floodedarea
+</code></pre>
+
+<p>
+Increase water level to 113.7m and 115.0m and create flooded
+area maps at these two levels. Include the maps of flooded areas 
+at these water levels in your report.
+
+<h3>Optional: Assess and mitigate impact of the road on flowrouting.  </h3>
+
+<p>
 Compare the extracted streams (accum > 1500) with official stream data:
 
 <pre><code>
+g.region rast=elev_lid792_1m -p
 d.rast ortho_2001_t792_1m
 d.rast accum_5K values=1500-1000000
 d.vect streets_wake color=red
@@ -182,76 +264,6 @@ d.vect streams
 d.out.file streamcarved
 </code></pre>
 
-<h3>Compute refined flow pattern using D-inf</h3>
-Compare upslope and downslope flow lines:
-<span class="question">On what type of landform (ridge, valley) they converge?</span>
-
-<pre><code>
-g.region raster=elev_lid792_1m -p
-r.flow elevation=elev_lid792_1m flowline=flowlines flowlength=flowlg_1m flowaccumulation=flowacc_1m
-r.flow -u elevation=elev_lid792_1m flowlength=flowlgup_1m flowaccumulation=flowaccup_1m
-</code></pre>
-
-<p>
-Display maps along with contours to see relation to terrain:
-
-<pre><code>
-d.erase
-d.rast flowacc_1m
-d.vect elev_lid792_cont_1m color=red
-d.vect flowlines
-d.out.file flowdown
-d.erase
-d.rast flowaccup_1m
-d.vect elev_lid792_cont_1m color=red
-d.out.file flowlines
-</code></pre>
-
-<h3>Compare the multiple flow direction result with D8 and Dinf</h3>
-<span class="question">Compare the results of r.watershed:  accum_5K and accum_mfd_5K1m. Why are they different,
-which is more accurate and why?</span>
-<pre><code>
-r.watershed -a elevation=elev_lid792_1m threshold=5000 accumulation=accum_mfd_5K1m
-d.rast accum_mfd_5K1m
-d.vect streams
-d.out.file stream_mfd
-d.erase
-d.rast accum_5K
-d.vect streams
-d.out.file stream_sfd
-</code></pre>
-
-<h3>Compute wetness index</h3>
-
-<pre><code>
-g.region rural_1m -p
-r.topidx elev_lid792_1m output=wetness_1m
-r.colors map=wetness_1m color=water
-d.rast wetness_1m
-d.out.file wetness
-</code></pre>
-
-Compute the wettness index using the formula in the lecture (hint: you will need
-to compute slope using elev_lid792_1m and use accum_mfd_5K1m as contributing area.
-Check the values by comparing your output with wetness_1m computed with r.topidx.
-
-<p>Display elev_lid792_1m in 3D and drape over wetness_1m as color.<br>
-Note: switch off all layers except for elev_lid792_1m.
-
-<h3>Create a map of flooded area</h3>
-Create a map of flooded area for a given water level and seed point:
-
-<pre><code>
-r.lake elevation=elev_lid792_1m water_level=113.5 lake=flood1 coordinates=638728,220278
-d.rast elev_lid792_1m
-d.rast flood1
-d.out.file floodedarea
-</code></pre>
-
-<p>
-Increase water level to 113.7m and 115.0m and create flooded
-area maps at these two levels. Include the maps of flooded areas 
-at these water levels in your report.
 
 <!--
 r.lake elevation=elev_lid792_1m wl=113.7 lake=flood2 coordinates=638728,220278
