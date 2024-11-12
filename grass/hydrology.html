@@ -54,8 +54,8 @@ r.to.vect -s streams_der_30m_t out=streams_der_30m type=line
 
 <p>
 Generate relief shaded map of basins
- and display extracted streams along with the official Wake county streams (red):
-<span class="question">How do the derived streams compare with the official stream map?</span><br>
+ and display extracted streams along with the official Wake county streams (red).<br>
+<span class="question">How do the derived streams compare with the official stream map?</span>
 <span class="question">How can you modify the mapcalc expression to make stream origins fit better
 with the official stream map?</span>
 
@@ -108,11 +108,12 @@ Optional: How would you compute the total volume of mapped depressions?
 
 
 <h3>Derive contributing area for a given outlet</h3>
-Set region to the high resolution study area and zoom to it:
+Set region to the high resolution study area and zoom to it,
+compute flow accumulation, flow direction and basins with 15000 cells threshold:
 
 <pre><code>
 g.region rural_1m -p
-r.watershed -as elevation=elev_lid792_1m threshold=5000 accumulation=accum_5K drainage=draindir_5K basin=basin_5K
+r.watershed -as elevation=elev_lid792_1m threshold=15000 accumulation=accum_15K drainage=draindir_15K basin=basin_15K
 </code></pre>
 
 <p>
@@ -121,39 +122,35 @@ Remove previous layers. Display extracted streams over aerial image:
 <pre><code>
 d.erase
 d.rast ortho_2001_t792_1m
-d.rast accum_5K values=1500-1000000
+d.rast accum_5K values=1000-1000000
 </code></pre>
 
 <p>
-Identify outlet on the extracted stream.
-<p>
-Create a vector map with the point east=638845.52 north=220085.26 (download the text file)
-that has accum_5K=224510.
-
-<pre><code>
-v.in.ascii input=outlet_point.txt output=outletA30 separator=space
-d.vect outletA30 color=yellow
-</code></pre>
-
-<p>
-Delineate the contributing area associated with this outlet and convert it to vector format:
+Delineate contributing area (watershed) associated with an outlet located 
+on the extracted stream and convert it to vector format:
 
 <pre><code>
 r.water.outlet input=draindir_5K output=basin_A30 coordinates=638845.52,220085.26
 r.to.vect -s basin_A30 output=basin_A30 type=area
+v.in.ascii input=outlet_point.txt output=outletA30 separator=space
 </code></pre>
 
 <p>
-Display watershed boundary along with contours.<br>
-Compute the watershed area (category 1)<br>
+Display watershed boundary along with contours and
+compute the watershed area (category 1)<br>
 
 <pre><code>
+d.erase
 d.vect basin_A30 type=boundary color=green width=2
 r.contour elev_lid792_1m output=elev_lid792_cont_1m step=1 minlevel=104
 d.vect elev_lid792_cont_1m color=white
+d.vect outletA30 color=yellow
 d.out.file watershedA30
 r.report basin_A30 unit=h,a
 </code></pre>
+
+<span class="question">What is the delineated watershed area [ha] ?  </span><br>
+Optional: How would you compute average slope of this contributing area?
 
 <h3>Assess and mitigate impact of the road on flowrouting</h3>
 Compare the extracted streams (accum > 1500) with official stream data:
