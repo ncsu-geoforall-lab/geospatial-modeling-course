@@ -1,10 +1,10 @@
 <h2>Flow routing and watershed analysis</h2>
 <p>Resources:
 <ul>
-<li><a href="https://grass.osgeo.org/grass83/manuals/index.html">
+<li><a href="https://grass.osgeo.org/grass84/manuals/index.html">
 GRASS GIS overview and manual</a></li>
 <li> <a href="data_acquisition.html#commands">Recommendations</a>
-and <a href="./grass_intro.html">tutorial</a>
+<!--and <a href="./grass_intro.html">tutorial</a>-->
 how to use GUI from the first assignment</li>
 </ul>
 
@@ -42,24 +42,19 @@ r.watershed -s elevation=elev_ned_30m threshold=10000 accumulation=accum_10K dra
 </code></pre>
 
 <p>
-Extract more detailed streams from flow accumulation raster:
+Extract more detailed streams from flow accumulation raster,
+and convert basins and streams to vector format:
 
 <pre><code>
 r.mapcalc "streams_der_30m = if(abs(accum_10K) > 100, 1, null())"
-</code></pre>
-
-<p>
-Convert to vector format and display results
-along with the official Wake county streams (red):
-
-<pre><code>
 r.to.vect -s basin_10K output=basin_10K type=area
 r.thin streams_der_30m output=streams_der_30m_t
 r.to.vect -s streams_der_30m_t out=streams_der_30m type=line
 </code></pre>
 
 <p>
-Generate shaded map and display:
+Generate relief shaded map of basins
+ and display extracted streams along with the official Wake county streams (red):
 <span class="question">How do the derived streams compare with the official stream map?</span><br>
 <span class="question">How can you modify the mapcalc expression to make stream origins fit better
 with the official stream map?</span>
@@ -70,14 +65,19 @@ d.his hue=basin_10K intensity=elevation_shade brighten=40
 d.vect basin_10K type=boundary
 d.rast lakes
 d.vect streams_der_30m color=blue
-d.vect streams color=red
 d.out.file mystreams
+d.vect streams color=red
+d.out.file streams_compare
 </code></pre>
 
+<p>Note that you can also use a MFD routing for r.watershed combined with r.stream.extract 
+for vectorized streams with topology of stream network. Read the manual pages to learn more.
+
 <h3>Create map of DEM depressions</h3>
-Depression filling is often necessary for certain flow routing algorithms but it can alter the elevation data significantly. 
+Depression filling is sometimes necessary for certain flow routing algorithms 
+but it can significantly alter the elevation data leading to srtificial straight channels. 
 Find out how extensive the depressions are in our DEM.<br>
-Note that <em class="module">r.watershed</em> doesn't need any depression filling thanks to
+Note that <em class="module">r.watershed</em> tool doesn't need any depression filling thanks to
 its underlying algorithm which uses least cost path to get over depressions.
 
 <pre><code>
@@ -101,6 +101,10 @@ d.rast depr_bin
 d.vect lakes type=area fill_color=blue
 d.out.file depressions
 </code></pre>
+
+<span class="question">What is the area mapped as depression in [ha] and [%] ? 
+(hint: use r.report with depr_bin) </span><br>
+Optional: How would you compute the total volume of mapped depressions?
 
 
 <h3>Derive contributing area for a given outlet</h3>
