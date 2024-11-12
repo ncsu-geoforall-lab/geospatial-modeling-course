@@ -147,7 +147,7 @@ d.rast ortho_2001_t792_1m
 d.vect basin_A30 type=boundary color=green width=2
 r.contour elev_lid792_1m output=elev_lid792_cont_1m step=1 minlevel=104
 d.vect elev_lid792_cont_1m color=white
-d.vect outletA30 color=yellow
+d.vect outletA30 color=yellow size=15 icon=basic/circle
 d.out.file watershedA30
 r.report basin_A30 unit=h,a
 </code></pre>
@@ -189,16 +189,16 @@ flowaccumulation maps from MFD and SFD (the Dinf maps flowacc_1m was displayed a
 <pre><code>
 r.watershed -a elevation=elev_lid792_1m threshold=15000 accumulation=accum_mfd_15K
 d.rast accum_mfd_15K
-d.vect streams
+d.vect streams co=red
 d.out.file stream_mfd
 d.erase
 d.rast accum_15K
-d.vect streams
+d.vect streams co=red
 d.out.file stream_sfd
 </code></pre>
 
 <span class="question">Compare the MFD and SFD results of r.watershed. 
-Why are they different, which is more accurate and why?</span>
+Why are they different, which is more realistic and why?</span>
 
 <h3>Compute wetness index</h3>
 
@@ -221,16 +221,19 @@ Note: switch off all layers except for elev_lid792_1m.
 Create a map of flooded area for a given water level and seed point:
 
 <pre><code>
+g.region rast=elev_lid792_1m -p
 r.lake elevation=elev_lid792_1m water_level=113.5 lake=flood1 coordinates=638728,220278
 d.rast elev_lid792_1m
 d.rast flood1
 d.out.file floodedarea
 </code></pre>
 
-<p>
+<p><span class="question">
 Increase water level to 113.7m and 115.0m and create flooded
 area maps at these two levels. Include the maps of flooded areas 
-at these water levels in your report.
+at these water levels in your report. Why is the flooded area much larger than 
+for 113.5m?
+</span>
 
 <h3>Optional: Assess and mitigate impact of the road on flowrouting.  </h3>
 
