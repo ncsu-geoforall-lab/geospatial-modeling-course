@@ -1,10 +1,10 @@
 <h2>Erosion modeling</h2>
 <p>Resources:
 <ul>
-<li><a href="https://grass.osgeo.org/grass83/manuals/index.html">
+<li><a href="https://grass.osgeo.org/grass84/manuals/index.html">
 GRASS GIS overview and manual</a></li>
 <li> <a href="data_acquisition.html#commands">Recommendations</a>
-and <a href="./grass_intro.html">tutorial</a>
+<!--and <a href="./grass_intro.html">tutorial</a>-->
 how to use GUI from the first assignment</li>
 <li><a href="../resources/erosion_notes.pdf">Brief theoretical background, equations, units</a></li>
 <li><a href="data/cfactor.txt">C-factor values</a></li>
@@ -14,7 +14,7 @@ how to use GUI from the first assignment</li>
 </ul>
 
 <p>
-Text files with recode rules and color rules:
+Text files with recode, color, and label rules:
 <ul>
 <li>Land use category description (<a href="data/lu_labels.txt">lu_labels.txt</a>)</li>
 <li>C-factor recode table (<a href="data/cfac_rules.txt">cfac_rules.txt</a>)</li>
@@ -35,11 +35,9 @@ or type <code>cd</code> (stands for change directory) into the GUI
 <pre><code>
 cd
 </code></pre>
-Download all text files with recode rules, color rules and site locations (see above)
+Download all text files with recode rules, color rules and labels (see above)
 to the selected directory. Now you can use the commands from the assignment requiring the text file
 without the need to specify the full path to the file.
-
-
 
 <!-- # compute length-based LS-factor (topographic potential for erosion)
 # for SW Wake area at 10m resolution
@@ -62,62 +60,70 @@ nviz elevation co=lsfac3d
 # can you comment on where is the highest topographic potential
 # for erosion predicted by the 2d and 3d models?  -->
 
+Equations and units used in this assignment are explained in this 
+<a href="https://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/erosion_notes.pdf">
+Brief theoretical background for GIS-based erosion modeling with RUSLE3D and USPED</a>
 
 <h3>Compute soil detachment using USLE3D</h3>
 
-<h4>Compute topographic potential (LS factor)</h4>
-
-Compare impact of the power function exponents on the erosion pattern.<br>
+First, we compute topographic potential (LS factor) for soil erosion and
+compare impact of the power function exponents on the erosion pattern.<br>
 <span class="question">Which equation represents conditions when contributing area has greater impact
-and which models stronger influence of slope?</span>
+and which models stronger influence of slope? Which result predicts higher erosion rates?</span>
 
 <pre><code>
 g.region raster=elev_lid792_1m -p
 r.slope.aspect elevation=elev_lid792_1m slope=slope_1m aspect=aspect_1m
-r.flow elevation=elev_lid792_1m flowaccumulation=flowacc_1m
-r.mapcalc "lsfac3d_1m = 1.2 * pow(flowacc_1m * 1./22.1,0.2) * pow(sin(slope_1m)/0.09,1.3)"
-r.mapcalc "lsfac3d_s1_1m = 1.5 * pow(flowacc_1m * 1./22.1,0.5) * pow(sin(slope_1m)/0.09,1.0)"
+r.flow elevation=elev_lid792_1m flowaccumulation=flowaccum_1m
+r.mapcalc "lsfac3d_1m = 1.2 * pow(flowaccum_1m * 1./22.1,0.2) * pow(sin(slope_1m)/0.09,1.3)"
+r.mapcalc "lsfac3d_s1_1m = 1.5 * pow(flowaccum_1m * 1./22.1,0.5) * pow(sin(slope_1m)/0.09,1.0)"
 r.colors lsfac3d_s1_1m color=gyr -e
 r.colors lsfac3d_1m raster=lsfac3d_s1_1m
 </code></pre>
 
 Display layers and save outputs:
-d.erase
 <pre><code>
+d.erase
 d.rast lsfac3d_1m
 d.vect elev_lid792_cont1m
-d.legend lsfac3d_1m at=2,50,2,6
+d.legend -d lsfac3d_1m at=2,30,2,6
+d.barscale
 d.out.file lsfac_s13
 
 d.rast lsfac3d_s1_1m
 d.vect elev_lid792_cont1m
-d.legend lsfac3d_s1_1m at=2,50,2,6
+d.legend -d lsfac3d_s1_1m at=2,30,2,6
 d.out.file lsfac_s10
 </code></pre>
 
 
 <h4>Compute soil detachment for spatially variable land cover</h4>
 
-Set region to rural area and recode landcover_1m to cfactor
+Recode landcover_1m to land cover erosion factor C values given in the 
+<a href="data/cfac_rules.txt">cfac_rules.txt</a> table
 using the <em class="module">r.recode</em> module.
-Assign special color table and display result.<br>
+Assign a custom color table and display result.<br>
 
 <pre><code>
-g.region rural_1m -p
 r.recode landcover_1m output=cfactor_1m rules=cfac_rules.txt
 r.colors map=cfactor_1m rules=cfac_color.txt
 d.rast cfactor_1m
+d.legend cfactor_1m
+d.out.file cfactor_bare
 </code></pre>
 <!--r.category cfactor_1m rules=cfac_labels.txt-->
 
 <p>
 Compute the USLE3D equation using map algebra,
-cfactorbare_1m is the same as cfactor_1m,
-cfactorgrow_1m has landuse recoded for summer conditions.<br>
-Specify units of the raster maps using
+cfactorbare_1m is the same as cfactor_1m with bare agricultural fields,
+cfactorgrow_1m has landuse recoded for growing season conditions.
+We use rainfall intensity factor R=270 and soil erodibility factor K
+extracted from the soils database.<br>
+Assign custom color ramp using the provided rules 
+and specify units of the raster maps using
 the <em class="module">r.support</em> module.<br>
 <span class="question">Compare erosion rates and distribution
-for winter (bare) and summer conditions.</span>
+for bare and growing season conditions.</span>
  
 <pre><code>
 r.mapcalc "soillossbare_1m = 270. * soils_Kfactor * lsfac3d_1m * cfactorbare_1m"
@@ -127,40 +133,28 @@ r.colors soillossgrow_1m raster=soillossbare_1m
 r.support map=soillossbare_1m units="ton/(acre.year)"
 r.support map=soillossgrow_1m units="ton/(acre.year)"
 </code></pre>
-d.erase
 Remove previous layers and display the new ones:
 <pre><code>
+d.erase
 d.rast soillossbare_1m
-d.legend soillossbare_1m at=2,50,2,6
+d.legend -d soillossbare_1m at=2,40,2,6
 d.out.file soillossbare
 d.rast soillossgrow_1m
-d.legend soillossgrow_1m at=2,50,2,6
+d.legend -d soillossgrow_1m at=2,40,2,6
 d.out.file soillosgrow
 r.univar soillossbare_1m
 r.univar soillossgrow_1m
 </code></pre>
 
-
-<h4>Compute new DEM with erosion carved-in</h4>
-
-<pre><code>
-r.mapcalc "elev_erodedb_1m = elev_lid792_1m-(soillossbare_1m/100.)"
-</code></pre>
-
-Display elev_erodedb_1m in 3D and drape over soillossbare_1m as color.<br>
-To view it in 3D switch off everything except elev_erodedb_1m.<br>
-Drape soillossbare_1m as color and don't forget to set fine resolution to 1.<br>
-Use lighting from SW, z-exag at least 2.0<br>
-
-
 <h3>Compute net erosion/deposition maps (using USPED)</h3>
 
 Compute net erosion/deposition maps as divergence of sediment flow (USPED).
 <p>
-First compute sediment flow and its components in x, y directions:
+First compute sediment flow and its x, y components in the steepest slope 
+(aspect) direction:
 
 <pre><code>
-r.mapcalc "sedflow_1m = 270. * soils_Kfactor * cfactorgrow_1m * flowacc_1m * sin(slope_1m)"
+r.mapcalc "sedflow_1m = 270. * soils_Kfactor * cfactorgrow_1m * flowaccum_1m * sin(slope_1m)"
 r.colors sedflow_1m raster=soillossbare_1m
 d.rast sedflow_1m
 r.mapcalc "qsx = sedflow_1m * cos(aspect_1m)"
@@ -168,8 +162,12 @@ r.mapcalc "qsy = sedflow_1m * sin(aspect_1m)"
 </code></pre>
 
 <p>
-Compute change of sediment flow in the x and y directions
-and then change in the direction of flow using divergence.<br>
+Compute change of sediment flow in the x and y directions as partial derivatives 
+of sediment flow component surfaces. We are using qsx and dsy surfaces (rasters)
+instead of elevation raster as input and partial derivatives dx and dy as output
+of the r.slope.aspect tool.  
+The change of sediment flow in the direction of flow (aspect) is then computed as 
+ divergence. Display the map of erosion and depsotion pattern using custom color ramp<br>
 
 <pre><code>
 r.slope.aspect elevation=qsx dx=qsx_dx
@@ -178,12 +176,11 @@ r.mapcalc "erdep = qsx_dx + qsy_dy"
 r.info -r erdep
 r.colors erdep rules=erdep_color.txt
 d.rast erdep
-d.legend erdep at=2,50,2,6 range=-100,100
+d.legend erdep at=2,50,2,6 range=-5,5
 </code></pre>
 
 <p>
-Display elev_lid792_1m in 3D and drape over erdep as color (switch off all layers except for elev_lid792_1m).<br>
-
+Optional: Display elev_lid792_1m in 3D and drape over erdep as color (switch off all layers except for elev_lid792_1m).<br>
 
 <h4>Compute summary statistics</h4>
 
@@ -237,3 +234,16 @@ The units are tons/(acre.year), but our cells are 1 m<sup>2</sup>.
 Therefore we have to divide by 4046 (1 acre = 4046 m<sup>2</sup>)
 to get total ton per year transported from the watershed.
 You can use the Python shell in the <em>Python</em> tab do the division.
+
+<h3>Optional</h3>
+
+<h4>Compute new DEM with erosion carved-in</h4>
+
+<pre><code>
+r.mapcalc "elev_erodedb_1m = elev_lid792_1m-(soillossbare_1m/100.)"
+</code></pre>
+
+Display elev_erodedb_1m in 3D and drape over soillossbare_1m as color.<br>
+To view it in 3D switch off everything except elev_erodedb_1m.<br>
+Drape soillossbare_1m as color and don't forget to set fine resolution to 1.<br>
+Use lighting from SW, z-exag at least 2.0<br>
