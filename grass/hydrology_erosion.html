@@ -60,6 +60,7 @@ nviz elevation co=lsfac3d
 # can you comment on where is the highest topographic potential
 # for erosion predicted by the 2d and 3d models?  -->
 
+<p>
 Equations and units used in this assignment are explained in this 
 <a href="https://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/erosion_notes.pdf">
 Brief theoretical background for GIS-based erosion modeling with RUSLE3D and USPED</a>
@@ -133,7 +134,9 @@ r.colors soillossgrow_1m raster=soillossbare_1m
 r.support map=soillossbare_1m units="ton/(acre.year)"
 r.support map=soillossgrow_1m units="ton/(acre.year)"
 </code></pre>
-Remove previous layers and display the new ones:
+
+Remove previous layers, display the soil loss maps for two different seasons
+and compute the summary statistics for erosion rates:
 <pre><code>
 d.erase
 d.rast soillossbare_1m
@@ -146,7 +149,7 @@ r.univar soillossbare_1m
 r.univar soillossgrow_1m
 </code></pre>
 
-<h3>Compute net erosion/deposition maps (using USPED)</h3>
+<h3>Compute net erosion/deposition maps using USPED model</h3>
 
 Compute net erosion/deposition maps as divergence of sediment flow (USPED).
 <p>
@@ -167,7 +170,8 @@ of sediment flow component surfaces. We are using qsx and dsy surfaces (rasters)
 instead of elevation raster as input and partial derivatives dx and dy as output
 of the r.slope.aspect tool.  
 The change of sediment flow in the direction of flow (aspect) is then computed as 
- divergence. Display the map of erosion and depsotion pattern using custom color ramp<br>
+ divergence resulting in net erosion and deposition map erdep. 
+Display the map of erosion and deposition pattern using custom color ramp.<br>
 
 <pre><code>
 r.slope.aspect elevation=qsx dx=qsx_dx
@@ -191,6 +195,10 @@ to add labels (stable, high erosion, etc) to individual categories:
 r.recode erdep output=erdep_class rules=erdep_class.txt
 r.category erdep_class rules=erdep_label.txt sep=:
 r.report erdep_class unit=p,h,a
+r.colors erdep_class color=differences
+d.rast erdep_class
+d.legend -c erdep_class at=60,80,2,6
+d.out.file erdep_classes
 </code></pre>
 
 <p>
@@ -215,15 +223,14 @@ Example output:
 <span class="question">Comment on advantages, disadvantages and risks of
 classifying erosion/deposition data into categories.</span>
 
-<p>
-Compute univariate statistics:
+<h3>Optional</h3>
+
+<h4>Estimate amount of excess sediment transported out of the studied site.</h4>
+Compute univariate statistics for the erdep map and extract the line with sum:
 
 <pre><code>
 r.univar erdep
 </code></pre>
-
-<p>
-Look for line with sum:
 
 <pre>
 sum: -2374.473814
@@ -234,8 +241,6 @@ The units are tons/(acre.year), but our cells are 1 m<sup>2</sup>.
 Therefore we have to divide by 4046 (1 acre = 4046 m<sup>2</sup>)
 to get total ton per year transported from the watershed.
 You can use the Python shell in the <em>Python</em> tab do the division.
-
-<h3>Optional</h3>
 
 <h4>Compute new DEM with erosion carved-in</h4>
 
