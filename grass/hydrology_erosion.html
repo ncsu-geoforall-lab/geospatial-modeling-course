@@ -140,10 +140,10 @@ and compute the summary statistics for erosion rates:
 <pre><code>
 d.erase
 d.rast soillossbare_1m
-d.legend -d soillossbare_1m at=2,40,2,6
+d.legend soillossbare_1m at=2,40,2,6
 d.out.file soillossbare
 d.rast soillossgrow_1m
-d.legend -d soillossgrow_1m at=2,40,2,6
+d.legend soillossgrow_1m at=2,40,2,6
 d.out.file soillosgrow
 r.univar soillossbare_1m
 r.univar soillossgrow_1m
@@ -181,6 +181,7 @@ r.info -r erdep
 r.colors erdep rules=erdep_color.txt
 d.rast erdep
 d.legend erdep at=2,50,2,6 range=-5,5
+d.out.file erosion_deposition
 </code></pre>
 
 <p>
