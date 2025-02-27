@@ -19,11 +19,18 @@ Add the point feature class fire_pt
 <p>
 Use Viewshed tool (not 'Viewshed 2' or the 'Ready to use tool') to compute the area visible from the fire_pt location.
 <pre>
-In the Geoprocessing pane, search for and select the 'Viewshed' tool
+In the Geoprocessing pane, search for and select the Visibility tool from the Spatial Analyst Toolbox or 3D Analyst toolbox (the tool is listed twice in the Geoprocessing list, but either works).
 Set input surface to 'elev_ned'
 Set observer feature to 'fire_pt'
 Set output raster to 'viewshe_elev1'
 Click 'Run'
+</pre>
+
+<p>To see the ground elevation at the fire_pt, find the Export to Point tool in the Geoprocessing list.</p>
+<pre>
+Input raster: evel_ned
+Input put: our x and y values for fire point
+Output rater: fire_pt_elevation
 </pre>
 
 <p>
@@ -35,7 +42,7 @@ How much area (in sq. meters) do these visible cells represent?</span><br>
 
 <p><strong>Rerun the viewshed, with elevation offset at the fire_pnt site at +60 m.</strong>
 <p>Add the field OFFSETA to the fire_pt attribute table. 
-<pre>
+<!-- <pre>
 <i>RMC</i> on the fire_pt layer > Open Attribute Table
 <i>LMC</i> on the first icon in the Attribute Table toolbar > Field:Add
 Type the name OFFSETA in the new field name row then hit the enter key
@@ -44,24 +51,31 @@ Click the 'X' to close the fields tab
 In the fire_pt Attribute Table, double LMC and then type '60' in the OFFSETA column
 You can close the attribute table
 Edit tab on the ribbon->manage edits->'save'
-</pre>
+</pre> -->
 
-<p>Rerun the viewshed
+<!-- <p>Rerun the viewshed -->
+<p>In the Geoprocessing pane, search for and select the 'Visibility' tool</p>
 <pre>
-In the Geoprocessing pane, search for and select the 'Viewshed' tool
-Set input surface to 'elev_ned'
-Set observer feature to 'fire_pt'
-Set output raster to 'viewshe_elev60'
-Click 'Run'
+    Set input surface to 'elev_ned'
+    Set observer feature to 'fire_pt'
+    Set output raster to 'viewshe_elev60'
+    Click the carrot next to “Observer Parameters”
+    Under observer offset, input 60.
+    Click 'Run'
 </pre>
 <p>
-<span class="question">Now, how many cell are visible in this viewshed?<br>
-How much additional area was gained by adding the 60 m of elevation
-to the observer?</span>
+    <span class="question">What is the difference between surface offset, observer elevation, and observer offset?</span>
 <p>
-<strong>Rerun the viewshed again, using the +60 m observer, but this time limit your search radius to 2000m.</strong>
-<p>Add the fields RADIUS1 and RADIUS2 to the fire_pt attribute table. 
-<pre>
+    <span class="question">
+        Now, how many cell are visible in this viewshed?<br>
+        How much additional area was gained by adding the 60 m of elevation
+        to the observer?
+    </span>
+<p>
+
+    <!-- <strong>Rerun the viewshed again, using the +60 m observer, but this time limit your search radius to 2000m.</strong>
+<p>Add the fields RADIUS1 and RADIUS2 to the fire_pt attribute table.  -->
+<!-- <pre>
 <i>RMC</i> on the fire_pt layer > Open Attribute Table
 <i>LMC</i> on the first icon in the Attribute Table toolbar > Field:Add
 Type the name RADIUS1 in the new field name row then hit the enter key
@@ -71,14 +85,20 @@ Click the 'X' to close the fields tab
 In the fire_pt Attribute Table, double LMC and then type '0' in the RADIUS1 column and '2000' in the RADIUS2 column
 You can close the attribute table
 Edit tab on the ribbon->manage edits->'save'
-</pre>
-<p>Rerun the viewshed
+</pre> -->
+
+<p>Rerun the viewshed</p>
 <pre>
-In the Geoprocessing pane, search for and select the 'Viewshed' tool
-Set input surface to 'elev_ned'
-Set observer feature to 'fire_pt'
-Set output raster to 'viewshe_elev60_2000'
-Click 'Run'
+    In the Geoprocessing pane, search for and select the 'Visibility' tool
+    Set input surface to 'elev_ned'
+    Set observer feature to 'fire_pt'
+    Click the carrot next to “Observer Parameters”
+    Under observer offset, input 60.
+    For inner radius, input 1000.
+    For outer radius, input 2000.
+    For Horizontal Start Angle, put 45.
+    For Horizontal End Angle, put 135.
+    Click 'Run'
 </pre>
 <p>
 <span class="question">How many cells are visible in this viewshed?
