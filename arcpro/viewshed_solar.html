@@ -93,11 +93,9 @@ Edit tab on the ribbon->manage edits->'save'
     Set input surface to 'elev_ned'
     Set observer feature to 'fire_pt'
     Click the carrot next to “Observer Parameters”
-    Under observer offset, input 60.
-    For inner radius, input 1000.
+    Under observer offset, input 60
+    For inner radius, input 0.
     For outer radius, input 2000.
-    For Horizontal Start Angle, put 45.
-    For Horizontal End Angle, put 135.
     Click 'Run'
 </pre>
 <p>
@@ -108,10 +106,16 @@ How much ground area is visible?</span>
 <p>
 
 <pre>
-Add two fields: AZIMUTH1 and AZIMUTH2 (as doubles) to the fire_pt Attribute table (see instructions above)
-Start editing (see instructions above)
-modify RADIUS1 and RADIUS2 fields: RADIUS1 =  '1000', RADIUS2 =  '2000', 
-and populate: AZIMUTH1=45, and AZIMUTH2=135.
+    In the Geoprocessing pane, search for and select the Visibility tool
+    Set input surface to 'elev_ned'
+    Set observer feature to 'fire_pt'
+    Click the carrot next to “Observer Parameters”
+    Under observer offset, input 60.
+    For inner radius, input 1000.
+    For outer radius, input 2000.
+    For Horizontal Start Angle, put 45.
+    For Horizontal End Angle, put 135.
+    Click 'Run'    
 </pre>
 <p>Rerun the viewshed (see instructions above)
 <p>
