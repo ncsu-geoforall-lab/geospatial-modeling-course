@@ -108,7 +108,7 @@ Before starting with GRASS GIS it is important to understand that
 GRASS GIS uses the concept of <em>projects</em>, <em>mapsets</em>
 and <em>computational region</em> to support
 efficient analysis and modeling without the need to subset and resample
-data. Data in a GRASS project has common coordinate system.
+data. Data in a GRASS project have common coordinate system.
 Each project can have several mapsets, one is called PERMANENT
 to store baseline data, others are set by users. You can modify
 the data only in your current mapset, but you can view or copy
@@ -269,7 +269,7 @@ You may need to install
 to view TIFF images saved from the 3D view.
 Alternatively, you can just take screenshots of the 3D visualization.
 
-<h3>Data view and query</h3>
+<h3>Changing data view, query and region</h3>
 To get familiar with query and zoom tools, set the view back to 2D.
 Querying data means finding out the values in raster maps
 or attributes in vector maps at a location selected by mouse.
@@ -313,7 +313,14 @@ d.vect boundary_county type=boundary
 d.out.file nc_precip_stations
 </code></pre>
 
+<p>
+Note that any new data (map layers) that you create are automatically stored in your 
+GRASS database/project/current_mapset.
+If you want to go back to displayed maps that you have worked on in Map Display, 
+you can save the Map Display and Layer manager, including the symbology and layout
+in a GRASS workspace file *.gxw under <em>File</em> > <em>Workspace</em> > <em>Save as</em>.
 
+<!--
 <h3>Managing data</h3>
 
 We will learn how to find more information about the data, copy and rename maps.
@@ -429,11 +436,7 @@ v.info streets_wake
 v.info -c streets_wake
 </code></pre>
 
-<p>
-Note that all data (map layers) that you create are stored in your GRASS database/project/current_mapset.
-If you want to go back to what you have worked on, you can save the Map Display and Layer manager, including the symbology and layout
-in a GRASS workspace file *.gxw under <em>File</em> > <em>Workspace</em> > <em>Save as</em>.
-
+-->
 
 <h3>Import and export for raster and vector data</h3>
 
