@@ -14,9 +14,9 @@
   <li class="fragment">Understand the diversity of geospatial data sources</li>
   <li class="fragment">Classify modern mapping technologies</li>
   <li class="fragment">Understand the concept of georeferenced data</li>
-  <li class="fragment">Explain differences between the basic coordinate reference systems (CRS)</li>
-  <li class="fragment">Use CRS standards to find parameters for a given CRS</li>
-  <li class="fragment">Understand concept of re-projection between CRSs</li> 
+  <li class="fragment">Explain priciples of coordinate reference systems (CRS)</li>
+  <li class="fragment">Define raster and vector data models
+  <li class="fragment">Distinguish between continuous and discrete phenomena
 <!--<li class="fragment"><strong>Use</strong> the proper terminology and <strong>understand</strong> its meaning</li>-->
 </ul>
 </section>
@@ -378,10 +378,266 @@ often performed on-fly, may be inaccurate and time consuming
 </section>
 
 <section>
+   <h3>Geospatial data models</h3>
+<p> Mapped data, results of modeling or analysis are represented in GIS using
+<ul>
+  <li class="fragment">raster (regular grid) data model
+  <li class="fragment">vector (feature) data model
+  <li class="fragment">specialized representations: meshes
+</ul>
+<p>
+<img height="200" src="img/data_models/datatypescomposit.jpg">
+</section>
+
+<section>
+   <h3>Geospatial phenomena</h3>
+<p>
+<ul>
+<li>Continuous fields
+  <ul>
+    <li class="fragment">elevation surfaces</li>
+    <li class="fragment">temperature, precipitation</li>
+    <li class="fragment">concentration of chemicals in soil or water bodies</li>
+  </ul>
+<p>
+<li>Discrete features: lines, points or areas with attributes
+  <ul>
+    <li class="fragment">roads, buildings, cell towers</li>
+    <li class="fragment">land use types, administrative units</li>
+  </ul>
+<p>
+<li>Some phenomena can be treated as both types
+    <ul>
+    <li class="fragment">agricultural fields (crop type vs. crop height), soil properties</li>
+    <li class="fragment">population densities</li>
+    </ul>
+</ul>
+<aside class="notes">
+phenomenon
+anything that can be perceived as an occurrence or fact by the senses
+the object of perception, experience, etc
+</aside>
+</section>
+
+<section>
+   <h3>Continuous fields</h3>
+<p>
+  <ul>
+  <li class="fragment">each point in space is assigned a distinct value,
+      change in values between neighboring points is small</li>
+  <li class="fragment">mathematical representation: bi-variate or multi-variate
+  continuous functions $w=f(x,y), w=f(x,y,z), w=f(x,y,z,t)$</li>
+  <li class="fragment">often represented by a <b>raster data model</b></li>
+  <li class="fragment">vector model is also used: isolines, meshes, or points.</li>
+  </ul>
+<p class="fragment">
+<img height="160" src="img/data_models/dem_1m.jpg">
+<img height="160" src="img/data_models/elcont1m_gen00.jpg">
+<img height="160" src="img/data_models/TINgrassnvizrand2.jpg">
+<img height="120" src="img/data_acquisition/lidarmrpts3dcolored.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Discrete objects / features</h3>
+<p>
+  <ul>
+  <li class="fragment">points, lines, or areas (polygons) with attributes
+  <li class="fragment">represented by <b>vector data model</b> as geometry(shape) with attribute table
+  <li class="fragment">raster representation is also used
+  </ul>
+<p class="fragment">
+<img height="220" src="img/data_models/streetsnoise.jpg">
+<img height="220" src="img/data_models/vectorast_census.png">
+<img height="220" src="img/data_models/rasterdiscr_roads.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Raster data model: 2D</h3>
+<p>
+<ul>
+  <li>header: spatial extent and <b>resolution</b>, followed by matrix of values (INT, FP, DP),
+  <li>continuous field : value assigned to a grid point
+  <li>discrete object : category value assigned to pixel (area)
+</ul>
+<p class="fragment">
+<img height="350" src="img/data_models/raster_cont_discr.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Raster data model: continuous fields</h3>
+<small>Elevation, 10m resolution (combined with shaded relief) </small>
+<img height="220" src="img/data_models/rastercont_elev.jpg">
+<br>
+<small>Precipitation, 500m resolution (color map draped over shaded relief)</small>
+<img height="230" src="img/data_models/preciptopo3d.jpg">
+</section>
+
+<section>
+   <h3>Raster data model: discrete features</h3>
+<p>
+Land use classes at 30m resolution, qualitative data
+<p>
+<img height="340" src="img/data_models/raster_discr3dlu.jpg">
+<img height="340" src="img/data_models/lu96_legbig.png">
+</section>
+
+<section>
+   <h3>Raster data model: discrete features</h3>
+<p>
+Roads: Speed limits for roads and walking speed for off-road areas, 30m resolution, quantitative data
+<p>
+<img height="340" src="img/data_models/rasterdiscr_roads.jpg">
+</section>
+
+<section>
+   <h3>Raster data model: 3D hybrid</h3>
+<p>
+<div class="left" style="max-width:50%">
+<ul>
+ <li>vertical stack of 2D raster layers
+ <li class="fragment">can be used to represent soil horizons or geological layers
+ <li class="fragment">combined representation:
+ <ul>
+  <li class="fragment">continuous (horizontally)
+  <li class="fragment">discrete (vertically)
+ </ul>
+</ul>
+</div>
+<div class="right" style="max-width:40%">
+<img width="90%" src="img/data_models/horiz2.gif">
+<p><small>Cross-sections through 3D model of soil horizons</small>
+</div>
+</section>
+
+<section>
+   <h3>Raster data model: 3D grid</h3>
+<p>
+<ul>
+  <li>header + 3D matrix of values, voxel model
+  <li class="fragment">spatial extent N,S,E,W,<b>Top, Bottom</b>
+  <li class="fragment">vertical resolution is usually much finer than horizontal
+  <li class="fragment">often used for 3D continuous representation $w=f(x,y,z)$
+</ul>
+<img height="200" src="img/data_models/Voxelcodbox.gif">
+<img height="120" src="img/data_models/lgsoilcorg.gif">
+<img height="200" src="img/data_models/Voxelphfenc.gif">
+<img height="120" src="img/data_models/lg_soilph.gif">
+<p><small>Soil properties: Percent organic carbon, soil pH reaction </small>
+<!--<video height="300" controls loop autoplay> <source src="img/data_models/Voxelcodbox.mpg" type="video/mpg">-->
+</section>
+
+<section>
+   <h3>Vector data model</h3>
+<p>
+ Abstract representation of complex features
+<br><small>school – point, road – centerline, park - polygon</small>
+<ul>
+ <li><b>Geometry:</b>
+  <ul>
+  <li class="fragment">Points [x,y,(z)] represent point, line, or polygon(area) features
+  <li class="fragment">Set of points create elements of feature geometry: <b>line</b>: nodes, vertices; <b>polygon</b>: centroid, boundary
+  <li class="fragment"><a href="https://en.wikipedia.org/wiki/Geospatial_topology">Geospatial Topology</a> defines how the elements of
+feature geometry are interrelated and organized (don't confuse with topography!)
+ <li class="fragment">Topology ensures integrity of features and efficiency by defining shared coincident geometry (shared
+boundaries, nodes).
+  </ul>
+<p>
+ <li><b>Attributes</b> are stored in data management systems
+</ul>
+<aside class="notes">
+the study of geometric properties and spatial relations unaffected by the continuous change of shape or size of figures.
+the way in which constituent parts are interrelated or arranged.
+</aside>
+</section>
+
+<section>
+   <h3>Vector data model geometry</h3>
+<div class="left" style="max-width:45%">
+<p>Point data: no topology
+<img height="180" src="img/data_models/ncpfas_samples_pointdata.jpg">
+<img height="160" src="img/data_models/pointcloud.png">
+</div>
+
+<div class="right" style="max-width:55%">
+<p>Elements of line data: vertices, nodes
+<p>
+<img height="300" src="img/data_models/roads_nodes_vert.png">
+</div>
+</section>
+
+<section>
+   <h3>Vector data model geometry</h3>
+<p>Elements: vertices(red), nodes(blue), centroids(green)
+<p>
+Polygons: vertices+nodes=boundaries, centroids
+<p>
+<img height="380" src="img/data_models/census_nodesvertcentrlb2.png">
+</section>
+
+<section>
+   <h3>Vector data model examples</h3>
+<p>Geometry and attributes for point, line and polygon data:
+<p>
+<img height="390" src="img/data_models/vectormodel_geom.png">
+<img height="390" src="img/data_models/vectmodel_attrib.png">
+</section>
+
+<section>
+   <h3>Vector data: 3D models</h3>
+<p>
+Full 3D meshes: representation of structures
+<p>
+<img height="400" src="img/data_models/ccuas_blender_mesh.jpg">
+</section>
+
+<section>
+   <h3>Common geospatial data formats</h3>
+<p>Format: specific implementation of data model,
+<br>open standard or proprietary
+<p> Raster
+<ul class="fragment">
+<li>GIS (ascii and binary): GeoTIFF, ArcGRID, GRASS, SURFER
+<li>Imagery: MrSID, GeoTIFF, BIN, JPEG2000, IMG
+<li>Graphics:  GIF, JPG, PNG, Bitmap
+<li>HDF, NetCDF
+</ul>
+<p>
+Vector
+<ul class="fragment">
+<li>GeoPackage exchange format, KML, Shape, ArcSDE, GML, MapInfo, TIGER
+<li>PostGIS, OracleSpatial
+</ul>
+</section>
+
+<section>
+   <h3>Geospatial data format conversion</h3>
+<p>
+Format description is usually stored with data: automated format recognition and conversion
+<p class="fragment">
+General library for geospatial raster and vector format conversions:
+<br>Geospatial Data Abstraction Library (GDAL/OGR)
+<br><strong><a href="https://gdal.org/">gdal.org</a></strong>
+<p class="fragment">
+given format - <strong>single abstract model</strong> - new format
+</p>
+<p class="fragment">
+GDAL includes command line utilities for data processing
+</p>
+<p class="fragment">
+Coupled with PROJ library it also provides coordinate system transformations
+</p>
+</section>
+
+<section>
  <h3>Summary</h3>
 <ul>
   <li>we provided overview of modern technologies for geospatial data acquisition
   <li>we explained the concept of coordinate reference systems and related standards
+  <li>we introduced raster and vector data models and showed how they are used to represent 
+      continuous and discrete geographic phenomena
 </ul>
 </section>
 
