@@ -89,14 +89,17 @@ In GRASS GIS Map Display toolbar
 </ul>
 <i>
 The d.* commands throughout the assignments indicate which map layers should be included
-in the output map, <em class="module">d.out.file</em> indicates which map should be saved for the report.
-You might already have the right map layers in your Layer Manager, so you don't have to load them again.
-The CLI instructions can also be used for running the assignments on Linux and Mac as scripts.
+in the output map, 
+<a href="https://grass.osgeo.org/grass-stable/manuals/d.out.file.html"><em>d.out.filei</em></a>
+indicates which map should be saved for the report.
+Often, you will already have the required map layers in your Layer Manager, 
+so you don't have to load them again using a d.* command.
+Note, that the CLI instructions can also be used for running the assignments on Linux and Mac as scripts.
 </i>
 
 <h3>GRASS project and mapset</h3>
 If you don't already have GRASS GIS spatial database nc_spm_08_grass7
-downloaded, you can find it on
+downloaded, you can find links to it on
 <a href="../logistics.html#data">Course logistics page</a>.
 <p>
 Before starting with GRASS GIS it is important to understand that
@@ -118,8 +121,10 @@ Suggested workflow is to create a new mapset for each assignment
 and do all computations there.
 
 <p>
-Computational region is set by <em class="module">g.region</em> module (command)
-and specifies the spatial extent and resolution at which raster operation are performed.
+Computational region is set by the command 
+<a href="https://grass.osgeo.org/grass-stable/manuals/g.region.html">
+g.region</a>
+and specifies the spatial extent and resolution at which raster operations are performed.
 
 
 <h3>Start GRASS GIS</h3>
@@ -281,7 +286,7 @@ Now display statewide DEM, county boundaries and climate stations:
 <p>
   Remove all map layers from Layer Manager.<br>
 In Layer Manager menu: <em>Settings > Region > Set Region</em>.<br>
-In <em class="module">g.region</em> dialog: <em>Set current region from named region</em> >
+In <em>g.region</em> dialog: <em>Set current region from named region</em> >
 select "nc_500m" > <em>Run</em> > <em>Close</em>.<br>
 In Map Display: <em>Zoom to computational region</em>.<br>
 In Layer Manager: <em>Add raster layer</em> > select "elev_state_500m".<br>
