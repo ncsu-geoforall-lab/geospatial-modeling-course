@@ -273,7 +273,7 @@ d.out.file mymap
 </code></pre>
 
 <h3>Display data in 3D</h3>
-This is just a quick preview: We will explore 3D visualization in 3rd assignment.
+This is just a quick preview: We will explore 3D visualization in future assignments.
 <p>
 In Layer Manager check off the elevation_shade layer, but keep the elevation raster on.
 In Map Display switch 2D view to 3D view.
@@ -298,9 +298,10 @@ In Map Display explore the options to zoom:
 You can also zoom to specific map layer by right clicking on the layer
 and selecting Zoom to selected map(s).
 <p>
-Now display statewide DEM, county boundaries and climate stations:
+Next, display statewide DEM, county boundaries and climate stations:
 <p>
-  Remove all map layers from Layer Manager.<br>
+  Remove all map layers from Layer Manager, remove legend and scale bar by right clicking on it
+and select Remove.<br>
 In Layer Manager menu: <em>Settings > Region > Set Region</em>.<br>
 In <em>g.region</em> dialog: <em>Set current region from named region</em> >
 select "nc_500m" > <em>Run</em> > <em>Close</em>.<br>
@@ -309,9 +310,10 @@ In Layer Manager: <em>Add raster layer</em> > select "elev_state_500m".<br>
 Add vector map layer "precip_30ynormals", set the symbol to basic/marker.<br>
 Add vector map layer boundary_county,
 to display only county boundary, under tab <em>Selection</em> switch off area and switch on boundary.
-Rearrange the layers by mouse if needed.
+Rearrange the layers by mouse if needed and add legend and scale bar as in the previous example.
 <p>
-The command line equivalent is below,
+The command line equivalent is belowr:,
+<!--
 except for removing all map layers from the <em>Layer Manager</em>.
 When using GUI and its <em>Console</em>, you can either uncheck
 the map layers or completely remove them in the <em>Layer Manager</em>.
@@ -319,10 +321,11 @@ When using the system command line and
 <em class="module">d.mon</em>,
 you can use
 <em class="module">d.erase</em>.
+-->
 
 <pre><code>
-g.region nc_500m -p
 d.erase
+g.region nc_500m -p
 d.rast elev_state_500m
 d.vect precip_30ynormals icon=basic/marker
 d.vect boundary_county type=boundary
@@ -330,7 +333,8 @@ d.out.file nc_precip_stations
 </code></pre>
 
 <p>
-Note that any new data (map layers) that you create are automatically stored in your 
+Note that any new data (map layers) that you will import in the next section or create 
+in the future assignments are automatically stored in your 
 GRASS database/project/current_mapset.
 If you want to go back to displayed maps that you have worked on in Map Display, 
 you can save the Map Display and Layer manager, including the symbology and layout
