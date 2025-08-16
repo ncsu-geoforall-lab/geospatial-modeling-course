@@ -90,7 +90,7 @@ In GRASS GIS Map Display toolbar
 <i>
 The d.* commands throughout the assignments indicate which map layers should be included
 in the output map, 
-<a href="https://grass.osgeo.org/grass-stable/manuals/d.out.file.html"><em>d.out.filei</em></a>
+<a href="https://grass.osgeo.org/grass-stable/manuals/d.out.file.html"><em>d.out.file</em></a>
 indicates which map should be saved for the report.
 Often, you will already have the required map layers in your Layer Manager, 
 so you don't have to load them again using a d.* command.
@@ -244,6 +244,22 @@ These are the command line equivalents:
 d.vect streets_wake
 d.vect roadsmajor color=red width=2
 d.vect schools_wake icon=basic/circle size=10 fill_color=blue
+</code></pre>
+
+<p>
+Add legend and scale bar:
+<p>
+To add the legend use <em>Add map elements</em> button in Map Display and select <em>Add legend</em> (you can
+use mouse to move it around, right click to adjust the size or remove it).a<br>
+To add scale bar use: <em>Add map elements</em> > <em>Add scale bar</em> (double click on it to change it,
+for example you can change its length and units under Optional tab).<br>
+<p>
+These are the command line equivalents:
+
+<pre><code>
+d.legend elevation
+d.legend.vect
+d.barscale
 </code></pre>
 
 <p>
@@ -493,9 +509,12 @@ have hard time finding them especially on MS Windows.
 </ul>
 You can then display the exported "roadsmajor" data in ArcGIS.
 
-Note that the names of the GRASS GIS modules which were used in the
-background during the import and export we just did:
-<em class="module">v.import</em> and <em class="module">v.out.ogr</em>.
+Note that the names of the GRASS GIS tool used in the
+background during the import and export were: 
+<a href="https://grass.osgeo.org/grass-stable/manuals/v.import.html">
+<em>v.import</em></a> and
+<a href="https://grass.osgeo.org/grass-stable/manuals/v.out.ogr.html">
+<em class="module">v.out.ogr</em></a>.
 
 <!--
 <h4>Import and export of vectors when scripting</h4>
