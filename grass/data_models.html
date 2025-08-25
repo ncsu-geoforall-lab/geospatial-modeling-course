@@ -188,6 +188,7 @@ d.rast landuse96_100m
 d.out.file lenduse_100m
 </code></pre>
 
+<!--
 <h3>Converting between vector data types</h3>
 
 <p>
@@ -217,6 +218,7 @@ d.vect census_wake2000 color=red fill_color=none
 d.legend.vect
 d.out.file vect_to_points
 </code></pre>
+-->
 
 <!--
 Convert contour lines to points (useful for computing DEM from contours):
@@ -237,6 +239,8 @@ d.vect elev_ned_contpts co=brown icon=basic/point size=3
 
 <p>
 Convert vector data to raster for use in raster-based analysis.
+
+<!--
 First, remove all previous map layers from <em>Layer Manager</em> and
 adjust the computational region to resolution 200m:
 
@@ -260,9 +264,11 @@ d.rast schools_cap_200m
 d.vect streets_wake co=grey
 d.legend schools_cap_200m at=70,30,2,6
 </code></pre>
+-->
 
 <p>
-Now convert lines in "streets" vector to raster.
+Convert lines in "streets" vector to raster, we will use this conversion in  
+least cost path modeling later on.
 Set the resolution to 30m and use speed limit attribute.
 
 <pre><code>
