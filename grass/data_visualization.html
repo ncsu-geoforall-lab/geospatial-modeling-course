@@ -1,7 +1,7 @@
 <h2>Data display and visualization</h2>
 <p>Resources:
 <ul>
-<li><a href="https://grass.osgeo.org/grass83/manuals/index.html">
+<li><a href="https://grass.osgeo.org/grass-stable/manuals/index.html">
 GRASS GIS overview and manual</a></li>
 <li> <a href="data_acquisition.html#commands">Recommendations</a>
 <!--and <a href="./grass_intro.html">tutorial</a>-->
@@ -43,6 +43,7 @@ GUI is recommended for the tasks below, see the <a href="data_acquisition.html#c
 GUI equivalents for selected d* commands</a>, the command line instructions below are 
 to indicate the workflow and output.
 
+<!--
 <h4>Display subset of raster data</h4>
 Visualy explore relation between developed areas and topography.
 Remove all previously used layers from the <em>Layer Manager</em>, then set region and
@@ -63,8 +64,9 @@ d.rast landuse96_28m values=1,2
 d.vect streets_wake
 d.out.file landuse_elev
 </code></pre>
+-->
 
-<h4>Display color composite and subset of raster data</h4>
+<h4>Display color composite and a subset of raster data</h4>
 Visualy explore the development in the 1996 land use map layer and the 2002 landsat imagery
 using similar approach as with the shaded elevation above, but here we use a landsat 2002 
 image composite<br>
@@ -93,6 +95,8 @@ d.rast elevation val=50-80,120-160 -o
 <h4>Change colors for raster maps</h4>
 There are many ways how to adjust or create custom color ramps for raster maps,
 see <em class="module">r.colors</em> manual, we explore only some basic tools here.
+
+<!--
 <p>
 First create your own copy of the elevation map (see the command below).<br>
 Display it by Add raster > "myelev".
@@ -113,6 +117,7 @@ r.colors myelev color=elevation
 d.rast myelev
 d.out.file mynewelevation
 </code></pre>
+-->
 
 <!--
 <p>
@@ -122,7 +127,6 @@ In the Layer Manager menu click <em>Raster</em> > <em>Manage colors</em> > <em>M
 Select raster map "myelev".<br>
 Click on colored squares to change the color, click <em>Preview</em>.<br>
 If it looks good - click OK.
--->
 
 <p>
 To create color table for future multiple uses, especially for scripting,
@@ -150,15 +154,16 @@ or run it from comand line (make sure the rule file is in your working directory
 r.colors myelev rules=mycolor.txt
 d.out.file mynewelevation2
 </code></pre>
-
 <p>
 Note that you can combine color RGB and name definitions
 as well as % and cat/val to create complex custom color tables
 and store them in a text file for future use, see the examples in <em class="module">r.colors</em> man page.
+-->
 
 <h4>Compare the use of equal interval and histogram equalized color table for slope</h4>
 
-First, we set an equal interval color ramp to our copy of the slope map.
+First, we create our copy of the slope map and then display it with an equal interval color ramp
+with colors ranging from blue-green-yellow to red (bgyr).
 To add the legend use <em>Add map elements</em> button on Map Display.
 
 <pre><code>
@@ -170,7 +175,7 @@ d.out.file myslopecolor
 </code></pre>
 
 <p>
-Now set the histogram equalized color table, and save the new slope map.
+Now change to the histogram equalized color table, and save the new slope map.
 <pre><code>
 r.colors -e myslope color=bgyr
 d.out.file myslopecolorequalized
@@ -207,6 +212,26 @@ d.legend myslope at=50,90,4,7
 </code></pre>
 
 <p>
+Add grid for state plane coordinates at 5000m with ticks at 1000m.
+Also add a lat/long grid at 2 arc minute interval.
+<p>
+In Layer Manager > <em>Add various overlays</em> > <em>Add grid layer</em> > Size 5000 > Run.<br>
+To draw only border with ticks: change Size to 1000 and click <em>Disable</em> > <em>Disable grid drawing</em> > Run.<br>
+Switch off <em>Disable grid drawing</em>.<br>
+To draw lat/long grid: set <em>Required</em> > Size to 0:02 > click <em>Draw</em> > <em>Draw geographic grid</em> > Run.<br>
+Command line alternative:
+
+<pre><code>
+d.grid size=5000 color=brown
+d.grid -n size=1000
+d.out.file myelevmap_gridxy
+#switch off previous grids
+d.grid -g size=0:02 color=black
+d.out.file myelevmap_gridlatlong
+</code></pre>
+
+<!--
+<p>
 Switch off "myslope", display "myelev" raster and change the legend to "myelev" raster.
 Add grid for state plane coordinates at 5000m with ticks at 1000m.
 Also add a lat/long grid at 2 arc minute interval.
@@ -227,6 +252,7 @@ d.out.file myelevmap_gridxy
 d.grid -g size=0:02 color=black
 d.out.file myelevmap_gridlatlong
 </code></pre>
+-->
 
 <h3>Visualization in 3D perspective</h3>
 <p>
