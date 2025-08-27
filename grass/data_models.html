@@ -312,6 +312,7 @@ Then do the conversion.
 d.erase
 g.region raster=streams_derived -p
 d.rast streams_derived
+r.colors map=streams_derived color=water
 r.thin streams_derived output=streams_derived_t
 r.to.vect streams_derived_t output=streams_derived_t type=line
 </code></pre>
