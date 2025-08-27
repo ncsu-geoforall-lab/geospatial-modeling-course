@@ -73,6 +73,8 @@ image composite<br>
 In Layer Manager: <em>Add various raster map layers</em> > <em>Add RGBmap layer</em>.<br>
 
 <pre><code>
+d.erase
+g.region raster=landuse96_28m -p
 d.rgb red=lsat7_2002_30 green=lsat7_2002_20 blue=lsat7_2002_10
 d.rast landuse96_28m values=1,2
 #make sure to change opacity of the landuse layer to see the developed areas in 2002 and 1996
@@ -224,10 +226,10 @@ Command line alternative:
 <pre><code>
 d.grid size=5000 color=brown
 d.grid -n size=1000
-d.out.file myelevmap_gridxy
+d.out.file myslopemap_gridxy
 #switch off previous grids
 d.grid -g size=0:02 color=black
-d.out.file myelevmap_gridlatlong
+d.out.file myslopemap_gridlatlong
 </code></pre>
 
 <!--
