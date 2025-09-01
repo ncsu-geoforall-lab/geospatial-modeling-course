@@ -140,8 +140,9 @@ d.out.file lu_signle_map
 
 <span class="question">Which land use covers the largest area with a single landuse category within 7x7
 moving windows (most homogeneous areas)?</span><br>
-<span class="question">Use map algebra to create a map layer that represents homogeneous forested areas
-that we may target for protection and include the resulting map in your report</span>
+<span class="question">Use map algebra to extract a map layer that represents homogeneous 
+"Mixed hardwoods / Conifers" areas (category 18) from the "landuse_1cat" layer
+that we may target for protection and include the command and a resulting map in your report</span>
 
 <h4>Smoothing elevation raster and analyzing differences between DEMs</h4>
 <p>
@@ -219,6 +220,10 @@ r.colors elevlidD_6m raster=elevation
 d.rast elevlidD_6m
 d.out.file patched_dem
 </code></pre>
+
+<span class="question">Compute difference between the "elevlidD_6m" and "elevation maps",
+assign it a diverging color ramp and compute a summary statistics of the differences. 
+Include the map and the statistics into your report</span>
 
 <!--
 <p>
@@ -309,7 +314,7 @@ d.rast mysrtm_ned30_dif
 r.univar myelev_srtm_30m
 -->
 <!-- p. 109<br> -->
-<h4>Working with if statements</h4>
+<h4>Working with if statements and null()</h4>
 Create map of urban areas (high density and low density class)
 with 0 class elsewhere.
 
@@ -336,7 +341,7 @@ d.out.file urban12_nonurbannull
 
 <h3>Optional -  various additional useful tasks</h3>
 <!-- p. 110-111<br> -->
-<h4>Handling null values</h4>
+<h4>Handling null values and creating a mask</h4>
 
 <!--
 Replace lakes in the landclass96 map with more accurate representation.<br>
@@ -358,7 +363,8 @@ d.out.file luselakes
 r.mapcalc developed=if(landclass96 > 1, null(), 1)
 -->
 Create mask for low lying developed areas (e.g. vulnerable to flooding)
-with elevation between 60 and 100m and land use 1 or 2.<br>
+with elevation between 60 and 100m and land use 1 or 2. We could use this mask to 
+exclude this areas from future high density urbanization in an urban growth simulation.<br>
 Set the region, display the input maps and create a MASK.<br>
 Before you start new computations, remove or switch off previous map layers
 in the <em>Layer Manger</em>.
@@ -442,8 +448,9 @@ d.rast elevation_792_10m
 <p>
 Zoom out to see that it is a subset.
 
+<!--
 <h4>Work with NULL and MASK</h4>
-<!-- p. 103-104<br> -->
+p. 103-104<br> 
 Set the mask and check its effect.
 
 <pre><code>
@@ -469,14 +476,16 @@ g.region raster=urban2_30m
 </code></pre>
 
 Then, compute % area for each category in each zipcode.
-<!--<span class="question">Which zipcode has the most high density development?</span>-->
+<span class="question">Which zipcode has the most high density development?</span>
 
 <pre><code>
 r.stats -pl zipcodes,urban2_30m
 </code></pre>
+-->
 
 <!-- p. 113<br> -->
 <h4>Working with relative coordinates</h4>
+Compute smoothed SRTM DEM using 3x3 moving window average.
 Enter the expression on a single line without \<br>
 Again, it is a good idea to remove the previously used map layers
 before we start to work on a new task.
