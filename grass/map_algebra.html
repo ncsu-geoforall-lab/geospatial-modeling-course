@@ -28,7 +28,7 @@ Text files with color rules:
 </ul>
 
 <h3>Start GRASS GIS</h3>
-Create a new mapset (called e.g. HW_map_algebra) in <em>nc_spm_08_grass7</em> project and
+Create a new mapset (called e.g. assignment3 or HW_map_algebra) in <em>nc_spm_08_grass7</em> project and
 change working directory:<br>
 <em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
 or type <code>cd</code> (stands for change directory) into the GUI
@@ -38,12 +38,12 @@ cd
 </code></pre>
 
 <p>
-Download text file with color rules (see above)
+Download text file with color rules "srtmneddiff_color.txt" (see above)
 to the selected directory. Now you can use the commands from the assignment requiring the text file
 without the need to specify the full path to the file.
 
 <h3>Compute summaries</h3>
-<!-- p.90 -->
+<!-- p.90 
 Compute areas for each category at two different resolutions.
 <p>
 <span class="question">Are the area results computed at different resolutions equal? </span>
@@ -57,19 +57,21 @@ r.report landuse96_28m unit=c,h,p
 g.region raster=landuse96_28m res=30 -ap
 r.report landuse96_28m unit=c,h,p
 </code></pre>
+-->
 
 <p>
 Compute areas for each category of land use for each zipcode.
-Compare in your report land use distribution in 27601 Raleigh with 27511 Cary.
+In your report compare land use distribution in 27601 Raleigh with 27511 Cary.
 Include only the relevant part of the table in your report.
 
 <pre><code>
+g.region rast=landuse96_28m -p
 r.report zipcodes,landuse96_28m unit=h,p
 </code></pre>
 
 <p>
 Compute zonal statistics maps representing
-average slope for each basini often needed for hydrologic modeling.<br>
+average slope for each basin, often needed for hydrologic modeling.<br>
 Add legends using <em>Add map elements</em> in Map Display toolbar.
 Reminder: <em class="module">d.out.file</em> means Save to graphics file for your report.
 
@@ -138,6 +140,8 @@ d.out.file lu_signle_map
 
 <span class="question">Which land use covers the largest area with a single landuse category within 7x7
 moving windows (most homogeneous areas)?</span><br>
+<span class="question">Use map algebra to create a map layer that represents homogeneous forested areas
+that we may target for protection and include the resulting map in your report</span>
 
 <h4>Smoothing elevation raster and analyzing differences between DEMs</h4>
 <p>
