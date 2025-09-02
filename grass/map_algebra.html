@@ -21,7 +21,7 @@ class="module">r.mapcalc</em>) in the GRASS GIS Raster Map Calculator
 which can be launched from <em>Layer Manager</em> toolbar.
 
 <p>
-Text files with color rules:
+Text file with color rules:
 <ul>
 <!-- <li><a href="data/rastcomposite_color.txt">rastcomposite_color.txt</a></li> -->
 <li><a href="data/srtmneddiff_color.txt">srtmneddiff_color.txt</a></li>
@@ -42,7 +42,7 @@ Download text file with color rules "srtmneddiff_color.txt" (see above)
 to the selected directory. Now you can use the commands from the assignment requiring the text file
 without the need to specify the full path to the file.
 
-<h3>Compute summaries</h3>
+<h3>Compute and map summarry statistics</h3>
 <!-- p.90 
 Compute areas for each category at two different resolutions.
 <p>
@@ -57,7 +57,6 @@ r.report landuse96_28m unit=c,h,p
 g.region raster=landuse96_28m res=30 -ap
 r.report landuse96_28m unit=c,h,p
 </code></pre>
--->
 
 <p>
 Compute areas for each category of land use for each zipcode.
@@ -68,6 +67,7 @@ Include only the relevant part of the table in your report.
 g.region rast=landuse96_28m -p
 r.report zipcodes,landuse96_28m unit=h,p
 </code></pre>
+-->
 
 <p>
 Compute zonal statistics maps representing
@@ -100,13 +100,14 @@ d.out.file landuse96_modebasin
 </code></pre>
 
 <span class="question">What is the most common land use in the two basins with the steepest average slope?</span>
+You can use map query or map algebra to find out the naswer.
 
 <h3>Apply neighborhood operators and map algebra</h3>
 <!-- p.127<br> -->
 <h4>Map land use diversity</h4>
 Use neighborhood operator to compute land use diversity map and create a map of locations
 with the most homogeneous (single category) landuse where a land use diversification could be beneficial
-(e.g. by planting trees).<br>
+(e.g. by planting trees). Use 7x7 cells window to find areas which have single landuse within 200x200m. <br>
 <!--<span class="question">Explore how different sizes of the neighborhood used alter the results and why?</span><br>-->
 <p>
 First, remove all previously added map layers from the <em>Layer Manager</em>, then compute
@@ -142,7 +143,8 @@ d.out.file lu_signle_map
 moving windows (most homogeneous areas)?</span><br>
 <span class="question">Use map algebra to extract a map layer that represents homogeneous 
 "Mixed hardwoods / Conifers" areas (category 18) from the "landuse_1cat" layer
-that we may target for protection and include the command and a resulting map in your report</span>
+that we may target for protection. Include the command and a resulting map with extracted
+map displayed together with "streets_wake" in your report</span>
 
 <h4>Smoothing elevation raster and analyzing differences between DEMs</h4>
 <p>
@@ -218,12 +220,14 @@ g.region raster=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m -p
 r.patch input=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m output=elevlidD_6m
 r.colors elevlidD_6m raster=elevation
 d.rast elevlidD_6m
+d.vect roadsmajor
 d.out.file patched_dem
 </code></pre>
 
-<span class="question">Compute difference between the "elevlidD_6m" and "elevation maps",
-assign it a diverging color ramp and compute a summary statistics of the differences. 
-Include the map and the statistics into your report</span>
+<span class="question">Using map algebra, Compute difference between the "elevlidD_6m" and "elevation" maps,
+assign it a diverging color ramp (e.g. "differences" provided by r.colors) 
+and compute a summary statistics of the differences. 
+Include the map and the statistics into your report and comment on the resulting pattern</span>
 
 <!--
 <p>
