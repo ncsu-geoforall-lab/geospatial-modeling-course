@@ -334,6 +334,7 @@ d.out.file urban12_nonurbanzero
 Alternatively with logical 'or' operator and null elsewhere:
 
 <pre><code>
+d.erase
 r.mapcalc "urban2_30m = if(landuse96_28m == 1 || landuse96_28m == 2,landuse96_28m,null())"
 d.rast urban2_30m
 d.legend urban2_30m at=10,30,5,8
