@@ -224,8 +224,14 @@ r.describe route_20Westernb
 r.describe route_52Hollyb
 </code></pre>
 
+<p>Do it yourself</p>
 <p>
-If you would like to display streets_cost surface in 3D as shown in the lecture,
+<span class="question">Find least cost path between the Jordan hall (E=638871 m, N=225467 m) and the Johnson lake dam (E=635639 m, N=223285 m). Define the cost as travel time based on the speed limits as we did in the assignment. Provide the workflow and two maps 1. Map showing the cumulative cost to get to the Johnson lake dam 2. Map showing the resulting least cost path converted to a vector line shown in red. For both maps include streets_wake for context.  What is the least cost path distance in kilometers between the two locations and how much time in minutes is needed to get to the target destination?
+Hint: You can use streets_travtime that you have already created as your cost input map. You don’t need to import the coordinates of the two sites, they can be provided as input parameters.
+</span>
+
+<p>
+Optional: If you would like to display streets_cost surface in 3D as shown in the lecture,
 you need to multiply the surface by 1000 using <em class="module">r.mapcalc</em> because the numbers
 in hours are very low.<br>
 Then switch off all layers except for the streets_cost_1000
