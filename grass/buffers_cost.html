@@ -95,6 +95,7 @@ For legend set the discrete speed limit values in GUI legend dialog:<br>
 tab <em>Required</em> > streets_speed, <em>Subset</em> > <em>List of discrete category numbers</em>
 
 <pre><code>
+d.erase
 g.region swwake_30m -p
 v.info -c streets_wake
 v.to.rast streets_wake output=streets_speedtmp use=attr attrcolumn=SPEED type=line
@@ -137,13 +138,14 @@ echo "634886 224328 1" | v.in.ascii out=fire_pt separator=space -->
 Compute isochrones and display the cumulative cost surface map.
 
 <pre><code>
-r.contour streets_cost output=streets_cost_04 step=0.04 cut=100
-r.colors streets_cost color=elevation
+d.erase
 d.rast streets_cost
+r.colors streets_cost color=elevation
+r.contour streets_cost output=streets_cost_04 step=0.04 cut=100
 d.vect fire_pt color=red icon=basic/marker size=20
 d.vect streets_cost_04
 d.legend streets_cost at=5,50,2,5
-d.out.file mycostmap
+d.out.file mycumulativecostmap
 </code></pre>
 
 <h4>Find cost (travel time) from selected firestations</h4>
@@ -194,8 +196,8 @@ Find the least cost path for the two closest stations:
 <pre><code>
 r.drain -n input=streets_cost output=route_20Westernb start_coordinates=635940.3,225912.8
 r.drain -n input=streets_cost output=route_52Hollyb start_coordinates=633178.2,221353.0
-r.colors route_20Westernb color=grey
-r.colors route_52Hollyb color=grey
+r.colors route_20Westernb color=ramp
+r.colors route_52Hollyb color=ramp
 </code></pre>
 
 <p>
@@ -224,18 +226,25 @@ r.describe route_20Westernb
 r.describe route_52Hollyb
 </code></pre>
 
-<p>Do it yourself</p>
+<p>Optional (+5 points) - do it yourself</p>
 <p>
-<span class="question">Find least cost path between the Jordan hall (E=638871 m, N=225467 m) and the Johnson lake dam (E=635639 m, N=223285 m). Define the cost as travel time based on the speed limits as we did in the assignment. Provide the workflow and two maps 1. Map showing the cumulative cost to get to the Johnson lake dam 2. Map showing the resulting least cost path converted to a vector line shown in red. For both maps include streets_wake for context.  What is the least cost path distance in kilometers between the two locations and how much time in minutes is needed to get to the target destination?
-Hint: You can use streets_travtime that you have already created as your cost input map. You don’t need to import the coordinates of the two sites, they can be provided as input parameters.
-</span>
+Find least cost path between the Jordan hall and the Johnson lake dam. 
+Use previously created streets_travtime as your input cost. 
+Provide the workflow and two maps 
+1. Map showing the cumulative cost to get to the Johnson lake dam (start_coordinates=636333,223465) 
+2. Map showing the resulting least cost path from Jordan Hall (start_coordinates=638875,225450)
+ converted to a vector line shown in red. For both maps include streets_wake for context. 
+ What is the least cost path distance in kilometers between the two locations and how much time in minutes is needed to get to the target destination?
+Hint: You don’t need to import the coordinates of the two sites, as they can be provided as input parameters.
 
+<!--
 <p>
 Optional: If you would like to display streets_cost surface in 3D as shown in the lecture,
 you need to multiply the surface by 1000 using <em class="module">r.mapcalc</em> because the numbers
 in hours are very low.<br>
 Then switch off all layers except for the streets_cost_1000
 and change display to 3D.
+-->
 
 <h4>Compute accessibility map for help in search for lost person</h4>
 
