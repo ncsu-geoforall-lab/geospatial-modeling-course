@@ -113,11 +113,15 @@ click "Run"
 </pre>
 
 <p>
-Add the feature class data that will be used to create the terrain
+Add the feature class data that will be used to create the terrain:
+Important (ArcGIS Pro): All feature classes used in a terrain must be stored inside the same feature dataset as the terrain. They also must share the same spatial reference. Placing in the same geodatabase (.gbd) is not enough.
 <pre>
-In the Geoprocessing pane, search for and select the 'Feature class to feature class' tool
+In the Geoprocessing pane, search for and select the 'Export Features' tool (Data Management - Features). You may also use Copy Features.
+<!--In the Geoprocessing pane, search for and select the 'Feature class to feature class' tool-->
 Set 'input features' to 'elev_lid792_randpts'
-Set 'output location' to 'terrain'
+Set 'Output Feature Class' to elev_lid792_rand_fc." 
+<!--Set 'output location' to 'terrain'-->
+Set 'Output Location' to the terrain feature dataset you just created (not .gbd root)
 Set 'output feature class' to 'elev_lid792_rand_fc'
 Click 'Run'
 </pre>
