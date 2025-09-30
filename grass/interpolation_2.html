@@ -124,7 +124,7 @@ using cross-validation (no raster output, result is points with predictive error
 
 <pre><code>
 d.erase
-v.surf.rst -c input=elev_lid792_randpts zcolumn=value cvdev=elev_rstdef_cv npmin=120 segmax=35
+v.surf.rst -c input=elev_lid792_randpts zcolumn=value cvdev=elev_rstdef_cv npmin=140 
 v.colors elev_rstdef_cv use=attr column=flt1 rules=deviations_color.txt
 v.univar elev_rstdef_cv column=flt1 type=point
 </code></pre>
