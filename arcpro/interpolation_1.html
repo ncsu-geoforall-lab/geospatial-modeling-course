@@ -98,7 +98,29 @@ Click 'Run'
 
 Alternatively, convert your map to a Local Scene and visualize as described in the previous assignment.
 
-<h4>Create the Terrain Model using the Terrain Wizard</h4>
+<h3>Interpolate DEM using IDW and check it with hillshade</h3>
+
+Interpolate DEM using IDW:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'IDW' tool
+Set 'Input point features' to 'elev_lid792_randpts'
+Set 'Z value field' to 'value_'
+Set 'Output Raster' to 'elev_idw_2m'
+Leave the other inputs as defaults
+Click 'Run'
+</pre>
+
+<p> 
+Check the interpolated elevation surface using hillshade:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Hillshade' tool
+Set 'Input raster' to 'elev_idw_2m'
+Set 'Output Raster' to 'Hillsh_idw_2m'
+</pre>
+
+<h4>Optional: Create the Terrain Model using the Terrain Wizard</h4>
 <p>
 A terrain dataset is a multiresolution, TIN-based surface built from lidar/sonar/photogrammetric measurements stored as features in a geodatabase. 
 
@@ -182,6 +204,7 @@ Leave all else as default
 Click 'Run'
 </pre>
 
+<!--
 <h3>Interpolate DEM using IDW and check it with hillshade</h3>
 
 Interpolate DEM using IDW:
@@ -203,3 +226,4 @@ In the Geoprocessing pane, search for and select the 'Hillshade' tool
 Set 'Input raster' to 'elev_idw_2m'
 Set 'Output Raster' to 'Hillsh_idw_2m'
 </pre>
+-->
