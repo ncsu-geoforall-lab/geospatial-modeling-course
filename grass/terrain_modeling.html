@@ -89,7 +89,7 @@ d.out.file be_pointdensity
 d.erase
 d.rast lid_1r_binn1m
 d.legend -d -s lid_1r_binn1m at=2,50,8,12
-r.report lid_1r_binn1m unit=p
+r.report lid_1r_binn1m unit=p,c
 r.univar lid_1r_binn1m
 d.out.file first_pointdensity
 </code></pre>
@@ -136,6 +136,9 @@ d.out.file lid1rmean2m
 
 <span class="question">Why are there holes in the binned DEMs?
 Why is the first return map mostly green (where is the orange-brown elevation?)
+Adjust the r.colors command for lid_1r_binmean2m that will redistribute the colors 
+so that the topographic features are well represented. Hint, see assignment 2. Include
+the adjusted map in your report.
 </span>
 
 <p>
