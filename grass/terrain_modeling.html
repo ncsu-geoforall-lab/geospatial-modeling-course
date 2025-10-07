@@ -61,8 +61,8 @@ Now we import bare earth points and first return points separately (add -o flag 
 if you are getting error that the projection does not match the project projection):
 
 <pre><code>
-v.in.lidar -t input=tile_0793_016_spm.las output=elev_lid793016_be class_filter=2
-v.in.lidar -t input=tile_0793_016_spm.las output=elev_lid793016_1r return_filter=first
+v.in.lidar -t input=tile_0793_016_spm.las output=elev_lid793016_be class_filter=2 -o
+v.in.lidar -t input=tile_0793_016_spm.las output=elev_lid793016_1r return_filter=first -o
 </code></pre>
 <p>
 Note: if you have any problems with the files, review the instructions above or
@@ -77,8 +77,8 @@ Compare point densities for bare earth, first return.
 
 <pre><code>
 g.region vect=elev_lid793016_1r res=1 -p
-r.in.lidar input=tile_0793_016_spm.las output=lid_be_binn1m class_filter=2 method=n
-r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binn1m return_filter=first method=n
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binn1m class_filter=2 method=n -o
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binn1m return_filter=first method=n -o
 r.colors lid_be_binn1m,lid_1r_binn1m color=bcyr -e
 d.erase
 d.rast lid_be_binn1m
@@ -99,8 +99,8 @@ Compute a raster map representing mean elevation for each 1m cell.<br>
 It will have holes.
 
 <pre><code>
-r.in.lidar input=tile_0793_016_spm.las output=lid_be_binmean1m class_filter=2 method=mean
-r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binmean1m return_filter=first method=mean
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binmean1m class_filter=2 method=mean -o
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binmean1m return_filter=first method=mean -o
 r.colors lid_be_binmean1m color=elevation
 r.colors lid_1r_binmean1m color=elevation
 r.info map=lid_1r_binmean1m
@@ -120,8 +120,8 @@ Result is almost good enough for 1st return, but there are still many holes for 
 
 <pre><code>
 g.region res=2 -ap
-r.in.lidar input=tile_0793_016_spm.las output=lid_be_binmean2m class_filter=2 method=mean
-r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binmean2m return_filter=first method=mean
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binmean2m class_filter=2 method=mean -o
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binmean2m return_filter=first method=mean -o
 r.colors lid_be_binmean2m color=elevation
 r.colors lid_1r_binmean2m color=elevation
 d.erase
@@ -145,9 +145,9 @@ the adjusted map in your report.
 Compute range of elevation values in each grid cell:
 
 <pre><code>
-r.in.lidar input=tile_0793_016_spm.las output=lid_be_binrange2m class_filter=2 method=range
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binrange2m class_filter=2 method=range -o
 r.colors lid_be_binrange2m color=bcyr -e
-r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binrange2m return_filter=first method=range
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binrange2m return_filter=first method=range -o
 r.colors lid_1r_binrange2m color=bcyr -e
 d.erase
 d.rast lid_be_binrange2m
@@ -236,9 +236,10 @@ Save image for your report.
 
 Visualizing the raw points in point clouds can be time consuming both in 2D and
 3D, however several tools for doing so in an efficient way exist. Try to
-use <a href="https://plas.io/">plas.io</a>, an online point cloud
-visualization tool to visualize the LAS file from this assignment.
-Explore the provided visualization tools in plas.io and create images
+use <a href="https://plas.io/">plas.io</a> or 
+<a href="https://potree.org/potree/examples/viewer.html"> potree</a>, 
+online point cloud visualization tools to visualize the LAS file from this assignment.
+Explore the provided visualization tools and create images
 showing different properties of the point cloud or the visualization
 techniques and how they would be useful for further analysis.
 
