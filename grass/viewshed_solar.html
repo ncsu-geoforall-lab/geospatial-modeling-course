@@ -215,3 +215,17 @@ d.rast it356
 d.legend it356 at=2,30,2,6
 d.out.file insol_time
 </code></pre>
+
+Dowload grass addon script to compute daily solar irradiation for 10 days, save the time series
+output as a space-time dataset and visualize the result using animation.
+
+<pre><code>
+g.extension r.sun.daily
+g.region raster=elevation -p
+r.sun.daily elevation=elevation start_day=30 end_day=40 beam_rad_basename=beam beam_rad=beam_sum nprocs=4 -t
+t.info beam
+r.info beam
+</code></pre>
+
+Use <a href="https://grass.osgeo.org/grass-stable/manuals/g.gui.animation.html">animation tool</a>
+to display the results as animation (see the Fall 2025 video in Moodle).
