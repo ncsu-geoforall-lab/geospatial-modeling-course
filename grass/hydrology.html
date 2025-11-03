@@ -34,7 +34,7 @@ start GRASS<br>
 
 <h3>Compute flow direction, flow accumulation and subwatersheds</h3>
 Compute flow direction, flow accumulation and subwatersheds
-with approx. size of 10000 cells from 30m NED.
+with approx. size of 10000 cells from 30m NED using least cost path method with single flow direction (SFD):
 
 <pre><code>
 g.region raster=elev_ned_30m -p
@@ -42,7 +42,7 @@ r.watershed -s elevation=elev_ned_30m threshold=10000 accumulation=accum_10K dra
 </code></pre>
 
 <p>
-Extract more detailed streams from flow accumulation raster,
+Extract detailed streams from flow accumulation raster,
 and convert basins and streams to vector format:
 
 <pre><code>
@@ -58,6 +58,8 @@ Generate relief shaded map of basins
 <span class="question">How do the derived streams compare with the official stream map?</span>
 <span class="question">Modify the mapcalc expression to make stream origins fit better
 with the official stream map and include the modified expression and map in your report.</span>
+<span class="question">What do the negative values in the flow direction and flow accumulation maps mean?
+(hint - read r.watershed manual page)</span>
 
 <pre><code>
 d.erase
@@ -76,7 +78,7 @@ for raster and vectorized streams with topology of stream network. Read the manu
 
 <h3>Create map of DEM depressions</h3>
 Depression filling is sometimes necessary for certain flow routing algorithms 
-but it can significantly alter the elevation data leading to srtificial straight channels. 
+but it can significantly alter the elevation data leading to artificial straight channels. 
 Find out how extensive the depressions are in our DEM.<br>
 Note that <em class="module">r.watershed</em> tool doesn't need any depression filling thanks to
 its underlying algorithm which uses least cost path to get over depressions.
@@ -104,8 +106,8 @@ d.out.file depressions
 </code></pre>
 
 <span class="question">What is the area mapped as depression in [ha] and [%] ? 
-(hint: use r.report with depr_bin) </span><br>
-Optional: Compute the total volume of mapped depressions?
+(hint: use r.report with depr_bin) Are all depressions in DEM real or artificial? </span><br>
+Optional: Compute the total volume of mapped depressions.
 
 
 <h3>Derive contributing area for a given outlet</h3>
@@ -181,7 +183,12 @@ d.out.file flowdown
 d.erase
 d.rast flowaccup_1m
 d.vect elev_lid792_cont_1m color=red
-d.out.file flowlines
+d.out.file flowup
+d.erase
+d.rast flowlg_1m
+d.vect elev_lid792_cont_1m color=red
+d.legend flowlg_1m
+d.out.file flowlength
 </code></pre>
 
 <h3>Compare the multiple flow direction flow accumulation with the D8 and Dinf</h3>
@@ -190,6 +197,7 @@ Compute flowaccumulation using the default MFD method and display the
 flowaccumulation maps from MFD and SFD (the Dinf maps flowacc_1m was displayed above):
 
 <pre><code>
+g.region raster=elev_lid792_1m -p
 r.watershed -a elevation=elev_lid792_1m threshold=15000 accumulation=accum_mfd_15K
 d.rast accum_mfd_15K
 d.vect streams co=red
