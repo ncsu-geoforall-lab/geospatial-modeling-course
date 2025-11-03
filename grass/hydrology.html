@@ -56,8 +56,8 @@ r.to.vect -s streams_der_30m_t out=streams_der_30m type=line
 Generate relief shaded map of basins
  and display extracted streams along with the official Wake county streams (red).<br>
 <span class="question">How do the derived streams compare with the official stream map?</span>
-<span class="question">How can you modify the mapcalc expression to make stream origins fit better
-with the official stream map?</span>
+<span class="question">Modify the mapcalc expression to make stream origins fit better
+with the official stream map and include the modified expression and map in your report.</span>
 
 <pre><code>
 d.erase
@@ -70,8 +70,9 @@ d.vect streams color=red
 d.out.file streams_compare
 </code></pre>
 
-<p>Note that you can also use a MFD routing for r.watershed combined with r.stream.extract 
-for vectorized streams with topology of stream network. Read the manual pages to learn more.
+<p>Note that you can also use  
+<a href="https://grass.osgeo.org/grass-stable/manuals/r.stream.extract.html">r.stream.extract</a> 
+for raster and vectorized streams with topology of stream network. Read the manual pages to learn more.
 
 <h3>Create map of DEM depressions</h3>
 Depression filling is sometimes necessary for certain flow routing algorithms 
@@ -104,7 +105,7 @@ d.out.file depressions
 
 <span class="question">What is the area mapped as depression in [ha] and [%] ? 
 (hint: use r.report with depr_bin) </span><br>
-Optional: How would you compute the total volume of mapped depressions?
+Optional: Compute the total volume of mapped depressions?
 
 
 <h3>Derive contributing area for a given outlet</h3>
@@ -152,8 +153,10 @@ d.out.file watershedA30
 r.report basin_A30 unit=h,a
 </code></pre>
 
-<span class="question">What is the delineated watershed area [ha] ?  </span><br>
-Optional: How would you compute average slope of this contributing area?
+<span class="question">What is the delineated watershed area [ha] ? 
+Compute average slope of this watershed: include the workflow and the resulting average
+ (hint: check the previous assignments for workflow)
+</span><br>
 
 <h3>Compute refined flow pattern using D-inf</h3>
 Compare upslope and downslope flow lines:
