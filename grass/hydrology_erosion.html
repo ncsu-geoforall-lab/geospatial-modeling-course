@@ -196,7 +196,7 @@ to add labels (stable, high erosion, etc) to individual categories:
 r.recode erdep output=erdep_class rules=erdep_class.txt
 r.category erdep_class rules=erdep_label.txt sep=:
 r.report erdep_class unit=p,h,a
-r.colors erdep_class color=differences
+r.colors -n erdep_class color=differences
 d.rast erdep_class
 d.legend -c erdep_class at=60,80,2,6
 d.out.file erdep_classes
