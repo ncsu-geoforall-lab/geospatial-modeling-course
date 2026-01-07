@@ -5,16 +5,16 @@ For the general introduction to the course, see
 
 <h3 id="software">Software</h3>
 
-Install GRASS GIS and ArcGIS Pro software following the instructions bellow.
+Install GRASS and ArcGIS Pro software following the instructions bellow.
 Note that ArcGIS is available to students through the university.
-GRASS GIS is available to anybody and you can continue using it
+GRASS is available to anybody and you can continue using it
 on your computer after you graduate.
 
-<h4>GRASS GIS</h4>
+<h4>GRASS</h4>
 
 <ul>
     <li>
-        Free and open source package GRASS GIS
+        Free and open source package GRASS
         (<a href="https://grass.osgeo.org/">official website</a>)
     </li>
     <li>
@@ -22,7 +22,7 @@ on your computer after you graduate.
         <ul>
             <li>
                 use the stand-alone installer package
-                <a href="https://grass.osgeo.org/download/windows/">GRASS GIS 8.4.1</a>.
+                <a href="https://grass.osgeo.org/download/windows/">GRASS 8.4.2</a>.
             </li>
         </ul>
     </li>
@@ -30,8 +30,8 @@ on your computer after you graduate.
         <b>macOS</b>:
         <ul>
             <li>
-                Download GRASS GIS 8.4.1 binaries from
-                <a href="https://grass.osgeo.org/download/mac/">GRASS GIS for Mac website</a>
+                Download GRASS 8.4.2 binaries from
+                <a href="https://grass.osgeo.org/download/mac/">GRASS for Mac website</a>
                 and follow their instructions about running it from /Applications folder and
                 about first time opening GRASS.
 <!--
@@ -51,13 +51,13 @@ brew install grass7 --with-liblas</pre>
         <b>Linux</b>:
         <ul>
             <li>
-                <a href="https://grass.osgeo.org/download/linux/">GRASS GIS packages</a>
+                <a href="https://grass.osgeo.org/download/linux/">GRASS packages</a>
                 are available in software repositories
             </li>
         </ul>
     </li>
     <li>
-        use available resources to learn about GRASS GIS
+        use available resources to learn about GRASS
         <ul>
 <!-- these two items need updates to 8.2 - e.g. GUI icons explanations does not match the screenshot
             <li>
@@ -73,13 +73,13 @@ brew install grass7 --with-liblas</pre>
 -->
             <li>find <a href="https://grass-tutorials.osgeo.org/"> GRASS tutorial </a> for a topic you want 
 to learn about
-            <li>use <a href="https://grass.osgeo.org/grass-stable/manuals/helptext.html">GRASS GIS Quickstart</a> to learn how to get started
+            <li>use <a href="https://grass.osgeo.org/grass-stable/manuals/helptext.html">GRASS Quickstart</a> to learn how to get started
             </li>
-            <li>use <a href="https://grass.osgeo.org/grass-stable/manuals/index.html">GRASS GIS 8.4.1 Reference Manual</a>
-                to access Introductions and Manuals for GRASS GIS tools 
+            <li>use <a href="https://grass.osgeo.org/grass-stable/manuals/index.html">GRASS 8.4.2 Reference Manual</a>
+                to access Introductions and Manuals for GRASS tools 
             </li>
             <li>follow <a href="https://www.youtube.com/watch?v=kktp5gZLLCk&list=PLiNYVMuYqTHUZUa7t3874sBfWAuNMj4pZ">
-                Geospatial Modeling with GRASS GIS 8.4.0 videos</a> for assignments in GIS582
+                Geospatial Modeling with GRASS 8.4.0 videos</a> for assignments in GIS582
             </li>
             <li> see also <a href="https://www.grassbook.org">Open Source GIS: A GRASS GIS Approach</a>
                 book which is available in printed and electronic form in NCSU libraries. It was written for GRASS6
@@ -102,7 +102,7 @@ to learn about
             </li>
             <li>
                 or just learn when doing the first
-                <a href="grass/data_acquisition.html">GRASS GIS assignment</a>
+                <a href="grass/data_acquisition.html">GRASS assignment</a>
             </li>
         </ul>
 </ul>
@@ -131,11 +131,11 @@ Data are provided at three hierarchical levels:
 </ul>
 -->
 <ul>
-<li>Sample GRASS GIS dataset:
+<li>Sample GRASS dataset:
     <ul>
         <li>
-            The dataset is provided during installation of GRASS GIS on MS Windows under the name North_Carolina.
-        <li>If you don't have it, start GRASS GIS. In the data management window,
+            The dataset is provided during installation of GRASS on MS Windows under the name North_Carolina.
+        <li>If you don't have it, start GRASS. In the data management window,
             click the icon <em>Download sample project to current database</em> and
             select <em>Complete North Carolina dataset</em>, click <em>Download</em>,
             close when finished. You should see a project <em>nc_spm_08_grass7</em> in your database.
@@ -145,7 +145,7 @@ Data are provided at three hierarchical levels:
 <!-- add link to slides with screenshots and/or video - THIS MAY BE HARD TO DO WITHOUT VIDEO! -->
 
         <li>Alternatively, you can download and unzip <a href="https://grass.osgeo.org/sampledata/north_carolina/nc_spm_08_grass7.zip">
-            <em>nc_spm_08_grass7</em></a> into the <em>grassdata</em> directory and then start GRASS GIS - you should see the dataset
+            <em>nc_spm_08_grass7</em></a> into the <em>grassdata</em> directory and then start GRASS - you should see the dataset
             in the Data catalog. 
             In this case it is <strong>important</strong> to make sure that your unziping software does
             not create additional directory with the same name, e.g. on MS Windows make sure that you do not get 
@@ -171,8 +171,8 @@ Instructions:
             <li>Mac OS or Linux: ideally in your home directory, e.g. /home/myname/Documents/grassdata</li>
         </ul>
     </li>
-    <li>After downloading, unpack ArcGIS geodatabase into arcdata folder and, if using GRASS GIS version &lt 8, 
-    copy GRASS GIS location into grassdata folder</li>
+    <li>After downloading, unpack ArcGIS geodatabase into arcdata folder and, if using GRASS version &lt 8, 
+    copy GRASS location into grassdata folder</li>
     <li><strong>Important:</strong> make sure that your unziping software does
     not create additional directory with the same name, e.g. on MS Windows make sure that you do not get nc_spm_08_grass7\nc_spm_08_grass7.
     </li>
@@ -203,8 +203,8 @@ You can find additional data for your project in this list of <a href="resources
 <h3 id="assignments">Assignments</h3>
 
 In the assignments you will be performing similar geospatial analyses
-in two different software packages - GRASS GIS and ArcGIS Pro.
-<em>Both</em> GRASS GIS and ArcGIS Pro solutions are required,
+in two different software packages - GRASS and ArcGIS Pro.
+<em>Both</em> GRASS and ArcGIS Pro solutions are required,
 described in a single paper (more details see below).
 Step-by-step instructions are provided, but it is your task to explain
 what is being done in terms of methods and results,
@@ -219,7 +219,7 @@ based on the lectures, manual pages and other on-line resources.
             <li>Introduction: task, problem, background, importance, motivation</li>
             <li>Methods: general description of methods and concepts, do not repeat instructions
               and do not discuss software issues here - this section should be software independent, common for
-              both ArcGIS and GRASS GIS and equations for methods should be included where appropriate.
+              both ArcGIS and GRASS and equations for methods should be included where appropriate.
               In this section you should demonstrate that for the given step-by-step instructions
               your were able to explain what methods are being used to solve the given problem</li>
               <li>Results: images, maps, graphs, tables with comments, focus on what is interesting in the data
@@ -319,7 +319,7 @@ Moodle Forums are set up to introduce yourself, post your questions about assign
     <p><i>Please complete the following information:</i></p>
     <ul>
         <li>OS: [e.g. Windows 10, macOS 10.15, Ubuntu 20.04]</li>
-        <li>GRASS GIS version or ArcPro version: [e.g. 8.4.0, 2.8.3]</li>
+        <li>GRASS version or ArcPro version: [e.g. 8.4.0, 2.8.3]</li>
     </ul>
 </ul>
 

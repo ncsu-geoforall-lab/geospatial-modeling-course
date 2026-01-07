@@ -212,7 +212,7 @@ Each software has its own syntax, operators and functions
 <li class="fragment"><code>exp(x,y), sin(x), log(x)</code>
 <li class="fragment"><code>min(x1,x2,..), max(), median()</code>
 </ul>
-<p class="fragment"><small>See GRASS GIS <a href="https://grass.osgeo.org/grass83/manuals/r.mapcalc.html">map algebra manual page</a>
+<p class="fragment"><small>See GRASS <a href="https://grass.osgeo.org/grass83/manuals/r.mapcalc.html">map algebra manual page</a>
 for extensive set of supported operators and mathematical functions</small>
 </section>
 
@@ -224,7 +224,7 @@ for extensive set of supported operators and mathematical functions</small>
 <li>reclassification, sub-setting, masking, overlays
 <li>Example: extract map of elevations in all forested areas with elevation > 120m
 </ul>
-<p>GRASS GIS expression
+<p>GRASS expression
 <p><code>forest_z = if(landc==5 && elev > 120., elev, null())</code></p>
 </section>
 
@@ -261,7 +261,7 @@ for extensive set of supported operators and mathematical functions</small>
 <img height="240" src="img/analysis_basicraster/ndvi_0.png">
 <p><small>This is to illustrate the arithmentic operators, 
 note that various vegetation indices are usually implemented
-as a separate module, e.g. <code>i.vi</code> in GRASS GIS</small>
+as a separate module, e.g. <code>i.vi</code> in GRASS</small>
 </section>
 
 <section>
@@ -273,7 +273,7 @@ as a separate module, e.g. <code>i.vi</code> in GRASS GIS</small>
 <img height="240" src="img/analysis_basicraster/ndvi_fp.png">
 <p><small>This is to illustrate the arithmentic operators, 
 note that various vegetation indices are usually implemented
-as a separate module, e.g. <code>i.vi</code> in GRASS GIS</small>
+as a separate module, e.g. <code>i.vi</code> in GRASS</small>
 </section>
 
 <section>
@@ -287,7 +287,7 @@ $$T = A^{1.5} \sin \beta$$
    <li>$A$ is contributing area per unit width
    <li>$\beta$ is slope
 </ul>
-<p class=small>GRASS GIS expression</p>
+<p class=small>GRASS expression</p>
 <p class=small>
 <code>t_sed = if(landc==5, exp(area,1.5) * sin(slope), null())</code>
 </section>

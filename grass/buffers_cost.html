@@ -2,7 +2,7 @@
 <p>Resources:
 <ul>
 <li><a href="https://grass.osgeo.org/grass83/manuals/index.html">
-GRASS GIS overview and manual</a></li>
+GRASS overview and manual</a></li>
 <li> <a href="data_acquisition.html#commands">Recommendations</a>
 and <a href="./grass_intro.html">tutorial</a>
 how to use GUI from the first assignment</li>
@@ -18,7 +18,7 @@ Text files with recode rules, color rules and site locations:
 <li><a href="data/lostperson.txt">lostperson.txt</a></li>
 </ul>
 
-<h3>Start GRASS GIS</h3>
+<h3>Start GRASS</h3>
 Create a new mapset (called e.g. HW_buffers_cost) in nc_spm_08_grass7 project.
 Remove MASK in case it was left over
 from previous assignment (use command <code>r.mask -r</code>).
@@ -119,7 +119,7 @@ v.in.ogr input=fire_pt.json output=fire_pt
 
 <p>
 Assign travel time to cross a 30m grid cell in hours.<br>
-Note that cost in GRASS GIS is defined as travel time per <em>cell</em>.
+Note that cost in GRASS is defined as travel time per <em>cell</em>.
 <p>
 Compute cumulative cost surface to the given point.<br>
 <span class="question">Where does the 0.018641 constant come from?</span>

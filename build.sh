@@ -52,16 +52,16 @@ do
     done
 done
 
-# GRASS GIS index
+# GRASS index
 FILES="`./extract-links.py "grass/.+html" assignments.html`"
-TITLE="List of GRASS GIS assignments"
+TITLE="List of GRASS assignments"
 HEAD_TEXT=""
 # if this gets longer, it must go to a file
 FOOT_TEXT="<img src='../img/grass_index.png' style='max-width: 90%;'>
 <p>
 If you are a non-NCSU visitor, you may find these additional pages useful:
 <ul>
-    <li><a href='../topics/grass.html'>Introduction to GRASS GIS</a>
+    <li><a href='../topics/grass.html'>Introduction to GRASS</a>
     <li><a href='../lectures.html'>Lectures</a>
     <li><a href='../logistics.html#software'>Software download instructions</a>
     <li><a href='../logistics.html#data'>Dataset download instructions</a>\

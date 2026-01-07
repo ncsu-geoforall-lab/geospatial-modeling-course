@@ -48,7 +48,7 @@ commit all or specify the filenames to commit just some of them.
 Use `-m "some commit message"` to describe the changes you made.
 The fastest way to commit might be, for example:
 
-    git commit -am "updated for GRASS GIS 7"
+    git commit -am "updated for GRASS 8.4.2"
 
 If you want to provide a longer commit message, just omit the `-m "..."` and
 you will get an editor (`nano` by default) where you can write a commit message.
@@ -129,7 +129,7 @@ in the web pages.
 * update links to the Moodle site
 * create a new page for project titles and link it
 * search for all other occurrences of string `term-changes` and update
-* update to current GRASS GIS release
+* update to current GRASS release
 * email students with link to the website and to Moodle
 
 The `term-changes` should be added to all places which needs to be
@@ -149,7 +149,7 @@ Confirm with:
 grep -Irn "[^0-9]old_year_here[^0-9]"
 ```
 
-### Updating for new GRASS GIS releases
+### Updating for new GRASS releases
 
 Update commands URLs for documentation:
 
@@ -161,14 +161,14 @@ grep -IrnE grassXY --exclude=README.md --exclude-dir={build,.git}
 Now run the *grep* command again, to get what the script does not
 handle.
 
-Find also other locations where a specific GRASS GIS version is
+Find also other locations where a specific GRASS version is
 mentioned (replace `X` and `Y` with version number):
 
 ```
 grep -IrnE "[^0-9]X\.Y[^0-9]" --exclude=README.md --exclude-dir={build,.git}
 ```
 
-Testing GRASS GIS assignments
+Testing GRASS assignments
 -----------------------------
 
 Prepare new directory and mapset:
@@ -208,7 +208,7 @@ rm -r ~/grassdata/nc_spm_08_grass7/test/
 Automatic indexes
 -----------------
 
-Topics index and GRASS GIS assignments index are generated automatically.
+Topics index and GRASS assignments index are generated automatically.
 The process is split into two phases. First, links to pages are extracted
 from a given page. This introduces the desired order of the linked pages
 (alternative would be, e.g. alphabetical order based on file names

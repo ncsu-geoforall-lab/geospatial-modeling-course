@@ -16,7 +16,7 @@ Generate the test script::
     ./doc2tests.py < .../terrain_analysis.html > test_terrain_analysis.sh
     chmod u+x test_terrain_analysis.sh
 
-In GRASS GIS session::
+In GRASS session::
 
     ./test_terrain_analysis.sh
 

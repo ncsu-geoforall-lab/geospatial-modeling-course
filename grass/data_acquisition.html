@@ -4,15 +4,15 @@
 <ul>
 <li>
 <a href="https://grass.osgeo.org/grass-stable/manuals/index.html">
-GRASS GIS overview and manual</a>
+GRASS overview and manual</a>
 </li>
 <li><a href="https://www.youtube.com/watch?v=kktp5gZLLCk&list=PLiNYVMuYqTHUZUa7t3874sBfWAuNMj4pZ">
- Geospatial Modeling with GRASS GIS 8.4.0 videos for assignments in GIS582</a>
+ Geospatial Modeling with GRASS 8.4.0 videos for assignments in GIS582</a>
 </li>
 </ul>
 
 
-<h3 id="commands">Understanding GRASS GIS commands</h3>
+<h3 id="commands">Understanding GRASS commands</h3>
 
 <p>
 You can run GRASS several ways using its graphical user interface (GUI)
@@ -47,15 +47,15 @@ Video tutorials
 Introduction to GRASS video tutorial by Brendan Harmon</a>
   <li>Video tutorial (no sound, switch on annotations):
 <a href="https://www.youtube.com/watch?v=9fcBvYetIsM">
-    <strong>Getting started with GRASS GIS GUI</strong></a>.
-Note: recorded with GRASS GIS 7.2, some details can differ (e.g. the start up window).</li>
+    <strong>Getting started with GRASS GUI</strong></a>.
+Note: recorded with GRASS 7.2, some details can differ (e.g. the start up window).</li>
 <li>Updated Video tutorial (GRASS 8.3.0):
     <a href="https://www.youtube.com/watch?v=OCcM1XfxHW8&list=PLSCH2IXZ2pHrUXXuOK7EBKWmMD7i6CTA-&index=1">
-        <strong>Introduction to GRASS GIS version 8 - Basics and getting started.</strong></a>.
+        <strong>Introduction to GRASS version 8 - Basics and getting started.</strong></a>.
 </li>
 <li>Screenshot-based tutorial demonstrates these options:
 <a href="./grass_intro.html">
-    <strong>Getting started with GRASS GIS GUI</strong>
+    <strong>Getting started with GRASS GUI</strong>
 </a></li> 
 </ul>
 -->
@@ -70,7 +70,7 @@ Feel free to use the approach that suits you the best.
 For a quick reference, here are the GUI equivalents for the d.* commands:
 
 <p>
-In GRASS GIS Layer Manager toolbar
+In GRASS Layer Manager toolbar
 <ul>
     <!-- the em tags cannot be merged for the module auto link script -->
     <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.rast.html">
@@ -78,7 +78,7 @@ In GRASS GIS Layer Manager toolbar
     <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.vect.html">d.vect<em>: Add vector map layer</em></a>
     <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.shade.html">d.shade<em>: Add various raster map layers > Add shaded relief map</em></a>
 </ul>
-In GRASS GIS Map Display toolbar
+In GRASS Map Display toolbar
 <ul>
  <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.zoom.html">d.zoom<em>: Zoom options</em></a>
  <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.out.file.html">d.out.file<em>: Save display image to file</em></a>
@@ -98,12 +98,12 @@ Note, that the CLI instructions can also be used for running the assignments on 
 </i>
 
 <h3>GRASS project and mapset</h3>
-If you don't already have GRASS GIS spatial database nc_spm_08_grass7
+If you don't already have GRASS spatial database nc_spm_08_grass7
 downloaded, you can find links to it on
 <a href="../logistics.html#data">Course logistics page</a>.
 <p>
-Before starting with GRASS GIS it is important to understand that
-GRASS GIS uses the concept of <em>projects</em>, <em>mapsets</em>
+Before starting with GRASS it is important to understand that
+GRASS uses the concept of <em>projects</em>, <em>mapsets</em>
 and <em>computational region</em> to support
 efficient analysis and modeling without the need to subset and resample
 data. Data in a GRASS project have common coordinate system.
@@ -127,9 +127,9 @@ g.region</a>
 and specifies the spatial extent and resolution at which raster operations are performed.
 
 
-<h3>Start GRASS GIS</h3>
+<h3>Start GRASS</h3>
 <p>
-Start GRASS GIS as any other program on your computer.
+Start GRASS as any other program on your computer.
 
 You should see a project <em>nc_spm_08_grass7</em> in your database.
 If you have not downloaded it yet,
@@ -152,7 +152,7 @@ in the Layers tab and/or using display commands.
 <p>
 To save your outputs and to store external data create a directory where you can write, e.g.
 on MS Windows, C:\Users\myname\Documents\GIS582_HW\report1.
-Then set this directory in GRASS GIS as your working directory:<br>
+Then set this directory in GRASS as your working directory:<br>
 <em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select this directory<br>
 or type <code>cd</code> (stands for change directory) into the GUI
 <em>Console</em> and hit Enter:
@@ -349,7 +349,7 @@ We will learn how to find more information about the data, copy and rename maps.
 
 Browse raster and vector data in the provided database using
 the <em>Data</em> tab in the <em>Layer Manager</em>.
-The tree shows projects and mapsets in your GRASS GIS database.
+The tree shows projects and mapsets in your GRASS database.
 <p>
 You can also paste the following command into the <em>Console</em>
 to list the raster and vector maps:
@@ -513,7 +513,7 @@ have hard time finding them especially on MS Windows.
 </ul>
 You can then display the exported "roadsmajor" data in ArcGIS.
 
-Note that the names of the GRASS GIS tool used in the
+Note that the names of the GRASS tool used in the
 background during the import and export were: 
 <a href="https://grass.osgeo.org/grass-stable/manuals/v.import.html">
 <em>v.import</em></a> and

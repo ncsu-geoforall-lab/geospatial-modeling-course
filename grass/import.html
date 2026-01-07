@@ -1,12 +1,12 @@
-<h2>Import and export of data from different sources in GRASS GIS</h2>
+<h2>Import and export of data from different sources in GRASS</h2>
 
-GRASS GIS project can contain data only in one coordinate reference system (CRS)
+GRASS project can contain data only in one coordinate reference system (CRS)
 in order to have full control over reprojection
 and avoid issues coming from on-the-fly reprojection.
 
 <p>
 When starting a project, decide which CRS you will use. Create
-a new project using Project Wizard (accessible from GRASS GIS start-up page).
+a new project using Project Wizard (accessible from GRASS start-up page).
 Specify desired CRS either by providing
 EPSG code (can be found e.g. at <a href="https://epsg.io/">epsg.io</a>)
 or by providing a georeferenced file (such as Shapefile) which has
@@ -76,7 +76,7 @@ using a text editor (Notepad++, TextEdit, MS Notepad), for example:
 
 The coordinates we entered are in EPSG:3358 and we assume that the
 GRASS project is using this CRS as well.
-This file can be imported to GRASS GIS using:
+This file can be imported to GRASS using:
 
 <pre><code>
 v.in.ascii input=points.txt output=test_ascii separator=comma x=1 y=2
@@ -204,9 +204,9 @@ r.in.lidar input=tile_0793_016_spm.las -s -o
 </code></pre>
 
 
-<h3>Transferring GRASS GIS data between two computers</h3>
+<h3>Transferring GRASS data between two computers</h3>
 
-If two GRASS GIS users want to exchange data, they can use GRASS GIS native
+If two GRASS users want to exchange data, they can use GRASS native
 exchange format &ndash; <em>packed map</em>. A vector or raster map can be
 exported from a GRASS project in this format using
 <em class="module">v.pack</em> or <em class="module">r.pack</em> respectively.
@@ -215,7 +215,7 @@ a GRASS Database. <em>Projection of the source and target GRASS projects
 must be the same.</em>
 
 <p>
-If GRASS GIS users wish to exchange GRASS Mapsets, they can do so as long as
+If GRASS users wish to exchange GRASS Mapsets, they can do so as long as
 the source and target GRASS projects have the same projection.
 The PERMANENT Mapset should not be usually exchanged as it is a crucial part
 of the given project.
@@ -229,8 +229,8 @@ in the same way as any other directories on the computer.
 <h3>Further resources</h3>
 
 <ul>
-    <li><a href="https://grass.osgeo.org/grass83/manuals">GRASS GIS manual</a></li>
-    <li><a href="https://grass.osgeo.org/grass83/manuals/grass_database.html">About GRASS GIS Database structure</a></li>
-    <li><a href="https://grasswiki.osgeo.org/wiki/GRASS_GIS_for_ArcGIS_users">GRASS GIS for ArcGIS users</a></li>
+    <li><a href="https://grass.osgeo.org/grass83/manuals">GRASS manual</a></li>
+    <li><a href="https://grass.osgeo.org/grass83/manuals/grass_database.html">About GRASS Database structure</a></li>
+    <li><a href="https://grasswiki.osgeo.org/wiki/GRASS_GIS_for_ArcGIS_users">GRASS for ArcGIS users</a></li>
     <li><a href="https://epsg.io/">epsg.io</a> (Repository of EPSG codes)</li>
 </ul>
