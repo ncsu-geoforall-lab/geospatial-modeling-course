@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Spatial interpolation and approximation II: splines</h2>
+<p>Resources:
+<ul>
+<li><a href="https://grass.osgeo.org/grass83/manuals/index.html">
+GRASS overview and manual</a></li>
+<li> <a href="data_acquisition.html#commands">Recommendations</a>
+and <a href="./grass_intro.html">tutorial</a>
+how to use GUI from the first assignment</li>
+</ul>
+
+<p>
+Text files with color rules:
+<ul>
+<li><a href="data/deviations_color.txt">deviations_color.txt</a></li>
+<li><a href="data/precip_color.txt">precip_color.txt</a></li>
+</ul>
+
+
+<h3>Start GRASS</h3>
+Create a new mapset (called e.g. HW_interpolation_2) in nc_spm_08_grass7 project and
+change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+Download all text files with color rules (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
+
+<!-- p. 235<br> -->
+<h3>Explore impact of spline tension parameter on the interpolated surface</h3>
+Display the input scattered points with elevation stored as attribute named value. Then
+interpolate elevation rasters from these points using splines with different tension.
+Compute aspect simultaneously with interpolation and 
+<span class="question">explain impact of tension by using tension=40 (default), tension=10 and tension=160.</span>
+
+<pre><code>g.region rural_1m res=1 -p
+v.colors map=elev_lid792_randpts use=attr column=value color=elevation
+d.vect elev_lid792_randpts
+v.surf.rst input=elev_lid792_randpts elevation=elev_rstdef_1m aspect=asp_rstdef_1m zcolumn=value npmin=140
+v.surf.rst input=elev_lid792_randpts elevation=elev_rstt10_1m aspect=asp_rstt10_1m zcolumn=value tension=10 npmin=140
+v.surf.rst input=elev_lid792_randpts elevation=elev_rstt160_1m aspect=asp_rstt160_1m zcolumn=value tension=160 npmin=140
+</code></pre>
+
+<p>
+Compare the interpolated elevation surfaces using aspect maps.<br>
+Change the aspect color table to grey aspect for consistency with assignment 4A.<br>
+Save aspect images for your report.
+
+<pre><code>r.colors asp_rstdef_1m color=aspect
+r.colors asp_rstt10_1m color=aspect
+r.colors asp_rstt160_1m color=aspect
+d.erase
+d.rast asp_rstdef_1m
+d.out.file asp_rst_t40
+d.rast asp_rstt10_1m
+d.out.file asp_rst_t10
+d.rast asp_rstt160_1m
+d.out.file asp_rst_t160
+</code></pre>
+
+<p>
+Or use 3D views of elev_rstdef_1m, elev_rstt10_1m, elev_rstt160_1m, 
+make sure you switch off the aspect rasters and save the 3 images for your report.
+
+<h3>Explore impact of spline smoothing parameter on deviations of the interpolated surface </h3>
+Compute elevation raster,aspect, and deviations vector point map with different values of smoothing
+(switch off aspect maps to see the elevations output).
+Compare summary statistics for deviations for smoothing 0.1 and 10, including root mean square deviation (rmsdevi)
+ provided by r.info of the resulting elevations maps<br>
+
+<pre><code>v.surf.rst input=elev_lid792_randpts elevation=elev_rstdef_1mb aspect=asp_rstdef zcolumn=value smooth=0.1 deviations=elev_rstdef_devi npmin=140
+v.surf.rst input=elev_lid792_randpts elevation=elev_rstsm10_1mb aspect=asp_rstsm10 zcolumn=value smooth=10 deviations=elev_rstsm10_devi npmin=140
+r.info elev_rstdef_1mb
+v.info -c elev_rstdef_devi
+v.univar elev_rstdef_devi column=flt1 type=point
+r.info elev_rstsm10_1mb
+v.info -c elev_rstsm10_devi
+v.univar elev_rstsm10_devi column=flt1 type=point
+r.colors asp_rstdef color=aspect
+d.out.file aspect_smoothdefault
+r.colors asp_rstsm10 color=aspect
+d.out.file aspect_smooth10
+</code></pre>
+
+<p>
+Compute and display deviations maps using the same divergent custom color table.
+Note that we are interpolating the deviations, not the given elevations.
+
+<pre><code>v.surf.rst input=elev_rstdef_devi elevation=elev_rstdef_devi zcolumn=flt1 npmin=140
+v.surf.rst input=elev_rstsm10_devi elevation=elev_rstsm10_devi zcolumn=flt1 npmin=140
+</code></pre>
+
+<p>
+Apply the downloaded custom color table <a href="data/deviations_color.txt">deviations_color.txt</a>
+to the deviation raster. Right click to remove legend from previous map if needed.<br>
+Optionally, to view the results in 3D use "elev_rstdef_1mb" for elevation (switch off everything else)
+and drape the deviations maps as color.
+
+<pre><code>r.colors elev_rstsm10_devi rules=deviations_color.txt
+r.colors elev_rstdef_devi rules=deviations_color.txt
+d.erase
+d.rast elev_rstdef_devi
+d.legend elev_rstdef_devi at=2,50,2,6
+d.out.file elev_rstdef_devi
+d.rast elev_rstsm10_devi
+d.legend elev_rstsm10_devi at=2,50,2,6
+d.out.file elev_rstsm10_devi
+</code></pre>
+
+<span class="question">What is the difference in deviations in terms of summary statististics 
+and spatial pattern for the interpolation with the two different smoothing parameters?  </span>
+
+<h3>Compute predictive error of interpolation</h3>
+Compute predictive error of interpolation for each point
+using cross-validation (no raster output, result is points with predictive errors).
+
+<pre><code>d.erase
+v.surf.rst -c input=elev_lid792_randpts zcolumn=value cvdev=elev_rstdef_cv npmin=140 
+v.colors elev_rstdef_cv use=attr column=flt1 rules=deviations_color.txt
+v.univar elev_rstdef_cv column=flt1 type=point
+</code></pre>
+
+<p>
+Compute raster map of predictive errors and <span class="question">identify locations
+where the sampling is inadequate leading to large predictive errors.</span><br>
+
+<pre><code>v.surf.rst input=elev_rstdef_cv elevation=elev_rstdef_cv zcolumn=flt1
+r.colors elev_rstdef_cv rules=deviations_color.txt
+d.erase
+d.rast elev_rstdef_cv
+d.legend elev_rstdef_cv at=2,50,2,6
+d.out.file elev_rstdef_cv
+</code></pre>
+
+Optionally, to view the result in 3D use "elev_rstdef_1mb" for elevation (switch off everything else) and drape the crossvalidation map "elev_rstdef_cv" as color.
+
+<!-- <font color="#000066">
+nviz elev_rstdef_1m col=elev_rstdef_cv
+p. 247
+# optional task interpolate from contours using spline
+# run in background - may take a few minutes
+</font>
+g.region rural_1m res=2 -p
+v.surf.rst elev_lid792_cont1m elev=elev_rstcontd_2m zcol=level aspect=asp_rstcontd_2m dmin=3
+d.erase
+d.rast elev_rstcontd_2m
+<font color="#000066">
+# to compare the results,
+# optionally change the color table to grey aspect or use nviz
+</font>
+r.colors asp_rstcontd_2m col=aspect
+d.rast asp_rstcontd_2m
+d.vect elev_lid792_cont1m col=yellow
+<font color="#000066">
+# to improve the interpolation run v.generalize on elev_lid792_cont1m
+-->
+
+<h3>Interpolate precipitation with influence of topography</h3>
+
+Set 3D region for entire North Carolina (read the man page for <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/g.region.html">g.region</a></em>).<br>
+We set <em>tbres</em> to high value - we have just a single level
+because we are not computing the 3D raster (see lecture for more details).
+
+<pre><code>g.region raster=elev_state_500m -p
+g.region t=2000 b=0 tbres=2000 res3=500 -p3
+</code></pre>
+
+<p>
+Compute precipitation raster map without influence of elevation
+(with segmax=700 segmentation is not performed so
+interpolation function is computed using all points at once).<br>
+We will use mask during the interpolation to limit the computation to North Carolina.
+Zoom to computational region to see the input maps and the result.
+
+<pre><code>d.rast ncmask_500m
+r.mask raster=ncmask_500m
+v.info -c precip_30ynormals
+d.vect precip_30ynormals size=2
+v.surf.rst input=precip_30ynormals elevation=precip_annual_500m zcolumn=annual segmax=700
+</code></pre>
+
+<p>
+Use the downloaded the color table <a href="data/precip_color.txt">precip_color.txt</a>.<br>
+
+<pre><code>r.colors precip_annual_500m rules=precip_color.txt
+d.erase
+d.rast precip_annual_500m
+d.legend precip_annual_500m at=2,30,2,5 range=970,2400
+d.out.file precip_annual
+</code></pre>
+
+<p>
+Compute precipitation raster map with influence of elevation.
+<p>
+We use trivariate spline interpolation and compute the result as a crossection
+between the trivariate precipitation function and bivariate elevation function.
+We rescale elevation by 90 to incorporate strong influence of topography and use
+the 2D cross_output raster for the resulting precipitation map.<br>
+<br>
+
+<pre><code>v.info -c precip_30ynormals_3d
+v.vol.rst input=precip_30ynormals_3d cross_input=elev_state_500m cross_output=precip_anntopo_500m maskmap=elev_state_500m wcolumn=annual zscale=90 segmax=700
+r.colors precip_anntopo_500m raster=precip_annual_500m
+d.rast precip_anntopo_500m
+d.out.file precip_anntopo
+</code></pre>
+<p>
+
+<!--
+Optionally, to view the results in 3D, switch off everything except for elev_state_500m and precip_30ynormals_3d,
+switch to 3D, set(type in) viewer height at 300000, z-exag at 6, fine res=1,<br>
+use precip_anntopo_500m for color, set icon size for points - sphere, 5000.<br>
+Display the result and save the image for the report.
+-->
+
+<p>
+<span class="question">Try to explain how was elevation used for the precipitation raster interpolation.</span>
+<p>
+After you are finished, remove mask.
+
+<pre><code>r.mask -r
+</code></pre>
+
+
+<!--
+nviz elev_state_500m co=precip_anntopo_500m points=precip_30ynormals_3d
+<a href="https://www.grassbook.org/gallery/chapters/s050303f010_resamp.jpg">
+<img src="https://skagit.meas.ncsu.edu/~helena/grasswork/grassbookdat07/galery/galery/s070302f010_resamp_i.jpg" height=70>
+</a>
+-->
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

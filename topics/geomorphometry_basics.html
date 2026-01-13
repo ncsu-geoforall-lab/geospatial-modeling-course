@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>5. Geomorphometry</h2>
+
+<h3 id="terrain_modeling" class="subtopic">5.A Terrain modeling</h3>
+Outline:
+<ul>
+    <li>3D mapping technologies: topography and bathymetry</li>
+    <li>digital elevation data representation</li>
+    <li>regular grid DEM and TIN-based elevation models</li>
+    <li>point cloud properties and analyis</li>
+</ul>
+<h4>Lecture</h4>
+<p>
+    <a href="../lectures/geomorph_terrain.html">Lecture slides: Elevation surface modeling,</a>
+<p>
+Supplemental materials:
+<ul>
+    <li><a href="../resources/data_providers.html">Links to elevation data repositories</a>
+    <li>Point cloud viewers <a href="https://potree.org/potree/examples/viewer.html">potree</a>, 
+        <a href="https://plas.io/">plas.io</a>
+    <li><a href="https://doi.org/10.3390/s23031593">Petras, V.et al., (2023). Point Density Variations in Airborne Lidar Point Clouds. Sensors, 23(3). https://doi.org/10.3390/s23031593
+</a>
+    <li><a href="https://doi.org/10.3390/rs13183581">Guth, P.L., et al. 2021 - Digital Elevation Models: Terminology and Definitions. Remote Sensing, 13(18):3581. https://doi.org/10.3390/rs13183581</a>
+    <li><a href="https://pubs.geoscienceworld.org/gsa/geosphere/article/7/6/1340/132498/Modeling-and-analysis-of-landscape-evolution-using">
+Starek MJ, et al., 2011, Modeling and analysis of landscape evolution using airborne, terrestrial, and laboratory laser scanning, Geosphere, 7(6), p. 1340-1356, doi:10.1130/GES00699.1.</a>
+    <li><a href="https://opengeospatialdata.springeropen.com/articles/10.1186/s40965-017-0019-2">
+Petrasova, A., Mitasova, H., Petras, V., Jeziorska, J., 2017, Fusion of high-resolution DEMs for water flow modeling, Open Geospatial Data, Software and Standards 2(6), DOI: 10.1186/s40965-017-0019-2</a>
+    <li><a href="https://grasswiki.osgeo.org/wiki/Processing_lidar_and_UAV_point_clouds_in_GRASS_GIS_(workshop_at_FOSS4G_Boston_2017)">Processing lidar and UAV point clouds in GRASS GIS workshop 2017</a>
+    <li><a href="https://www.academia.edu/download/54615977/afreeman_pdf.pdf">Freeman, Ch., et al. 2004, Rapid response 3D survey techniques for seamless topo/bathy modeling: 2003 Hatteras Breach, North Carolina, Shore and Beach, 72(2), p. 25-30.</a>
+<!--
+    <li><a href="https://geografia.science.upjs.sk/webshared/Laspublish/Tokaj/Tokaj.html">Explore shared point cloud data with  potree </a>
+-->
+    <li>Original lecture:
+    <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Lterrain.pptx">Slides in the video</a>,
+    <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_LterrainJan2014.pptx">Slides with 2014 updates</a>,
+    videos: <a href="https://youtu.be/PLby6Hb6Euw">Terrain Mapping</a>,<a href="https://youtu.be/mEFqaLN15E0">Terrain Modeling</a>,
+    <a href="https://youtu.be/h-TBWaNcEv4">Point cloud binning</a>.
+</ul>
+<h4>Assignment A:</h4>
+<ul>
+    <li>Approach:
+        <a href="../grass/terrain_modeling.html">GRASS solution</a>,
+        <a href="../arcpro/terrain_modeling.html">ArcGIS Pro solution</a>.
+    <li>The assignments use standard GIS tools to analyze the point clouds. Updates and links to
+        specialized lidar data processing tools are provided in GRASS and ArcGIS solution webpages.
+    <li><a href="../faq.html#terrain_modeling">Comments/answers to HW questions</a>
+</ul>
+
+<h3 id="terrain_analysis" class="subtopic">5.B Spatial and temporal terrain analysis</h3>
+Outline:
+<ul>
+    <li>summary parameters: volumes, surface areas</li>
+    <li>first and second order point parameters: general approach</li>
+    <li>methods for slope, aspect and curvatures using polynomial and spline approximation</li>
+    <li>combining parameters to map landforms and terrain features</li>
+    <li>computing parameters from noisy data, accuracy and uncertainty, scale and level of detail</li>
+    <li>raster time series analysis, quantification of coastal change</li>
+</ul>
+<h4>Lecture</h4>
+<p>
+    <a href="../lectures/topoanalysis.html">Lecture slides:  Basic topographic analysis</a> 
+<p>
+Supplemental materials:
+<p>
+<ul>
+    <li><a href="https://link-springer-com.prox.lib.ncsu.edu/chapter/10.1007/978-3-319-89303-7_6">Basic Landscape Analysis,</a> 
+    chapter from Petrasova et al., 2018, Tangible Modeling with Open Source GIS. Second edition. Springer.
+    <a href="https://link-springer-com.prox.lib.ncsu.edu/book/10.1007/978-3-319-89303-7">Available through NCSU library</a>
+    or <a href="https://link.springer.com/book/10.1007%2F978-3-319-89303-7">through Springer</a>
+    <li><a href="https://doi.org/10.1016/j.geomorph.2012.11.005">Jasiewicz, J., Stepinski, T., 2013, Geomorphons - a pattern recognition approach to classification and mapping of landforms, Geomorphology, vol. 182, 147-156 (DOI: 10.1016/j.geomorph.2012.11.005)</a>
+    <li> <a href="https://opengeospatialdata.springeropen.com/articles/10.1186/s40965-017-0021-8">
+Petras V., Newcomb D.J., Mitasova, H., 2017, Generalized 3D fragmentation index derived from lidar point clouds, Open Geospatial Data, Software and Standards 2(9), DOI: 10.1186/s40965-017-0021-8</a>
+    <li><a href="https://doi.org/10.3390/drones4030036">
+Montgomery K., et al. 2020. Measures of Canopy Structure from Low-Cost UAS for Monitoring Crop Nutrient Status. In: Drones 4(3).</a>
+    <li><a href="https://link-springer-com.prox.lib.ncsu.edu/book/10.1007%2F978-1-4939-1835-5">
+    GIS-based Analysis of Coastal Lidar Time-Series,</a> Springer Brief booklet by Hardin et al., available through NCSU library
+    or <a href="https://link.springer.com/book/10.1007%2F978-1-4939-1835-5">through Springer</a>.
+    <li><a href="https://ieeexplore.ieee.org/abstract/document/6469163">
+Starek, M.J., et al. 2013, Space-Time Cube Representation of Stream Bank Evolution Mapped by Terrestrial Laser Scanning, IEEE Geoscience and Remote Sensing Letters 10(6), p. 1369-1373, PP(99), DOI 10.1109/LGRS.2013.2241730</a>,
+    <a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/MJ_Starek_Revision_GRSL-00540-2012.pdf">pdf</a>
+    <li>Original lecture: <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Ltopoanal.ppt">Slides</a>, videos:
+    <a href="https://youtu.be/nVFxj-sSNY4">Gradient parameters</a>,
+    <a href="https://youtu.be/sIhzzKyRfsI">Curvature parameters</a>,
+    <a href="https://youtu.be/0bbcis1PVxY">Elevation time series</a>.
+</ul>
+
+<h4>Assignment B</h4>
+<ul>
+    <li>Approach:
+        <a href="../grass/terrain_analysis.html">GRASS solution</a>,
+		<a href="../arcpro/terrain_analysis.html">ArcGIS Pro solution</a>
+    <li><a href="../faq.html#terrain_analysis">Comments/answers to HW questions</a>
+</ul>
+   <h3>Homework 5. A and B</h3>
+        Prepare a paper on properties of lidar data and on computing topographic parameters from
+        digital elevation models.
+        Discuss how the topographic analysis methods and types of DEM influence the result.
+        Describe results of elevation time series analysis.
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

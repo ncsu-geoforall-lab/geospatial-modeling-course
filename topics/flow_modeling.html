@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>7. Flow modeling</h2>
+
+<h3 id="hydrology" class="subtopic">7.A Flow routing, watershed analysis</h3>
+Outline:
+<ul>
+    <li>cumulative terrain parameters based on flow tracing: definitions and general approach
+        (flow path length, flow accumulation, stream networks, watershed boundaries, ridge lines)
+    <li>methods for computing flow direction (D8, Dinf), flow tracing (SFD, MFD, uniform, weighted)
+    <li>methods for flow tracing through depressions and flat areas
+        (filling, carving, hybrid, least cost path)
+    <li>principle of stream extraction from a DEM and watershed delineation
+</ul>
+<h4>Lecture</h4>
+<p>
+ <a href="../lectures/flow.html">Lecture slides: Flow routing and watershed analysis</a>
+<p>
+Supplemental materials:
+<ul>
+   <li><a href="https://link-springer-com.prox.lib.ncsu.edu/chapter/10.1007/978-3-319-89303-7_7">
+Surface Water Flow Modeling</a> chapter from Petrasova et al., 2018, Tangible Modeling with Open Source GIS. Second Edition. Springer.
+   <a href="https://link-springer-com.prox.lib.ncsu.edu/book/10.1007/978-3-319-89303-7">Available free through NCSU library.</a>
+or <a href="https://link.springer.com/book/10.1007%2F978-3-319-89303-7">through Springer</a>
+   <li><a href="https://www.hydrol-earth-syst-sci.net/15/667/2011/hess-15-667-2011.html">Metz, M. et al. (2011) Efficient extraction of drainage networks from massive, radar-based elevation models with least cost path search, Hydrology and Earth System Sciences 15, pp. 667-678.</a>
+   <li><a href="https://www.sciencedirect.com/science/article/pii/S0098300411000975?via%3Dihub">J Jasiewicz, M Metz, 2011: A new GRASS GIS toolkit for Hortonian analysis of drainage networks, Computers and Geosciences.https://doi.org/10.1016/j.cageo.2011.03.003</a>
+   <li><a href="https://www.sciencedirect.com/science/article/pii/S0022169411002599?via%3Dihub">Nobre et al. 2011, Height Above the Nearest Drainage – a hydrologically relevant new terrain model, Journal of Hydrology,404(1-2), p. 13-29. </a>
+   <li>Original lecture:<a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Lflow.ppt">Slides</a>, videos:
+    <a href="https://youtu.be/QBudJw9axSM">Flow accumulation</a>,
+    <a href="https://youtu.be/DoHH3yyLL-U">Stream extraction and watersheds</a>
+</ul>
+
+<h4>Assignment A</h4>
+<ul>
+    <li>Approach:
+<!--        <a href="https://dashboard.wholetale.org/run/6542bb1ac67faf246f3ab457?tab=interact" target="_blank">(New) Jupyter Notebook</a>,
+-->
+        <a href="../grass/hydrology.html">GRASS solution</a>,
+        <a href="../arcpro/hydrology.html">ArcGIS Pro solution</a>
+</ul>
+
+<h3 id="hydrology_2" class="subtopic">7.B Hydrologic and Erosion modeling</h3>
+Outline:
+<ul>
+    <li>geospatial aspects of models: spatially averaged and distributed models</li>
+    <li>spatial hydrologic modeling </li>
+    <li>spatial modeling of erosion and sediment transport</li>
+    <li>deriving input parameters, analysis and visualization of modeling results</li>
+    <li>modeling impact of landuse change</li>
+</ul>
+<h4>Lecture</h4>
+<p>
+ <a href="../lectures/hydro_erosion.html">Lecture slides: Hydrologic and Erosion Modeling,</a> 
+<p>
+Supplemental materials:
+<ul>
+<!--<li><a href="giserosion5.pdf">Review paper: Geospatial Erosion Modeling</a>-->
+<li><a href="https://link-springer-com.prox.lib.ncsu.edu/chapter/10.1007/978-3-319-89303-7_7">
+Surface Water Flow Modeling</a>
+and <a href="https://link-springer-com.prox.lib.ncsu.edu/chapter/10.1007/978-3-319-89303-7_8">Soil Erosion Modeling</a>
+chapters from Petrasova et al., 2018, Tangible Modeling with Open Source GIS. Second Edition. Springer.
+<a href="https://link-springer-com.prox.lib.ncsu.edu/book/10.1007/978-3-319-89303-7">Available free through NCSU library.</a>
+or <a href="https://link.springer.com/book/10.1007%2F978-3-319-89303-7">through Springer</a>
+    <li><a href="https://www-sciencedirect-com.prox.lib.ncsu.edu/science/article/pii/B978012374739600052X">
+Mitasova et al., 2013, GIS-based soil erosion modeling, </a>In: Treatise on Geomorphology. Academic Press, San Diego, CA, vol. 3, 
+Remote Sensing and GIScience in Geomorphology, pp. 228–258
+    <li><a href="https://ncsu-geoforall-lab.github.io/erosion-modeling-tutorial/">Soil erosion and deposition modeling tutorial</a> (material under development)
+    <li><a href="http://www4.ncsu.edu/~hmitaso/gmslab/reports/CerlErosionTutorial/denix/denixstart.html">Erosion modeling tutorial</a> (old but useful document)
+    <li>Original lectures:
+        <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_LHydroSpr2010.ppt">Slides I: Geospatial modeling and hydrology</a>,
+        <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_LErosionSpr2011.ppt">Slides II: Erosion modeling</a>,
+        videos:
+    <a href="https://youtu.be/MovxE_73os8">Geospatial Modeling</a>,
+    <a href="https://youtu.be/v0jj4UKJmoQ">Hydrologic Modeling</a>,
+    <a href="https://youtu.be/9OwjmOuS8gs">Erosion Modeling</a>,
+    <a href="https://youtu.be/2uFhPzIvoXk">Erosion Modeling applications</a>.
+</ul>
+<h4>Assignment B:</h4>
+<ul>
+    <li><a href="../resources/erosion_notes.pdf">Brief theoretical background</a>
+        (equations used to write map algebra expressions)
+    <li>Approach:
+<!--
+        <a href="https://dashboard.wholetale.org/run/6542bb1ac67faf246f3ab457?tab=interact" target="_blank">(New) Jupyter Notebook</a>,
+-->
+        <a href="../grass/hydrology_erosion.html">GRASS solution</a>,
+        <a href="../arcpro/hydrology_erosion.html">ArcGIS Pro solution</a>
+    <li>Optional: process based hydrologic modeling using path sampling method (SIMWE)
+    <ul>
+    <li><a href="../grass/simwe.html">GRASS solution: SIMWE</a></li></ul>
+    </ul>
+</ul>
+   <h3> Homework 7 A and B:</h3>
+        Prepare a paper where you compare different methods for flowrouting and watershed analysis, compute flooded area, and
+    explain and discuss impact of model parameters and land use scenarios on
+    spatial pattern and magnitude of erosion as simulated by simple GIS-based models.
+If you are doing the notebook, there is no separate paper, just complete the Jupyter Notebook questions and tasks and submit the notebook as a PDF file. 
+<!--You must also submit the assignment survey located on Moodle.-->
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>
