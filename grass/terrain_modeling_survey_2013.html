@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Geomorphometry I: Terrain Modeling</h2>
+<p>
+Resources: <a href="https://grass.osgeo.org/grass83/manuals/index.html">
+GRASS overview and manual</a>,
+<a href="https://liblas.org/"> libLAS tools for lidar data conversions</a>
+
+<p>
+Download the Raleigh 2013 lidar data as LAS file and orthophoto (download individual files to avoid issues with unzipping):
+<ul>
+<li><a href="https://drive.google.com/drive/folders/1C_vov2M85dOmHp7dzLLyW8JP--IrqonY?usp=drive_link">Folder with LAS file and orthophoto</a>
+<!--
+<li><a href="https://drive.google.com/file/d/1wIrX7a9caZL-br7n_EfCMQh9gaF0XR9I/view?usp=sharing" download>LAS tile 0793_016 in NC State Plane Meters </a></li>
+<li><a href="https://drive.google.com/file/d/1BsWi2W2aW601NntpRPOiwqOneBT4fFc7/view?usp=sharing" download>Orthophoto geotif (mosaic at 1ft resolution)</a></li>
+-->
+<p>Alternative link
+<li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/tile_0793_016_spm.las" download>LAS tile 0793_016 in NC State Plane Meters </a></li>
+<li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/ortho_0793_016_ncspm.zip" download>Orthophoto geotif (mosaic at 1ft resolution)</a></li>
+</ul>
+
+<h3>Software support</h3>
+
+The GRASS installation on your computer may not support
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.lidar.html">r.in.lidar</a></em> and <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.in.lidar.html">v.in.lidar</a></em>
+modules. You can try them, e.g. using
+
+<pre><code>r.in.lidar --help
+</code></pre>
+
+On Windows platform, please use the standalone version of GRASS
+we recommend in <a href="../logistics.html">Course Logistics</a>.
+If the modules don't work for you, please use instead of this assignment the
+<a href="terrain_modeling_ascii.html">ASCII file based version</a>
+of the assignment.
+
+<h3>Start GRASS</h3>
+Create a new mapset (called e.g. HW_terrain_modeling) in nc_spm_08_grass7 project and
+change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+Download all files one-by-one (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the file
+without the need to specify the full path to the file.
+
+
+<!-- p. 249<br> -->
+<h3>Analyze bare earth and multiple return lidar data properties by binning</h3>
+Import the points using <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.in.lidar.html">v.in.lidar</a></em>.
+We can specify which class and which return (first, middle, last) we want to import.<br>
+We can see the classification either in metadata distributed with the lidar data
+or it can be displayed with <a href="https://liblas.org/">lasinfo</a> tool (in case lasinfo command is not available, skip this step.):
+<pre><code>lasinfo tile_0793_016_spm.las
+</code></pre>
+Class 2 represents bare earth points.<br>
+Now we import bare earth points and first return points separately (add -o flag to the command 
+if you are getting error that the projection does not match the project projection):
+
+<pre><code>v.in.lidar -t input=tile_0793_016_spm.las output=elev_lid793016_be class_filter=2 -o
+v.in.lidar -t input=tile_0793_016_spm.las output=elev_lid793016_1r return_filter=first -o
+</code></pre>
+<p>
+Note: if you have any problems with the files, review the instructions above or
+use v.in.lidar GUI dialog to browse to get the path to the files.
+<p>
+Set the region from the imported point file with resolution of 1 meter.
+Compute raster maps (with <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.lidar.html">r.in.lidar</a></em>) representing number of points per 1 m grid cell
+(add -o flag to the r.in.lidar command if you are getting error that the projection does not match the project projection):
+Compare point densities for bare earth, first return.
+<span class="question">How do the point densities for bare earth and first return compare?
+</span>
+
+<pre><code>g.region vect=elev_lid793016_1r res=1 -p
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binn1m class_filter=2 method=n -o
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binn1m return_filter=first method=n -o
+r.colors lid_be_binn1m,lid_1r_binn1m color=bcyr -e
+d.erase
+d.rast lid_be_binn1m
+d.legend lid_be_binn1m at=2,50,2,9
+r.report lid_be_binn1m unit=p,c
+r.univar lid_be_binn1m
+d.out.file be_pointdensity
+d.erase
+d.rast lid_1r_binn1m
+d.legend -d -s lid_1r_binn1m at=2,50,8,12
+r.report lid_1r_binn1m unit=p,c
+r.univar lid_1r_binn1m
+d.out.file first_pointdensity
+</code></pre>
+
+<p>
+Compute a raster map representing mean elevation for each 1m cell.<br>
+It will have holes.
+
+<pre><code>r.in.lidar input=tile_0793_016_spm.las output=lid_be_binmean1m class_filter=2 method=mean -o
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binmean1m return_filter=first method=mean -o
+r.colors lid_be_binmean1m color=elevation
+r.colors lid_1r_binmean1m color=elevation
+r.info map=lid_1r_binmean1m
+d.erase
+d.rast lid_be_binmean1m
+d.legend lid_be_binmean1m at=2,40,2,5
+d.out.file lidbemean1m
+d.erase
+d.rast lid_1r_binmean1m
+d.legend lid_1r_binmean1m at=2,40,2,5
+d.out.file lid1rmean1m
+</code></pre>
+
+<p>
+Compute a raster map representing mean elevation for each 2m cell.<br>
+Result is almost good enough for 1st return, but there are still many holes for bare earth.
+
+<pre><code>g.region res=2 -ap
+r.in.lidar input=tile_0793_016_spm.las output=lid_be_binmean2m class_filter=2 method=mean -o
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binmean2m return_filter=first method=mean -o
+r.colors lid_be_binmean2m color=elevation
+r.colors lid_1r_binmean2m color=elevation
+d.erase
+d.rast lid_be_binmean2m
+d.legend lid_be_binmean2m at=2,40,2,5
+d.out.file lidbemean2m
+d.erase
+d.rast lid_1r_binmean2m
+d.legend lid_1r_binmean2m at=2,40,2,5
+d.out.file lid1rmean2m
+</code></pre>
+
+<span class="question">Why are there holes in the binned DEMs?
+Why is the first return map mostly green (where is the orange-brown elevation?)
+Adjust the r.colors command for lid_1r_binmean2m that will redistribute the colors 
+so that the topographic features are well represented. Hint, see assignment 2. Include
+the adjusted map in your report.
+</span>
+
+<p>
+Compute range of elevation values in each grid cell:
+
+<pre><code>r.in.lidar input=tile_0793_016_spm.las output=lid_be_binrange2m class_filter=2 method=range -o
+r.colors lid_be_binrange2m color=bcyr -e
+r.in.lidar input=tile_0793_016_spm.las output=lid_1r_binrange2m return_filter=first method=range -o
+r.colors lid_1r_binrange2m color=bcyr -e
+d.erase
+d.rast lid_be_binrange2m
+d.legend lid_be_binrange2m at=2,40,2,5
+d.out.file lid_be_binrange2m
+d.erase
+d.rast lid_1r_binrange2m
+d.legend lid_1r_binrange2m at=2,40,2,5
+d.out.file lid_1r_binrange2m
+</code></pre>
+
+<p>
+Import and display orthophoto, switch off all layers except for orthophoto.
+
+<pre><code>r.in.gdal ortho_0793_016_ncspm.tif output=ortho_2013_0793
+d.rast ortho_2013_0793
+</code></pre>
+
+<p>
+Identify the features that are associated with large range values.<br>
+Display only the high values of range (objects taller than 10m).<br>
+<span class="question">What landcover is associated with large range in multiple return data?</span>
+
+<pre><code>d.rast lid_1r_binrange2m values=10.-200.
+d.out.file mylid_1rrange2m
+</code></pre>
+
+<p>
+We now know how dense the data are at 1m and 2m resolution
+and what is the range of elevation values within a grid cell.<br>
+If we need a 1m resolution DTM or DSM for our application
+this analysis tells us that the fast binning is not enough 
+and we need to interpolate it from the point cloud.
+<!--
+<span class="question">What steps would you begin with when processing
+point cloud data you are not familiar with?</span>
+-->
+
+<h3>Interpolate DTM and DSM</h3>
+
+To interpolate DTM and DSM using the RST spline function
+we use default parameters except for number of points used for
+interpolation (npmin), minimum distance between points
+ and higher tension and smoothing for multiple return data.<br>
+Be patient, it can take a few minutes to run depending on your computer power.<br>
+We derive shaded relief for the interpolated DTM and DSM and display
+the result as colored shaded topography to highlight the terrain features.
+
+<pre><code>g.region res=1 -ap
+v.surf.rst input=elev_lid793016_be elevation=elev_lid793016_be_1m npmin=120 dmin=1
+v.surf.rst input=elev_lid793016_1r elevation=elev_lid793016_1r_1m npmin=120 tension=100 smooth=0.5 dmin=1
+r.relief input=elev_lid793016_be_1m output=elev_lid793016_be_1msh
+r.relief input=elev_lid793016_1r_1m output=elev_lid793016_1r_1msh
+d.erase
+d.shade shade=elev_lid793016_be_1msh color=elev_lid793016_be_1m
+d.legend elev_lid793016_be_1m
+d.out.file elevation_be_1m
+d.erase
+d.shade shade=elev_lid793016_1r_1msh color=elev_lid793016_1r_1m
+d.legend elev_lid793016_1r_1m
+d.out.file elevation_1r_1m
+</code></pre>
+
+<span class="question">How does the binned first return DSM compare to interpolated first return DSM and what is the reason for the differences in range and coverage?
+</span>
+<p>
+<span class="question">Compute a map of above ground height of vegetation and buildings from your interpolated bare ground and first return DEMs using map algebra. Include the output map with appropriate color ramp in your report. What is the mean height computed from this map?
+</span>
+
+<h3>Optional: Visualize the interpolated DEMs in 3D with cutting planes </h3>
+
+Remove legend and switch off all map layers except for the last 2 interpolated ones.<br>
+Use 3D view with cutting planes to compare the bare earth and terrain surface.<br>
+Make sure fine resolution is set to 1 for all surfaces.<br>
+Assign each surface constant color, add constant plane at 75m elevation for reference.<br>
+Shade the crossection using the color by bottom surface option.<br>
+If you don't remember this, see screen capture video for 3d view.
+
+<p>
+Save image for your report.
+
+<h3>Optional: Visualize the point cloud using plas.io</h3>
+
+Visualizing the raw points in point clouds can be time consuming both in 2D and
+3D, however several tools for doing so in an efficient way exist. Try to
+use <a href="https://plas.io/">plas.io</a> or 
+<a href="https://potree.org/potree/examples/viewer.html"> potree</a>, 
+online point cloud visualization tools to visualize the LAS file from this assignment.
+Explore the provided visualization tools and create images
+showing different properties of the point cloud or the visualization
+techniques and how they would be useful for further analysis.
+
+<!--
+Edit and add as optional from MEA592 multid and lidar - useful task that has been missing
+
+Compute different surfaces by binning while exploring what different returns and classes show.
+Then create a raster map of classes: 1 - ground, 2 - vegetation, 3 - buildings
+
+lasinfo tile_0793_016_spm.las
+#	341246 Unclassified (1) 
+#	560224 Ground (2) 
+#	25 Low Point (noise) (7) 
+#	844382 Reserved for ASPRS Definition (11) 
+
+# create DSM
+
+r.in.lidar -o input=tile_0793_016_spm.las output=tile16_all_max method=max resolution=10 class_filter=1,2
+
+# create surface based on last return (represents canopy)
+
+r.in.lidar -o input=tile_0793_016_spm.las output=tile16_last_mean resolution=10 method=mean return_filter=last class_filter=1,2
+
+# create surface representing ground based on already classified points
+
+r.in.lidar -o input=tile_0793_016_spm.las output=tile16_ground_mean resolution=10 class_filter=2
+
+# combine surfaces and create classes: 1 - ground, 2 - vegetation, 3 - buildings
+
+r.mapcalc "classes = if( ! isnull(tile16_last_mean), 2, if( !isnull( tile16_ground_mean), 1, if( !isnull(tile16_all_max),3, null())))"
+
+# set colors, copy and paste the following color rules into "or enter values directly" text field located in Define tab (option rules)
+
+r.colors map=classes 
+1 220:220:180
+2 0:180:0
+3 150:0:0
+
+# leave just raster map 'tile16_surface_elev' in Layer Manager, hide legend
+# got to 3D view, set surface resolution 1 and color to map 'classes'
+-->
+
+<!--
+# optional
+# find out where we have multiple returns
+d.rast ortho_2013_0793
+
+# condition for subset in GUI:
+# Add vector>Selection>type return=1 into WHERE condition of SQL statement
+# you need to add the points 4 times to create a map that will have
+# all sets of returns
+r.in.xyz input=0793_016.txt out=lid_mr_binn1m meth=n separator=space
+d.rast lid_mr_binn1m
+d.legend lid_mr_binn1m at=2,80,2,5 thin=2
+d.out.file mylidmrn1m
+r.report lid_mr_binn1m unit=p,c
+r.univar lid_mr_binn1m
+
+v.in.ascii -z input=0793_016.txt out=elev_lid793016_all z=3 separator=space
+d.vect elev_lid793016_all where=return=1 fcol=grey size=5 icon=basic/circle
+d.vect elev_lid793016_all where=return=2 fcol=green size=4 icon=basic/circle
+d.vect elev_lid793016_all where=return=3 fcol=yellow size=3 icon=basic/circle
+d.vect elev_lid793016_all where=return=4 fcol=red size=2
+d.out.file lidreturns
+# can you guess what is in the area that does not have any 1st return points?
+nviz elev_lidrural_1m,elev_lidrurfirst_1m
+<font color="#000066">
+# save image for report, if you don't have tiff support, use screen capture tool
+-->
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

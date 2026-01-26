@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Data display and visualization</h2>
+<p>Resources:
+<a href="https://www.lib.ncsu.edu/gis/virtcamp.html">ESRI Academy (Formerly ESRI virtual campus)</a>
+<p>
+Launch ArcGIS Pro and login with ArcGIS Online credentials if required.
+Select New> Map> Create New Project.
+Create a new project in your preferred workspace,
+in the instructions below we are using the default C:\Users\myname\Documents\ArcGIS\Projects\ folder.
+<p>
+Use your judgement to decide which maps to include in your report.
+<p>
+
+<h3>Viewing data in 2D</h3>
+
+<h4>Raster data symbology</h4>
+Display land use classes using custom color, add labels:
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select 'landcl96'
+'OK'
+RMC landcl96->Symbology
+In the 'symbology' pane, in the Label column, LMC on the label number to replace numbers 1-7 with these labels, respectively:
+developed
+agriculture
+herbaceous
+shrubland
+forest
+water
+sediment
+
+In the 'symbology' pane, LMC on the color column boxes and replace the color for each land use with a more intuitive one.
+</pre>
+
+<p>
+Save as layer to preserve the new color scheme and labels:
+
+<pre>
+RMC on the landcl96 entry in the Contents ->'Sharing'->'Save as layer file...'
+Save as landcl96.lyr in your assignment folder
+</pre>
+
+<!--
+<p>
+Display only categories 1 and 2 from the land use map:
+
+<pre>
+RMC landcl96->Symbology
+In the 'symbology' pane, LMC to select items 3 - 7 (herbaceous - sediment)
+RMC Remove button to remove values 3 through 7
+</pre>
+
+<p>
+Display only elevation higher than 100 m over a geology map:
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select 'geology'
+select 'elev'
+'OK'
+RMC elev->Symbology
+In the 'Symbology' pane, Change 'Strech' to 'Classify'
+Set the method to 'Equal Interval'
+Set Classes to 10
+On the 'Advanced symbol options' tab of the 'Symbology' pane->'Data Exclusion'-> enter '0-100'
+Select the "Appearance" tab from the top ribbon
+Set Transparency to 50% in the "Effects" group of the ribbon
+</pre>
+
+<p>
+Change colors for raster maps:
+<pre>
+RMC elev->Symbology
+In the 'Symbology' pane, change the color scheme to one of the predifined elevation ramps
+(hover over each scheme to see the color ramp name)
+</pre>
+-->
+
+<p>
+Use a histogram equalized color table to display topographic slope:
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select 'slope'
+'OK'
+RMC slope->Symbology
+Choose the 'Green to Red' color ramp
+Change the Stretch Type to 'Histogram Equalize'
+</pre>
+
+<h4>Legend, scale, grid</h4>
+<p>
+Make a map with a legend, scale and grid:
+
+<pre>
+Turn off all layers except landcl96 in the Contents pane
+</pre>
+<p>
+add the streams layer
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
+select 'streams'
+'OK'
+Change the streams color to blue 
+RMC streams->Symbology
+Click the symbol line to open the 'Format line symbol' option
+Click the 'Properties' tab
+Change the color to a blue and line width to 1.25
+'Apply'
+Toggle to Layout View: 
+Select the 'Insert' tab from the top ribbon, project group->'New Layout'
+Select a template appropriate for your map
+On the topr ribbon->Insert tab->Map frames group-> add a 'Map Frame' 
+by dragging a box on the layout
+</pre>
+
+<p>
+Assign a fixed scale for the layout:
+
+<pre>
+In the map layout window, Contents pane, RMC 'Map Frame'->Properties
+Click the 'Dispay Options' tab in the 'Element/Format Map Frame' pane
+Select 'Fixed Scale' under constraint and set it to 1:50,000
+</pre>
+
+<p>
+Add a legend<br>
+
+<pre>
+On the 'Insert' tab in the 'Map Surrounds' group, click 'Legend'
+Click and drag on the layout to create the legend
+RMC on your new legend->Properties.  A new 'Element' pane will open
+In the legend/Element pane, Click to show on legend title
+Replace the text "Legend" with "Land Classification" 
+
+On the 'Display' tab of the element pane
+Add a Legend Frame Border (select one as you feel appropriate)
+Add a white Frame Background. Set the cap to X:0.1in and Y:0.1in (as in the Frame Border)
+Adjust the border x and y gap to 0.1 in each
+Drag the legend to a more appropriate location, and resize it to make it "fit" into your map.
+</pre>
+
+<p>
+Add a scale bar:
+
+<pre>
+On the 'Insert' tab, in the 'Map Surrounds' group, click the 'Scale Bar' button
+Select a scale bar (your choice)
+Click and drag on the layout to create the scale bar.
+RMC on the scale bar-> Properties 
+In the 'Element' pane, set Division Units to kilometers
+Set the division value to a whole number and set 'Resize Behavior to 'Adjust width'
+Place and resize the legend as you see fit for your map design. Make sure that the numbers on the scale are reasonable (round numbers preferably). 
+</pre>
+
+<p>
+Add a grid:
+
+<pre>
+On the 'Insert' tab, in 'the Map Frames' group, click the 'Grid' button
+select a 'Measured Grid' option
+</pre>
+
+<p>
+Display roads with labels:
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
+select 'roadsmajor'
+'OK'
+RMC roadsmajor->Symbology
+Click the symbol line to open the 'Format line symbol' option
+Search or browse the 'Gallery' and change the symbol to Expressway 
+Select roadmajor in the contents pane. On the ribbon, under Feature Layer, click the Labeling tab, and click 'Label'
+In the 'Label class' group, select 'Road_Name' from the dropdown.
+Change the font and size in the 'Text Symbol' group.
+Use the 'Label placement' group to select 'North American Streets'
+
+Or, RMC roadsmajor->Labeling Properties
+Language should be 'Arcade'
+Expression $feature.ROAD_NAME
+Font, size and placement options can be changed in this pane as well.
+Find and use the 'Halo' option under 'Symbol'
+
+Export the layout to pdf
+Share tab on the ribbon->export group->layout
+</pre>
+
+<!--
+<h4>Compare hillshades</h4>
+
+<p>
+<pre>
+Go back to the Map window and remove all the layers from TOC (or you can create a new project)
+Add 'elev' from the ncrast geodatabase
+Change the color ramp for elev to an appropriate elevation color scheme
+</pre>
+<p>
+Compare different types of hillshade effects from an elevation map
+<p> 1. Hillshade generated using the 3D Analyst Extension.
+
+<pre>
+In the Geoprocessing pane, search for and select the "hillshade" tool.
+Select elev as input, hillsh_el as output, z factor=3
+Click 'Run'
+The new hillshade should have been added to the contents pane above your elev raster
+If not, drag the hillshade above the elev raster
+Change the Hillshade to 50% transparency
+</pre>
+
+<p>
+2. Hillshade generated with the "Raster Functions" tool:
+
+<pre>
+On the Analysis ribbon -> Raster group->'Raster Functions' pane
+Expand the Surface functions and select the Hillshade option (or search for Hillshade in the Raster Functions pane).
+Select 'elev' as the raster
+Set the Z to 3 to exaggerate the height variation in the terrain
+Click 'Create new layer' to create a new layer in the current map.
+(Note that this is only a new display of the processed data—it is not a new raster dataset)
+The new hillshade should have been added to the contents pane above your elev raster
+If not, drag the hillshade above the elev raster
+Change the Hillshade to 50% transparency
+</pre>
+
+<p>
+To examine the differences, zoom into an area of the data and toggle the hillshade layer
+on and off (by repetitively checking and unchecking the layer in the TOC). The rapid image interchange emphasizes differences.
+<p>
+In order to copare the results with elev with no hillshade applied you can load the elev layer again, without checking the hillshade effect in Symbology tab 
+-->
+
+<h3>Viewing data in 3D using a Scene</h3>
+In ArcGIS Pro, a 3D map is called a scene. 
+A scene can be viewed in either global or local mode. 
+Global mode is best for very large study areas. Local mode is best for smaller study areas. 
+You can view any scene as a global scene or a local scene by clicking the Global button or the Local button in the View group on the View tab.
+Start a Local Scene:
+
+<pre>
+With the 'elev' raster still in the map
+View tab on the ribbon->view->convert->'To Local Scene'
+A new 'Map_3d' window tab should open
+</pre>
+
+<p>
+Or create a new Local Scene:
+
+<pre>
+Start a new projectSelect 'Local Scene' from the templates
+On the Map tab, in the Layer group, click 'Add Data'
+Add 'ncrast.gdb\elev'
+</pre>
+
+<p>
+Display 2-dimensional data as a 3-D surface (to render in 3-D):
+
+Add a ground elevation surface:
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'->'Elevation source'
+Add 'ncrast.gdb\elev'
+</pre>
+
+<p>
+To change the vertical exaggeration (z-value multiplier, default is 1) for a layer:
+
+<pre>
+In the Contents pane, under Elevation Surfaces, click Ground
+The Elevation Surface contextual tab set appears on the ribbon
+Under Elevation Surface, click the Appearance tab
+In the Drawing group, for Vertical Exaggeration, type 10
+</pre>
+
+<p>
+Drape a vector feature over the 3-D (raster) surface:
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Add  'ncshape.gdb\streets_wake'
+It may add the layer to the 3d layers in the contents pane.  
+If so, Drag the layer to the 2d Layers group above 'elev'
+</pre>
+
+<p>
+this action will both drape the vector streets on the raster surface,
+and clip the extent of the much larger streets data to that of the surface.
+
+Change the color ramp for a layer:
+
+<pre>
+RMC 'elev'-> Symbology
+Use the 'Gallery' tab to scroll through the available ESRI-provided ramps.
+Choose one of the color ramps
+</pre>
+
+<p>
+Change the background color (useful for enhancing visualization).
+
+<pre>
+RMC 'Scene' in the 'Contents' pane->Properties ***May be Map_3d instead of scene***
+Go to the 'General' tab
+Choose the black color patch from the color palette drop-down menu
+Click 'OK'.
+</pre>
+
+<p>
+Adjust the direction (azimuth and altitude) and contrast of the light applied the surface:
+
+<pre>
+Reset the background color to white (refer to previous task)
+In the 'Contents' pane, under 'Elevation Surfaces', click 'Ground'
+The 'Elevation Surface' contextual tab set appears on the ribbon
+In the 'Surface' group, Check 'Shade relative to light position'
+
+RMC 'Map_3d' in the 'Contents' pane->Properties
+Go to the 'Illumination' tab
+Reposition the light source by changing altitude and azimuth
+Click 'OK'
+</pre>
+<p>
+
+
+<p>
+Adjust the lighting contrast:
+
+<pre>
+RMC 'Map_3d' in the 'Contents' pane->Properties
+Go to the 'Illumination' tab
+Use the contrast slider to adjust contrast value
+Click 'OK'
+</pre>
+
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

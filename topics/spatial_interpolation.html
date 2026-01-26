@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>4. Spatial Interpolation</h2>
+
+<h3 id="interpolation_1" class="subtopic">4.A Spatial interpolation: methods</h3>
+Outline:
+<ul>
+    <li>definitions, principles and applications
+    <li>selected methods and their properties
+    <!--Outline:
+<ul> <li>Voronoi polygons, TIN-based method <li>Inverse distance weighting <li>Splines, kriging)</li> </ul>-->
+    <li>influence of interpolation parameters</li>
+</ul>
+<h4>Lecture</h4>
+<p>
+    <a href="../lectures/spatial_interp_methods.html">Lecture slides: Spatial Interpolation methods</a>
+<p>
+Supplemental materials:
+<ul>
+    <li>Interactive <a href="https://alexbeutel.com/webgl/voronoi.html">Voronoi diagram generator</a> with WebGL by Alex Beutel</li>
+    <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/resources/mitas_mitasova_1999_2005.pdf">Overview of interpolation methods</a> by
+    Mitas, L., Mitasova, H., 1999, Spatial Interpolation. In: P.Longley, M.F. Goodchild, D.J. Maguire, D.W.Rhind (Eds.), Geographical Information Systems: Principles, Techniques, Management and Applications, GeoInformation International, Wiley, 481-492.
+    <li><a href="https://www.spatialanalysisonline.com/HTML/index.html">Equations for additional functions</a> 
+in Geospatial Analysis - 5th Edition, 2015, by de Smith, Goodchild, and Longley (see sections 6.6.1, 6.6.5, 6.6.6, 6.6.7)
+    <li>Original lecture:<a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Linterp.ppt">Slides (methods)</a>,
+    <a href="../resources/interpolation_notes.pdf">Equations</a>, videos:
+    <a href="https://youtu.be/VO2e0MhtYKI">Interpolation Definitions</a>,
+    <a href="https://youtu.be/pigHe9nKaR8">Interpolation Methods</a>.
+<!--<li><a href="https://doi.org/10.1016/j.envsoft.2013.12.008">Review of interpolation methods in environmental sciences</a>-->
+</ul>
+<h4>Assignment part A</h4>
+<ul>
+    <li>Approach:
+        <a href="../grass/interpolation_1.html">GRASS solution</a>,
+		<a href="../arcpro/interpolation_1.html">ArcGIS Pro solution</a>
+    <li><a href="../faq.html#interpolation_1">Comments/answers to HW questions</a>
+</ul>
+
+<h3 id="interpolation_2" class="subtopic">4.B Spatial interpolation: splines</h3>
+
+Outline:
+<ul>
+    <li>influence of spline interpolation parameters: tension/range and smoothing</li>
+    <li>evaluating interpolation accuracy, crossvalidation</li>
+    <li>special cases: contours, profiles, anisotropy</li>
+    <li>trivariate interpolation of volumes and topo-climatology</li>
+    <li>implementation - point selection techniques</li>
+</ul>
+<h4>Lecture</h4>
+<p>
+<a href="../lectures/spatial_interp_splines.html">Lecture slides: Spatial Interpolation with splines</a>
+<p>
+Supplemental materials:
+<ul>
+    <li><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/resources/mitas_mitasova_1999_2005.pdf">
+Overview of interpolation methods</a> by Mitas, L., Mitasova, H., 1999, Spatial Interpolation. 
+In: P.Longley, M.F. Goodchild, D.J. Maguire, D.W.Rhind (Eds.), GIS: Principles, Techniques, Management and Applications, 
+GeoInformation International, Wiley, 481-492.
+    <li><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/IEEEGRSL2005.pdf">
+Mitasova, H., Mitas, L. and Harmon, R.S., 2005, Simultaneous spline interpolation and topographic analysis for lidar elevation data: methods for Open source GIS, IEEE GRSL 2(4), 375- 379.</a>
+    <li><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/TGIS2002_Hofierka_et_al.pdf">
+Hofierka J., Parajka J., Mitasova H., Mitas L., 2002, Multivariate Interpolation of Precipitation Using Regularized Spline with Tension. 
+TGIS 6(2), 135-150.</a>
+    <li>Hutchinson, MF, 1995, Interpolating mean rainfall using thin plate smoothing splines, Int. Journal of Geographical Information Systems 9(4), 385-403. 
+    <li>Original lecture: <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_LinterpS2f.ppt">Slides</a>, videos:
+    <a href="https://youtu.be/eLYsx-ADOGI">Interpolation with Splines</a>,
+    <a href="https://youtu.be/73c_1BD-ztI">Interpolation Point selection</a>.
+<!--    <li><a href="https://www.alatown.com/spline/">History of splines for design</a>, note that these are mesh-based splines, different from
+the thin plate splines with smoothing and tension used for gridding in GIS-->
+</ul>
+
+<h4>Assignment part B</h4>
+<ul>
+    <li>Approach:
+        <a href="../grass/interpolation_2.html">GRASS solution</a>,
+		<a href="../arcpro/interpolation_2.html">ArcGIS Pro solution</a>
+    <li><a href="../faq.html#interpolation_2">Comments/answers to HW questions</a>
+</ul>
+<h3>Homework 4. A and B</h3>
+        Prepare a paper on impact of interpolation method and its parameters on the resulting surface
+        including the properties of spline interpolation method, its parameters and measures of accuracy.
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

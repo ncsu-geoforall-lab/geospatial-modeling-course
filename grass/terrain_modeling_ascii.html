@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Geomorphometry I: Terrain Modeling (data in ASCII files)</h2>
+
+<p>
+Resources: <a href="https://grass.osgeo.org/grass83/manuals/index.html">
+
+<p>
+Download the ASCI (x,y,z) lidar bare earth data
+<a href="data/lid_be_pts.txt">lid_be_pts.txt</a><br>
+Download the ASCI (x,y,z) lidar multiple return data
+<a href="data/lid_mr_pts.txt">lid_mr_pts.txt</a><br>
+
+
+<h3>Start GRASS</h3>
+Create a new mapset (called e.g. HW_terrain_modeling) in nc_spm_08_grass7 project and
+change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+Download all files (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the file
+without the need to specify the full path to the file.
+
+
+<h3>Bare earth data</h3>
+
+Analyze bare earth and multiple return lidar data properties.
+First, download the ASCI (x,y,z) lidar data
+<a href="data/lid_be_pts.txt">lid_be_pts.txt</a>
+and then compute a raster map representing number of points
+per 2m and 6m grid cell to assess the point density.
+If you are unsure about the current working directory and where your
+text file with point is, run <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.xyz.html">r.in.xyz</a></em> from GUI
+to find the path to the external <tt>lid_be_pts.txt</tt>.
+Do not forget to zoom to computational region
+to check its extent and see the resulting data.
+You can use horizontal legends by resizing legend into wide short
+rectangle or by using at=6,10,2,30 in the command line.
+You can resize the <em>Map Display</em> to create white space above
+and below the raster map image.
+
+<pre><code>g.region rural_1m res=2 -p
+r.in.xyz input=lid_be_pts.txt output=lid_be_binn2m method=n
+r.in.xyz input=lid_mr_pts.txt output=lid_mr_binn2m method=n
+d.erase
+d.rast lid_mr_binn2m
+d.legend lid_mr_binn2m at=2,20,2,5
+d.out.file mylidmrn2m
+r.report lid_mr_binn2m unit=p
+r.univar lid_mr_binn2m
+d.rast lid_be_binn2m
+d.legend lid_be_binn2m at=2,20,2,5
+r.report lid_be_binn2m unit=p
+r.univar lid_be_binn2m
+</code></pre>
+
+
+<h3>Range of coordinates at lower resolution</h3>
+
+<p>
+Patch and overlay planimetry to see that there are
+no points in areas with buildings:
+
+<pre><code>v.patch P079214,P079215,P079218,P079219 out=planimetry_rural
+d.vect planimetry_rural
+d.out.file mylidben2m
+</code></pre>
+
+<p>
+Decrease resolution and try the above steps with
+the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.xyz.html">r.in.xyz</a></em> module again.
+Again, run it from GUI, define full path, or manage your current
+working directory.
+
+<pre><code>g.region rural_1m res=6 -ap
+r.in.xyz input=lid_be_pts.txt out=lid_be_binn6m meth=n
+d.erase
+d.rast lid_be_binn6m
+d.legend lid_be_binn6m at=2,20,2,5
+d.out.file mylidben6m
+r.report lid_be_binn6m unit=p
+r.univar lid_be_binn6m
+</code></pre>
+
+<p>
+Compute a raster map representing mean elevation for each 6m cell.
+It will still have a few holes.
+
+<pre><code>r.in.xyz input=lid_be_pts.txt out=lid_be_binmean6m meth=mean
+r.colors lid_be_binmean6m color=elevation
+d.rast lid_be_binmean6m
+d.legend lid_be_binmean6m at=2,40,2,5
+r.in.xyz input=lid_mr_pts.txt out=lid_mr_binmean6m meth=mean
+r.colors lid_mr_binmean6m co=elevation
+d.rast lid_mr_binmean6m
+d.legend lid_mr_binmean6m at=2,40,2,5
+d.out.file mylidmrmean6m
+</code></pre>
+
+<p>
+Compute range:
+
+<pre><code>r.in.xyz input=lid_be_pts.txt out=lid_be_binrange6m meth=range
+r.in.xyz input=lid_mr_pts.txt out=lid_mr_binrange6m meth=range
+d.erase
+d.rast lid_be_binrange6m
+d.legend lid_be_binrange6m at=2,40,2,5
+d.rast lid_mr_binrange6m
+d.legend lid_mr_binrange6m at=2,40,2,5
+</code></pre>
+
+<p>
+Identify the features that are associated with large range values.
+Display with vector data.
+
+<pre><code>d.vect planimetry_rural
+d.vect lakes type=boundary co=violet
+d.vect streams co=blue
+d.out.file mylidmrrange6m
+</code></pre>
+
+<p>
+Display only the high values of range (0.5-20m) overlayed over orthophoto.
+<span class="question">What landcover is associated with large range in multiple return data?</span>
+
+<p>
+<span class="question">Which landscape features may be lost at 6m resolution?</span>
+
+<pre><code>g.region rural_1m -p
+</code></pre>
+
+<p>
+Do not forget to zoom/set the display to computational region
+to display only selected interval of values in GUI.
+Add raster > Required tab, select <tt>lid_be_binrange6m</tt>
+In Selection tab, set List of values to be displayed to <tt>0.5-20</tt>.
+
+<pre><code>d.erase
+d.rast ortho_2001_t792_1m
+d.rast lid_be_binrange6m val=0.5-20.
+d.erase
+d.rast ortho_2001_t792_1m
+d.rast lid_mr_binrange6m val=0.5-20.
+</code></pre>
+
+
+<h3>Interpolation</h3>
+
+<p>
+We now know how dense the data are and what is the range within cell.<br>
+If we need 1m resolution DEM for our application
+this analysis tells us that we need to interpolate.
+<p>
+Import the ascii lidar data as vector points.<br>
+Import only points in the rural area without building a table (-t flag in tab Points),
+number of column used as z is 3 (third column),
+and using z-coordinate for elevation (Tab Optional, Create 3D vector map).<br>
+We assume that the txt file is in your current working directory.
+
+<pre><code>g.region rural_1m -p
+v.in.ascii -ztr input=lid_be_pts.txt out=elev_lid_bepts z=3
+</code></pre>
+
+<p>
+Display bare ground and multiple return points over orthophoto:
+
+<pre><code>d.erase
+d.rast ortho_2001_t792_1m
+</code></pre>
+
+<p>
+Display our imported points:
+
+<pre><code>d.vect elev_lid_bepts size=2 col=red
+</code></pre>
+
+<p>
+Display points available in the data set
+(elev_lid_bepts and elev_lid792_bepts should be identical):
+
+<pre><code>d.vect elev_lidrural_mrpts size=4 col=0:100:0
+d.vect elev_lid792_bepts size=2 col=yellow
+</code></pre>
+
+<p>
+<!-- # note: if you are getting warning that topology is not available
+# build topology
+</font>
+v.build elev_lid792_bepts
+v.build elev_lidrural_mrpts
+<font color="#000066"> -->
+Extract first return to get points for DSM.<br>
+Interpolate DEM and DSM (more about interpolation in the interpolation assignment).<br>
+We use default parameters except for number of points used for
+segmentation and interpolation - segmax and npmin
+and higher tension for multiple return data:
+
+<pre><code>g.region rural_1m -p
+v.extract elev_lidrural_mrpts out=elev_lidrur_first type=point where="Return=1"
+v.surf.rst input=elev_lid792_bepts elevation=elev_lidrural_1m npmin=120 segmax=25
+v.surf.rst input=elev_lidrur_first elevation=elev_lidrurfirst_1m npmin=120 segmax=25 tension=100 smooth=0.5
+d.erase
+d.rast elev_lidrural_1m
+d.rast elev_lidrurfirst_1m
+</code></pre>
+
+<p>
+Remove all layers except for elev_lidrural_1m and elev_lidrurfirst_1m and
+switch to 3D view with cutting planes to compare the bare earth and terrain surface.<br>
+Make sure fine resolution is set to 1 for all surfaces.
+Assign each surface constant color, add constant plane z=90 for reference.
+Create crossections using cutting plane,
+shade the crossection using the color by bottom surface option.<br>
+Save image for report.
+If you don't remember this, see screen capture video for
+<a href="https://youtu.be/xo_jJHgtbR4">GRASS 3D view</a>.
+
+
+<h3>Multiple returns</h3>
+
+<p>
+Find out where we have multiple returns:
+
+<pre><code>g.region rural_1m -p
+d.erase
+d.rast ortho_2001_t792_1m
+</code></pre>
+
+<p>
+Condition for subset in GUI:
+Add vector > Selection > type return=1 into WHERE condition of SQL statement.<br>
+You need to add the points 4 times to create a map that will have<br>
+all sets of returns.
+
+<pre><code>d.vect elev_lidrural_mrpts where=return=1 col=red size=2
+d.vect elev_lidrural_mrpts where=return=2 col=green size=3
+d.vect elev_lidrural_mrpts where=return=3 col=blue
+d.vect elev_lidrural_mrpts where=return=4 col=yellow
+d.out.file lidreturns
+</code></pre>
+
+<p>
+<span class="question">Can you guess what is in the area that does not have any 1st return points?</span>
+
+
+<!-- add here TIN using the new module if available -->
+
+<!--
+<p>
+Optional task
+Contour (isoline) representation
+generate contours with 10m and 3m interval
+
+g.region raster=elevation -p
+d.erase
+d.rast elevation
+r.contour elevation out=elev_contour_10m step=10
+d.vect elev_contour_10m
+v.label -a map=elev_contour_10m label=contour_labels column=level back=white
+d.labels contour_labels
+r.contour elevation out=elev_contour_3m step=3 min=55 max=154
+d.rast elevation
+d.vect elev_contour_3m
+-->
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

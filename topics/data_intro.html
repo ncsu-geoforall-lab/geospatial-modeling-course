@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>1. Geospatial Data Introduction</h2>
+Outline:
+<ul>
+    <li>on-ground/in-situ, airborne, and satellite data acquisition</li>
+    <li>coordinate reference systems </li>
+    <li>geospatial data models and formats
+    <li>getting started with open source GRASS
+</ul>
+
+<h3>Lecture</h3>
+
+<ul>
+    <li><a href="../lectures/geospatialdata.html">Lecture slides: Geospatial Data Acquisition</a>, use arrow keys to forward the slides
+    <li><a href="../lectures/grass.html">Introduction to GRASS:</a> overview of the open source software principles and GRASS used in the Assignments 
+</ul>
+
+Supplemental materials:
+<ul>
+    <li>Coordinate referenced systems 
+    <ul>
+    <!--<li><a href="https://thetruesize.com/">The true size</a> - explore the size of countries and their distortions in Pseudo Mercator-->
+    <!-- Notes on <a href="https://fatra.cnr.ncsu.edu/geospatial-modeling-course/resources/WGS84_NAD83.pdf">WGS84 and NAD83 difference</a>-->
+    <li><a href="https://epsg.io/">Coordinate systems and EPSG codes</a>, also available at 
+        <a href="https://spatialreference.org/">Spatial Reference</a>
+<!--    <li><a href="https://confluence.qps.nl/pages/viewpage.action?pageId=29855153">North American Datums explained</a>-->
+    <li><a href="https://geodesy.noaa.gov/datums/newdatums/index.shtml">New NA datum in 2022</a>
+    <li><a href="https://web.archive.org/web/20160122040117/progonos.com/furuti/mapproj/normal/toc/carttoc.html">Map projections</a>,
+    </ul>
+    <li>Open source geospatial software
+    <ul>
+        <li>
+            <a 
+                href="https://learning.openplains.com/content/workshops/smackhack25/ncssm_workshop.html" target="_blank">
+                Intro to Geoprocessing with GRASS
+            </a>
+        </li>
+        <li>
+            <a href="https://grass-tutorials.osgeo.org/" target="_blank">
+                Offical GRASS Tutorials
+            </a>
+        </li>
+        <li>
+            <a href="https://gistbok-ltb.ucgis.org/page/20/concept/5798">
+                Petras, V., Mitasova, H., and Petrasova, A. (2021). Open Source Software Development. The Geographic Information Science & Technology Body of Knowledge (2nd Quarter 2021 Edition), John P. Wilson (ed.). DOI: 10.22224/gistbok/2021.2.4
+            </a>
+        </li>
+        <li>
+            <a href="https://www.youtube.com/watch?v=QldQuhxS4X8&list=PLOZRfOojyTZooO3HMd8dTp8Wk37cdbY6C&index=2">
+                Introduction to GRASS
+            </a> by Brendan Harmon
+    </ul>
+    <li>Original lecture material: <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Ldata.ppt">Lecture Slides </a> and videos: <a href="https://youtu.be/lgAFtw7cIh4">Mapping</a> and <a href="https://youtu.be/jXFncBsurwo">Georeferencing</a>
+</ul>
+
+<h3>Assignment: Explore the provided North Carolina data set </h3>
+<p>Prepare a short paper describing general properties of the provided NC data set
+(coordinate system, resolutions, spatial extents, etc.). Document the properties with the output and images created
+following the assignment instructions and include answers to questions (highlighted in red).
+
+<ul>
+    <li>Approachs:
+    <li>Track 1 - GUI</li>
+    <ul>
+       <li>  <a href="../grass/data_acquisition.html">GRASS solution</a>,
+       <li>  <a href="../arcpro/data_acquisition.html">ArcGIS Pro solution (Optional)</a>
+    </ul>
+    <li>Track 2 - Jupyter Notebook</li>
+    <ul>
+        <li><a href="https://colab.research.google.com/drive/1KnSVoezy3kvmwwHJf2oz0p4GvGV54yic?usp=sharing">Tutorial 1A</a></li>
+        <li><a href="https://colab.research.google.com/drive/1vLu4z8lTQZUIzyYN7ShvJGrYmK144Qrx?usp=sharing">Assignment 1A</a></li>
+        <li><a href="https://colab.research.google.com/drive/1d0Mnu2ABQY0xU0Z2HZWQ6pKupbu6yU6s?usp=sharing">Tutorial 1B</a></li>
+        <li><a href="https://colab.research.google.com/drive/11jGn4CXiC216gCvXI-FUjM7uJioUWTN6?usp=sharing">Assignment 1B</a></li>
+    </ul>
+    <li>See also 
+    <a href="https://ncsu-geoforall-lab.github.io/geospatial-modeling-course/logistics.html#assignments">Assignment paper instructions</a> and
+    <a href="../faq.html#data_acquisition">Comments/answers to HW questions</a>
+<!--    <li> <a href="https://www.youtube.com/watch?v=9fcBvYetIsM"> Getting started with GRASS</a>.
+Note: video recorded with GRASS 7.2, some details can differ. Switch on annotations.-->
+</ul>
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

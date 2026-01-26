@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Buffers, cost surfaces, least cost path</h2>
+<p>Resources:
+<a href="https://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
+
+<p>
+Include resulting maps into your report 
+(use your judgment to decide which results to include). Adjust the colors and symbology of displayed layers to match the cartographic standards (lakes are displayed in blue etc.)
+
+<!-- <pre>
+========================================================================
+ALL COORDINATE SYSTEMS MUST BE DEFINED TO RUN BUFFER (i.e. .prj files)
+========================================================================
+</pre> -->
+
+<p>
+Create the workspace for the current assignment as the folder Buffers_cost<br>
+<p>
+To constrain analyses in a similar manner as g.region,
+set the spatial extent using the options under Environments, for example:<br>
+to constrain analyses results to the extents defined by intersection of input features:<br>
+
+<pre>
+Start ArcMap.
+From the menu Geoprocessing -> Environments... -> Processing extent.
+Choose Intersection of Inputs from the drop down menu.
+Click 'OK'
+</pre>
+
+<p>
+<!-- You can create a bounding polygon of the "elev" DEM by using the 3D Analyst Tools. Check out 3D Analyst (if you haven't already) > Open ArcToolbox > 3D Analyst Tools > Conversion > From Raster > Raster Domain
+Input = "elev"
+Output = "name your file"
+Output Type = Line or Poly (I tend to use Poly so I can calculate area)
+Then when you are clipping the extent of the Data Frame you can use the extent of your new file, instead of copy/pasting or writing down the extent of the raster.  -->
+
+To work on a subset, clip your data to a given spatial extent.<br>
+Constrain the drawing of project layers to a user specified extent.
+
+<pre>
+Start -> Programs -> ArcMap
+Add ./ncrast.mdb/elev
+Add ./ncshape.mdb/streets_wake
+Dbl. Click the 'elev' layer in the TOC
+Go to -> Layer Properties -> Extent
+Write down the four numbers in the text fields labeled: 'Left', 'Right', 'Top', 'Bottom' 
+Click 'OK'
+Dbl. Click 'Layers' in the TOC
+Go to ->'Data Frame Properties' -> 'Data Frame' -> 'Clip Options' -> 'Clip to Shape' 
+Click 'Specify Shape'
+Select 'Custom Extent' 
+Uncheck the 'Degrees' check box
+Enter the four numbers you recorded earlier in their appropriate text fields
+Click 'OK'
+Click 'OK'
+</pre>
+
+<h3>Find developed areas close to lakes</h3>
+Create the buffers:
+
+<pre>
+File -> Add Data -> Add Data...
+Select ./ncrast.mdb/lakes
+Select ./ncrast.mdb/landcl96
+Check out a Spatial Analyst Extension license (Menu -> Customize -> Extensions -> Spatial Analyst box needs to be checked)
+Open the ArcToolbox (you may already have it open)
+Select 'Spatial Analyst Tools->Distance->Euclidean Distance'
+Set 'Input raster' to 'lakes'
+Set Output distance raster' to '\Buffers_cost\lk_dist'
+Set 'Maximum distance' to '500'
+Leave the rest as defaults 
+Click 'OK'
+</pre>
+
+<p>
+Select the locations that overlay developed areas:
+
+<pre>
+Select 'Spatial Analyst Tools->Map Algebra->Raster Calculator'
+Type in the expression: SetNull( "landcl96" > 2, "lk_dist")
+Set the Output raster to './Buffers_cost/dev_lakes
+Click 'OK'
+</pre>
+
+<h3>Compute cost surface from accident based on speed limits</h3>
+
+<pre>
+File -> Add Data -> Add Data...
+Select ncshape.mdb/streets_wake
+Open the ArcToolbox (if not already open)
+Select 'Conversion Tools->To Raster->Polyline to Raster'
+Set 'Input Features' to 'streets_wake'
+Set 'Value field' to 'SPEED'
+Set 'Output Raster Dataset to './Buffers_cost/str_speed'
+Set Cellsize to 30
+Leave the others as defaults 
+Click 'OK'
+
+File -> Add Data -> Add Data...
+select ./ncshape.mdb/fire_pt
+</pre>
+
+<p>
+Set the working directory:
+
+<pre>
+Select Geoprocessing -> Environments...
+Under 'Workspace' set the 'Current Workspace' to '.\Buffers_cost'
+Under 'Raster Analysis' set the 'Cell Size' to 'Same as layer str_speed'
+Under 'Raster Analysis' set the  'Mask' to '.\ncshape.mdb\boundary_wake'
+Click 'OK'
+</pre>
+
+<p>
+Assign travel time per cell in hours, compute cost surface.<br>
+Assign null values a speed of 5.
+
+<pre>
+Open the ArcToolbox (if not already open)
+Select 'Spatial Analyst Tools->Map Algebra->Raster Calculator'
+Type in the expression: Con(IsNull("str_speed"),5,"str_speed") 
+Set the Output raster to 'str_speed2'
+Click 'OK'
+</pre>
+
+<p>
+Calculate the travel time and cost surface.
+<p>
+In ArcGIS cost is defined per <em>map unit</em> (meters in this case).
+We create a cost raster where cost is time to cross one map unit.
+<span class="question">Where does the 0.00062137 constant come from?</span>
+
+<pre>
+Select 'Spatial Analyst Tools->Map Algebra->Raster Calculator' 
+Type in the expression: 0.00062137 / "str_speed2"
+Set the 'Output raster' to str_trv
+
+Open the ArcToolbox (if not already open)
+Select 'Spatial Analyst Tools->Distance->Cost Distance'
+Set 'Input raster or feature source data' to 'fire_pt'
+Set 'Input Cost raster' to 'str_trv'    
+Set 'Output distance raster' to './Buffers_cost/str_cost'
+Set 'Output backlink raster (optional)' to './Buffers_cost/backlink'
+Leave the rest as defaults
+Click 'OK'
+</pre>
+
+<h3>Find cost from selected firestations</h3>
+
+<pre>
+File -> Add Data -> Add Data...
+Select ./ncshape.mdb/firestations
+Open the ArcToolbox (if not already open)
+Select 'Spatial Analyst Tools->Extraction->Sample'
+Set 'Input rasters' to 'str_cost'
+Set 'Input Location raster or point features' to 'firestations'
+Set 'Output table' to './Buffers_cost/station_costs'
+Leave everything else as defaults
+Click 'OK'
+</pre>
+
+<p>
+Add the table of costs (NOTE: in Arc 10 this should be added automatically at the bottom of the TOC).
+However, if the table does not get added:
+<pre>
+
+File -> Add Data ->
+Select '.\Buffers_cost\station_costs'
+</pre>
+
+<p>
+Open the station_costs table and sort on the field 'STR_COST':
+
+<pre>
+<i>right click</i> 'station_costs' -> Open
+<i>right click</i> column named 'STR_COST' and choose 'Sort Ascending'
+Note the range of cost values.
+Close the table
+</pre>
+
+<!--<p>
+ #create the cost backlink (direction grid)
+Open the ArcToolbox (if not already open)
+Select 'Spatial Analyst Tools->Distance->Cost Back Link'
+Set 'Input raster or feature source data' to 'fire_pt'
+Set the 'Input cost raster' to 'str_cost'
+Set the 'Ouput Backlink raster' to '.\Buffers_cost\backlink'  
+Click 'OK' -->
+
+
+<p>
+Find shortest path from nearby firestations.<br>
+Note: create the firestations as a shapefile if the below
+does not work with geodatabase firestations.
+
+<pre>
+Open the ArcToolbox (if not already open)
+Select 'Spatial Analyst Tools->Distance->Cost Path'
+Set 'Input raster or feature destination data' to 'firestations'
+Set 'Destination field' to 'OBJECTID'
+Set the 'Input cost distance raster' to 'str_cost'
+Set the 'Input cost backlink raster' to 'backlink'
+Set the 'Output raster' to '.\Buffers_cost\cost_path'
+Set the 'Path type' to 'BEST_SINGLE'   
+Click 'OK'
+</pre>
+<p>
+Note: to see the resulting least cost (drive-time) path
+you may have to turn off some or most of the layers in your TOC.
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

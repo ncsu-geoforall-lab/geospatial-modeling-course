@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Surface water flow and erosion simulation</h2>
+
+Here we compute surface runoff, and sediment transport using existing
+path sampling model.
+
+<p>
+Resources:
+<ul>
+    <li><a href="https://grass.osgeo.org/grass83/manuals/index.html">
+GRASS overview and manual</a>
+    <li><a href="https://www.grassbook.org/">GRASS book</a>
+</ul>
+<!--
+<p>
+<a href="mannings.txt">Mannings values</a><br>
+<a href="rainfallexcess.txt">Rainfall-infiltration recode table</a><br>
+<a href="erodibility.txt">Erodibility, transport capacity coef., critical sheer stress</a>
+-->
+
+<p>
+For animating in GRASS 8, see the
+<a href="https://www.youtube.com/watch?v=Pi1ESk9iPwk">video instructions</a> or
+instructions for the
+<a href="https://ncsu-geoforall-lab.github.io/grass-temporal-workshop/">
+  Spatio-temporal data handling and visualization in GRASS workshop
+</a>
+
+
+<h3>Start GRASS</h3>
+Create a new mapset (called e.g. HW_interpolation_2) in nc_spm_08_grass7 project and
+change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+
+<p>
+Download all text files with color rules (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
+
+<h3>Overland flow depth and discharge</h3>
+
+<p>
+
+
+<pre><code>g.region rural_1m res=2 -p
+</code></pre>
+<!-- r.mapcalc "man05 = 0.05"
+r.mapcalc "infil0 = 0."
+r.mapcalc "rain50mmhr = 50." -->
+<p>
+Calculate partial derivatives to define the gradient of elevation surface:
+
+<pre><code>v.surf.rst -d input=elev_lid792_bepts elevation=elev_lid792_2m slope=dx_2m aspect=dy_2m tension=15 smooth=1.5 npmin=150
+</code></pre>
+Note that partial derivatives can be also computed using <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.slope.aspect.html">r.slope.aspect</a></em>.
+
+<p>
+Compute spatial pattern of overland flow depth and discharge
+by running the SIMWE model implemented in
+the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.sim.water.html">r.sim.water</a></em> module.
+We will use uniform rainfall excess, infiltration and land cover.
+<pre><code>r.sim.water -t elevation=elev_lid792_2m dx=dx_2m dy=dy_2m rain_value=50 infil_value=0 man_value=0.05 depth=wdp_2m discharge=disch_2m nwalkers=100000 niterations=30 output_step=2
+</code></pre>
+
+Display the results, add legend for individual raster and whatever you think is appropriate.
+
+<pre><code>d.rast wdp_2m.30
+d.rast disch_2m.30
+</code></pre>
+
+<p>
+Optionally, animate the time series:
+<em>File > Animation tool</em>
+
+
+<h4>Peak runoff with predefined flow direction</h4>
+
+Compute peak runoff with predefined flow direction
+along the stream inluding culvert under the road.
+
+<p>
+First, compute direction (aspect) of the given streams:
+
+<pre><code>v.to.rast streams output=streams_dir_2m use=dir
+</code></pre>
+
+<p>
+Compute stream dx and dy using direction and slope equal to 2 degrees:
+
+<pre><code>r.mapcalc "dxstr_2m = tan(2.)*cos(streams_dir_2m)"
+r.mapcalc "dystr_2m = tan(2.)*sin(streams_dir_2m)"
+</code></pre>
+
+<p>
+Compute combined DEM and stream dx and dy:
+
+<pre><code>r.mapcalc "dxdemstr_2m = if(isnull(dxstr_2m), dx_2m, dxstr_2m)"
+r.mapcalc "dydemstr_2m = if(isnull(dystr_2m), dy_2m, dystr_2m)"
+</code></pre>
+
+<p>
+Run the model:
+
+<pre><code>r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain_value=50 infil_value=0 man_value=0.05 depth=wdpstr_2m discharge=dischstr_2m nwalkers=100000 niterations=30 output_step=2
+d.rast dischstr_2m.30
+</code></pre>
+
+<p>
+Use Animation tool to animate the discharge.
+
+
+<h4>Runoff for spatially variable landcover and rainfall excess</h4>
+
+Compute runoff for spatially variable landcover
+represented by spatially variable Mannings and rainfall excess.
+
+<p>
+We will use variable Mannings coefficient defined by reclassifying
+land cover class. Here is the content of a file called
+<code>land_to_mannings.txt</code> with reclassification rules for
+the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.recode.html">r.recode</a></em> module.
+
+<pre data-filename="land_to_mannings.txt">
+1:1:0.9:0.9
+2:2:0.5:0.5
+3:3:0.01:0.01
+4:4:0.03:0.03
+5:5:0.01:0.01
+6:6:0.05:0.05
+7:7:0.1:0.1
+8:8:0.1:0.1
+9:9:0.9:0.9
+10:10:0.03:0.03
+11:11:0.5:0.5
+</pre>
+
+<pre><code>r.recode input=landcover_1m output=mancover_2m rules=land_to_mannings.txt
+</code></pre>
+
+Similarly, we will create raster with spatially variable rainfall excess
+rates based on the land cover classes. We use file named
+<code>land_to_rain.txt</code> to specify the rates for individual classes.
+
+<pre data-filename="land_to_rain.txt">
+1:1:50:50
+2:2:5:5
+3:3:40:40
+4:4:35:35
+5:5:50:50
+6:6:40:40
+7:7:25:25
+8:8:15:15
+9:9:50.:50.
+10:10:40:40
+11:11:10:10
+</pre>
+
+Again, we use the file as rules for the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.recode.html">r.recode</a></em> module.
+
+<pre><code>r.recode input=landcover_1m output=raincover_2m rules=land_to_rain.txt
+</code></pre>
+
+<p>
+Run the model:
+
+<pre><code>r.sim.water -t elevation=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=raincover_2m infil_value=0 man=mancover_2m depth=wdpstrcov_2m discharge=distrcov_2m nwalkers=100000 niterations=30 output_step=2
+</code></pre>
+
+Display the static results.
+
+<pre><code>d.rast wdpstrcov_2m.30
+d.legend wdpstrcov_2m.30
+d.rast distrcov_2m.30
+d.legend distrcov_2m.30
+</code></pre>
+
+<p>
+Animate the time series using the Animation tool.
+
+
+<h3>Sediment flow rate, erosion and deposition</h3>
+
+Compute sediment flow rate and net erosion/deposition using sediment
+transport part of the SIMWE model implemented in the
+the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.sim.sediment.html">r.sim.sediment</a></em> module.
+To make the computations faster, set region just to the upper part of
+the watershed:
+
+<pre><code>g.region s=s+290
+</code></pre>
+
+<p>
+Compute input transport capacity and detachment coefficient maps:
+
+<pre><code>r.mapcalc "tranin = 0.001"
+r.mapcalc "detin = 0.001"
+</code></pre>
+
+<p>
+Compute input critical shear stress:
+
+<pre><code>r.mapcalc "tauin = 0.01"
+</code></pre>
+
+<p>
+Run the model using the last depth from previous run:
+
+<pre><code>g.copy rast=wdp_2m.30,wdp_2m
+r.sim.sediment elevation=elev_lid792_2m dx=dx_2m dy=dy_2m water_depth=wdp_2m detachment_coeff=detin transport_coeff=tranin shear_stress=tauin man_value=0.05 nwalkers=1000000 niterations=30 transport_capacity=tcapacity tlimit_erosion_deposition=erdepmax sediment_flux=sedflow erosion_deposition=erdepsimwe
+</code></pre>
+
+<p>
+Display these results after few seconds:
+
+<pre><code>d.rast tcapacity
+d.rast erdepmax
+</code></pre>
+
+<p>
+Display the final results:
+
+<pre><code>d.rast sedflow
+d.legend sedflow
+d.rast erdepsimwe
+d.legend erdepsimwe
+</code></pre>
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

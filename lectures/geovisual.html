@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2><b>Geovisualization</b></h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="https://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h3>Learning objectives</h3>
+<p>
+<ul>
+  <li>understand scaling properties of raster and vector data display
+  <li>select suitable color ramps for raster data 
+  <li>use relief shading to analyze surface structure
+<!--  <li>color and symbols for vector data
+  <li>map elements -->
+  <li>explain and use 3D visualization: single and multiple surfaces
+  <li>understand applications of dynamic visualization with animations
+  <li>discuss properties of tangible interaction
+<!--
+  <li>Web GIS cartography MapBox, Kepler, MapStory, CartoDB, WorldMap, Beccario Earth
+-->
+</ul>
+</section>
+
+<section>
+  <h3>Role of geovisualization</h3>
+<p>
+<ul>
+<li class="fragment">Visual analytics: highlight spatial patterns or features
+<p>
+<li class="fragment">Communication of geospatial information
+<p>
+<li class="fragment">Example: Explore Global Weather Conditions at
+<strong>
+<a href="https://earth.nullschool.net/about.html">earth</a></strong> by Cameron Beccario
+<p><small>Near-real time dynamics, presented in several projections</small>
+</ul>
+</section>
+
+<section>
+   <h3>Display of raster and vector data</h3>
+<small>
+<ul>
+ <li class="fragment">all data displayed on computer screen are rasters, 
+what you see is controlled by the resolution of your map display 
+ <li class="fragment">raster data: as we zoom in, raster grid cells become visible,
+reinterpolate to higher resolution to smooth out the effect
+ <li class="fragment">vector data: vertices are connected by rasterized line, it is scalable, limited
+only by the dispaly resolution 
+</ul>
+</small>
+<p> <img height="350" src="img/data_visualize/raster_vect_displ_zoom.jpg">
+</p>
+</section>
+
+<section>
+   <h3>Display of large rasters</h3>
+<small>  If the number of rows or columns in a raster is greater than those of map display,
+<br>not all pixels are visible (red): convert to vector representation (blue)</small>
+<br> <img height="220" src="img/data_visualize/raster_large_streams.jpg">
+<img height="220" src="img/data_visualize/raster_large_streamszoom.jpg"><br>
+<class="fragment"> <img height="200" src="img/data_visualize/vector_large_streams.jpg">
+<img height="200" src="img/data_visualize/vector_large_streamszoom.jpg">
+<br><small> Example:3000x3000 raster in 1000x1000 window only every third pixel shown,
+zoom to 500x500 subset shows all pixels.  
+</small>
+</section>
+
+<section>
+   <h3>Working with color</h3>
+<p>
+<ul>
+ <li class="fragment">Color components: hue, brightness, and saturation
+ <li class="fragment">Quantitative representation: Red + Green + Blue
+ <li class="fragment">Color for raster data: discrete or continuous 
+ <li class="fragment">Continuous <strong>interpolates</strong> RGB values based on the values in the raster map
+ <li class="fragment">Color for vector data: usually discrete by definition
+</ul>
+<p>
+Learn more about color (see supplemental material)
+<small>
+<ul>
+<li><a href="https://morphocode.com/the-use-of-color-in-maps/">Color in Maps</a>
+<li><a href="https://www.axismaps.com/guide/general/using-colors-on-maps/">More about Color in Maps</a>
+<li><a href="https://colorbrewer2.org/">Colorbrewer</a>
+<li><a href="https://tristen.ca/hcl-picker/#/hlc/6/1/21313E/EFEE69">Interactive color picker </a>
+</ul>
+</small>
+</section>
+
+<section>
+   <h3>Colors for discrete raster data</h3>
+<ul>
+<li>quantitative data: constant hue, color intensity is a function of values
+<li>qualitative data: constant intensity, varied discrete hue
+</ul>
+<p class="fragment"> 
+<img height="320" src="img/data_visualize/soilsKfac_discrleg.png">
+<img height="320" src="img/data_visualize/soils_rural_1mID.png"> </p>
+<p><small> Soil erodibility (see units <a href="../resources/erosion_notes.pdf">here</a>) and Soil ID maps
+</small>
+</section>
+
+<section>
+   <h3>Colors for continuous raster data</h3>
+<ul>
+<li>continuous color highlights continuous property
+<li>discrete color: convert the continuous data to discrete classes; some information is lost
+</ul>
+<p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_elev.jpg">
+<br><small>note: default color ramp for FP maps is often greyscale with uniform interval</small></p>
+</section>
+
+<section>
+   <h3>Colors for continuous raster data</h3>
+<p> <small>
+Distribution of color based on uniform raster data intervals</small>
+<p class="fragment"><img class="fragment" height="380" src="img/data_visualize/Color_raster_equalint.jpg"> 
+<img class="fragment" height="380" src="img/data_visualize/Color_raster_histeq1.jpg"> </p>
+<p><small>Uniform intervals work for elevations in Piedmont, 
+but for entire NC this approach highlights that most NC is flat coastal 
+plane but we don't see its subtle topography structure </small></p>
+</section>
+
+<section>
+   <h3>Histogram equalized color</h3>
+<p> <small> Distribution of color based on histogram of raster data values and a custom color ramp</small>
+<p class="fragment"> <img height="380" src="img/data_visualize/Color_raster_histeq2.jpg">
+<br> <small>Assigns color based on intervals which cover approximately the same area.
+Highlights topography structure but distorts the elevation differences</small>
+</section>
+
+<section>
+   <h3>Color for non-linear distributions</h3>
+<ul>
+<li>Flow accumulation data range over several magnitudes
+<li>Uniform interval color ramp
+</ul> 
+<p> <img height="380" src="img/data_visualize/accum_50K_30mabs.png">
+<p class="credit">The flow accumulation values range between 1 and 73000 with large number of cells with 
+small values and small number of cells with very large values </p>
+</section>
+
+<section>
+   <h3>Color for non-linear distributions</h3>
+<ul>
+<li>Flow accumulation data range over several magnitudes
+<li>Histogram equalized color ramp: green-yellow-blue
+</ul> 
+<p> <img height="380" src="img/data_visualize/flowacc_histeq_lg.png">
+<p class="credit">The high flow accumulation which represents the main streams is lost. </p>
+</section>
+
+<section>
+   <h3>Color for non-linear distributions</h3>
+<ul>
+<li>Flow accumulation data range over several magnitudes
+<li>Logarithmic color ramp: green-yellow-blue
+</ul> 
+<p> <img height="380" src="img/data_visualize/flowacc_log_lg.jpg">
+<p class="credit">Highlights the main streams with good representation of smaller streams</p>
+</section>
+
+<section>
+   <h3>Color for non-linear distributions</h3>
+<ul>
+<li>Convert to vector model with stream order
+<li>Color, width based on stream order
+</ul>
+<p> <img height="380" src="img/data_visualize/streams_order.png">
+<p class="credit">GRASS workflow provided in 
+<a href="https://baharmon.github.io/watersheds-in-grass">GRASS for Designers by Brendan Harmon</a></p>
+</section>
+
+<section>
+    <h3>Color ramps for continuous data: summary </h3>
+<ul>
+  <li class="fragment">discrete: based on discrete categories derived from continuous data
+  <li class="fragment">continuous: colors (R,G,B) are interpolated based on raster data values
+  <li class="fragment">histogram equalized: colors are distributed based on the raster map histogram
+  <li class="fragment">logarithmic
+  <li class="fragment">see <a href="../topics/data_models_visu.html#data_visualization">
+supplemental material for many others</a> and explanation of the best practices 
+</section>
+
+
+<section>
+   <h3>Maps with relief shading</h3>
+<ul>
+<li>Color composite highlights relationship between 
+<ul>
+  <li>the theme values represented by hue  
+  <li>surface structure represented by brightness derived as shaded relief (illuminated topography)
+</ul>
+</ul>
+<p> <img height="340" src="img/data_visualize/relief_shade_color.jpg">
+</section>
+
+<section>
+   <h3>Relief shading</h3>
+<p>Resulting color composite for elevation theme
+<p> <img height="420" src="img/data_visualize/rastercont_elev.jpg">
+</section>
+
+<section>
+   <h3>Relief shading</h3>
+<p>Color composite for flow accumulation with elevation
+<p> <img height="420" src="img/data_visualize/accum_1m_log.jpg">
+<img height="200" src="img/data_visualize/flowlegend.png">
+</section>
+
+<!--
+<section>
+   <h3>Vector data display</h3>
+<p>
+Topic covered by thematic cartography,
+often follow established conventions or national standards 
+<p class=small>
+<ul>
+  <li>lines: color and symbols
+  <li>polygons: color and fill, transparency
+  <li>points: color and symbols
+  <li>colors and symbols are assigned based on attributes
+  <li>general rules for quantitative and qualitative data apply
+  <li>relation between symbol size, line width and scale
+  <li>adding labels: complex algorithms for automated positioning of labels 
+(simulated annealing)
+</ul>
+</p>
+</section>
+-->
+
+<section>
+  <h3>From image to map</h3>
+<ul>
+<li>Display of raster and vector data does not make a map
+<li>Map: cartographic representation of geospatial data
+<li>Map elements position the image on earth and explain the content
+</ul>
+</section>
+
+<!--
+<section>
+  <h3>Coordinate system grid</h3>
+<ul>
+<li>Compare the geodetic(geographic) and projected grid
+</ul>
+<p> <img height="340" src="img/data_visualize/cartogrid_ll.png">
+<img height="340" src="img/data_visualize/cartogrid_xy.png">
+</section>
+-->
+
+<section>
+<h3>Map elements</h3>
+<ul>
+<li>data frame - map content image
+<li>elements outside the map image
+<ul>
+<li>legend and title, scale and north arrow
+<li>coordinates, citation, metadata
+</ul>
+</ul>
+<br> <img height="320" src="img/data_visualize/Map_RHahn_ArcGIS.png">
+<img height="320" src="img/data_visualize/GRASS_map_land_change_30m.png">
+<p class=credit>Images from report by Hahn, GIS582 and 
+<a href="https://doi.org/10.3390/rs14071718">Corey White et al, 2022, 
+Rapid-DEM: Rapid Topographic Updates through Satellite Change Detection and UAS Data Fusion. Remote Sensing 14(7), 1718.</a></p>
+</section>
+
+<section>
+   <h3>Visualization in 3D perspective</h3>
+<ul>
+<li> Projection of 3D object into a 2D space: perspective
+<p>
+<ul>
+<li class="fragment"> paralel lines intersect in vanishing point(s)
+<li class="fragment"> scale depends on distance from the viewer
+<li class="fragment"> only visible part of surface is rendered:
+interactive exploration is important for viewing obstructed data
+</ul>
+</ul>
+<p><img height="180" src="img/data_visualize/vis3dcomposits.jpg">
+</section>
+
+<section>
+   <h3>Parameters of 3D perspective</h3>
+  <ul>
+  <li class="fragment">viewing position (height, distance and angle)
+  <li class="fragment">surface position, z-scale, resolution
+  <li class="fragment">surface color: raster map, vector data
+  </ul>
+<p>
+<img height="200" src="img/data_visualize/elev3d_S_30km_z1.jpg">
+<img height="200" src="img/data_visualize/elev3d_S_5km_z5.jpg">
+</section>
+
+<section>
+   <h3>Light and shading</h3>
+<p>Important for visual representation of surface structure
+<p>Useful for identification of subtle features or artifacts
+<p><img height="360" src="img/data_visualize/nvizlightnew.jpg">
+</section>
+
+<section>
+   <h3>Multiple surface visualization</h3>
+<p>Applications and properties
+<ul>
+  <li class="fragment">Lidar: bare ground and surface with vegetation
+  <li class="fragment">Change in topography (coast, development)
+  <li class="fragment">Geological or soil layers
+<p>
+  <li class="fragment">Vertical scaling is important: vertical distances often 1-3 magnitudes smaller than horizontal
+  <li class="fragment">Display: side-by-side or stacked
+  <li class="fragment">Interactive cutting planes for exploration of stacked surfaces
+</ul>
+</section>
+
+<section>
+   <h3>Multiple surface visualization</h3>
+<p>Side by side: Bare Earth and Vegetated Surfaces derived from lidar data
+<p><img height="400" src="img/data_visualize/lidnvizmultiplesurf.jpg">
+</section>
+
+<section>
+   <h3>Multiple surface visualization</h3>
+<p>Stacked surfaces with crossections
+<br><img height="250" src="img/data_visualize/nvizcutplanelwDEMDSMS.jpg">
+<br><img height="225" src="img/data_visualize/nvizcutplane_lwDSMDEMS2.jpg">
+</section>
+
+<!--
+<section>
+   <h3>Multiple surface visualization</h3>
+<p>Difference over time: migrating dune
+<p><img height="350" src="img/data_visualize/jr_74_17_cut3.jpg">
+</section>
+
+<section>
+   <h3>Dynamic Visualization</h3>
+<a href="https://ncsu-geoforall-lab.github.io/dynamic-surfaces-talk/texas.html#/">Dynamic Landscapes</a>
+<p>Talk on "Exploring changing landscapes with dynamic visualizations and tangible interaction"
+</section>
+-->
+
+<section>
+   <h3>Dynamic visualization: animations  </h3>
+<ul>
+<li> When to use animations: 
+<p>
+<ul>
+  <li class="fragment">dynamic simulations: ocean surge, flooding, wind, pollution, migration, urban growth
+  <li class="fragment">time series of data : migrating landforms, temperature, precipitation, melting of ice cap, urban growth
+  <li class="fragment">method analysis – changing a parameter or crossections
+</ul>
+<p class="fragment"><img height="190" src="img/data_visualize/anim_storsurge.gif">
+<img class="fragment" height="190" src="img/data_visualize/NagsHead.gif">
+<img class="fragment" height="190" src="img/spatial_interpolation/smooth.gif">
+<!--<img class="fragment" height="200" src="img/data_visualize/voxels_vegetation_anim.gif">-->
+</section>
+
+<!--
+<section>
+   <h3>Animations 2D</h3>
+<p> 2D animations examples
+<p> Image composite - simulation: 2D urban growth, data: urban growth
+<p>planets, google earth engine and many others
+</section>
+-->
+
+<section>
+   <h3>Animations in 3D </h3>
+<ul>
+<li>Dynamic process: overland flow simulation using path sampling method, time series 
+of particles and water depth maps draped over static DEM
+</ul>
+<p><img height="350" src="img/data_visualize/Balsfanimwalk.gif">
+<img class="fragment" height="350" src="img/data_visualize/fanimhhcolp.gif">
+</section>
+
+<section>
+   <h3>Animations in 3D: examples </h3>
+<p> Jockey's ridge:
+Dynamic surfaces: series of changing surfaces, static viewing position
+<br>
+<img height="430" src="img/data_visualize/jr_74_17_anim3dlgfix.gif">
+<p class=credit><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/TME169-pp.155-167.pdf">
+Mitas, O. et al., 2013, Managing Dune Landscape Changes at 
+Jockey's Ridge State Park, North Carolina, Tourism in Marine Environments 9(3-4), pp. 155-167.</a>
+</p>
+</section>
+
+<section>
+   <h3>Space-time cube: landforms </h3>
+<p> Jockey's ridge: evolution of 16m elevation contour, isosurface evolving over time
+<br><img height="420" src="img/data_visualize/JR_STC_16m_anim.gif">
+<p class=credit>Animation by A. Petrasova, see also <a href="https://journals.sagepub.com/doi/abs/10.1177/1473871613487086">
+Tateosian L., et al. 2014, Visualizations of Coastal Terrain Time-series, 
+Information Visualization, 13 (3) pp. 266 - 282.</a>
+</section>
+
+<section>
+   <h3>Animations for voxel models</h3>
+  <p>3D vegetation structure from multiple return lidar point cloud: moving cross-section
+<p><img height="350" src="img/data_visualize/voxels_vegetation_anim.gif">
+<p><small><a href="https://opengeospatialdata.springeropen.com/articles/10.1186/s40965-017-0021-8">
+Petras V., Newcomb D. J., Mitasova H, 2017. Generalized 3D fragmentation index derived from lidar point clouds. </a></small>
+</section>
+
+<section>
+   <h3>Animations in 3D </h3>
+  <p>Fly-by: static features explored by moving viewing position
+  <br>Dynamic isourfaces from multi-temporal voxel model
+<p><img height="350" src="img/data_visualize/wellnew.gif">
+<img class="fragment" height="350" src="img/data_visualize/well456.gif">
+<p><small><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/dynamicgis">See more examples here</a></small> 
+</section>
+
+<!--
+<section>
+  <h3>Web-based visualization</h3>
+Interactive 3D visualization supported by WebGL
+<p> <a href="https://plas.io"> Point cloud viewer</a>
+<p> <a href="https://kepler.gl"> Kepler: vector data display and analysis</a>
+<img height="320" src="img/data_visualize/pfas_kepler_3D.png">
+<p><a href="https://github.com/cwhite911/trianglenc-crime/blob/master/README.md">Kepler Lab</a> by Corey White
+</section>
+-->
+
+<section>
+<h3>Tangible Landscape</h3>
+<p> Bringing people together around GIS: Tangible user interface for GRASS
+<p>Designed to make working with geospatial data and simulations engaging, and fun</p>
+<p>
+    <img height="180" src="img/data_visualize/tangible_landscape_compcrop.jpg">
+<p><small>
+Petrasova, A. et al. (2018). Tangible Modeling with Open Source GIS. Second edition. Springer International Publishing.
+<a href="https://doi.org/10.1007/978-3-319-89303-7">https://doi.org/10.1007/978-3-319-89303-7</a>
+</small>
+</section>
+
+<section>
+<h3>How does it work?</h3>
+<iframe data-autoplay width="50%" height="330" src="https://www.youtube.com/embed/Cd3cCQTGer4?rel=0&amp;showinfo=0&amp;loop=1&amp;playlist=Cd3cCQTGer4" frameborder="0" allowfullscreen></iframe>
+&nbsp; &nbsp;<img height=380 src="img/data_visualize/rendered_diagram_2.png">
+<p>Tangible Landscape couples a digital and a physical model through a continuous cycle of 3D scanning, geospatial modeling, and projection</p>
+</section>
+
+<section>
+<h3>Interactions</h3>
+<p><img height="450" src="img/data_visualize/tl_interactions_all.jpg">
+</section>
+
+<section>
+    <h3>Coupling with 3D rendering</h3>
+<p><img height="450" src="img/data_visualize/process4.png">
+</section>
+
+<section>
+<h3>Tangible Landscape for education</h3>
+<p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jX6FurEeW28?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<img height="260" src="img/data_visualize/collaboration2.JPG">
+<p><a href="https://consbio.org/products/webinars/tangible-landscape-tool-modeling-and-science-communication">TL Webinar</a>
+<p><a href="https://ncsu-geoforall-lab.github.io/geospatial-simulations-course/topics/data_simulation.html#tangible_landscape">
+TL as a geosimulation environment</a> in GIS714
+</section>
+
+<section>
+ <h3>Summary</h3>
+<ul>
+  <li>display of raster and vector data: scaling properties
+  <li>color ramps for raster data, relief shading
+  <li>map elements
+  <li>3D visualization: single and multiple surfaces
+  <li>dynamic visualization with animations
+  <li>Tangible Landscape
+<!--  <li>Web GIS cartography-->
+</ul>
+</section>
+
+<!--
+<section>
+ <h3>Reading, resources</h3>
+<ul>
+<li>Color ramps
+  <ul>
+  <li> Brewer
+  <li>https://wikipedia.org/wiki/Histogram_equalization
+  <li>https://www.generation5.org/content/2004/histogramEqualization.asp
+  </ul>
+<li>web based visualization
+</section>
+-->
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="https://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>

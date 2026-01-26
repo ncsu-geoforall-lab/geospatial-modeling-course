@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Buffers, cost surfaces, least cost path</h2>
+<p>Resources:
+<a href="https://www.lib.ncsu.edu/gis/virtcamp.html">ESRI Academy (Formerly ESRI virtual campus)</a>
+<p>
+Launch ArcGIS Pro and login with ArcGIS Online credentials if required.
+Select New> Map> Create New Project.
+Create a new project in your preferred workspace,
+in the instructions below we are using the default C:\Users\myname\Documents\ArcGIS\Projects\ folder.
+<p>
+Use your judgement to decide which maps to include in your report.
+Adjust the colors and symbology of displayed layers to match the cartographic standards (lakes are displayed in blue etc.)
+
+<p>
+To constrain analyses in a similar manner as g.region,
+set the spatial extent using the options under Environments, for example:<br>
+to constrain analyses results to the extents defined by intersection of input features:<br>
+
+<pre>
+Analysis tab on the ribbon Geoprocessing->Environments-> 'Processing extent'
+Choose 'Intersection of Inputs' from the drop down menu.
+Click 'Run'
+</pre>
+
+<!--<p>
+Constrain the drawing of project layers to a user specified extent.
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select 'elev'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
+select 'streets_wake'
+In the 'Contents' pane, RMC 'Map'-> 'extent' tab of the Map properties window
+Select 'Use a Custom Extent' 
+Select 'elev' from 'extent of a layer'
+Click 'Run'
+</pre>
+***This is not working on pro 2.5***-->
+
+<h3>Find developed areas close to lakes</h3>
+Create the buffers:
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
+Select 'lakes'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+Select 'landcl96'
+In the Geoprocessing pane, search for and select the 'Euclidean Distance' tool
+Set 'Input raster' to 'lakes'
+Set Output distance raster' to 'lk_dist'
+Set 'Maximum distance' to '500'
+Leave the rest as defaults 
+Click 'Run'
+</pre>
+
+<p>
+Select the locations that overlay developed areas:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+Type in the expression: SetNull( "landcl96" > 2, "lk_dist")
+Set the Output raster to 'dev_lakes'
+Click 'Run'
+</pre>
+
+<h3>Compute cost surface from accident based on speed limits</h3>
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
+Select 'streets_wake'
+In the Geoprocessing pane, search for and select the 'Polyline to Raster' tool
+Set 'Input Features' to 'streets_wake'
+Set 'Value field' to 'SPEED'
+Set 'Output Raster Dataset to 'str_speed'
+Set Cellsize to 30
+Leave the others as defaults 
+Click 'Run'
+</pre>
+
+<p>
+Verify the working directory then modify mask and cell size:
+
+<pre>
+Click on the Analysis tab on the ribbon and click Environments. 
+Verify workspace is set to the assignment gdb you created at the begining of this assignment
+Under 'Raster Analysis' set the 'Cell Size' to 'str_speed'
+Under 'Raster Analysis' set the  'Mask' to 'boundary_wake' in the ncshape.gdb
+Click 'Run'
+</pre>
+
+<p>
+Assign travel time per cell in hours, compute cost surface.<br>
+Assign null values a speed of 5.
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+Type in the expression: Con(IsNull("str_speed"),5,"str_speed") 
+Set the Output raster to 'str_speed2'
+Click 'Run'
+</pre>
+
+<p>
+Calculate the travel time and cost surface.
+<p>
+In ArcGIS cost is defined per <em>map unit</em> (meters in this case).
+We create a cost raster where cost is time to cross one map unit.
+<span class="question">Where does the 0.00062137 constant come from?</span>
+<p>
+Create travel time
+<pre>
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+Type in the expression: 0.00062137 / "str_speed2"
+Set the 'Output raster' to str_trv
+</pre>
+<p>
+Create a fire location
+<pre>
+Browse to your project GDB in the 'Catalog' pane
+right click->new->feature class
+set name to 'fire_pt'
+select 'point'
+click 'finish'
+add the layer to your map
+From the 'edit' ribbon->'features' group->'Create'
+From the 'create features' pane->selec fire_pt
+RMC on the map-> 'Absolute x,y,x'
+paste '634886' for x and '224328' for y.  Hit the enter key to add the point
+'Edit' ribbon->'manage edits' group->save.
+clear the selection in the 'selection' group of the 'edit 'window
+</pre>
+<p>
+Create cost surface
+<pre>
+In the Geoprocessing pane, search for and select the 'Cost Distance' tool
+Set 'Input raster or feature source data' to 'fire_pt'
+Set 'Input Cost raster' to 'str_trv'    
+Set 'Output distance raster' to 'str_cost'
+Set 'Output backlink raster' to '.\buffers_cost\backlink' # This should be set to your working directory
+Leave the rest as defaults
+Click 'Run'
+</pre>
+
+<h3>Find cost from selected firestations</h3>
+Find cost
+<p>
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
+Select 'firestations'
+In the Geoprocessing pane, search for and select the 'Sample' tool
+Set 'Input rasters' to 'str_cost'
+Set 'Input Location raster or point features' to 'firestations'
+Set 'Output table' to 'station_costs'
+Leave everything else as defaults
+Click 'Run'
+</pre>
+
+<p>
+Add the table of costs (NOTE: this should be added automatically at the bottom of the Contents pane).
+However, if the table does not get added:
+<pre>
+
+Map->layer-> Add Data ->
+Select 'station_costs' from your project GDB
+</pre>
+
+<p>
+Open the station_costs table and sort on the field 'STR_COST_Band_1':
+
+<pre>
+<i>RMC</i> 'station_costs' -> Open
+<i>RMC</i> column named 'STR_COST_Band_1' and choose 'Sort Ascending'
+Note the range of cost values.
+Close the table
+</pre>
+
+<p>
+Find shortest path from nearby firestations.<br>
+Note: create the firestations as a shapefile if the below
+does not work with geodatabase firestations.
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Cost Path' tool
+Set 'Input raster or feature destination data' to 'firestations'
+Set 'Destination field' to 'OBJECTID'
+Set the 'Input cost distance raster' to 'str_cost'
+Set the 'Input cost backlink raster' to 'backlink'
+Set the 'Output raster' to 'cost_path'
+Set the 'Path type' to 'BEST_SINGLE'   
+Click 'Run'
+</pre>
+<p>
+Note: to see the resulting least cost (drive-time) path
+you may have to turn off some or most of the layers in your TOC.
+How does this compare to the table values?
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

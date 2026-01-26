@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2><b>Spatial Interpolation: Splines</b></h2>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="https://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h3>Outline (learning objectives)</h3>
+<p>
+<ul>
+  <li>Spline interpolation 
+  <li>Spline parameters: tension and smoothing
+  <li>Evaluating interpolation accuracy: deviations, crossvalidation
+  <li>Special cases: contours, anisotropy 
+  <li>Processing large point data sets: segmentation, subsampling
+  <li>Multivariate interpolation: volumes, topo-climatology, dynamic volumes
+</ul>
+</section>
+
+<section>
+  <h3>Interpolation with radial basis functions (RBF)</h3>
+<ul>
+  <li>Variational approach is based on minimizing:
+  <ul>
+    <li class="fragment">deviations from the given points
+    <li class="fragment">smoothness seminorm or roughness penalty
+  </ul>
+  <li class="fragment"> Radial basis functions: multiquadrics, splines
+  <li class="fragment">
+  Physics-based interpretation:  spline function is a thin flexible plate with tunable bending energy
+  <li class="fragment"> Formally equivalent to universal kriging
+</ul>
+</section>
+
+<section>
+   <h3>Splines: general equation</h3>
+<p>
+$$
+F(r) = T(r) + ∑ λ_j R(r,r_j)  \;    j=1,m
+$$
+<ul>
+<li>$r = (x,y)$ is location of a grid point,
+<li>$r_j=(x_j,y_j$) is location of a measured point
+<li>$λ_j$ are coefficients
+<li class="fragment">$R(r,r_j)$ is a radial basis function
+<li class="fragment">$T(r)$ is a trend:<br>
+    low order polynomial: $a_0$, $a_0+a_1x+a_2y$, ...,
+</ul>
+<br>
+<img class="fragment" height="150" src="img/spatial_interpolation/smooth.gif"> </p>
+</section>
+
+<section>
+  <h3>Splines with different properties</h3>
+  <p>Spline properties depend on the formulation of
+smoothness seminorm or roughness penalty
+<ul>
+  <li class="fragment">thin plate spline ($2^{nd}$ order derivatives)
+  <li class="fragment">spline with tension ($1^{st}$ and $2^{nd}$ order derivatives) 
+  <li class="fragment">regularized spline ($2^{nd}$ and higher order)
+  <li class="fragment">regularized spline with tension (derivatives of all orders with decreasing weight)
+  <li class="fragment">see the smoothness seminorms in 
+  <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/resources/mitas_mitasova_1999_2005.pdf"> Table 1</a> 
+  <li class="fragment">see example equations for $R(.)$  
+  <a href="https://spatialanalysisonline.com/HTML/index.html">here</a>
+</ul>
+<p><small>Note: Functions with $2^{nd}$ order derivatives minimize curvatures</small>
+</section>
+
+<section>
+   <h3>Regularized spline with tension (RST) </h3>
+<p>
+$$
+F(r) = T(r) + ∑ λ_j R(\varphi |r-r_j|)  \;    j=1,m
+$$
+<ul>
+<!--<li>where $\rho =\varphi |r-r_j|$ -->
+<li>$\varphi$ is the tension parameter and 
+<li>$|r-r_j|$ is the squared distance between the unsampled and measured points. 
+<li>minimizes seminorm with all derivatives with decreasing weight
+</ul>
+<p class="fragment"> <small>
+Spline tension rescales distances, it has similar effect to adjusting the range in kriging 
+or the distance weight exponent in IDW
+</small>
+</section>
+
+<section>
+   <h3>Spline: tension parameter</h3>
+Tension controls the stiffness of the plate:
+<ul> 
+ <li> high tension: soft rubber sheet, short range 
+ <li> low tension: stiff steel plate, long range 
+</ul>
+<p>
+<img height="400" src="img/spatial_interpolation/tension.gif"> </p>
+</section>
+
+<section>
+   <h3>Spline: tension parameter</h3>
+<p>
+<img height="230" src="img/spatial_interpolation/spline_ten160_1mn.jpg"> 
+<img height="230" src="img/spatial_interpolation/spline_ten40_1mn.jpg"> 
+<img height="230" src="img/spatial_interpolation/spline_ten10_1mn.jpg"> 
+<small>
+<ul>
+  <li> High tension, short  range of influence, soft rubber sheet, 
+       results in a rough surface with a peak or pit in each data point
+  <li> Low tension, long range of influence, stiffer steel plate, 
+       results in a smoother surface with possible overshoots.
+  <li>Note that tension is inverse of stiffness
+</ul>
+</small>
+</section>
+
+<section>
+   <h3>Spline: smoothing parameter</h3>
+<p> Allows the surface to deviate from measured points
+<p>
+$$F(x_i,y_i) = z(x_i, y_i) + \varepsilon(x_i,y_i)$$ 
+<p>
+<img height="280" src="img/spatial_interpolation/spline_smooth_springs.png"> 
+<p>Reduces overshoots, smoothes out noise, improves numerical stability.
+It can be applied to individual points. 
+</section>
+
+<section>
+   <h3>Spline: smoothing</h3>
+<p>
+Smoothing controls the deviation from the data points, large smoothing results in trend surface $T(x,y)$
+<p>
+<img height="400" src="img/spatial_interpolation/smooth.gif"> </p>
+<p><small><a href="https://covid19.ncdhhs.gov/dashboard/wastewater-monitoring">Smoothing spline applied to concentrations
+of COVID-19 virus in wastewater</a></small>
+</section>
+
+<section>
+   <h3>Spline: smoothing</h3>
+Smoothing can be spatially variable 
+<p>
+<img height="340" src="img/spatial_interpolation/spline_ten40_1mn.jpg">
+<img height="340" src="img/spatial_interpolation/spline_smoothvar_1mn.jpg"> </p>
+</section>
+
+<section>
+   <h3>Spline implementations</h3>
+<ul>
+  <li>Spline with tension: numerical solution supports carved streams, but here the 
+tension is too high
+  <li>Explicit RST method: lower tension combined with smoothing reduce bias towards given points
+</ul>
+<p>
+<img height="300" src="img/spatial_interpolation/InttopogrF1e.gif">
+<img height="300" src="img/spatial_interpolation/IntRSTF1f.gif"> </p>
+<p class="credit">Figure from
+<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation. In: P.Longley, M.F. Goodchild, D.J. Maguire, D.W.Rhind (Eds.), GIS: Principles, Techniques, Management and Applications, GeoInformation International, Wiley, 481-492.</a></p>
+</section>
+
+<section>
+   <h3>Interpolation with anisotropy</h3>
+ Anisotropic tension: rescaling distances in a given direction
+ changes the range of influence in this direction, leading to anisotropic pattern in the resulting surface
+<p>
+<img height="360" src="img/spatial_interpolation/spline_anisotr_streamHK.png"> </p>
+<p class="credit">Data from
+Genereux, D.P., S. Leahy, H. Mitasova, C.D. Kennedy, and D.R. Corbett, 2008, 
+Spatial and temporal variability of streambed hydraulic conductivity in West Bear Creek, NC,
+J. Hydrology, 358, p. 332-352</p>
+</section>
+
+<section>
+   <h3>Interpolation from profiles</h3>
+<ul>
+ <li>GPS-based sensors: dense sampling along a line 
+ <li>use anisotropy to rescale distances between profiles, minimize artifacts
+</ul>
+<img height="360" src="img/spatial_interpolation/spline_anisotr_beachprofiles.jpg"> 
+<br><small>Better alternative is to map the beach with a drone using structure from motion</small>
+</section>
+
+<section>
+   <h3>Interpolation accuracy</h3>
+<ul>
+ <li>Effect of smoothing: deviations from given points
+     $$ dz (x,y) = z' (x,y) – z (x,y) $$
+ <p> <small>where $z'$ is the interpolated value and $z$ is the given value </small>
+<p>
+<li class="fragment"> Predictive accuracy: crossvalidation error
+     $$e_z (x,y) = z' (x,y) – z_o (x,y)$$
+  <p class="fragment">
+  <small>where $z'$ is the interpolated and $z_o$ is the given value in a point that was omitted 
+from the set of points used for the interpolation. 
+n-interpolations are performed, each time omitting one point in which $e_z$ is computed: 
+also called 
+<a href="https://en.wikipedia.org/wiki/Cross-validation_(statistics)">
+leave-one-out cross-validation (LOOCV)</a>
+  </small>
+  </p>
+  <li class="fragment"> Artifacts, bias can be found using histograms, aspect maps, curvatures
+</ul>
+</section>
+
+<section>
+   <h3>Interpolated surface deviations </h3>
+Deviations map for smoothing 0.1 and 10
+<p>
+<img height="350" src="img/spatial_interpolation/devism01_3d.jpg"> 
+<img height="350" src="img/spatial_interpolation/devism10_3d.jpg"> </p>
+<p><small>Color maps of differences between the given and interpolated values draped 
+over the DEMs</small>
+</section>
+
+<section>
+   <h3>Interpolated surface predictive errors </h3>
+Map showing spatial pattern of predictive errors 
+<p>
+<img height="350" src="img/spatial_interpolation/crossval2d.png"> 
+<img height="350" src="img/spatial_interpolation/crossval3d.jpg"> </p>
+<p><small>Map of differences between the interpolated and given values in a point that was omitted
+from the set of points used for the interpolation (leave one out cross-validation), shown with
+given set of points and draped over DEM.</small> 
+</section>
+
+<section>
+   <h3>Solutions for large data sets </h3>
+<ul>
+<li>Measured point data often include thousands to millions of points (point clouds)
+<li>To compute the coefficients of interpolation function we need to solve a system
+of $n$ linear equations, where $n$ is number of given points.
+<li class="fragment">To keep $n$ small we compute interpolation locally with optimized search
+ or apply segmented processing
+</ul>
+</section>
+
+<section>
+   <h3>Segmented processing </h3>
+<ul>
+<li>Segmented processing splits the region into rectagular segments
+<li class="fragment">each rectangular segment has approximately same number of measured points
+<li class="fragment">interpolation is performed for all grid points within the segment
+<li class="fragment">interpolation function is computed 
+using measured points within the segment and its neighborhood 
+</ul>
+</section>
+
+<section>
+   <h3>Quadtree segmentation </h3>
+<ul>
+<li>if the number of points within a rectangle is larger than given maximum, it is split
+into 4 smaller rectangles.
+<li class="fragment">dynamic search window is used to find overlapping points to ensure smooth connection of segments
+</ul>
+<p><img height="350" src="img/spatial_interpolation/quadtreeseg.png">
+<img class="fragment" height="350" src="img/spatial_interpolation/segm_overlapwindow.png">
+</section>
+
+<section>
+   <h3>Quadtree segmentation </h3>
+Interpolation of a river bathymetry using quadtree segmentation
+<p>
+<img height="400" src="img/spatial_interpolation/comput.gif">
+</section>
+
+<section>
+   <h3>Oversampling in point measurements</h3>
+Automated point data acquisition often leads to large data sets with redundant points.
+Examples:
+<ul>
+  <li class="fragment">point clouds acquired by lidar
+  <li class="fragment">point data along profile collected automatically by GPS
+  <li class="fragment">scanned contours converted to points
+</ul>
+<img height="250" src="img/geomorph_terrain/points_lidar_gps.jpg">
+</section>
+
+<section>
+   <h3>Point density reduction </h3>
+<ul>
+<li class="fragment">Can we interpolate a 2D grid if we have points with identical $x,y$ but different $z$?
+<li class="fragment">How do we define identical?
+<li class="fragment">minimum distance at which two points
+are considered two independent measurements
+(usually horizontal accuracy of the measured data)
+</ul>
+<br>
+<p class="fragment">
+We can eliminate points where $d_{i,j} > d_{min}$, usually $d_{min}$ is a function
+of data accuracy and grid resolution, often leading to much faster computation
+while preserving the level of detail.
+</section>
+
+<section>
+   <h3>Optimized subsampling </h3>
+If the density of points along contours is high, spline with high tension leads
+to steps along contours. Solution:
+<ul>
+<li>Subsample points based on distance and shape.
+<li>Example: reduction from 40,000 to 3000 points - no visible change in isoline geometry
+</ul>
+<p><img height="340" src="img/spatial_interpolation/spline_from_contours_segm.jpg">
+</section>
+
+<section>
+   <h3>Interpolation with optimized subsampling</h3>
+Point reduction and lower tension improves the result,
+while computation is 10-times faster with no artifacts
+<p>
+<img height="350" src="img/spatial_interpolation/spline_from_contours.png"> </p>
+<p><small>Subsampling lidar point clouds: 50-90% points can be often removed leading
+to much faster interpolation and fewer artifacts</small>
+</section>
+
+
+<section>
+   <h3>Multivariate spline interpolation</h3>
+<ul>
+ <li>Given $m$ points measured in 3D space, find such trivariate spline function 
+$F(x,y,z$) that for each $i=1,m$
+$$
+    w_i=F(x_i,y_i,z_i)              
+$$
+ <li>and compute $w_k=F(x_k,y_k,z_k)$ in 3D grid points
+<p>
+ <li class="fragment">Similarly for points measured in 4D space (3D + time): $w_i=F(x_i,y_i,z_i,t_i)$
+ <li class="fragment">we use the quadvariate spline to compute a 4D grid (or a series of 3D grids)
+</ul>
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: volume</h3>
+Nitrogen concentrations $w_i$ in the Chesapeake Bay sampled at points $(x_i,y_i,z_i)$ 
+with different depths
+<p>
+<img height="360" src="img/spatial_interpolation/chesapsites.jpg">
+<img height="360" src="img/spatial_interpolation/chesap_midtens.jpg"> 
+<img height="280" src="img/spatial_interpolation/chesaplg.gif"> </p>
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: tension</h3>
+Impact of tension on the volume model: high to low
+<p>
+<img height="220" src="img/spatial_interpolation/chesap_hightens.jpg"> 
+<img height="220" src="img/spatial_interpolation/chesap_midtens.jpg"> 
+<img height="220" src="img/spatial_interpolation/chesap_lowtens.jpg"> 
+<p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
+
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: tension</h3>
+Impact of tension on the volume model
+<p>
+<img height="320" src="img/spatial_interpolation/tension3d.gif">
+<img height="200" src="img/spatial_interpolation/chesaplg.gif"> 
+<p><small>High tension: local maxima or minima at given points; low tension: smooth pattern
+with potential "overshoots" </small>
+<p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
+</section>
+
+<section>
+   <h3>Trivariate Interpolation to 2D grid</h3>
+<ul>
+ <li>Interpolation of 2D grid with influence of third variable
+ <li>Given $m$ points $(x_i,y_i,z_i,w_i)$  where $z_i = F_1 (x_i,y_i)$ 
+find such $F_2(x,y,z)$ that for each $i=1,m$
+$$
+    w_i=F_2(x_i,y_i,z_i)
+$$
+ <li> then compute $w_k=F_3(x_k,y_k)$ at $F_1 \cap F_2$
+</ul>
+<p>
+<ul>
+<li class="fragment" ><small>
+Example: $w_i$ is precipitation measured at locations $x_i,y_i$ at ground elevation $z_i$.
+$F_1$ is represented by a DEM, $F_2$ is an interpolated precipitation volume (voxel model) 
+that passes through the points $(x_i,y_i,z_i,w_i)$. $F_3$ is a bivariate function represented
+as a 2D precipitation grid which is an intersection of a DEM and the interpolated precipitation volume $F_2$
+</small>
+<li class="fragment" ><small>Statistical approach of the method is described in 
+Hutchinson, MF, 1995, Interpolating mean rainfall using thin plate smoothing splines, Int. Journal of Geographical Information Systems 9(4), 385-403.
+and has been used to interpolate global climate maps </small>
+<li class="fragment" ><small>See also 
+<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/TGIS2002_Hofierka_et_al.pdf">Hofierka J., et al. 2002, Multivariate Interpolation of Precipitation Using Regularized Spline with Tension. TGIS 6(2), 135-150.</a>
+</small>
+</ul>
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: precipitation</h3>
+NC mean annual precipitation with zoom into Western NC: 
+bivariate interpolation and trivariate interpolation which includes influence of elevation
+<p> 
+<img height="350" src="img/spatial_interpolation/spline_trivar_NCprecip.jpg">
+<br><small>If sufficient data are available, the method captures increase of precipitation
+with elevation around Asheville and decrease of precipitation with elevation on the border with SC
+</small>
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: precipitation</h3>
+Tropical South America mean annual precipitation using bivariate and trivariate interpolation
+<p> 
+<img height="340" src="img/spatial_interpolation/xmsap2d.gif">
+<img class="fragment" height="340" src="img/spatial_interpolation/xmsapel.gif">
+<p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
+</section>
+
+<section>
+   <h3>Trivariate Interpolation: precipitation</h3>
+<p> 
+Tuning the influence of elevation on precipitation pattern through rescaling in the $z$-direction
+<img height="380" src="img/spatial_interpolation/sapel.gif">
+<img height="150" src="img/spatial_interpolation/lgsaprecip.png"> </p>
+<p class="credit"><a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation.  GeoInformation International, Wiley, 481-492.</a></p>
+</section>
+
+
+<section>
+   <h3>Quad-variate spline interpolation </h3>
+Dynamics of nitrogen concentrations during a year, based on monthly measurements
+<p><img height="360" src="img/spatial_interpolation/chall4d.gif">
+<img height="260" src="img/spatial_interpolation/chesaplg.gif">
+</section>
+
+<section>
+  <h3>Quad-variate spline interpolation</h3>
+Dynamics of groundwater contamination over 10 years 
+<p> 
+<img height="350" src="img/data_visualize/wellnew.gif">
+<img height="350" src="img/data_visualize/well456.gif">
+</section>
+
+<section>
+   <h3>Summary</h3>
+<p>
+<ul>
+  <li>Spline interpolation and its parameters: tension and smoothing
+  <li>Evaluating interpolation accuracy: deviations, crossvalidation
+  <li>Special cases: contours, anisotropy
+  <li>Processing large point data sets: segmentation, subsampling
+  <li>Multivariate interpolation: volumes, topo-climatology, dynamic volumes
+</ul>
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="http://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>

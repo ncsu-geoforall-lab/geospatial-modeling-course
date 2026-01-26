@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>GRASS GIS 7 GUI intro</h2>
+Note: The screenshots were done for GRASS GIS 7.0, there might be therefore slight differences for newer versions of GRASS.
+<h3>Start</h3>
+
+<h4>GRASS data structure</h4>
+For this introduction we create new mapset intro to keep data organized.
+<p>
+<img src="./img/intro/intro.png">
+
+<h3>Display</h3>
+<h4>GRASS GUI: Add raster map elev_lid792_1m</h4>
+<img src="./img/intro/add_elev_lid.png">
+
+<p>
+Set the computational extent and resolution of the mapset to match map <code>elev_lid792_1m</code>.
+Computational region will be explained later.
+<p>
+<img src="./img/intro/region_set.png">
+
+
+<h4>Display elevation in 3D view</h4>
+
+<p>
+<img src="./img/intro/elev_3D_1.png">
+<p>
+<img src="./img/intro/elev_3D_2.png">
+<p>
+<img src="./img/intro/elev_3D_3.png">
+<p>
+<img src="./img/intro/elev_3D_4.png">
+
+<h4>Display elevation legend</h4>
+<img src="./img/intro/legend.png">
+
+<h3>GRASS modules</h3>
+GRASS functionality is available through modules (tools). Modules
+respect following naming conventions:
+<p>
+<table>
+    <tbody>
+        <tr>
+            <th>group</th>
+            <th>prefix</th>
+            <th>examples</th>
+        </tr>
+        <tr>
+            <td>general</td>
+            <td>g.*</td>
+            <td>g.list, g.remove, g.copy</td>
+        </tr>
+        <tr>
+            <td>raster</td>
+            <td>r.*</td>
+            <td>r.univar, r.neighbors, r.contour</td>
+        </tr>
+        <tr>
+            <td>vector</td>
+            <td>v.*</td>
+            <td>v.info, v.generalize, v.db.select</td>
+        </tr>
+        <tr>
+            <td>3D raster</td>
+            <td>r3.*</td>
+            <td>r3.info, r3.to.rast, r3.colors</td>
+        </tr>
+        <tr>
+            <td>temporal</td>
+            <td>t.*</td>
+            <td>t.list, t.rast.aggregate, t.vect.univar</td>
+        </tr>
+        <tr>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+        </tr>
+    </tbody>
+</table>
+<h4>Finding and running a module</h4>
+Type name or keyword in Search:
+<p>
+<img src="./img/intro/module_search.png">
+<p>
+Raster > Reports and statistics > Basic raster metadata
+<p>
+<img src="./img/intro/module_menu.png">
+<p>
+Type beginning of command in Command console
+<p>
+<img src="./img/intro/module_type.png">
+<p>
+Command console supports auto-completion of maps and parameters.
+<p>
+<img src="./img/intro/module_complete.png">
+<p>
+Browse command history using up and down arrows.
+<p>
+<img src="./img/intro/module_history.png">
+
+<h3>Region settings</h3>
+Before we use a module to compute a new raster map,
+we must set properly computational region.
+All raster computations will be performed in the specified
+extent and with the given resolution.
+<pre>
+g.region -p
+
+north:      220750
+south:      220000
+west:       638300
+east:       639000
+nsres:      1
+ewres:      1
+rows:       750
+cols:       700
+cells:      525000
+</pre>
+<img src="./img/intro/region.png">
+<p>
+We can set it to match a raster map like this:
+<p>
+<img src="./img/intro/region_set.png">
+<h3>Running modules</h3>
+<h4>Module example: r.slope.aspect</h4>
+Raster > Terrain analysis > Slope and aspect
+<p>
+<img src="./img/intro/rslope_1.png"><br>
+<img src="./img/intro/rslope_2.png"><br>
+<img src="./img/intro/rslope_3.png"><br>
+<img src="./img/intro/rslope_4.png">
+
+<h3>3D view</h3>
+Uncheck newly created maps:
+<p>
+<img src="./img/intro/uncheck.png">
+<p>
+Add vector map streams:
+<p>
+<img src="./img/intro/streams.png">
+<p>
+Set resolution and map draped over the surface:
+<p>
+<img src="./img/intro/3d_elev.png"><br>
+<img src="./img/intro/3d_ortho.png"><br>
+<img src="./img/intro/3d_slope.png">
+<p>
+Save picture as TIF or PPM file and then quit GUI:
+<p>
+<img src="./img/intro/3d_save.png"><br>
+<img src="./img/intro/3d_quit.png">
+
+<p>
+<h4>Quit GRASS session</h4>
+<p>
+<img src="./img/intro/terminal_quit.png">
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

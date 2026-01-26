@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Data models</h2>
+<p>Resources:
+<a href="https://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
+<p>
+Create the folder assign2 in your preferred workspace,
+in the instructions below we are using C:\Users\myname\arcdata\assign2.
+<p>
+Include resulting maps into your report
+(use your judgement to decide which results to include).
+<p>Find all used tools in <em>Toolbox Window</em> or use <em>Search</em> window.
+
+<h3>Convert Data from Raster to Raster: change resolution</h3>
+
+<p>
+Compare resampling by nearest neighbor for discrete and continuous raster maps:
+
+<pre>
+File > Add Data > Add Data...
+select ncrast.mdb/elev_ned
+select ncrast.mdb/landcl96
+
+Select 'Data Management Tools->Raster->Raster Processing->Resample'
+Set 'Input Raster' to 'landcl96'
+Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\landcl_10m'
+Set 'Output Cell Size' to 10
+Set 'Resampling Technique' to 'NEAREST'
+Click 'OK'
+
+Select 'Data Management Tools->Raster->Raster Processing->Resample'
+Set 'Input Raster' to 'elev_ned'
+Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\ned_10m_nn'
+Set 'Output Cell Size' to 10
+Set 'Resampling Technique' to 'NEAREST'
+Click 'OK'
+</pre>
+
+<p>
+Check the resampled elevation surface using the aspect map:
+
+<pre>
+Check out a Spatial Analysis Extension license: Customize Menu->Extensions
+
+Select 'Spatial Analyst Tools->Surface->Aspect'
+Set 'Input Surface' to 'ned_10m_nn'
+Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\aspect_10m_nn'
+Click 'OK'
+</pre>
+
+<p>
+Reinterpolate DEMs (continuous raster data) using bilinear and bicubic interpolation:
+
+<pre>
+Select 'Data Management Tools->Raster->Raster Processing->Resample'
+Set 'Input Raster' to 'elev_ned'
+Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\ned_10m_bi'
+Set 'Output Cell Size' to 10
+Set 'Resampling Technique' to 'BILINEAR'
+Click 'OK'
+
+Select 'Data Managemnt Tools->Raster->Raster Processing->Resample'
+Set 'Input Raster' to 'elev_ned'
+Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\ned_10m_bc'
+Set 'Output Cell Size' to 10
+Set 'Resampling Technique' to 'CUBIC'
+Click 'OK'
+</pre>
+
+<p>
+Check the interpolated elevation surface using aspect maps:
+
+<pre>
+'Spatial Analyst Tools->Surface->Aspect'
+Set 'Input Surface' to 'ned_10m_bi'
+Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\aspect_10m_bi'
+Click 'OK'
+
+'Spatial Analyst Tools->Surface->Aspect'
+Set 'Input Surface' to 'ned_10m_bc'
+Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\aspect_10m_bc'
+Click 'OK'
+</pre>
+
+<p>
+Resampling to lower resolution (downscaling) for continuous field data:
+
+<pre>
+Select 'Spatial Analyst Tools->Generalization->Aggregate'
+Set 'Input raster' to 'elev_ned'
+Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\el_90m_mean'
+Set 'Cell factor' to 3
+Set 'Aggregation technique' to 'MEAN'
+Click 'OK'
+</pre>
+
+<p>
+Resampling to lower resolution (downscaling) for discrete categories:
+
+
+<pre>
+Select 'Data Management' Tools-> Raster -> Raster Processing -> Resample'
+Set 'Input raster' to 'landcl96'
+Set 'Output raster' to 'C:\Users\myname\arcdata\assign2\landcl_mode'
+Set 'X' and 'Y' to 90
+Set 'Resampling technique' to 'MAJORITY'
+Click 'OK'
+</pre>
+
+<h3>Convert Data from Vector to Raster using a working region</h3>
+Convert SW Wake subarea of geology layer to 30m raster.
+
+<pre>
+Select 'File->Add Data->Add Data...'
+Select ./ncshape.mdb/geology
+Select ./ncshape.mdb/swwake_10m
+
+Select 'Conversion Tools->To Raster->Polygon To Raster'
+Set Input Features to '.\ncshape.mdb\geology'
+Set Value Field to 'GEO_NAME'
+Set Output Raster Dataset to 'C:\Users\myname\arcdata\assign2\rast_geo'
+Set Cellsize to 30
+Leave the remaining fields as their defaults
+</pre>
+
+<p>
+Adjust the working region:
+
+<pre>
+Click 'Environments...' button (bottom of dialog)
+Under 'Processing Extent' Set the 'Extent' to 'Same as layer .\ncshape.mdb\swwake_10m'
+Click 'OK'
+Click 'OK'
+</pre>
+
+<p>
+Convert SW Wake subset of streets_wake layer
+to 30m raster representing speed limit:
+
+<pre>
+Select 'File->Add Data->Add Data...'
+Select ./ncshape.mdb/streets_wake
+
+Select 'Conversion Tools->To Raster->PolyLine To Raster'
+Set Input Features to '.\ncshape.mdb\streets_wake'
+Set Value Field to 'SPEED'
+Set Output Raster Dataset to 'C:\Users\myname\arcdata\assign2\rast_spdroads'
+Set Cellsize to 30
+Leave the remaining fields as their defaults
+</pre>
+
+<p>
+Adjust the working region:
+
+<pre>
+Click 'Environmnents...' button (bottom of dialog)
+Under 'Processing Extent' Set the 'Extent' to 'Same as layer .\ncshape.mdb\swwake_10m'
+Click 'OK'
+Click 'OK'
+Click 'OK'
+</pre>
+
+<p>
+Convert point data to raster:
+
+<pre>
+Select 'Conversion Tools->To Raster->Point To Raster'
+Set Input Features to .\ncshape.mdb\Schools_Wake
+Set Value Field to 'CORECAPACI'
+Set Output Raster Dataset to sw_rast
+Set Cellsize to 200
+Click 'OK'
+</pre>
+
+<h3>Convert Data from Raster to Vector</h3>
+
+<pre>
+File->Add Data->Add Data...
+Select ./ncrast.mdb/bas_50k
+# if raster bas_50k is floating point, convert the values to integer (check RMC on bas_50k-->Properties)
+
+Select 'Spatial Analyst->Map Algebra
+Type in the expression  Int("bas_50k")
+Set Output to bas_50kint
+Click 'OK'
+
+Select 'Conversion Tools->From Raster->Raster To Polygon'
+Set Input Raster to 'bas_50kint'
+Set Field to 'Value'
+Set 'Output Polygon Features' to 'C:\Users\myname\arcdata\assign2\bas_50Kpoly.shp'
+Click 'OK'
+</pre>
+
+<h3>
+Export data to format readable by other software</h3>
+
+Export vector data to shape file:
+
+<pre>
+From the Catalog Tab in ArcMap:
+Navigate to and open: ncshape.mdb
+RMC roadsmajor->Data->Export->To Shapefile (single)
+Set Output Location to C:\Users\myname\arcdata\assign2
+Set output Feature Class to 'roads_shp'
+Click 'OK'
+</pre>
+
+<p>
+Export raster data to grid ascii:
+
+<pre>
+Select 'Conversion Tools->From Raster->Raster to ASCII'
+Set Input Raster to ncrast.mdb\landcl96
+Set output ASCII to: 'C:\Users\myname\arcdata\assign2\landcl96.asc
+Click 'OK'
+
+Navigate to 'C:\Users\myname\arcdata\assign2\ and open landcl96.asc in NotePad
+Examine the contents
+Close landcl96.asc
+</pre>
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

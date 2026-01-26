@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Geospatial Data Introduction</h2>
+
+<p>Resources:
+<ul>
+<li>
+<a href="https://grass.osgeo.org/grass-stable/manuals/index.html">
+GRASS overview and manual</a>
+</li>
+<li><a href="https://www.youtube.com/watch?v=kktp5gZLLCk&list=PLiNYVMuYqTHUZUa7t3874sBfWAuNMj4pZ">
+ Geospatial Modeling with GRASS 8.4.0 videos for assignments in GIS582</a>
+</li>
+</ul>
+
+
+<h3 id="commands">Understanding GRASS commands</h3>
+
+<p>
+You can run GRASS several ways using its graphical user interface (GUI)
+and command line interface (CLI):
+<ul>
+    <li>
+        for display (d.*) commands use GUI,
+        for other commands (r.*, g.*, v.*) type the command name into
+        the command console in the <em>Console</em> tab
+        (see the tabs at the bottom of the <em>Layer Manager</em>)
+        and then press Enter to open command (module) GUI;
+    <li>
+        for the display (d.*) commands use GUI,
+        for other commands type or paste (Paste or Shift Insert) command
+        with all options into <em>Console</em> and Enter, you can use Up/Down
+        arrows on your keyboard to retrieve previously run command, if you want to re-run it with
+        different options;
+    <li>
+        run everything through GUI: start the command using a
+        relevant button or select it from a drop down menu (use the
+        <em>Modules</em> to find the command);
+  <li>
+        when running on Linux or Mac, paste the command with the options into the shell (you can copy/paste multiple
+        commands at once)
+</ul>
+
+<p>
+<!-- 
+Video tutorials 
+<ul>
+  <li><a href="https://www.youtube.com/watch?v=QldQuhxS4X8&list=PLOZRfOojyTZooO3HMd8dTp8Wk37cdbY6C&index=2">
+Introduction to GRASS video tutorial by Brendan Harmon</a>
+  <li>Video tutorial (no sound, switch on annotations):
+<a href="https://www.youtube.com/watch?v=9fcBvYetIsM">
+    <strong>Getting started with GRASS GUI</strong></a>.
+Note: recorded with GRASS 7.2, some details can differ (e.g. the start up window).</li>
+<li>Updated Video tutorial (GRASS 8.3.0):
+    <a href="https://www.youtube.com/watch?v=OCcM1XfxHW8&list=PLSCH2IXZ2pHrUXXuOK7EBKWmMD7i6CTA-&index=1">
+        <strong>Introduction to GRASS version 8 - Basics and getting started.</strong></a>.
+</li>
+<li>Screenshot-based tutorial demonstrates these options:
+<a href="./grass_intro.html">
+    <strong>Getting started with GRASS GUI</strong>
+</a></li> 
+</ul>
+-->
+
+
+<p>
+Instructions for both
+<b><a href="https://grass.osgeo.org/grass-stable/manuals/wxGUI.html">GUI</a></b>
+and command line approach are provided in the introductory assignments,
+but the instructions will be mostly command line later on.
+Feel free to use the approach that suits you the best.
+For a quick reference, here are the GUI equivalents for the d.* commands:
+
+<p>
+In GRASS Layer Manager toolbar
+<ul>
+    <!-- the em tags cannot be merged for the module auto link script -->
+    <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.rast.html">
+    d.rast<em>: Add raster map layer</em></a>
+    <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.vect.html">d.vect<em>: Add vector map layer</em></a>
+    <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.shade.html">d.shade<em>: Add various raster map layers > Add shaded relief map</em></a>
+</ul>
+In GRASS Map Display toolbar
+<ul>
+ <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.zoom.html">d.zoom<em>: Zoom options</em></a>
+ <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.out.file.html">d.out.file<em>: Save display image to file</em></a>
+ <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.barscale.html">d.barscale<em>: Add map elements > Add scale bar</em></a>
+ <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.legend.html">d.legend<em>: Add map elements > Add raster legend</em></a>
+ <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.legend.vect.html">d.legend.vect<em>: Add map elements > Add vector legend</em>
+ <li><a href="https://grass.osgeo.org/grass-stable/manuals/d.northarrow.html">d.northarrow<em>: Add map elements > Add north arrow</em></a>
+</ul>
+<i>
+The d.* commands throughout the assignments indicate which map layers should be included
+in the output map, 
+<a href="https://grass.osgeo.org/grass-stable/manuals/d.out.file.html"><em>d.out.file</em></a>
+indicates which map should be saved for the report.
+Often, you will already have the required map layers in your Layer Manager, 
+so you don't have to load them again using a d.* command.
+Note, that the CLI instructions can also be used for running the assignments on Linux and Mac as scripts.
+</i>
+
+<h3>GRASS project and mapset</h3>
+If you don't already have GRASS spatial database nc_spm_08_grass7
+downloaded, you can find links to it on
+<a href="../logistics.html#data">Course logistics page</a>.
+<p>
+Before starting with GRASS it is important to understand that
+GRASS uses the concept of <em>projects</em>, <em>mapsets</em>
+and <em>computational region</em> to support
+efficient analysis and modeling without the need to subset and resample
+data. Data in a GRASS project have common coordinate system.
+Each project can have several mapsets, one is called PERMANENT
+to store baseline data, others are set by users. You can modify
+the data only in your current mapset, but you can view or copy
+data from other mapsets. See also
+<a href="https://grass.osgeo.org/grass-stable/manuals/grass_database.html">structure of GRASS database</a>.
+
+<p>
+<b>DO NOT MOVE</b> the files under project directory using non-GRASS tools.
+
+<p>
+Suggested workflow is to create a new mapset for each assignment
+and do all computations there.
+
+<p>
+Computational region is set by the command 
+<a href="https://grass.osgeo.org/grass-stable/manuals/g.region.html">
+g.region</a>
+and specifies the spatial extent and resolution at which raster operations are performed.
+
+
+<h3>Start GRASS</h3>
+<p>
+Start GRASS as any other program on your computer.
+
+You should see a project <em>nc_spm_08_grass7</em> in your database.
+If you have not downloaded it yet,
+click the icon <em>Download sample project to current database</em> and
+select <em>Complete North Carolina dataset</em>, click <em>Download</em>, close when finished.
+<!--
+See also
+<a href="./grass/img/GRASS8.3_download_nc_sample_dataset.webm">Screen capture for MS Windows</a>
+-->
+
+<p>To start working on your Assignment 1
+right click on <em>nc_spm_08_grass7</em> and select <em>Create mapset</em>, type in name for the new mapset,
+for example, <em>assignment1</em>, press OK. You will get a message that the Current mapset is <em>assignment1</em>
+and any new map layer that you will create will be saved here. 
+The provided data are in the mapset PERMANENT - double click to see the list of available raster and vector
+map layers. You can preview a map layer by double-clicking on it but we will manage the Map Display
+in the Layers tab and/or using display commands. 
+
+
+<p>
+To save your outputs and to store external data create a directory where you can write, e.g.
+on MS Windows, C:\Users\myname\Documents\GIS582_HW\report1.
+Then set this directory in GRASS as your working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select this directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+
+<p>
+Find the working coordinate reference system, spatial extent and resolution:<br>
+In GUI: <em>Settings</em> > <em>Map projections</em> > <em>Display map projection</em><br>
+In GUI: <em>Settings</em> > <em>Region</em> > <em>Display Region</em><br>
+<p>
+Or paste the following command into the <em>Console</em> tab:
+
+<pre><code>g.proj -p
+g.region -pl
+</code></pre>
+
+<h3>Display data in 2D</h3>
+First set working region to a given elevation raster using GUI: <br>
+<em>Settings > Region > Set Region >
+Set region to match raster map(s) > select elevation > Run > Close</em>
+or alternatively, paste in the command console in the <em>Console</em> tab:
+
+<pre><code>g.region raster=elevation -p
+</code></pre>
+
+<!--
+If you plan on using the command, in the above command, you can notice
+that the name of the parameter is not specified (here it should be
+<em>region</em>), only the value (here "swwake_30m"). That's because
+name of a saved region is the first parameter of the
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/g.region.html">g.region</a></em> module and in that case we can leave it
+out for brevity.
+-->
+
+<p>
+Display elevation map:
+<p>
+In Layer Manager > <em>Add raster layer button</em> > select raster "elevation" > OK.<br>
+In Map Display > <em>Zoom to computational region extent</em>.<br>
+Make sure the Render button (lower right corner)
+for automatic rendering of maps is checked on.
+You can also use the first button <em>Display map</em> in Map Display to render maps.
+<p>
+Alternatively, you can add raster layer by pasting this command into the
+<em>Console</em> tab:
+
+<pre><code>d.rast elevation
+</code></pre>
+
+<p>
+Display elevation as a colored shaded map:
+<p>
+In Layer Manager > <em>Add various raster maps layers</em> > <em>Add shaded relief map layer</em> >
+select "elevation_shade" as shaded relief map and "elevation" as color map.<br>
+Under <em>Optional</em> tab set <em>Percent to brighten</em> to 30 > OK.
+<p>
+Command line equivalent: paste into the <em>Console</em> and press Enter:
+
+<pre><code>d.shade shade=elevation_shade color=elevation brighten=30
+</code></pre>
+
+
+<p>
+Now check the range of elevation values of the entire map.
+Either by pasting the following command into the <em>Console</em> or right clicking
+on the elevation raster layer and selecting <em>Metadata</em> in the context menu.
+
+<pre><code>r.info -r elevation
+</code></pre>
+
+<p>
+Display vector line and point maps:
+<p>
+In Layer Manager: <em>Add vector map layer button</em> >
+select "streets_wake" > OK.
+Adjust the colors, line widths, symbols by clicking on relevant tabs.
+Add additional maps ("roadsmajor", "schools_wake").
+<p>
+These are the command line equivalents:
+
+<pre><code>d.vect streets_wake
+d.vect roadsmajor color=red width=2
+d.vect schools_wake icon=basic/circle size=10 fill_color=blue
+</code></pre>
+
+<p>
+Add legend and scale bar:
+<p>
+To add the legend use <em>Add map elements</em> button in Map Display and select <em>Add legend</em> (you can
+use mouse to move it around, right click to adjust the size or remove it).a<br>
+To add scale bar use: <em>Add map elements</em> > <em>Add scale bar</em> (double click on it to change it,
+for example you can change its length and units under Optional tab).<br>
+<p>
+These are the command line equivalents:
+
+<pre><code>d.legend elevation
+d.legend.vect
+d.barscale
+</code></pre>
+
+<p>
+Save the displayed map:<br>
+In Map Display click <em>Save display to graphic file</em>.
+Or run the equivalent command from the console, the graphic file 
+will be saved into your working directory.
+
+<pre><code>d.out.file mymap
+</code></pre>
+
+<h3>Display data in 3D</h3>
+This is just a quick preview: We will explore 3D visualization in future assignments.
+<p>
+In Layer Manager check off the elevation_shade layer, but keep the elevation raster on.
+In Map Display switch 2D view to 3D view.
+After the 3D mode is loaded, increase viewing height with slider, rotate puck to the south.
+Click Data tab and set <em>Fine mode resolution</em> to 1, to get the full resolution surface.
+Save the image by clicking on <em>Save display to graphic file</em> (tiff support is required).
+You may need to install
+<a href="https://www.irfanview.com/">IrfanView</a>
+to view TIFF images saved from the 3D view.
+Alternatively, you can just take screenshots of the 3D visualization.
+
+<h3>Changing data view, query and region</h3>
+To get familiar with query and zoom tools, set the view back to 2D.
+Querying data means finding out the values in raster maps
+or attributes in vector maps at a location selected by mouse.
+In Layer Manager select the map layer(s) to query by clicking on it.
+In Map Display click button <em>Query raster/vector map(s)</em> and
+click on a map at locations where you want to know the values/attributes.
+<p>
+In Map Display explore the options to zoom:
+<em>zoom-in, zoom-out, zoom to selected map, zoom to computational region</em>.
+You can also zoom to specific map layer by right clicking on the layer
+and selecting Zoom to selected map(s).
+<p>
+Next, display statewide DEM, county boundaries and climate stations:
+<p>
+  Remove all map layers from Layer Manager, remove legend and scale bar by right clicking on it
+and select Remove.<br>
+In Layer Manager menu: <em>Settings > Region > Set Region</em>.<br>
+In <em>g.region</em> dialog: <em>Set current region from named region</em> >
+select "nc_500m" > <em>Run</em> > <em>Close</em>.<br>
+In Map Display: <em>Zoom to computational region</em>.<br>
+In Layer Manager: <em>Add raster layer</em> > select "elev_state_500m".<br>
+Add vector map layer "precip_30ynormals", set the symbol to basic/marker.<br>
+Add vector map layer boundary_county,
+to display only county boundary, under tab <em>Selection</em> switch off area and switch on boundary.
+Rearrange the layers by mouse if needed and add legend and scale bar as in the previous example.
+<p>
+The command line equivalent is belowr:,
+<!--
+except for removing all map layers from the <em>Layer Manager</em>.
+When using GUI and its <em>Console</em>, you can either uncheck
+the map layers or completely remove them in the <em>Layer Manager</em>.
+When using the system command line and
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/d.mon.html">d.mon</a></em>,
+you can use
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/d.erase.html">d.erase</a></em>.
+-->
+
+<pre><code>d.erase
+g.region nc_500m -p
+d.rast elev_state_500m
+d.vect precip_30ynormals icon=basic/marker
+d.vect boundary_county type=boundary
+d.out.file nc_precip_stations
+</code></pre>
+
+<p>
+Note that any new data (map layers) that you will import in the next section or create 
+in the future assignments are automatically stored in your 
+GRASS database/project/current_mapset.
+If you want to go back to displayed maps that you have worked on in Map Display, 
+you can save the Map Display and Layer manager, including the symbology and layout
+in a GRASS workspace file *.gxw under <em>File</em> > <em>Workspace</em> > <em>Save as</em>.
+
+<!--
+<h3>Managing data</h3>
+
+We will learn how to find more information about the data, copy and rename maps.
+
+<h4>List existing data</h4>
+
+Browse raster and vector data in the provided database using
+the <em>Data</em> tab in the <em>Layer Manager</em>.
+The tree shows projects and mapsets in your GRASS database.
+<p>
+You can also paste the following command into the <em>Console</em>
+to list the raster and vector maps:
+
+<pre><code>g.list -f type=raster,vector
+</code></pre>
+
+You can also use left mouse click in the <em>Data</em> tab to add maps
+into <em>Layers</em> and display them this way.
+
+<p>
+Now list only vector maps which start with "s":
+In the <em>Data</em> tab enter to the <em>Search</em> box the
+following <code>v:^s</code> which limits the search to
+vectors using <code>v:</code> which start (<code>^</code>) with the
+letter <code>s</code>.
+
+<p>
+Or use <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/g.list.html">g.list</a></em> in the <em>Console</em> tab:
+
+<pre><code>g.list type=vector pattern="s*"
+</code></pre>
+
+Note that <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/g.list.html">g.list</a></em> by default uses different
+pattern matching syntax than the <em>Console</em> tab.
+If you use the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/g.list.html">g.list</a></em> dialog in GUI,
+in tab <em>Required</em> select type <em>vector map(s)</em>
+and in tab <em>Pattern</em> enter <em>s*</em> for the
+<em>Map name search pattern</em> field.
+
+<p>
+Now list saved computational regions (which are extents and
+resolutions bookmarked in the database):
+In the <em>File</em> menu or in the <em>Modules</em> tab:
+Find <em>Manage Maps</em> > <em>List</em> to get the
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/g.list.html">g.list</a></em> dialog.
+In the dialog tab <em>Required</em> select type
+<em>region definition(s)</em>. Then hit Enter or press <em>Run</em>.
+
+<p>
+Or just paste the following command into the <em>Console</em> tab:
+
+<pre><code>g.list -p type=region
+</code></pre>
+
+Alternatively, you can type <code>g.list</code> into
+the <em>Console</em> and hit Enter to get the module dialog that way.
+
+<h4>Copy and remove data</h4>
+
+You can copy and remove maps using the <em>Data</em> tab in the
+<em>Layer Manager</em>.
+
+<p>
+First find the raster map named <code>geology_30m</code> in the
+<code>PERMANENT</code> mapset and use right click to <em>Copy</em> it.
+Then find again the current mapset and use right click and
+<em>Paste</em> to create a copy the <code>geology_30m</code> in
+the current mapset. You will be prompted for the new name, change it
+to <code>mygeology</code>.
+
+<p>
+Than let's say we want to rename it. Use right click again on the new
+copy, select <em>Rename</em> and type <code>mygeology_30m</code>.
+Finally, let's delete this copy using right click and <em>Delete</em>.
+
+<p>
+The above instructions for copying, renaming, and deleting can be done
+in the <em>Console</em> using the modules <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/g.copy.html">g.copy</a></em>,
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/g.rename.html">g.rename</a></em>, and <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/g.remove.html">g.remove</a></em>
+as follows:
+
+<pre><code>g.copy raster=geology_30m,mygeology
+g.rename raster=mygeology,mygeology_30m
+g.list raster
+g.remove type=raster name=mygeology_30m -f
+</code></pre>
+
+<p>
+You can find these modules in the GUI in the <em>File</em> menu or
+in the <em>Modules</em> tab under <em>Manage Maps</em>.
+
+<p>
+Note that you can only remove maps from the current mapset
+and also note that the <em>Data</em> tab asks for confirming the removal
+and the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/g.remove.html">g.remove</a></em> requires you to use the
+<code>-f</code> flag.
+
+<p>
+Find information about individual maps layers and their attributes:<br>
+In GUI: right click raster layer "elevation", select <em>Metadata</em>,
+right click vector layer "streets_wake", select <em>Metadata</em>, <em>Show attribute data</em>.
+
+<p>
+Or paste the following command into the <em>Console</em>:
+
+<pre><code>r.info elevation
+v.info streets_wake
+v.info -c streets_wake
+</code></pre>
+
+-->
+
+<h3>Import and export for raster and vector data</h3>
+
+<p>
+In this section we will cover importing and exporting of raster and vector
+data which are in the same projection as the GRASS project we work in.
+
+Cases where the projection differs are covered in a <a href="import.html">separate guide</a>.
+
+
+<h4>Import and export Shapefiles</h4>
+
+Download a shapefile with geodetic points:
+<!-- <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/geod_pts_spm.zip">geod_pts_spm.zip</a>. -->
+<a href="data/geod_pts_spm.zip">geod_pts_spm.zip</a>.
+
+Save and extract (unzip) it to your working directory.
+<!--Note where are the extracted files as you will use the extracted Shapefile in the next step.-->
+
+<p>
+To import file in GUI use:
+<ul>
+<li><em>File > Import vector data > Simplified vector import with reprojection</em>.</li>
+<li>Use <em>Browse</em> button to find the "gdc.shp" file you extracted earlier.
+to fill the <em>Source input</em> field.</li>
+<li>Then click on <em>Import</em> button.</li>
+</ul>
+<!--
+Zoom to computational region to keep the spatial extent at working region<br>
+-->
+In case the imported point data was not displayed automatically,
+use <em>File > Add vector</em> to display the data
+and zoom to the vector layer.<br>
+<span class="question">How are the 
+ imported geodetic data points spatially related to the "streets_wake" vector data?
+</span>
+Hint: add "streets_wake" to layer manager and zoom to this layer.
+
+<p>
+Export the roadsmajor map as a shape file:
+<ul>
+<li><em>File > Export vector map > Common export formats</em></li>
+<li>Select "roadsmajor" as <em>Name of input vector map</em></li>
+<li>Use <em>Browse</em> to find a directory to export the data to,
+e.g. your "working directory".
+This will fill out the <em>Name of OGR output datasource</em> field
+with the path to this directory (e.g. "C:\mydirectory\roadsmajor.shp") 
+Make sure to specify the full path to your output files otherwise you might
+have hard time finding them especially on MS Windows.
+(Also note that you need to have write permissions for that directory.)
+</li>
+<li>Select <em>ESRI_Shapefile</em> in <em>Data format to write</em></li>
+<li>click <em>Run</em></li>
+</ul>
+You can then display the exported "roadsmajor" data in ArcGIS.
+
+Note that the names of the GRASS tool used in the
+background during the import and export were: 
+<a href="https://grass.osgeo.org/grass-stable/manuals/v.import.html">
+<em>v.import</em></a> and
+<a href="https://grass.osgeo.org/grass-stable/manuals/v.out.ogr.html">
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.out.ogr.html">v.out.ogr</a></em></a>.
+
+<!--
+<h4>Import and export of vectors when scripting</h4>
+<p>
+For scripting workflows a command line import/export can be used.<br>
+It requires properly set path to external files.
+In this case, "gdc.shp" would be replaced, e.g. by "C:\path_to_my_file\gdc.shp"
+on MS Windows and by "/path_to_my_file/gdc.shp" on unix-like systems.
+And the full path, e.g. "C:\path_to_my_file\roadsmajor.shp", would be used
+instead of "roadsmajor.shp".
+
+<pre data-run="no"><code>v.import input=gdc.shp output=geodetic_points
+v.out.ogr input=roadsmajor output=roadsmajor.shp
+</code></pre>
+
+On MS Windows it is often easier to do the import through GUI
+to get the correct path to your data.<br>
+On Mac, Linux and other systems you can use current working directory
+and/or auto-complete in the system command line to avoid typing the full path;
+you can of course use GUI if you prefer. 
+-->
+
+<h4>Import a raster file provided in GeoTIFF format</h4>
+
+<p>
+Download a landuse raster in GeoTIFF format:
+<a href="data/lc96ras_cut.tif">lc96ras_cut.tif</a> and 
+save it into your working directory.
+<p>
+To import this file through GUI use:
+<em>File > Import raster data > Simplified raster import with reprojection</em>.
+Use <em>Browse</em> button to find the path to the downloaded "lc96ras_cut.tif" file.<br>
+Make sure the file is checked in the <em>List of GDAL layers</em>.
+Click <em>Import</em>.
+
+<p>
+Alternatively, if the data that you want to import is stored in your working directory 
+you can use the following command:
+
+<pre><code>r.import input=lc96ras_cut.tif output=landuse96_subset
+</code></pre>
+
+Note, that if the data is not in the working directory you need to provide a full path to your input data,
+so you would have to replace "lc96ras_cut.tif" by something
+like "C:\path_to\my_file\lc96ras_cut.tif". 
+In such case the import is easier to do through GUI 
+where you can use Browse to get the correct path to your data.
+
+<h4>Exporting raster files as ASCII grid and GeoTIFF</h4>
+
+<p>
+Now, export raster files as ASCII grid and GeoTIFF.
+<p>
+Use <em>File</em> > <em>Export raster map</em> > <em>Common export formats</em>.<br>
+Similarly as for the vector data export, the exported file will be savedi in your working directory
+or you need to specify the full path to the directory where you want the exported file to be saved.
+Use GTiff and AAIGrid as <em>Raster data format to write</em>
+and use file extension appropriate for each format, i.e., <tt>.tif</tt>
+and <tt>.ascii</tt> respectively.
+<br>
+Alternatively, you can use the command line equivalent to export the data to your working directory:
+
+<pre><code>r.out.gdal input=basin_50K output=basin_50K.tif
+r.out.gdal input=elev_ned_30m output=elev_ned_30m.ascii format=AAIGrid
+</code></pre>
+
+<h3>Creating new GRASS project</h3>
+We will create new projects based on EPSG code and based on
+georeferenced file.
+<p> First we create a new project with Coordinate Reference System (CRS) given by
+    EPSG code 3404.
+    <span class="question">Which CRS has EPSG 3404 and what are its characteristics?</span>
+    
+<p>
+Launch <em>Project Wizard</em>
+from Layer Manager menu > <em>Settings</em> > <em>GRASS working environment</em> >
+ <em>Create new project</em><br>
+In <em>Name</em> field type "nc_spf" > <em>Next</em><br>
+Select method <em>Select CRS from a list by EPSG or description</em> > <em>Next</em><br>
+Type EPSG code 3404 > <em>Next</em> > OK > Finish<br>
+
+In this new project review the CRS information:
+<pre><code>g.proj -p
+</code></pre>
+
+<p>Another way to set up a GRASS project uses CRS information from a georeferenced file.
+Again launch the <em>Project Wizard</em>:
+<p>
+In <em>Name</em> field type "nc_spm" > <em>Next</em><br>
+Select method <em>Read CRS from a georeferenced data file</em> > <em>Next</em><br>
+Browse to downloaded file <a href="data/lc96ras_cut.tif">lc96ras_cut.tif</a> >
+<em>Next</em> > Finish<br>
+<em>Import data?</em> > Yes > OK<br>
+
+Review again the projection information:
+<pre><code>g.proj -p
+</code></pre>
+
+<h3>Optional: add WMS layer</h3>
+
+When we created new projects in the previous section
+(nc_sft and nc_spm) GRASS automatically switched to the mapset
+in a newly created project (it will be bold in the data catalog). 
+For the next task we go back to our "assignment1" mapset in the
+"nc_spm_08_grass7" project:
+<p>
+In the Data catalog, Right click on the "assignment1" in the "nc_spm_08_grass7" project
+and select <em>Switch mapset</em> from the menu.
+You should now be ready to set the region to a small rural watershed and display
+an existing ortho and then view and download orthophoto through web mapping service.
+Requires good internet connection. 
+<p>
+First change region to the small rural area specified by the saved
+region named "rural_1m", display the provided orthophoto and save its image
+for your report.
+
+<pre><code>g.region region=rural_1m -p
+d.rast ortho_2001_t792_1m
+d.out.file ortho2001
+</code></pre>
+
+<p>
+In Layer Manager toolbar <em>Add web service layer</em>.<br>
+Paste the link to the service into server field and press connect:<br>
+<pre>
+https://imagery.nationalmap.gov/arcgis/services/USGSNAIPPlus/ImageServer/WMSServer?
+</pre>
+Wait until GUI changes. Be patient, it can take up to one minute.<br>
+In <em>Available web services</em>, select <em>WMS 1.3.0</em>.<br>
+In <em>List of layers</em>, there should be "USGSNAIPPlus", click on plus icon to open
+list of provided products.<br>
+Select a desired product (e.g. Natural colors or NDVI), Press Add layer button and wait.<br>
+The dialog can be closed afterwards.<br>
+
+<p>
+To save the layer:<br>
+Right click on the web service layer in Layer Manager - choose <em>Save web service layer</em>.
+In dialog, set the name of the layer ortho_new and press <em>Save layer</em>.<br>
+Save the image of the new orthophoto for your report:
+
+<pre><code>d.out.file orthonew
+</code></pre>
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

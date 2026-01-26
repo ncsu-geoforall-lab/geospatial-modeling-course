@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Spatial interpolation and approximation I: methods</h2>
+<p>Resources:
+<ul>
+<li><a href="https://grass.osgeo.org/grass83/manuals/index.html">
+GRASS overview and manual</a></li>
+<li> <a href="data_acquisition.html#commands">Recommendations</a>
+and <a href="./grass_intro.html">tutorial</a>
+how to use GUI from the first assignment</li>
+</ul>
+
+<h3>Start GRASS</h3>
+Create a new mapset (called e.g. HW_interpolation_1) in nc_spm_08_grass7 project and
+change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+
+<!-- p. 232<br> -->
+<h3>Compute Voronoi polygons</h3>
+Display the polygons with centroids.<br>
+Find the column name where z is stored and convert the polygons to raster.<br>
+Compute aspect to evaluate the surface geometry.
+
+<pre><code>g.region rural_1m -p
+d.erase
+v.voronoi elev_lid792_randpts output=elev_vor
+d.vect elev_vor size=1 -c type=area,centroid
+v.info -c elev_vor
+v.to.rast elev_vor output=elev_vor_1m attrcolumn=value use=attr
+r.colors elev_vor_1m color=elevation
+r.slope.aspect elevation=elev_vor_1m aspect=asp_vor_1m
+</code></pre>
+
+<p>
+Display the resulting elevation map and aspect map.
+<pre><code>d.erase
+d.rast elev_vor_1m
+d.rast asp_vor_1m
+d.vect elev_lid792_randpts size=1 color=red
+d.out.file aspect_voronoi
+</code></pre>
+<p>
+Optionally, you can view it in 3D perspective
+(switch off all layers except for elev_vor_1m and switch to 3D view).
+
+<h3>Interpolation using IDW</h3>
+Set region and resolution, find a column name where z is stored.<br>
+Interpolate DEM using IDW, check the result using aspect.
+
+<pre><code>g.region rural_1m -p
+v.info -c elev_lid792_randpts
+v.surf.idw elev_lid792_randpts output=elev_idw_1m column=value
+r.colors elev_idw_1m color=elevation
+r.slope.aspect elevation=elev_idw_1m aspect=asp_idw_1m
+d.erase
+d.rast elev_idw_1m
+d.rast asp_idw_1m
+d.out.file aspect_idw
+</code></pre>
+
+<p>
+Design experiment that elucidates the impact of IDW parameters on the surface,
+focus on the impact of:
+<ul>
+<li>exponent e.g., power=0.5, 1, 5 (2 is the default)</li>
+<li>number of neighboring points e.g., npoint=1, 5, 20, 60 (12 is the default)</li>
+</ul>
+Include selected images (e.g. hillshade or aspect)
+and <em>relevant</em> stats (e.g., mean, min, max from <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.univar.html">r.univar</a></em>, histogram)
+that highlight the differences in the resulting surfaces into your report.
+<p>
+Check the surface interpolated with default parameters using 3D view.<br>
+Do not forget to switch off everything except for the interpolated elevations and
+set fine resolution to 1.<br>
+You can use constant color for the surface to highlight its structure.<br>
+Save an image for your report.
+
+<h3>Compute DEM from contours</h3>
+Compute DEM from contours using linear interpolation between isolines:
+<pre><code>g.region rural_1m -p
+v.to.rast elev_lid792_cont1m output=el_lid792_cont1m attrcolumn=level use=attr
+r.surf.contour el_lid792_cont1m output=el_rcont
+r.colors el_rcont color=elevation
+</code></pre>
+
+<p>
+Check the result using a 2D aspect map or view el_rcont in 3D.<br>
+In 3D set view from SE and light from NW to reveal subtle geometry.
+
+<pre><code>r.slope.aspect elevation=el_rcont aspect=asp_rcont
+d.rast el_rcont
+d.rast asp_rcont
+d.vect elev_lid792_cont1m col=white
+d.out.file asp_rcont
+</code></pre>
+
+<!-- <font color="#000066">
+nviz el_rcont
+# to asses the impact of point distribution on the resulting surface
+# generate contours, convert them to points and create voronoi polygons
+# use 20m res. for contour generation to avoid too many points
+# use 4m res. to convert the polygons to raster to preserve the polygon shape
+# do not forget to "zoom into computational region" after changing your region setting
+# in the report, discuss the geometry of the resulting surface
+# when compared with voronoi polygons generated from random points
+</font>
+g.region rural_1m res=20 -p
+d.erase
+r.contour el_D792_6m out=elev_cont_3m step=3m min=103
+v.to.points elev_cont_3m out=elev_cont_3mpts use=vertex
+v.voronoi elev_cont_3mpts out=elev_cont_3mvor
+d.vect -c elev_cont_3mvor
+g.region res=4 -p
+d.erase
+v.info -c elev_cont_3m
+v.to.rast elev_cont_3mvor out=elev_cont_4mvor col=level
+r.slope.aspect elevation=elev_cont_4mvor aspect=asp_elev_cont_4mvor
+r.colors elev_cont_4mvor co=elevation
+d.rast asp_elev_cont_4mvor
+d.vect elev_cont_3mpts col=red
+d.rast elev_cont_4mvor
+d.out.file elev_cont_vor -->
+<h3>Optional: create TIN model</h3>
+Convert z-value stored as attribute "value" to z-coordinate.<br>
+Compute TIN:<br>
+
+<pre><code>v.to.3d elev_lid792_randpts output=elev_lid792_randpts3d column=value
+v.delaunay elev_lid792_randpts3d output=elev_rand_tin
+v.colors elev_rand_tin use=z color=elevation
+r.mapcalc "level90 = 90"
+</code></pre>
+
+Visualize the TIN as 3D vector data:<br>
+Keep only "level90" and "elev_rand_tin" switched on
+(remove or uncheck everything else).<br>
+Switch the view from 2D to 3D.
+Go to <em>Data > Vector</em> and unckeck <em>Show vector points</em>.
+In <em>Vector lines</em>, change color from black to gray
+and set <em>Display</em> from <em>on surface</em> to <em>as 3D</em>.
+
+
+<!-- #some of the below is obsolete
+nviz elev_idw_1m vect=elev_rand_tin
+# compute reference plane for visualization in nviz
+# Optional - visualize as 3D vector data
+# you need to start nviz with a elev_lid792_1m so that it can set its view defaults
+# add the TIN as vector lines (although it is 3D polygons) or
+# in nviz Visualize>Vector lines/3D polygons>elev_cont_tin
+# change the color for the raster level90 to grey and delete elev_lid792_1m
+# change the vector color to something nicer than blue
+</font>
+v.delaunay elev_cont_3mpts out=elev_cont_tin
+d.vect -c elev_cont_tin
+nviz level90,elev_lid792_1m vect=elev_cont_tin
+-->
+
+<h3>Optional: Use Python to create the data for IDW comparison</h3>
+
+A part of the first interpolation assignment (4A) for GRASS
+is computing IDW with different parameters.
+The task is to compare the different results in any way you think
+is appropriate and comment on the results.
+To comment on the results, you need to create them.
+You can simply execute the module with different parameters
+and then compute all the subsequent analyses which will help you determine
+what are the properties of the surfaces generated by IDW with different settings.
+However, you can also use Python to compute this data
+if you know Python at least a little bit.
+
+<p>
+The simplest way to execute the Python code
+which uses GRASS packages is to use Simple Python editor integrated
+in GRASS accessible from the toolbar or the Python tab in the Layer Manager.
+Another option is to write the Python code in your favorite plain text editor
+like Notepad++ (note that Python editors are plain text editors).
+Then run the script in GRASS using the main menu File -> Launch script.
+
+<p>
+The way to call GRASS modules in Python is very similar to what we use
+in the assignments and it is described in the documentation.
+The page also contains several examples
+how to write simple and more advanced scripts.
+Here are some examples relevant to the assignment.
+
+<p>
+Interpolation using different number of points (modify the list
+of numbers of points):
+
+<pre><code>import grass.script as gs
+
+for npoints in [1, 20]:
+    name = 'elev_idw_1m_npoints_{}'.format(npoints)
+    stats = gs.parse_command('v.surf.idw', input='elev_lid792_randpts',
+                             output=name, column='value', npoints=npoints)
+</code></pre>
+
+Computing statistics but showing only some for different number of points
+(you can combine the code with the code above):
+
+<pre><code>import grass.script as gs
+
+for npoints in [1, 20]:
+    name = 'elev_idw_1m_npoints_{}'.format(npoints)
+    print("\n\n")
+    print(name)
+    print(len(name) * "=")
+    stats = gs.parse_command('r.univar', map=name, flags='eg')
+
+    print(stats['min'], stats['max'])
+</code></pre>
+
+Now write your own code to compute IDW interpolation for different values 
+of power parameter (e.g., 0.5, 1, 2, 5) by modifying the previous code. 
+Once you have the elev_idw_1m_power_05, .... computed you can 
+set the color table and compute shaded relief for your outputs:
+
+<pre><code>import grass.script as gs
+
+for power in [0.5, 1, 2, 5]:
+    gs.run_command('r.colors',
+        map='elev_idw_1m_power_{}'.format(power),
+        color='elevation')
+    gs.run_command('r.relief',
+        input='elev_idw_1m_power_{}'.format(power),
+        output='elev_idw_1m_power_{}_relief'.format(power))
+    gs.run_command('r.shade',
+        color='elev_idw_1m_power_{}'.format(power),
+        shade='elev_idw_1m_power_{}_relief'.format(power),
+        output='elev_idw_1m_power_{}_shaded'.format(power))
+</code></pre>
+
+Creating a PNG image with histogram for changing power:
+
+<pre><code>import grass.script as gs
+
+for power in [0.5, 1, 2, 5]:
+    gs.run_command('d.mon', start='cairo',
+        output='elev_idw_1m_power_{}_histogram.png'.format(power))
+    gs.run_command('d.histogram',
+        map='elev_idw_1m_power_{}'.format(power))
+    gs.run_command('d.mon', stop='cairo')
+</code></pre>
+
+Here are two commands often used when using the scripts.
+First is setting the computational. We can do that in a script,
+but it better and more general to do it before executing the script:
+
+<pre><code>g.region region=rural_1m
+</code></pre>
+
+When we want to run the script again, we first need to remove the created
+raster maps:
+
+<pre><code>g.remove type=raster pattern="elev_idw_1m_npoints_*"
+</code></pre>
+
+In case you don't know anything about Python scripting
+but you still want to try something this might be a good start together
+with some (free) courses at
+<a href="https://www.codecademy.com/learn/python">Codecademy</a>.
+To learn more about using Python in GRASS, see the introduction to the
+<a href="https://grass.osgeo.org/grass83/manuals/libpython/script_intro.html">grass.script</a>
+package.
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

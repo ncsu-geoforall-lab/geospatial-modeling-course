@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Geospatial Analysis II:  buffers, cost surfaces, least cost path</h2>
+<p>Resources:
+<ul>
+<li><a href="https://grass.osgeo.org/grass83/manuals/index.html">
+GRASS overview and manual</a></li>
+<li> <a href="data_acquisition.html#commands">Recommendations</a>
+and <a href="./grass_intro.html">tutorial</a>
+how to use GUI from the first assignment</li>
+</ul>
+
+<p>
+Text files with recode rules, color rules and site locations:
+<ul>
+<li><a href="data/noise_cats.txt">noise_cats.txt</a></li>
+<li><a href="data/friction_rules.txt">friction_rules.txt</a></li>
+<li><a href="data/friction_color.txt">friction_color.txt</a></li>
+<li><a href="data/fire_pt.json">fire_pt.json</a></li>
+<li><a href="data/lostperson.txt">lostperson.txt</a></li>
+</ul>
+
+<h3>Start GRASS</h3>
+Create a new mapset (called e.g. HW_buffers_cost) in nc_spm_08_grass7 project.
+Remove MASK in case it was left over
+from previous assignment (use command <code>r.mask -r</code>).
+<p>
+Change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+Download all text files with recode rules, color rules and site locations (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
+
+<!-- p. 133<br> -->
+<h3>Buffers</h3>
+
+<h4>Find developed areas potentially impacted by noise from highways</h4>
+Set region and create buffers along major roads.<br>
+Intersect developed areas from landuse map with road buffers.<br>
+Transfer the category labels and compute the affected area.<br>
+Run <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.category.html">r.category</a></em> from GUI and browse to the txt file,
+or run <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.category.html">r.category</a></em> command (assuming <a href="data/noise_cats.txt">noise_cats.txt</a>
+is in your working directory).
+
+<pre><code>g.region raster=landuse96_28m -p
+v.to.rast roadsmajor out=roadsmajor_28m use=value
+r.buffer roadsmajor_28m output=roads_buffers distances=250,500,2500
+r.mapcalc "noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null())"
+r.colors noise color=ryg
+r.category noise rules=noise_cats.txt separator=:
+r.report -n noise units=p,h
+</code></pre>
+
+<p>
+Display the results. In GUI switch off previous maps.
+
+<pre><code>d.rast noise
+d.vect streets_wake
+d.legend -c noise at=5,25,2,5
+</code></pre>
+
+<span class="question">What is the total developed area iin [ha] 
+within the 250m from the major roads?</span>
+
+<h4>Find schools potentially affected by high levels of noise</h4>
+Convert schools to raster using CORECAPACI attribute (school capacity).<br>
+Use map algebra to overlay with noise impact buffers and
+compute the number of students exposed to noise (see result of <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.univar.html">r.univar</a></em>).
+
+<pre><code>v.to.rast schools_wake output=schoolscap_10m use=attr attrcolumn=CORECAPACI type=point
+r.mapcalc "schools_noise = if(int(schoolscap_10m) &amp;&amp; roads_buffers == 2, int(schoolscap_10m), null())"
+r.univar schools_noise
+r.to.vect schools_noise output=schools_noise type=point
+d.vect schools_wake icon=basic/circle size=10 fill_color=blue legend_label="schools"
+d.vect schools_noise size=14 fill_color=cyan icon=basic/circle color=black legend_label="noise risk schools"
+d.legend.vect
+d.barscale
+d.out.file mynoisemap
+</code></pre>
+
+<span class="question">How many students are potentially affected by noise based on the school capacities and less than 250m distance to major roads?</span>
+
+<h3>Cost surfaces</h3>
+<!-- p. 136-139<br> -->
+<h4>Compute cumulative cost surface to a given accident site based on speed limits</h4>
+
+Use 5mi/hr speed limit for off-road areas (nulls).<br>
+For legend set the discrete speed limit values in GUI legend dialog:<br>
+tab <em>Required</em> > streets_speed, <em>Subset</em> > <em>List of discrete category numbers</em>
+
+<pre><code>d.erase
+g.region swwake_30m -p
+v.info -c streets_wake
+v.to.rast streets_wake output=streets_speedtmp use=attr attrcolumn=SPEED type=line
+r.mapcalc "streets_speed = if(isnull(streets_speedtmp),5,streets_speedtmp)"
+r.info streets_speed
+r.colors -n streets_speed color=inferno
+d.rast streets_speed
+d.legend streets_speed at=5,40,2,5 use=5,25,35,45,65
+d.out.file myspeedmap
+</code></pre>
+
+<p>
+Import the accident point location from GeoJSON file <a href="data/fire_pt.json">fire_pt.json</a><br>
+Run <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.in.ogr.html">v.in.ogr</a></em> from GUI, use file browser to provide full path to the file,
+or run the command assuming the file is in your working directory.
+
+<pre><code>v.in.ogr input=fire_pt.json output=fire_pt
+</code></pre>
+
+
+<p>
+Assign travel time to cross a 30m grid cell in hours.<br>
+Note that cost in GRASS is defined as travel time per <em>cell</em>.
+<p>
+Compute cumulative cost surface to the given point.<br>
+<span class="question">Where does the 0.018641 constant come from?</span>
+You can modify the expression to get time in minutes.
+
+<pre><code>r.mapcalc "streets_travtime = 0.018641/streets_speed"
+r.cost -k streets_travtime output=streets_cost start_points=fire_pt
+</code></pre>
+
+<p>
+<!-- <font color="#000066">
+# or use echo in linux shell
+</font>
+echo "634886 224328 1" | v.in.ascii out=fire_pt separator=space -->
+Compute isochrones and display the cumulative cost surface map.
+
+<pre><code>d.erase
+d.rast streets_cost
+r.colors streets_cost color=elevation
+r.contour streets_cost output=streets_cost_04 step=0.04 cut=100
+d.vect fire_pt color=red icon=basic/marker size=20
+d.vect streets_cost_04
+d.legend streets_cost at=5,50,2,5
+d.out.file mycumulativecostmap
+</code></pre>
+
+<h4>Find cost (travel time) from selected firestations</h4>
+
+First make your own copy of the firestations map and list attributes.<br>
+Then query the cumulative cost surface at the firestations location.<br>
+The travel time in hours will be stored in the attribute column CVLAG.
+
+<pre><code>g.copy vector=firestations,myfirestations
+v.info -c myfirestations
+v.what.rast myfirestations raster=streets_cost column=CVLAG
+d.vect myfirestations icon=basic/circle size=15 fill_color=red
+</code></pre>
+
+<p>
+Add myfirestations to Layer Manager and right click on Show attribute data.<br>
+Click on CVLAG to order them and find the lowest cost (shortest time) > 0
+(firestations with 0 cost are outside the region).<br>
+You should see a <a href="img/firestations_table.png">table like this</a>.<br>
+Export firestations with traveltime less than 0.1 hr:
+
+<pre><code>v.out.ascii input=myfirestations separator=space precision=3 columns=ID,LOCATION,CVLAG where="CVLAG&lt;0.1 AND CVLAG&gt;0"
+</code></pre>
+
+<p>
+You should get something like the following:
+<pre>
+635775.565 228121.693 19 19 4021 District Dr 0.076
+635940.262 225912.796 20 0 5001 Western Blvd 0.037
+637386.831 222569.152 21 0 1721 Trailwood Dr 0.071
+633178.155 221353.037 52 27 6000 Holly Springs Rd 0.060
+</pre>
+
+<p>
+To get the computed time, you can also query the cumulative cost raster directly
+using coordinates (in this example it's Western Blvd firestation),
+or using GUI query tool by selecting the cost layer and clicking on the map:
+
+<pre><code>r.what map=streets_cost coordinates=635940.262,225912.796 separator=space
+</code></pre>
+
+<p>
+Find the least cost path for the two closest stations:
+
+<pre><code>r.drain -n input=streets_cost output=route_20Westernb start_coordinates=635940.3,225912.8
+r.drain -n input=streets_cost output=route_52Hollyb start_coordinates=633178.2,221353.0
+r.colors route_20Westernb color=ramp
+r.colors route_52Hollyb color=ramp
+</code></pre>
+
+<p>
+Display the results in GUI.<br>
+You already may have some of these maps in GUI layer tree,
+so just switch them on and off and re-order as needed:
+
+<pre><code>d.erase
+d.rast streets_cost
+d.vect fire_pt color=red icon=basic/marker size=20
+d.vect myfirestations icon=basic/circle size=15 fill_color=red
+d.rast route_20Westernb
+d.rast route_52Hollyb
+d.out.file mylcpmap
+</code></pre>
+
+<p>
+Print the length of the path in cells (multiply by 30m to get approx. m).<br>
+You should have the time in hr already from the cost map.<br>
+<span class="question">At what average speed [km/hr] needs the truck travel to get there in estimated time?
+Is the time, speed and distance realistic?</span>
+
+<pre><code>r.describe route_20Westernb
+r.describe route_52Hollyb
+</code></pre>
+
+<p>Do it yourself</p>
+<p>
+<span class="question">
+Find least cost path between the Jordan hall and the Johnson lake dam. 
+Use previously created streets_travtime as your input cost. 
+Provide the workflow and two maps 
+1. Map showing the cumulative cost to get to the Johnson lake dam (start_coordinates=636333,223465) 
+2. Map showing the resulting least cost path from Jordan Hall (start_coordinates=638875,225450)
+ converted to a vector line shown in red. For both maps include streets_wake for context. 
+ What is the least cost path distance in kilometers between the two locations and how much time in minutes is needed to get to the target destination?
+Hint: You don’t need to import the coordinates of the two sites, as they can be provided as input parameters.
+</span>
+
+<!--
+<p>
+Optional: If you would like to display streets_cost surface in 3D as shown in the lecture,
+you need to multiply the surface by 1000 using <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.mapcalc.html">r.mapcalc</a></em> because the numbers
+in hours are very low.<br>
+Then switch off all layers except for the streets_cost_1000
+and change display to 3D.
+-->
+
+<h4>Compute accessibility map for help in search for lost person</h4>
+
+Given a point where a lost person was last located we compute a map that represents how far 
+the person could have walked within the surrounding environment.
+The environmental variables for accessibility are derived from elevation, land use
+and streets using the equation in the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.walk.html">r.walk</a></em> manual page and 
+the <a href="data/friction_rules.txt">friction_rules.txt</a> file.
+<p>
+First, create friction map based on land cover.<br>
+Note: We remove previously used map layers in the <em>Layer Manager</em>
+or using the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/d.erase.html">d.erase</a></em> tool, 
+so the layers are not rendered when we don't need them anymore.<br>
+Set the computational region and display land cover classes:
+
+<pre><code>d.erase
+g.region swwake_30m -p
+r.category landclass96
+</code></pre>
+
+<p>
+Recode the landuse map to friction map using the rules in 
+<a href="data/friction_rules.txt">friction_rules.txt</a>.<br>
+
+<pre><code>r.recode landclass96 out=friction rules=friction_rules.txt
+</code></pre>
+
+<p>
+Add the impact of streets to friction map - they are missed by the landuse map.
+
+<pre><code>r.mapcalc "friction2 = if(streets_speed > 6, 0.1, friction)"
+r.colors friction2 rules=friction_color.txt
+d.erase
+d.rast friction2
+d.legend friction2 at=5,50,2,5
+d.out.file myfrictionmap
+</code></pre>
+
+<p>
+Compute the cumulative cost map from the given point and generate isochrones:
+
+<pre><code>r.walk -k elevation=elev_ned_30m friction=friction2 output=walkcost start_coordinates=635576,216485 lambda=0.5 max_cost=10000
+r.contour walkcost output=walkcost step=1000 cut=100
+</code></pre>
+
+<p>
+To display the input, import coordinates of the point where the lost person was last seen
+given in the file <a href="data/lostperson.txt">lostperson.txt</a>.
+
+<pre><code>v.in.ascii input=lostperson.txt output=lostperson separator=comma
+</code></pre>
+
+<p>
+<!--<font color="#000066">
+# or use echo (in linux only)
+</font>
+echo "635576,216485" | v.in.ascii out=lostperson separator=","-->
+Uncheck the friction map and display the results:
+
+<pre><code>d.erase
+r.colors -e map=walkcost color=viridis
+d.rast lakes
+d.rast walkcost
+d.vect streets_wake
+d.vect walkcost color=red
+d.vect walkcost color=red where=level=6000 width=3
+d.vect lostperson color=yellow fill_color=yellow icon=basic/marker size=30
+d.legend walkcost at=5,50,2,5
+d.out.file mywalkcostmap
+</code></pre>
+
+<span class="question">How did we ensure that the person does not walk over the lakes?
+</span>
+
+<h3>Optional</h3>
+
+<h4>Find developed areas close to lakes</h4>
+Set region, create buffers:
+
+<pre><code>g.region swwake_30m -p
+r.buffer lakes output=lakes_buff distances=60,120,240,500
+d.rast lakes_buff
+</code></pre>
+
+<p>
+List categories in land use map to identify category numbers for developed areas.
+Then run <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.mapcalc.html">r.mapcalc</a></em> to extract the developed areas within the buffers
+and use <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.support.html">r.support</a></em> to assign the labels from the original buffer raster 
+to the new developed buffer raster map (needed for legend): 
+
+<pre><code>r.category landuse96_28m
+r.mapcalc "developed_lake = if(landuse96_28m==1 || landuse96_28m==2, lakes_buff, null())"
+r.support developed_lake raster=lakes_buff
+r.category developed_lake
+</code></pre>
+
+<p>
+Display results:<br>
+In GUI: switch off previous map, use Add raster, Add vector icons.
+
+<pre><code>d.rast developed_lake
+d.vect streets_wake color=grey
+d.rast lakes
+d.legend -c developed_lake use=2,3,4,5 at=5,25,2,5
+d.out.file mylakesbuffmap
+</code></pre>
+
+<p>
+Find the total area within buffers and the developed area in ha:
+
+<pre><code>r.report -n lakes_buff units=h
+r.report -n developed_lake units=h
+</code></pre>
+
+<h4> Compute the shortest distance map and cost surface to highways</h4>:
+
+Set region, convert vector road map to raster:
+
+<pre><code>g.region swwake_30m -p
+v.to.rast roadsmajor output=roadsmajor use=val type=line
+</code></pre>
+
+<pre><code>r.mapcalc "area_one = 1"
+r.cost input=area_one output=dist_toroad start_rast=roadsmajor
+r.mapcalc "dist_meters = dist_toroad * (ewres() + nsres())/2."
+r.mapcalc "dist_class = int(dist_meters/500)"
+d.erase
+d.rast dist_class
+d.vect roadsmajor
+d.out.file dist_roadsmaj
+r.cost -k input=streets_travtime output=cdist_toroadk start_rast=roadsmajor
+r.colors cdist_toroadk color=bgyr
+d.rast cdist_toroadk
+d.vect streets_wake color=black
+d.vect roadsmajor color=red
+d.legend cdist_toroadk at=5,50,2,5
+d.out.file cost_roadsmaj
+</code></pre>
+
+<!---
+# compute linear regression and correlation  coefficient between different elevation data
+r.regression.line elevation map2=elev_srtm_30m
+
+# compute correlation matrix
+# run this from GUI: type r.covar, click run GUI, click on Print correlation matrix
+</font>
+g.region swwake_30m -p
+r.covar -r elevation,elev_ned_30m,elev_srtm_30m
+
+#p. 112-113
+# transform a slope map to a map
+#representing probability values that
+#increase linearly with the slope value, but the rate of increase
+#changes at given threshold values (in our example at 2., 8. and 15.
+#degrees).
+r.mapcalc "probability1 = graph(slope, 0.,0.,2.,0.1,8.,0.3,15.,0.8,90.,1.)"
+r.colors probability1 col=byr
+d.rast.leg probability1
+# compute map where probability values decrease with slope value
+r.mapcalc "probability2 = graph(slope, 0.,1.,2.,0.9,8.,0.7,15.,0.2,90.,0.)"
+r.colors probability2 col=byr
+d.rast.leg probability2
+# compute map where probability values increase up to 8 degrees slope and then they decrease
+r.mapcalc "probability3 = graph(slope, 0.,0.,2.,0.5,8.,1.,15.,0.5,90.,0.)"
+r.colors probability3 col=byr
+d.rast.leg probability3
+-->
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

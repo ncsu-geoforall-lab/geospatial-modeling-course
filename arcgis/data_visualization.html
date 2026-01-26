@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Data display and visualization</h2>
+
+<p>Resources:
+<a href="https://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
+
+Create folder Data_visualization in your preferred workspace.
+
+Include resulting maps into your report
+(use your judgment to decide which results to include).
+<pre>
+Start ArcGIS
+Start->Programs->ArcMap
+</pre>
+<h3>Viewing data in 2D</h3>
+
+<h4>Raster data symbology</h4>
+Display land use classes using custom color, add labels:
+
+<pre>
+File->Add Data->Add Data... ./ncrast.mdb/landcl96
+<i>right click</i> landcl96->Properties
+<i>left click</i> Symbology Tab
+<i>left click</i> on line 1 in the Label column replace numbers 1-7 with these labels, respectively:
+(hint: the tab key will move you to the next label entry)
+
+developed
+agriculture
+herbaceous
+shrubland
+forest
+water
+sediment
+
+<i>left click</i> on color - replace the color for each land use by more intuitive one.
+Click 'OK'
+</pre>
+
+<p>
+Save as layer to preserve the new color scheme and labels:
+
+<pre>
+<i>left click</i> on the landcl96 entry in the Table of Contents (TOC) ->'Save as layer file...'
+Navigate to .\Data_visualization
+Save as landcl96.lyr
+</pre>
+
+<p>
+Display only categories 1 and 2 from the land use map:
+
+<pre>
+<i>right click</i> landcl96->Properties
+<i>left click</i> Symbology Tab
+Use <i>left click</i> to select items 3 - 7 (herbaceous - sediment)
+<i>left click</i> Remove button to remove values 3 through 7
+Click 'OK'
+</pre>
+
+<p>
+Display only elevation higher than 100 m over the geology map:
+
+<pre>
+File->Add Data->Add Data...  .\ncrast.mdb\geology
+File->Add Data->Add Data...  .\ncrast.mdb\elev
+<i>right click</i> elev->Properties
+<i>left click</i> Symbology Tab
+From the Show panel (far left) select 'Classified'
+<i>left click</i> Classify Button
+Set the method to 'Equal Interval'
+Set Classes to 10
+<i>left click</i> the 'Exclusion' button
+Set the Excluded values to 1-100
+Click 'OK'
+Click 'OK'
+<i>left click</i> Display Tab -> Set the Transparency to 50%
+Click 'OK'
+</pre>
+
+<p>
+Change colors for raster maps:
+<pre>
+<i>right click</i> elev->Properties
+<i>left click</i> Symbology Tab
+Change the color ramp to one that goes from green to white (one of the last in the drop down menu)
+</pre>
+
+<p>
+Use a histogram equalized color table to display topographic slope:
+
+
+<pre>
+File->Add Data->Add Data...  .\ncrast\slope
+<i>right click</i> slope->Properties
+<i>left click</i> Symbology Tab
+Choose the 'Red to Green Diverging, Bright' color ramp
+Change the Stretch Type to Histogram Equalize
+Click 'OK'
+</pre>
+
+<h4>Legend, scale, grid</h4>
+<p>
+Make a map with a legend, scale and grid:
+
+<pre>
+Turn off all layers except landcl96 in the TOC
+</pre>
+<p>
+add the streams layer
+<pre>
+File->Add Data->Add Data... ./ncshape.mdb/streams
+change the streams color to blue 
+in the TOC <i>right click</i> streams -> Properties
+<i>left click</i> Symbology Tab
+<i>left click</i> line symbol
+change the color to blue
+Click 'OK'
+Toggle to Layout View: View Menu->Layout View
+</pre>
+
+<p>
+Assign a fixed scale for the layout:
+
+<pre>
+<i>right click</i> Layers->Properties
+Select Data Frame tab
+In the Extent panel select Fixed Scale and set it to 1:50,000
+Click 'OK'
+ <!-- the default format of the layout is to small to display the whole area in the 1:50000 scale. Should I change the scale or the format or leave it as it is? -->
+</pre>
+
+<p>
+Add a legend<br>
+
+<pre>
+Insert Menu->Legend...
+Accept the defaults for the first panel <i>left click</i> 'Next >'
+Replace the text "Legend" with "Land Classification" in the Legend title
+<i>left click</i> 'Next >'
+Add a Legend Frame Border (select one as you feel appropriate)
+Add a white Frame Background. Set the cap to X:10 and Y:10 (as in the Frame Border)
+<i>left click</i> 'Next >'
+<i>left click</i> 'Next >'
+<i>left click</i> 'Finish'
+Follow the menus until finished
+Drag the legend to a more appropriate location, and resize as you feel is needed to
+make it "fit" into your map.
+</pre>
+
+<p>
+Add a scale bar:
+
+<pre>
+Insert Menu->Scale bar...
+Select a scale bar (your choice)
+<i>left click</i> Properties to set Division Units to kilometers
+Click 'OK'
+Click 'OK'
+Place and resize the legend as you see fit for your map design. Make sure that the numbers on the scale are reasonable (round numbers preferably). 
+Hint: You can resize the Data Frame too (select Data Frame by <i>left click</i> on it then drag the corners to the desired position
+</pre>
+
+<p>
+Add a grid:
+
+<pre>
+<i>right click</i> Layers->Properties
+Select the Grids tab
+Click 'New Grid...'
+select 'Measured Grid'
+Click 'Next >'
+Leave all the settings as the defaults and click through the remaining windows
+Click 'Finish'
+Click 'OK'
+</pre>
+
+<p>
+Display roads with labels:
+
+<pre>
+File->Add Data->Add Data...  ./ncshape.mdb/roadsmajor
+<i>right click</i> (roadsmajor)->Properties
+<i>left click</i> Symbology Tab
+<i>left click</i> line symbol
+change the symbol to Expressway 
+Select Labels tab
+In the Text String Panel set the Label Field to 'ROAD_NAME'
+Check the 'Label features in this layer' box (upper left corner of dialog window)
+In the Text Symbol section <i>left click</i> Symbol...
+In the dialog window select the 'Country 3' style and <i>left click</i> Edit Symbol... button in the right panel of the Sybol Selector dialog window.
+In the Editor dialog window go the the Mask tab and in Style section check the 'Halo' option
+Click 'OK' to come back to the Symbol Selector dialog window
+Click 'OK' to come back to the Layer Properties window
+In the Other Options section <i>left click</i> 'Placement Properties...' button
+In the Position Section, set the position to 'On the line'
+Click 'OK' to come back to the Layer Properties window
+Click 'OK' 
+</pre>
+
+<h4>Compare hillshades</h4>
+<p>
+<pre>
+Switch the Layer mode back to the Data Mode and remove all the layers from TOC (You can also start a new project in menu File -> New project)
+</pre>
+<p>
+Compare different types pof displayung the hillshade effect for the elev map
+<p> 1. Hillshade generated using the 3D Analyst Extension.
+
+<pre>
+<i>left click</i> Customize Menu->Extensions...
+Check out a 3D Analyst license
+ArcToolBox->3D Analyst Tools->Raster Surface->Hillshade
+Select elev as input, hillsh_el as output, zscale=3
+Click 'OK'
+File->Add Data->Add Data...  .\ncrast.mdb\elev
+<i>right click</i> elev->Properties
+<i>left click</i> Symbology Tab
+From the Show panel (far left) select 'Stretched'
+Change the color ramp to one that goes from green to white (one of the last in the drop down menu)
+<i>left click</i> Display Tab -> Set the Transparency to 50%
+Click 'OK'
+change the layer name <i>left click</i> elev layer in the TOC than again <i>left click</i> elev layer in the TOC. Type the name: elev_transp
+</pre>
+<p>
+2. Hillshade generated by the Symbology 'Switch on Hillshade':
+
+<pre>
+File->Add Data->Add Data...  .\ncrast.mdb\elev
+<i>right click</i> elev->Properties
+<i>left click</i> Symbology Tab
+From the Show panel (far left) select 'Stretched'
+Change the color ramp to one that goes from green to white (one of the last in the drop down menu)
+Check the 'Use hillshade effect'
+Set the Z to 3
+Click 'OK'
+change the layer name <i>left click</i> elev layer in the TOC than again <i>left click</i> elev layer in the TOC. Type the name: elev_hillsh
+</pre>
+
+<p>
+To examine the differences, zoom into an area of the data and toggle elev_hillsh layer
+on and off (by repetitively checking and unchecking the layer in the TOC). The rapid image interchange emphasizes differences.
+<p>
+In order to copare the results with elev with no hillshade applied you can load the elev layer again, without checking the hillshade effect in Symbology tab <pre>
+File->Add Data->Add Data...  .\ncrast.mdb\elev
+<i>right click</i> elev->Properties
+<i>left click</i> Symbology Tab
+From the Show panel (far left) select 'Streched'
+Change the color ramp to one that goes from green to white (one of the last in the drop down menu)
+</pre>
+<p>
+Toggle elev layer on and off by repetitively checking and unchecking the layer in the TOC. 
+
+<h3>Viewing data in 3D using ArcScene</h3>
+Start ArcScene:
+
+<pre>
+Start -> Programs -> ArcGIS -> ArcScene
+</pre>
+
+<p>
+Add data in ArcScene:
+
+<pre>
+<i>left click</i> on the 'Add Data' Button in the tool bar
+Add .\ncrast.mdb\elev
+Note, you can shift-click (contiguous selections) or control-click
+(non-contiguous selections) to add more than one data set at a time.
+</pre>
+
+<p>
+Display 2-dimensional data as a 3-D surface (to render in 3-D):
+
+<pre>
+Dbl. click the 'elev' layer in the TOC
+Select Layer Properties -> Base Heights
+Select 'FLoating on a custom surface' and select .\ncrast.mdb\elev as the
+elevation layer from the drop-down menu.
+Click 'OK'
+</pre>
+
+<p>
+To change the vertical exaggeration (z-value multiplier, default is 1) for a layer:
+
+<pre>
+Dbl. Click 'Scene Layers' in the TOC
+Go to ->'Scene Properties' -> 'General' tab -> 'Vertical Exaggeration'
+Choose '10' from the drop-down list.
+Click 'OK'
+</pre>
+
+<p>
+Drape a vector feature over the 3-D (raster) surface:
+
+<pre>
+<i>left click</i> on the 'Add Data' Button in the tool bar
+Add  .\ncshape.mdb\streets_wake
+Dbl. click on streets_wake in the TOC.
+From Properties select Base Heights tab -> 'Floating on a custom surface'
+and select .\ncrast.mdb\elev as the elevation layer from the drop-down menu.
+Set Elevations from features to 'No feature-based heights'
+Click 'OK'
+</pre>
+
+<p>
+this action will both drape the vector streets on the raster surface,
+and clip the extent of the much larger streets data to that of the surface.
+
+Change the color ramp for a layer:
+
+<pre>
+Dbl-Click on 'elev'
+Go to the Symbology tab.
+Use the 'Color Ramp' drop-down menu to scroll through the available ESRI-provided ramps.
+Choose one of the color ramps
+Click 'OK'
+</pre>
+
+<p>
+Change the background color (useful for enhancing visualization).
+Here we change illumination to simulate night.<br>
+
+<pre>
+Dbl-Click Scene Layers in the TOC
+Go to -> Scene Properties -> General tab.
+Choose the black color patch from the color palette drop-down menu
+Click 'OK'.
+</pre>
+
+<p>
+Adjust the direction (azimuth and altitude) and contrast of the light applied the surface:
+
+<pre>
+Reset the background color to white (refer to previous task)
+Dbl-Click on 'elev'
+Go to -> Rendering tab -> Effects
+Check 'Shade areal features relative to the scene's light position'
+Click 'OK'
+Dbl-Click Scene Layers in the TOC
+Go to -> Scene Properties -> Illumination tab
+Reposition the light source by dragging the yellow "solar" indicators
+to shift altitude and azimuth
+Click 'OK'
+</pre>
+<p>
+Note: the changes you make to solar altitude and azimuth are reflected immediately
+in the view frame, so you might want to drag the Scene Properties dialog to a position
+such that you can see the rendered surface in ArcScene. From here, when you move the
+Sun you'll see the changes made immediately applied to the rendered surface.
+
+
+<p>
+Adjust the lighting contrast:
+
+<pre>
+Dbl. Click Scene Layers in the TOC
+Go to -> Scene Properties -> Illumination tab
+Use the contrast slider to adjust contrast value
+Click 'OK'
+</pre>
+<p>
+Note: changes made using the contrast slider, like those controls associated with
+solar altitude and azimuth, are reflected immediately in the data frame.
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

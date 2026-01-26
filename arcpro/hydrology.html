@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Flow routing and watershed analysis</h2>
+<p>Resources:
+<a href="https://www.lib.ncsu.edu/gis/virtcamp.html">ESRI Academy</a>
+<p>
+Launch ArcGIS Pro and login with ArcGIS Online credentials if required.
+Select New> Map> Create New Project.
+Create a new project in your preferred workspace,
+in the instructions below we are using the default C:\Users\myname\Documents\ArcGIS\Projects\ folder.
+<p>
+Use your judgement to decide which maps to include in your report.
+<p>
+
+<h3>Derive flow pattern and streams from 10m NED</h3>
+
+Fill the sinks in DEM:
+
+<pre>
+In the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select 'elev'
+'Ok'
+In the Geoprocessing pane, search for and select the 'Fill' tool
+Set 'Input surface raster' to 'elev'
+Set 'Output Surface Raster' to 'Fill_elev1'
+Click 'Run'
+</pre>
+
+<p>
+Compute flow direction:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Flow Direction' tool
+Set 'Input surface raster' to 'Fill_elev1'
+Set 'Output flow direction raster' to 'FlowDir_fill1'
+Click 'Run'
+</pre>
+
+<p>
+Compute flow accumulation:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Flow Accumulation' tool
+Set 'Input flow direction raster' to 'FlowDir_fill1'
+Set 'Output accumulation raster' to 'FlowAcc_fill1'
+Click 'Run'
+</pre>
+
+<p>
+Change the color table to something better -
+e.g. STRECHED  yellow-green-blue, histogram equalized (Strech type) works well.<br>
+If the resolution of your screen is not good enough to see connected streams,
+zoom-in to see the detail.<br>
+Compare with streams digitized from high resolution orthophoto:
+
+
+<pre>
+On the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
+select 'streams'
+'OK'
+</pre>
+
+<p>
+Change color to red: <span class="question">how do the derived streams fit with the digitized data?</span>
+
+<p>
+Derive drainage basins:
+<pre>
+In the Geoprocessing pane, search for and select the 'Basin' tool
+Set 'Input d8 flow direction raster' to 'FlowDir_fill1'
+Set 'Output Raster' to 'Basins_fill1'
+Click 'Run'
+</pre>
+
+<p>
+Derive flow path length:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Flow Length' tool
+Set 'Input flow direction raster' to 'FlowDir_fill1'
+Set 'Output Raster' to 'flowlength'
+Click 'Run'
+</pre>
+
+<h3>Derive stream network and watersheds from 30m NED</h3>
+<!--Set your workspace and scratch workspace to C:\path\.Hydro
+<pre> 
+Geoprocessing>Environments>Workspace
+Add ncrast/elev_ned
+</pre>
+This is done when you set up the project in arcpro-->
+
+First check whether we have sinks, if yes, fill them in.
+<pre>
+In the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select 'elev_ned'
+In the Geoprocessing pane, search for and select the 'Flow Direction' tool
+Set 'Input surface raster' tp 'elev_ned' 
+Set 'Output flow direction raster' to 'FlowDir_el30'
+Click 'Run'
+
+In the Geoprocessing pane, search for and select the 'Sink' tool
+Set 'input d8 flow direction raster' to 'FlowDir_el30'
+Set 'output raster' to 'sinks30'
+Click 'Run'
+
+In the Geoprocessing pane, search for and select the 'Fill' tool
+Set 'Input surface raster' to 'elev_ned'
+Set 'Output Surface Raster' to 'Fill_elev30'
+Click 'Run'
+</pre>
+Compute flow direction and flow accumulation 
+<pre>
+In the Geoprocessing pane, search for and select the 'Flow Direction' tool
+Set 'Input surface raster' to 'Fill_elev30'
+Set 'Output flow direction raster' to 'FlowDir_fil30'
+Click 'Run'
+
+In the Geoprocessing pane, search for and select the 'Flow Accumulation' tool
+Set 'Input flow direction raster' to 'FlowDir_fil30'
+Set 'Output accumulation raster' to 'Flowacc_fil30'
+Click 'Run'
+</pre>
+
+Extract streams from flow accumulation using map algebra
+<pre>
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+expression= Con( "Flowacc_fil30" > 10000, 1, 0 ) output=Streams_der30
+Click 'Run'
+</pre>
+Create stream links from the stream raster and derive watersheds draining into these stream links:
+<pre>
+In the Geoprocessing pane, search for and select the 'Stream Link' tool
+Set 'Input stream raster' to 'Streams_der30'
+Set 'Input flow dir raster' to 'FlowDir_fil30'
+Set 'Output' to 'Source30'
+
+In the Geoprocessing pane, search for and select the 'Watershed' tool
+Set Input d8 flow direction raster to 'FlowDir_fil30'
+Set 'Input raster or Pour point data' to 'Source30'
+Leave 'Pour point field' set to 'value'
+Set 'Output' to 'Watersheds30'
+</pre>
+
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

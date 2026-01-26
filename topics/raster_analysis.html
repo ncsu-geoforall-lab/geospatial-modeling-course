@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>3. Geospatial Analysis</h2>
+
+<h3 id="map_algebra" class="subtopic">3.A Global, zonal and neighborhood operations, map algebra</h3>
+Outline:
+<ul>
+    <li>global and zonal statistics, neighborhood operations
+    <li>raster map algebra
+        <ul>
+            <li>expressions, operators, functions and variables
+            <li>basic calculations, integer and floating point data
+            <li>"if" conditions, handling NULLs and creating masks
+        </ul>
+    <li>raster map patching and overlay
+    <li>raster map reclassification and rescaling
+</ul>
+<h4>Lecture</h4>
+<p>
+    <a href="../lectures/basicraster.html">Lecture slides: Neighborhood operations, map algebra</a>
+<p>
+Supplemental materials:
+<ul>
+    <li><a href="https://www.spatialanalysisonline.com/HTML/index.html?statistical_measures_and_relat.htm">Statistical measures and related formulas</a>
+    <li><a href="https://opengeospatialdata.springeropen.com/articles/10.1186/s40965-017-0021-8">Petras V. et al., 2017, Generalized 3D fragmentation index derived from lidar point clouds, DOI: 10.1186/s40965-017-0021-8</a>, example of complex neighborhood operations on 2D and 3D raster
+    <li>Original lecture:
+    <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Lmalgebra.ppt"> Slides</a>, videos:
+    <a href="https://youtu.be/QiwfaPf1dKo">Global, Zonal, and Focal Statistics</a>,
+    <a href="https://youtu.be/TSNvEu6USjU">Map Algebra and Reclassification</a>.
+</ul>
+
+<h4>Assignment part A</h4>
+<ul>
+    <li>Approachs:
+    <li>Track 1 - GUI</li>
+    <ul>
+        <li>Approach:
+            <a href="../grass/map_algebra.html">GRASS solution</a>,
+            <a href="../arcpro/map_algebra.html">ArcGIS Pro solution</a>
+        <li><a href="../faq.html#map_algebra">Comments/answers to HW questions</a>
+    </ul>
+    <li>Track 2 - Jupyter Notebook</li>
+    <ul>
+        <li>
+            <a
+                href="https://github.com/ncsu-geoforall-lab/GIS582-assignments/tree/main/3AB%20-%20Analysis">
+                Follow instructions on GitHub
+            </a>
+        </li>
+    </ul>
+</ul>
+
+<h3 id="buffers_cost" class="subtopic">3.B Buffers, cost surfaces, least cost path</h3>
+Outline:
+<ul>
+    <li>measuring distance, proximity operators
+    <li>point, line, and area buffers
+    <li>cost surfaces, least cost path
+</ul>
+<h4>Lecture</h4>
+<p>
+    <a href="../lectures/costsurfaces.html">Lecture slides: Buffers, cost surfaces, least cost path</a>
+<p>
+Supplemental materials:
+<ul>
+    <li>
+    <a href="https://link.springer.com/chapter/10.1007/978-3-319-89303-7_10">Trail Planning</a>
+    chapter from Petrasova et al., 2018, Tangible Modeling with Open Source GIS. Second edition. Springer.
+    (<a href="https://link-springer-com.prox.lib.ncsu.edu/chapter/10.1007/978-3-319-89303-7_10">NCSU Library link</a>
+    <li><a href="https://link.springer.com/chapter/10.1007/978-1-4939-1835-5_4">Topographic feature extraction using least cost path</a>
+    a chapter from Hardin et al. 2014,GIS-based Analysis of Coastal Lidar Time-Series, Springer Briefs in Computer Science, Springer, New York, 84 p.
+    <a href="https://link-springer-com.prox.lib.ncsu.edu/chapter/10.1007/978-1-4939-1835-5_4">NCSU Library link</a> 
+    <a href="https://link.springer.com/article/10.1186/s40965-017-0019-2">Petrasova et al. 2017, Fusion of high-resolution DEMs for water flow modeling, DOI: 10.1186/s40965-017-0019-2</a>, application of spatially variable buffer for DEM fusion.
+    <li><a href="https://www.smithsonianmag.com/innovation/this-mapping-tool-could-help-wilderness-firefighters-plan-escape-routes-180965253/">Firefighters escape route planning</a>
+    <li><a href="https://en.wikipedia.org/wiki/List_of_fractals_by_Hausdorff_dimension">Fractals by Hausdorff dimension</a>
+    <li>Original lecture:
+    <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/GIS_Anal_Lcost_surf.ppt">Slides</a>
+    and videos:
+    <a href="https://youtu.be/bGDC-0qKFKg">Measuring distance</a>,
+    <a href="https://youtu.be/1qdQTjdlaBA">Buffers</a>,
+    <a href="https://youtu.be/4r8HP9WvzBo">Cost surfaces</a>.
+</ul>
+
+<h4>Assignment part B</h4>
+<ul>
+    <li>Approach:
+        <a href="../grass/buffers_cost.html">GRASS solution</a>,
+        <a href="../arcpro/buffers_cost.html">ArcGIS Pro solution</a>
+    <li><a href="../faq.html#buffers_cost">Comments/answers to HW questions</a>
+</ul>
+<h3>Homework 3. A and B</h3>
+        Prepare a paper on applications of global and zonal statistics,
+        neighborhood operations and map algebra for analysis of continuous and discrete geospatial data.
+        In this paper also explain and demonstrate the use of buffers and cost surfaces
+        for solving proximity problems. Comment on specific results for the study area and given tasks.
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

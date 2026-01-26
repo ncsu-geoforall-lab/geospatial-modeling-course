@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Geospatial data models</h2>
+<!--Task: Resample raster data, convert between raster and vector data models-->
+<p>Resources:
+<ul>
+<li><a href="https://grass.osgeo.org/grass83/manuals/index.html">
+GRASS overview and manual</a></li>
+<li> <a href="data_acquisition.html#commands">Recommendations</a>
+<!--and <a href="./grass_intro.html">tutorial</a> -->
+for how to use GUI from the first assignment</li>
+</ul>
+
+<h3>Start GRASS</h3>
+<p>To start working on your Assignment 2
+right click on <em>nc_spm_08_grass7</em> and select <em>Create mapset</em>, type in name for the new mapset,
+for example, <em>assignment2</em>, press OK. You will get a message that the Current mapset is <em>assignment2</em>
+and any new map layer that you will create will be saved here.
+As mentioned in the previous assignment, the provided data are in the mapset PERMANENT 
+- double click to see the list of available raster and vector
+map layers. 
+
+<p>
+To save your outputs and to store external data change/create a directory where you can write, e.g. on MS Windows, 
+C:\Users\myname\Documents\GIS582_HW\report2. Then set this directory in GRASS as your working directory:
+Change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > browse to and select your report2 directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+
+<p>
+If you prefer to work in GUI, you should be able to find out yourself
+the GUI equivalents for the tasks below.<br>
+Some hints for GUI are included, but
+from now on, most of the instructions will be provided as commands for command line.<br>
+Hint for running most of the commands in GUI - type or paste the name of the module
+into the command console in the <em>Console</em> tab and then hit Enter to open the GUI dialog.<br>
+<em>Read</em> the manual page for each command you are using for the first time to learn
+what it is doing and what the parameters mean.
+
+<h3>Resampling to a different resolution</h3>
+
+<p>
+Resample the given raster map to higher and lower resolution
+(30m->10m, 30m->100m) and compare resampling by nearest neighbor
+with bilinear and bicubic method.
+<p>First, set the computation region extent to our study area
+and set resolution to 30 meters.
+The computational region (region for short) is set using <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/g.region.html">g.region</a></em> module, 
+the <code>-p</code> flag is used to print the region coordinates and resolution. 
+Here we use a predefined region which is included in our data set.
+
+<pre><code>g.region region=swwake_30m -p
+</code></pre>
+
+<p>
+<em>Zoom to computational region</em> by clicking on the relevant icon on top
+of the <em>Map Displaa</em>y to make sure your display shows the region that we are working with.
+
+<p>
+Then we display the 30m resolution NED elevation raster.
+
+<pre><code>d.rast elev_ned_30m
+</code></pre>
+
+<p>
+To resample it to 10m resolution, first set the computational region to resolution 10m,
+then resample the raster using the nearest neighbor method.<br>
+Hint: To open the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.resamp.interp.html">r.resamp.interp</a></em> in GUI, type or paste the module name
+into the <em>Console</em> tab, then <em>Enter</em> to open the GUI dialog,
+don't forget to set the method to nearest under <em>Optional</em> tab.
+
+<pre><code>g.region res=10 -p
+r.resamp.interp elev_ned_30m out=elev_ned10m_nn method=nearest
+</code></pre>
+
+<p>
+<!--
+TODO: check how the resolution works in GUI, might be important when resampling
+Zoom to computational region in Map Display to set it to 10m resolution (equivalent to d.erase)<br>
+display the resampled map (Add Raster, if you don't have it it in the Layer Manager already)<br>
+-->
+
+The resulting elevation map should display automatically, if not, 
+display the resampled map by adding "elev_ned10m_nn" to <em>Layer Manager</em>
+in case you don't have it in the Layer Manager already.<br>
+Alternatively, use in command line the following:
+
+<pre><code>d.rast elev_ned10m_nn
+</code></pre>
+
+<p>
+The elevation map "elev_ned10m_nn" looks the same as the original one,
+so now check the resampled elevation surface using the aspect map:
+
+<pre><code>r.slope.aspect elevation=elev_ned10m_nn aspect=aspect_ned10m_nn
+</code></pre>
+
+<p>
+You should see the aspect map derived from the resampled elevation map in your display,
+or you can add "aspect_ned10m_nn" to <em>Layer Manager</em>
+or in command line using:
+
+<pre><code>d.rast aspect_ned10m_nn
+</code></pre>
+
+<p>
+To save the map, click in <em>Map Display</em> on the button
+<em>Save display to graphic file"</em> or alternatively,
+use the following command to save your map in the current working directory:
+
+<pre><code>d.out.file aspect_nn
+</code></pre>
+
+<p>
+Now, reinterpolate DEMs using bilinear and bicubic interpolation.
+Check the structure of interpolated elevation surfaces using aspect maps.
+
+<pre><code>r.resamp.interp elev_ned_30m out=elev_ned10m_bil meth=bilinear
+r.resamp.interp elev_ned_30m out=elev_ned10m_bic meth=bicubic
+r.slope.aspect elevation=elev_ned10m_bil aspect=aspect_ned10m_bil
+r.slope.aspect elevation=elev_ned10m_bic aspect=aspect_ned10m_bic
+d.rast aspect_ned10m_bil
+d.rast aspect_ned10m_bic
+</code></pre>
+
+<p>
+Save the displayed maps and in your report, compare the results with
+the previously computed nearest neighbor result.<br>
+In <em>Map Display</em> click button <em>Save display to graphic file</em>,
+or use the following in the command line:
+
+<pre><code>d.out.file aspect_bil
+</code></pre>
+<span class="question">Why is the aspect map of elevation raster map computed by the nearest neighbor method 
+different from the one computed by bilinear interpolation?</span><br>
+
+<p>
+Resample to lower resolution (30m -> 100m).
+<p>
+First, remove all map layers from the <em>Layer Manager</em> because we don't need to see them anymore
+ and then display the original elevation and land use maps:.
+
+<pre><code>d.erase
+d.rast elev_ned_30m
+d.rast landuse96_28m
+</code></pre>
+
+Then change the region resolution and resample
+elevation (which is a continuous field)
+and land use (which has discrete categories).<br>
+<span class="question">Explain selection of aggregation method. Can we use average also for landuse?
+What does mode mean?</span>
+<!--
+<p>Reminder: d.erase indicates that you should remove all map layers
+from <em>Layer Manager</em>.
+-->
+
+<!--
+Not using the following because it might be more advantageous to look at some smaller region.
+Also, make sure that your <em>Map Display</em>
+is zoomed to computational region or to newly created maps (this should be the same).
+-->
+
+<pre><code>g.region res=100 -p
+r.resamp.stats elev_ned_30m out=elev_new100m_avg method=average
+d.rast elev_new100m_avg
+d.out.file elev_100m
+</code></pre>
+
+
+<pre><code>d.erase
+r.resamp.stats landuse96_28m out=landuse96_100m method=mode
+d.rast landuse96_100m
+d.out.file lenduse_100m
+</code></pre>
+
+<!--
+<h3>Converting between vector data types</h3>
+
+<p>
+Convert census blocks polygons to points using their centroids
+(useful for interpolating a population density trend surface):
+
+<pre><code>v.to.points census_wake2000 type=centroid out=census_centr use=vertex
+</code></pre>
+
+Display census boundaries using GUI:<br>
+<em>Add vector</em> "census_wake2000"
+<em>Selection</em> > <em>Feature type</em> > <em>boundary</em>
+(switch off the other types).<br>
+Save the displayed map in <em>Map Display</em> click button
+<em>Save display to graphic file</em>.<br>
+Alternatively, use the following commands to control display.
+<p>
+Note that in both command line and GUI you must either enter the full path
+to the file you are saving the image in, or you must know the current working
+directory.
+
+<pre><code>d.erase
+d.vect census_centr icon=basic/circle fill_color=green size=10
+d.vect census_wake2000 color=red fill_color=none
+d.legend.vect
+d.out.file vect_to_points
+</code></pre>
+-->
+
+<!--
+Convert contour lines to points (useful for computing DEM from contours):
+
+<pre><code>v.to.points input=elev_ned10m_cont10m output=elev_ned_contpts type=line use=vertex
+</code></pre>
+
+Display the "elev_ned_contpts" points vector and zoom-in to very small area
+to see the actual points.
+
+<pre><code>d.vect elev_ned_contpts co=brown icon=basic/point size=3
+</code></pre>
+-->
+
+<h3>Convert from vector to raster</h3>
+
+<p>
+Convert vector data to raster for use in raster-based analysis.
+
+<!--
+First, remove all previous map layers from <em>Layer Manager</em> and
+adjust the computational region to resolution 200m:
+
+<pre><code>d.erase
+g.region swwake_30m res=200 -p
+</code></pre>
+
+<p>
+Convert vector points "schools" to raster.
+As value for raster use attribute column "CORECAPACI" for core capacity.<br>
+To add legend in GUI use
+<em>Add map elements</em> > <em>Show/hide legend</em>
+and select "schools_cap_200m".
+
+<pre><code>d.vect schools_wake 
+v.info -c schools_wake
+v.to.rast schools_wake out=schools_cap_200m use=attr attrcol=CORECAPACI type=point
+d.rast schools_cap_200m
+d.vect streets_wake co=grey
+d.legend schools_cap_200m at=70,30,2,6
+</code></pre>
+-->
+
+<p>
+Convert lines in "streets" vector to raster, we will use this conversion in  
+least cost path modeling later on.
+Set the resolution to 30m and use speed limit attribute.
+
+<pre><code>g.region res=30 -p
+v.to.rast streets_wake out=streets_speed_30m use=attr attrcol=SPEED type=line
+</code></pre>
+
+<p>
+Raster "streets_speed_30m" will be added to the Layer manager and displayed in the <em>Map Display</em>.
+<br>
+Add legend for "streets_speed_30m" raster using GUI in <em>Map Display</em>:<br>
+<em>Add legend</em> > <em>Set Options</em> > <em>Subset</em> > <em>List of discrete cat numbers</em>
+and type in speed limits 25,35,45,55,65; move legend with mouse as needed.
+<p>
+Alternatively, use the following commands:
+
+<pre><code>d.rast streets_speed_30m 
+d.legend streets_speed_30m at=5,30,2,5 use=25,35,45,55,65 
+</code></pre>
+
+<p>
+Save the displayed map.
+In <em>Map Display</em> click button <em>Save display to graphic file</em>,
+or use the following.
+
+<pre><code>d.out.file vect_to_rast
+</code></pre>
+
+<h3>Convert from raster to vector data</h3>
+
+Convert raster lines to vector lines.
+<p>
+First, remove map layers from <em>Layer Manager</em> and set the region.
+Hint: right click on the raster legends to select Remove legend.
+Then do the conversion.
+<p>
+
+<pre><code>d.erase
+g.region raster=streams_derived -p
+d.rast streams_derived
+r.colors map=streams_derived color=water
+r.thin streams_derived output=streams_derived_t
+r.to.vect streams_derived_t output=streams_derived_t type=line
+</code></pre>
+<p>
+<span class="question">Explain why we are using <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.thin.html">r.thin</a></em> module</span>.
+
+<p>
+Visually compare the result with streams digitized from airphotos.
+To make space for the vector legend you may need to stretch your Map Display window a little wider.
+
+<pre><code>d.vect streams_derived_t color=blue
+d.vect streams color=red
+d.legend.vect
+</code></pre>
+
+<p>
+Save the displayed map (in Map Display click button <em>Save display to graphic file</em>).
+
+<pre><code>d.out.file streams_compare
+</code></pre>
+
+<p>
+Convert raster areas representing basins to vector polygons.
+<p>
+First, remove map layers from <em>Layer Manager</em> and set the region.
+To convert, use raster values as category numbers (flag -v) and 
+display boundaries of vector polygons.<br>
+Verify the basin boundaries by displaying them together with streams - the stream 
+networks should "fit" within the basin boundaries.
+
+<pre><code>d.erase
+g.region raster=basin_50K -p
+r.to.vect -sv basin_50K output=basin_50Kval type=area
+d.erase
+d.rast basin_50K
+d.vect basin_50Kval type=boundary width=2
+d.vect streams color=blue
+</code></pre>
+
+<p>
+Save the displayed map either using GUI or using the following in case
+you are working in the command liner:.
+
+<pre><code>d.out.file basins
+</code></pre>
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

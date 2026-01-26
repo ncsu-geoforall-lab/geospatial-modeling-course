@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Geomorphometry II: Spatial and Temporal Terrain Analysis</h2>
+<p>
+Resources: <a href="https://grass.osgeo.org/grass83/manuals/index.html">
+GRASS overview and manual</a>,
+<a href="https://www.grassbook.org/">GRASSbook</a>.
+
+<h3>Start GRASS</h3>
+Create a new mapset (called e.g. HW_terrain_analysis) in nc_spm_08_grass7 project and
+change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
+
+<h3>Compute basic topographic parameters: slope and aspect</h3>
+<!-- p. 142-142<br> -->
+
+To explore computation of basic topographic parameters we set our computational region
+to NW section of our elevation DEM and compute steepest slope and aspect maps
+(make sure to zoom to computational region)
+<pre><code>g.region raster=elevation -p
+g.region s=s+7000 e=e-7000 -p
+r.slope.aspect elevation=elevation slope=myslope aspect=myaspect
+r.colors myaspect co=aspectcolr
+</code></pre>
+
+<p>
+DEMs are sometimes distributed with elevations stored as integer values,
+changing the pattern of topographic parameters. To show impact of integer 
+elevation values in meters on slope and aspect pattern we first compute
+an integer DEM, its slope and aspect and then compare the resulting maps
+with the original floating point DEM results
+
+<pre><code>r.mapcalc "elev_int = int(elevation)"
+r.slope.aspect elevation=elev_int aspect=aspect_int_10m slope=slope_int_10m
+r.colors aspect_int_10m co=aspectcolr
+d.erase
+d.rast myslope
+d.legend myslope at=2,40,2,6
+d.out.file myslopemap
+d.rast slope_int_10m
+d.out.file slope_intmap
+d.rast myaspect
+d.legend myaspect at=2,40,2,6
+d.out.file myaspect
+d.rast aspect_int_10m
+d.out.file aspect_intmap
+</code></pre>
+
+<p>
+It is also helpful to compare the histograms (you can switch off the orange 
+rectangle showing computational region by clicking on the Map Display Settings
+icon on top of Map Display and switching off "Show computational extent")
+
+<pre><code>d.erase
+d.histogram myslope
+d.out.file histmyslope
+d.histogram slope_int_10m
+d.out.file histslope_int_10m
+d.histogram myaspect
+d.out.file myaspectmap
+d.histogram aspect_int_10m
+d.out.file aspect_intmap
+</code></pre>
+
+<p>
+<span class="question">Can you explain the difference in slope and aspect maps and 
+their histograms derived from integer (m vertical resolution)
+and floating point DEMs?</span>
+
+<h3>Compute slope along road</h3>
+First set the region to the extent of the bus route #11 and to 10m resolution.
+Then convert the vector line of the route to raster using the direction of the route.
+
+<pre><code>g.region vect=busroute11 align=elevation res=10 -p
+v.to.rast input=busroute11 type=line output=busroute11_dir use=dir
+d.rast busroute11_dir
+d.legend busroute11_dir
+d.out.file bus11direction
+</code></pre>
+
+Compute the steepest slope of the topography around the route by assigning
+the values of slope derived from a DEM 
+
+<pre><code>r.slope.aspect elevation=elevation slope=slope_dem aspect=aspect_dem 
+r.mapcalc "route_slope_dem = if(busroute11_dir, slope_dem)"
+d.rast route_slope_dem
+</code></pre>
+
+Then compute the slope in the direction of the route using the difference between aspect of the topography
+and the route direction angles.
+Display the results along with the elevation contours and compute univariate statistics.
+
+<pre><code>r.mapcalc "route_slope_dir = abs(atan(tan(slope_dem) * cos(aspect_dem - busroute11_dir)))"
+r.colors map=route_slope_dem,route_slope_dir color=bcyr -e
+r.contour input=elevation output=contours step=3
+d.erase
+d.vect contours color=220:200:200
+d.rast route_slope_dem
+d.legend route_slope_dem
+d.out.file route_slope_dem
+d.rast route_slope_dir
+d.out.file route_slope_dir
+r.univar route_slope_dem
+r.univar route_slope_dir
+</code></pre>
+
+<span class="question">
+What is the difference between the two slope maps? Which slope is steeper on average and why?
+</span>
+
+<h3>Curvatures</h3>
+<p>
+<!-- # further zoom into a selected area until you see grid cells
+# display gradient vector
+# in GUI GIS Manager click the icon with arrows
+</font>
+d.erase
+d.rast elevation
+d.zoom
+d.rast.arrow aspect arrow_col=blue magnitude=slope scale=2 -->
+<!-- p.248-249<br> -->
+Compute curvatures simultaneously with interpolation of DEM from lidar data
+ using regularized spline with tension.
+Evaluate the influence of the spline parameters on the spatial pattern of the curvature maps.<br>
+
+<pre><code>g.region rural_1m  -p
+v.surf.rst input=elev_lid792_bepts elevation=elev_lid_1m pcurvature=pc_lid_1m tcurvature=tc_lid_1m npmin=120
+</code></pre>
+
+<p>
+Display the profile and tangential curvatures as 2D images.<br>
+
+<pre><code>d.erase
+d.rast pc_lid_1m
+d.legend pc_lid_1m 
+d.out.file profcurvature_dtm
+d.erase
+d.rast tc_lid_1m
+d.legend tc_lid_1m
+d.out.file tangcurvature_dtm
+</code></pre>
+
+<p>
+The curvature maps reflect the lidar survey pattern rather than topographic features.<br>
+We can lower the tension and increase the smoothing to reduce the noise
+and map the curvatures of topography.<br>
+
+<pre><code>v.surf.rst input=elev_lid792_bepts elevation=elev_lidt15_1m aspect=asp_lidt15_1m pcurvature=pc_lidt15_1m tcurvature=tc_lidt15_1m npmin=120 tension=15 smooth=1.
+d.erase
+d.rast pc_lidt15_1m
+d.legend pc_lidt15_1m
+d.out.file profcurvature_dtm2
+d.rast tc_lidt15_1m
+d.legend tc_lidt15_1m
+d.out.file tangcurvature_dtm2
+</code></pre>
+
+<p>
+Optionally, you can display the results in 3D view:
+switch off all layers except for elevation surface that you want to view
+and then drape the curvature maps over DEMs as color.
+
+<span class="question">
+How does changing the spline parameters influence the spatial pattern of curvatures?
+</span>
+
+<!--
+same for all return data
+v.surf.rst input=elev_lidrural_mrpts elevation=elev_lidmr_1m aspect=asp_lidmr_1m pcurvature=pc_lidmr_1m tcurvature=tc_lidmr_1m npmin=120 segmax=25 tension=300 smooth=1.
+d.rast pc_lidmr_1m
+d.legend pc_lidmr_1m
+d.out.file profcurvature_dsm
+v.surf.rst input=elev_lidrural_mrpts elevation=elev_lidmrt15_1m aspect=asp_lidmrt15_1m pcurvature=pc_lidmrt15_1m tcurvature=tc_lidmrt15_1m npmin=120 segmax=25 tension=15 smooth=1.
+d.rast pc_lidmrt15_1m
+d.legend pc_lidmrt15_1m
+d.out.file profcurvature_dsm2
+-->
+
+<h3>Landforms</h3>
+
+<!-- p. 150<br> -->
+Extract landforms at different levels of detail by adjusting the size of moving window.<br>
+Set rural subregion at 1m resolution,
+compute landforms using 9m and 45m neighborhood: read the manual to learn more.<br>
+<span class="question">Explain types of landforms and the role of the neighborhood size.</span>
+
+<pre><code>g.region rural_1m -p
+r.param.scale elev_lid792_1m output=feature9c_1m size=9  method=feature
+r.param.scale elev_lid792_1m output=feature45c_1m size=45 method=feature
+</code></pre>
+
+<p>
+Display with legend, save images for the report.<br>
+Optionally display the feature maps draped over elev_lid792_1m as color.
+
+<pre><code>d.erase
+d.rast feature9c_1m
+d.legend -c feature9c_1m at=2,20,2,6 font=Arial
+d.out.file landfroms9
+d.rast feature45c_1m
+d.vect elev_lid792_cont1m color=grey
+d.out.file landfroms45
+<!--nviz elev_lid792_1m color=feature9c_1m nviz elev_lid792_1m color=feature45c_1m-->
+</code></pre>
+
+<p>
+Map basic landforms using geomorphons DSM, read the manual page and the associated paper to learn how it works
+
+<pre><code>r.geomorphon elevation=elev_lid792_1m forms=geomorphon_s50d10 search=50 dist=10 
+d.erase
+d.rast geomorphon_s50d10
+d.vect elev_lid792_cont1m color=grey
+d.legend -c geomorphon_s50d10 at=2,30,2,8
+d.out.file geomorphon_s50d10
+</code></pre>
+
+<span class="question">Apply geomorphon to the 10m resolution DEM "elevation" (set region to raster elevation) and explain what is shown in the resulting map. Include the output map in your report.</span>
+
+<!--
+r.geomorphon elevation=elev_lid792_1m forms=geomorphon_s50d0 search=50 dist=0
+d.rast geomorphon_s50d0
+d.legend -c geomorphon_s50d0 at=2,30,2,8
+d.out.file geomorphon_s50d0
+r.geomorphon elevation=elev_lidmr_1m forms=geomorphon_dsm search=50
+d.legend -c geomorphon_dsm at=2,30,2,8
+d.out.file geomorphon_dsm
+-->
+
+<h3>Optional: Raster time series analysis</h3>
+
+We will explore elevation time series analysis using a series of coastal DEMs
+provided in NagsHead_series Mapset<br>
+<p>
+Download Mapset and color tables:
+<ul>
+<li> Download <a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/data/NagsHead_series.zip">
+NagsHead time series</a> and copy it into your nc_spm_08_grass7 project
+(it should be the same level directory as PERMANENT).
+Do not let your unzipping program create additional level directory with the same name!
+If you are not sure about GRASS Database structure read about it in
+<a href="https://grass.osgeo.org/grass83/manuals/grass_database.html">the manual</a>.
+<li>Custom color table for time series standard deviations map <a href="data/stddev_color.txt">stddev_color.txt</a></li>
+<!--<li><a href="data/regrslope_color.txt">regrslope_color.txt</a></li>-->
+</ul>
+
+You have to first make the mapset accessible.<br>
+In GUI: menu <em> Settings</em> -> <em>GRASS working environment</em> -> <em>Mapset access</em>
+or by using a command:
+
+<pre><code>g.mapsets operation=add mapset=NagsHead_series
+</code></pre>
+
+If you don't see the mapset, make sure you downloaded it and unzipped it correctly.
+
+<p>
+Run the series analysis and explain the results:<br>
+<span class="question">Which maps are core and envelope? 
+Which landforms have high standard deviation and what does it mean?</span>
+
+<pre><code>g.region raster=NH_2008_1m -p
+d.erase
+d.rast NH_2008_1m
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_min method=minimum
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_max method=maximum
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_mintime method=min_raster
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_maxtime method=max_raster
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_range method=range
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_avg method=average
+r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_stddev method=stddev
+<!--r.series NH_1999_1m,NH_2001_1m,NH_2004_1m,NH_2005_1m,NH_2007_1m,NH_2008_1m out=NH_9908_slope method=slope-->
+r.colors NH_9908_stddev rules=stddev_color.txt
+r.colors -n NH_9908_range color=inferno
+<!--r.colors NH_9908_slope rules=regrslope_color.txt-->
+d.erase
+d.rast NH_9908_stddev
+d.legend NH_9908_stddev
+d.out.file series_stddev
+d.rast NH_9908_range
+d.legend NH_9908_range
+d.out.file series_range
+</code></pre>
+
+<p>
+You can use cutting plane in 3D view to show the core and envelope.<br>
+Add constant elevation plane at -1m for reference,
+set zexag to  3-5 (the default is too high).<br>
+Assign surfaces constant color, use top or bottom surface for crossection color.<br>
+When using top for color, lower the light source to make
+top surface dark and highlight the crossection.
+Include the output maps and the 3D view with a cutting plane in your report to illustrate
+the answers to the two questions.
+
+<!-- # optional example: topo parameters from contours
+nviz NH_9908_min,NH_9908_max
+g.region rural_1m res=2 -p
+v.surf.rst input=elev_lid792_cont1m zcol=level dmin=3 npmin=250 \
+  el=elev_rstcontd_2mt slo=slp_rstcontd_2m pc=pc_rstcontd_2m
+d.erase
+d.rast slp_rstcontd_2m
+d.rast pc_rstcontd_2m
+d.vect elev_lid792_cont1m
+g.region rural_1m res=2 -p
+v.surf.rst input=elev_lid792_cont1m zcol=level el=elev_rstct10_2m \
+   slo=slp_rstct10_2m asp=asp_rstct10_2m pcur=pc_rstct10_2m \
+   tcu=tc_rstct10_2m ten=10 dmin=3 npmin=250
+d.rast pc_rstct10_2m
+d.vect elev_lid792_cont1m
+d.rast tc_rstct10_2m
+# if available, use v.generalize to reduce number of points in elev_lid792_cont1m
+# and interpolate
+<font color="#000066">
+-->
+
+<h3>Optional: Cut and fill and volume</h3>
+
+<!-- p. 132 -->
+
+Compute cut and fill for 4m deep excavation to build a facility.
+First, set the region and display facility on top of orthophoto.
+
+<pre><code>g.region rural_1m -p
+d.erase
+d.rast ortho_2001_t792_1m
+d.rast facility
+</code></pre>
+
+Then set (raster) mask to the facility map and find minimum elevation
+within the facility:
+
+<pre><code>r.mask raster=facility
+r.univar elevation
+</code></pre>
+
+Minimum which you obtain should be 123.521m.
+Bottom of 4m excavation will be then
+
+<pre>
+123.52 - 4 = 119.52
+</pre>
+
+Use raster algebra to create the excavation:
+
+<pre><code>r.mapcalc "excavation = elevation - 119.52"
+r.univar excavation
+d.rast excavation
+</code></pre>
+
+Minimum you get should be 4.00057 and maximum 9.50554.
+Note that the excavation is limited by the mask we set earlier,
+so we can now do global operation to compute the volume
+which applies just the the facility.
+
+<pre><code>r.volume excavation
+</code></pre>
+
+Now remove mask. This is important so that
+your future work is not affected.
+
+<pre><code>r.mask -r
+</code></pre>
+
+<!--
+<h3>Optional: Compute polar histogram</h3>
+
+Can you explain the difference in polar histograms?
+
+<pre><code>g.region raster=myaspect
+d.polar aspect_int_10m
+d.polar myaspect
+</code></pre>
+-->
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

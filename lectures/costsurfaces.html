@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="en">
+<!-- This is a generated file. Do not edit. -->
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Lecture slides for GIS/MEA582</title>
+
+        <meta name="description" content="Lecture slides for NCSU GIS/MEA582: Geospatial Modeling and Analysis">
+        <meta name="author" content="Helena Mitasova and NCSU GeoForAll Lab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* using !important because, reveal styles are applied afterwards  */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47% !important;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<section>
+    <h2><b>Geospatial Analysis</b></h2>
+    <h3>proximity, buffers, cost surfaces</h3>
+    <p style="margin-top: 0.5em">
+        Helena Mitasova</p>
+    <p class="title-foot">
+        GIS/MEA582 Geospatial Modeling and Analysis
+        <a href="https://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+    </p>
+</section>
+
+<section>
+    <h2>Learning objectives</h2>
+<p>
+<ul>
+  <li>Understand different metrics for distance
+<p>
+  <li>Define buffer operation, discrete and continous buffers
+<p>
+  <li>Explain concept of cost surfaces
+<p>
+  <li>Understand least cost path 
+</ul>
+</section>
+
+<section>
+   <h3>Measuring distance</h3>
+<p>
+  <ul>
+   <li class="fragment">Euclidean: shortest distance in plane
+   <li class="fragment">Geodesic: shortest distance over curved surface, great circle on sphere: 
+   <a href="https://mathworld.wolfram.com/GreatCircle.html">orthodrome</a>
+   <li class="fragment">$L^p$ metrics on meshes or grids
+   <li class="fragment">Linear referencing systems
+  </ul>
+</section>
+
+<section>
+   <h3>Measuring distance: spheroid</h3>
+<ul>
+  <li>Geodesic: shortest distance over curved surface
+  <li><a href=" https://en.wikipedia.org/wiki/Rhumb_line">Rhumbline</a>: 
+  constant bearing path, line in Mercator projection, not the shortest path
+</ul>
+<br> 
+<img height="420" src="img/analysis_costsurf/geodesic_rhumb_sm.png">
+</section>
+
+<section>
+   <h3>Measuring distance: plane</h3>
+<ul>
+ <li class="fragment"><strong>Generalized distance</strong>: $L^p$ metrics for measuring distance on meshes or grids
+ <li class="fragment">distance between two points $a(x_1,y_1)$ and $b(x_2,y_2)$
+<p>
+ <li class="fragment">$d_p(a,b)=[(x_1-x_2)^p + (y_1-y_2)^p]^{1/p}$
+ <ul>
+    <li class="fragment">$p=2$ : Euclidean distance
+    <li class="fragment">$p=1$ : Manhattan (Taxicab, City block) metric
+ </ul>
+<p>
+  <li class="fragment"><strong>Linear Referencing Systems</strong>: 
+location is defined by its linear distance from a known point on a route  
+and distance is measured along segments of a network; used for roads, utilities, waterways
+</ul>
+</section>
+
+<section>
+   <h3>Manhattan metrics</h3>
+Comparison of buffer pattern measured with Euclidean and Manhattan metric
+<p> 
+<img height="320" src="img/analysis_costsurf/manhattam_metrics.png">
+<img height="300" src="img/analysis_costsurf/buffrgrow_eucl.png">
+<img height="300" src="img/analysis_costsurf/buffrgrow_manh.png">
+<p><small>$d_1(a,b)=(x_1-x_2) + (y_1-y_2)$</small>
+</section>
+
+<section>
+    <h3>Measuring distance in networks</h3>
+Linear Referencing Systems: distance along bus routes
+<p> 
+<img class="fragment" height="420" src="img/analysis_costsurf/buslinesstops.png">
+</section>
+
+<section>
+   <h3>Measuring feature length</h3>
+<p>
+<ul>
+  <li class="fragment">what is the length of NC coastline? Neuse river?
+  <li class="fragment">feature length is scale dependent 
+  <li class="fragment">vector model: length depends on level of detail captured by the vertices 
+  <li class="fragment">raster model: resolution and level of detail (grain)
+<p>
+  <li class="fragment">natural features are often complex 
+  <a href="https://en.wikipedia.org/wiki/List_of_fractals_by_Hausdorff_dimension">fractals</a>
+</ul>
+</section>
+
+<section>
+   <h3>Measuring feature length</h3>
+Compare stream length from 
+<a href="https://www.usgs.gov/national-hydrography/national-hydrography-dataset">
+USGS NHD</a> and a stream derived from a local 1m lidar-based DEM
+<p> <img height="350" src="img/analysis_costsurf/Streams_NHD_GRASSlidar.png">
+<img height="350" src="img/analysis_costsurf/stream_extraction_lidarc.png">
+<p><small>NHD streams mapped at 1:24000 scale, simplified geometry, leading to shorter length.
+</small>
+</section>
+
+<section>
+   <h3>Measuring feature length</h3>
+Compare length of NC Coastline from NC GIS and from a World map 1:10M
+<p> <img height="320" src="img/analysis_costsurf/nc_shoreline_nc.png">
+<img class="fragment" height="320" src="img/analysis_costsurf/nc_shoreline_world.png">
+<img class="fragment" height="320" src="img/analysis_costsurf/nc_shoreline_worldnc.png">
+<p class="fragment"><small>World map scale 1km=0.1mm - narrow barrier islands are not represented
+<br>Keep scale in mind when comparing length of features represented at different scales!</small>
+</section>
+
+<section>
+   <h3>Raster-based proximity to features</h3>
+<ul>
+<li class="fragment">discrete:
+   <ul>
+   <li class="fragment">applies to raster representation of discrete features (points, lines, areas) 
+   <li class="fragment">creates discrete buffer zones from a given feature 
+   <li class="fragment">requires resolution sufficiently higher than the buffer widths
+   </ul>
+<p>
+<li class="fragment">continuous:
+   <ul>
+   <li class="fragment">derives proximity raster from a given feature
+   <li class="fragment">computes distances from a feature for every cell 
+   <li class="fragment">equivalent to cumulative cost surface with uniform cost=1
+   <li class="fragment">resolution controls the distance precision - step 
+   </ul>
+</ul>
+</section>
+
+<section>
+   <h3>Raster map buffer: points</h3>
+<ul>
+<li>Task: map forested areas around schools  
+<li>Create discrete point buffers at selected distances 
+</ul>
+<p> 
+<img height="360" src="img/analysis_costsurf/buff_schools.png">
+<img height="120" src="img/analysis_costsurf/schoolsbuffer_lg.png">
+</section>
+
+<section>
+   <h3>Raster map buffer: points</h3>
+<ul>
+<li>Use map algebra to combine buffers with landcover  
+</ul>
+<small><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code></small>
+<p> <img height="350" src="img/analysis_costsurf/buff_schools_veg.png">
+<!--<p><small>Use vector operations to add comlumn to school attribute table and add percent forested area within the buffer,
+keep in mind our 30m resolution. Why do we use 0 and not null in the expression?</small>
+-->
+</section>
+
+<section>
+   <h3>Raster map buffer: areas</h3>
+<ul>
+<li>Map developed areas within walking distance of lakes           
+<li>Use map algebra to combine buffers with landcover                                           
+</ul>
+<small><code>lake_buf_dev = if(landcl98 == 1 && lake_buff, lake_buff, 0)</code></small>
+<p> <img height="350" src="img/analysis_costsurf/buff_lakes_200m.png">
+<img height="350" src="img/analysis_costsurf/buff_lakes_dev_anna.jpg">
+</section>
+
+<section>
+   <h3>Raster map buffer: lines</h3>
+<ul>
+<li>Identify developed areas that may be impacted by noise from a highway: 
+<li>
+<small>Create buffers along the highway, combine with landcover using map algebra </small>
+</ul>
+<small><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null()) </code></small>
+<p> 
+<img height="340" src="img/analysis_costsurf/buffer_rast_roads.png">
+<img height="340" src="img/analysis_costsurf/noise_shadestr.png">
+<p class="fragment"><small> why 0 and not null? </small>
+</section>
+
+<section>
+   <h3>Raster map buffer: lines</h3>
+Identify schools and compute number of children potentially impacted by noise
+<small>Convert schools to raster using the school capacity attribute and use map algebra
+to extract schools close to the highway</small>
+<small><code>schools_noise = if(int(schoolscap_10m) && roads_buffers == 2, int(schoolscap_10m), null())</code></small>
+<p> <img height="350" src="img/analysis_costsurf/noise_schools_anna.png">
+<p><small>Map of developed areas and schools impacted by highway noise</small>
+</section>
+
+<section>
+   <h3>Continuous proximity raster</h3>
+Proximity surface represents
+shortest path (distance) from each cell to the target point
+<p> <img height="380" src="img/analysis_costsurf/costsurf_dist.jpg">
+<p><small>Derive continuous buffer as a subset with distance less than given threshold</small>
+</section>
+
+<section>
+   <h3>Continuous proximity raster</h3>
+To measure the proximity (distance), traverse the region in:
+standard 8 directions, Knight 16 directions
+<p> <img height="350" src="img/analysis_costsurf/cost1D8.jpg">
+<img height="350" src="img/analysis_costsurf/cost1D16.jpg">
+</section>
+
+<section>
+   <h3>Continuous proximity raster</h3>
+Proximity surface represents
+shortest path (distance) from each cell to the target line feature
+<p> <img height="400" src="img/analysis_costsurf/costsurf_distrd.jpg">
+</section>
+
+<section>
+   <h3>Cost surfaces</h3>
+<p>
+Cumulative (accumulated) cost surface measures proximity based on cost: 
+<ul>
+<li class="fragment">raster representation of cumulative cost 
+of reaching the target point(s) from any location in the given region.
+</ul>
+
+<p class="fragment">
+Input cost map 
+<ul>
+<li class="fragment">value assigned to a cell represents cost of traversing that cell,
+<li class="fragment">cost can be based on time, energy, price, etc.
+</ul>
+</section>
+
+
+<section>
+   <h3>Cost map</h3>
+If cost is spatially variable, we need to define cost to traverse each grid cell,
+usually expressed as time $t[s]$ derived, for example, from:
+<p>
+<ul>
+    <li class="fragment">speed data for driving,                       
+    <li class="fragment">velocity estimates for flows,                       
+    <li class="fragment">slope, vegetation and obstacles for walking on trails 
+</ul>
+</section>
+
+<section>
+   <h3>Cost map example</h3>
+<p>
+Example: cost map derived as time $t[s]$ needed to traverse a $d[m]$ resolution grid cell
+<p>
+$$ t = d / v $$
+<p>
+where, $v$ [m/s] is speed, approximated e.g., by speed limit stored in roads/streets data layer.
+<p><small>
+Cost map is computed using arithmetic expression in map algebra.
+<p>
+<code>r.mapcalc "streets_travtime = 0.018641/streets_speed"</code>
+</small>
+</section>
+
+<section>
+   <h3>Cost map</h3>
+<ul>
+ <li>Speed limit and cost raster maps
+ <li>Cost is time $t$ [s] to traverse a 30m cell, off-road cells are assigned 5 mi/hr.
+</ul>
+<p> <img height="350" src="img/analysis_costsurf/speed_rast.png">
+<img height="350" src="img/analysis_costsurf/cost_traveltime.png">
+<p><small>Cost can be defined per grid cell or per map unit, depending on implementation</small>
+</section>
+
+<section>
+   <h3>Cumulative cost surface</h3>
+Cumulative cost surface represents the time to reach the target point A from anywhere in the region.
+<p> <img height="350" src="img/analysis_costsurf/costsurface3dHR.png">
+<img height="100" src="img/analysis_costsurf/costsurf_dist">
+<p><small>The higher the hill the more time it takes to reach A (red point), highways are valleys, 
+blue points are firestations</small>
+</section>
+
+<section>
+   <h3>Least cost path</h3>
+<ul>
+<li class="fragment">using the cumulative cost surface, find the least cost (fastest) path to the target point
+<li class="fragment">least cost path follows the oposite directions used for creating the cumulative 
+cost surface: back-links 
+ <li class="fragment">similar to steepest slope line used for flow routing with terrain replaced by cost surface
+</ul>
+</section>
+
+<section>
+   <h3>Least cost path between two points</h3>
+<p>Least cost path from a given point to the target follows gradient direction - backlinks
+<p> <img height="350" src="img/analysis_costsurf/streets_costarrows_lcp.png">
+<img height="350" src="img/analysis_costsurf/streets_costarrows_lcpzm.png">
+</p>
+</section>
+
+<section>
+   <h3>Least cost path: back-link raster</h3>
+<p>
+<ul>
+<li class="fragment">direction of least cost path to the target from all grid cells = backlink map
+<li class="fragment">equivalent to surface gradient direction (aspect) map 
+</ul>
+<p class="fragment"> <img height="340" src="img/analysis_costsurf/cumcost_aspect_col.png.png">
+<img height="340" src="img/analysis_costsurf/backlinks_mea582.png">
+<p class="fragment"><small>Aspect map derived from the cumulative cost cost surface
+using r.slope.aspect, colored consistently with Arc backlink output. Backling map from Amy Nau
+</small>
+</section>
+
+<section>
+   <h3>Least cost path applications</h3>
+Locate the firestation that can reach the accident site $A$ on the highway the fastest and identify the shortest path:
+<small>
+<ul>
+   <li class="fragment">use query to extract cumulative cost (travel time) to A from all firestations, add the time
+to the attribute table
+   <li class="fragment">identify the firestation $F_1$ with the lowest cost
+   <li class="fragment">trace the least cost path from $F_1$ to $A$
+</ul> 
+</small>
+<p> <img height="350" src="img/analysis_costsurf/leastcostpath_fire.png">
+<p class="fragment" style="small">Example from the assignment shows two LCP, note the issue with overpass</p>
+</section>
+
+<section>
+   <h3>Cost surface for walking</h3>
+Empirical equation to estimate time $t[s]$ to traverse a grid cell walking in complex terrain:
+<p>
+$$
+t = a\Delta s + b \Delta h_u + c \Delta h_{md} + d \Delta h_{sd} + w.f
+$$
+<small>
+<ul>
+  <li class="fragment">$a,b,c,d$ [s/m]: weights, functions of inverse speed $1/v$
+  <li class="fragment">$\Delta s$ [m]: distance across a grid cell
+  <li class="fragment">$\Delta h_u, \Delta h_{md}, \Delta h_{sd}$ [m] - elevation difference upslope, moderate downslope and steep downslope
+  <li class="fragment">$w.f$ [s]: added time needed to traverse a cell due to friction, $f$ is a friction map, $w$ is weight
+  <li class="fragment">walking upslope and steep downslope increase cost, moderate downslope decreases cost.
+  <li class="fragment">default values for $a,b,c,d$ are empirical coefficients, based on man walking effort at standard conditions.
+</ul>
+</small>
+</section>
+
+<section>
+   <h3>Input data for estimating cost</h3>
+Walking cost combines inputs derived from elevation $\Delta h_u, \Delta h_{md}, \Delta h_{sd}$,
+land cover is used for friction map $f$. 
+<p> <img height="350" src="img/analysis_basicraster/elevation_shade10m.jpg">
+<img height="350" src="img/analysis_costsurf/friction2d.png">
+<p><small>low friction: developed areas, streets and roads; moderate friction: forest;
+extreme friction (barrier): lakes</small>
+</section>
+
+<section>
+   <h3>Cumulative cost surface</h3>
+Cumulative cost surface and isochrones to support search for lost person 
+last seen at point A.
+<p> 
+<img height="450" src="img/analysis_costsurf/walkcosthours.png">
+<p style="small"> Step of the isochrones s 0.5 hr</p>
+</section>
+
+<section>
+   <h3>Cumulative cost surface from lines</h3>
+Cumulative cost distance from major roads based on travel time (cost) estimated
+from speed limit. Target is lines represented by set of points. 
+<p> 
+<img height="300" src="img/analysis_costsurf/costsurf_roads.png">
+<img height="300" src="img/analysis_costsurf/costroads_3.png">
+<p> <small>Compare with buffers - areas within the cost distance less than a given threshold</small></p> 
+</section>
+
+<section>
+   <h3>Least cost path applications</h3>
+<ul>
+  <li class="fragment">find firefighters escape routes
+  <li class="fragment">design optimal trails
+  <li class="fragment">extract foredune ridge from coastal DEM
+  <li class="fragment">find safe access routes during natural disaters (earthquakes, floods)
+  <li class="fragment">estimate time for wastewater to get to treatment plant from any point in sewershed
+</ul>
+</section>
+
+<section>
+   <h3>Cumulative cost surface for monitoring</h3>
+<ul>
+  <li>Estimate time wastewater travels from source to wastewater plant
+  <li>Time to traverse a grid cell is computed using flow velocity estimated by Mannings equation as function of roughness, flow depth and slope
+  <li>Important for interpeting measured concentrations of SARS-CoV2 in wastewater to
+monitor trends in COVID-19
+</ul>
+</section>
+
+<section>
+   <h3>Monitoring pathogens</h3>
+<p>Time to wastewater plant from any location connected to sewer network and a sub-sewersheds map
+<p>
+<img height="360" src="img/analysis_costsurf/carysewermaskedtime_co2.png">
+<img height="360" src="img/analysis_costsurf/cary_sewer_subsewersheds.png">
+</section>
+
+<section>
+ <h3>Summary</h3>
+<ul>
+  <li>measuring distance is scale dependendent, different metrics can be defined
+  <li>buffers are used to analyze variables or features in proximity of points, lines and areas
+  <li>cumulative cost surfaces measure proximity based on cost
+  <li>least cost path finds optimized route based on cumulative cost surface
+</ul>
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="https://ncsu-geoforall-lab.github.io/geospatial-modeling-course/" title="Go to the course page">&#8962;</a>
+</div>
+<!-- This is a generated file. Do not edit. -->
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: { 
+        		// optionally load pre-recorded chalkboard drawing from file
+            		src: "chalkboard.json",
+            	},
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+            	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	},
+            });
+
+        </script>
+
+    </body>
+</html>
