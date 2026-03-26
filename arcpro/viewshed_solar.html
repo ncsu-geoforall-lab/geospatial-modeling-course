@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Viewshed and solar radiation analysis</h2>
+<p>Resources:
+<a href="https://www.lib.ncsu.edu/gis/virtcamp.html">ESRI Academy</a>
+<p>
+Please run this assignment with newer ArcPro tools if they are available.
+For example, use Raster Solar Radiation Tool instead of Area Solar Radiation (thanks Heather for the suggestion).
+<p>
+Launch ArcGIS Pro and login with ArcGIS Online credentials if required.
+Select New> Map> Create New Project.
+Create a new project in your preferred workspace,
+in the instructions below we are using the default C:\Users\myname\Documents\ArcGIS\Projects\ folder.
+<p>
+Use your judgement to decide which maps to include in your report.
+<p>
+<h3>Viewshed Analysis</h3>
+
+<pre>
+Add the raster elev_ned
+Add the point feature class fire_pt
+</pre>
+
+<p>
+Use Viewshed tool (not 'Viewshed 2' or the 'Ready to use tool') to compute the area visible from the fire_pt location.
+<pre>
+In the Geoprocessing pane, search for and select the Visibility tool from the Spatial Analyst Toolbox or 3D Analyst toolbox (the tool is listed twice in the Geoprocessing list, but either works).
+Set input surface to 'elev_ned'
+Set observer feature to 'fire_pt'
+Set output raster to 'viewshe_elev1'
+Click 'Run'
+</pre>
+
+<p>To see the ground elevation at the fire_pt, find the Export to Point tool in the Geoprocessing list.</p>
+<pre>
+Input raster: evel_ned
+Input put: our x and y values for fire point
+Output rater: fire_pt_elevation
+</pre>
+
+<p>
+What is the ground elevation at the fire_pt site?<br>
+In the output (viewshed) raster the visible cells are given a value of 1,
+while those not visible are assigned a value of 0.<br>
+<span class="question">How many cells are visible in this view shed?<br>
+How much area (in sq. meters) do these visible cells represent?</span><br>
+
+<p><strong>Rerun the viewshed, with elevation offset at the fire_pnt site at +60 m.</strong>
+<p>Add the field OFFSETA to the fire_pt attribute table. 
+<!-- <pre>
+<i>RMC</i> on the fire_pt layer > Open Attribute Table
+<i>LMC</i> on the first icon in the Attribute Table toolbar > Field:Add
+Type the name OFFSETA in the new field name row then hit the enter key
+Fields tab on the ribbon->changes->'save'
+Click the 'X' to close the fields tab
+In the fire_pt Attribute Table, double LMC and then type '60' in the OFFSETA column
+You can close the attribute table
+Edit tab on the ribbon->manage edits->'save'
+</pre> -->
+
+<!-- <p>Rerun the viewshed -->
+<p>In the Geoprocessing pane, search for and select the 'Visibility' tool</p>
+<pre>
+    Set input surface to 'elev_ned'
+    Set observer feature to 'fire_pt'
+    Set output raster to 'viewshe_elev60'
+    Click the carrot next to “Observer Parameters”
+    Under observer offset, input 60.
+    Click 'Run'
+</pre>
+<p>
+    <span class="question">What is the difference between surface offset, observer elevation, and observer offset?</span>
+<p>
+    <span class="question">
+        Now, how many cell are visible in this viewshed?<br>
+        How much additional area was gained by adding the 60 m of elevation
+        to the observer?
+    </span>
+<p>
+
+    <!-- <strong>Rerun the viewshed again, using the +60 m observer, but this time limit your search radius to 2000m.</strong>
+<p>Add the fields RADIUS1 and RADIUS2 to the fire_pt attribute table.  -->
+<!-- <pre>
+<i>RMC</i> on the fire_pt layer > Open Attribute Table
+<i>LMC</i> on the first icon in the Attribute Table toolbar > Field:Add
+Type the name RADIUS1 in the new field name row then hit the enter key
+Add another column and name it RADIUS2
+Fields tab on the ribbon->changes->'save'
+Click the 'X' to close the fields tab
+In the fire_pt Attribute Table, double LMC and then type '0' in the RADIUS1 column and '2000' in the RADIUS2 column
+You can close the attribute table
+Edit tab on the ribbon->manage edits->'save'
+</pre> -->
+
+<p>Rerun the viewshed</p>
+<pre>
+    In the Geoprocessing pane, search for and select the 'Visibility' tool
+    Set input surface to 'elev_ned'
+    Set observer feature to 'fire_pt'
+    Click the carrot next to “Observer Parameters”
+    Under observer offset, input 60
+    For inner radius, input 0.
+    For outer radius, input 2000.
+    Click 'Run'
+</pre>
+<p>
+<span class="question">How many cells are visible in this viewshed?
+How much ground area is visible?</span>
+<p>
+<strong>Restrict the search area to an annulus 1000 m wide (from 1000m to 2000m) and restrict the search azimuth to the arc from NE (45 deg) to SE (135 deg).</strong>
+<p>
+
+<pre>
+    In the Geoprocessing pane, search for and select the Visibility tool
+    Set input surface to 'elev_ned'
+    Set observer feature to 'fire_pt'
+    Click the carrot next to “Observer Parameters”
+    Under observer offset, input 60.
+    For inner radius, input 1000.
+    For outer radius, input 2000.
+    For Horizontal Start Angle, put 45.
+    For Horizontal End Angle, put 135.
+    Click 'Run'    
+</pre>
+<p>Rerun the viewshed (see instructions above)
+<p>
+<span class="question">How many cells and area are visible now?</span>
+<p>
+Now let's next add our own data,
+but instead of a single point, let's add a pair to the project<br>
+
+<p>
+Here are the the coordinates (in NC State Plane NAD83) for a building on Centennial Campus:
+
+<pre>
+x=638898 and y=224528
+</pre>
+
+<p>
+And for Jordan Hall on Central Campus:
+
+<pre>
+x=638887, y=225365.
+</pre>
+
+<p>
+Put these values into a text file (use e.g. Notepad but avoid MS Word). and save the file in a known location (with the extension .txt)<br>
+Your text file should look something like this:
+
+<pre>
+X,Y
+638898,224528
+638887,225365
+</pre>
+
+<p>
+Load your points to ArcGIS Pro:
+
+<pre>
+In the Map tab, in the Layer group, click 'Add Data'->'XY Point data'
+A new tool will open in the geoprocessing pane
+browse for your saved .txt file
+Set Output feature class to 'xy_points'
+Set 'X Field' to 'X' and 'Y Field' to 'Y'
+Make sure the coordinate system is correct
+Click 'Run'
+</pre>
+
+Open the Attribute Table of newly created shapefile
+Add the fields OFFSETA, VERT1, VERT2, AZIMUTH1, and AZIMUTH2. 
+Populate 
+point FID=0: 
+OFFSETA=35m, VERT1=12, VERT2=-12, AZIMUTH1=300, AZIMUTH2=60. 
+For point FID=1: 
+OFFSETA=40m, VERT1=12, VERT2=-12, AZIMUTH1=150, AZIMUTH2=240. 
+Save the edits
+
+</pre>
+
+<p>
+Run a viewshed on your new data with these attributes.
+
+<span class="question">For an observer standing atop the Red Hat Building,
+what do you think that this view shed result represents?<br>
+Can the observer see Jordan Hall on the NCSU Central Campus?<br>
+Do you think an observer standing atop Jordan Hall could see
+his counterpart on the Red Hat Building?</span>
+
+<h3>Solar radiation analysis</h3>
+Perform solar radiation analysis in Spatial Analyst:
+
+<p>
+Compute the incident solar radiation for the summer solstice (day number=172)
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Area Solar Radiation' tool
+Set input raster = elev_ned
+Set the output raster = ned_solar172
+Set the latitude = 35.7716 (~for Raleigh, NC)
+Set the Time Configuration to Within a day
+Set the Date/Time settings-Day number of year to 172
+the remainder of the fields can be left at their default values.
+Click 'Run'
+</pre>
+
+<p>
+Repeat the above steps to generate a incident solar radiation raster
+for the winter solstice (day number=356).<br>
+Note: the computation can take some time.
+<p>
+<span class="question">What are the data units for the resulting incident radiation maps?</span><br>
+<p>
+Determine the difference in radiation energy between the two solstice extremes
+by differencing the two radiation rasters just created.<br>
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+Set output to solar_diff
+In the calculator's expression field type:
+"ned_solar172" - "ned_solar356"
+</pre>
+
+<p>
+Change the color ramp to one that emphasizes contrast in the difference raster.<br>
+<span class="question">Where do you see the greatest differences in insolation between summer and winter?<br>
+Where does the least difference in annual insolation occur?<br>
+Do these differences make sense? Explain.</span>
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

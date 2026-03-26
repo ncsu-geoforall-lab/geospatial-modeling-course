@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Import and export of data from different sources in GRASS</h2>
+
+GRASS project can contain data only in one coordinate reference system (CRS)
+in order to have full control over reprojection
+and avoid issues coming from on-the-fly reprojection.
+
+<p>
+When starting a project, decide which CRS you will use. Create
+a new project using Project Wizard (accessible from GRASS start-up page).
+Specify desired CRS either by providing
+EPSG code (can be found e.g. at <a href="https://epsg.io/">epsg.io</a>)
+or by providing a georeferenced file (such as Shapefile) which has
+the CRS you want.
+
+<h3>Importing data in common vector and raster formats</h3>
+
+<p>
+For basic import of raster and vector files, use <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.import.html">r.import</a></em>
+and <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.import.html">v.import</a></em>, respectively.
+These modules will reproject the input data if necessary.
+If the input data's CRS matches the project's CRS, we can use
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.gdal.html">r.in.gdal</a></em> or <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.in.ogr.html">v.in.ogr</a></em>
+for importing raster and vector.
+
+<p>
+Alternatively, you can use a two-step approach
+for the cases when the data's CRS doesn't match the project's CRS.
+First create a new temporary project
+based on the CRS of the data you want to import, switch to this project
+and then use <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.gdal.html">r.in.gdal</a></em> or <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.in.ogr.html">v.in.ogr</a></em>
+to import raster and vector data, respectively. Then switch to the project
+of your project and use
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.proj.html">r.proj</a></em> and <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.proj.html">v.proj</a></em>
+to reproject data from the temporary project to your project.
+This approach is necessary for formats which are not supported by
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.import.html">r.import</a></em> and <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.import.html">v.import</a></em> modules.
+Modules  <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.proj.html">r.proj</a></em> and <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.proj.html">v.proj</a></em>
+can be also used for bringing raster and vector maps from one project to another.
+
+<p>
+Modules <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.gdal.html">r.in.gdal</a></em> and <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.in.ogr.html">v.in.ogr</a></em>
+check whether the CRS of the imported data matches the project's CRS.
+Sometimes the CRS of imported data is not specified correctly
+or is missing and therefore import fails.
+If you know that the actual CRS matches the project's CRS,
+it is appropriate to use <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.gdal.html">r.in.gdal</a></em>'s
+or <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.in.ogr.html">v.in.ogr</a></em>'s -o flag to overwrite the projection
+check and import the data as they are.
+
+<p>
+If you zoom to raster or vector in GRASS GUI and it does not fit with
+the rest of the data, it means that it was imported with wrong projection
+information (or with the -o flag when the coordinates in fact don't match).
+You can use r.info and v.info to get the information
+about the extents of (already imported) rasters and vectors.
+
+<h3>Importing CSV and other ASCII data</h3>
+
+<p>
+There are many formats of plain text files. In the context of GIS we usually
+talk about ASCII formats and CSV files. CSV files usually hold only
+coordinates and sometimes attributes of points.
+These files usually don't have CRS information attached to them,
+so we must be very careful and import the data only if the coordinates
+are in the CRS of the project we are using.
+
+<p>
+Let's create a CSV file called <code>points.txt</code>
+using a text editor (Notepad++, TextEdit, MS Notepad), for example:
+
+<pre>
+637803.6,223804.7
+641835.5,223761.2
+643056.0,217419.0
+</pre>
+
+The coordinates we entered are in EPSG:3358 and we assume that the
+GRASS project is using this CRS as well.
+This file can be imported to GRASS using:
+
+<pre><code>v.in.ascii input=points.txt output=test_ascii separator=comma x=1 y=2
+</code></pre>
+
+Notice, we have to specify the column number where the X and Y (optionally Z)
+coordinates are stored. In this example, X coordinates are in the first column
+Y in the second one. Don't forget to specify correct column delimiter.
+<p>
+If the data are not in the CRS we are using, create a new project
+with matching CRS,
+import the data and use <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.proj.html">v.proj</a></em> as described above.
+
+
+<h3>Importing lidar point clouds</h3>
+
+Lidar point clouds can be imported in two ways: as raster maps using binning
+or as vector points. However, one must explore the dataset first.
+
+<p>
+In command line, we can check the projection information and other metadata
+about a LAS file using <em>lasinfo</em> tool:
+
+<pre><code>lasinfo tile_0793_016_spm.las
+</code></pre>
+<p>
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.lidar.html">r.in.lidar</a></em> module can be used to scan the spatial extent
+of the dataset:
+
+<pre><code>r.in.lidar input=tile_0793_016_spm.las -s
+</code></pre>
+
+
+<h4>Binning</h4>
+
+Before creating the actual raster with elevation, we need to decide the extent
+and the resolution we will use for the binning. We can use
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.lidar.html">r.in.lidar</a></em> module for that by setting the resolution
+directly and using a -e flag to use dataset extent instead of taking it from
+the computational region.
+We are interested in the density of points, so we use <code>method=n</code>:
+
+<pre><code>r.in.lidar input=tile_0793_016_spm.las output=tile_0793_016_n method=n -e resolution=2
+</code></pre>
+
+After determining the optimal resolution for binning and the desired area,
+we can use <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/g.region.html">g.region</a></em> to set the computational region.
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.lidar.html">r.in.lidar</a></em> without the additional parameters above
+will create a raster map from points using binning with resolution and extent
+taken from the computational region:
+
+<pre><code>r.in.lidar input=tile_0793_016_spm.las output=tile_0793_016
+</code></pre>
+
+
+<h4>Interpolation</h4>
+
+When the result of binning contains a lot of NULL cells or when it is not
+smooth enough for further analysis, we can import the point cloud as vector
+points and interpolate a raster.
+
+<p>
+Supposing that we already determined the desired extent and resolution
+(using <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.lidar.html">r.in.lidar</a></em> as described above) we can use
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.in.lidar.html">v.in.lidar</a></em> lidar for import (and using class filter
+to get only ground points):
+
+<pre><code>v.in.lidar input=tile_0793_016_spm.las output=tile_0793_016 class=2 -r -t -b
+</code></pre>
+
+This import only the points of class 2 (ground)
+in the current computational region
+without the attribute table and building the topology.
+Then we follow with interpolation using,
+e.g. <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.surf.rst.html">v.surf.rst</a></em> module:
+
+<pre><code>v.surf.rst input=tile_0793_016 elevation=tile_0793_016_elevation slope=tile_0793_016_slope aspect=tile_0793_016_aspect npmin=100 tension=20 smooth=1
+</code></pre>
+
+
+<h4>Importing data in different CRS</h4>
+
+In case the CRS of the file doesn't match the CRS
+used in the GRASS project, reprojection can be done before importing
+using <em>las2las</em> tool from libLAS.
+
+<p>
+The following example command is for reprojecting tiles
+in NAD83/North Carolina in feet (EPSG:2264)
+into NAD83/North Carolina in meters (EPSG:3358):
+<pre><code>las2las --a_srs=EPSG:2264 --t_srs=EPSG:3358 -i input_spf.las -o output_spm.las
+</code></pre>
+
+<h4>Importing data in LAS version 1.4 or newer</h4>
+
+The LAS version 1.4 is not backwards compatible for readers expecting
+LAS 1.2. Unfortunately, libLAS supports only 1.2 and not 1.4.
+Fortunately, PDAL can convert to the version 1.2 using the translate
+tool:
+
+<pre><code>pdal translate --input=input_v14.las --writers.las.minor_version=2 --output=output_v12.las
+</code></pre>
+
+<h4>Importing data with broken projection information</h4>
+
+Modules <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.lidar.html">r.in.lidar</a></em> and <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.in.lidar.html">v.in.lidar</a></em>
+check whether the CRS of the imported data matches the project's CRS.
+Sometimes the CRS of imported data is not specified correctly
+or is missing and therefore import fails.
+If you know that the actual CRS matches the project's CRS,
+it is appropriate to use <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.in.lidar.html">r.in.lidar</a></em>'s
+or <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.in.lidar.html">v.in.lidar</a></em>'s -o flag to overwrite the projection
+check and import the data as they are.
+
+<pre><code>r.in.lidar input=tile_0793_016_spm.las -s -o
+</code></pre>
+
+
+<h3>Transferring GRASS data between two computers</h3>
+
+If two GRASS users want to exchange data, they can use GRASS native
+exchange format &ndash; <em>packed map</em>. A vector or raster map can be
+exported from a GRASS project in this format using
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.pack.html">v.pack</a></em> or <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.pack.html">r.pack</a></em> respectively.
+This format preserves everything for a map in a way as it is stored in
+a GRASS Database. <em>Projection of the source and target GRASS projects
+must be the same.</em>
+
+<p>
+If GRASS users wish to exchange GRASS Mapsets, they can do so as long as
+the source and target GRASS projects have the same projection.
+The PERMANENT Mapset should not be usually exchanged as it is a crucial part
+of the given project.
+Projects can be easily transferred in between GRASS Database directories
+on different computers as they carry all data and projection information
+within them and the storage format used in the background is platform independent.
+Projects as well as whole GRASS Databases can be copied and moved
+in the same way as any other directories on the computer.
+
+
+<h3>Further resources</h3>
+
+<ul>
+    <li><a href="https://grass.osgeo.org/grass83/manuals">GRASS manual</a></li>
+    <li><a href="https://grass.osgeo.org/grass83/manuals/grass_database.html">About GRASS Database structure</a></li>
+    <li><a href="https://grasswiki.osgeo.org/wiki/GRASS_GIS_for_ArcGIS_users">GRASS for ArcGIS users</a></li>
+    <li><a href="https://epsg.io/">epsg.io</a> (Repository of EPSG codes)</li>
+</ul>
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

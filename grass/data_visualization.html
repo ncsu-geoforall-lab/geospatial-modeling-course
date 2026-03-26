@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Data display and visualization</h2>
+<p>Resources:
+<ul>
+<li><a href="https://grass.osgeo.org/grass-stable/manuals/index.html">
+GRASS overview and manual</a></li>
+<li> <a href="data_acquisition.html#commands">Recommendations</a>
+<!--and <a href="./grass_intro.html">tutorial</a>-->
+how to use GUI from the first assignment</li>
+<li>Screen captures for 3D visualization with 3D view (wxNVIZ) in GRASS GIS 6.4.3RC2 (similar to GRASS 7 and 8)
+<ul>
+<li><a href="https://youtu.be/TRNUJy_ctc0">Visualization in GRASS I: surface</a></li>
+<li><a href="https://youtu.be/yaf4Bzv7F-c">Visualization in GRASS II: draping points and lines</a></li>(legend does not work in GRASS8.4)
+<li><a href="https://youtu.be/xo_jJHgtbR4">Visualization in GRASS III: cutting planes</a></li>
+</ul></li>
+</ul>
+
+
+<h3>Start GRASS</h3>
+Your <strong>current mapset</strong> should be a previously created <em>assignment2</em> 
+in the <em>nc_spm_08_grass7</em> project, you can continue working in it or create a new mapset
+(e.g., assignment2b) following the instructions from the previous assignments.
+
+<p>
+To save your outputs and to store external data change your working directory 
+to the one that you created in previous assignment e.g., 
+<em>C:\Users\myname\Documents\GIS582_HW\report2</em>,
+type <code>cd</code> into <em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+then browse to and select your <em>report2</em> directory.
+
+<h3>Changing the default font</h3>
+
+Change the default font used for map rendering in GUI Settings:
+<em>File</em> > <em>Preferences</em> > <em>Map Display</em>.
+Pick a new default font and <em>Save</em> the settings.
+<br>Note, that you can also change the default color table, default vector display properties
+and other display behavior in GUI settings.
+
+<h3>Basic 2D display operations</h3>
+GUI is recommended for the tasks below, see the <a href="data_acquisition.html#commands">
+GUI equivalents for selected d* commands</a>, the command line instructions below are 
+to indicate the workflow and output.
+
+<!--
+<h4>Display subset of raster data</h4>
+Visualy explore relation between developed areas and topography.
+Remove all previously used layers from the <em>Layer Manager</em>, then set region and
+display land use categories 1, 2 (developed land) over shaded topography.<br>
+<em>Settings</em> > <em>Region</em> > <em>Set region</em> > <em>Set region to match this raster</em> > select "landuse96_28m".<br>
+<em>Add raster</em> > select "elevation_shade".<br>
+<em>Add raster</em> > select "landuse96_28m" > <em>Selection</em> > <em>List of cats to display</em> > 1,2.<br>
+<em>Zoom to computational region</em>.<br>
+Right click on "landuse96_28m" map layer and <em>Change opacity</em> to show topography blended with landuse.
+Save display to graphic file.
+
+<pre><code>d.erase
+g.region raster=landuse96_28m -p
+d.rast elevation_shade
+d.rast landuse96_28m values=1,2
+#make sure to change opacity of the landuse layer to combine it with shaded topography
+d.vect streets_wake
+d.out.file landuse_elev
+</code></pre>
+-->
+
+<h4>Display color composite and a subset of raster data</h4>
+Visualy explore the development in the 1996 land use map layer and the 2002 landsat imagery
+using similar approach as with the shaded elevation above, but here we use a landsat 2002 
+image composite<br>
+In Layer Manager: <em>Add various raster map layers</em> > <em>Add RGBmap layer</em>.<br>
+
+<pre><code>d.erase
+g.region raster=landuse96_28m -p
+d.rgb red=lsat7_2002_30 green=lsat7_2002_20 blue=lsat7_2002_10
+d.rast landuse96_28m values=1,2
+#make sure to change opacity of the landuse layer to see the developed areas in 2002 and 1996
+d.vect roadsmajor color=yellow
+d.out.file mylandsat
+</code></pre>
+
+<span class="question">How did the developed area change between 1996 and 2002?</span>
+<!--
+<font color="#000066">
+# Following the example above
+# display elevations with values within intervals <50,80> and <120,160> over geology
+# elevation is continuous field map, so we use val instead of cat for Selection
+# set opacity level for the elevation to 50% to see the underlying geology
+</font>
+d.rast geology_30m
+d.rast elevation val=50-80,120-160 -o
+-->
+
+<h4>Change colors for raster maps</h4>
+There are many ways how to adjust or create custom color ramps for raster maps,
+see <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.colors.html">r.colors</a></em> manual, we explore only some basic tools here.
+
+<!--
+<p>
+First create your own copy of the elevation map (see the command below).<br>
+Display it by Add raster > "myelev".
+
+<pre><code>g.copy raster=elevation,myelev
+d.rast myelev
+</code></pre>
+
+<p>
+Set the color table to a predefined one (feel free to select a different one than the suggestion below, e.g. sepia).
+<p>
+GUI options: Right Click on the raster layer "myelev" in Layer Manager > <em>Set color table</em> > <em>Define</em> > <em>Name of color table</em> > "elevation" > <em>Run</em>.<br>
+If you don't see the new colors - click the first button in Map Display to redraw.
+
+<pre><code>r.colors myelev color=elevation
+d.rast myelev
+d.out.file mynewelevation
+</code></pre>
+-->
+
+<!--
+<p>
+Change the color table interactively using rules:
+<p>
+In the Layer Manager menu click <em>Raster</em> > <em>Manage colors</em> > <em>Manage Color rules interactively</em>.<br>
+Select raster map "myelev".<br>
+Click on colored squares to change the color, click <em>Preview</em>.<br>
+If it looks good - click OK.
+
+<p>
+To create color table for future multiple uses, especially for scripting,
+type the rules into a plain text mycolor.txt file using a text editor (TextEdit, Notepad)
+and save it in your working directory, for example (feel free to use your own colors):
+
+<pre data-filename="mycolor.txt">
+50 blue
+70 aqua
+90 green
+110 yellow
+130 orange
+160 brown
+</pre>
+
+<p>
+Then assign it as follows:<br>
+Right click on "myelev" map layer > <em>set color table</em> > <em>Define</em> > <em>Path to rules file</em> > <em>Run</em>.<br>
+If needed, redraw using the first button on Map Display.
+You can also create and assign the above color table by typing or pasting it into the
+<em>enter values interactively</em> window
+or run it from comand line (make sure the rule file is in your working directory):
+
+<pre><code>r.colors myelev rules=mycolor.txt
+d.out.file mynewelevation2
+</code></pre>
+<p>
+Note that you can combine color RGB and name definitions
+as well as % and cat/val to create complex custom color tables
+and store them in a text file for future use, see the examples in <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.colors.html">r.colors</a></em> man page.
+-->
+
+<h4>Compare the use of equal interval and histogram equalized color table for slope</h4>
+
+First, we create our copy of the slope map and then display it with an equal interval color ramp
+with colors ranging from blue-green-yellow to red (bgyr).
+To add the legend use <em>Add map elements</em> button on Map Display.
+
+<pre><code>g.copy raster=slope,myslope
+r.colors myslope color=bgyr
+d.rast myslope
+d.legend myslope
+d.out.file myslopecolor
+</code></pre>
+
+<p>
+Now change to the histogram equalized color table, and save the new slope map.
+<pre><code>r.colors -e myslope color=bgyr
+d.out.file myslopecolorequalized
+</code></pre>
+
+<p>
+To explain the difference between the two maps, you can generate a histogram.
+On Map Display click on <em>Analyze map</em> > <em>Create histogram with d.histogram</em> to open the histogram tool and
+save results to graphics file. Or use this command which will
+add a histogram as a layer to Layer Manager and then save the image:
+<pre><code>d.histogram myslope
+d.out.file slopehistogram
+</code></pre>
+
+If you want to remove the orange rectangle in the display that shows the extent
+of computational region click on "Map Display Settings" icon on the top
+of the map display and switch of "Show computational extent".
+You can put it back whenever you need it and you can adjust other 
+Map display settings there as well.
+
+<span class="question">What is the effect of the histogram equalized color table on the slope map pattern?</span>
+
+<h3>Modify legend, scale and grid</h3>
+To re-size the legend for myslope, right click on the legend,
+select Resize legend and resize with mouse.
+Alternatively you can resize by selecting <em>Pointer</em> mode in Map Display, double clicking on legend to launch the legend dialog
+and set options > <em>Optional</em> > <em>Placement</em> > 50,90,4,7.<br>
+Numbers are bottom,top,left,right as percentage of screen coordinates.<br>
+Add units to the legend: <em>Add map elements</em> > <em>Add text layer</em> > type deg > OK.<br>
+Add barscale on Map Display: <em>Add map elements</em> > <em>Add scale bar</em> (double click on it to change iti,
+for example you can change its length and units under Optional tab).<br>
+<p>
+Note: you can use horizontal legends by using Placement at=6,10,2,30
+or just stretch it horizontally with mouse.
+
+<pre><code>d.barscale length=1000
+d.legend myslope at=50,90,4,7
+</code></pre>
+
+<p>
+Add grid for state plane coordinates at 5000m with ticks at 1000m.
+Also add a lat/long grid at 2 arc minute interval.
+<p>
+In Layer Manager > <em>Add various overlays</em> > <em>Add grid layer</em> > Size 5000 > Run.<br>
+To draw only border with ticks: change Size to 1000 and click <em>Disable</em> > <em>Disable grid drawing</em> > Run.<br>
+Switch off <em>Disable grid drawing</em>.<br>
+To draw lat/long grid: set <em>Required</em> > Size to 0:02 > click <em>Draw</em> > <em>Draw geographic grid</em> > Run.<br>
+Command line alternative:
+
+<pre><code>d.grid size=5000 color=brown
+d.grid -n size=1000
+d.out.file myslopemap_gridxy
+#switch off previous grids
+d.grid -g size=0:02 color=black
+d.out.file myslopemap_gridlatlong
+</code></pre>
+
+<!--
+<p>
+Switch off "myslope", display "myelev" raster and change the legend to "myelev" raster.
+Add grid for state plane coordinates at 5000m with ticks at 1000m.
+Also add a lat/long grid at 2 arc minute interval.
+<p>
+In Layer Manager > <em>Add various overlays</em> > <em>Add grid layer</em> > Size 5000 > Run.<br>
+To draw only border with ticks: change Size to 1000 and click <em>Disable</em> > <em>Disable grid drawing</em> > Run.<br>
+Switch off <em>Disable grid drawing</em>.<br>
+To draw lat/long grid: set <em>Required</em> > Size to 0:02 > click <em>Draw</em> > <em>Draw geographic grid</em> > Run.<br>
+Command line alternative:
+
+<pre><code>d.rast myelev
+d.legend myelev
+d.grid size=5000 color=brown
+d.grid -n size=1000
+d.out.file myelevmap_gridxy
+#switch off previous grids
+d.grid -g size=0:02 color=black
+d.out.file myelevmap_gridlatlong
+</code></pre>
+-->
+
+<h3>Visualization in 3D perspective</h3>
+<p>
+Interactively view "elevation" raster and vector data ("streams", "usgsgages") in 3D view,
+adjust viewing position, surface properties and lighting to highlight features and display
+landuse data over topography.  Note, that legend is not currently supported in 3D view.
+
+Remove or switch off any map layers in the Layer Manager (if you have any)
+and set region to the raster "elevation".
+
+<pre><code>d.erase
+g.region raster=elevation -p <!--nviz elevation vector=roadsmajor point=schools_wake-->
+</code></pre>
+
+<p>
+Then add raster "elevation", and vector "streams", and "usgsgages".<br>
+Zoom to computational region and Switch to 3D view.<br>
+<p>
+Follow the video
+<a href="https://youtu.be/TRNUJy_ctc0">Visualization in GRASS I: surface</a>
+and <a href="https://youtu.be/yaf4Bzv7F-c">Visualization in GRASS II: draping points and lines</a>(legend does not work in GRASS8.4)
+and save 2-3 images for your report
+(save as tiff or take screenshot, if you don't have tiff support).
+
+<h3>Optional</h3>
+
+<h4>Visualizing multiple surfaces</h4>
+Visualize multiple surfaces (bare earth and surface with vegetation and structures),<br>
+analyze their relationship using crossections generated by interactive cutting planes<br>
+<p>
+It is recommended to quit GRASS before starting the task below
+because we will be working with a smaller, high resolution region.
+<p>
+Start grass with your previous mapset.
+First set region to "rural_1m", then interpolate surface with vegetation
+from multiple return lidar points using the module <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.surf.rst.html">v.surf.rst</a></em>
+(we will explain interpolation later on).
+
+<pre><code>g.region rural_1m -p
+v.surf.rst input=elev_lidrural_mrpts elevation=elev_lidruralmr_1m npmin=120 segmax=25 tension=40 smooth=1.0
+</code></pre>
+
+<p>
+In Layer Manager Add rasters "elev_lidruralmr_1m" and "elev_lid792_1m" (bare earth).
+In Map Display <em>Zoom to computational region</em>.
+<p>
+Make sure that you have only the two elevation maps switched on in the Layer Manager.
+Switch to 3D view and follow the video
+<a href="https://youtu.be/xo_jJHgtbR4">Visualization in GRASS III: cutting planes</a>.
+Save 2-3 interesting images for your report, include at least one crossection.
+If you do not see the elevation surfaces click Look: "center" in the View pannel of the 3D view.
+<!--nviz elev_lidruralmr_1m,elev_lid792_1m-->
+
+<h3>Optional</h3>
+
+<h4>Map Swipe</h4>
+Use mapswipe to compare the new orthophoto with the ortho provided in the data set:<br>
+
+<pre><code>g.mapsets mapset=assignment1 operation=add
+</code></pre>
+
+<em>File</em> > <em>Map Swipe</em>.<br>
+Add raster > select "ortho_2001_t792_1m" and "ortho_new".<br>
+<p>
+Move slider to compare images - what changes do you observe?
+Save a screenshot of the mapswipe window showing the comparison of orthos.
+See more options <a href="https://grasswiki.osgeo.org/wiki/WxGUI_Map_Swipe">here</a>.
+
+<p>
+
+<!--
+<h3>Export NC precipitation stations data to KML and post in Google Earth</h3>
+
+To see what you are exporting, add the <em>precip_30ynormals</em> raster
+or use the following command:
+
+<pre><code>d.vect precip_30ynormals
+</code></pre>
+
+You may need to use right click in <em>Layers</em> to zoom to the extent
+of the whole vector map. Then use <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/v.out.ogr.html">v.out.ogr</a></em> to
+export the vector map in the KML format.
+If your are running the command in GUI do not forget to click point for
+data type. To view the data in Google Earth just drag and drop the KML
+file in the Google Earth window.
+<br><em>Make sure you include extension ".kml" in the output file name.</em>
+
+<pre><code>v.out.ogr precip_30ynormals output=precipitation.kml format=KML type=point
+</code></pre>
+
+If you use the command above, the kml file will be saved in your working directory.
+-->
+<!--
+<font color="#000066">
+# Set color scheme for vector data, display vector data attributes
+</font>
+g.region raster=elevation -p
+g.copy vect=streets_wake,mystreets
+v.colors mystreets column=SPEED color=rainbow
+d.vect -a mystreets
+#
+# if the above does not work try this
+#
+v.db.addcol map=mystreets columns="myrgb varchar(11)"
+v.colors mystreets column=SPEED color=rainbow rgb_column=myrgb
+d.vect -a mystreets rgb_column=myrgb
+
+<font color="#000066">
+# Export data to kml and post in Google Earth# If your are running the command in GUI do not forget to click point for data type
+# To view the data in Google Earth just drag and drop the kml file in the Google Earth window
+</font>
+g.region nc_500m
+v.out.ogr precip_30ynormals dsn=c:\temp\precipitation.kml format=KML type=point
+
+
+<font color="#000066">
+# Draw thematic vector map showing number of children 10-14 in census blocks and school capacity
+# In GIS Layer Manager Add various vector maps > Add thematic layer
+# Tab Required > censusblk_swwake, Feature type > area, Name of attribute> P10_TO_14,
+# Type of display>graduated_colors, Thematic divisions>interval, Color scheme > yellow-cyan
+# Tab Theme > Number of classes > 12, OK
+#
+# In GIS Layer Manager Add various vector maps > Add thematic layer
+# Required > schools_wake, Feature type > point, Name of attribute> CORECAPACI,
+# Type of display>graduated_points, Thematic divisions>interval
+# Theme > Number of classes > 10
+# Points > Icon size > 3, Max icon size > 30
+</font>
+d.vect.thematic -gs map=censusblk_swwake type=area column=P10_TO_14 themetype=graduated_colors nint=15 colorscheme=yellow-cyan
+d.vect.thematic -gs map=schools_wake type=point column=CORECAPACI themetype=graduated_points size=3 maxsize=30 nint=10 colorscheme=blue-red
+v.colors mycensus column=P10_TO_14 color=bcyr
+
+<font color="#000066">
+# derive RGB channels from hue and intensity
+# save shaded map with basins as a single raster layer
+</font>
+g.region raster=elevation -p
+r.his h=basin_50K i=elevation_shade b=el_b g=el_g r=el_r
+<font color="#000066">
+# create a single composite map
+</font>
+r.composite b=el_b g=el_g r=el_r out=basins_shaded_10m
+d.rast basins_shaded_10m
+-->
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

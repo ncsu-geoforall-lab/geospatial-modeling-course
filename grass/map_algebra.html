@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Geospatial Analysis I: global, zonal and focal operations, map algebra</h2>
+<p>Resources:
+<ul>
+<li><a href="https://grass.osgeo.org/grass83/manuals/index.html">
+GRASS overview and manual</a></li>
+<li> <a href="data_acquisition.html#commands">Recommendations</a>
+and <a href="./grass_intro.html">tutorial</a>
+how to use GUI from the first assignment</li>
+</ul>
+
+<!-- TODO
+- try to redefine below into larger meaningful examples
+- improve the SRTM difference example to show the impact of 0, null on univar
+- test and improve the MASK examples
+-->
+<p>
+To run <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.mapcalc.html">r.mapcalc</a></em> expressions, you can either
+run the entire command in the GUI <em>Console</em>, or in case of any
+problems, type or copy the expression (without the <em
+class="module">r.mapcalc</em>) in the GRASS Raster Map Calculator
+which can be launched from <em>Layer Manager</em> toolbar.
+
+<p>
+Text file with color rules:
+<ul>
+<!-- <li><a href="data/rastcomposite_color.txt">rastcomposite_color.txt</a></li> -->
+<li><a href="data/srtmneddiff_color.txt">srtmneddiff_color.txt</a></li>
+</ul>
+
+<h3>Start GRASS</h3>
+Create a new mapset (called e.g. assignment3 or HW_map_algebra) in <em>nc_spm_08_grass7</em> project and
+change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+
+<p>
+Download text file with color rules "srtmneddiff_color.txt" (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
+
+<h3>Compute and map summarry statistics</h3>
+<!-- p.90 
+Compute areas for each category at two different resolutions.
+<p>
+<span class="question">Are the area results computed at different resolutions equal? </span>
+Copy and paste the report from the output window or
+save the report in a text file: <em>Output window</em> > <em>Save</em>.
+Use fixed width font (e.g., Courier, Andale Mono  in your report to preserve formatting).
+
+<pre><code>g.region raster=landuse96_28m res=12 -ap
+r.report landuse96_28m unit=c,h,p
+g.region raster=landuse96_28m res=30 -ap
+r.report landuse96_28m unit=c,h,p
+</code></pre>
+
+<p>
+Compute areas for each category of land use for each zipcode.
+In your report compare land use distribution in 27601 Raleigh with 27511 Cary.
+Include only the relevant part of the table in your report.
+
+<pre><code>g.region rast=landuse96_28m -p
+r.report zipcodes,landuse96_28m unit=h,p
+</code></pre>
+-->
+
+<p>
+Compute zonal statistics maps representing
+average slope for each basin, often needed for hydrologic modeling.<br>
+Add legends using <em>Add map elements</em> in Map Display toolbar.
+Reminder: <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/d.out.file.html">d.out.file</a></em> means Save to graphics file for your report.
+
+<pre><code>g.region raster=slope -p
+r.stats.zonal base=basin_50K cover=slope method=average output=slope_avgbasin
+r.colors slope_avgbasin color=gyr
+d.rast slope_avgbasin
+d.legend slope_avgbasin at=90,50,5,8
+d.vect streams color=15:25:110
+d.vect streets_wake color=grey
+d.out.file slope_avgbasin
+</code></pre>
+
+<p>
+Compute zonal statistics maps representing most common land use for each basin.<br>
+To get the best result, make sure you use all the flags from the example below.
+
+<pre><code>g.region raster=landuse96_28m -p
+r.mode base=basin_50K cover=landuse96_28m output=landuse96_modebasin
+d.rast landuse96_modebasin
+d.vect streams
+d.legend landuse96_modebasin at=40,20,2,5 -n -f -c
+d.out.file landuse96_modebasin
+</code></pre>
+
+<span class="question">What is the most common land use in the two basins with the steepest average slope?</span>
+You can use map query or map algebra to find out the naswer.
+
+<h3>Apply neighborhood operators and map algebra</h3>
+<!-- p.127<br> -->
+<h4>Map land use diversity</h4>
+Use neighborhood operator to compute land use diversity map and create a map of locations
+with the most homogeneous (single category) landuse where a land use diversification could be beneficial
+(e.g. by planting trees). Use 7x7 cells window to find areas which have single landuse within 200x200m. <br>
+<!--<span class="question">Explore how different sizes of the neighborhood used alter the results and why?</span><br>-->
+<p>
+First, remove all previously added map layers from the <em>Layer Manager</em>, then compute
+and display the land use diversity map. 
+Adjust the legend size and placement as needed using right click and mouse.
+
+<pre><code>d.erase
+g.region raster=landuse96_28m -p
+r.neighbors landuse96_28m output=lu_divers method=diversity size=7
+d.rast lu_divers
+d.legend lu_divers at=90,70,5,8 -v
+d.vect streets_wake co=white
+r.report lu_divers unit=p
+d.out.file lu_diversity_map
+</code></pre>
+
+<p>
+Use map algebra to extract the single category areas
+and find out the area totals for each category using the report tool.
+
+<pre><code>r.mapcalc "landuse_1cat = if(lu_divers == 1, landuse96_28m, null())"
+r.colors landuse_1cat raster=landuse96_28m
+r.category landuse_1cat raster=landuse96_28m
+r.report landuse_1cat unit=h,p -n
+d.rast landuse_1cat
+d.legend -c landuse_1cat
+d.out.file lu_signle_map
+</code></pre>
+
+<span class="question">Which land use covers the largest area with a single landuse category within 7x7
+moving windows (most homogeneous areas)?</span><br>
+<span class="question">Use map algebra to extract a map layer that represents homogeneous 
+"Mixed hardwoods / Conifers" areas (category 18) from the "landuse_1cat" layer
+that we may target for protection. Include the command and a resulting map with extracted
+map displayed together with "streets_wake" in your report</span>
+
+<h4>Smoothing elevation raster and analyzing differences between DEMs</h4>
+<p>
+Use neighborhood operator to smooth the SRTM elevation map "elev_srtm_30m" and 
+compare the summary statistics for the original and smoothed SRTM DEM.
+First, display the lidar-based "elev_ned_30m" map, assign the same colors to the "elev_srtm_30m"
+and compare their values using legends. Then use neighborhood operator
+applied to 5x5 window to smooth the "elev_srtm_30m" and compare the results
+using the r.univar tool. 
+<span class="question">How does the size of the neighborhood influence the resulting DEM?</span>
+(You can test different sizes yourself.)
+
+<pre><code>d.erase
+g.region raster=elev_srtm_30m -p
+d.rast elev_ned_30m
+d.legend elev_ned_30m
+r.colors elev_srtm_30m raster=elevation
+d.rast elev_srtm_30m
+d.legend elev_srtm_30m
+d.out.file srtm_dem_original
+r.neighbors elev_srtm_30m output=elev_srtm30m_sm5 method=average size=5
+d.rast elev_srtm30m_sm5
+d.out.file srtm_dem_smoothed
+r.univar elev_ned_30m
+r.univar elev_srtm_30m
+r.univar elev_srtm30m_sm5
+</code></pre>
+
+Further explore the difference between the SRTM DEM "elev_srtm_30m" and lidar-based NED DEM "elev_ned_30m".
+First, compute the map of elevation differences using map algebra and find the range of differences:
+
+<pre><code>r.mapcalc "srtm_ned30_dif = elev_srtm_30m - elev_ned_30m"
+r.info -r srtm_ned30_dif
+</code></pre>
+
+<p>
+Assign a divergent color table
+ to distinguish the negative and positive values,
+<a href="data/srtmneddiff_color.txt">srtmneddiff_color.txt</a>.<br>
+GUI: Right click on layer > <em>Properties</em> > <em>Set color table</em> > <em>Colors</em> > <em>Path to rules file</em>.
+
+<pre><code>r.colors srtm_ned30_dif rules=srtmneddiff_color.txt
+</code></pre>
+
+<p>
+Zoom to computational region and switch off previous map layers. Display the difference map layer:
+
+<pre><code>d.erase
+d.rast srtm_ned30_dif
+d.legend -d srtm_ned30_dif at=90,40,5,7
+d.out.file srtm_ned30_dif
+</code></pre>
+
+<p>
+<span class="question">Are the elevations in "elev_srtm_30m" higher in most areas or lower than in "elev_ned_30m"?
+Which result will you use to answer the above question -
+the "srtm_ned30_dif" map or the numbers provided by <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.univar.html">r.univar</a></em>?
+Are there any values in the elev_srtm_30m map that are not realistic? Where are they located?</span>
+
+<h3>Patch multiple raster layers into a single raster</h3>
+<!-- p.124-125<br> -->
+Patch raster tiles for lidar based, 6m res. DEM for Centennial Campus.
+<!--Before displaying new data, remove older map layers from <em>Layer Manager</em>.-->
+<!-- on MS VISTA you need to have UAC (User Account Control) disabled to run r.patch<br> -->
+
+<pre><code>d.erase
+g.region raster=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m -p
+r.patch input=el_D793_6m,el_D783_6m,el_D782_6m,el_D792_6m output=elevlidD_6m
+r.colors elevlidD_6m raster=elevation
+d.rast elevlidD_6m
+d.vect roadsmajor
+d.out.file patched_dem
+</code></pre>
+
+<span class="question">Using map algebra, Compute difference between the "elevlidD_6m" and "elevation" maps,
+assign it a diverging color ramp (e.g. "differences" provided by r.colors) 
+and compute a summary statistics of the differences. 
+Include the map and the statistics into your report and comment on the resulting pattern</span>
+
+<!--
+<p>
+Patching discrete raster layers over continuous raster:
+
+<pre><code>g.region raster=elev_ned_30m -p
+r.patch input=roadsmajor,facility,lakes,elevation output=composite
+</code></pre>
+
+<p>
+Assign colors to the composite based on raster values.
+First check the range of values in each raster.
+They are very different so custom color table is needed.
+
+<pre><code>r.info -r roadsmajor
+r.info -r facility
+r.info -r lakes
+r.info -r elevation
+</code></pre>
+
+<p>
+Assign the custom color table (<a href="data/rastcomposite_color.txt">rastcomposite_color.txt</a>).<br>
+GUI: Right click on layer > <em>Properties</em> > <em>Set color table</em> > <em>Define</em> > <em>Path to rules file</em>
+or just type <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.colors.html">r.colors</a></em> into <em>Console</em> and hit Enter.
+Browser will pick up the full path to your color rules file.
+<p>
+The command below assumes that the color table is in your working directory.<br>
+Zoom to computational region and switch off previous map layers.
+
+<pre><code>r.colors composite rules=rastcomposite_color.txt
+d.rast composite
+d.out.file composite
+</code></pre>
+-->
+
+<h3>More Map Algebra</h3>
+See <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.mapcalc.html">r.mapcalc</a></em> manual page for syntax and functions.
+You can run r.mapcalc from console using command line or GUI (Raster map calculator).
+<!-- # <a href="mapcalcformats.html">See here for several ways on <b>how to run r.mapcalc</b></a>-->
+<!--If you are getting en error when running
+<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.mapcalc.html">r.mapcalc</a></em> in GUI <em>Console</em> or the system
+command line, launch the GUI version from <em>Layer Manager</em>
+toolbar.-->
+
+<h4>NDVI</h4>
+Compute Normalized Difference Vegetation Index (NDVI).<br>
+<span class="question">Explain the difference between floating point and integer
+handling in ndvi1, ndvi2 and ndvi3 result</span>.
+Make sure to zoom into computational area after changing the region.
+
+<pre><code>d.erase
+g.region raster=lsat7_2002_40 -p
+r.mapcalc "ndvi1 = (lsat7_2002_40 - lsat7_2002_30) / (lsat7_2002_40 + lsat7_2002_30)"
+r.mapcalc "ndvi2 = 1.0 * (lsat7_2002_40 - lsat7_2002_30) / (lsat7_2002_40 + lsat7_2002_30)"
+r.mapcalc "ndvi3 = float(lsat7_2002_40 - lsat7_2002_30) / float(lsat7_2002_40 + lsat7_2002_30)"
+r.info -r ndvi1
+r.info -r ndvi2
+r.info -r ndvi3
+r.colors ndvi3 color=ndvi
+d.rast ndvi3
+d.legend ndvi3
+d.out.file ndvi3
+</code></pre>
+
+Note that this is a simplified, map algebra example, for computing various vegetation indices
+in GRASS, we would use the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/i.vi.html">i.vi</a></em> tool
+after performing atmospheric corrections.
+
+<!--
+<font color="#000066">
+# check the imapct of NULL on map algebra operation
+# create a copy of SRTM DSM map
+# replace cells with elevation=0 by NULL (NULLs will be transparent)
+# what is the mean and range of differences when using 0 and NULL?
+</font>
+g.copy rast=elev_srtm_30m,myelev_srtm_30m
+g.region raster=myelev_srtm_30m -p
+d.rast myelev_srtm_30m
+r.null myelev_srtm_30m setnull=0.
+r.mapcalc mysrtm_ned30_dif=myelev_srtm_30m-elev_ned_30m
+r.colors mysrtm_ned30_dif raster=srtm_ned30_dif
+d.rast srtm_ned30_dif
+d.rast mysrtm_ned30_dif
+r.univar myelev_srtm_30m
+-->
+<!-- p. 109<br> -->
+<h4>Working with if statements and null()</h4>
+Create map of urban areas (high density and low density class)
+with 0 class elsewhere.
+
+<pre><code>g.region raster=landuse96_28m -p
+r.mapcalc "urban1_30m = if(landuse96_28m == 1,1,0) + if(landuse96_28m == 2,2,0)"
+d.rast urban1_30m
+d.legend urban1_30m at=10,30,5,8
+d.out.file urban12_nonurbanzero
+</code></pre>
+
+<p>
+Alternatively with logical 'or' operator and null elsewhere:
+
+<pre><code>d.erase
+r.mapcalc "urban2_30m = if(landuse96_28m == 1 || landuse96_28m == 2,landuse96_28m,null())"
+d.rast urban2_30m
+d.legend urban2_30m at=10,30,5,8
+d.out.file urban12_nonurbannull
+</code></pre>
+
+<span class="question">What is the difference between the two urban raster maps?  </span>
+
+
+<h3>Optional -  various additional useful tasks</h3>
+<!-- p. 110-111<br> -->
+<h4>Handling null values and creating a mask</h4>
+
+<!--
+Replace lakes in the landclass96 map with more accurate representation.<br>
+From raster map lakes, we divide lakes by 1000 because the lake map has
+large numbers that would have required custom color table.
+
+<pre><code>r.mapcalc "luselakes = if(isnull(lakes), landclass96, lakes/1000)"
+d.rast luselakes
+d.out.file luselakes
+</code></pre>
+-->
+
+<p>
+<!--
+<font color="#000066">
+# create a map of developed areas where all land use categories > 1 are set to null
+</font>
+r.mapcalc developed=if(landclass96 > 1, null(), 1)
+-->
+Create mask for low lying developed areas (e.g. vulnerable to flooding)
+with elevation between 60 and 100m and land use 1 or 2. We could use this mask to 
+exclude this areas from future high density urbanization in an urban growth simulation.<br>
+Set the region, display the input maps and create a MASK.<br>
+Before you start new computations, remove or switch off previous map layers
+in the <em>Layer Manger</em>.
+You may also zoom to computational region in <em>Map Display</em>
+once you set a new one.
+
+<pre><code>g.region raster=elevation -p
+d.erase
+d.rast elevation
+d.rast landuse96_28m
+r.mapcalc "low_elev_developed = if((elevation &lt; 100 &amp;&amp; elevation > 60) &amp;&amp; (landuse96_28m == 1 || landuse96_28m == 2),1,null())"
+r.mask raster=low_elev_developed
+</code></pre>
+Command <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.mask.html">r.mask</a></em> creates a raster map "MASK" in your mapset.
+
+<p>
+Remove "low_elev_developed" layer if it was added.
+<p>Display watersheds to see the mask effect:
+
+<pre><code>d.rast basin_50K
+d.out.file basin_masked
+</code></pre>
+
+<p>
+Disable mask, and display basin_50K again
+to show that the mask was removed.
+
+<pre><code>r.mask -r
+d.rast basin_50K
+</code></pre>
+
+<h4>Using coordinates of moving window in map algebra</h4>
+<!-- p. 114<br> -->
+Replace section of SRTM DSM with NED DEM elevation.<br>
+<span class="question">Try to explain how this <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.mapcalc.html">r.mapcalc</a></em> expression works.</span>
+
+<pre><code>r.mapcalc "elev_combined = if(y() &lt; 224274. &amp;&amp; x() > 637455., elevation, elev_srtm_30m)"
+</code></pre>
+
+<h4>Tilted plane</h4>
+Create a raster map representing tilted plane (e.g., geologic fault):
+
+<pre><code>g.region rural_1m -p
+r.mapcalc "tiltplane = 0.2*(0.1*row()+col())+50"
+r.mapcalc "tiltpl_under = if(tiltplane &lt; elev_lid792_1m + 2,tiltplane,null())"
+</code></pre>
+
+<p>
+View the elevation surface and subsurface plane in 3D.
+<em>Switch off all layers in the layer manager except for elev_lid792_1m and tiltpl_under</em>.
+Change display to 3D view, adjust viewing position to a view from South.
+Save an image for your report.
+
+<!-- p. 91<br> -->
+<h4>Map subsets</h4>
+Use map algebra to create map subsets.<br>
+Change region to the airphoto tile 792 and resolution 10m.
+Since we will work in different area, it is a good idea to remove
+all previously used map layers from <em>Layers</em> in
+the <em>Layer Manager</em>.
+
+<pre><code>g.region raster=ortho_2001_t792_1m res=10 -ap
+d.erase
+d.rast ortho_2001_t792_1m
+</code></pre>
+
+<p>
+Create a subset of the map elevation for this subregion.
+
+<pre><code>r.mapcalc "elevation_792_10m = elevation"
+d.rast elevation_792_10m
+</code></pre>
+
+<p>
+Zoom out to see that it is a subset.
+
+<!--
+<h4>Work with NULL and MASK</h4>
+p. 103-104<br> 
+Set the mask and check its effect.
+
+<pre><code>d.rast elevation
+d.vect streets_wake
+r.mask raster=urban maskcats=55
+d.rast elevation
+</code></pre>
+
+<p>
+Remove mask:
+
+<pre><code>r.mask -r
+</code></pre>
+
+<h4>Zonal statistics</h4>
+
+First, set the computational region:
+
+<pre><code>g.region raster=urban2_30m
+</code></pre>
+
+Then, compute % area for each category in each zipcode.
+<span class="question">Which zipcode has the most high density development?</span>
+
+<pre><code>r.stats -pl zipcodes,urban2_30m
+</code></pre>
+-->
+
+<!-- p. 113<br> -->
+<h4>Working with relative coordinates</h4>
+Compute smoothed SRTM DEM using 3x3 moving window average.
+Enter the expression on a single line without \<br>
+Again, it is a good idea to remove the previously used map layers
+before we start to work on a new task.
+
+<pre><code>g.region raster=elev_srtm_30m -p
+d.erase
+r.mapcalc "elev_srtm30m_smooth = (elev_srtm_30m[-1,-1]   \
+           + elev_srtm_30m[-1,0] + elev_srtm_30m[-1,1] \
+           + elev_srtm_30m[0,-1] + elev_srtm_30m[0,0]  \
+           + elev_srtm_30m[0,1]  + elev_srtm_30m[1,-1] \
+           + elev_srtm_30m[1,0]  + elev_srtm_30m[1,1])/9."
+</code></pre>
+
+<p>
+Assign the resulting map the same color table as the original.
+Compare global statistics
+
+<pre><code>r.colors elev_srtm30m_smooth raster=elev_srtm_30m
+r.univar elev_srtm_30m
+r.univar elev_srtm30m_smooth
+d.rast elev_srtm_30m
+d.rast elev_srtm30m_smooth
+</code></pre>
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

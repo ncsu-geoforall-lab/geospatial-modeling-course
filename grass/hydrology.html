@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Flow routing and watershed analysis</h2>
+<p>Resources:
+<ul>
+<li><a href="https://grass.osgeo.org/grass84/manuals/index.html">
+GRASS overview and manual</a></li>
+<li> <a href="data_acquisition.html#commands">Recommendations</a>
+<!--and <a href="./grass_intro.html">tutorial</a>-->
+how to use GUI from the first assignment</li>
+</ul>
+
+<p>
+Text file with outlet point coordinates:
+<ul>
+<li>point coordinates (<a href="data/outlet_point.txt">outlet_point.txt</a>)</li>
+</ul>
+
+<h3>Start GRASS</h3>
+Create a new mapset (called e.g. HW_hydrology) in nc_spm_08_grass7 project and
+change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+Download all text files with site locations (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
+
+
+<!--<p><B>Tasks: Compare flowaccumulation, stream networks and watersheds derived by different algorithms from different DEMs, map flooded area </B></p>
+####!!!!UPDATE WITH SFD and MFD for r.watershed and r.stream.extract for vectorized streams #### explain the topology of stream network from r.stream.extract -->
+start GRASS<br>
+
+<h3>Compute flow direction, flow accumulation and subwatersheds</h3>
+Compute flow direction, flow accumulation and subwatersheds
+with approx. size of 10000 cells from 30m NED using least cost path method with single flow direction (SFD):
+
+<pre><code>g.region raster=elev_ned_30m -p
+r.watershed -s elevation=elev_ned_30m threshold=10000 accumulation=accum_10K drainage=draindir_10K basin=basin_10K
+</code></pre>
+
+<p>
+Extract detailed streams from flow accumulation raster,
+and convert basins and streams to vector format:
+
+<pre><code>r.mapcalc "streams_der_30m = if(abs(accum_10K) > 100, 1, null())"
+r.to.vect -s basin_10K output=basin_10K type=area
+r.thin streams_der_30m output=streams_der_30m_t
+r.to.vect -s streams_der_30m_t out=streams_der_30m type=line
+</code></pre>
+
+<p>
+Generate relief shaded map of basins
+ and display extracted streams along with the official Wake county streams (red).<br>
+<span class="question">How do the derived streams compare with the official stream map?</span>
+<span class="question">Modify the mapcalc expression to make stream origins fit better
+with the official stream map and include the modified expression and map in your report.</span>
+<span class="question">What do the negative values in the flow direction and flow accumulation maps mean?
+(hint - read r.watershed manual page)</span>
+
+<pre><code>d.erase
+d.his hue=basin_10K intensity=elevation_shade brighten=40
+d.vect basin_10K type=boundary
+d.rast lakes
+d.vect streams_der_30m color=blue width=2
+d.out.file mystreams
+d.vect streams color=red
+d.out.file streams_compare
+</code></pre>
+
+<p>Note that you can also use  
+<a href="https://grass.osgeo.org/grass-stable/manuals/r.stream.extract.html">r.stream.extract</a> 
+for raster and vectorized streams with topology of stream network. Read the manual pages to learn more.
+
+<h3>Create map of DEM depressions</h3>
+Depression filling is sometimes necessary for certain flow routing algorithms 
+but it can significantly alter the elevation data leading to artificial straight channels. 
+Find out how extensive the depressions are in our DEM.<br>
+Note that <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.watershed.html">r.watershed</a></em> tool doesn't need any depression filling thanks to
+its underlying algorithm which uses least cost path to get over depressions.
+
+<pre><code>g.region raster=elevation -p
+r.fill.dir input=elevation output=elev_fill1 direction=dir1 areas=unres1
+r.fill.dir input=elev_fill1 output=elev_fill2 direction=dir2 areas=unres2
+r.fill.dir input=elev_fill2 output=elev_fill3 direction=dir3 areas=unres3
+r.mapcalc "depr_bin = if((elevation-elev_fill3) &lt; 0., 1, null())"
+r.colors depr_bin color=blues
+</code></pre>
+
+<p>
+Remove all previously used layers from the <em>Layer Manager</em> and
+display the new results, compare the derived depressions with actual lakes:
+
+<pre><code>d.erase
+d.rast elevation
+d.vect roadsmajor
+d.rast depr_bin
+d.vect lakes type=area fill_color=blue
+d.out.file depressions
+</code></pre>
+
+<span class="question">What is the area mapped as depression in [ha] and [%] ? 
+(hint: use r.report with depr_bin) Are all depressions in DEM real or artificial? </span><br>
+Optional: Compute the total volume of mapped depressions.
+
+
+<h3>Derive contributing area for a given outlet</h3>
+
+Set region to the high resolution study area and zoom to it,
+compute flow accumulation, flow direction and basins with 15000 cells threshold:
+
+<pre><code>g.region rural_1m -p
+r.watershed -as elevation=elev_lid792_1m threshold=15000 accumulation=accum_15K drainage=draindir_15K basin=basin_15K
+</code></pre>
+
+<p>
+Remove previous layers. Display extracted streams over aerial image:
+
+<pre><code>d.erase
+d.rast ortho_2001_t792_1m
+d.rast accum_15K values=1000-1000000
+</code></pre>
+
+<p>
+Delineate contributing area (watershed) associated with an outlet located 
+on the extracted stream and convert it to vector format.
+Import coordinates of the outlet to include it in the map in the next step.
+
+<pre><code>r.water.outlet input=draindir_15K output=basin_A30 coordinates=638845.52,220085.26
+r.to.vect -s basin_A30 output=basin_A30 type=area
+v.in.ascii input=outlet_point.txt output=outletA30 separator=space
+</code></pre>
+
+<p>
+Display watershed boundary along with contours and
+compute the watershed area (category 1)<br>
+
+<pre><code>d.erase
+d.rast ortho_2001_t792_1m
+d.vect basin_A30 type=boundary color=green width=2
+r.contour elev_lid792_1m output=elev_lid792_cont_1m step=1 minlevel=104
+d.vect elev_lid792_cont_1m color=white
+d.vect outletA30 color=yellow size=15 icon=basic/circle
+d.out.file watershedA30
+r.report basin_A30 unit=h,a
+</code></pre>
+
+<span class="question">What is the delineated watershed area [ha] ? 
+Compute average slope of this watershed: include the workflow and the resulting average
+ (hint: check the previous assignments for workflow)
+</span><br>
+
+<h3>Compute refined flow pattern using D-inf</h3>
+Compare upslope and downslope flow lines:
+<span class="question">On what type of landform (ridge, valley) do the upslope
+and dowslope flowlines converge?</span>
+
+<pre><code>g.region raster=elev_lid792_1m -p
+r.flow elevation=elev_lid792_1m flowline=flowlines flowlength=flowlg_1m flowaccumulation=flowacc_1m
+r.flow -u elevation=elev_lid792_1m flowlength=flowlgup_1m flowaccumulation=flowaccup_1m
+</code></pre>
+
+<p>
+Display maps along with contours to see the relation of flow pattern to terrain:
+
+<pre><code>d.erase
+d.rast flowacc_1m
+d.vect elev_lid792_cont_1m color=red
+d.vect flowlines
+d.out.file flowdown
+d.erase
+d.rast flowaccup_1m
+d.vect elev_lid792_cont_1m color=red
+d.out.file flowup
+d.erase
+d.rast flowlg_1m
+d.vect elev_lid792_cont_1m color=red
+d.legend flowlg_1m
+d.out.file flowlength
+</code></pre>
+
+<h3>Compare the multiple flow direction flow accumulation with the D8 and Dinf</h3>
+
+Compute flowaccumulation using the default MFD method and display the 
+flowaccumulation maps from MFD and SFD (the Dinf maps flowacc_1m was displayed above):
+
+<pre><code>g.region raster=elev_lid792_1m -p
+r.watershed -a elevation=elev_lid792_1m threshold=15000 accumulation=accum_mfd_15K
+d.rast accum_mfd_15K
+d.vect streams co=red
+d.out.file stream_mfd
+d.erase
+d.rast accum_15K
+d.vect streams co=red
+d.out.file stream_sfd
+</code></pre>
+
+<span class="question">Compare the MFD and SFD results of r.watershed. 
+Why are they different, which is more realistic and why?</span>
+
+<h3>Compute wetness index</h3>
+
+<pre><code>g.region rural_1m -p
+r.topidx elev_lid792_1m output=wetness_1m
+r.colors map=wetness_1m color=water
+d.rast wetness_1m
+d.out.file wetness
+</code></pre>
+
+Optional: Compute the wettness index using the formula in the lecture (hint: you will need
+to compute slope using elev_lid792_1m and use accum_mfd_15K as contributing area.
+Check the values by comparing your output with wetness_1m computed with r.topidx.
+
+<p>Display elev_lid792_1m in 3D and drape over wetness_1m as color.<br>
+Note: switch off all layers except for elev_lid792_1m.
+
+<h3>Create a map of flooded area</h3>
+Create a map of flooded area for a given water level and seed point:
+
+<pre><code>g.region rast=elev_lid792_1m -p
+r.lake elevation=elev_lid792_1m water_level=113.5 lake=flood1 coordinates=638728,220278
+d.rast elev_lid792_1m
+d.rast flood1
+d.out.file floodedarea
+</code></pre>
+
+<p><span class="question">
+Increase water level to 113.7m and 115.0m and create flooded
+area maps at these two levels. Include the maps of flooded areas 
+at these water levels in your report. Why is the flooded area much larger than 
+for 113.5m?
+</span>
+
+<h3>Optional: Assess and mitigate impact of the road on flowrouting.  </h3>
+
+<p>
+Compare the extracted streams (accum > 1500) with official stream data:
+
+<pre><code>g.region rast=elev_lid792_1m -p
+d.rast ortho_2001_t792_1m
+d.rast accum_5K values=1500-1000000
+d.vect streets_wake color=red
+d.vect streams color=green
+d.out.file streamcompare
+</code></pre>
+
+<p>Carve a pre-defined channel given by the stream data into DEM</p>
+
+<pre><code>r.carve raster=elev_lid792_1m vector=streams width=2 depth=0.8 output=elev_lidcarved_1m
+r.colors elev_lidcarved_1m raster=elev_lid792_1m
+d.rast elev_lidcarved_1m
+</code></pre>
+
+<p>Extract streams from the carved DEM and compare with the official streams map.<br>
+<span class="question">What is the difference between accum_5K, accumc_5K1m and streams?<br>
+Explain the advantage and disadvantage of carving.</span>
+
+<pre><code>r.watershed -as elevation=elev_lidcarved_1m accumulation=accumc_5K1m
+d.rast accumc_5K1m values=1500-10000000
+d.vect streams
+d.out.file streamcarved
+</code></pre>
+
+
+<!--
+r.lake elevation=elev_lid792_1m wl=113.7 lake=flood2 coordinates=638728,220278
+r.lake elevation=elev_lid792_1m wl=114.0 lake=flood3 coordinates=638728,220278
+d.rast flood2
+d.rast flood3
+# note for the GRASSbook example
+# clean fix for the r.watershed in rural_1m example from GRASSbook
+# when r.watershed runs on floating point elevation data the watershed
+# defined by rural_1m is not complete - few grid cells that drain into
+# this area are outside the region
+# fix - extend the region 20m north, reinterpolate the DEM, rerun r.wtaershed
+<font color="#000066">
+r.lake elev_lid792_1m wl=115.0 lake=flood2 seed=flood1
+d.rast flood2
+# optional
+# display seed, overlay flow accumulation from r.watershed </font> -->
+<!--
+echo "638728 220278 1" | v.in.ascii out=lakeseed fs=space
+d.vect lakeseed
+d.rast accum_5K cat=1000-1000000
+d.vect streets_wake col=red
+<font color="#000066">
+# use previous result as seed and increase water level
+</font>
+r.lake elev_lid792_1m wl=115.0 lake=flood2 seed=flood1
+d.rast flood2
+-->
+
+<!-- # we select the point east=638872.6 north=220042.6
+<font color="#000066">
+# compute flow pattern  and wettness index using MFD
+# skip if terraflow is not available in your GRASS installation
+</font>
+g.region raster=elev_lid792_1m -p
+r.terraflow elev_lid792_1m fill=elev_lidfilled_1m   \
+            dir=dir_terrafl_1m swater=swatershed_1m \
+            accum=accumterra_1m tci=tci_1m
+d.erase
+d.rast swatershed_1m
+d.rast accumterra_1m
+d.rast tci_1m
+-->
+
+
+<!--
+<a href="http://www.grassbook.org/gallery/chapters/s050303f010_resamp.jpg">
+<img src="https://skagit.meas.ncsu.edu/~helena/grasswork/grassbookdat07/galery/galery/s070302f010_resamp_i.jpg" height=70>
+</a>
+-->
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>
