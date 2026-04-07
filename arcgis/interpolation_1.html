@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Spatial interpolation and approximation I: methods</h2>
+<p>Resources:
+<a href="https://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
+
+
+<p>
+Create the assignment working directory (folder) .\Interpolation<br>
+
+<pre>
+Start ArcMap
+</pre>
+
+<h3>Compute DEM based on voronoi polygons</h3>
+Compute DEM based on voronoi polygons and check it with hillshade.<br>
+Compute and display voronoi polygons with centroids (clear data frame).
+
+<pre>
+ArcMap File->Add Data->Add Data...
+Select ncshape.mdb/elev_lid792_randpts
+Open the ArcToolbox
+Select 'Analysis Tools->Proximity->Create Thiessen Polygons' 
+Set 'Input Features' to 'elev_lid792_randpts'
+Set 'Output Feature Class' to '.\Interpolation\elev_vor.shp'
+Set 'Output Fields' to 'ALL'    
+Click 'OK'
+NOTE: this process may take a while...
+Select 'Data Management Tools->Features->Feature to Point'
+Set 'Input Features' to 'elev_vor'
+Set 'Output Feature Class' to '.\Interpolation\vor_center.shp'
+Leave the 'Inside' box unchecked
+Click 'OK'
+</pre>
+
+<p>
+Convert to raster and display with standard elevation color.
+
+<pre>
+Open the ArcToolbox (if it's not already open)
+Select 'Conversion Tools->To Raster->Polygon To Raster'
+Set 'Input Feature' to 'elev_vor'
+Set 'Value Field' to 'value_'
+Set 'Output Raster Dataset' to '.\Interpolation\elev_vor2m'
+Set 'Cellsize' to '2'         
+Click 'OK'
+</pre>
+
+<p>
+Set the Raster Analyst Cell Size to 2m in Environment Settings.
+
+<pre>
+Select Menu Geoprocessing->Environments...->Raster Analyst
+NOTE: this will set the default cell size to 2 units (meters) for all subsequent processing.
+Set Cell Size to 'As Specified Below'
+Set the cell value to 2
+Click 'OK'
+</pre>
+
+<p>
+Check the result using hillshade.
+
+<pre>
+Check out a 3-D Analyst Extension license
+Open the ArcToolbox (if it's not already open)
+Select '3D Analyst->Raster Surface->Hillshade'
+Set 'Input Surface' to 'elev_vor2m'
+Set 'Output Raster' to '.\Interpolation\Hillsh_vor_2m'
+Click 'OK'
+</pre>
+
+<h3>Interpolate DEM using TIN and check it in ArcScene or hillshade</h3>
+First create TIN:
+
+<pre>
+Select 3D Analyst Tools->Data Management->TIN->Create TIN
+Set 'Output TIN' to '.\Interpolation\elev_lid792_TIN'
+Set Input Feature Class to 'elev_lid792_randpts'
+In the tablem change the entry in the  'height_field' column to 'value_'
+and 'SF_type' to 'Mass_Points'
+Click 'OK'
+</pre>
+
+<p>
+Interpolate TIN to raster DEM.<br>
+<pre>
+Open the ArcToolbox (if it's not already open)
+Select '3D Analyst Tools->Conversion->From TIN->TIN to Raster'
+Set 'Input Tin' to 'elev_lid792_TIN'
+Change the 'Sampling Distance' to CELLSIZE 2 (Note: you will have erase the previous value and type 2)
+Set Output Raster to .\Interpolation\tinrast_2m
+Leave all else as default
+Click OK
+</pre>
+
+<p>
+Display  as hillshade:
+
+<pre>
+Open the ArcToolbox (if it's not already open)
+Select 3D Analyst Tools->Raster Surface->Hillshade'
+Set 'Input Surface' to 'tinrast_2m'
+Set 'Output Raster' to '.\Interpolation\Hlshtinrast2m'
+Click 'OK'
+</pre>
+<h4>Create the Terrain Model using the Terrain Wizard in ArcCatalog.</h4>
+<p>
+Create a new empty file geodatabase and feature dataset.
+<pre>
+<i>right mouse click</i> on the Interpolation folder in ArcCatalog
+Choose New->File geodatabase
+Set the geodatabase name to 'Interpolation_terrain'
+</pre>
+
+<p>
+Create a new feature dataset called 'terrain' in the new 'Interpolation_terrain' geodatabase.
+<pre>
+<i>right mouse click</i> on the 'Interpolation_terrain' geodatabase and select New->Feature dataset
+Set name to 'terrain'
+click 'Next'
+</pre>
+<p>
+Set (Import) the horizontal coordinate system for the dataset to that associated
+with the vector point feature class 'elev_lid792_randpts'.<br>
+<pre>
+Click on the globe with star icon (next to the search window) -> Import
+Inticate the path ./ncshape.mdb/elev_lid792_randpts
+Finish with defaults
+</pre>
+
+<p>
+Add the feature class data that will be used to create the terrain
+<pre>
+In the ArcCatalog,
+Drag the elev_lid792_randpts into the created feature dataset
+(or use right click to Copy and Paste)
+Click 'OK' in the pop up window
+</pre>
+<p>
+Construct the Terrain Model:<br>
+<pre>
+In ArcCatalog <i>right mouse click</i> on the 'terrain' feature data set, select NEW->Terrain
+</pre>
+
+<p>
+In the Terrain Wizard:<br>
+<pre>
+Set the terrain name to 'elev_lid792_TER'
+Set the participating feature class to 'elev_lid792_randpts'
+Set the Approximate point spacing to 1m (average distance between points)
+Click 'Next'
+Set the Height Source to 'value_' (Note: this is a drop-down menu)
+Click 'Next'
+For Select pyramid type, choose defaults
+Click 'Next'
+Click 'Calculate pyramid properties' to generate two 2 pyramid levels
+Click 'Next'
+Review the displayed summary
+Click 'Next'
+Click 'Finish' to build new terrain
+Click 'Yes' in the pop up window to build the created terrain
+</pre>
+
+<p>
+Add the terrain to your ArcMap project
+<pre>
+ArcMap File->Add Data->Add Data...
+Select ./Interpolation/Interpolation_terrain.mdb/terrain/elev_lid792_TER
+</pre>
+
+Compute a raster DEM from Terrain, 
+<pre>
+Open the ArcToolbox (if it's not already open)
+Select '3D Analyst Tools->Conversion->From Terrain->Terrain to Raster'
+Set 'Input Terrain' to 'elev_lid792_TER'
+Change the 'Sampling Distance' to CELLSIZE 2 (Note: to will have to erase the previous value and type 2)
+Set Output Raster to .\Interpolation\terrast_2m
+Leave all else as default
+Click OK
+</pre>
+
+<h3>Interpolate DEM using IDW and check it with hillshade</h3>
+
+Interpolate DEM using IDW:
+
+<pre>
+Open the ArcToolbox (if it's not already open)
+Check out a Spatial Analyst Extension license
+Select 'Spatial Analyst Tools->Interpolation->IDW'
+Set 'Input point features' to 'elev_lid792_randpts'
+Set 'Z value field' to 'value_'
+Set 'Output Raster' to '.\Interpolation\elev_idw_2m'
+Leave the other inputs as defaults
+Click 'OK'
+</pre>
+
+<p>
+Check the interpolated elevation surface using hillshade:
+
+<pre>
+Open the ArcToolbox (if it's not already open)
+Select '3D Analyst Tools->Raster Surface->Hillshade'
+Set 'Input raster' to 'elev_idw_2m'
+Set 'Output Raster' to '.\Interpolation\Hillsh_idw_2m'
+</pre>
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

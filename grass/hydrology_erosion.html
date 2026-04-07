@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Erosion modeling</h2>
+<p>Resources:
+<ul>
+<li><a href="https://grass.osgeo.org/grass84/manuals/index.html">
+GRASS overview and manual</a></li>
+<li> <a href="data_acquisition.html#commands">Recommendations</a>
+<!--and <a href="./grass_intro.html">tutorial</a>-->
+how to use GUI from the first assignment</li>
+<li><a href="../resources/erosion_notes.pdf">Brief theoretical background, equations, units</a></li>
+<li><a href="data/cfactor.txt">C-factor values</a></li>
+<li><a href="../resources/kfactor.html">K-factor</a></li>
+<li><a href="https://www.ars.usda.gov/ARSUserFiles/64080530/RUSLE/AH_703.pdf">R-factor</a> (page 47) </li>
+
+</ul>
+
+<p>
+Text files with recode, color, and label rules:
+<ul>
+<li>Land use category description (<a href="data/lu_labels.txt">lu_labels.txt</a>)</li>
+<li>C-factor recode table (<a href="data/cfac_rules.txt">cfac_rules.txt</a>)</li>
+<li>C-factor color table (<a href="data/cfac_color.txt">cfac_color.txt</a>)</li>
+<li>Soil loss color table (<a href="data/soilloss_color.txt">soilloss_color.txt</a>)</li>
+<li>Erosion/deposition color table (<a href="data/erdep_color.txt">erdep_color.txt</a>)</li>
+<li>Erosion/deposition classes (<a href="data/erdep_class.txt">erdep_class.txt</a>)</li>
+<li>Erosion/deposition class labels (<a href="data/erdep_label.txt">erdep_label.txt</a>)</li>
+</ul>
+
+
+<h3>Start GRASS</h3>
+Create a new mapset (called e.g. HW_erosion) in nc_spm_08_grass7 project and
+change working directory:<br>
+<em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > select/create any directory<br>
+or type <code>cd</code> (stands for change directory) into the GUI
+<em>Console</em> and hit Enter:
+<pre><code>cd
+</code></pre>
+Download all text files with recode rules, color rules and labels (see above)
+to the selected directory. Now you can use the commands from the assignment requiring the text file
+without the need to specify the full path to the file.
+
+<!-- # compute length-based LS-factor (topographic potential for erosion)
+# for SW Wake area at 10m resolution
+</font>
+g.region swwake_10m -p
+r.watershed -s elevation=elevation thresh=50000 accum=flowaccum_10m length=lsfac2d
+r.colors lsfac2dfp co=gyr -e
+# <b>erase and zoom display to computational region</b>
+d.erase
+d.rast lsfac2dfp
+d.legend lsfac2dfp at=2,50,2,6
+d.out.file lsfac2d
+r.mapcalc "lsfac3d = 1.2 * pow(flowaccum_10m * 100,0.2) * sin(slope)"
+r.colors lsfac3d co=gyr -e
+d.rast lsfac3d
+d.legend lsfac3d at=2,50,2,6
+d.out.file lsfac3d
+nviz elevation co=lsfac3d
+<font color="#000066"># when you zoom-in and explore the result
+# can you comment on where is the highest topographic potential
+# for erosion predicted by the 2d and 3d models?  -->
+
+<p>
+Equations and units used in this assignment are explained in this 
+<a href="https://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/erosion_notes.pdf">
+Brief theoretical background for GIS-based erosion modeling with RUSLE3D and USPED</a>
+
+<h3>Compute soil detachment using USLE3D</h3>
+
+First, we compute topographic potential (LS factor) for soil erosion and
+compare impact of the power function exponents on the erosion pattern.<br>
+<span class="question">Which equation represents conditions when contributing area has greater impact
+and which models stronger influence of slope? Which result predicts higher erosion rates?</span>
+
+<pre><code>g.region raster=elev_lid792_1m -p
+r.slope.aspect elevation=elev_lid792_1m slope=slope_1m aspect=aspect_1m
+r.flow elevation=elev_lid792_1m flowaccumulation=flowaccum_1m
+r.mapcalc "lsfac3d_1m = 1.2 * pow(flowaccum_1m * 1./22.1,0.2) * pow(sin(slope_1m)/0.09,1.3)"
+r.mapcalc "lsfac3d_s1_1m = 1.5 * pow(flowaccum_1m * 1./22.1,0.5) * pow(sin(slope_1m)/0.09,1.0)"
+r.colors lsfac3d_s1_1m color=gyr -e
+r.colors lsfac3d_1m raster=lsfac3d_s1_1m
+</code></pre>
+
+Display layers and save outputs:
+<pre><code>d.erase
+d.rast lsfac3d_1m
+d.vect elev_lid792_cont1m
+d.legend -d lsfac3d_1m at=2,30,2,6
+d.barscale
+d.out.file lsfac_s13
+
+d.rast lsfac3d_s1_1m
+d.vect elev_lid792_cont1m
+d.legend -d lsfac3d_s1_1m at=2,30,2,6
+d.out.file lsfac_s10
+</code></pre>
+
+
+<h4>Compute soil detachment for spatially variable land cover</h4>
+
+Recode landcover_1m to land cover erosion factor C values given in the 
+<a href="data/cfac_rules.txt">cfac_rules.txt</a> table
+using the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.recode.html">r.recode</a></em> module.
+Assign a custom color table and display result.<br>
+
+<pre><code>r.recode landcover_1m output=cfactor_1m rules=cfac_rules.txt
+r.colors map=cfactor_1m rules=cfac_color.txt
+d.rast cfactor_1m
+d.legend cfactor_1m
+d.out.file cfactor_bare
+</code></pre>
+<!--r.category cfactor_1m rules=cfac_labels.txt-->
+
+<p>
+Compute the USLE3D equation using map algebra,
+cfactorbare_1m is the same as cfactor_1m with bare agricultural fields,
+cfactorgrow_1m has landuse recoded for growing season conditions.
+We use rainfall intensity factor R=270 and soil erodibility factor K
+extracted from the soils database.<br>
+Assign custom color ramp using the provided rules 
+and specify units of the raster maps using
+the <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.support.html">r.support</a></em> module.<br>
+<span class="question">Compare erosion rates and distribution
+for bare and growing season conditions.</span>
+ 
+<pre><code>r.mapcalc "soillossbare_1m = 270. * soils_Kfactor * lsfac3d_1m * cfactorbare_1m"
+r.mapcalc "soillossgrow_1m = 270. * soils_Kfactor * lsfac3d_1m * cfactorgrow_1m"
+r.colors soillossbare_1m rules=soilloss_color.txt
+r.colors soillossgrow_1m raster=soillossbare_1m
+r.support map=soillossbare_1m units="ton/(acre.year)"
+r.support map=soillossgrow_1m units="ton/(acre.year)"
+</code></pre>
+
+Remove previous layers, display the soil loss maps for two different seasons
+and compute the summary statistics for erosion rates:
+<pre><code>d.erase
+d.rast soillossbare_1m
+d.legend soillossbare_1m at=2,40,2,6
+d.out.file soillossbare
+d.rast soillossgrow_1m
+d.legend soillossgrow_1m at=2,40,2,6
+d.out.file soillosgrow
+r.univar soillossbare_1m
+r.univar soillossgrow_1m
+</code></pre>
+
+<h3>Compute net erosion/deposition maps using USPED model</h3>
+
+Compute net erosion/deposition maps as divergence of sediment flow (USPED).
+<p>
+First compute sediment flow and its x, y components in the steepest slope 
+(aspect) direction:
+
+<pre><code>r.mapcalc "sedflow_1m = 270. * soils_Kfactor * cfactorgrow_1m * flowaccum_1m * sin(slope_1m)"
+r.colors sedflow_1m raster=soillossbare_1m
+d.rast sedflow_1m
+r.mapcalc "qsx = sedflow_1m * cos(aspect_1m)"
+r.mapcalc "qsy = sedflow_1m * sin(aspect_1m)"
+</code></pre>
+
+<p>
+Compute change of sediment flow in the x and y directions as partial derivatives 
+of sediment flow component surfaces. We are using qsx and dsy surfaces (rasters)
+instead of elevation raster as input and partial derivatives dx and dy as output
+of the r.slope.aspect tool.  
+The change of sediment flow in the direction of flow (aspect) is then computed as 
+ divergence resulting in net erosion and deposition map erdep. 
+Display the map of erosion and deposition pattern using custom color ramp.<br>
+
+<pre><code>r.slope.aspect elevation=qsx dx=qsx_dx
+r.slope.aspect elevation=qsy dy=qsy_dy
+r.mapcalc "erdep = qsx_dx + qsy_dy"
+r.info -r erdep
+r.colors erdep rules=erdep_color.txt
+d.rast erdep
+d.legend erdep at=2,50,2,6 range=-5,5
+d.out.file erosion_deposition
+</code></pre>
+
+<p>
+Optional: Display elev_lid792_1m in 3D and drape over erdep as color (switch off all layers except for elev_lid792_1m).<br>
+
+<h4>Compute summary statistics</h4>
+
+Use <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.recode.html">r.recode</a></em> to classify erosion/deposition and <em class="module"><a href="https://grass.osgeo.org/grass76/manuals/r.category.html">r.category</a></em>
+to add labels (stable, high erosion, etc) to individual categories:
+
+<pre><code>r.recode erdep output=erdep_class rules=erdep_class.txt
+r.category erdep_class rules=erdep_label.txt sep=:
+r.report erdep_class unit=p,h,a
+r.colors -n erdep_class color=differences
+d.rast erdep_class
+d.legend -c erdep_class at=60,80,2,6
+d.out.file erdep_classes
+</code></pre>
+
+<p>
+Example output:
+<pre>
+[...]
+| #| description         |  %  | hectares |  acres  |
+|-4| severe erosion . . .| 0.19|  0.101300|  0.25031|
+|-3| high erosion . . . .| 1.34|  0.701600|  1.73365|
+|-2| moderate erosion . .| 3.89|  2.042600|  5.04726|
+|-1| low erosion . . . . |19.74| 10.366000| 25.61438|
+| 0| stable . . . . . . .|61.32| 32.192000| 79.54643|
+| 1| low deposition . . .| 8.40|  4.407600| 10.89118|
+| 2| moderate deposition | 2.49|  1.307500|  3.23083|
+| 3| high deposition . . | 1.29|  0.676900|  1.67262|
+| 4| severe deposition . | 0.24|  0.126100|  0.31159|
+| *|no data. . . . . . . | 1.10|  0.578400|  1.42922|
+|---------------------------------------------------|
+|TOTAL                   |100.00| 52.500000|129.7275|
+</pre>
+
+<span class="question">Comment on advantages, disadvantages and risks of
+classifying erosion/deposition data into categories.</span>
+
+<h3>Optional</h3>
+
+<h4>Estimate amount of excess sediment transported out of the studied site.</h4>
+Compute univariate statistics for the erdep map and extract the line with sum:
+
+<pre><code>r.univar erdep
+</code></pre>
+
+<pre>
+sum: -2374.473814
+</pre>
+
+<p>
+The units are tons/(acre.year), but our cells are 1 m<sup>2</sup>.
+Therefore we have to divide by 4046 (1 acre = 4046 m<sup>2</sup>)
+to get total ton per year transported from the watershed.
+You can use the Python shell in the <em>Python</em> tab do the division.
+
+<h4>Compute new DEM with erosion carved-in</h4>
+
+<pre><code>r.mapcalc "elev_erodedb_1m = elev_lid792_1m-(soillossbare_1m/100.)"
+</code></pre>
+
+Display elev_erodedb_1m in 3D and drape over soillossbare_1m as color.<br>
+To view it in 3D switch off everything except elev_erodedb_1m.<br>
+Drape soillossbare_1m as color and don't forget to set fine resolution to 1.<br>
+Use lighting from SW, z-exag at least 2.0<br>
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

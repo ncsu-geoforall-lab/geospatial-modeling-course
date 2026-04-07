@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h3>Erosion modeling</h3>
+<p>Resources:
+<a href="https://www.lib.ncsu.edu/gis/virtcamp.html">ESRI Academy</a>
+<p>
+Launch ArcGIS Pro and login with ArcGIS Online credentials if required.
+Select New> Map> Create New Project.
+Create a new project in your preferred workspace,
+in the instructions below we are using the default C:\Users\myname\Documents\ArcGIS\Projects\ folder.
+<p>
+Use your judgement to decide which maps to include in your report.
+<p>
+
+<h3>Compute soil detachment rate using USLE3D</h3>
+
+Compute a map of soil detachment rate using USLE3D equation which assumes that there is no deposition.<br>
+This represents detachment limited sediment transport by overland flow.<br>
+<pre>
+E = RKLSCP
+</pre>
+<p>where
+<ul>
+<li>E is the annual soil detachment rate (soil loss)</li>
+<li>R is the rainfall</li>
+<li>K is the soil</li>
+<li>C is the land cover</li>
+<li>P is the preventive measures factor</li>
+<li>LS = 1.4 * (U/22.1)**0.4 * (sin (slope)/0.09)**1.2<br>
+LS is the topography factor, U is contributing area per unit width (function of flow accumulation)</li>
+</ul>
+<p>
+For units and explanation of constants see <a href="../resources/erosion_notes.pdf"><b>Erosion modeling notes</b></a><br>
+
+<p>
+First compute slope, and flow accumulation for the elevation raster map e_lid792 (NOT elid_792):
+--Leave other values defaul if not specified--
+<pre>
+In the Map tab, in the Layer group, click 'Add Data'
+Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
+select 'e_lid792'  (NOT elid_792)
+"Ok"
+</pre>
+
+<p>
+Compute slope_1m map using the Slope function, we will use it later:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Slope' tool
+input'e_lid792
+output=slope_1m
+Keep 'DEGREES' for output measurement
+</pre>
+
+<p>
+Compute the flow accumulation map Flowacc:
+<pre>
+In the Geoprocessing pane, search for and select the 'Fill' tool
+input=e_lid792 
+output=Fill_e_lid
+
+In the Geoprocessing pane, search for and select the 'Flow Direction' tool
+input=Fill_e_lid 
+ouput=FlowDir_fil
+
+In the Geoprocessing pane, search for and select the 'Flow Accumulation' tool
+input=FlowDir_fil 
+output=Flowacc
+</pre>
+
+<h4>LS factor</h4>
+Build an expression in the Spatial Analyst Raster Calculator for lsfac map
+using the Flowacc and slope_1m layers you just generated.<br>
+<p>
+Note that the lsfac map represents the topographic factor LS used in the USLE3D model.<br>
+Flowacc map multiplied by resolution is the contributing area per unit width U.
+
+<p>
+Type in the expression for lsfac layer (make sure you have spaces around operators).<br>
+Slope should be in radians,
+flowaccumulation is in number of cells so we multiply by resolution:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+expression=
+1.4 * (Power("Flowacc" * 1. / 22.1 , 0.4) * Power(Sin("slope_1m" * math.pi/180.0) / 0.09, 1.2))
+Set the 'output raster' to 'lsfac'
+Click 'Run'
+</pre>
+
+<h4>Soil loss</h4>
+
+Now build the expression for soil detachment rate E (soil loss) s_loss. From the formula
+<pre>
+E = RKLSCP
+</pre>
+We computed LS factor
+R factor is considered to be constant and set to 270.0
+K factor values can be added as a layer ncrast.gdb/soils_kf
+C factior values can be added as a layer ncrast.gdb/cfactb
+P factor (prevention measures) is here taken to = 1.
+<p>
+Multiplying all the factors in Raster Calculator we will compute the raster map of erosion rate
+<pre>
+Add ncrast.gdb/soils_kf
+Add ncrast.gdb/cfactb
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+expression=
+270.0 * "cfactb" * "lsfac" * "soils_kf"
+Set the 'output raster' to 's_loss'
+</pre>
+
+Adjust color scheme for the s_loss map - histogram equalized stretch type may be needed
+<span class="question">Find average soil loss rate in the area from the s_loss map</span> (in Properties:Source).
+
+<h3>USPED model</h3>
+Compute net erosion and deposition as a divergence of sediment flow vector field.<br>
+Note that custom color tables that cover entire range of values
+including negative are important in this section.
+
+<p>
+We have already computed slope_1m and flowaccumulation, but we will also need direction of flow.<br>
+Compute aspect_1m map (direction of flow, direction of gradient vector) using the Aspect function:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Aspect'
+input=e_lid792 
+output=aspect_1m
+</pre>
+
+<p>
+Build an expression for sflowtopo (topographic factor LS for sediment flow T)
+using the Raster Calculator.<br>
+For the exponents use m=n=1, resolution is 1.
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+expression=
+"Flowacc" * 1. * Sin("slope_1m" * math.pi/180.0)
+output raster = sflowtopo
+</pre>
+
+<p>
+OR use m=1.3 and n=1.2 for study areas with extensive rills.<br>
+In this case, channels/streams will have large erosion rates due to high values of flowaccumulation.
+
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+expression=
+(Power("Flowacc" * 1. , 1.3) * Power((Sin("slope_1m" * math.pi/180.0)), 1.2))
+output raster = sflowtopo2
+</pre>
+
+<h4>Compute divergence of sediment flow</h4>
+First compute components of sediment flow in x and y direction:
+Calculate qsx
+<pre>
+Be sure the 'cfactb' layer from earlier is in your map or you will recieve an error-
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+expression=
+"sflowtopo" * "soils_kf" * "cfactb" * 270. * Cos((- "aspect_1m" + 450.) * math.pi / 180.0)
+Output raster = qsx
+</pre>
+Calculate qsy
+<pre>
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+expression=
+"sflowtopo" * "soils_kf" * "cfactb" * 270. * Sin((- "aspect_1m" + 450.) * math.pi / 180.0)
+Output raster = qsy
+</pre>
+
+<p>
+Compute components of change in sediment flow in x and y direction
+as partial derivatives of sediment flow field, derived from slope and aspect
+ - see eqs 1,2,3 from <a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/reports/cerl99/rep99.html">here</a>.
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Slope' tool
+input=qsx
+output=Slope_qsx
+In the Geoprocessing pane, search for and select the 'Aspect' tool
+input=qsx
+output=Aspect_qsx
+In the Geoprocessing pane, search for and select the 'Slope' tool
+input=qsy
+output=Slope_qsy
+In the Geoprocessing pane, search for and select the 'Aspect' tool
+input=qsy
+output=Aspect_qsy
+</pre>
+Compute qsx_dx and qsy_dy
+<pre>
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+expression=
+Cos((- "Aspect_qsx" + 450) * math.pi / 180.0) * Tan("Slope_qsx" * math.pi/180.0)
+output=qsx_dx
+expression=
+Sin((- "Aspect_qsy" + 450) * math.pi / 180.0) * Tan("Slope_qsy" * math.pi/180.0)
+output=qsy_dy
+</pre>
+
+<p>
+Finally compute net erosion deposition:
+
+<pre>
+In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
+expression="qsx_dx" + "qsy_dy"
+output=erdep
+</pre>
+
+<p>
+Assign an appropriate color classification scheme to the erdep raster and generate a map for the report.<br>
+
+Note: the differences in the erdep are subtle and the default color table will almost assuredly render<br>
+the erosion deposition map in a way that little detail is revealed. <br>
+You are free to experiment with the the tools in Arc in order to define classification scheme which will
+reveal the erosion/deposition pattern.<br>
+Here's an option that should yield pretty good contrast between erosion and deposition:
+
+<pre>
+RMC the erdep layer->Symbology
+Select 'Classify' from 'Primary symbology'
+Set Classes to 11
+Choose a broad, divergent color ramp from the Color Scheme drop down field
+that ranges from brown grading through white to green (brown-green continuous)
+Edit the eleven break values (located in the classes tab) to:
+-250000.00  (data minimum)
+-50.00
+-5.00
+-1.00
+-0.10
+0.10
+1.00
+5.00
+50.00
+330000.00    (data maximum)
+</pre>
+
+You should now see the erosion and deposition areas rendered with pretty good contrast.
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

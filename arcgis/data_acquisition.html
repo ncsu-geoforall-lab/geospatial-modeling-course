@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA582: Geospatial Modeling and Analysis</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>NCSU GIS/MEA582:<br>Geospatial Modeling and Analysis</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<!--<li><a href="../topics/course_intro.html">Introduction</a></li>-->
+<li><a href="../logistics.html">Logistics</a></li>
+<!--<li><a href="../topics/index.html">Topics</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../faq.html">FAQs</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Geospatial Data Introduction</h2>
+<p>Resources:
+<a href="https://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
+
+<p>
+Instructions:
+LMC, RMC mean left and right mouse click.
+
+The geodatabases: ncshape.mdb, ncrast.mdb. If you don't already have these
+geodatabases downloaded, you can find them on
+<a href="../logistics.html#data">Course logistics page</a>.
+<p>
+You can put the geodatabases in any suitable directory where you have permissions to write
+and in these instructions we will refer to this directory C:\Users\myname\arcdata.
+<p>
+Move both geodatabases to the directory: C:\Users\myname\arcdata
+
+<h3>Data management</h3>
+Start ArcMap:  Start->Programs->ArcGIS->ArcMap 10.
+Click the Cancel button to dismiss the Getting Started dialog.
+
+<p>
+Adding data to ArcMap:
+Add the Bridges feature class (located in ncshape.mdb) to your project.
+Examine the descriptive attributes associated with the bridge features.
+
+<pre>
+RMC on the Bridges entry in the Table of Contents and select Open Attribute Table from
+the context menu.</pre>
+<ul><li>How many attributes (data fields) are associated with the Bridges feature class?</li>
+<li>How many bridges are shown in the Bridges feature class?</li></ul>
+
+
+<p>
+Create a new geodatabase to store data:
+
+<pre>
+Find the Catalog tab along the right side of the ArcMap map window and LMC to expand.
+Navigate in the catalog tree to C:\Users\myname\arcdata.
+Create a new folder called 'Assign1' in the arcdata folder.
+RMC on the newly minted Assign1 folder icon in the Catalog window and
+choose New -> File Geodatabase from the context menu.
+Name it 'Assign1'.
+</pre>
+
+<p>
+Copy data from one geodatabase to another:
+
+<pre>
+Open ncshape.mdb geodatabase in the [Arc]catalog tree
+LMC on ncshape.mdb to open it.
+</pre>
+
+<p>
+Copy a feature class from one geodatabase to another:
+
+<pre>
+Find and RMC bridges->Copy.
+Navigate to the Assign1 geodatabase; On the geodatabase icon: RMC -> Paste.
+Click 'OK' in the Data Transfer dialog.
+</pre>
+<p>
+Note: you can also remove the data layer using the same menu
+
+<p>
+Convert a feature class to a shape file:
+
+<pre>
+Open ncshape.mdb in the ArcCatalog window.
+RMC bridges->Export->To Shapefile (single).
+Set Output Location to C:\Users\myname\arcdata\Assign1 (your Assign1 folder).
+Set output Feature Class to 'bridges_shp'.
+Click 'OK'.
+</pre>
+
+<h3>Data view and symbology</h3>
+<p>
+Adding Raster Data into Data Frame:
+
+<pre>
+File->Data->Add Data...
+Navigate to the ncrast.mdb geodatabase and add the elev raster layer
+</pre>
+
+<p>
+Turn the Bridges Layers Off:
+
+<pre>
+LMC the check boxes (to remove the existing checks) next to each
+of the three bridge entries in the TOC.
+</pre>
+
+<p>
+Zoom to the elev raster layer:
+
+<pre>
+RMC on elev and select Zoom to Layer
+</pre>
+
+<p>
+Change color scheme:
+
+<pre>
+RMC elev->Properties and select the 'Symbology' tab
+Change the Color Ramp (Color Ramp drop down menu) to one that
+represents elevation intuitively (it makes sense to you)
+</pre>
+
+<p>
+Add hillshade data into the data frame:
+
+<pre>
+File->Data->Add Data...
+Add elev_sh from the ncrast.mdb geodatabase
+</pre>
+
+<p>
+Change the transparency of the hillshade:
+
+<pre>
+RMC elev_sh->Properties
+Click on the 'Display' Tab
+Set Transparency to 70%
+Click 'OK'
+</pre>
+
+<p>
+Display vector points and lines:
+
+<pre>
+File->Data->Add Data...
+Add streets_wake, roadsmajor, schools_wake from the ncshape.mdb geodatabase
+Hint: press and hold the control key to add multiple data layers
+</pre>
+
+<p>
+Change the line style:
+
+<pre>
+RMC roadsmajor->Properties and select 'Symbology' tab
+Click on the button displaying the current symbol
+Change the color to red and the width to 1.6
+Click 'OK'
+Click 'OK'
+</pre>
+
+<p>
+Change the point style:
+
+<pre>
+LMC directly on the symbol for schools_wake in the Table of Contents (shortcut to the
+symbol selector)
+Select 'School 1' It's about half way down in the symbol palette
+Change the size to 14
+Click 'OK'
+</pre>
+
+<p>
+Trim the Vector Display to Match the Raster's Geographic Extent:
+
+<pre>
+RMC Layers at the top of the TOC
+Select Properties->Data Frame->Clip Options->Clip to shape
+LMC Specify Shape button
+LMC Custom Extent
+Uncheck the Degrees Check box
+Enter the following in the top, bottom, left, and right fields,
+respectively: 228500, 215000, 630000, 645000. (FYI: These coordinates define
+the geographic extent of the elev and elev_sh raster layers.)
+Click 'OK'
+Click 'OK'
+</pre>
+
+<p>
+Your display should now clip the roads and schools data so that these only:
+display in the are covered by the elev and hillshade rasters.
+
+<p>
+Save the map for your report:
+
+<pre>
+LMC File->Export map  (Save the file to your Assign1 workspace as pdf or png)
+</pre>
+
+<p>
+Exit ArcMap. You can choose to save your project, if you wish, however, it's not necessary.
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses2527.wolfware.ncsu.edu/course/view.php?id=7855">Moodle site</a></li>
+<li><a href="https://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://policies.ncsu.edu/overview/">Disclaimer</a></li>
+<li><a href="https://accessibility.oit.ncsu.edu/">Accessibility</a></li>
+<li>
+    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2008-2026
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>
