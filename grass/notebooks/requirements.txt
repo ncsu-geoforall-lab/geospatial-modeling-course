@@ -1,6 +1,0 @@
-folium
-matplotlib
-numpy
-Pillow
-ply
-PyVirtualDisplay
