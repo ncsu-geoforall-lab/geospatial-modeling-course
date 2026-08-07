@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 """
 
@@ -24,22 +24,21 @@ Do the cleanup using something like::
 
     d.mon stop=cairo
     rm *png
-    g.remove type=raster,vector patter=* -f
+    g.remove type=raster,vector pattern=* -f
 """
 
-import sys
 import re
-import fileinput
+import sys
 
-code_start = re.compile(r'<pre><code>')
-code_end = re.compile(r'</code></pre>')
+code_start = re.compile(r"<pre><code>")
+code_end = re.compile(r"</code></pre>")
 
-file_content_start = re.compile(r'<pre data-filename=.*>')
-file_content_end = re.compile(r'</pre>')
+file_content_start = re.compile(r"<pre data-filename=.*>")
+file_content_end = re.compile(r"</pre>")
 file_name_capture = re.compile(r'<pre data-filename="(.*?)">')
 
-html_comment_start = re.compile(r'\s*<!--')
-html_comment_end = re.compile(r'-->')
+html_comment_start = re.compile(r"\s*<!--")
+html_comment_end = re.compile(r"-->")
 
 in_code = False
 in_file_content = False
@@ -47,47 +46,53 @@ in_html_comment = False
 in_code = False
 
 ignored_lines = [
-    re.compile(r'grass7.'),
-    re.compile(r'cd'),
-    re.compile(r'cd.*'),
-    #re.compile(r'\s*d\.mon'),
-    #re.compile(r'\s*d\.out.file')
+    re.compile(r"grass7."),
+    re.compile(r"cd"),
+    re.compile(r"cd.*"),
+    # re.compile(r'\s*d\.mon'),
+    # re.compile(r'\s*d\.out.file')
 ]
 
 line_count = 0
 
 common_replacements = [
-    (re.compile('&gt;'), '>'),
-    (re.compile('&lt;'), '<'),
-    (re.compile('&amp;'), '&'),
+    (re.compile("&gt;"), ">"),
+    (re.compile("&lt;"), "<"),
+    (re.compile("&amp;"), "&"),
 ]
 
-# allow also uppper case tags for now
+# allow also upper case tags for now
 text_replacemets = [
-    (re.compile(r'<p>', re.IGNORECASE), ''),
-    (re.compile(r'</p>', re.IGNORECASE), ''),
-    (re.compile(r'<br>', re.IGNORECASE), ''),
-    (re.compile(r'<div>', re.IGNORECASE), ''),
-    (re.compile(r'</div>', re.IGNORECASE), ''),
-    (re.compile(r'<a href="([^"]+)">[^<]+</a>', re.IGNORECASE), r'\1'),
-    (re.compile(r'^\s+\n$', re.IGNORECASE), '\n'),
+    (re.compile(r"<p>", re.IGNORECASE), ""),
+    (re.compile(r"</p>", re.IGNORECASE), ""),
+    (re.compile(r"<br>", re.IGNORECASE), ""),
+    (re.compile(r"<div>", re.IGNORECASE), ""),
+    (re.compile(r"</div>", re.IGNORECASE), ""),
+    (re.compile(r'<a href="([^"]+)">[^<]+</a>', re.IGNORECASE), r"\1"),
+    (re.compile(r"^\s+\n$", re.IGNORECASE), "\n"),
 ]
 
 text_replacemets.extend(common_replacements)
 
 file_path_extraction = re.compile(r'<a href="([^"]+)"[^>]*>([^<]+)</a>', re.IGNORECASE)
-file_from_url_extraction = re.compile(r'<a href="([^"]+)/([^"/]+)"[^>]*>([^<]+)</a>', re.IGNORECASE)
-download_attribute_presence = re.compile(r'<a href="([^"]+)"[^>]* download[^>]*>([^<]+)</a>', re.IGNORECASE)
+file_from_url_extraction = re.compile(
+    r'<a href="([^"]+)/([^"/]+)"[^>]*>([^<]+)</a>', re.IGNORECASE
+)
+download_attribute_presence = re.compile(
+    r'<a href="([^"]+)"[^>]* download[^>]*>([^<]+)</a>', re.IGNORECASE
+)
 
 code_replacemets = [
-    (re.compile('d.mon wx.'), 'd.mon cairo'),
-    (re.compile('d.out.file (.+)(.png|)'),
-     r'# save the currently rendered image (generated replacement of d.out.file)\ncp map.png \1.png'),
+    (re.compile("d.mon wx."), "d.mon cairo"),
+    (
+        re.compile("d.out.file (.+)(.png|)"),
+        r"# save the currently rendered image (generated replacement of d.out.file)\ncp map.png \1.png",
+    ),
 ]
 
 code_replacemets.extend(common_replacements)
 
-d_command = re.compile('d\..+ .+')
+d_command = re.compile(r"d\..+ .+")
 
 code_for_beginning = r"""#!/usr/bin/env bash
 
@@ -114,35 +119,31 @@ sys.stdout.write(code_for_beginning)
 
 previous_code_line = None
 
-for line in fileinput.input():
+for line in sys.stdin:
     line_count += 1  # lines are numbered from one
 
     file_path_match = file_path_extraction.search(line)
     if file_path_match:
         path = file_path_match.group(1)
         name = file_path_match.group(2)
-        if not name in replaced_files and not path.startswith('http'):
-            print "### >>>", name , path, "### ###"
+        if name not in replaced_files and not path.startswith("http"):
+            print("### >>>", name, path, "### ###")
             replaced_files.append(name)
-            code_replacemets.append(
-                (re.compile('=' + name), '=' + path))
-            code_replacemets.append(
-                (re.compile('="' + name + '"'), '="' + path + '"'))
-        elif path.startswith('http'):
-            print "### ###", path, "### ###"
+            code_replacemets.append((re.compile("=" + name), "=" + path))
+            code_replacemets.append((re.compile('="' + name + '"'), '="' + path + '"'))
+        elif path.startswith("http"):
+            print("### ###", path, "### ###")
             if download_attribute_presence.search(line):
-                print "### ###", line, "### ###"
+                print("### ###", line, "### ###")
                 sys.stdout.write(
-                    '# download the linked file (generated code)\n'
-                    '#wget "%s"\n' % path
+                    f'# download the linked file (generated code)\n#wget "{path}"\n'
                 )
-                if path.endswith('.zip'):
+                if path.endswith(".zip"):
                     match = file_from_url_extraction.search(line)
                     name = match.group(2)
                     sys.stdout.write(
-                    '# uncompress the downloaded file (generated code)\n'
-                    'unzip "%s"\n' % name
-                )
+                        f'# uncompress the downloaded file (generated code)\nunzip "{name}"\n'
+                    )
 
     if html_comment_start.search(line) and not html_comment_end.search(line):
         in_html_comment = True
@@ -152,7 +153,7 @@ for line in fileinput.input():
     # TODO: skip the other parsing if in comment and not end of comment
     elif file_content_start.search(line):
         in_file_content = True
-        tmp_file = open(file_name_capture.search(line).group(1), 'w')
+        tmp_file = open(file_name_capture.search(line).group(1), "w")  # noqa: SIM115
         continue
     elif in_file_content and file_content_end.search(line):
         in_file_content = False
@@ -166,19 +167,19 @@ for line in fileinput.input():
         if d_command.search(previous_code_line):
             # line number refers to the original file, not the new one
             sys.stdout.write(
-                '# save the currently rendered image (generated code)\n'
-                'cp map.png image_line_%d.png' % line_count
+                "# save the currently rendered image (generated code)\n"
+                f"cp map.png image_line_{line_count}.png"
             )
         continue
 
     if in_code:
-        line = re.sub('<!--.*-->', '', line)
+        line = re.sub("<!--.*-->", "", line)
         skip_line = False
         for ignored_line in ignored_lines:
             if ignored_line.search(line):
                 skip_line = True
         if not skip_line:
-            #sys.stdout.write("line %d: %s" % (line_count, line)) # debug
+            # sys.stdout.write("line %d: %s" % (line_count, line)) # debug
             for regexp, replacement in code_replacemets:
                 line = regexp.sub(replacement, line)
             sys.stdout.write(line)
@@ -190,9 +191,9 @@ for line in fileinput.input():
     else:
         for regexp, replacement in text_replacemets:
             line = regexp.sub(replacement, line)
-        if line == '\n':
+        if line == "\n":
             sys.stdout.write(line)
         else:
-            sys.stdout.write("# %s" % line)
+            sys.stdout.write(f"# {line}")
 
 sys.stdout.write(code_for_end)

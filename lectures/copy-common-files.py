@@ -1,29 +1,37 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # builds pages from source
 
-from __future__ import print_function
 
-import os
-import sys
-import shutil
 import argparse
-import re
+import os
+import shutil
+import sys
 
 
 def error_message(*objs):
     print("ERROR: ", *objs, file=sys.stderr)
 
+
 def main():
-    directories = ['css', 'js', 'lib', 'plugin']
-    
+    directories = ["css", "js", "lib", "plugin"]
+
     parser = argparse.ArgumentParser(
-        description='Copies the common files for all presentations to one directory')
-    parser.add_argument('--src-dir', dest='common_srcdir', action='store',
-                        help='Directory with common files to copy from')
-    parser.add_argument('--dst-dir', dest='common_dstdir', action='store',
-                        required=True,
-                        help='Directory to copy common files to')
+        description="Copies the common files for all presentations to one directory"
+    )
+    parser.add_argument(
+        "--src-dir",
+        dest="common_srcdir",
+        action="store",
+        help="Directory with common files to copy from",
+    )
+    parser.add_argument(
+        "--dst-dir",
+        dest="common_dstdir",
+        action="store",
+        required=True,
+        help="Directory to copy common files to",
+    )
 
     args = parser.parse_args()
     srcdir = args.common_srcdir
@@ -41,5 +49,5 @@ def main():
     return 0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())
