@@ -1,0 +1,43 @@
+# Vendored reveal.js and course data files are not ours to fix
+exclude: |
+  (?x)^(
+      lectures/(js|lib|plugin|css)/
+    | grass/data/
+  )
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: [--fix=lf]
+        # legacy CRLF LaTeX notes, avoid whole-file churn
+        exclude: '^resources/(erosion_notes|interpolation_notes)\.tex$'
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-added-large-files
+        args: [--maxkb=10000]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.2
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.3
+    hooks:
+      - id: codespell
+        # ned: National Elevation Dataset; nd: math notation in slides;
+        # dum: Digital Urban Model; linke: Linke turbidity factor;
+        # ist/ot: tokens inside URLs (citeseerx.ist.psu.edu, OpenTopography ids)
+        args:
+          - --ignore-words-list=ned,nd,dum,linke
+          - --uri-ignore-words-list=ist,OT
+        # archival student project titles are a historical record
+        exclude: '^project_titles/'
