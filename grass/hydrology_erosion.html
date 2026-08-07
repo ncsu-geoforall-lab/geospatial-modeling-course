@@ -61,7 +61,7 @@ nviz elevation co=lsfac3d
 # for erosion predicted by the 2d and 3d models?  -->
 
 <p>
-Equations and units used in this assignment are explained in this 
+Equations and units used in this assignment are explained in this
 <a href="https://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/erosion_notes.pdf">
 Brief theoretical background for GIS-based erosion modeling with RUSLE3D and USPED</a>
 
@@ -100,7 +100,7 @@ d.out.file lsfac_s10
 
 <h4>Compute soil detachment for spatially variable land cover</h4>
 
-Recode landcover_1m to land cover erosion factor C values given in the 
+Recode landcover_1m to land cover erosion factor C values given in the
 <a href="data/cfac_rules.txt">cfac_rules.txt</a> table
 using the <em class="module">r.recode</em> module.
 Assign a custom color table and display result.<br>
@@ -120,12 +120,12 @@ cfactorbare_1m is the same as cfactor_1m with bare agricultural fields,
 cfactorgrow_1m has landuse recoded for growing season conditions.
 We use rainfall intensity factor R=270 and soil erodibility factor K
 extracted from the soils database.<br>
-Assign custom color ramp using the provided rules 
+Assign custom color ramp using the provided rules
 and specify units of the raster maps using
 the <em class="module">r.support</em> module.<br>
 <span class="question">Compare erosion rates and distribution
 for bare and growing season conditions.</span>
- 
+
 <pre><code>
 r.mapcalc "soillossbare_1m = 270. * soils_Kfactor * lsfac3d_1m * cfactorbare_1m"
 r.mapcalc "soillossgrow_1m = 270. * soils_Kfactor * lsfac3d_1m * cfactorgrow_1m"
@@ -153,7 +153,7 @@ r.univar soillossgrow_1m
 
 Compute net erosion/deposition maps as divergence of sediment flow (USPED).
 <p>
-First compute sediment flow and its x, y components in the steepest slope 
+First compute sediment flow and its x, y components in the steepest slope
 (aspect) direction:
 
 <pre><code>
@@ -165,12 +165,12 @@ r.mapcalc "qsy = sedflow_1m * sin(aspect_1m)"
 </code></pre>
 
 <p>
-Compute change of sediment flow in the x and y directions as partial derivatives 
+Compute change of sediment flow in the x and y directions as partial derivatives
 of sediment flow component surfaces. We are using qsx and dsy surfaces (rasters)
 instead of elevation raster as input and partial derivatives dx and dy as output
-of the r.slope.aspect tool.  
-The change of sediment flow in the direction of flow (aspect) is then computed as 
- divergence resulting in net erosion and deposition map erdep. 
+of the r.slope.aspect tool.
+The change of sediment flow in the direction of flow (aspect) is then computed as
+ divergence resulting in net erosion and deposition map erdep.
 Display the map of erosion and deposition pattern using custom color ramp.<br>
 
 <pre><code>

@@ -15,11 +15,11 @@
 <ul>
   <li>Understand different metrics for distance
 <p>
-  <li>Define buffer operation, discrete and continous buffers
+  <li>Define buffer operation, discrete and continuous buffers
 <p>
   <li>Explain concept of cost surfaces
 <p>
-  <li>Understand least cost path 
+  <li>Understand least cost path
 </ul>
 </section>
 
@@ -28,7 +28,7 @@
 <p>
   <ul>
    <li class="fragment">Euclidean: shortest distance in plane
-   <li class="fragment">Geodesic: shortest distance over curved surface, great circle on sphere: 
+   <li class="fragment">Geodesic: shortest distance over curved surface, great circle on sphere:
    <a href="https://mathworld.wolfram.com/GreatCircle.html">orthodrome</a>
    <li class="fragment">$L^p$ metrics on meshes or grids
    <li class="fragment">Linear referencing systems
@@ -39,10 +39,10 @@
    <h3>Measuring distance: spheroid</h3>
 <ul>
   <li>Geodesic: shortest distance over curved surface
-  <li><a href=" https://en.wikipedia.org/wiki/Rhumb_line">Rhumbline</a>: 
+  <li><a href=" https://en.wikipedia.org/wiki/Rhumb_line">Rhumbline</a>:
   constant bearing path, line in Mercator projection, not the shortest path
 </ul>
-<br> 
+<br>
 <img height="420" src="img/analysis_costsurf/geodesic_rhumb_sm.png">
 </section>
 
@@ -58,8 +58,8 @@
     <li class="fragment">$p=1$ : Manhattan (Taxicab, City block) metric
  </ul>
 <p>
-  <li class="fragment"><strong>Linear Referencing Systems</strong>: 
-location is defined by its linear distance from a known point on a route  
+  <li class="fragment"><strong>Linear Referencing Systems</strong>:
+location is defined by its linear distance from a known point on a route
 and distance is measured along segments of a network; used for roads, utilities, waterways
 </ul>
 </section>
@@ -67,7 +67,7 @@ and distance is measured along segments of a network; used for roads, utilities,
 <section>
    <h3>Manhattan metrics</h3>
 Comparison of buffer pattern measured with Euclidean and Manhattan metric
-<p> 
+<p>
 <img height="320" src="img/analysis_costsurf/manhattam_metrics.png">
 <img height="300" src="img/analysis_costsurf/buffrgrow_eucl.png">
 <img height="300" src="img/analysis_costsurf/buffrgrow_manh.png">
@@ -77,7 +77,7 @@ Comparison of buffer pattern measured with Euclidean and Manhattan metric
 <section>
     <h3>Measuring distance in networks</h3>
 Linear Referencing Systems: distance along bus routes
-<p> 
+<p>
 <img class="fragment" height="420" src="img/analysis_costsurf/buslinesstops.png">
 </section>
 
@@ -86,18 +86,18 @@ Linear Referencing Systems: distance along bus routes
 <p>
 <ul>
   <li class="fragment">what is the length of NC coastline? Neuse river?
-  <li class="fragment">feature length is scale dependent 
-  <li class="fragment">vector model: length depends on level of detail captured by the vertices 
+  <li class="fragment">feature length is scale dependent
+  <li class="fragment">vector model: length depends on level of detail captured by the vertices
   <li class="fragment">raster model: resolution and level of detail (grain)
 <p>
-  <li class="fragment">natural features are often complex 
+  <li class="fragment">natural features are often complex
   <a href="https://en.wikipedia.org/wiki/List_of_fractals_by_Hausdorff_dimension">fractals</a>
 </ul>
 </section>
 
 <section>
    <h3>Measuring feature length</h3>
-Compare stream length from 
+Compare stream length from
 <a href="https://www.usgs.gov/national-hydrography/national-hydrography-dataset">
 USGS NHD</a> and a stream derived from a local 1m lidar-based DEM
 <p> <img height="350" src="img/analysis_costsurf/Streams_NHD_GRASSlidar.png">
@@ -121,17 +121,17 @@ Compare length of NC Coastline from NC GIS and from a World map 1:10M
 <ul>
 <li class="fragment">discrete:
    <ul>
-   <li class="fragment">applies to raster representation of discrete features (points, lines, areas) 
-   <li class="fragment">creates discrete buffer zones from a given feature 
+   <li class="fragment">applies to raster representation of discrete features (points, lines, areas)
+   <li class="fragment">creates discrete buffer zones from a given feature
    <li class="fragment">requires resolution sufficiently higher than the buffer widths
    </ul>
 <p>
 <li class="fragment">continuous:
    <ul>
    <li class="fragment">derives proximity raster from a given feature
-   <li class="fragment">computes distances from a feature for every cell 
+   <li class="fragment">computes distances from a feature for every cell
    <li class="fragment">equivalent to cumulative cost surface with uniform cost=1
-   <li class="fragment">resolution controls the distance precision - step 
+   <li class="fragment">resolution controls the distance precision - step
    </ul>
 </ul>
 </section>
@@ -139,10 +139,10 @@ Compare length of NC Coastline from NC GIS and from a World map 1:10M
 <section>
    <h3>Raster map buffer: points</h3>
 <ul>
-<li>Task: map forested areas around schools  
-<li>Create discrete point buffers at selected distances 
+<li>Task: map forested areas around schools
+<li>Create discrete point buffers at selected distances
 </ul>
-<p> 
+<p>
 <img height="360" src="img/analysis_costsurf/buff_schools.png">
 <img height="120" src="img/analysis_costsurf/schoolsbuffer_lg.png">
 </section>
@@ -150,7 +150,7 @@ Compare length of NC Coastline from NC GIS and from a World map 1:10M
 <section>
    <h3>Raster map buffer: points</h3>
 <ul>
-<li>Use map algebra to combine buffers with landcover  
+<li>Use map algebra to combine buffers with landcover
 </ul>
 <small><code>school_buf_forest = if(landcl98 == 5 && school_buff, school_buff, 0)</code></small>
 <p> <img height="350" src="img/analysis_costsurf/buff_schools_veg.png">
@@ -162,8 +162,8 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 <section>
    <h3>Raster map buffer: areas</h3>
 <ul>
-<li>Map developed areas within walking distance of lakes           
-<li>Use map algebra to combine buffers with landcover                                           
+<li>Map developed areas within walking distance of lakes
+<li>Use map algebra to combine buffers with landcover
 </ul>
 <small><code>lake_buf_dev = if(landcl98 == 1 && lake_buff, lake_buff, 0)</code></small>
 <p> <img height="350" src="img/analysis_costsurf/buff_lakes_200m.png">
@@ -173,12 +173,12 @@ keep in mind our 30m resolution. Why do we use 0 and not null in the expression?
 <section>
    <h3>Raster map buffer: lines</h3>
 <ul>
-<li>Identify developed areas that may be impacted by noise from a highway: 
+<li>Identify developed areas that may be impacted by noise from a highway:
 <li>
 <small>Create buffers along the highway, combine with landcover using map algebra </small>
 </ul>
 <small><code>noise = if(landuse96_28m==1 || landuse96_28m==2, roads_buffers, null()) </code></small>
-<p> 
+<p>
 <img height="340" src="img/analysis_costsurf/buffer_rast_roads.png">
 <img height="340" src="img/analysis_costsurf/noise_shadestr.png">
 <p class="fragment"><small> why 0 and not null? </small>
@@ -220,14 +220,14 @@ shortest path (distance) from each cell to the target line feature
 <section>
    <h3>Cost surfaces</h3>
 <p>
-Cumulative (accumulated) cost surface measures proximity based on cost: 
+Cumulative (accumulated) cost surface measures proximity based on cost:
 <ul>
-<li class="fragment">raster representation of cumulative cost 
+<li class="fragment">raster representation of cumulative cost
 of reaching the target point(s) from any location in the given region.
 </ul>
 
 <p class="fragment">
-Input cost map 
+Input cost map
 <ul>
 <li class="fragment">value assigned to a cell represents cost of traversing that cell,
 <li class="fragment">cost can be based on time, energy, price, etc.
@@ -241,9 +241,9 @@ If cost is spatially variable, we need to define cost to traverse each grid cell
 usually expressed as time $t[s]$ derived, for example, from:
 <p>
 <ul>
-    <li class="fragment">speed data for driving,                       
-    <li class="fragment">velocity estimates for flows,                       
-    <li class="fragment">slope, vegetation and obstacles for walking on trails 
+    <li class="fragment">speed data for driving,
+    <li class="fragment">velocity estimates for flows,
+    <li class="fragment">slope, vegetation and obstacles for walking on trails
 </ul>
 </section>
 
@@ -278,7 +278,7 @@ Cost map is computed using arithmetic expression in map algebra.
 Cumulative cost surface represents the time to reach the target point A from anywhere in the region.
 <p> <img height="350" src="img/analysis_costsurf/costsurface3dHR.png">
 <img height="100" src="img/analysis_costsurf/costsurf_dist">
-<p><small>The higher the hill the more time it takes to reach A (red point), highways are valleys, 
+<p><small>The higher the hill the more time it takes to reach A (red point), highways are valleys,
 blue points are firestations</small>
 </section>
 
@@ -286,8 +286,8 @@ blue points are firestations</small>
    <h3>Least cost path</h3>
 <ul>
 <li class="fragment">using the cumulative cost surface, find the least cost (fastest) path to the target point
-<li class="fragment">least cost path follows the oposite directions used for creating the cumulative 
-cost surface: back-links 
+<li class="fragment">least cost path follows the opposite directions used for creating the cumulative
+cost surface: back-links
  <li class="fragment">similar to steepest slope line used for flow routing with terrain replaced by cost surface
 </ul>
 </section>
@@ -305,7 +305,7 @@ cost surface: back-links
 <p>
 <ul>
 <li class="fragment">direction of least cost path to the target from all grid cells = backlink map
-<li class="fragment">equivalent to surface gradient direction (aspect) map 
+<li class="fragment">equivalent to surface gradient direction (aspect) map
 </ul>
 <p class="fragment"> <img height="340" src="img/analysis_costsurf/cumcost_aspect_col.png.png">
 <img height="340" src="img/analysis_costsurf/backlinks_mea582.png">
@@ -323,7 +323,7 @@ Locate the firestation that can reach the accident site $A$ on the highway the f
 to the attribute table
    <li class="fragment">identify the firestation $F_1$ with the lowest cost
    <li class="fragment">trace the least cost path from $F_1$ to $A$
-</ul> 
+</ul>
 </small>
 <p> <img height="350" src="img/analysis_costsurf/leastcostpath_fire.png">
 <p class="fragment" style="small">Example from the assignment shows two LCP, note the issue with overpass</p>
@@ -351,7 +351,7 @@ $$
 <section>
    <h3>Input data for estimating cost</h3>
 Walking cost combines inputs derived from elevation $\Delta h_u, \Delta h_{md}, \Delta h_{sd}$,
-land cover is used for friction map $f$. 
+land cover is used for friction map $f$.
 <p> <img height="350" src="img/analysis_basicraster/elevation_shade10m.jpg">
 <img height="350" src="img/analysis_costsurf/friction2d.png">
 <p><small>low friction: developed areas, streets and roads; moderate friction: forest;
@@ -360,9 +360,9 @@ extreme friction (barrier): lakes</small>
 
 <section>
    <h3>Cumulative cost surface</h3>
-Cumulative cost surface and isochrones to support search for lost person 
+Cumulative cost surface and isochrones to support search for lost person
 last seen at point A.
-<p> 
+<p>
 <img height="450" src="img/analysis_costsurf/walkcosthours.png">
 <p style="small"> Step of the isochrones s 0.5 hr</p>
 </section>
@@ -370,11 +370,11 @@ last seen at point A.
 <section>
    <h3>Cumulative cost surface from lines</h3>
 Cumulative cost distance from major roads based on travel time (cost) estimated
-from speed limit. Target is lines represented by set of points. 
-<p> 
+from speed limit. Target is lines represented by set of points.
+<p>
 <img height="300" src="img/analysis_costsurf/costsurf_roads.png">
 <img height="300" src="img/analysis_costsurf/costroads_3.png">
-<p> <small>Compare with buffers - areas within the cost distance less than a given threshold</small></p> 
+<p> <small>Compare with buffers - areas within the cost distance less than a given threshold</small></p>
 </section>
 
 <section>
@@ -393,7 +393,7 @@ from speed limit. Target is lines represented by set of points.
 <ul>
   <li>Estimate time wastewater travels from source to wastewater plant
   <li>Time to traverse a grid cell is computed using flow velocity estimated by Mannings equation as function of roughness, flow depth and slope
-  <li>Important for interpeting measured concentrations of SARS-CoV2 in wastewater to
+  <li>Important for interpreting measured concentrations of SARS-CoV2 in wastewater to
 monitor trends in COVID-19
 </ul>
 </section>
@@ -409,7 +409,7 @@ monitor trends in COVID-19
 <section>
  <h3>Summary</h3>
 <ul>
-  <li>measuring distance is scale dependendent, different metrics can be defined
+  <li>measuring distance is scale dependent, different metrics can be defined
   <li>buffers are used to analyze variables or features in proximity of points, lines and areas
   <li>cumulative cost surfaces measure proximity based on cost
   <li>least cost path finds optimized route based on cumulative cost surface

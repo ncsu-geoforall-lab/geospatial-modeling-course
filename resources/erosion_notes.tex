@@ -23,14 +23,14 @@ E = R K L S C P
 $$
 
 \noindent
-where 
-$E$ is average annual soil loss in $ton/(acre.year)=0.2242kg/(m^2.year)=2.242ton/(ha.year)$, 
+where
+$E$ is average annual soil loss in $ton/(acre.year)=0.2242kg/(m^2.year)=2.242ton/(ha.year)$,
 
 \noindent
 $R$ is rainfall factor in (hundreds of ft-tonf.in)/(acre.hr.year) = 17.02(MJ.mm)/(ha.hr.year),
 
 \noindent
-$K$ is soil erodibility factor in (ton acre.hr)/(hundreds of acre ft-tonf.in) = 
+$K$ is soil erodibility factor in (ton acre.hr)/(hundreds of acre ft-tonf.in) =
 
 \noindent
 = 0.1317(ton.ha.hr)/(ha.MJ.mm),
@@ -52,31 +52,31 @@ $$
 LS=(m+1) \left(U/22.1\right)^m \left({\sin{\beta}}/{0.09}\right)^n
 $$
 \noindent
-where 
+where
 
 \noindent
-$U$ is the upslope area per unit width (measure of water flow) in meters ($m^2/m$), 
+$U$ is the upslope area per unit width (measure of water flow) in meters ($m^2/m$),
 
 \noindent
-$\beta$ is the slope angle in degree, 
+$\beta$ is the slope angle in degree,
 
 \noindent
-$22.1$ is the length of the standard USLE plot in meters, 
+$22.1$ is the length of the standard USLE plot in meters,
 
 \noindent
-$0.09 = 9\% = 5.15^{\circ}$ is the slope of the standard USLE plot. 
+$0.09 = 9\% = 5.15^{\circ}$ is the slope of the standard USLE plot.
 
 \noindent
 The values of exponents range for $m=0.2-0.6$ and
 $n=1.0-1.3$, where the lower values are used for prevailing sheet flow and
-higher values for prevailing rill flow.  
+higher values for prevailing rill flow.
 
 \smallskip
 {\bf Unit Stream Power Based Erosion/Deposition model (USPED)}
 
 \noindent
- USPED estimates a sediment transport limited case of erosion/deposition 
-using the concept proposed by Moore and Burch (1986). 
+ USPED estimates a sediment transport limited case of erosion/deposition
+using the concept proposed by Moore and Burch (1986).
 It combines the USLE/RUSLE parameters
 and upslope contributing area per unit width $U$ to estimate the
 sediment flow $T$ at sediment transport capacity:
@@ -85,7 +85,7 @@ $$
 $$
 \noindent
 $R, K, C, P, U, \beta$ are the same as in USLE,
-and $U, \beta$ are not normalized, because 
+and $U, \beta$ are not normalized, because
 
 \noindent
 $T$ is an estimate of sediment flow $[kg/(m.s)]$ or
@@ -101,13 +101,13 @@ D=\nabla\cdot (T{\bf s_0}) = {\partial (T \cos \alpha) \over {\partial x}} +
 {\partial (T \sin \alpha) \over {\partial y}},
 $$
 \noindent
-where 
+where
 
 \noindent
 $\alpha$ in degrees is the aspect of the terrain surface (direction of flow).
 
 \noindent
-We get $D$ in $[kg/(m^2s)]$ by dividing $T[kg/(ms)] / dx[m]$ 
+We get $D$ in $[kg/(m^2s)]$ by dividing $T[kg/(ms)] / dx[m]$
 or $T[ton/10000m.year]/dx[m]=D[ton/(10000m^2. year)]=D[(ton/ha.year)]$
 
 The exponents $m,n$ control the relative influence of water and slope
@@ -119,22 +119,22 @@ better reflect the pattern of compounded, long term impact of both rill and
 sheet erosion and averaging over a long term sequence of large and small
 events.
 
-We can transform the rate of erosion or deposition to 
+We can transform the rate of erosion or deposition to
 elevation change at grid point:
 $$
 dz=D/\varrho
 $$
 \noindent
 where
-$\varrho$ is soil density in $[kg/m^3]$=$[0.001 ton / m^3]$ so we divide 
-erosion/deposition rate $D$ in $[ton/(ha.year)]$ by 10-times density 
+$\varrho$ is soil density in $[kg/m^3]$=$[0.001 ton / m^3]$ so we divide
+erosion/deposition rate $D$ in $[ton/(ha.year)]$ by 10-times density
 in $[kg/m^3]$
 
 \noindent
 $dz[m/year]=D/(10.\varrho)$ is elevation change per year at grid point.
 
 \noindent
-Mass of sediment eroded or deposited at a cell 
+Mass of sediment eroded or deposited at a cell
 
 $$D_{cell}[ton/year]=D[ton/(10000m^2s)]*r^2[m^2]$$
 
@@ -142,4 +142,3 @@ $$D_{cell}[ton/year]=D[ton/(10000m^2s)]*r^2[m^2]$$
 where $r$ is raster resolution in meters.
 
 \bye
-

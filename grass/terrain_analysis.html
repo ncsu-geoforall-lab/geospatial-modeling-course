@@ -31,7 +31,7 @@ r.colors myaspect co=aspectcolr
 
 <p>
 DEMs are sometimes distributed with elevations stored as integer values,
-changing the pattern of topographic parameters. To show impact of integer 
+changing the pattern of topographic parameters. To show impact of integer
 elevation values in meters on slope and aspect pattern we first compute
 an integer DEM, its slope and aspect and then compare the resulting maps
 with the original floating point DEM results
@@ -54,7 +54,7 @@ d.out.file aspect_intmap
 </code></pre>
 
 <p>
-It is also helpful to compare the histograms (you can switch off the orange 
+It is also helpful to compare the histograms (you can switch off the orange
 rectangle showing computational region by clicking on the Map Display Settings
 icon on top of Map Display and switching off "Show computational extent")
 
@@ -71,7 +71,7 @@ d.out.file aspect_intmap
 </code></pre>
 
 <p>
-<span class="question">Can you explain the difference in slope and aspect maps and 
+<span class="question">Can you explain the difference in slope and aspect maps and
 their histograms derived from integer (m vertical resolution)
 and floating point DEMs?</span>
 
@@ -88,10 +88,10 @@ d.out.file bus11direction
 </code></pre>
 
 Compute the steepest slope of the topography around the route by assigning
-the values of slope derived from a DEM 
+the values of slope derived from a DEM
 
 <pre><code>
-r.slope.aspect elevation=elevation slope=slope_dem aspect=aspect_dem 
+r.slope.aspect elevation=elevation slope=slope_dem aspect=aspect_dem
 r.mapcalc "route_slope_dem = if(busroute11_dir, slope_dem)"
 d.rast route_slope_dem
 </code></pre>
@@ -145,7 +145,7 @@ Display the profile and tangential curvatures as 2D images.<br>
 <pre><code>
 d.erase
 d.rast pc_lid_1m
-d.legend pc_lid_1m 
+d.legend pc_lid_1m
 d.out.file profcurvature_dtm
 d.erase
 d.rast tc_lid_1m
@@ -223,7 +223,7 @@ d.out.file landfroms45
 Map basic landforms using geomorphons DSM, read the manual page and the associated paper to learn how it works
 
 <pre><code>
-r.geomorphon elevation=elev_lid792_1m forms=geomorphon_s50d10 search=50 dist=10 
+r.geomorphon elevation=elev_lid792_1m forms=geomorphon_s50d10 search=50 dist=10
 d.erase
 d.rast geomorphon_s50d10
 d.vect elev_lid792_cont1m color=grey
@@ -272,7 +272,7 @@ If you don't see the mapset, make sure you downloaded it and unzipped it correct
 
 <p>
 Run the series analysis and explain the results:<br>
-<span class="question">Which maps are core and envelope? 
+<span class="question">Which maps are core and envelope?
 Which landforms have high standard deviation and what does it mean?</span>
 
 <pre><code>

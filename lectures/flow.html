@@ -12,12 +12,12 @@
     <h3>Learning objectives</h3>
 <p>
 <ul>
-  <li>define cumulative terrain parameters based on flow routing 
-  <li>understand methods for computing flow direction and flow accumulation 
-  <li>identify methods for flow routing through depressions and flat areas 
-  <li>perform stream extraction from a DEM 
+  <li>define cumulative terrain parameters based on flow routing
+  <li>understand methods for computing flow direction and flow accumulation
+  <li>identify methods for flow routing through depressions and flat areas
+  <li>perform stream extraction from a DEM
   <li>perform watershed delineation
-  <li>identify methods to map inundation flooding 
+  <li>identify methods to map inundation flooding
 </ul>
 </section>
 
@@ -26,9 +26,9 @@
 <p>Flow routing over a DEM is used to derive the following parameters and features:
 <p>
   <ul>
-  <li class="fragment">flow path length 
+  <li class="fragment">flow path length
   <li class="fragment">flow accumulation
-  <li class="fragment">stream networks 
+  <li class="fragment">stream networks
   <li class="fragment">contributing areas
   <li class="fragment">watershed boundaries
   </ul>
@@ -44,8 +44,8 @@
 </ul>
 <p class="fragment">Methods to derive flow direction from a DEM:
 <ul>
- <li class="fragment">discrete: D8, D16 
- <li class="fragment">continuous: D-infinity 
+ <li class="fragment">discrete: D8, D16
+ <li class="fragment">continuous: D-infinity
 </ul>
 </section>
 
@@ -73,11 +73,11 @@ $$\alpha^\circ = {\arccos} \left( -f_y / \sqrt{f_x^2+f_y^2} \right) = \arctan (f
 
 <section>
    <h3>Flow routing</h3>
-Tracing flow in the gradient direction to compute 
+Tracing flow in the gradient direction to compute
 <p>
 <ul>
  <li class="fragment">flowline: path of a single drop following gradient vector
- <li class="fragment">flow path length: flowline length measured over surface or in horizontal plane 
+ <li class="fragment">flow path length: flowline length measured over surface or in horizontal plane
  <li class="fragment">flow accumulation: density of flowlines generated from each grid cell
 </ul>
 </section>
@@ -100,8 +100,8 @@ Tracing flow in the gradient direction to compute
    <h3>Flow path length</h3>
 <p>
 <ul>
-<li>length of a hillslope upslope from a given cell 
-<li>distance of given cell from the outlet 
+<li>length of a hillslope upslope from a given cell
+<li>distance of given cell from the outlet
 </ul>
 <p>
 <img height="350" src="img/flow_erosion/flowlgdown.jpg">
@@ -114,7 +114,7 @@ Tracing flow in the gradient direction to compute
    <h3>The longest path to outlet</h3>
 <ul>
   <li>length of the flow line from the grid cell that is the farthest from the outlet
-  <li>when water from this cell reaches outlet, all cells within a watershed have drained to outlet 
+  <li>when water from this cell reaches outlet, all cells within a watershed have drained to outlet
   <li>the longest path to outlet is used to compute time to concentration (time to steady state flow)
 </ul>
 </section>
@@ -122,9 +122,9 @@ Tracing flow in the gradient direction to compute
 <section>
    <h3>Flow accumulation at a grid cell</h3>
 <ul>
- <li class="fragment">assuming a single flow line (drop) generated from each cell, 
+ <li class="fragment">assuming a single flow line (drop) generated from each cell,
 it is the number of flowlines (drops) passing through the given grid cell
- <li class="fragment">number of grid cells draining into the given grid cell 
+ <li class="fragment">number of grid cells draining into the given grid cell
  <li class="fragment">upslope contributing area for the given grid cell (horizontal area, in cell units)
 </ul>
 <p class="fragment"> <img height="280" src="img/flow_erosion/flowlines_flowaccum.jpg">
@@ -133,7 +133,7 @@ it is the number of flowlines (drops) passing through the given grid cell
 <section>
    <h3>Flow accumulation across landscape</h3>
 <p>
-Evolution of steady state flow as water moves through the landscape 
+Evolution of steady state flow as water moves through the landscape
 with steady rainfall and uniform flow velocity
 <p> <img height="430" src="img/flow_erosion/water.gif">
 <br><small>flow line density captured after each 10 flow routing steps</small>
@@ -144,7 +144,7 @@ with steady rainfall and uniform flow velocity
 <p>
 Measure of steady state flow depth when all flowlines reached the outlet or the edge of the map
 <p> <img height="380" src="img/flow_erosion/Flow3d_irwineldsdac5.png">
-<br><small>Flow accumulation represented as exagerrated 3D surface added to the elevation model highlights
+<br><small>Flow accumulation represented as exaggerated 3D surface added to the elevation model highlights
 the steady state flow accumulation </small>
 </section>
 
@@ -166,7 +166,7 @@ the steady state flow accumulation </small>
 <section>
    <h3>Flow routing methods</h3>
 <p>
-Flow accumulation as a result of SFD routing 
+Flow accumulation as a result of SFD routing
 <p class="fragment">using D8 and D-inf flow direction
 <p class="fragment"> <img height="380" src="img/flow_erosion/flowD8dem.jpg">
 <img class="fragment" height="380" src="img/flow_erosion/flowdinfdem.jpg">
@@ -182,12 +182,12 @@ Flow accumulation as a result of SFD and MFD routing  with D8 flow direction
 
 <section>
    <h3>Weighted flow routing</h3>
-Each cell is assigned weight proportional to the amount of runoff it produces 
+Each cell is assigned weight proportional to the amount of runoff it produces
 (rainfall excess available for runoff after infiltration and vegetation intercept)
 <p> <img height="340" src="img/flow_erosion/landclass_30m.jpg">
 <img height="340" src="img/flow_erosion/accum_runoffdiff_30m3d.jpg">
-<p><small>Land use map with developed areas (orange) and associated runoff weights - in blue areas 
-all water gets routed, in grey areas only a fraction</small> 
+<p><small>Land use map with developed areas (orange) and associated runoff weights - in blue areas
+all water gets routed, in grey areas only a fraction</small>
 </section>
 
 <section>
@@ -203,7 +203,7 @@ Spatially variable runoff reflects the impact of developed areas on flow accumul
  <li class="fragment">Automated stream mapping: extracting connected stream network from flow accumulation map
  <li class="fragment">Stream raster map is derived using map algebra based on flow accumulation threshold
  <li class="fragment">Result is converted to vector representation of a connected stream network
- <li class="fragment">Stream origin is dynamic, often driven by groundwater: 
+ <li class="fragment">Stream origin is dynamic, often driven by groundwater:
 additional information is needed for accurate identification
 </ul>
 </section>
@@ -211,7 +211,7 @@ additional information is needed for accurate identification
 <section>
    <h3>Stream extraction</h3>
 Flow accumulation from 30m NED using SFD D8 method, threshold accumulation: 100 cells,
-and a vectorized extracted stream network 
+and a vectorized extracted stream network
 <p><img height="380" src="img/flow_erosion/stream_extract.jpg">
 </section>
 
@@ -219,9 +219,9 @@ and a vectorized extracted stream network
    <h3>Flow routing in flat areas</h3>
 <ul>
  <li>to create connected stream network flow needs to be routed through flats and depressions
- <li class="fragment">integer DEMs, lakes or filled depressions create flat areas 
+ <li class="fragment">integer DEMs, lakes or filled depressions create flat areas
  <li class="fragment">flat areas: zero slope and undefined aspect
- <li class="fragment">solutions: 
+ <li class="fragment">solutions:
  <ul>
  <li class="fragment">iterative assignment of direction from the first draining cell
  <li class="fragment">imposed gradient (small change in elevation)
@@ -232,9 +232,9 @@ and a vectorized extracted stream network
 <section>
    <h3>Flow routing through depressions</h3>
 <p>Depressions "trap" flow
-<p>Sources of depressions in DEMs: 
+<p>Sources of depressions in DEMs:
  <ul>
- <li class="fragment">real topographic features 
+ <li class="fragment">real topographic features
  <li class="fragment">noise, measurements errors
  <li class="fragment">processing artifacts
 </ul>
@@ -295,7 +295,7 @@ Depressions in lidar-based DEM and MFD flow accumulation using DEM with filled d
 <section>
    <h3>Depressions: carving</h3>
 <p>Carving streams from digitized stream data may introduce artifacts, if the digitized streams
-do not match the DEM 
+do not match the DEM
 <p><img height="400" src="img/flow_erosion/carved_dem.jpg">
 </section>
 
@@ -306,7 +306,7 @@ Modified DEM with connected stream network where each grid cell drains into the 
 <ul>
   <li class="fragment">hydrologically enforced DEM does not have depressions or flat areas
   <li class="fragment">it should not be referred to as hydrologically correct, because all wetlands are removed
-  <li class="fragment">least cost path methods do not require depression filling 
+  <li class="fragment">least cost path methods do not require depression filling
 </ul>
 <p class="fragment">Depending on application carefully evaluate whether depression filling is appropriate
 </section>
@@ -340,7 +340,7 @@ Measured as horizontal accuracy of stream centerline
  <li class="fragment">other terms for watershed: (drainage) basin, catchment, contributing area
  <li class="fragment">watersheds can be organized into hierarchies based on the size of contributing area
 </ul>
-<p class="fragment"> see more at <a href="https://water.usgs.gov/GIS/huc.html"> 
+<p class="fragment"> see more at <a href="https://water.usgs.gov/GIS/huc.html">
 USGS Hydrologic units: </a> hierarchy of drainage areas for national river network,
 the newest delineation is <b>The Watershed Boundary Dataset (WBD)</b>
 </section>
@@ -348,7 +348,7 @@ the newest delineation is <b>The Watershed Boundary Dataset (WBD)</b>
 <section>
    <h3>Watershed analysis</h3>
 <ul>
- <li class="fragment">find watershed boundaries for a given outlet, for example, a stream gauge 
+ <li class="fragment">find watershed boundaries for a given outlet, for example, a stream gauge
  <li class="fragment">find contributing area for a given stream segment
  <li class="fragment">partition a region  into watersheds with the given approximate size
 </ul>
@@ -357,7 +357,7 @@ the newest delineation is <b>The Watershed Boundary Dataset (WBD)</b>
 <section>
    <h3>Watershed analysis</h3>
 <p>
- Watershed boundaries for a given outlet using SFD-D8 
+ Watershed boundaries for a given outlet using SFD-D8
 <p>
 <p><img height="400" src="img/flow_erosion/watershed_from_outlet.jpg">
 <p><small>Outlet must be located exactly on a stream grid cell - local flowaccumulation maximum</small>
@@ -373,7 +373,7 @@ the newest delineation is <b>The Watershed Boundary Dataset (WBD)</b>
 
 <section>
    <h3>Watersheds</h3>
-<p>Watershed and its subwatershes 
+<p>Watershed and its subwatershes
 <p><img height="400" src="img/flow_erosion/subwatersheds.jpg">
 <p>Chagres river watershed in Panama
 </section>
@@ -384,7 +384,7 @@ the newest delineation is <b>The Watershed Boundary Dataset (WBD)</b>
 <p>
 $$w = \ln (A / \tan \gamma)$$
 <ul>
-<li class="fragment">$A$ is upslope contributing area per unit contour width, 
+<li class="fragment">$A$ is upslope contributing area per unit contour width,
 <li class="fragment">$\gamma$ is slope
 <li class="fragment">$w$ increases with larger $A$ (more water) and lower slope (slower water flow).
 </ul>
@@ -445,7 +445,7 @@ $$w = \ln (A / \tan \gamma)$$
 <li>over larger areas river channel has variable elevation: Height Above Nearest Drainage (HAND) methodology
 <li>using flow direction, computes raster where each cell is $\Delta z$ between the given cell
 and the the cell on the stream into which the cell drains.
-<li>water level is then spread from the stream 
+<li>water level is then spread from the stream
 </ul>
 <p><img height="320" src="img/flow_erosion/heightabovestream.jpg">
 <img height="320" src="img/flow_erosion/inundation_5m.jpg">
@@ -472,7 +472,7 @@ and the the cell on the stream into which the cell drains.
 <li class="fragment">we have learned about methods for computing flow direction (D8, Dinf) and flow routing SFD, MFD
 <li class="fragment">we discussed flow through flat areas and depressions
 <li class="fragment">we have applied flow routing to extract streams and watersheds and to compute wetness index
-<li class="fragment">we have learned about methods to map inundation flooding 
+<li class="fragment">we have learned about methods to map inundation flooding
 </ul>
 </section>
 
@@ -487,6 +487,3 @@ and the the cell on the stream into which the cell drains.
 links
 </section>
 -->
-
-
-

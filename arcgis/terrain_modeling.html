@@ -11,7 +11,7 @@ to the Modeling folder. Unpack the package containing orthophoto.
 
 
 <h3>Bring lidar data into ArcGIS</h3>
-There are multiple ways of handling lidar data in ArcGIS. We will use LAS datasets and multipoint files. For other workflows refer to the FYI section at the end of the assignment 
+There are multiple ways of handling lidar data in ArcGIS. We will use LAS datasets and multipoint files. For other workflows refer to the FYI section at the end of the assignment
 <h3>Analyze multiple return lidar data</h3>
 <h4>Create a LAS dataset from .las point cloud</h4>
 LAS datasets provide a way to quickly view the properties of a point cloud. You can also use binning or TINs to create a DSM or DEM. This is especially useful if you want to process several .las files at once.
@@ -49,7 +49,7 @@ Set 'Input Features' to 'lidar_all'
 Set 'Output Raster' to '.\Modeling\ground_count2m'
 Set 'Method' to 'POINT_COUNT'
 Set 'Sampling Type' to 'CELLSIZE'
-Set 'Sampling Value' to '2'                            
+Set 'Sampling Value' to '2'
 Click 'OK'
 Right click on resulting raster in Layers and select 'Properties'
 Click 'Symbology' tab and change color ramp to something appropriate.
@@ -66,7 +66,7 @@ Set 'Input Features' to 'lidar_all'
 Set 'Output Raster' to '.\Modeling\ground_count2m'
 Set 'Method' to 'POINT_COUNT'
 Set 'Sampling Type' to 'CELLSIZE'
-Set 'Sampling Value' to '6'                            
+Set 'Sampling Value' to '6'
 Click 'OK'
 Right click on resulting raster in Layers and select 'Properties'
 Click 'Symbology' tab and change color ramp to something appropriate.
@@ -82,7 +82,7 @@ Set 'Input Features' to 'lidar_all'
 Set 'Output Raster' to '.\Modeling\ground_range6m'
 Set 'Method' to 'Z_RANGE'
 Set 'Sampling Type' to 'CELLSIZE'
-Set 'Sampling Value' to '6'                            
+Set 'Sampling Value' to '6'
 Click 'OK'
 </pre>
 
@@ -100,7 +100,7 @@ Set 'Interpolation Type' to 'Binning'
 Set 'Cell Assignment Type' to 'Average'
 Set 'Void Fill Method' to 'LINEAR'
 Set 'Sampling Type' to 'CELLSIZE'
-Set 'Sampling Value' to '6'                            
+Set 'Sampling Value' to '6'
 Click 'OK'
 </pre>
 
@@ -147,7 +147,7 @@ Turn on the Geostatistical Analyst Extension
 Menu -> Customize ->Extensions...
 Add Geostatistical Analyst toolbar by right clicking on the empty space next to the Main Toolbar -> check Geostatistical Analyst
 Select 'Geostatistical Analyst Toolbar->Geostatistical Wizard'
-Under 'Deterministic Methods' select 'Radial Basis Function' 
+Under 'Deterministic Methods' select 'Radial Basis Function'
 Set 'Source Dataset' to 'lidar_first'
 Set 'Data Field' to 'Z' (or 'Shape.Z')
 Click 'Next'
@@ -184,10 +184,10 @@ You can also import LAS using the Add Rasters to Mosaic Dataset tool.
 See <a href="https://resources.arcgis.com/en/help/main/10.2/index.html#/Adding_lidar_data_to_a_mosaic_dataset/015w0000006q000000/">ArcGIS help</a>.
 
 <h4>3. Terrains</h4>
-The Terrain Wizard in ArcCatalog. Create a feature dataset inside a geodatabase.  
-Import your LAS files using the LAS to Multipoint tool in the 3D Analyst.  
-Save the multipoint feature class in your new feature dataset.  
+The Terrain Wizard in ArcCatalog. Create a feature dataset inside a geodatabase.
+Import your LAS files using the LAS to Multipoint tool in the 3D Analyst.
+Save the multipoint feature class in your new feature dataset.
 Right click on the feature dataset and select New/Terrain to launch the Terrain Wizard.
 See ArcGIS help <a href="https://resources.arcgis.com/en/help/main/10.2/index.html#//005v0000001p000000">here</a>
-and <a href="https://resources.arcgis.com/en/help/main/10.2/index.html#//005v00000002000000">here</a>. 
+and <a href="https://resources.arcgis.com/en/help/main/10.2/index.html#//005v00000002000000">here</a>.
 <p>

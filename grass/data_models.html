@@ -14,12 +14,12 @@ for how to use GUI from the first assignment</li>
 right click on <em>nc_spm_08_grass7</em> and select <em>Create mapset</em>, type in name for the new mapset,
 for example, <em>assignment2</em>, press OK. You will get a message that the Current mapset is <em>assignment2</em>
 and any new map layer that you will create will be saved here.
-As mentioned in the previous assignment, the provided data are in the mapset PERMANENT 
+As mentioned in the previous assignment, the provided data are in the mapset PERMANENT
 - double click to see the list of available raster and vector
-map layers. 
+map layers.
 
 <p>
-To save your outputs and to store external data change/create a directory where you can write, e.g. on MS Windows, 
+To save your outputs and to store external data change/create a directory where you can write, e.g. on MS Windows,
 C:\Users\myname\Documents\GIS582_HW\report2. Then set this directory in GRASS as your working directory:
 Change working directory:<br>
 <em>Settings</em> > <em>GRASS working environment</em> > <em>Change working directory</em> > browse to and select your report2 directory<br>
@@ -47,8 +47,8 @@ Resample the given raster map to higher and lower resolution
 with bilinear and bicubic method.
 <p>First, set the computation region extent to our study area
 and set resolution to 30 meters.
-The computational region (region for short) is set using <em class="module">g.region</em> module, 
-the <code>-p</code> flag is used to print the region coordinates and resolution. 
+The computational region (region for short) is set using <em class="module">g.region</em> module,
+the <code>-p</code> flag is used to print the region coordinates and resolution.
 Here we use a predefined region which is included in our data set.
 
 <pre><code>
@@ -85,7 +85,7 @@ Zoom to computational region in Map Display to set it to 10m resolution (equival
 display the resampled map (Add Raster, if you don't have it it in the Layer Manager already)<br>
 -->
 
-The resulting elevation map should display automatically, if not, 
+The resulting elevation map should display automatically, if not,
 display the resampled map by adding "elev_ned10m_nn" to <em>Layer Manager</em>
 in case you don't have it in the Layer Manager already.<br>
 Alternatively, use in command line the following:
@@ -142,7 +142,7 @@ or use the following in the command line:
 <pre><code>
 d.out.file aspect_bil
 </code></pre>
-<span class="question">Why is the aspect map of elevation raster map computed by the nearest neighbor method 
+<span class="question">Why is the aspect map of elevation raster map computed by the nearest neighbor method
 different from the one computed by bilinear interpolation?</span><br>
 
 <p>
@@ -257,7 +257,7 @@ To add legend in GUI use
 and select "schools_cap_200m".
 
 <pre><code>
-d.vect schools_wake 
+d.vect schools_wake
 v.info -c schools_wake
 v.to.rast schools_wake out=schools_cap_200m use=attr attrcol=CORECAPACI type=point
 d.rast schools_cap_200m
@@ -267,7 +267,7 @@ d.legend schools_cap_200m at=70,30,2,6
 -->
 
 <p>
-Convert lines in "streets" vector to raster, we will use this conversion in  
+Convert lines in "streets" vector to raster, we will use this conversion in
 least cost path modeling later on.
 Set the resolution to 30m and use speed limit attribute.
 
@@ -286,8 +286,8 @@ and type in speed limits 25,35,45,55,65; move legend with mouse as needed.
 Alternatively, use the following commands:
 
 <pre><code>
-d.rast streets_speed_30m 
-d.legend streets_speed_30m at=5,30,2,5 use=25,35,45,55,65 
+d.rast streets_speed_30m
+d.legend streets_speed_30m at=5,30,2,5 use=25,35,45,55,65
 </code></pre>
 
 <p>
@@ -340,9 +340,9 @@ d.out.file streams_compare
 Convert raster areas representing basins to vector polygons.
 <p>
 First, remove map layers from <em>Layer Manager</em> and set the region.
-To convert, use raster values as category numbers (flag -v) and 
+To convert, use raster values as category numbers (flag -v) and
 display boundaries of vector polygons.<br>
-Verify the basin boundaries by displaying them together with streams - the stream 
+Verify the basin boundaries by displaying them together with streams - the stream
 networks should "fit" within the basin boundaries.
 
 <pre><code>

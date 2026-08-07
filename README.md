@@ -193,7 +193,7 @@ Now, inspect the output and files in the directory.
 Then delete the created maps and images.
 
 ```
-grass ~/grassdata/nc_spm_08_grass7/test/ --exec g.remove type=raster,vector patter="*" -f
+grass ~/grassdata/nc_spm_08_grass7/test/ --exec g.remove type=raster,vector pattern="*" -f
 rm *.png
 ```
 

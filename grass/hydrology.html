@@ -72,13 +72,13 @@ d.vect streams color=red
 d.out.file streams_compare
 </code></pre>
 
-<p>Note that you can also use  
-<a href="https://grass.osgeo.org/grass-stable/manuals/r.stream.extract.html">r.stream.extract</a> 
+<p>Note that you can also use
+<a href="https://grass.osgeo.org/grass-stable/manuals/r.stream.extract.html">r.stream.extract</a>
 for raster and vectorized streams with topology of stream network. Read the manual pages to learn more.
 
 <h3>Create map of DEM depressions</h3>
-Depression filling is sometimes necessary for certain flow routing algorithms 
-but it can significantly alter the elevation data leading to artificial straight channels. 
+Depression filling is sometimes necessary for certain flow routing algorithms
+but it can significantly alter the elevation data leading to artificial straight channels.
 Find out how extensive the depressions are in our DEM.<br>
 Note that <em class="module">r.watershed</em> tool doesn't need any depression filling thanks to
 its underlying algorithm which uses least cost path to get over depressions.
@@ -105,7 +105,7 @@ d.vect lakes type=area fill_color=blue
 d.out.file depressions
 </code></pre>
 
-<span class="question">What is the area mapped as depression in [ha] and [%] ? 
+<span class="question">What is the area mapped as depression in [ha] and [%] ?
 (hint: use r.report with depr_bin) Are all depressions in DEM real or artificial? </span><br>
 Optional: Compute the total volume of mapped depressions.
 
@@ -130,7 +130,7 @@ d.rast accum_15K values=1000-1000000
 </code></pre>
 
 <p>
-Delineate contributing area (watershed) associated with an outlet located 
+Delineate contributing area (watershed) associated with an outlet located
 on the extracted stream and convert it to vector format.
 Import coordinates of the outlet to include it in the map in the next step.
 
@@ -155,7 +155,7 @@ d.out.file watershedA30
 r.report basin_A30 unit=h,a
 </code></pre>
 
-<span class="question">What is the delineated watershed area [ha] ? 
+<span class="question">What is the delineated watershed area [ha] ?
 Compute average slope of this watershed: include the workflow and the resulting average
  (hint: check the previous assignments for workflow)
 </span><br>
@@ -193,7 +193,7 @@ d.out.file flowlength
 
 <h3>Compare the multiple flow direction flow accumulation with the D8 and Dinf</h3>
 
-Compute flowaccumulation using the default MFD method and display the 
+Compute flowaccumulation using the default MFD method and display the
 flowaccumulation maps from MFD and SFD (the Dinf maps flowacc_1m was displayed above):
 
 <pre><code>
@@ -208,7 +208,7 @@ d.vect streams co=red
 d.out.file stream_sfd
 </code></pre>
 
-<span class="question">Compare the MFD and SFD results of r.watershed. 
+<span class="question">Compare the MFD and SFD results of r.watershed.
 Why are they different, which is more realistic and why?</span>
 
 <h3>Compute wetness index</h3>
@@ -241,8 +241,8 @@ d.out.file floodedarea
 
 <p><span class="question">
 Increase water level to 113.7m and 115.0m and create flooded
-area maps at these two levels. Include the maps of flooded areas 
-at these water levels in your report. Why is the flooded area much larger than 
+area maps at these two levels. Include the maps of flooded areas
+at these water levels in your report. Why is the flooded area much larger than
 for 113.5m?
 </span>
 

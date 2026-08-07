@@ -14,10 +14,10 @@
 <p>
 <ul>
   <li>summary parameters: volumes, surface areas
-  <li>first and second order point parameters 
+  <li>first and second order point parameters
   <li>methods for slope, aspect and curvatures using polynomial and spline approximation
-  <li>computing parameters from noisy data, level of detail 
-  <li>combining parameters to map landforms 
+  <li>computing parameters from noisy data, level of detail
+  <li>combining parameters to map landforms
   <li>DEM time series
 </ul>
 </section>
@@ -42,7 +42,7 @@ $$
 V=∑dx.dy.dz = dx.dy ∑ dz
 $$
 <li class="fragment">where $dx.dy$ is grid cell area, $dz = z_0-z_i$, is cell value difference, $z_0$ is constant, plane or curved surface
-<li class="fragment">computed as sum of grid cell values 
+<li class="fragment">computed as sum of grid cell values
 <li class="fragment">can be applied as global or zonal metrics
 </ul>
 <p>
@@ -53,9 +53,9 @@ $$
 <section>
    <h3>Surface area</h3>
 <ul>
-<li class="fragment">sum of 3D triangle areas, depending on the direction of the diagonal: minimum and maximum surface 
-<li class="fragment"> alternative: 8 triangles connecting grid center with neighboring ones 
-<li class="fragment"> larger than 2D area 
+<li class="fragment">sum of 3D triangle areas, depending on the direction of the diagonal: minimum and maximum surface
+<li class="fragment"> alternative: 8 triangles connecting grid center with neighboring ones
+<li class="fragment"> larger than 2D area
 </ul>
 <p>
  <img height="300" src="img/analysis_basicraster/surfacearea2.jpg">
@@ -67,9 +67,9 @@ $$
 <p>
 Measure geometric properties at any point of the elevation surface
 <ul>
-<li class="fragment">steepness, orientation, and shape 
+<li class="fragment">steepness, orientation, and shape
 <li class="fragment">derivation based on differential geometry
-<li class="fragment">computed from raster DEM 
+<li class="fragment">computed from raster DEM
 <li class="fragment">computed directly from scattered points using interpolation function with suitable properties
 </ul>
 </section>
@@ -77,15 +77,15 @@ Measure geometric properties at any point of the elevation surface
 <section>
    <h3>Elevation surface gradient</h3>
 Given a surface  $z = f(x,y)$, where $f(x,y)$ is a continuous bivariate function,
-we can define a gradient: 
+we can define a gradient:
 <p class="fragment">
-$$ 
+$$
 \nabla z = ({\partial z \over \partial x}, {\partial z \over \partial y}) = (f_x,f_y)
 $$
 <p class="fragment">
-where $f_x$ and $f_y$ are first order partial derivatives of $f(x,y)$ 
+where $f_x$ and $f_y$ are first order partial derivatives of $f(x,y)$
 <p class="fragment">
-vector field that represents the <b>maximum rate of change</b> in elevation 
+vector field that represents the <b>maximum rate of change</b> in elevation
 and points in the direction of this change
 <p>
 <small><a href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/partial-derivatives/v/partial-derivatives-introduction">
@@ -107,12 +107,12 @@ $$
 
 <section>
    <h3>Steepest slope angle</h3>
-Given the surface gradient $\nabla z = (f_x,f_y)$, 
+Given the surface gradient $\nabla z = (f_x,f_y)$,
 the steepest slope magnitude $s[\%]$ is the gradient vector magnitude
 <p class="fragment">
 $$ s = 100 \sqrt {f_x^2 + f_y^2} $$
 <p class="fragment">
-and the steepest slope angle $\gamma$ is 
+and the steepest slope angle $\gamma$ is
 <p class="fragment">
 $$ \tan \gamma = \sqrt{f_x^2 + f_y^2} $$
 <ul>
@@ -120,7 +120,7 @@ $$ \tan \gamma = \sqrt{f_x^2 + f_y^2} $$
 <li class="fragment"> rise over run in direction of max elevation change
 </ul>
 <p class="fragment">
-<small>keep in mind that 
+<small>keep in mind that
 $$ (f_x,f_y)=({\partial z \over \partial x}, {\partial z \over \partial y})$$
 </small>
 </section>
@@ -149,7 +149,7 @@ the $0^{\circ}$ direction (E or N)
  <li class="fragment">controls flow direction and sun inclination angle
 </ul>
 <p class="fragment"><small>
- when only $f_x = 0, \tan \alpha = \inf$ and $\alpha = 90 degrees$, but when $f_x = f_y = 0$ then $\alpha$ is undefined  
+ when only $f_x = 0, \tan \alpha = \inf$ and $\alpha = 90 degrees$, but when $f_x = f_y = 0$ then $\alpha$ is undefined
 </small>
 </section>
 
@@ -168,7 +168,7 @@ $$ \tan \gamma_t =  \tan \gamma \cos(\alpha - \alpha_t) $$
 <p>
 <ul>
 <li> where $\gamma$ is the steepest slope angle.
-<li> $\alpha$ is  the steepest slope direction 
+<li> $\alpha$ is  the steepest slope direction
 </ul>
 <p class="fragment">Slope angle $\gamma_t$ is always smaller than $\gamma$
 <p class="fragment"> <small>Directional derivative: ${\partial z \over \partial s} = f_x \cos \alpha_t + f_y \sin \alpha_t$
@@ -178,7 +178,7 @@ $$ \tan \gamma_t =  \tan \gamma \cos(\alpha - \alpha_t) $$
 
 <section>
    <h3>Slope along a bus line </h3>
-Elevation contours, steepest slope map, bus route 
+Elevation contours, steepest slope map, bus route
 <p> <img height="450" src="img/topoanalysis/bus_toposlope_cont.jpg">
 <p><small>Arrows show steepest slope direction (red) and direction of route (purple)</small>
 </section>
@@ -186,7 +186,7 @@ Elevation contours, steepest slope map, bus route
 <section>
    <h3>Slope angle in the route direction</h3>
 Steepest slope angle and slope angle in the direction of bus route
-<p> 
+<p>
 <img height="370" src="img/topoanalysis/bus_route_toposlope.png">
 <img height="370" src="img/topoanalysis/bus_routeslope.png">
 </section>
@@ -209,7 +209,7 @@ Polynomial approximation on 3x3 moving window:
 <p>
 $$ z = f(x,y)=a_0+a_1 x + a_2 y + a_3 xy + a_4 x^2 + a_5 y^2 $$
 <ul>
-   <li class="fragment">we can write 9 equations to solve for $a_i$ parameters 
+   <li class="fragment">we can write 9 equations to solve for $a_i$ parameters
    <li class="fragment">more equations than needed - we use weighted least squares to fit the polynomial to the 9 grid points
 </ul>
 <p><img height="310" src="img/topoanalysis/movingwindow3x3a.png">
@@ -245,7 +245,7 @@ and slope and aspect histograms
    <h3>Shape metrics: curvatures</h3>
 Curvature at a point: inverse of the radius of a circle tangent to a curve $[m^{-1}]$
 <p class="fragment"> <img height="300" src="img/topoanalysis/curvatures_radius.png">
-<p class="fragment">Blue: Concave, Orange: Convex.  
+<p class="fragment">Blue: Concave, Orange: Convex.
 <p class="fragment">High curvature value is associated with smaller circle
 </section>
 
@@ -254,7 +254,7 @@ Curvature at a point: inverse of the radius of a circle tangent to a curve $[m^{
 <ul>
 <li class="fragment">In general, surface has <b>different curvatures in different directions</b>
 <li class="fragment"><b>Principal curvatures: </b>maximum and minimum curvatures $\kappa_1, \kappa_2$
-at a point, in perpendicular directions 
+at a point, in perpendicular directions
 <li class="fragment">Mean and Gaussian curvatures: $\kappa_M = (\kappa_1 + \kappa_2) /\, 2, \kappa_G = (\kappa_1 \kappa_2) /\, 2$
 <li class="fragment">Geomorphometric curvatures are related to processes: profile, tangential / plan
 </ul>
@@ -267,7 +267,7 @@ at a point, in perpendicular directions
 <li class="fragment">measures rate of change in slope
 <p>
     <ul>
-    <li class="fragment">convex: increasing slope - flow acceleration 
+    <li class="fragment">convex: increasing slope - flow acceleration
     <li class="fragment">concave: decreasing slope - flow deceleration
     </ul>
 </ul>
@@ -280,7 +280,7 @@ at a point, in perpendicular directions
 <li class="fragment">measures rate of change in aspect, curvature of contours
 <p>
     <ul>
-    <li class="fragment">convex: flow divergence 
+    <li class="fragment">convex: flow divergence
     <li class="fragment">concave: flow convergence
     </ul>
 </ul>
@@ -326,7 +326,7 @@ Methods to estimate curvatures from a DEM:
 Polynomial approximation on 3x3 moving window:
 $$ z = f(x,y)=a_0+a_1 x + a_2 y + a_3 xy + a_4 x^2 + a_5 y^2 $$
 <ul>
-   <li class="fragment">we use weighted least squares to fit the polynomial 
+   <li class="fragment">we use weighted least squares to fit the polynomial
    <li class="fragment">we estimate  $f_x, f_y, f_{xx}, f_{yy}, f_{xy}$ using weighted elevation differences
 and differences of differences
    <li class="fragment">we copmute the curvatures using equations for $\kappa_p, \kappa_t$
@@ -397,9 +397,9 @@ Tangential curvature computed using RST with high and lower tension
 <ul>
 <li>Peak: $\nabla z = 0$ and $\kappa_p, \kappa_t$ is convex-convex
 <li>Pit: $\nabla z = 0$ and $\kappa_p, \kappa_t$ is concave-concave
-<li>Saddle: $\nabla z = 0$ and $\kappa_p$ is convex, $\kappa_t$ is concave 
-<li>Ridge: $\nabla z \neq 0$ and $\kappa_t$ is convex 
-<li>Valley: $\nabla z \neq 0$ and $\kappa_t$ is concave 
+<li>Saddle: $\nabla z = 0$ and $\kappa_p$ is convex, $\kappa_t$ is concave
+<li>Ridge: $\nabla z \neq 0$ and $\kappa_t$ is convex
+<li>Valley: $\nabla z \neq 0$ and $\kappa_t$ is concave
 </ul>
 <p>
 <img height="220" src="img/topoanalysis/geomorph_legend.png">
@@ -407,8 +407,8 @@ Tangential curvature computed using RST with high and lower tension
 
 <section>
 <h3>Basic Landforms map</h3>
-Impact of moving window size on landform mapping 
-<br>(1m resolution DEM, 9x9, 45x45 window) 
+Impact of moving window size on landform mapping
+<br>(1m resolution DEM, 9x9, 45x45 window)
 <p>
 <img height="350" src="img/topoanalysis/landforms_9c1m.jpg">
 <img height="350" src="img/topoanalysis/landforms_45c1m.jpg">
@@ -429,17 +429,17 @@ to classification and mapping of landforms, Geomorphology, vol. 182, 147-156
 
 <section>
 <h3>Geomorphons</h3>
-Landforms for the entire US using a 30m resolution NED: 
+Landforms for the entire US using a 30m resolution NED:
 <p>
 <img height="350" src="img/topoanalysis/us_geom_26642.jpg">
-<p><small>Jasiewicz, J., Stepinski, T., 2013, Geomorphons - a pattern recognition approach 
-to classification and mapping of landforms, Geomorphology, vol. 182, 147-156 
+<p><small>Jasiewicz, J., Stepinski, T., 2013, Geomorphons - a pattern recognition approach
+to classification and mapping of landforms, Geomorphology, vol. 182, 147-156
 (DOI: 10.1016/j.geomorph.2012.11.005)</small>
 </section>
 
 <section>
 <h3>Geomorphons</h3>
-Mapping of tree crowns, buildings from lidar/UAS DSM 
+Mapping of tree crowns, buildings from lidar/UAS DSM
 <p>
 <img height="420" src="img/topoanalysis/geomorphon_trees_PT_IJGI.jpg">
 <img height="420" src="img/topoanalysis/geomorphons_buildings2.jpg">
@@ -460,14 +460,14 @@ Hardin, E., et al, 2014, GIS-based Analysis of Coastal Lidar Time-Series, Spring
 
 <section>
 <h3>Multitemporal DEMs: analysis</h3>
-Given $n$ DEM snaphots $z(i,j,t_k)  \quad k=1, ..., n$, per-cell operation can be used to derive: 
+Given $n$ DEM snapshots $z(i,j,t_k)  \quad k=1, ..., n$, per-cell operation can be used to derive:
 <p>
 <ul>
- <li class="fragment">Core surface: $z_{core}(i,j)=\min_k z(i,j,t_k)  \quad k=1, ..., n$  
- <li class="fragment">Envelope surface: $z_{env}(i,j)=\max_k z(i,j,t_k)  \quad k=1, ..., n$  
+ <li class="fragment">Core surface: $z_{core}(i,j)=\min_k z(i,j,t_k)  \quad k=1, ..., n$
+ <li class="fragment">Envelope surface: $z_{env}(i,j)=\max_k z(i,j,t_k)  \quad k=1, ..., n$
 <p>
- <li class="fragment">Time of max: $t_{max} (i,j) = t_l, \quad   {\rm where} \quad z(i,j,t_l) = z_{env}(i,j) $ 
- <li class="fragment">Time of min: $t_{min} (i,j) = t_p, \quad   {\rm where} \quad z(i,j,t_p) = z_{core}(i,j)$ 
+ <li class="fragment">Time of max: $t_{max} (i,j) = t_l, \quad   {\rm where} \quad z(i,j,t_l) = z_{env}(i,j) $
+ <li class="fragment">Time of min: $t_{min} (i,j) = t_p, \quad   {\rm where} \quad z(i,j,t_p) = z_{core}(i,j)$
 </ul>
 <p><small>
 Core surface is the minimum elevation and envelope surface as the maximum elevation measured at each cell over the given time period,
@@ -486,10 +486,10 @@ Nags Head: core, envelope, time of maximum
 
 <section>
 <h3>Multitemporal DEMs: analysis</h3>
-Discrete changes and a continuous rate of change 
+Discrete changes and a continuous rate of change
 <p>
 <ul>
- <li class="fragment">Building lost or new:  $z_{env}(i_c,j_c) - z_{core}(i_c,j_c) > h_b$  
+ <li class="fragment">Building lost or new:  $z_{env}(i_c,j_c) - z_{core}(i_c,j_c) > h_b$
  <p>
  <ul>
   <li class="fragment">Lost structure: $t_{max} (i_l,j_l)  <  t_{min} (i_l,j_l)$
@@ -500,9 +500,9 @@ Discrete changes and a continuous rate of change
 <!--
  <p>
  <ul>
-   <li class="fragment">$ r_s(i_e,j_e) < \varepsilon_e  \cap r_c(i_e,j_e) > r_{cmin}$ 
-   <li class="fragment">$ r_s(i_d,j_d) > \varepsilon_d  \cap r_c(i_d,j_d) > r_{cmin}$ 
-   <li class="fragment">where 
+   <li class="fragment">$ r_s(i_e,j_e) < \varepsilon_e  \cap r_c(i_e,j_e) > r_{cmin}$
+   <li class="fragment">$ r_s(i_d,j_d) > \varepsilon_d  \cap r_c(i_d,j_d) > r_{cmin}$
+   <li class="fragment">where
  </ul>
 -->
 </ul>
@@ -510,7 +510,7 @@ Discrete changes and a continuous rate of change
 
 <section>
 <h3>Multitemporal DEMs: analysis</h3>
-Nags Head: buildings, shoreline band, 
+Nags Head: buildings, shoreline band,
 <br>rate of elevation change (regression slope)
 <p>
 <img class="fragment" height="350" src="img/topoanalysis/NH_homes_picBot.png">

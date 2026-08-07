@@ -18,10 +18,10 @@ Compute and display voronoi polygons with centroids (clear data frame).
 ArcMap File->Add Data->Add Data...
 Select ncshape.mdb/elev_lid792_randpts
 Open the ArcToolbox
-Select 'Analysis Tools->Proximity->Create Thiessen Polygons' 
+Select 'Analysis Tools->Proximity->Create Thiessen Polygons'
 Set 'Input Features' to 'elev_lid792_randpts'
 Set 'Output Feature Class' to '.\Interpolation\elev_vor.shp'
-Set 'Output Fields' to 'ALL'    
+Set 'Output Fields' to 'ALL'
 Click 'OK'
 NOTE: this process may take a while...
 Select 'Data Management Tools->Features->Feature to Point'
@@ -40,7 +40,7 @@ Select 'Conversion Tools->To Raster->Polygon To Raster'
 Set 'Input Feature' to 'elev_vor'
 Set 'Value Field' to 'value_'
 Set 'Output Raster Dataset' to '.\Interpolation\elev_vor2m'
-Set 'Cellsize' to '2'         
+Set 'Cellsize' to '2'
 Click 'OK'
 </pre>
 
@@ -166,7 +166,7 @@ ArcMap File->Add Data->Add Data...
 Select ./Interpolation/Interpolation_terrain.mdb/terrain/elev_lid792_TER
 </pre>
 
-Compute a raster DEM from Terrain, 
+Compute a raster DEM from Terrain,
 <pre>
 Open the ArcToolbox (if it's not already open)
 Select '3D Analyst Tools->Conversion->From Terrain->Terrain to Raster'

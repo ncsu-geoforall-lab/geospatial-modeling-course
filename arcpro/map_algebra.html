@@ -44,7 +44,7 @@ Expression type= python 3
 Click on the empty acreage 'area_sq_meters=' field
 <i>double left click</i> on Count to add it to the equation
 Click on Multiply * button
-Type in 812.25 (i.e. area of each cell in square meters) 
+Type in 812.25 (i.e. area of each cell in square meters)
 The field should now look like- !COUNT! * 812.25
 Click 'Run'
 Note the new values in the area_sq_meters field
@@ -140,7 +140,7 @@ elid_793
 In the Geoprocessing pane, search for and select the 'Mosaic To New Raster' tool
 Set Input Rasters to 'elid_782' , 'elid_783' , 'elid_792' , 'elid_793'
 Set Output Location to your project gdb
-Set Raster dataset name to 'elev_6m.tiff' (you do not need an extention for GDB rasters)
+Set Raster dataset name to 'elev_6m.tiff' (you do not need an extension for GDB rasters)
 Set Spatial reference to match one of the inputs
 Set Pixel type to 32_BIT_FLOAT
 Set Number of Bands to 1
@@ -184,7 +184,7 @@ Type in the expression:
    Set Output raster to 'ndvi1'
 Click 'Run'
 In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
-Type in the expression: 
+Type in the expression:
    Float("lsat7_40" - "lsat7_30") / Float("lsat7_40" + "lsat7_30")
    Set Output raster to 'ndvi2'
 Click 'Run'
@@ -200,7 +200,7 @@ Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
 Select 'elev_ned'
 Select 'elev_srt'
 In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
-Type in the expression: "elev_srt" - "elev_ned"  
+Type in the expression: "elev_srt" - "elev_ned"
 Set Output raster to 'elev_diff'
 Click 'Run'
 </pre>
@@ -221,7 +221,7 @@ In the Map tab, in the Layer group, click 'Add Data'
 Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
 Select 'landcl96' (this layer may already be present in your project)
 In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
-Type in the expression: Con( ("landcl96" == 1) | ("landcl96" == 2),"landcl96",0)  
+Type in the expression: Con( ("landcl96" == 1) | ("landcl96" == 2),"landcl96",0)
 Set Output raster to 'calcmap5a'
 Click 'Run'
 </pre>
@@ -232,7 +232,7 @@ Alternatively use the 'pick' tool:
 <pre>
 In the Geoprocessing pane, search for and select the 'Pick' tool
 Set input position raster to 'landcl96'
-Set the input rasters as constant values: 1 and 2. 
+Set the input rasters as constant values: 1 and 2.
 Enter 1 and then 2 such that there are two entries (each value is on its own line).
 Set output raster to 'urban_pick'
 Click 'Run'
@@ -247,7 +247,7 @@ Select ncrast.mdb/landcl96 (this layer may already be present in your project)
 Select ncrast.mdb/lakes
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst->Map Algebra->Raster Calculator
-Type in the expression: Con(IsNull("lakes"), "landcl96", "lakes" / 1000) 
+Type in the expression: Con(IsNull("lakes"), "landcl96", "lakes" / 1000)
 Set output raster to '.\Map_algebra\luselakes'
 Click 'OK'
 </pre> -->
@@ -257,7 +257,7 @@ Create a map where all land use categories > 1 are set to null:
 
 <pre>
 In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
-Type in the expression: SetNull( "landcl96" > 1, "landcl96" )     
+Type in the expression: SetNull( "landcl96" > 1, "landcl96" )
 Set output raster to 'developed'
 Click 'Run'
 </pre>
@@ -267,7 +267,7 @@ Create mask for areas with elevation between 60 and 100m and land use 1 or 2:
 
 <pre>
 In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
-Type in the expression: 
+Type in the expression:
 SetNull( (("elev" &lt; 100) &amp; ("elev" > 60)) &amp; (("landcl96" == 1) | ("landcl96" == 2)), 1)
 Set output raster to 'mask'
 Click 'Run'

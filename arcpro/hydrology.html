@@ -47,7 +47,7 @@ Click 'Run'
 
 <p>
 Change the color table to something better -
-e.g. STRECHED  yellow-green-blue, histogram equalized (Strech type) works well.<br>
+e.g. STRETCHED  yellow-green-blue, histogram equalized (Stretch type) works well.<br>
 If the resolution of your screen is not good enough to see connected streams,
 zoom-in to see the detail.<br>
 Compare with streams digitized from high resolution orthophoto:
@@ -84,7 +84,7 @@ Click 'Run'
 
 <h3>Derive stream network and watersheds from 30m NED</h3>
 <!--Set your workspace and scratch workspace to C:\path\.Hydro
-<pre> 
+<pre>
 Geoprocessing>Environments>Workspace
 Add ncrast/elev_ned
 </pre>
@@ -96,7 +96,7 @@ In the Map tab, in the Layer group, click 'Add Data'
 Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
 select 'elev_ned'
 In the Geoprocessing pane, search for and select the 'Flow Direction' tool
-Set 'Input surface raster' tp 'elev_ned' 
+Set 'Input surface raster' tp 'elev_ned'
 Set 'Output flow direction raster' to 'FlowDir_el30'
 Click 'Run'
 
@@ -110,7 +110,7 @@ Set 'Input surface raster' to 'elev_ned'
 Set 'Output Surface Raster' to 'Fill_elev30'
 Click 'Run'
 </pre>
-Compute flow direction and flow accumulation 
+Compute flow direction and flow accumulation
 <pre>
 In the Geoprocessing pane, search for and select the 'Flow Direction' tool
 Set 'Input surface raster' to 'Fill_elev30'
@@ -142,5 +142,3 @@ Set 'Input raster or Pour point data' to 'Source30'
 Leave 'Pour point field' set to 'value'
 Set 'Output' to 'Watersheds30'
 </pre>
-
-

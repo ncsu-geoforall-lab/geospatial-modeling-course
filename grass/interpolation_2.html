@@ -33,7 +33,7 @@ without the need to specify the full path to the file.
 <h3>Explore impact of spline tension parameter on the interpolated surface</h3>
 Display the input scattered points with elevation stored as attribute named value. Then
 interpolate elevation rasters from these points using splines with different tension.
-Compute aspect simultaneously with interpolation and 
+Compute aspect simultaneously with interpolation and
 <span class="question">explain impact of tension by using tension=40 (default), tension=10 and tension=160.</span>
 
 <pre><code>
@@ -64,7 +64,7 @@ d.out.file asp_rst_t160
 </code></pre>
 
 <p>
-Or use 3D views of elev_rstdef_1m, elev_rstt10_1m, elev_rstt160_1m, 
+Or use 3D views of elev_rstdef_1m, elev_rstt10_1m, elev_rstt160_1m,
 make sure you switch off the aspect rasters and save the 3 images for your report.
 
 <h3>Explore impact of spline smoothing parameter on deviations of the interpolated surface </h3>
@@ -115,7 +115,7 @@ d.legend elev_rstsm10_devi at=2,50,2,6
 d.out.file elev_rstsm10_devi
 </code></pre>
 
-<span class="question">What is the difference in deviations in terms of summary statististics 
+<span class="question">What is the difference in deviations in terms of summary statististics
 and spatial pattern for the interpolation with the two different smoothing parameters?  </span>
 
 <h3>Compute predictive error of interpolation</h3>
@@ -124,7 +124,7 @@ using cross-validation (no raster output, result is points with predictive error
 
 <pre><code>
 d.erase
-v.surf.rst -c input=elev_lid792_randpts zcolumn=value cvdev=elev_rstdef_cv npmin=140 
+v.surf.rst -c input=elev_lid792_randpts zcolumn=value cvdev=elev_rstdef_cv npmin=140
 v.colors elev_rstdef_cv use=attr column=flt1 rules=deviations_color.txt
 v.univar elev_rstdef_cv column=flt1 type=point
 </code></pre>

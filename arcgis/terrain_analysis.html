@@ -47,7 +47,7 @@ Set 'Output raster' to '.\Analysis\Slope_el_srt'
 Set 'Output measurement' to 'DEGREE'
 Click 'OK'
 
-<i>right mouse click</i> 'Slope_el_srt->Properties->Symbology->Classify 
+<i>right mouse click</i> 'Slope_el_srt->Properties->Symbology->Classify
 </pre>
 
 <p>
@@ -72,10 +72,10 @@ Open ArcToolbox (if it's not already open)
 Select 3D Analyst Tools->Data Management->TIN->Create TIN
 Set 'Output TIN' to .\Analysis\lid792_tin
 Set 'Input feature class' to elev_lid792_randpts
-In the Input feature class list, find the "height_field" (2nd field from left). 
-Click on the entry for the elev_lid792_randpts (Shape_Z is displayed by default). 
-By clicking on the field it should convert to a drop-down list. 
-Click the down arrow to display your list of options and select "Value_".  
+In the Input feature class list, find the "height_field" (2nd field from left).
+Click on the entry for the elev_lid792_randpts (Shape_Z is displayed by default).
+By clicking on the field it should convert to a drop-down list.
+Click the down arrow to display your list of options and select "Value_".
 Click 'OK'
 </pre>
 
@@ -84,7 +84,7 @@ Click 'OK'
 Open the ArcToolbox (if it's not already open)
 Select '3D Analyst Tools-> terrain and TIN Surface -> Surface Slope'
 Set 'Input Surface' to 'lid792_tin'
-Set 'Output Feature Class' as '.\Analysis\lid792_tin_SurfaceSlope' 
+Set 'Output Feature Class' as '.\Analysis\lid792_tin_SurfaceSlope'
 Set 'Slope Units' to 'DEGREE'
 Click 'OK'
 
@@ -99,7 +99,7 @@ The default (ESRI) breaks (bins) are at 0.57, 1.43, 2.66, 5.71, 12.13, 24.89,
 Open the ArcToolbox (if it's not already open)
 Select '3D Analyst Tools-> Triangulated Surface -> Surface Slope'
 Set 'Input Surface' to 'lid792_tin'
-Set 'Output Feature Class' as '.\Analysis\lid792_tin_SurfaceSlope' 
+Set 'Output Feature Class' as '.\Analysis\lid792_tin_SurfaceSlope'
 Set 'Slope Units' to 'DEGREE'
 Click 'OK'
 </pre>
@@ -129,7 +129,7 @@ Click 'OK'
 Choose similar color table as for the TIN. To get more continuous color table:
 
 <pre>
-<i>right mouse click</i> 'Slope_elid72' 
+<i>right mouse click</i> 'Slope_elid72'
 Select 'Properties -> Symbology"
 Change Classes to 32
 Click 'OK'
@@ -139,4 +139,3 @@ Click 'OK'
 Compute the aspect and curvature.<br>
 For curvature change the color table to one that has lighter break in the middle.<br>
 <span class="question">Compare the resulting slope, aspect and curvature with the topographic parameters derived from TIN.</span>
-

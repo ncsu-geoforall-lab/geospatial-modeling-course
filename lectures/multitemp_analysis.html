@@ -13,7 +13,7 @@
     <h3>Outline (learning objectives)</h3>
 <p>
 <ul>
-   <li>raster time series analysis, 
+   <li>raster time series analysis,
    <li>quantification of coastal change
    <li>temporal framework
 </ul>
@@ -25,8 +25,8 @@
 <li class="fragment">Continuous surface measured at discrete points
 <p>
 <ul>
-  <li class="fragment">Human selected points 
-  <li class="fragment">Automated point sampling 
+  <li class="fragment">Human selected points
+  <li class="fragment">Automated point sampling
 </ul>
 <p>
 <li class="fragment">Terrestrial (land) surface
@@ -173,18 +173,18 @@ Single and multibeam sonar
   <h3>Digital Elevation Models</h3>
 <p>
 <ul>
- <li class="fragment">Regular grid (raster) 
- <li class="fragment">Unstructured meshes: Triangular Irregular Network (TIN) 
- <li class="fragment">Contours - elevation isolines derived from grid or TIN 
- <li class="fragment">Parametric Mesh: complex structures 
- <li class="fragment">Unstructured point clouds: measured data 
+ <li class="fragment">Regular grid (raster)
+ <li class="fragment">Unstructured meshes: Triangular Irregular Network (TIN)
+ <li class="fragment">Contours - elevation isolines derived from grid or TIN
+ <li class="fragment">Parametric Mesh: complex structures
+ <li class="fragment">Unstructured point clouds: measured data
 </ul>
 </section>
 
 <section>
   <h3>Regular grid: raster DEM</h3>
 <p>
-Derived from measured points by gridding: 
+Derived from measured points by gridding:
 <p>
 <ul>
 <li class="fragment">if there is at least one point for each grid cell – binning, per-cell statistics
@@ -210,7 +210,7 @@ From given scattered points to points at regular grid
 <li class="fragment">uniform resolution - potential for undersampling and oversampling
 <li class="fragment">representation of faults and sharp breaklines requires very high resolution
 </ul>
-<p class="fragment"><small>Most public elevation data are distributed as raster DEM through 
+<p class="fragment"><small>Most public elevation data are distributed as raster DEM through
 <a href="https://ncsu-geoforall-lab.github.io/geospatial-modeling-course/resources/data_providers.html">
 On-line repositories</a></small>
 </section>
@@ -240,15 +240,15 @@ From given scattered points to Delaunay TIN
 <p>
 <ul>
 <li class="fragment">requires pre-defined breaklines for man-made features, valleys, faults, etc.
-<li class="fragment">density of TIN is adjusted to surface complexity 
+<li class="fragment">density of TIN is adjusted to surface complexity
 <li class="fragment">additional points may need to be interpolated to create smooth surface
 </ul>
 
-<p class="fragment">When to use TIN: 
+<p class="fragment">When to use TIN:
 <ul>
-<li class="fragment">engineering applications, 
-<li class="fragment">manual modification of model is desired(design), 
-<li class="fragment">complex faults need to be represented, 
+<li class="fragment">engineering applications,
+<li class="fragment">manual modification of model is desired(design),
+<li class="fragment">complex faults need to be represented,
 <li class="fragment">multiscale representation for visualization
 </ul>
 </section>
@@ -257,7 +257,7 @@ From given scattered points to Delaunay TIN
    <h3>TIN issues</h3>
 <p>
 <ul>
-<li class="fragment">discontinuity in first derivative along edges: artificial triangular structures on the surface 
+<li class="fragment">discontinuity in first derivative along edges: artificial triangular structures on the surface
 <li class="fragment">dams can be created across valleys if stream is not defined as a breakline
 </ul>
 <p class="fragment"> <img height="365" src="img/geomorph_terrain/TINgrassnvizrand2.jpg">
@@ -267,7 +267,7 @@ From given scattered points to Delaunay TIN
 <section>
    <h3>TIN issues</h3>
 <p>
-If input are points on contours: flats on the top of hills or ridges if no peaks are defined 
+If input are points on contours: flats on the top of hills or ridges if no peaks are defined
 <p> <img height="355" src="img/geomorph_terrain/TINgrassnviz2.jpg">
 </p>
 </section>
@@ -275,8 +275,8 @@ If input are points on contours: flats on the top of hills or ridges if no peaks
 <section>
    <h3>Elevation isolines: contours</h3>
 <ul>
-<li class="fragment">traditional approach for representation of elevation, drawn by hand from measured mass points by interpolating along triangle edges 
-<li class="fragment">automated procedures: from TIN or grid, 
+<li class="fragment">traditional approach for representation of elevation, drawn by hand from measured mass points by interpolating along triangle edges
+<li class="fragment">automated procedures: from TIN or grid,
 <li class="fragment">not very suitable for highly detailed, noisy  data such as lidar
 <li class="fragment">very useful when the surface has simple geometry
 <li class="fragment">selecting contour interval: depends on slope and resolution
@@ -301,16 +301,16 @@ If input are points on contours: flats on the top of hills or ridges if no peaks
    <h3>Point clouds</h3>
 <p>
 <ul>
-<li class="fragment">Set of $(x, y, z, r, i, ...)$ measured points reflected from Earth surface or objects on or above it, 
+<li class="fragment">Set of $(x, y, z, r, i, ...)$ measured points reflected from Earth surface or objects on or above it,
 <ul>
-<li class="fragment">$x,y,z$ are georeferenced coordinates, 
-<li class="fragment">r is the return number and 
-<li class="fragment">i is intensity, 
-<li class="fragment">r:g:b may be also measured 
+<li class="fragment">$x,y,z$ are georeferenced coordinates,
+<li class="fragment">r is the return number and
+<li class="fragment">i is intensity,
+<li class="fragment">r:g:b may be also measured
 </ul>
-<li class="fragment">Formats 
+<li class="fragment">Formats
 <ul>
-<li class="fragment">ASCII (x,y,z, ...) format 
+<li class="fragment">ASCII (x,y,z, ...) format
 <li class="fragment">binary LAS and LAZ format: industry lidar data exchange format
 <li class="fragment">header, record info, x,y,z,i, scan dir, edge of flight line, time, classification, etc.
 </ul>
@@ -319,7 +319,7 @@ If input are points on contours: flats on the top of hills or ridges if no peaks
 
 <section>
    <h3>Multiple return point clouds</h3>
-<p> 
+<p>
 <img height="355" src="img/geomorph_terrain/points3d.png">
 </p>
 </section>
@@ -334,7 +334,7 @@ If input are points on contours: flats on the top of hills or ridges if no peaks
 <ul>
 <li class="fragment">bare earth point extraction
 <li class="fragment">canopy extraction
-<li class="fragment">structures and power lines extraction 
+<li class="fragment">structures and power lines extraction
 </ul>
 <li class="fragment">computing DEMs
 </ul>
@@ -355,7 +355,7 @@ If input are points on contours: flats on the top of hills or ridges if no peaks
 <p>
 Binning: fast method for analyzing point clouds and generating DEMs using per-cell processing
 <ul>
-<li class="fragment">analysis: number of points per cell, range, stddv 
+<li class="fragment">analysis: number of points per cell, range, stddv
 <li class="fragment">Methods for DEM: mean, min, max, nearest
 <li class="fragment">sufficient for many applications
 <li class="fragment">no need to import the points, on-fly raster generation
@@ -419,7 +419,7 @@ Binning: fast method for analyzing point clouds and generating DEMs using per-ce
 
 <section>
    <h3>Point density: 2013 Wake county lidar</h3>
-<p>Number of points per 1m grid cell: all returns and first return 
+<p>Number of points per 1m grid cell: all returns and first return
 <p> <img height="300" src="img/geomorph_terrain/lid2013_all_n_3ftb.png">
 <img height="300" src="img/geomorph_terrain/lid2013_1r_n_3ftb.png">
 </p>
