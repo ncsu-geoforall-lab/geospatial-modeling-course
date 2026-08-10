@@ -126,6 +126,10 @@ A list of what should be changed, updated or checked for new semester
 in the web pages.
 
 * change dates in the schedule (in this repository)
+* upload the official syllabus using the
+  [syllabus tool](https://sis.emas.ncsu.edu/faculty/online-syllabi/) in MyPack
+  Portal and update the Class Search snapshot link in `index.html`
+  (the URL is term-specific)
 * update links to the Moodle site
 * create a new page for project titles and link it
 * search for all other occurrences of string `term-changes` and update

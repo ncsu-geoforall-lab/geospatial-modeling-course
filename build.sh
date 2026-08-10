@@ -28,7 +28,8 @@ done
 
 # for backwards compatibility, remove next semester
 build_page "index.html" "syllabus.html"
-build_page "logistics.html" "intro.html"
+build_page "policies.html" "intro.html"
+build_page "policies.html" "logistics.html"
 
 for DIR in grass arcgis arcpro resources project_titles topics
 do
@@ -63,8 +64,8 @@ If you are a non-NCSU visitor, you may find these additional pages useful:
 <ul>
     <li><a href='../topics/grass.html'>Introduction to GRASS</a>
     <li><a href='../lectures.html'>Lectures</a>
-    <li><a href='../logistics.html#software'>Software download instructions</a>
-    <li><a href='../logistics.html#data'>Dataset download instructions</a>\
+    <li><a href='../policies.html#software'>Software download instructions</a>
+    <li><a href='../policies.html#data'>Dataset download instructions</a>\
 </ul>
 "
 DIR="grass"
