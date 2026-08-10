@@ -1,18 +1,19 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-import sys
-import fileinput
 import re
+import sys
 
-block_start = re.compile(r'^\s*<pre ?.*><code ?.*>\s*$')
+block_start = re.compile(r"^\s*<pre ?.*><code ?.*>\s*$")
 
-for line in fileinput.input():
+for line in sys.stdin:
     # ignore header
-    line = re.sub(r'<em class="module">([^<]*)</em>',
-                  r'<em class="module"><a href="https://grass.osgeo.org/grass76/manuals/\1.html">\1</a></em>',
-                  line)
+    line = re.sub(
+        r'<em class="module">([^<]*)</em>',
+        r'<em class="module"><a href="https://grass.osgeo.org/grass-stable/manuals/\1.html">\1</a></em>',
+        line,
+    )
     if block_start.search(line):
-        line = line.rstrip(' \t\n')
+        line = line.rstrip(" \t\n")
         sys.stdout.write(line)
     else:
         sys.stdout.write(line)

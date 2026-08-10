@@ -1,7 +1,7 @@
 <h2>Geospatial Analysis II:  buffers, cost surfaces, least cost path</h2>
 <p>Resources:
 <ul>
-<li><a href="https://grass.osgeo.org/grass83/manuals/index.html">
+<li><a href="https://grass.osgeo.org/grass-stable/manuals/index.html">
 GRASS overview and manual</a></li>
 <li> <a href="data_acquisition.html#commands">Recommendations</a>
 and <a href="./grass_intro.html">tutorial</a>
@@ -64,7 +64,7 @@ d.vect streets_wake
 d.legend -c noise at=5,25,2,5
 </code></pre>
 
-<span class="question">What is the total developed area iin [ha] 
+<span class="question">What is the total developed area iin [ha]
 within the 250m from the major roads?</span>
 
 <h4>Find schools potentially affected by high levels of noise</h4>
@@ -229,12 +229,12 @@ r.describe route_52Hollyb
 <p>Do it yourself</p>
 <p>
 <span class="question">
-Find least cost path between the Jordan hall and the Johnson lake dam. 
-Use previously created streets_travtime as your input cost. 
-Provide the workflow and two maps 
-1. Map showing the cumulative cost to get to the Johnson lake dam (start_coordinates=636333,223465) 
+Find least cost path between the Jordan hall and the Johnson lake dam.
+Use previously created streets_travtime as your input cost.
+Provide the workflow and two maps
+1. Map showing the cumulative cost to get to the Johnson lake dam (start_coordinates=636333,223465)
 2. Map showing the resulting least cost path from Jordan Hall (start_coordinates=638875,225450)
- converted to a vector line shown in red. For both maps include streets_wake for context. 
+ converted to a vector line shown in red. For both maps include streets_wake for context.
  What is the least cost path distance in kilometers between the two locations and how much time in minutes is needed to get to the target destination?
 Hint: You don’t need to import the coordinates of the two sites, as they can be provided as input parameters.
 </span>
@@ -250,15 +250,15 @@ and change display to 3D.
 
 <h4>Compute accessibility map for help in search for lost person</h4>
 
-Given a point where a lost person was last located we compute a map that represents how far 
+Given a point where a lost person was last located we compute a map that represents how far
 the person could have walked within the surrounding environment.
 The environmental variables for accessibility are derived from elevation, land use
-and streets using the equation in the <em class="module">r.walk</em> manual page and 
+and streets using the equation in the <em class="module">r.walk</em> manual page and
 the <a href="data/friction_rules.txt">friction_rules.txt</a> file.
 <p>
 First, create friction map based on land cover.<br>
 Note: We remove previously used map layers in the <em>Layer Manager</em>
-or using the <em class="module">d.erase</em> tool, 
+or using the <em class="module">d.erase</em> tool,
 so the layers are not rendered when we don't need them anymore.<br>
 Set the computational region and display land cover classes:
 
@@ -269,7 +269,7 @@ r.category landclass96
 </code></pre>
 
 <p>
-Recode the landuse map to friction map using the rules in 
+Recode the landuse map to friction map using the rules in
 <a href="data/friction_rules.txt">friction_rules.txt</a>.<br>
 
 <pre><code>
@@ -341,8 +341,8 @@ d.rast lakes_buff
 <p>
 List categories in land use map to identify category numbers for developed areas.
 Then run <em class="module">r.mapcalc</em> to extract the developed areas within the buffers
-and use <em class="module">r.support</em> to assign the labels from the original buffer raster 
-to the new developed buffer raster map (needed for legend): 
+and use <em class="module">r.support</em> to assign the labels from the original buffer raster
+to the new developed buffer raster map (needed for legend):
 
 <pre><code>
 r.category landuse96_28m

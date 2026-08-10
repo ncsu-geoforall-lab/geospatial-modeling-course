@@ -3,7 +3,7 @@
 <a href="https://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
 Create folder Map_algebra in your preferred workspace.
-Include resulting maps into your report 
+Include resulting maps into your report
 (use your judgment to decide which results to include).
 
 <p>
@@ -43,7 +43,7 @@ Click YES
 <pre>
 <i>double left click</i> on Count to populate equation in the bottom menu
 Click on Multiply * button
-Type in 812.25 (i.e. area of each cell in square meters) 
+Type in 812.25 (i.e. area of each cell in square meters)
 Click 'OK'
 Note the new values in the area_sq_meters field
 Close the Table
@@ -180,7 +180,7 @@ Type in the expression:
    Set Output raster to './Map_algebra/ndvi1
 Click 'OK'
 Select 'Spatial Analyst->Raster Calculator
-Type in the expression: 
+Type in the expression:
    Float("lsat7_40" - "lsat7_30") / Float("lsat7_40" + "lsat7_30")
    Set Output raster to './Map_algebra/ndvi2
 Click 'OK'
@@ -196,7 +196,7 @@ Select ncrast.mdb/elev_ned
 Select ncrast.mdb/elev_srt
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst->Map Algebra->Raster Calculator
-Type in the expression: "elev_srt" - "elev_ned"  
+Type in the expression: "elev_srt" - "elev_ned"
 Set Output raster to './Map_algebra/elev_diff
 Click 'OK'
 </pre>
@@ -219,8 +219,8 @@ File->Add Data->a Add Data...
 Select ncrast.mdb/landcl96
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst->Map Algebra->Raster Calculator
-Type in the expression: Con( ("landcl96" == 1) | ("landcl96" == 2),"landcl96",0)  
-(Note: in ArcGIS 10 map algebra components are case-sensitive - i.e. con != Con) 
+Type in the expression: Con( ("landcl96" == 1) | ("landcl96" == 2),"landcl96",0)
+(Note: in ArcGIS 10 map algebra components are case-sensitive - i.e. con != Con)
 Set Output raster to './Map_algebra/calcmap5a
 Click 'OK'
 </pre>
@@ -232,7 +232,7 @@ Alternatively use the 'pick' operation:
 Open the ArcToolbox (if not already open)
 Select Spatial Analyst Tools->Conditional->Pick
 Set input position raster to landcl96
-Set the input rasters as constant values: 1 and 2. 
+Set the input rasters as constant values: 1 and 2.
 Enter 1 and then 2 such that there are two entries (each value is on its own line).
 Set output raster to '.\Map_algebra\urban_pick'
 Click 'OK'
@@ -247,7 +247,7 @@ Select ncrast.mdb/landcl96 (this layer may already be present in your project)
 Select ncrast.mdb/lakes
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst->Map Algebra->Raster Calculator
-Type in the expression: Con(IsNull("lakes"), "landcl96", "lakes" / 1000) 
+Type in the expression: Con(IsNull("lakes"), "landcl96", "lakes" / 1000)
 Set output raster to '.\Map_algebra\luselakes'
 Click 'OK'
 </pre> -->
@@ -258,7 +258,7 @@ Create a map where all land use categories > 1 are set to null:
 <pre>
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst->Map Algebra->Raster Calculator'
-Type in the expression: SetNull( "landcl96" > 1, "landcl96" )     
+Type in the expression: SetNull( "landcl96" > 1, "landcl96" )
 Set output raster to '.\Map_algebra\developed'
 Click 'OK'
 </pre>
@@ -272,7 +272,7 @@ Select ncrast.mdb/landcl96 (this layer may already be present in your project)
 Select ncrast.mdb/elev   (this layer may already be present in your project)
 Open the ArcToolbox (if not already open)
 select 'Spatial Analyst->Map Algebra->Raster Calculator'
-Type in the expression: 
+Type in the expression:
 SetNull( (("elev" &lt; 100) &amp; ("elev" > 60)) &amp; (("landcl96" == 1) | ("landcl96" == 2)), 1)
 Set output raster to 'mask'
 </pre>

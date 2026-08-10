@@ -1,6 +1,6 @@
 <h2>Geomorphometry I: Terrain Modeling</h2>
 <p>
-Resources: <a href="https://grass.osgeo.org/grass83/manuals/index.html">
+Resources: <a href="https://grass.osgeo.org/grass-stable/manuals/index.html">
 GRASS overview and manual</a>,
 <a href="https://liblas.org/"> libLAS tools for lidar data conversions</a>
 
@@ -28,7 +28,7 @@ r.in.lidar --help
 </code></pre>
 
 On Windows platform, please use the standalone version of GRASS
-we recommend in <a href="../logistics.html">Course Logistics</a>.
+we recommend in <a href="../policies.html">Course Policies and Logistics</a>.
 If the modules don't work for you, please use instead of this assignment the
 <a href="terrain_modeling_ascii.html">ASCII file based version</a>
 of the assignment.
@@ -57,7 +57,7 @@ or it can be displayed with <a href="https://liblas.org/">lasinfo</a> tool (in c
 lasinfo tile_0793_016_spm.las
 </code></pre>
 Class 2 represents bare earth points.<br>
-Now we import bare earth points and first return points separately (add -o flag to the command 
+Now we import bare earth points and first return points separately (add -o flag to the command
 if you are getting error that the projection does not match the project projection):
 
 <pre><code>
@@ -136,7 +136,7 @@ d.out.file lid1rmean2m
 
 <span class="question">Why are there holes in the binned DEMs?
 Why is the first return map mostly green (where is the orange-brown elevation?)
-Adjust the r.colors command for lid_1r_binmean2m that will redistribute the colors 
+Adjust the r.colors command for lid_1r_binmean2m that will redistribute the colors
 so that the topographic features are well represented. Hint, see assignment 2. Include
 the adjusted map in your report.
 </span>
@@ -181,7 +181,7 @@ d.out.file mylid_1rrange2m
 We now know how dense the data are at 1m and 2m resolution
 and what is the range of elevation values within a grid cell.<br>
 If we need a 1m resolution DTM or DSM for our application
-this analysis tells us that the fast binning is not enough 
+this analysis tells us that the fast binning is not enough
 and we need to interpolate it from the point cloud.
 <!--
 <span class="question">What steps would you begin with when processing
@@ -236,8 +236,8 @@ Save image for your report.
 
 Visualizing the raw points in point clouds can be time consuming both in 2D and
 3D, however several tools for doing so in an efficient way exist. Try to
-use <a href="https://plas.io/">plas.io</a> or 
-<a href="https://potree.org/potree/examples/viewer.html"> potree</a>, 
+use <a href="https://plas.io/">plas.io</a> or
+<a href="https://potree.org/potree/examples/viewer.html"> potree</a>,
 online point cloud visualization tools to visualize the LAS file from this assignment.
 Explore the provided visualization tools and create images
 showing different properties of the point cloud or the visualization
@@ -250,10 +250,10 @@ Compute different surfaces by binning while exploring what different returns and
 Then create a raster map of classes: 1 - ground, 2 - vegetation, 3 - buildings
 
 lasinfo tile_0793_016_spm.las
-#	341246 Unclassified (1) 
-#	560224 Ground (2) 
-#	25 Low Point (noise) (7) 
-#	844382 Reserved for ASPRS Definition (11) 
+#	341246 Unclassified (1)
+#	560224 Ground (2)
+#	25 Low Point (noise) (7)
+#	844382 Reserved for ASPRS Definition (11)
 
 # create DSM
 
@@ -273,7 +273,7 @@ r.mapcalc "classes = if( ! isnull(tile16_last_mean), 2, if( !isnull( tile16_grou
 
 # set colors, copy and paste the following color rules into "or enter values directly" text field located in Define tab (option rules)
 
-r.colors map=classes 
+r.colors map=classes
 1 220:220:180
 2 0:180:0
 3 150:0:0
@@ -309,4 +309,3 @@ nviz elev_lidrural_1m,elev_lidrurfirst_1m
 <font color="#000066">
 # save image for report, if you don't have tiff support, use screen capture tool
 -->
-

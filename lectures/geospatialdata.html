@@ -14,7 +14,7 @@
   <li class="fragment">Understand the diversity of geospatial data sources</li>
   <li class="fragment">Classify modern mapping technologies</li>
   <li class="fragment">Understand the concept of georeferenced data</li>
-  <li class="fragment">Explain priciples of coordinate reference systems (CRS)</li>
+  <li class="fragment">Explain principles of coordinate reference systems (CRS)</li>
   <li class="fragment">Define raster and vector data models
   <li class="fragment">Distinguish between continuous and discrete phenomena
 <!--<li class="fragment"><strong>Use</strong> the proper terminology and <strong>understand</strong> its meaning</li>-->
@@ -23,7 +23,7 @@
 
 <section>
    <h3>Geospatial data acquisition</h3>
-<p>Current revolution in mapping technologies: 
+<p>Current revolution in mapping technologies:
 <p>Continuous data collection anywhere by anyone
 <br>
 <!-- <p>Have you ever collected geospatial data?
@@ -49,12 +49,12 @@ Emergence of autonomous platforms: air, ground, water </p>
 
 <section>
    <h3>Remote sensing: passive</h3>
-<p>Numerous satellite and airborne platforms and sensors, for example:  
+<p>Numerous satellite and airborne platforms and sensors, for example:
 <ul>
  <li class="fragment"><a href="https://www.usgs.gov/core-science-systems/nli/landsat">
-Landsat 1-9:</a> landcover since 1972, 30m, multispectral 
+Landsat 1-9:</a> landcover since 1972, 30m, multispectral
  <li class="fragment"><a href="https://terra.nasa.gov/">
-Terra:</a> MODIS temperature 250m; ASTER radiance, DEM  
+Terra:</a> MODIS temperature 250m; ASTER radiance, DEM
  <li class="fragment"><a href="https://sentinels.copernicus.eu/web/sentinel/home">
 SENTINEL 1-5P:</a> landcover, temperature, ocean currents, atmosphere, multispectral
  <li class="fragment">
@@ -148,7 +148,7 @@ See <a href="https://earthdata.nasa.gov/user-resources/remote-sensors">overview 
 
 <section>
    <h3>Non-traditional data sources</h3>
-<p>Widespread GPS enabled technology: 
+<p>Widespread GPS enabled technology:
 <p>
 <ul>
  <li class="fragment">smartphones, tablets (GPS and lidar)
@@ -177,8 +177,8 @@ Pedestrian density patterns from webcams</a> by Anna Petrasova
 <section>
    <h3>From mapping to GIS</h3>
 <p>
-Acquired data are transformed into georeferenced, 
-discrete representations of landscape features 
+Acquired data are transformed into georeferenced,
+discrete representations of landscape features
 <p>
 <ul>
 <li class="fragment">georeferencing (often in real-time using GPS)
@@ -191,14 +191,14 @@ discrete representations of landscape features
 <section>
    <h3>Georeferencing</h3>
 <p>
-Georeferenced data: location on Earth is represented in a <strong>Coordinate Referenced System (CRS)</strong> 
+Georeferenced data: location on Earth is represented in a <strong>Coordinate Referenced System (CRS)</strong>
 <p>
 <ul>
-<li>geodetic (geographic) coordinate system: 
+<li>geodetic (geographic) coordinate system:
 <br>geoid -- ellipsoid -- latitude/longitude
 <p>
 <li>projected reference systems:
-<br>geoid -- ellipsoid -- developable surface -- plane -- x,y 
+<br>geoid -- ellipsoid -- developable surface -- plane -- x,y
 </ul>
 </section>
 
@@ -220,7 +220,7 @@ Georeferenced data: location on Earth is represented in a <strong>Coordinate Ref
    <h3>Projected CRS</h3>
 <p>
 Projected reference systems (there are many):
-<br>geoid -- ellipsoid -- developable surface -- plane -- x,y 
+<br>geoid -- ellipsoid -- developable surface -- plane -- x,y
 <p><img height="200" src="img/data_acquisition/crs_projected.jpg">
 <ul>
 <li>developable surfaces: conic, cylindrical, azimuthal
@@ -238,11 +238,11 @@ Cartographic projections by Furuti</a> </small>
 Defined by:
 <ul>
 <li class="fragment">Reference spheroid/geoid and datum: <br> e.g. GRS80-NAD83, WGS84, NATR2022
-<li class="fragment">Projection and its parameters, e.g. : 
+<li class="fragment">Projection and its parameters, e.g. :
   <ul>
   <li class="fragment">Lambert Conformal Conic (LCC): states in US
   <li class="fragment">Universal Transverse Mercator (UTM): USGS, military
-  <li class="fragment">Albers Equal Area (conic): USGS national map 
+  <li class="fragment">Albers Equal Area (conic): USGS national map
   </ul>
 <li class="fragment">Vertical datum: e.g. NAVD88, NAPGD2022
 </ul>
@@ -261,7 +261,7 @@ International Organization of Oil and Gas Producers (OGP) Surveying and Position
 established standard for CRS definition with assigned EPSG codes
 (initiated by European Petroleum Survey Group - EPSG)
 -->
-<p class="fragment">EPSG codes and CRS representation in many formats is avaiable
+<p class="fragment">EPSG codes and CRS representation in many formats is available
 at <a href="https://epsg.io/">epsg.io</a>
 or <a href="https://spatialreference.org/">Spatial Reference website</a>
 Example: <a href="https://epsg.io/4326">EPSG:4326</a> WGS84 used in GPS
@@ -281,7 +281,7 @@ Search for NC at <a href="https://epsg.io/">epsg.io</a> returns 72! CRS
   <li><a href="https://epsg.io/3358">3358</a> NAD83(HARN)/NC(meter)
   <li><a href="https://epsg.io/3358">3404</a> NAD83(HARN)/NC(feet)
 </ul>
-<p><small>Projected CRS EPSG 3358 includes geoid to elipsoid projection (EPSG 4152) 
+<p><small>Projected CRS EPSG 3358 includes geoid to elipsoid projection (EPSG 4152)
 and elipsoid to plane projection (3358), the units on the map are meters, not degrees
 <br>New CRS: North Carolina State Plane Coordinate System (NCSPCS) 2022
 </small>
@@ -290,17 +290,17 @@ and elipsoid to plane projection (3358), the units on the map are meters, not de
 
 <!--
 <section>
-   <h3>Popular Visualization CRS</h3> 
+   <h3>Popular Visualization CRS</h3>
 <p>
-Most common in on-line mapping systems: 
+Most common in on-line mapping systems:
 <br>Pseudo-Mercator
 <p>
 EPSG statement
 <p class=small>We have reviewed the coordinate reference system used by Google, etc.
-and believe that it is technically flawed. We will not devalue the EPSG dataset by 
+and believe that it is technically flawed. We will not devalue the EPSG dataset by
 including such inappropriate geodesy and cartography.
 <br>
-In 1989, North American professional geographic organizations  
+In 1989, North American professional geographic organizations
 called for a ban on all rectangular coordinate maps (especially Mercator).
 </p>
 <p class=credit>
@@ -314,7 +314,7 @@ https://geography.about.com/library/weekly/aa030201b.htm
 <p>
 The reference system was eventually included as
 <a href="https://epsg.io/3857">EPSG 3857</a>
-3785 
+3785
 - it is not recommended for professional work
     <p><img src="img/data_acquisition/mercatorproj.gif" width="70%">
 <p>See explanation of the distortions animation and equations in an article about
@@ -329,7 +329,7 @@ The reference system was eventually included as
 compared with Winkel-Tripel projection with more realistic representation</small>
     <p><img src="img/data_acquisition/PseudoMercatorworld.jpg" width="40%">
     <img src="img/data_acquisition/Winkel-tripel-projection.jpg" width="50%">
-<small>Although the EPSG committee stated that they will not devalue the EPSG dataset by 
+<small>Although the EPSG committee stated that they will not devalue the EPSG dataset by
 including such inappropriate geodesy and cartography, Pseudo Mercator was eventually included as
 <a href="https://epsg.io/3857">EPSG 3857</a>
 - it is not recommended for professional work</small>
@@ -341,14 +341,14 @@ including such inappropriate geodesy and cartography, Pseudo Mercator was eventu
 Representation of coordinate systems in GIS
 <ul>
  <li>Metadata file
- <li>EPSG codes   
- <li>ESRI PRJ file 
- <li>PROJ format 
+ <li>EPSG codes
+ <li>ESRI PRJ file
+ <li>PROJ format
  <li>Transition towards ISO WKT 19162:2018 international standard notation (WKT)
 </ul>
 <p ><small>EPSG translated to input parameters of the PROJ software
 <br>NAD83(High Accuracy Reference Network HARN) / North Carolina
-<br><3358> +proj=lcc +lat_1=36.16666666666666 +lat_2=34.33333333333334 
+<br><3358> +proj=lcc +lat_1=36.16666666666666 +lat_2=34.33333333333334
 <br>+lat_0=33.75 +lon_0=-79 +x_0=609601.22 +y_0=0 +ellps=GRS80 +units=m +no_defs
 </small>
 </p>
@@ -367,11 +367,11 @@ Geospatial data often come in different CRS, e.g.:
 <p>
 Coordinate transformations
 <p>
-<b>x,y -> longitude, latitude -> x’,y’</b> 
+<b>x,y -> longitude, latitude -> x’,y’</b>
 <p class=small>
 often performed on-fly, may be inaccurate and time consuming
 <ul>
-   <li>first reproject all data into a suitable common CRS 
+   <li>first reproject all data into a suitable common CRS
    <li>then perform analysis and modeling
 </ul>
 </p>
@@ -636,7 +636,7 @@ Coupled with PROJ library it also provides coordinate system transformations
 <ul>
   <li>we provided overview of modern technologies for geospatial data acquisition
   <li>we explained the concept of coordinate reference systems and related standards
-  <li>we introduced raster and vector data models and showed how they are used to represent 
+  <li>we introduced raster and vector data models and showed how they are used to represent
       continuous and discrete geographic phenomena
 </ul>
 </section>
@@ -644,7 +644,7 @@ Coupled with PROJ library it also provides coordinate system transformations
 <!--
 <section>
  <h3>Reading, resources</h3>
-<p>Explore <a href="https://thetruesize.com/">The true size</a> 
+<p>Explore <a href="https://thetruesize.com/">The true size</a>
 links
 </section>
 -->

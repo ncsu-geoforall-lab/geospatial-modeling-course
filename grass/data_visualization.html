@@ -16,13 +16,13 @@ how to use GUI from the first assignment</li>
 
 
 <h3>Start GRASS</h3>
-Your <strong>current mapset</strong> should be a previously created <em>assignment2</em> 
+Your <strong>current mapset</strong> should be a previously created <em>assignment2</em>
 in the <em>nc_spm_08_grass7</em> project, you can continue working in it or create a new mapset
 (e.g., assignment2b) following the instructions from the previous assignments.
 
 <p>
-To save your outputs and to store external data change your working directory 
-to the one that you created in previous assignment e.g., 
+To save your outputs and to store external data change your working directory
+to the one that you created in previous assignment e.g.,
 <em>C:\Users\myname\Documents\GIS582_HW\report2</em>,
 type <code>cd</code> into <em>Console</em> and hit Enter:
 <pre><code>
@@ -40,12 +40,12 @@ and other display behavior in GUI settings.
 
 <h3>Basic 2D display operations</h3>
 GUI is recommended for the tasks below, see the <a href="data_acquisition.html#commands">
-GUI equivalents for selected d* commands</a>, the command line instructions below are 
+GUI equivalents for selected d* commands</a>, the command line instructions below are
 to indicate the workflow and output.
 
 <!--
 <h4>Display subset of raster data</h4>
-Visualy explore relation between developed areas and topography.
+Visually explore relation between developed areas and topography.
 Remove all previously used layers from the <em>Layer Manager</em>, then set region and
 display land use categories 1, 2 (developed land) over shaded topography.<br>
 <em>Settings</em> > <em>Region</em> > <em>Set region</em> > <em>Set region to match this raster</em> > select "landuse96_28m".<br>
@@ -67,8 +67,8 @@ d.out.file landuse_elev
 -->
 
 <h4>Display color composite and a subset of raster data</h4>
-Visualy explore the development in the 1996 land use map layer and the 2002 landsat imagery
-using similar approach as with the shaded elevation above, but here we use a landsat 2002 
+Visually explore the development in the 1996 land use map layer and the 2002 landsat imagery
+using similar approach as with the shaded elevation above, but here we use a landsat 2002
 image composite<br>
 In Layer Manager: <em>Add various raster map layers</em> > <em>Add RGBmap layer</em>.<br>
 
@@ -150,7 +150,7 @@ Right click on "myelev" map layer > <em>set color table</em> > <em>Define</em> >
 If needed, redraw using the first button on Map Display.
 You can also create and assign the above color table by typing or pasting it into the
 <em>enter values interactively</em> window
-or run it from comand line (make sure the rule file is in your working directory):
+or run it from command line (make sure the rule file is in your working directory):
 
 <pre><code>
 r.colors myelev rules=mycolor.txt
@@ -196,7 +196,7 @@ d.out.file slopehistogram
 If you want to remove the orange rectangle in the display that shows the extent
 of computational region click on "Map Display Settings" icon on the top
 of the map display and switch of "Show computational extent".
-You can put it back whenever you need it and you can adjust other 
+You can put it back whenever you need it and you can adjust other
 Map display settings there as well.
 
 <span class="question">What is the effect of the histogram equalized color table on the slope map pattern?</span>
@@ -313,7 +313,7 @@ Make sure that you have only the two elevation maps switched on in the Layer Man
 Switch to 3D view and follow the video
 <a href="https://youtu.be/xo_jJHgtbR4">Visualization in GRASS III: cutting planes</a>.
 Save 2-3 interesting images for your report, include at least one crossection.
-If you do not see the elevation surfaces click Look: "center" in the View pannel of the 3D view.
+If you do not see the elevation surfaces click Look: "center" in the View panel of the 3D view.
 <!--nviz elev_lidruralmr_1m,elev_lid792_1m-->
 
 <h3>Optional</h3>

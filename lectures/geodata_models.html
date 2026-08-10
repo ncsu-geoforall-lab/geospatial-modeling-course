@@ -31,7 +31,7 @@
 <p> Mapped data, results of modeling or analysis are represented in GIS using
 <ul>
   <li class="fragment">raster (regular grid) data model
-  <li class="fragment">vector (feature) data model 
+  <li class="fragment">vector (feature) data model
   <li class="fragment">specialized representations: meshes
 </ul>
 <p>
@@ -75,7 +75,7 @@ the object of perception, experience, etc
   <ul>
   <li class="fragment">each point in space is assigned a distinct value,
       change in values between neighboring points is small</li>
-  <li class="fragment">mathematical representation: bi-variate or multi-variate 
+  <li class="fragment">mathematical representation: bi-variate or multi-variate
   continuous functions $w=f(x,y), w=f(x,y,z), w=f(x,y,z,t)$</li>
   <li class="fragment">often represented by a <b>raster data model</b></li>
   <li class="fragment">vector model is also used: isolines, meshes, or points.</li>
@@ -118,7 +118,7 @@ the object of perception, experience, etc
 
 <section>
    <h3>Raster data model: continuous fields</h3>
-<small>Elevation, 10m resolution (combined with shaded relief) </small> 
+<small>Elevation, 10m resolution (combined with shaded relief) </small>
 <img height="220" src="img/data_models/rastercont_elev.jpg">
 <br>
 <small>Precipitation, 500m resolution (color map draped over shaded relief)</small>
@@ -147,13 +147,13 @@ Roads: Speed limits for roads and walking speed for off-road areas, 30m resoluti
 <p>
 <div class="left" style="max-width:50%">
 <ul>
- <li>vertical stack of 2D raster layers 
- <li class="fragment">can be used to represent soil horizons or geological layers 
- <li class="fragment">combined representation: 
+ <li>vertical stack of 2D raster layers
+ <li class="fragment">can be used to represent soil horizons or geological layers
+ <li class="fragment">combined representation:
  <ul>
   <li class="fragment">continuous (horizontally)
   <li class="fragment">discrete (vertically)
- </ul> 
+ </ul>
 </ul>
 </div>
 <div class="right" style="max-width:40%">
@@ -166,7 +166,7 @@ Roads: Speed limits for roads and walking speed for off-road areas, 30m resoluti
    <h3>Raster data model: 3D grid</h3>
 <p>
 <ul>
-  <li>header + 3D matrix of values, voxel model 
+  <li>header + 3D matrix of values, voxel model
   <li class="fragment">spatial extent N,S,E,W,<b>Top, Bottom</b>
   <li class="fragment">vertical resolution is usually much finer than horizontal
   <li class="fragment">often used for 3D continuous representation $w=f(x,y,z)$
@@ -184,17 +184,17 @@ Roads: Speed limits for roads and walking speed for off-road areas, 30m resoluti
 <section>
    <h3>Vector data model</h3>
 <p>
- Abstract representation of complex features 
+ Abstract representation of complex features
 <br><small>school – point, road – centerline, park - polygon</small>
 <ul>
- <li><b>Geometry:</b> 
+ <li><b>Geometry:</b>
   <ul>
   <li class="fragment">Points [x,y,(z)] represent point, line, or polygon(area) features
-  <li class="fragment">Set of points create elements of feature geometry: <b>line</b>: nodes, vertices; <b>polygon</b>: centroid, boundary 
-  <li class="fragment"><a href="https://en.wikipedia.org/wiki/Geospatial_topology">Geospatial Topology</a> defines how the elements of 
+  <li class="fragment">Set of points create elements of feature geometry: <b>line</b>: nodes, vertices; <b>polygon</b>: centroid, boundary
+  <li class="fragment"><a href="https://en.wikipedia.org/wiki/Geospatial_topology">Geospatial Topology</a> defines how the elements of
 feature geometry are interrelated and organized (don't confuse with topography!)
- <li class="fragment">Topology ensures integrity of features and efficiency by defining shared coincident geometry (shared 
-boundaries, nodes). 
+ <li class="fragment">Topology ensures integrity of features and efficiency by defining shared coincident geometry (shared
+boundaries, nodes).
   </ul>
 <p>
  <li><b>Attributes</b> are stored in data management systems
@@ -209,8 +209,8 @@ the way in which constituent parts are interrelated or arranged.
    <h3>Vector data model geometry</h3>
 <div class="left" style="max-width:45%">
 <p>Point data: no topology
-<img height="180" src="img/data_models/ncpfas_samples_pointdata.jpg"> 
-<img height="160" src="img/data_models/pointcloud.png"> 
+<img height="180" src="img/data_models/ncpfas_samples_pointdata.jpg">
+<img height="160" src="img/data_models/pointcloud.png">
 </div>
 
 <div class="right" style="max-width:55%">
@@ -224,7 +224,7 @@ the way in which constituent parts are interrelated or arranged.
    <h3>Vector data model geometry</h3>
 <p>Elements: vertices(red), nodes(blue), centroids(green)
 <p>
-Polygons: vertices+nodes=boundaries, centroids 
+Polygons: vertices+nodes=boundaries, centroids
 <p>
 <img height="380" src="img/data_models/census_nodesvertcentrlb2.png">
 </section>
@@ -240,7 +240,7 @@ Polygons: vertices+nodes=boundaries, centroids
 <section>
    <h3>Vector data: 3D models</h3>
 <p>
-Full 3D meshes: representation of structures 
+Full 3D meshes: representation of structures
 <p>
 <img height="400" src="img/data_models/ccuas_blender_mesh.jpg">
 </section>
@@ -250,7 +250,7 @@ Full 3D meshes: representation of structures
    <h3>Modifications of data representation</h3>
 <p>
 <ul>
-  <li>Changing raster resolution, e.g., when model inputs are rasters at different resolutions 
+  <li>Changing raster resolution, e.g., when model inputs are rasters at different resolutions
 <p>
   <li>Changing vector geometry type, e.g., when model input requires different geometry than given data (points instead of lines)
 </ul>
@@ -263,15 +263,15 @@ Full 3D meshes: representation of structures
 <li class="fragment">continuous fields: interpolation
   <ul>
     <li>the higher resolution raster values are <b>interpolated</b> using the values of the neighboring lower resolution cells
-    <li>methods: 
-    <a href="https://en.wikipedia.org/wiki/Bilinear_interpolation">bi-linear</a>, 
-    <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">bi-cubic</a>, 
+    <li>methods:
+    <a href="https://en.wikipedia.org/wiki/Bilinear_interpolation">bi-linear</a>,
+    <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation">bi-cubic</a>,
     <a href="https://en.wikipedia.org/wiki/Spline_interpolation">spline</a>.
   </ul>
 <p>
   <li class="fragment">discrete raster data: nearest neighbor resampling
   <ul>
-     <li>assigns the higher resolution cell the <b>same value</b> as the nearest lower resolution cell 
+     <li>assigns the higher resolution cell the <b>same value</b> as the nearest lower resolution cell
      <li>resulting raster has only the values present in the input raster
   </ul>
 </p>
@@ -280,7 +280,7 @@ Full 3D meshes: representation of structures
 
 <section>
    <h3>Increasing resolution: continuous</h3>
-<p>Elevation at 30m resolution resampled to 10m resolution 
+<p>Elevation at 30m resolution resampled to 10m resolution
 <br>
 <img width="92%" src="img/data_models/resampling_methods_elev.png">
 <br><small>Nearest neighbor creates "flats" in the resampled DEM, interpolation preserves smooth surface.</small>
@@ -314,7 +314,7 @@ may be needed if the difference in resolution is large</small>
 <ul>
   <li>grid cells do not align
   <li>elevation: no 0 slope
-  <li>geology: area for each class may change 
+  <li>geology: area for each class may change
 </ul>
 <p><small>
 </small>
@@ -329,7 +329,7 @@ may be needed if the difference in resolution is large</small>
 <section>
    <h3>Decreasing resolution</h3>
 Continuous data: nearest neighbor, average, min, max, or re-interpolation is used
-<p> 
+<p>
 <img height="300" src="img/data_models/rast_resampl_elev_down.jpg">
 <p><small>Nearest neighbor resampling of 10m DEM to 30m and 20m DEMs</small>
 </section>
@@ -337,7 +337,7 @@ Continuous data: nearest neighbor, average, min, max, or re-interpolation is use
 <section>
    <h3>Decreasing resolution</h3>
 Discrete data: nearest neighbor resampling, mode (most common or majority class)
-<p> 
+<p>
 <img height="300" src="img/data_models/rast_resampl_geol_down.png">
 <p><small>Nearest neighbor resampling of 10m soil typemap to 30m and 20m maps</small>
 </section>
@@ -355,10 +355,10 @@ Discrete data: nearest neighbor resampling, mode (most common or majority class)
 <p>
   <li class="fragment">Generalization
   <ul>
-   <li>simplifying geometry while preserving important information 
+   <li>simplifying geometry while preserving important information
    <li>both data geometry and type can be modified
    <li>line to simplified line, polygon to simplified polygon or point
-   <li>selecting subset of features 
+   <li>selecting subset of features
    <li>important when combining local, state and national scale data
   </ul>
   </li>
@@ -419,7 +419,7 @@ Spatial interpolation is used to compute raster representation from point measur
 
 <section>
    <h3>Raster to vector data</h3>
-<p>Continuous data: isolines, sampling points 
+<p>Continuous data: isolines, sampling points
 <p>
 <img height="250" src="img/data_models/dem_1m.jpg">
 <img height="250" src="img/data_models/elcont1m_gen00.jpg">
@@ -432,7 +432,7 @@ Spatial interpolation is used to compute raster representation from point measur
 <ul>
   <li>points – centers of grid cells
   <li>lines, polygon border lines: connected grid cell centers
-  <li>thinning and smoothing is often performed for lines 
+  <li>thinning and smoothing is often performed for lines
 </ul>
 <p>
 <img height="360" src="img/data_models/Datamodels_streamraster.png">
@@ -444,7 +444,7 @@ Spatial interpolation is used to compute raster representation from point measur
    <h3>Raster to vector data</h3>
 <p>
 <ul>
-   <li>areas – boundary, centroid, requires building topology 
+   <li>areas – boundary, centroid, requires building topology
    <li>connects points on grid cell boundary
 </ul>
 <p>
@@ -454,7 +454,7 @@ Spatial interpolation is used to compute raster representation from point measur
 <!--
 <section>
    <h3>Common geospatial data formats</h3>
-<p>Format: specific implementation of data model, 
+<p>Format: specific implementation of data model,
 <br>open standard or proprietary
 <p> Raster
 <ul class="fragment">
@@ -475,7 +475,7 @@ Vector
    <h3>Geospatial data format conversion</h3>
 <p>
 Format description is usually stored with data: automated format recognition and conversion
-<p class="fragment"> 
+<p class="fragment">
 General library for geospatial raster and vector format conversions:
 <br>Geospatial Data Abstraction Library (GDAL/OGR)
 <br><strong><a href="https://gdal.org/">gdal.org</a></strong>
@@ -512,7 +512,7 @@ Lidar point clouds on AWS
 <section>
   <h3>Open science </h3>
 <p>open data, open source software, open access
-<p>Learn more: 
+<p>Learn more:
 <a href="https://ncsu-geoforall-lab.github.io/open-science-course/topics/open-science.html">What is Open Science</a>
 </section>
 

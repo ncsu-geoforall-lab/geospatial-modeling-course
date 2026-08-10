@@ -12,27 +12,27 @@
     <h2>Learning objectives</h2>
 <p>
 <ul>
- <li>understand line of sight 
+ <li>understand line of sight
  <li>define viewshed, cumulative viewshed and viewscape
  <li>explain components of solar radiation in complex terrain
  <li>understand cast shadow and solar inclination angle
- <li>explain cumulative solar radiation, solar energy potential 
+ <li>explain cumulative solar radiation, solar energy potential
 </ul>
 </section>
 
 <section>
    <h3>Line of sight</h3>
 <ul>
-  <li>Line of sight (LoS) analysis is used to identify points on the terrain surface 
+  <li>Line of sight (LoS) analysis is used to identify points on the terrain surface
       along a given line that are visible from an observer point on this line
 <p>
   <li>LoS analysis or ray-tracing is used for:
 <p>
   <ul>
    <li class="fragment">3D visualization
-   <li class="fragment">visibility and viewshed analysis 
-   <li class="fragment">emitor-receptor systems design 
-taking into account decay of signal with distance, for example, to optimize locations of cell towers 
+   <li class="fragment">visibility and viewshed analysis
+   <li class="fragment">emitor-receptor systems design
+taking into account decay of signal with distance, for example, to optimize locations of cell towers
   </ul>
 </ul>
 </section>
@@ -41,11 +41,11 @@ taking into account decay of signal with distance, for example, to optimize loca
    <h3>Computing Line of sight</h3>
 <ul>
   <li>Given a viewing point $A$ and a target point $B$, $B$ is visible from $A$ if:
-<!--we define $$ tan \alpha = (z_B-z_A )/ d_{BA} $$ 
+<!--we define $$ tan \alpha = (z_B-z_A )/ d_{BA} $$
  <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is smaller than  $\alpha$
 -->
   <li class="fragment">all lines $AC_i$ are below the line $AB$
-  <li class="fragment">where the set of points $C_i$ represents projection of the line $AB$ on the surface 
+  <li class="fragment">where the set of points $C_i$ represents projection of the line $AB$ on the surface
 </ul>
 <p class="fragment">
 <img height="340" src="img/viewshed_solar/lineofsight_visible.jpg">
@@ -54,14 +54,14 @@ taking into account decay of signal with distance, for example, to optimize loca
 <section>
    <h3>Computing Line of sight</h3>
 <ul>
-Given a viewing point $A$ and a target point $B$, $B$ is not visible from $A$ if: 
+Given a viewing point $A$ and a target point $B$, $B$ is not visible from $A$ if:
 <!--$$ \tan \alpha = (z_B-z_A )/ d_{BA} $$
  <li class="fragment">for <b>any point C</b> between AB, $\alpha_c$ is greater than  $\alpha$
 -->
  <li class="fragment">any line $AC_i$ is above the line $AB$
- <li class="fragment">where the set of points $C_i$ represents projection of $AB$ on the surface 
+ <li class="fragment">where the set of points $C_i$ represents projection of $AB$ on the surface
 </ul>
-<p class="fragment"> 
+<p class="fragment">
 <img height="340" src="img/viewshed_solar/lineofsight_nonvisible.jpg">
 </section>
 
@@ -84,8 +84,8 @@ Given a viewing point $A$ and a target point $B$, $B$ is not visible from $A$ if
 <section>
    <h3>Viewshed example 1</h3>
 <ul>
- <li>Visibility analysis from buildings, 30m resolution DTM 
- <li>Relative height above the surface: 4 and 32 story building 
+ <li>Visibility analysis from buildings, 30m resolution DTM
+ <li>Relative height above the surface: 4 and 32 story building
 </ul>
 <p> <img height="320" src="img/viewshed_solar/nc_RHlos.jpg">
  <img height="320" src="img/viewshed_solar/nc_towerlos3D.jpg">
@@ -125,12 +125,12 @@ Given a viewing point $A$ and a target point $B$, $B$ is not visible from $A$ if
 <section>
    <h3>Viewshed example 4</h3>
 <ul>
-<li>High resolution viewshed analysis input  
+<li>High resolution viewshed analysis input
 <!--<a href="https://drive.google.com/open?id=0B8j08KoSleFQOFdWZ0pNaXJUdUE">Payam Tabrizian</a>-->
 </ul>
 <p> <img height="320" src="img/viewshed_solar/DSM_lidar_treestems1.jpg">
     <img height="320" src="img/viewshed_solar/DSM_lidar_treestems2.jpg">
-<p><small>Replacing "tree mounds" in DSM with tree trunks. 
+<p><small>Replacing "tree mounds" in DSM with tree trunks.
 <a href="https://doi.org/10.3390/ijgi9070445">Tabrizian et al. 2020, High Resolution Viewscape Modeling Evaluated Through Immersive Virtual Environments. ISPRS Int. J. Geo-Inf. 9, 445.</a>
 </small>
 </section>
@@ -138,7 +138,7 @@ Given a viewing point $A$ and a target point $B$, $B$ is not visible from $A$ if
 <section>
    <h3>Viewshed example 4</h3>
 <ul>
-<li>High resolution viewshed analysis with improved representation of trees: Dix park application                                             
+<li>High resolution viewshed analysis with improved representation of trees: Dix park application
 <!--<a href="https://drive.google.com/open?id=0B8j08KoSleFQOFdWZ0pNaXJUdUE">Payam Tabrizian</a>-->
 </ul>
 <p> <img height="380" src="img/viewshed_solar/DSM_lidar_treestems_view.jpg">
@@ -148,7 +148,7 @@ Given a viewing point $A$ and a target point $B$, $B$ is not visible from $A$ if
 
 <section>
    <h3>Cumulative Viewshed </h3>
-<p>Set of grid cells visible from a set of points: 
+<p>Set of grid cells visible from a set of points:
 <ul>
    <li class="fragment">find a path that has minimum or maximum visibility
    <li class="fragment">optimize distribution of signal sources to achieve the maximum coverage
@@ -162,7 +162,7 @@ Given a viewing point $A$ and a target point $B$, $B$ is not visible from $A$ if
    <h3>Solar radiation</h3>
 <p>
 <ul>
- <li class="fragment"> controls surface energy and water balance 
+ <li class="fragment"> controls surface energy and water balance
  <li class="fragment"> affects atmospheric, biophysical and hydrologic processes
  <li class="fragment"> provides a source of renewable energy
 </ul>
@@ -213,7 +213,7 @@ Given a date, time, and a location, for example:
 <ul>
    <li class="fragment">solar azimuth: 212.7934...
    <li class="fragment">solar altitude or inclination: 23.1924
-   <li class="fragment">sun declination - angle between solar beam and earth equator: -23.4405 
+   <li class="fragment">sun declination - angle between solar beam and earth equator: -23.4405
    (winter solstice, sun above the Tropic of Capricorn)
    <li class="fragment">sunrise time (without refraction cor.): 07:26:30
    <li class="fragment">sunset time (without refraction cor.): 17:00:28
@@ -228,11 +228,11 @@ Angle between the terrain normal and solar beam
 <ul>
    <li class="fragment">solar beam: defined by solar inclination and azimuth
    <li class="fragment"> terrain normal: 3D vector orthogonal to the plane tangent to terrain surface,
-   <li class="fragment">terrain normal: function of slope and aspect, 
-   horizontal projection of terrain normal is gradient $\nabla z = (f_x,f_y)$  
+   <li class="fragment">terrain normal: function of slope and aspect,
+   horizontal projection of terrain normal is gradient $\nabla z = (f_x,f_y)$
 </ul>
 <p class="fragment"><img height="300" src="img/viewshed_solar/solarincidangle.gif">
-<p class="fragment"><small>Modified from Batson et al., 1975, see also 8.1.8 in Hengl et al., 2008, Geomorphometry 
+<p class="fragment"><small>Modified from Batson et al., 1975, see also 8.1.8 in Hengl et al., 2008, Geomorphometry
 or A.62 in Neteler et al., 2008 Appendix
 </small>
 </section>
@@ -258,14 +258,14 @@ or A.62 in Neteler et al., 2008 Appendix
 
 <section>
    <h3>Solar irradiance</h3>
-<p>Solar beam (direct) irradiance for inclined plane in $W/m^2$ is function of: 
+<p>Solar beam (direct) irradiance for inclined plane in $W/m^2$ is function of:
 <ul>
-  <li class="fragment">solar incidence angle 
-  <li class="fragment">solar constant $[W/m^2]$ 
+  <li class="fragment">solar incidence angle
+  <li class="fragment">solar constant $[W/m^2]$
   <li class="fragment">atmospheric factors (clear sky):
 <ul>
   <li class="fragment">Linke turbidity factor (atm. turbidity due to aerosols - reduces direct radiation)
-<!--  <li class="fragment">relative optical air mass --> 
+<!--  <li class="fragment">relative optical air mass -->
   <li class="fragment">Rayleigh optical thickness (thickness of clear atm., function of surface pressure)
 </ul>
   <li class="fragment">cloud cover
@@ -278,8 +278,8 @@ or A.62 in Neteler et al., 2008 Appendix
 <p>Cumulative beam solar irradiance $[Wh/(m^2 day]$, diffuse and reflected irradiance
 for day 356 (winter solstice) computed with 0.5hr time step
 <p class="fragment"><img height="300" src="img/viewshed_solar/solarbeam356.jpg">
-<img height="220" src="img/viewshed_solar/solardiff356.jpg"> 
-<img height="220" src="img/viewshed_solar/solarrefl356.jpg"> 
+<img height="220" src="img/viewshed_solar/solardiff356.jpg">
+<img height="220" src="img/viewshed_solar/solarrefl356.jpg">
 </section>
 
 <section>
@@ -299,13 +299,13 @@ for day 356 (winter solstice) computed with 0.5hr time step
 
 <section>
    <h3>Solar irradiance dynamics</h3>
-<p>Centennial Campus during winter solstice 
+<p>Centennial Campus during winter solstice
 <p><img height="400" src="img/viewshed_solar/winter_solstice_centennial.gif">
 </section>
 
 <section>
    <h3>Solar irradiance dynamics</h3>
-<p>Centennial Campus during summer solstice 
+<p>Centennial Campus during summer solstice
 <p><img height="400" src="img/viewshed_solar/summer_solstice_centennial.gif">
 </section>
 

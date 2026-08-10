@@ -5,7 +5,7 @@
 Create the assignment working directory (folder) .\Interpolation2.
 
 <h3>Interpolation using splines</h3>
-Interpolate elevation surfaces from spot point heights using the Spline tool 
+Interpolate elevation surfaces from spot point heights using the Spline tool
 in the Spatial Analyst toolbox.<br>
 Use three different weights (0.1, 1, 1000) to control the tension, and thus, the resulting surface character.<br>
 For the first interpolation, you'll leave the Weight field blank, accepting the default 0.1 value.<br>
@@ -22,7 +22,7 @@ Set 'Z value field' to 'value_'
 Set 'Output Raster' to '.\Interpolation2\elev_tps'
 Set 'Output cell size' to '2'
 Set to Spline Type to 'TENSION'
-Leave the other inputs as defaults     
+Leave the other inputs as defaults
 Click 'OK'
 </pre>
 
@@ -70,7 +70,7 @@ Click Next/Finish/OK through remainder of dialogs
 
 <p>
 Rerun the interpolation in the Geostatistical Analyst Wizard using<br>
- Kernal Type = Completely Regularized Spline and compare your results.
+ Kernel Type = Completely Regularized Spline and compare your results.
 <p>Optional: compute empirical and model variogram for 'elev_lid792_randpts'
-and interpolate the surface using kriging with a model variogram that 
+and interpolate the surface using kriging with a model variogram that
 fits the best with the empirical variogram.

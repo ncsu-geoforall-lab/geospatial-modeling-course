@@ -18,7 +18,7 @@ You can copy and paste the commands into Layer Manager command console and press
 Copy and execute each command separately one after each other.
 Alternatively, you can use the module dialogs, you can find the modules in <em>Modules</em> tab,
 or menu, or you can type the module name in command console.
-See documentation <a href="https://grass.osgeo.org/grass83/manuals/wxGUI.modules.html">how to use module dialogs</a>.
+See documentation <a href="https://grass.osgeo.org/grass-stable/manuals/wxGUI.modules.html">how to use module dialogs</a>.
 
 </dd>
 
@@ -167,19 +167,19 @@ when used around operators and after comma.
 <h3 id="data_visualization">Geospatial data models, display and visualization</h3>
 <dl class="qa">
 
-<dt>How do I approach the Methodology sections while working with two different 
+<dt>How do I approach the Methodology sections while working with two different
 software packages, yet remaining “software independent?”</dt>
 <dd>
 In your methods section you should write your general, software independent methods:
-For example: We have compared methods for resampling raster data to higher and lower resolution, 
-highlighting the difference between methods used for continuous and discrete data. 
-We have resampled a 30m resolution DEM to 10m resolution DEM using nearest neighbor, 
-bilinear and bicubic methods (here you can add equations or references to literature for extra points). 
+For example: We have compared methods for resampling raster data to higher and lower resolution,
+highlighting the difference between methods used for continuous and discrete data.
+We have resampled a 30m resolution DEM to 10m resolution DEM using nearest neighbor,
+bilinear and bicubic methods (here you can add equations or references to literature for extra points).
 Then we have used aspect derived from the resampled 10m DEMs to highlight the  differences between the methods.
-In the results you then show the outputs from GRASS and ArcGIS and comment on what you have observed, 
-e.g. :The nearest neighbor method resampling of DEMs has resulted in discontinuous checkerboard pattern 
-observed in both the ArcGIS and GRASS output, while both bicubic and bilinear methods preserved 
-the continuity of the DEM surface. It is important to note that the differences were not visible 
+In the results you then show the outputs from GRASS and ArcGIS and comment on what you have observed,
+e.g. :The nearest neighbor method resampling of DEMs has resulted in discontinuous checkerboard pattern
+observed in both the ArcGIS and GRASS output, while both bicubic and bilinear methods preserved
+the continuity of the DEM surface. It is important to note that the differences were not visible
 in the elevation display but appeared in the derived aspect (and 3D representation if you chose to use it).
 You can try to explain what is causing the differences between the nn and bilinear methods.
 
@@ -201,7 +201,7 @@ Environments > General Settings > Extent</dd>
 <dt>Why we just don't use very high resolution for all raster data?</dt>
 <dd>
 When you have low resolution (big cells) it does not necessary mean
-that it is worse. Sometimes we can even rescale hight resolution data
+that it is worse. Sometimes we can even rescale high resolution data
 because we don't need the precision because other data for analysis are
 in the lower resolution or because we are hitting some storage limits.
 Re-scaling to higher resolution (smaller cells) does not give use more
@@ -234,7 +234,7 @@ high-quality cartography tasks.</dd>
 
 <h3 id="map_algebra">Global, zonal and focal operations, map algebra</h3>
 
-<dl class="qa"> 
+<dl class="qa">
 <dt>What does the difference between SRTM and NED DEMs mean?</dt>
 <dd>
     SRTM represents surface with vegetation and buildings, while NED is derived from bare earth lidar data,
@@ -283,7 +283,7 @@ the original raster.</dd>
 <!-- <dt>What the internal structure is of a GRASS raster, where is category list stored?
 <dd>
        We have talked about it in the first lecture, but you can find it in the
-       <a href="https://grass.osgeo.org/grass83/manuals/helptext.html">GRASS manual</a> too.
+       <a href="https://grass.osgeo.org/grass-stable/manuals/helptext.html">GRASS manual</a> too.
        If you are really interested you can look to the directories yourself.
        Categories are under <code>cats</code> directory,
        color tables under <code>colr</code>,
@@ -300,8 +300,8 @@ the original raster.</dd>
         I would have to see your results to say for sure,
         it should be the same if the firestations were all located on the roads, but they
         are not. They are located off-the road and they are not connected to the street network.
-        So you need to get them from the points reprsenting the stations onto the road,
-        either snaping them to the road (which may require manual aditing) or have the algorithm
+        So you need to get them from the points representing the stations onto the road,
+        either snapping them to the road (which may require manual aditing) or have the algorithm
         find the least cost path to the road by assigning off-road areas some low speed value.
         Depending on where the firestation is located in relation to the roads, the two approaches
         may lead to different paths.</dd> -->
@@ -434,4 +434,3 @@ and reduce its brightness to create contrast between the cross-section and the s
 are coloring the cross-section using the top surface option.
 
 </dl>
-

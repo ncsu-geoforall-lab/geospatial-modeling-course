@@ -1,7 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-import sys
 import re
+import sys
 
 argc = len(sys.argv)
 
@@ -16,15 +16,15 @@ end_html = sys.argv[3]
 directory = sys.argv[4]
 list_type = sys.argv[5]
 sublist_type = sys.argv[6]
-if sublist_type in ['ol', 'ul']:
+if sublist_type in ["ol", "ul"]:
     subheadings = True
     files = sys.argv[7:]
 else:
     subheadings = False
     files = sys.argv[6:]
 
-heading = re.compile(r'<[Hh]..*>(.+)</[Hh].>')
-heading_num = re.compile(r'<[Hh](.).*>.+</[Hh].>')
+heading = re.compile(r"<[Hh]..*>(.+)</[Hh].>")
+heading_num = re.compile(r"<[Hh](.).*>.+</[Hh].>")
 heading_subtopic = re.compile(r'<[Hh]..*class=".*subtopic.*".*>(.+)</[Hh].>')
 
 entries = []
@@ -33,7 +33,7 @@ subentries = {}
 # reads headings (main title and subheadings) from the linked files
 
 for name in files:
-    with open(name, 'r') as f:
+    with open(name, "r") as f:
         title = None
         title_num = None
         for line in f:
@@ -41,8 +41,7 @@ for name in files:
             if match and not title:
                 title = match.group(1)
                 # TODO: handle with and without /, now only with /
-                if name.startswith(directory):
-                    name = name[len(directory):]
+                name = name.removeprefix(directory)
                 entries.append((name, title))
                 if not subheadings:
                     break
@@ -63,20 +62,20 @@ for name in files:
 
 # writes out the list
 
-sys.stdout.write('<h2>{t}</h2>\n\n'.format(t=page_title))
+sys.stdout.write(f"<h2>{page_title}</h2>\n\n")
 
 sys.stdout.write(start_html)
-sys.stdout.write('<{t}>\n'.format(t=list_type))
-for (filename, title) in entries:
-    sys.stdout.write('    <li><a href="{f}">{t}</a></li>\n'.format(f=filename, t=title))
+sys.stdout.write(f"<{list_type}>\n")
+for filename, title in entries:
+    sys.stdout.write(f'    <li><a href="{filename}">{title}</a></li>\n')
     # write the sublist
     if subheadings and filename in subentries:
-        sys.stdout.write('<{t}>\n'.format(t=sublist_type))
+        sys.stdout.write(f"<{sublist_type}>\n")
         for subheading in subentries[filename]:
-            sys.stdout.write('    <li>{t}</li>\n'.format(t=subheading))
-            sys.stdout.write('</li>\n')
-        sys.stdout.write('</{t}>\n'.format(t=sublist_type))
-    sys.stdout.write('</li>\n')
-sys.stdout.write('</{t}>\n'.format(t=list_type))
+            sys.stdout.write(f"    <li>{subheading}</li>\n")
+            sys.stdout.write("</li>\n")
+        sys.stdout.write(f"</{sublist_type}>\n")
+    sys.stdout.write("</li>\n")
+sys.stdout.write(f"</{list_type}>\n")
 
 sys.stdout.write(end_html)

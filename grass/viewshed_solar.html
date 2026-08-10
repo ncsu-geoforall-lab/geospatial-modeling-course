@@ -1,7 +1,7 @@
 <h2>Viewshed and solar energy potential analysis</h2>
 <p>Resources:
 <ul>
-<li><a href="https://grass.osgeo.org/grass83/manuals/index.html">
+<li><a href="https://grass.osgeo.org/grass-stable/manuals/index.html">
 GRASS overview and manual</a></li>
 <li><a href="https://www.grassbook.org/"> GRASSbook</a></li>
 </ul>
@@ -120,8 +120,8 @@ r.sunmask -s elevation=elevfacility_1m year=2001 month=12 day=22 hour=14 minute=
 Calculate incidence angles including cast shadows on Dec. 22 at 2:25pm, EST.<br>
 We assign histogram equalized color table - <span class="question">can you explain why?</span>
 <br>
-<span class="question">What is the value of the incidence angle on the roof? 
-How is it related to solar altitude? (hint: see the output of r.info and query the incidence 
+<span class="question">What is the value of the incidence angle on the roof?
+How is it related to solar altitude? (hint: see the output of r.info and query the incidence
 angle map on the building)</span>
 
 <pre><code>
@@ -177,7 +177,7 @@ d.rast its356
 d.legend its356 at=25,50,1,3
 d.out.file solartime_winter
 d.rast its172
-d.legend its172 at=25,50,1,3 
+d.legend its172 at=25,50,1,3
 d.out.file solartime_summer
 </code></pre>
 
@@ -188,7 +188,7 @@ for generating sufficient energy throughout the year?
  </span>
 
 <p>
-Optionally display the irradiation maps draped over elevation elevfacility_1m in 3D view 
+Optionally display the irradiation maps draped over elevation elevfacility_1m in 3D view
 to see relation between terrain geometry and solar irradiation.
 
 <h3>
@@ -216,7 +216,7 @@ d.legend it356 at=2,30,2,6
 d.out.file insol_time
 </code></pre>
 
-Dowload grass addon script to compute daily solar irradiation for 10 days, save the time series
+Download grass addon script to compute daily solar irradiation for 10 days, save the time series
 output as a space-time dataset and visualize the result using animation.
 
 <pre><code>

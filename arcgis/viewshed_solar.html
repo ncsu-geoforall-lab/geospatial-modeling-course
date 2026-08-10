@@ -20,9 +20,9 @@ Add the point feature class fire_pt
 Use Viewshed tool (not Viewshed 2) to compute the area visible from the fire_pt location.
 <pre>
 Open the ArcToolbox
-ToolBox Spatial Analyst Tools->Surface->Viewshed 
+ToolBox Spatial Analyst Tools->Surface->Viewshed
 Set input surface to elev_ned
-Set observer feature to fire_pt 
+Set observer feature to fire_pt
 Give your viewshed a name, and store it in your ./Viewshed folder
 Click OK to run the analysis
 </pre>
@@ -35,7 +35,7 @@ while those not visible are assigned a value of 0.<br>
 How much area (in sq. meters) do these visible cells represent?</span><br>
 
 <p><strong>Rerun the viewshed, with elevation offset at the fire_pnt site at +60 m.</strong>
-<p>Add the field OFFSETA to the fire_pt attribute table. 
+<p>Add the field OFFSETA to the fire_pt attribute table.
 <pre>
 <i>right mouse click</i> on the fire_pt layer > Open Attribute Table
 <i>left mouse click</i> on the first icon in the Attribute Table toolbar > Add Field
@@ -49,9 +49,9 @@ Click 'Yes' to save your edits
 </pre>
 <p>Rerun the viewshed
 <pre>
-ToolBox Spatial Analyst Tools->Surface->Viewshed 
+ToolBox Spatial Analyst Tools->Surface->Viewshed
 Set input surface to elev_ned
-Set observer feature to fire_pt 
+Set observer feature to fire_pt
 Give your viewshed a name, but different from the first one and store it in your ./Viewshed folder
 Click OK to run the analysis
 </pre>
@@ -61,7 +61,7 @@ How much additional area was gained by adding the 60 m of elevation
 to the observer?</span>
 <p>
 <strong>Rerun the viewshed again, using the +60 m observer, but this time limit your search radius to 2000m.</strong>
-<p>Add the fields RADIUS1 and RADIUS2 to the fire_pt attribute table. 
+<p>Add the fields RADIUS1 and RADIUS2 to the fire_pt attribute table.
 <pre>
 <i>right mouse click</i> on the fire_pt layer > Open Attribute Table
 <i>left mouse click</i> on the first icon in the Attribute Table toolbar > Add Field
@@ -76,9 +76,9 @@ Click 'Yes' to save your edits
 </pre>
 <p>Rerun the viewshed
 <pre>
-ToolBox Spatial Analyst Tools->Surface->Viewshed 
+ToolBox Spatial Analyst Tools->Surface->Viewshed
 Set input surface to elev_ned
-Set observer feature to fire_pt 
+Set observer feature to fire_pt
 Give your viewshed a name, choose a different namet one and store it in your ./Viewshed folder
 Click OK to run the analysis
 </pre>
@@ -92,7 +92,7 @@ How much ground area is visible?</span>
 <pre>
 add two fields: AZIMUTH1 and AZIMUTH2 (as doubles) to the fire_pt Attribute table (see instructions above)
 Start editing (see instructions above)
-modify RADIUS1 and RADIUS2 fields: RADIUS1 =  '1000', RADIUS2 =  '2000', 
+modify RADIUS1 and RADIUS2 fields: RADIUS1 =  '1000', RADIUS2 =  '2000',
 and populate: AZIMUTH1=45, and AZIMUTH2=135.
 </pre>
 <p>Rerun the viewshed (see instructions above)
@@ -148,12 +148,12 @@ Convert it from the resulting event to a  shape file.
 Data > Export Data
 save in the ./Viewshed folder and click 'Yes' to add the layer to the project
 Open the Attribute Table of newly created shapefile
-Add the fields OFFSETA, VERT1, VERT2, AZIMUTH1, and AZIMUTH2. 
+Add the fields OFFSETA, VERT1, VERT2, AZIMUTH1, and AZIMUTH2.
 Populate (in the editing mode)
-point FID=0: 
-OFFSETA=35m, VERT1=12, VERT2=-12, AZIMUTH1=300, AZIMUTH2=60. 
-For point FID=1: 
-OFFSETA=40m, VERT1=12, VERT2=-12, AZIMUTH1=150, AZIMUTH2=240. 
+point FID=0:
+OFFSETA=35m, VERT1=12, VERT2=-12, AZIMUTH1=300, AZIMUTH2=60.
+For point FID=1:
+OFFSETA=40m, VERT1=12, VERT2=-12, AZIMUTH1=150, AZIMUTH2=240.
 Save the edits
 
 </pre>
@@ -171,8 +171,8 @@ his counterpart on the Red Hat Building?</span>
 Perform solar radiation analysis in Spatial Analyst:
 
 <pre>
-Display the Arc Toolbox. 
-Select Geoprocessing->Environments. 
+Display the Arc Toolbox.
+Select Geoprocessing->Environments.
 Under Workspace set the Current Workspace to point to the ncrast,mdb geodatabase
 </pre>
 

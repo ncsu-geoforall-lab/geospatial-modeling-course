@@ -25,9 +25,9 @@
 
                 // Display a presentation progress bar
                 progress: true,
-                
+
                 center: true,
-                
+
                 // Display the page number of the current slide
                 slideNumber: false,
 
@@ -42,7 +42,7 @@
                 // specified using percentage units.
                 // width: 960,
                 // height: 700,
-                
+
                 // Factor of the display size that should remain empty around the content
                 margin: 0.05,  // increase?
 
@@ -101,7 +101,7 @@
 
                 // Parallax background size
                 //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
-                chalkboard: { 
+                chalkboard: {
         		// optionally load pre-recorded chalkboard drawing from file
             		src: "chalkboard.json",
             	},
@@ -121,7 +121,7 @@
             	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
             	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
             	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
-            	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+            	    68: function() { RevealChalkboard.download() },	// download recorded chalkboard drawing when 'd' is pressed
             	},
             });
 

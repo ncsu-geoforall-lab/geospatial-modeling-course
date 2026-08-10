@@ -15,9 +15,9 @@
  <li>define spatial interpolation and its applications
  <li>classify methods and their properties
  <li>explain Voronoi polygons and linear interpolation on triangular irregular network
- <li>explain and apply inverse distance weighted method 
+ <li>explain and apply inverse distance weighted method
  <li>define geostatistical approach
- <li>define radial basis functions and splines 
+ <li>define radial basis functions and splines
 </ul>
 </section>
 
@@ -34,7 +34,7 @@ Estimate values at unsampled points using values measured at given points to:
 
 <section>
   <h3>Scattered points to grid</h3>
-Most common application 
+Most common application
 <p><img height="340" src="img/spatial_interpolation/scattered_pts.jpg">
 <img height="340" src="img/spatial_interpolation/pointstogrid.jpg">
 </section>
@@ -75,7 +75,7 @@ Groundwater pollution over 10 years: 3D space + time
 <section>
    <h3>Spatial interpolation: foundations</h3>
 <p>
-Problem definition 
+Problem definition
 <ul>
 <li class="fragment">find a function which passes through (or close to) the given set of discrete points and then
 <p>
@@ -86,7 +86,7 @@ Problem definition
 <section>
    <h3>Scattered points to grid</h3>
 <p>
-Find mathematical function $z = F(x,y)$ to estimate values $z$ at regular grid 
+Find mathematical function $z = F(x,y)$ to estimate values $z$ at regular grid
 using values $z_i$ at $m$ given scattered points $(x_i,y_i), i=m$
 <p> <img height="350" src="img/spatial_interpolation/scattered_pts.jpg">
  <img height="350" src="img/spatial_interpolation/pointstogrid.jpg">
@@ -97,10 +97,10 @@ using values $z_i$ at $m$ given scattered points $(x_i,y_i), i=m$
    <h3>Mathematical formulation</h3>
 Bi-variate interpolation and approximation can be formulated as follows:
 <p>
-Given $m$-points $(x_i, y_i, z_i), i=1,m$ 
+Given $m$-points $(x_i, y_i, z_i), i=1,m$
 <br>find such $F(x,y)$ that for each $i=1,m$
 <p class="fragment">
-           $$z_i=F(x_i,y_i)$$   
+           $$z_i=F(x_i,y_i)$$
 <p  class="fragment">
 and compute $z_k=F(x_k,y_k)$ where $(x_k,y_k)$ are grid points
 <p class="fragment">
@@ -112,10 +112,10 @@ and compute $z_k=F(x_k,y_k)$ where $(x_k,y_k)$ are grid points
    <h3>Mathematical formulation</h3>
 Bi-variate interpolation and approximation can be formulated as follows:
 <p>
-Given $m$-points $(x_i, y_i, z_i), i=1,m$ 
+Given $m$-points $(x_i, y_i, z_i), i=1,m$
 <br>find such $F(x,y)$ that for each $i=1,m$
 <p class="fragment">
-           $$z_i=F(x_i,y_i)$$  
+           $$z_i=F(x_i,y_i)$$
            $$z_i=F(x_i,y_i) + e(x_i,y_i)$$
 <p  class="fragment">
 and compute $z_k=F(x_k,y_k)$ where $(x_k,y_k)$ are grid points
@@ -126,8 +126,8 @@ and compute $z_k=F(x_k,y_k)$ where $(x_k,y_k)$ are grid points
 
 <section>
    <h3>Interpolation problem solution</h3>
-Problem does not have a unique solution: 
-<p> 
+Problem does not have a unique solution:
+<p>
 <img height="350" src="img/spatial_interpolation/interp1d_nn.png"> </p>
 </section>
 
@@ -159,7 +159,7 @@ Additional conditions are needed
   <li class="fragment"><b>Locality </b>: each point influences the surface only up to certain distance
    or value at a given point will be similar to values at nearby points
 <p>
-   <li class="fragment"><b>Geostatistical</b>: surface is one realization of a random function with spatial covariance 
+   <li class="fragment"><b>Geostatistical</b>: surface is one realization of a random function with spatial covariance
 <p>
    <li class="fragment"><b>Smoothness</b>: surface should be as smooth as possible while passing through or close to the data points
 </ul>
@@ -174,10 +174,10 @@ $$
 F(r) = T(r) + ∑ λ_j R(r,r_j)  \; \;    j=1,m
 $$
 <ul>
-<li class="fragment"> $r = (x,y)$ is location of an unsampled point  
+<li class="fragment"> $r = (x,y)$ is location of an unsampled point
 <li class="fragment">$r_j=(x_j,y_j$) is location of a measured point
 <li class="fragment">$T(r)$ is trend (low order polynomial)
-<li class="fragment">$λ_j$ are coefficients 
+<li class="fragment">$λ_j$ are coefficients
 <li class="fragment">$R(r,r_j)$ is a function of distance between the points (radial basis function, model variogram)
 </ul>
 </section>
@@ -188,7 +188,7 @@ $$
 Only a small subset of $n$ neighboring points is used
 <p>
 <ul>
- <li class="fragment">Voronoi polygons 
+ <li class="fragment">Voronoi polygons
  <li class="fragment">Triangular Irregular Network (TIN) - based linear interpolation
  <li class="fragment">Inverse distance weighted method
 </ul>
@@ -200,7 +200,7 @@ Voronoi polygons  define <b>unique nearest neighborhood</b> around each point
 <p>
 <img height="330" src="img/spatial_interpolation/voronoi_zoom.png"> </p>
 <p><small>Voronoi polygons are derived from the measured data - the measured point (red)
- is at the center of a Voronoi polygon 
+ is at the center of a Voronoi polygon
 <p><a href="https://alexbeutel.com/webgl/voronoi.html"> Voronoi diagram generator</a>
 or <a href="https://websvg.github.io/voronoi/">Parametric Voronoi generator</a></small>
 </section>
@@ -224,10 +224,10 @@ Value at an unsampled point $z(x,y)$ is <b>the same</b> as the measured value $z
 at the center of the Voronoi polygon $V_j$ within which the unsampled point is located:
 <p class="fragment">
 $$ T(x,y) = 0 $$
-$$z(x,y) = λ z(x_j,y_j)$$ 
+$$z(x,y) = λ z(x_j,y_j)$$
 <p>
 <ul>
-<li class="fragment">$\lambda = 1$, if $(x,y)$ is within $V_j$  
+<li class="fragment">$\lambda = 1$, if $(x,y)$ is within $V_j$
 <li class="fragment">$\lambda = 0$, if $(x,y)$ is outside $V_j$
 <li class="fragment">$j = 1,m$, where $m$ is the number of given points
 </ul>
@@ -245,12 +245,12 @@ nearest neighbor approach
    <h3>Voronoi polygons</h3>
 <ul>
  <li>2m resolution DEM computed using Voronoi polygons:
- <li>includes only measured values 
+ <li>includes only measured values
  <li>the surface is not continuous
 </ul>
 <br>
 <img height="320" src="img/spatial_interpolation/IntF1a.gif"> </p>
-<br> <small>Figure from 
+<br> <small>Figure from
 <a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
 </small>
 <!--<a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation. In: P.Longley, M.F. Goodchild, D.J. Maguire, D.W.Rhind (Eds.), GIS: Principles, Techniques, Management and Applications, GeoInformation International, Wiley, 481-492.</a></p>
@@ -260,13 +260,13 @@ nearest neighbor approach
 <section>
    <h3>Linear TIN-based method</h3>
 <p>
-Value $z(x,y)$ at an unsampled point is a linear combination of values 
+Value $z(x,y)$ at an unsampled point is a linear combination of values
 at 3 nearby given points $z(x_j,y_j)$ that form vertices of a triangle
 <p class="fragment">
 $$ T(r) = 0 $$
 $$z(x,y) = ∑ \lambda_j z(x_j,y_j) \; / \; \lambda_T \quad  j=1,2,3$$
 <ul>
-<li class="fragment">$\lambda_j$ is weight proportional to the area of a triangle 
+<li class="fragment">$\lambda_j$ is weight proportional to the area of a triangle
 defined by the unsampled point and two given points
 <li class="fragment">$\lambda_T$ is is weight proportional to the area of a triangle
 defined by the measured points
@@ -284,7 +284,7 @@ Value at a grid point is computed from 3 given points that form vertices of a De
 <section>
    <h3>Delaunay triangulation</h3>
 <p>
-Delaunay triangulation for a set of points P in a plane fulfills 
+Delaunay triangulation for a set of points P in a plane fulfills
 the condition that no point in P is inside the circumcircle of any triangle in DT(P).
 <p>
 <img height="350" src="img/spatial_interpolation/DelaunayTIN1.png"> </p>
@@ -293,11 +293,11 @@ the condition that no point in P is inside the circumcircle of any triangle in D
 <section>
    <h3>Delaunay triangulation</h3>
 <p>
-Delaunay triangulation for a set of points P in a plane fulfills 
+Delaunay triangulation for a set of points P in a plane fulfills
 the condition that no point in P is inside the circumcircle of any triangle in DT(P).
 <p>
 <img height="350" src="img/spatial_interpolation/DelaunayTIN2.png"> </p>
-<p><small>Learn more about  
+<p><small>Learn more about
 <a href="https://en.wikipedia.org/wiki/Delaunay_triangulation">properties and algorithms</a>
 </small>
 </section>
@@ -305,7 +305,7 @@ the condition that no point in P is inside the circumcircle of any triangle in D
 <section>
    <h3>Delaunay TIN and Voronoi polygons</h3>
 <p>
-Voronoi polygons (light blue) and Delaunay triangles (black) create dual graphs. 
+Voronoi polygons (light blue) and Delaunay triangles (black) create dual graphs.
 <p>
 <img height="380" src="img/spatial_interpolation/voronoi_zoom_tin2.png"> </p>
 <p><small>Each face of VP is associated with TIN vertex and each TIN face has VP vertex associated with it</small>
@@ -314,7 +314,7 @@ Voronoi polygons (light blue) and Delaunay triangles (black) create dual graphs.
 <section>
    <h3>Delaunay TIN surface model</h3>
 <p>
-TIN-based DEM generated from points on contours 
+TIN-based DEM generated from points on contours
 <p>
 <img height="400" src="img/spatial_interpolation/TINgrassnviz2.jpg">
 <p><small>Vector data model (irregular triangular mesh) representation of elevation surface</small>
@@ -337,7 +337,7 @@ TIN-based DEM generated from a random sub-sample of lidar points
   <li>surface is continuous, but the derivatives are not
 </ul>
 <br>
-<img height="320" src="img/spatial_interpolation/IntF1a.gif"> 
+<img height="320" src="img/spatial_interpolation/IntF1a.gif">
 <img height="320" src="img/spatial_interpolation/IntTinF1b.gif"> </p>
 <br><small>
 <a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
@@ -351,7 +351,7 @@ TIN-based DEM generated from a random sub-sample of lidar points
  <li>linear interpolation along steepest slope lines between two neighboring isolines
 </ul>
 <p>
-<img height="360" src="img/spatial_interpolation/contour_interp.jpg"> 
+<img height="360" src="img/spatial_interpolation/contour_interp.jpg">
 <img height="320" src="img/spatial_interpolation/interp_lin_isolines.jpg"> </p>
 </section>
 
@@ -361,10 +361,10 @@ TIN-based DEM generated from a random sub-sample of lidar points
 Inverse Distance Weighted Interpolation (IDW):
 <ul>
 <li class="fragment">the simplest and most common method
-<li class="fragment">value at an unsampled point is a weighted average of  values at nearby measured points 
+<li class="fragment">value at an unsampled point is a weighted average of  values at nearby measured points
 <li class="fragment">weights are usually inverse distance squared
 <li class="fragment">nearby measured points are defined as those located within a given distance or the closest n-points
-<li class="fragment">many modifications and improvements were developed 
+<li class="fragment">many modifications and improvements were developed
 </ul>
 </section>
 
@@ -378,11 +378,11 @@ $$ T(x,y) = 0 $$
 $$z(x,y) = ∑ \lambda_j z(x_j,y_j) \; / ∑ \lambda_j \quad  j=1,..., n$$
 
 <ul>
- <li class="fragment"> $\lambda_j = 1/d_j^p$ is weight proportional to power of inverse distance between 
-      the measured point $(x_j,y_j)$ and unsampled point $(x,y)$, 
+ <li class="fragment"> $\lambda_j = 1/d_j^p$ is weight proportional to power of inverse distance between
+      the measured point $(x_j,y_j)$ and unsampled point $(x,y)$,
  <li class="fragment"> $p$ is exponent, usually $p=2$
  <li class="fragment">function passes through the data points
- <li class="fragment">smoothing can be introduced by setting the weights as  $\lambda_j = 1/ (d_j^p + \beta)$, 
+ <li class="fragment">smoothing can be introduced by setting the weights as  $\lambda_j = 1/ (d_j^p + \beta)$,
      where $\beta$ is a smoothing parameter
 </ul>
 </section>
@@ -419,7 +419,7 @@ Value at a unsampled grid point (blue) is a weighted average of values measured 
 <!--
 <section>
    <h3>Local interpolation discontinuities</h3>
-<p>Problems when grid size is much smaller than 
+<p>Problems when grid size is much smaller than
 distance between given points: IDW surfaces with power exponent p=0.5 and p=5 (precipitation data)
 <p>
 <img height="220" src="img/spatial_interpolation/idw_precip_p05_3dpts.png">
@@ -439,12 +439,12 @@ Impact of power parameter (p=0.5, 2, 5) on the resulting surface: precipitation 
 
 <section>
    <h3>Inverse distance weighted method</h3>
-2m resolution DEM computed from points that are ~50m appart:
+2m resolution DEM computed from points that are ~50m apart:
 leads to local peaks and pits around given points
 <br>
-<img height="350" src="img/spatial_interpolation/IntIDWF1c.gif"> 
-<br><small>Bull's eye effect – circular contours when distance between 
-the measured points is much larger than the distance between grid points. 
+<img height="350" src="img/spatial_interpolation/IntIDWF1c.gif">
+<br><small>Bull's eye effect – circular contours when distance between
+the measured points is much larger than the distance between grid points.
 <a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">
 Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
 </small>
@@ -479,14 +479,14 @@ $$
 
 <section>
    <h3>Geostatistical approach</h3>
-We assume that the points that are close to each other have smaller differences in measured values 
-than the points that are farther appart 
+We assume that the points that are close to each other have smaller differences in measured values
+than the points that are farther apart
 <p>
 <ul>
-<li class="fragment">Model variogram $R(r,r_j)$ is derived by fitting a suitable function to empirical variogram 
-<li class="fragment">Model variogram functions: spherical, exponential, Gaussian, … 
+<li class="fragment">Model variogram $R(r,r_j)$ is derived by fitting a suitable function to empirical variogram
+<li class="fragment">Model variogram functions: spherical, exponential, Gaussian, …
 </ul>
-<img height="200" src="img/spatial_interpolation/GeostITC_variogramspher.jpg"> 
+<img height="200" src="img/spatial_interpolation/GeostITC_variogramspher.jpg">
 <p class="credit">Geostat_ITCCov3.pdf, D.G. Rossiter)</p>
 </section>
 
@@ -512,9 +512,9 @@ point pairs within the bin with distance $h$
    <h3>Empirical variogram</h3>
 Given set of elevation points and derived experimental variogram
 <p>
-<img height="300" src="img/spatial_interpolation/bar_pts_all.png"> 
+<img height="300" src="img/spatial_interpolation/bar_pts_all.png">
 <img height="300" src="img/spatial_interpolation/expvariogram_barania2.png"> </p>
-<p><small>Maximum distance is 2000 m, histogram bin is ~150m. 
+<p><small>Maximum distance is 2000 m, histogram bin is ~150m.
 Adapted from <a href="https://spatial-analyst.net/book/system/files/Hengl_2009_GEOSTATe2c1w.pdf">A Practical Guide to Geostatistical Mapping by T. Hengl.</a></small>
 </section>
 
@@ -522,15 +522,15 @@ Adapted from <a href="https://spatial-analyst.net/book/system/files/Hengl_2009_G
    <h3>Model variogram</h3>
 Optimized fit of a suitable function to empirical variogram: linear
 <p>
-<img height="280" src="img/spatial_interpolation/expvariogram_barania2.png"> 
-<img height="280" src="img/spatial_interpolation/exp_model_variogram_lin_bar.png"> 
+<img height="280" src="img/spatial_interpolation/expvariogram_barania2.png">
+<img height="280" src="img/spatial_interpolation/exp_model_variogram_lin_bar.png">
 </section>
 
 <section>
    <h3>Model variogram</h3>
 Optimized fit of a suitable function to empirical variogram: gaussian, spherical
 <p>
-<img height="280" src="img/spatial_interpolation/exp_model_variogram_gaus_bar.png"> 
+<img height="280" src="img/spatial_interpolation/exp_model_variogram_gaus_bar.png">
 <img height="280" src="img/spatial_interpolation/exp_model_variogram_spher_bar.png">
 </section>
 
@@ -547,16 +547,16 @@ Optimized fit of a suitable function to empirical variogram: exponential, Matern
 DEM interpolated with kriging using Matern model variogram
 <p>
 <img height="380" src="img/spatial_interpolation/bar_simdem10m_10.png"> </p>
-<p><small>More in GIS714 topic on 
+<p><small>More in GIS714 topic on
 <a href="https://ncsu-geoforall-lab.github.io/geospatial-simulations-course/assignments/geostats_sim.html">Geostatistical Simulations</a>
 </small>
 </section>
 
 <section>
    <h3>Kriging: Interpolated surface</h3>
-DEMs interpolated using IDW method and kriging with spherical variogram 
+DEMs interpolated using IDW method and kriging with spherical variogram
 <p>
-<img height="320" src="img/spatial_interpolation/IntIDWF1c.gif"> 
+<img height="320" src="img/spatial_interpolation/IntIDWF1c.gif">
 <img height="320" src="img/spatial_interpolation/IntkrigF1d.gif"> </p>
 <p><small>roughness in the surface is due to local implementation, discussed in the next section, not the function itself
 <a href="http://fatra.cnr.ncsu.edu/~hmitaso/gmslab/papers/mitas_mitasova_1999_2005.pdf">Mitas, L., Mitasova, H., 1999, Spatial Interpolation. Wiley, 481-492.</a>
@@ -587,17 +587,17 @@ Restrict interpolation to surveyed areas to avoid false patterns
    <h3>Splines</h3>
 We will cover splines in our next lecture
 <p>
-<img height="300" src="img/spatial_interpolation/InttopogrF1e.gif"> 
-<img height="300" src="img/spatial_interpolation/IntRSTF1f.gif"> 
+<img height="300" src="img/spatial_interpolation/InttopogrF1e.gif">
+<img height="300" src="img/spatial_interpolation/IntRSTF1f.gif">
 </section>
 
 <section>
    <h3>Summary</h3>
 <ul>
-<li class="fragment">Instead of a universal solution that would automatically optimize its parameters 
+<li class="fragment">Instead of a universal solution that would automatically optimize its parameters
  we now have a large number of different interpolation and approximation methods and their implementations and no robust automated approach for choosing the right one
 <li class="fragment">Sound knowledge of interpolated phenomenon and the methods is needed to do it correctly
-<li class="fragment">Given adequate amount of homogeneously distributed data, most methods will provide good results 
+<li class="fragment">Given adequate amount of homogeneously distributed data, most methods will provide good results
 <li class="fragment">Keep interpolation in mind when collecting data (e.g. parallel far apart but densely sampled profiles are difficult to interpolate)
 </ul>
 </section>

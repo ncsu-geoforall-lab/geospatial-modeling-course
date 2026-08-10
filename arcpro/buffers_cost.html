@@ -31,7 +31,7 @@ select 'elev'
 Browse to C:\Users\myname\Documents\ArcGIS\582data\ncshape.gdb
 select 'streets_wake'
 In the 'Contents' pane, RMC 'Map'-> 'extent' tab of the Map properties window
-Select 'Use a Custom Extent' 
+Select 'Use a Custom Extent'
 Select 'elev' from 'extent of a layer'
 Click 'Run'
 </pre>
@@ -50,7 +50,7 @@ In the Geoprocessing pane, search for and select the 'Euclidean Distance' tool
 Set 'Input raster' to 'lakes'
 Set Output distance raster' to 'lk_dist'
 Set 'Maximum distance' to '500'
-Leave the rest as defaults 
+Leave the rest as defaults
 Click 'Run'
 </pre>
 
@@ -75,7 +75,7 @@ Set 'Input Features' to 'streets_wake'
 Set 'Value field' to 'SPEED'
 Set 'Output Raster Dataset to 'str_speed'
 Set Cellsize to 30
-Leave the others as defaults 
+Leave the others as defaults
 Click 'Run'
 </pre>
 
@@ -83,8 +83,8 @@ Click 'Run'
 Verify the working directory then modify mask and cell size:
 
 <pre>
-Click on the Analysis tab on the ribbon and click Environments. 
-Verify workspace is set to the assignment gdb you created at the begining of this assignment
+Click on the Analysis tab on the ribbon and click Environments.
+Verify workspace is set to the assignment gdb you created at the beginning of this assignment
 Under 'Raster Analysis' set the 'Cell Size' to 'str_speed'
 Under 'Raster Analysis' set the  'Mask' to 'boundary_wake' in the ncshape.gdb
 Click 'Run'
@@ -96,7 +96,7 @@ Assign null values a speed of 5.
 
 <pre>
 In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
-Type in the expression: Con(IsNull("str_speed"),5,"str_speed") 
+Type in the expression: Con(IsNull("str_speed"),5,"str_speed")
 Set the Output raster to 'str_speed2'
 Click 'Run'
 </pre>
@@ -135,7 +135,7 @@ Create cost surface
 <pre>
 In the Geoprocessing pane, search for and select the 'Cost Distance' tool
 Set 'Input raster or feature source data' to 'fire_pt'
-Set 'Input Cost raster' to 'str_trv'    
+Set 'Input Cost raster' to 'str_trv'
 Set 'Output distance raster' to 'str_cost'
 Set 'Output backlink raster' to '.\buffers_cost\backlink' # This should be set to your working directory
 Leave the rest as defaults
@@ -188,7 +188,7 @@ Set 'Destination field' to 'OBJECTID'
 Set the 'Input cost distance raster' to 'str_cost'
 Set the 'Input cost backlink raster' to 'backlink'
 Set the 'Output raster' to 'cost_path'
-Set the 'Path type' to 'BEST_SINGLE'   
+Set the 'Path type' to 'BEST_SINGLE'
 Click 'Run'
 </pre>
 <p>

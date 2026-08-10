@@ -32,7 +32,7 @@ For units and explanation of constants see <a href="../resources/erosion_notes.p
 
 <p>
 First compute slope, and flow accumulation for the elevation raster map e_lid792 (NOT elid_792):
---Leave other values defaul if not specified--
+--Leave other values default if not specified--
 <pre>
 In the Map tab, in the Layer group, click 'Add Data'
 Browse to C:\Users\myname\Documents\ArcGIS\582data\ncrast.gdb
@@ -54,15 +54,15 @@ Keep 'DEGREES' for output measurement
 Compute the flow accumulation map Flowacc:
 <pre>
 In the Geoprocessing pane, search for and select the 'Fill' tool
-input=e_lid792 
+input=e_lid792
 output=Fill_e_lid
 
 In the Geoprocessing pane, search for and select the 'Flow Direction' tool
-input=Fill_e_lid 
-ouput=FlowDir_fil
+input=Fill_e_lid
+output=FlowDir_fil
 
 In the Geoprocessing pane, search for and select the 'Flow Accumulation' tool
-input=FlowDir_fil 
+input=FlowDir_fil
 output=Flowacc
 </pre>
 
@@ -122,7 +122,7 @@ Compute aspect_1m map (direction of flow, direction of gradient vector) using th
 
 <pre>
 In the Geoprocessing pane, search for and select the 'Aspect'
-input=e_lid792 
+input=e_lid792
 output=aspect_1m
 </pre>
 
@@ -154,7 +154,7 @@ output raster = sflowtopo2
 First compute components of sediment flow in x and y direction:
 Calculate qsx
 <pre>
-Be sure the 'cfactb' layer from earlier is in your map or you will recieve an error-
+Be sure the 'cfactb' layer from earlier is in your map or you will receive an error-
 In the Geoprocessing pane, search for and select the 'Raster Calculator' tool
 expression=
 "sflowtopo" * "soils_kf" * "cfactb" * 270. * Cos((- "aspect_1m" + 450.) * math.pi / 180.0)

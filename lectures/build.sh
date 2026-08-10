@@ -1,3 +1,5 @@
+#!/bin/bash
+
 BUILD_DIR=../build/lectures
 
 mkdir -p $BUILD_DIR

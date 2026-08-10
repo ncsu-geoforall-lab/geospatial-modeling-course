@@ -3,7 +3,7 @@
 <a href="https://www.lib.ncsu.edu/gis/virtcamp.html">ESRI virtual campus</a>
 
 <p>
-Include resulting maps into your report 
+Include resulting maps into your report
 (use your judgment to decide which results to include). Adjust the colors and symbology of displayed layers to match the cartographic standards (lakes are displayed in blue etc.)
 
 <!-- <pre>
@@ -42,12 +42,12 @@ Add ./ncrast.mdb/elev
 Add ./ncshape.mdb/streets_wake
 Dbl. Click the 'elev' layer in the TOC
 Go to -> Layer Properties -> Extent
-Write down the four numbers in the text fields labeled: 'Left', 'Right', 'Top', 'Bottom' 
+Write down the four numbers in the text fields labeled: 'Left', 'Right', 'Top', 'Bottom'
 Click 'OK'
 Dbl. Click 'Layers' in the TOC
-Go to ->'Data Frame Properties' -> 'Data Frame' -> 'Clip Options' -> 'Clip to Shape' 
+Go to ->'Data Frame Properties' -> 'Data Frame' -> 'Clip Options' -> 'Clip to Shape'
 Click 'Specify Shape'
-Select 'Custom Extent' 
+Select 'Custom Extent'
 Uncheck the 'Degrees' check box
 Enter the four numbers you recorded earlier in their appropriate text fields
 Click 'OK'
@@ -67,7 +67,7 @@ Select 'Spatial Analyst Tools->Distance->Euclidean Distance'
 Set 'Input raster' to 'lakes'
 Set Output distance raster' to '\Buffers_cost\lk_dist'
 Set 'Maximum distance' to '500'
-Leave the rest as defaults 
+Leave the rest as defaults
 Click 'OK'
 </pre>
 
@@ -92,7 +92,7 @@ Set 'Input Features' to 'streets_wake'
 Set 'Value field' to 'SPEED'
 Set 'Output Raster Dataset to './Buffers_cost/str_speed'
 Set Cellsize to 30
-Leave the others as defaults 
+Leave the others as defaults
 Click 'OK'
 
 File -> Add Data -> Add Data...
@@ -117,7 +117,7 @@ Assign null values a speed of 5.
 <pre>
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Map Algebra->Raster Calculator'
-Type in the expression: Con(IsNull("str_speed"),5,"str_speed") 
+Type in the expression: Con(IsNull("str_speed"),5,"str_speed")
 Set the Output raster to 'str_speed2'
 Click 'OK'
 </pre>
@@ -130,14 +130,14 @@ We create a cost raster where cost is time to cross one map unit.
 <span class="question">Where does the 0.00062137 constant come from?</span>
 
 <pre>
-Select 'Spatial Analyst Tools->Map Algebra->Raster Calculator' 
+Select 'Spatial Analyst Tools->Map Algebra->Raster Calculator'
 Type in the expression: 0.00062137 / "str_speed2"
 Set the 'Output raster' to str_trv
 
 Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Distance->Cost Distance'
 Set 'Input raster or feature source data' to 'fire_pt'
-Set 'Input Cost raster' to 'str_trv'    
+Set 'Input Cost raster' to 'str_trv'
 Set 'Output distance raster' to './Buffers_cost/str_cost'
 Set 'Output backlink raster (optional)' to './Buffers_cost/backlink'
 Leave the rest as defaults
@@ -183,7 +183,7 @@ Open the ArcToolbox (if not already open)
 Select 'Spatial Analyst Tools->Distance->Cost Back Link'
 Set 'Input raster or feature source data' to 'fire_pt'
 Set the 'Input cost raster' to 'str_cost'
-Set the 'Ouput Backlink raster' to '.\Buffers_cost\backlink'  
+Set the 'Ouput Backlink raster' to '.\Buffers_cost\backlink'
 Click 'OK' -->
 
 
@@ -200,7 +200,7 @@ Set 'Destination field' to 'OBJECTID'
 Set the 'Input cost distance raster' to 'str_cost'
 Set the 'Input cost backlink raster' to 'backlink'
 Set the 'Output raster' to '.\Buffers_cost\cost_path'
-Set the 'Path type' to 'BEST_SINGLE'   
+Set the 'Path type' to 'BEST_SINGLE'
 Click 'OK'
 </pre>
 <p>
