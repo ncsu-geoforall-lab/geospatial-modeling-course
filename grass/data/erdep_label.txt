@@ -1,0 +1,9 @@
+-4:severe erosion 
+-3:high erosion 
+-2:moderate erosion 
+-1:low erosion 
+0:stable 
+1:low deposition 
+2:moderate deposition 
+3:high deposition 
+4:severe deposition 
