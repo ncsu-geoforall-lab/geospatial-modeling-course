@@ -123,7 +123,7 @@ Distribution of color based on uniform raster data intervals</small>
 <img class="fragment" height="380" src="img/data_visualize/Color_raster_histeq1.jpg"> </p>
 <p><small>Uniform intervals work for elevations in Piedmont,
 but for entire NC this approach highlights that most NC is flat coastal
-plane but we don't see its subtle topography structure </small></p>
+plain but we don't see its subtle topography structure </small></p>
 </section>
 
 <section>
@@ -183,6 +183,8 @@ small values and small number of cells with very large values </p>
   <li class="fragment">continuous: colors (R,G,B) are interpolated based on raster data values
   <li class="fragment">histogram equalized: colors are distributed based on the raster map histogram
   <li class="fragment">logarithmic
+  <li class="fragment">prefer perceptually uniform, colorblind-safe ramps such as viridis
+when readers need to compare values accurately
   <li class="fragment">see <a href="../topics/data_models_visu.html#data_visualization">
 supplemental material for many others</a> and explanation of the best practices
 </section>
@@ -413,7 +415,7 @@ Petras V., Newcomb D. J., Mitasova H, 2017. Generalized 3D fragmentation index d
 <section>
    <h3>Animations in 3D </h3>
   <p>Fly-by: static features explored by moving viewing position
-  <br>Dynamic isourfaces from multi-temporal voxel model
+  <br>Dynamic isosurfaces from multi-temporal voxel model
 <p><img height="350" src="img/data_visualize/wellnew.gif">
 <img class="fragment" height="350" src="img/data_visualize/well456.gif">
 <p><small><a href="http://fatra.cnr.ncsu.edu/geospatial-modeling-course/slides/dynamicgis">See more examples here</a></small>
