@@ -12,10 +12,11 @@
     <h3>Learning objectives</h3>
 <p>
 <ul>
-  <li>understand and perform raster data resampling
-  <li>modify vector data representation
-  <li>convert between raster and vector data models
-  <li>find and use data repositories, wms services <!--metadata-->
+  <li>Describe resampling methods for continuous vs. discrete data
+  <li>Select and perform an appropriate resampling method
+  <li>Modify vector data representation
+  <li>Convert between raster and vector data models
+  <li>Find and use data repositories
 <!--
   <li class="fragment">Define raster and vector data models
   <li class="fragment">Distinguish between continuous and discrete phenomena
@@ -32,7 +33,7 @@
 <ul>
   <li class="fragment">raster (regular grid) data model
   <li class="fragment">vector (feature) data model
-  <li class="fragment">specialized representations: meshes
+  <li class="fragment">specialized representations: meshes, point clouds
 </ul>
 <p>
 <img height="200" src="img/data_models/datatypescomposit.jpg">
@@ -444,7 +445,7 @@ Spatial interpolation is used to compute raster representation from point measur
    <h3>Raster to vector data</h3>
 <p>
 <ul>
-   <li>areas – boundary, centroid, requires building topology
+   <li>areas - boundary, centroid, requires building topology
    <li>connects points on grid cell boundary
 </ul>
 <p>
@@ -493,9 +494,10 @@ Coupled with PROJ library it also provides coordinate system transformations
 
 <section>
 <h3>Data repositories</h3>
-Data repositories: WMS, WPS, WebGIS
+Data repositories: WMS, WFS, WPS
 <ul>
-  <li>Web mapping Service
+  <li>Web Mapping Service
+  <li>Web Feature Service
   <li>Web Processing Service
 </ul>
 <p>
@@ -508,6 +510,31 @@ Lidar point clouds on AWS
 -->
 </section>
 
+<section>
+   <h3>Cloud Optimized Data</h3>
+   <ul>
+     <li>COG - Cloud Optimized GeoTIFF
+     <li>COPC - Cloud Optimized Point Cloud
+     <li><a href="https://zarr.dev/">Zarr</a>- N-Dimensional Arrays
+     <li><a href="https://flatgeobuf.org/">FlatGeobuf</a> & GeoParquet
+   </ul>
+   <p>
+</section>
+
+
+<section>
+   <h3>SpatioTemporal Asset Catalogs (STAC)</h3>
+   Provides a common specification for exposing and searching spatial temporal metadata.
+   <ul>
+      <li>Catalog - container for logical groupings of metadata</li>
+      <li>Collection - provides additional metadata about the items it contains (extents, licenses, keywords, etc..)</li>
+      <li>Item - a GeoJSON feature describing assets at one place and time</li>
+      <li>Asset - the individual components of an item</li>
+   </ul>
+
+   For additional information see: <a href="https://stacspec.org/en">What is STAC</a>
+
+</section>
 <!--
 <section>
   <h3>Open science </h3>
