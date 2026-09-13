@@ -1,0 +1,7 @@
+950 red
+1000 orange
+1200 yellow
+1400 cyan
+1600 aqua
+1800 blue
+2500 violet

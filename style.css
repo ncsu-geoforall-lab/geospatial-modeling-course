@@ -1,0 +1,347 @@
+
+/* global and body settings */
+
+body {
+    background-color: #EEEEEE;
+    font-family: "Open Sans", "Helvetica Neue", Ubuntu, Arial, sans-serif;
+    font-size: 90%;
+    color: black;
+}
+
+/* site top image */
+
+#header-image {
+    height: 150px;
+    background-image: url("img/header.png");
+    background-repeat: no-repeat;
+}
+
+/* main heading / title */
+
+h1 {
+    margin: 0px;
+    padding: 0px;
+    padding-top: 50px;
+    padding-left: 30px;
+    font-size: 50px;
+    font-weight: bold;
+    font-size: 40px;
+    color: #006600;
+    text-shadow: 0 0 20px white, 0 0 18px white, 0 0 16px white, 0 0 14px white, 0 0 12px white, 0 0 10px white, 0 0 8px white, 0 0 6px white;
+}
+
+/* links */
+
+a {
+    color: #006600;
+    text-decoration: none;
+}
+    a:hover {
+    color: #006600;
+    text-decoration: underline;
+}
+
+/* normal headings */
+
+h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    color: #444;
+    clear: both;
+    border-bottom: 2px solid #F3F3F3;
+    padding-bottom: 0.1em;
+    margin-bottom: 0.9em;
+}
+
+/* links inside the headings - the standard settings */
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    font-weight: bold;
+    color: green;
+}
+
+/* pre and code */
+
+pre {
+    padding-top: .3em;
+    padding-bottom: .3em;
+    padding-left: .5em;
+    padding-right: .2em;
+    overflow-x: auto;
+    color: black;
+    /* background-color: rgb(90%, 90%, 90%); */
+    /* background-color: #998B6C; */
+    background-color: rgba(156, 138, 99, 0.17);
+}
+
+code {
+    font-size: 120%;
+}
+
+/* main menu navigation */
+
+nav {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    border: 0px solid #dcddde;
+    background-color: #ffffff;
+    border-radius: 0px;
+    /*box-shadow: 0 0 8px #eee;*/
+    background-color: #444;
+    font-size: 1.3em;
+}
+
+nav ul {
+    margin:0;
+    padding:0;
+    padding: 0px;
+    display: block;
+    list-style-type:none;
+}
+
+nav li {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    float: left;
+    border-right: 2px solid #F3F3F3;
+    /*border-left: 1px solid #DDDDDD;*/
+}
+
+.nav a {
+    text-decoration: none;
+    color: #F3F3F3;
+    display: inline-block;
+    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 15px;
+}
+
+nav li:hover {
+    background: #666;
+    color: #FFF;
+}
+
+/* footer */
+
+footer {
+    position: relative;
+    clear: both;
+    margin: 0;
+    margin-top: 50px;
+    padding: 0px;
+    font-size: 80%;
+    color: #888;
+    background-color: #EEE
+}
+
+/* footer navigation */
+
+footer nav ul {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    overflow: auto;
+    list-style-type: none;
+}
+
+footer nav li {
+    height: 1.5em;
+    float: left;
+    margin-right: 0px;
+    border-right: 1px solid #aaa;
+    padding: 0 20px;
+}
+
+footer nav li:last-child {
+    border-right: none;
+}
+
+footer nav li:hover {
+    background: #FFF;
+    color: #888;
+}
+/* only for bullet list next to wrapped figure
+ul {
+    list-style-position: inside;
+}
+*/
+
+/* list with images and headings */
+
+.image-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.image-list li {
+    padding: 5px;
+    overflow: auto;
+}
+
+.image-list li img {
+    width: 100px;
+    float: left;
+    margin: 0 15px 0 0;
+    background: white;
+}
+
+.image-list li p {
+    margin: 0px;
+}
+
+.image-list li h4 {
+    margin: 5px;
+    clear: none;
+}
+
+/* list with images and text under them */
+
+/* sparse list */
+
+.sparse>li {
+    margin-bottom: 1em;
+}
+
+/* list where logos of organizations are dominant */
+
+/* must be without ul to work */
+.logo-list {
+    list-style-type: none;
+    overflow: auto;
+    margin: 0px;
+    padding: 0px;
+}
+
+.logo-list li {
+    float: left;
+    text-align: center;
+    width: 150px;
+    padding: 20px;
+}
+
+.logo-list li img {
+    height: 100px;
+}
+
+.logo-list p {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* bigger padding for dd */
+
+dd {
+    padding: 4px;
+}
+dt {
+    font-weight: bold;
+}
+
+ul {
+    padding-left: 30px;
+}
+
+/* show more from the long list button */
+
+.more-button {
+    margin-left: 90px;
+    /*text-transform:uppercase;*/
+    font-size:110%;
+    color: rgb(128, 128, 128) !important
+}
+
+/* figures and centering */
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}
+
+.wrap {
+    float: left;
+}
+
+figure .video {
+    width: 100%;
+    height: 345px;
+    background-color: #ffffff;
+}
+
+figure .image {
+    width: 100%;
+}
+
+figure {
+    text-align: center;
+    display: table;
+    max-width: 50%; /* demo; set some amount (px or %) if you can */
+    margin: 10px auto; /* not needed unless you want centered */
+}
+
+iframe {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* thicker and gray hr */
+hr {
+    background: #ddd;
+    width: 100%;
+    height: 0.4em;
+    margin: 0 0 1.4em;
+    border: none;
+}
+
+/* question sentences in assignments */
+.question {
+    color: #FF5900;
+}
+
+/* default style is too dense */
+.schedule td {
+    padding-left: 0.5em;
+    padding-right: 0.2em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+/* width of first column */
+.schedule td:first-child {
+    width: 8em;
+}
+
+/* do table using alternate colors of rows */
+.schedule tr:nth-child(even) {
+    background: #EEE;
+}
+
+.schedule tr:nth-child(odd) {
+    background: #FFF;
+}
+
+/* override for header to get different color */
+.schedule > thead > tr:nth-child(1) {
+    background: #EEE;
+}
+
+/* header needs to bigger a little bit */
+.schedule > thead > tr > th {
+    padding-left: 0.5em;
+    padding-right: 0.2em;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+}
+
+/* FAQ or other Q&As */
+
+.qa dt {
+    font-weight: bold;
+    font-style: normal;
+    padding-top: 0.5em;
+    color: #444;
+}

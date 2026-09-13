@@ -1,0 +1,5 @@
+-145 blue
+-10 aqua
+0 white
+10 orange
+90 red

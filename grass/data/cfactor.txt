@@ -1,0 +1,17 @@
+C-factor values for different types of land cover
+
+Source (see for more detailed values and descriptions): 
+Haan, Barfield, Hayes: Design Hydrology and Sedimentology for Small Catchments
+
+Dense Forest       0.0001 - 0.001 values depend on effective canopy 100-75% and at least 5cm litter
+Sparse Forest      0.002  - 0.009 canopy 75-20% 
+
+Pasture, idle land 0.100  - 0.011 cover 40-100%
+Grassland          0.012  - 0.003 cover 40-100%
+
+Bare soil          1.200  - 0.900 buldozed, freshly disturbed, or compacted 
+Mulch on bare soil 0.100  - 0.200
+
+Corn, soy          0.650  - 0.20  from tilled seedbed to grown crop
+
+wetland, water, developed paved area has C=0 as there is no soil.

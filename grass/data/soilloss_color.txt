@@ -1,0 +1,7 @@
+0 220 255 220
+5 yellow
+40 orange
+90 red
+250 magenta
+4000 violet
+
