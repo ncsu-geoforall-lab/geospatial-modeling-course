@@ -1,0 +1,11 @@
+1:pond
+2:forest
+3:developed paved
+4:bare ground
+5:paved road
+6:dirt road
+7:vineyard
+8:agriculture (corn, soy)
+9:wetland
+10:bare ground path
+11:grass 

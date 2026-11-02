@@ -1,0 +1,6 @@
+0 grey
+0.5 cyan
+1.0 yellow
+2 orange
+5 red
+15 magenta
